@@ -10,7 +10,7 @@ import Context from "../../UseContext/Context";
 
 const ForgotPassword = () => {
   let [loginLoader, setLoginLoader] = useState(false);
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   let {
     userName,
     show,
