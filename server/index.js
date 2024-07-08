@@ -42,21 +42,7 @@ let PORT = process.env.PORT || 3000;
 //Cors Policy connect frontend and backend with same port:
 const allowedOrigins = ['https://myvirtualcard.in', 'https://www.myvirtualcard.in'];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl requests)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type,Authorization',
-  credentials: true, // If you need to include cookies in CORS requests
-}));
+app.use(cors("*"));
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());
