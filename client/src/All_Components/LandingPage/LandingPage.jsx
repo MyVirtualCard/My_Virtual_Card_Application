@@ -196,12 +196,12 @@ const LandingPage = () => {
         <div className="column2">
           <div className="navbar_actions">
             <div className="register_action">
-              <Link>
+              <Link to='/register'>
                 Register<i className="bx bxs-user-plus"></i>
               </Link>
             </div>
             <div className="login_action">
-              <Link>
+              <Link to='/login'>
                 Login<i className="bx bx-log-in"></i>
               </Link>
             </div>
