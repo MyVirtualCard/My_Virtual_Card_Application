@@ -43,7 +43,7 @@ const Register = () => {
     location,
     setLocation,
   } = useContext(Context);
-
+  const apiUrl = import.meta.env.REACT_APP_API_URL;
   let formik = useFormik({
     initialValues: {
       profile: "",
@@ -60,7 +60,7 @@ const Register = () => {
     onSubmit: async (values) => {
       setRegisterLoader(true);
       await
-        axios.post("http://localhost:3001/auth/register", values)
+        axios.post(`${apiUrl}/auth/register`, values)
         .then((response) => {
           toast.success(response.data.message);
           setRegisterLoader(false);
