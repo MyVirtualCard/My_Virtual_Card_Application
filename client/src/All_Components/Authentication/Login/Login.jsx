@@ -57,7 +57,7 @@ const Login = () => {
   // const api = axios.create({
   //     baseURL
   // })
-
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   let formik = useFormik({
     initialValues: {
       email: "",
@@ -71,7 +71,7 @@ const Login = () => {
       setLoginLoader(true);
 
       await axios
-        .post("http://localhost:3001/auth/login", values)
+        .post(`${apiUrl}/auth/login`, values)
         .then((res) => {
           toast.success(res.data.message);
           setLoginLoader(false);

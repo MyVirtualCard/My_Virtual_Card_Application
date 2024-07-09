@@ -40,9 +40,22 @@ dotenv.config();
 //Port initializing:
 let PORT = process.env.PORT || 3000;
 //Cors Policy connect frontend and backend with same port:
-const allowedOrigins = ['https://myvirtualcard.in', 'https://www.myvirtualcard.in'];
+// Allow requests from specific origins (replace with your frontend URL)
+const allowedOrigins = ['http://myvirtualcard.in', 'http://www.myvirtualcard.in','https://myvirtualcard.in', 'https://www.myvirtualcard.in','http://143.110.186.19:5173'];
 
-app.use(cors("*"));
+// app.use(cors("*")); 
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());

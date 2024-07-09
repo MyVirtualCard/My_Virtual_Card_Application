@@ -16,9 +16,9 @@ const Register = () => {
   let navigate = useNavigate();
 //  const baseURL =  import.meta.env.REACT_APP_API_URL
 
-//   const api = axios.create({
-//       baseURL
-//   })
+  // const api = axios.create({
+  //     baseURL
+  // })
   
   //All state data:
   let {
@@ -43,7 +43,9 @@ const Register = () => {
     location,
     setLocation,
   } = useContext(Context);
-  const apiUrl = import.meta.env.REACT_APP_API_URL;
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+
+
   let formik = useFormik({
     initialValues: {
       profile: "",
