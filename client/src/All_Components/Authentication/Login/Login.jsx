@@ -52,12 +52,11 @@ const Login = () => {
       alert("Sorry, your browser does not support text to speech!");
     }
   };
-  // const baseURL =  import.meta.env.REACT_APP_API_URL
 
-  // const api = axios.create({
-  //     baseURL
-  // })
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+});
+
   let formik = useFormik({
     initialValues: {
       email: "",
@@ -70,8 +69,8 @@ const Login = () => {
     onSubmit: async (values) => {
       setLoginLoader(true);
 
-      await axios
-        .post(`${apiUrl}/auth/login`, values)
+      await api
+        .post('/auth/login', values)
         .then((res) => {
           toast.success(res.data.message);
           setLoginLoader(false);
