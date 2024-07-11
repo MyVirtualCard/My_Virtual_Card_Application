@@ -65,16 +65,16 @@ console.log(import.meta.env.VITE_APP_API_URL)
     onSubmit: async (values) => {
       setRegisterLoader(true);
       await
-        axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, values)
+        api.post('/auth/register', values)
         .then((response) => {
           toast.success(response.data.message);
           setRegisterLoader(false);
           setTimeout(() => {
-            toast.success(response.data.emailMessage);
+            // toast.success(response.data.emailMessage);
           }, 1500);
           setTimeout(() => {
             navigate("/login");
-          }, 3000);
+          }, 1000);
         })
         .catch((error) => {
           console.log(error);
