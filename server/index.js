@@ -57,7 +57,7 @@ let PORT = process.env.PORT || 3000;
 
 // Allow requests from your frontend domain
 const corsOptions = {
-  origin: 'http://www.myvirtualcard.in',  // Replace with your actual frontend domain
+  origin: 'https://www.myvirtualcard.in',  // Replace with your actual frontend domain
   credentials: true,  // Allow cookies to be sent
   optionsSuccessStatus: 200
 };
