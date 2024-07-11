@@ -58,55 +58,54 @@ export const RegisterUser = async (req, res) => {
         //If doesn't exist created new user data to database:
         let createUser = new UserAuth(data);
 
-        const transporter = nodemailer.createTransport({
-          service: "SMTP",
-          host: process.env.SMTP_HOST || 'smtp.myvirtualcard.in', // Correctly specify the SMTP host
-          port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-          secure: true, // Use true for 465, false for other ports
-          auth: {
-            user: process.env.GMAIL, // your Gmail address
-            pass: process.env.GMAIL_PASSWORD, // your Gmail password
-          },
-          logger: true, // Add this line
-          debug: true,  // Add this line
-        });
+        // const transporter = nodemailer.createTransport({
+        //   service: "SMTP",
+        //   host: process.env.SMTP_HOST || 'smtp.myvirtualcard.in', // Correctly specify the SMTP host
+        //   port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+        //   secure: true, // Use true for 465, false for other ports
+        //   auth: {
+        //     user: process.env.GMAIL, // your Gmail address
+        //     pass: process.env.GMAIL_PASSWORD, // your Gmail password
+        //   },
+        //   logger: true, // Add this line
+        //   debug: true,  // Add this line
+        // });
 
-        let message = {
-          from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-          to: `${createUser.email}`, // list of receivers
-          subject: "Welcome to MyVirtual VCard Application✔", // Subject line
-          text: "You are Sucessfully Registered!", // plain text body
-          html: `
-          <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
-           <h2>Welcome to myvirtualcard</h2>
-           <h4> Your Account has been Sucessfully Created with us!</h4>
-          <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
-          <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
-          `, // html body
-        };
+        // let message = {
+        //   from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+        //   to: `${createUser.email}`, // list of receivers
+        //   subject: "Welcome to MyVirtual VCard Application✔", // Subject line
+        //   text: "You are Sucessfully Registered!", // plain text body
+        //   html: `
+        //   <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
+        //    <h2>Welcome to myvirtualcard</h2>
+        //    <h4> Your Account has been Sucessfully Created with us!</h4>
+        //   <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
+        //   <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
+        //   `, // html body
+        // };
 
         // send mail with defined transport object
-        transporter
-          .sendMail(message)
-          .then((info) => {
-            return res.status(201).json({
-              message: "Registered Sucessfully!",
-              emailMessage: "You should Receive an Email..",
-              info: info.messageId,
-              preview: nodemailer.getTestMessageUrl(info),
-              data: createUser,
-            });
-          })
-          .catch((error) => {
-            return res.status(500).json({ message: error.message });
-          });
+        // transporter
+        //   .sendMail(message)
+        //   .then((info) => {
+        //     return res.status(201).json({
+        //       message: "Registered Sucessfully!",
+        //       emailMessage: "You should Receive an Email..",
+        //       info: info.messageId,
+        //       preview: nodemailer.getTestMessageUrl(info),
+        //       data: createUser,
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     return res.status(500).json({ message: error.message });
+        //   });
         await createUser.save();
-     
 
-        // res.status(201).json({
-        //   message: "User Registered Sucessfully",
-        //   data: createUser,
-        // });
+        res.status(201).json({
+          message: "User Registered Sucessfully",
+          data: createUser,
+        });
       }
     }
   } catch (error) {
@@ -139,7 +138,7 @@ export const ForgotPassword = async (req, res) => {
             pass: process.env.GMAIL_PASSWORD, // your Gmail password
           },
           logger: true, // Add this line
-          debug: true,  // Add this line
+          debug: true, // Add this line
         });
 
         let message = {
@@ -158,7 +157,9 @@ export const ForgotPassword = async (req, res) => {
         transporter
           .sendMail(message)
           .then(() => {
-            res.status(201).json({ message: "Check your Registered Email Address!" });
+            res
+              .status(201)
+              .json({ message: "Check your Registered Email Address!" });
           })
           .catch((error) => {
             return res.status(500).json({ message: error.message });
