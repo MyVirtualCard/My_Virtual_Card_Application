@@ -43,23 +43,13 @@ let PORT = process.env.PORT || 3000;
 // Allow requests from specific origins (replace with your frontend URL)
 // const allowedOrigins = ['http://myvirtualcard.in', 'http://www.myvirtualcard.in','https://myvirtualcard.in', 'https://www.myvirtualcard.in','http://143.110.186.19:5173'];
 
-// // app.use(cors("*")); 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (allowedOrigins.includes(origin) || !origin) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-// };
 
-// // Apply CORS middleware
-// app.use(cors(corsOptions));
-// Use the CORS middleware
 // Allow requests from specific origins
 const corsOptions = {
-  origin: 'http://143.110.186.19:4173',
+  origin: 'https://www.myvirtualcard.in', // Replace with your frontend domain
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // if you need to send cookies or authentication headers
+  optionsSuccessStatus: 204
 };
 
 app.use(cors(corsOptions));
