@@ -29,7 +29,7 @@ import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 
-let host_ip='143.110.186.19';
+let host_ip='https://www.api.myvirtualcard.in';
 
 //App initialized
 let app = express();
@@ -119,7 +119,7 @@ mongoose
     console.log("MongoDB connected sucessfully");
     try {
       app.listen(PORT, () => {
-        console.log(`Server is listening http://${host_ip}:${PORT} number`);
+        console.log(`Server is listening ${host_ip}`);
       });
     } catch {
       console.log("Mongodb connection failure");
