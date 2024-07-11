@@ -28,6 +28,9 @@ import TermConditionRoute from "./Routes/Terms&Condition.route.js";
 import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
+
+let host_ip='143.110.186.19';
+
 //App initialized
 let app = express();
 app.use(Caddy.connect);
@@ -116,7 +119,7 @@ mongoose
     console.log("MongoDB connected sucessfully");
     try {
       app.listen(PORT, () => {
-        console.log(`Server is listening http://localhost:${PORT} number`);
+        console.log(`Server is listening http://${host_ip}:${PORT} number`);
       });
     } catch {
       console.log("Mongodb connection failure");
