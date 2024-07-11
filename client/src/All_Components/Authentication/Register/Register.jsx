@@ -48,7 +48,7 @@ const Register = () => {
     baseURL: import.meta.env.VITE_APP_API_URL,
 });
 
-
+console.log(import.meta.env.VITE_APP_API_URL)
   let formik = useFormik({
     initialValues: {
       profile: "",
