@@ -55,11 +55,14 @@ let PORT = process.env.PORT || 3000;
 //   optionsSuccessStatus: 204
 // };
 
-// app.use(cors(corsOptions));
-app.use(cors({
-  origin: 'https://www.myvirtualcard.in/',  // Replace with your frontend domain
-  credentials: true
-}));
+// Allow requests from your frontend domain
+const corsOptions = {
+  origin: 'http://www.myvirtualcard.in',  // Replace with your actual frontend domain
+  credentials: true,  // Allow cookies to be sent
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());
