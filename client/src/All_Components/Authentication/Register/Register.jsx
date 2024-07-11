@@ -65,7 +65,7 @@ const Register = () => {
     onSubmit: async (values) => {
       setRegisterLoader(true);
       await
-        api.post('/auth/register', values)
+        axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/register`, values)
         .then((response) => {
           toast.success(response.data.message);
           setRegisterLoader(false);
