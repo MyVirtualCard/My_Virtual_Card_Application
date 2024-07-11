@@ -12,10 +12,10 @@ export default defineConfig({
     port: 3001, // Specify the port (optional)
     proxy: {
       // Proxy API requests to the backend server
-      '/': {
+      '/api': {
         target: process.env.VITE_APP_API_URL, // Replace with your backend server address
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/ /, ''), // Remove /api prefix when forwarding to the backend
+        rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix when forwarding to the backend
       },
     },
   },
