@@ -11,7 +11,6 @@ import axios from "axios";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 // import { Flip, toast, ToastContainer } from "react-toastify";
 import { Toaster, toast } from "react-hot-toast";
-import "react-toastify/dist/ReactToastify.css";
 import VCard_Form_Edit from "../User_Admin_All_Component/Vcard_Form/VCard_Form_Edit";
 
 import VCard_URL_Form from "../User_Admin_All_Component/VCard_URL_Form";
