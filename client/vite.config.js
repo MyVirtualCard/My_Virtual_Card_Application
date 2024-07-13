@@ -8,7 +8,7 @@ dotenv.config()
 export default defineConfig({
   build: {
     rollupOptions: {
-      external: ['primereact/editor']
+      external: ['primereact/editor','react-copy-to-clipboard']
     }
   },
   plugins: [react()],
