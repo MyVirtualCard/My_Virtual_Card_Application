@@ -390,7 +390,7 @@ const Testimonial = () => {
 
         {/* //Create New Service Form */}
 
-        <div
+{testimonialFormOpen ?         <div
           className="create_new_testimonial_container"
           id={testimonialFormOpen ? "shadow_background" : ""}
         >
@@ -479,9 +479,10 @@ const Testimonial = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>: ''}
+
         {/* //update New Service Form */}
-        <div
+        {updateFormOpen ?      <div
           className="update_new_testimonial_container"
           id={updateFormOpen ? "shadow_background" : ""}
         >
@@ -568,7 +569,8 @@ const Testimonial = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>: ''}
+   
         {/* //Testimonial  Detail Box */}
 
         <div

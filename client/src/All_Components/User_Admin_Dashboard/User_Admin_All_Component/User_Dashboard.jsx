@@ -128,7 +128,7 @@ const User_Dashboard = () => {
 
             <div className="appoinment_container table-responsive  ">
               <div className="container">
-                <table className="table table-hover rounded-3" id="example">
+                <table className="table table-hover table-borderless rounded-3" id="example">
                   <thead>
                     <tr>
                       <th className="fw-bold text-center" colSpan="1" style={{ width: "20%" }}  >VCARD NAME</th>
