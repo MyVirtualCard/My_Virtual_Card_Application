@@ -141,8 +141,8 @@ const User_VCards = () => {
               <button
                 onClick={async () => {
                   setFormSubmitLoader(true);
-                  await axios
-                    .get(`http://localhost:3001/vcard_URL/${userName}`, {
+                  await api
+                    .get(`/vcard_URL/${userName}`, {
                       headers: {
                         Authorization: `Bearer ${userData.token}`,
                       },
@@ -238,13 +238,13 @@ const User_VCards = () => {
                           <td className="fw-light text-center align-items-center">
                             {" "}
                             <a
-                              href={`http://localhost:5173/${data.URL_Alies}`}
+                              href={`https://www.myvirtualcard.in/${data.URL_Alies}`}
                               target="_blank"
                             >
-                              http://localhost:5173/{data.URL_Alies}
+                              https://www.myvirtualcard.in/{data.URL_Alies}
                             </a>
                             <CopyToClipboard
-                              text={`http://localhost:5173/${data.URL_Alies}`}
+                              text={`https://www.myvirtualcard.in/${data.URL_Alies}`}
                               onCopy={handleCopyURL}
                             >
                               <i className="bx bx-copy"></i>
