@@ -178,7 +178,7 @@ const User_VCards = () => {
                 className="table table-borderless table-hover rounded-3"
                 id="example"
               >
-                <thead>
+                <thead className="bg-primary">
                   <tr>
                     <th
                       className="fw-semibold text-center"
@@ -226,7 +226,7 @@ const User_VCards = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-light text-center">
                   {VCardCount != undefined ? (
                     VCardCount.map((data, index) => {
                       return (
