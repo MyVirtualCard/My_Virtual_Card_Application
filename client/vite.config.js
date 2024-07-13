@@ -6,11 +6,6 @@ import dotenv from 'dotenv'
 dotenv.config()
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      external: ['primereact/editor','react-copy-to-clipboard','primereact/resources/themes/saga-blue/theme.css','primereact/resources/primereact.min.css','primeicons/primeicons.css']
-    }
-  },
   plugins: [react()],
 })
 
