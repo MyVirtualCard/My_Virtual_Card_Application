@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./ForgotPassword.scss";
-// import image from "../../assets/5.png";
+import image from '../../../assets/SVG/Forgot/forgot_svg2.png'
 import site_logo from "../../../assets/Authentication_image/BrandLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -67,7 +67,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="login_container">
+      <div className="forgot_container">
         <Toaster position="top-right"></Toaster>
 
         <div className="right">

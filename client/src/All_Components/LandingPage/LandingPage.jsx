@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import slide_1_image from "../../assets/LandingPage_image/slide-1.png";
 // import offer_sale_gif from "./assets/Website_page_images/offer_price.gif";
 // import rocket from "./assets/animations/rocket.gif";
-import message from "../../assets/LandingPage_image/animations/message.gif";
+import message from "../../assets/animations/message.gif";
 // import slide_1_image from "./assets/Website_page_images/home_page_images.png";
 // import slide_1_image from "./assets/Website_page_images/home_page_right_image.svg";
 // import vcard1 from "./assets/Digicards/1.png";
@@ -16,27 +16,27 @@ import message from "../../assets/LandingPage_image/animations/message.gif";
 // import vcard6 from "./assets/Digicards/6.png";
 // import vcard7 from "./assets/Digicards/7.png";
 
-import vcard1 from "../../assets/LandingPage_image/Digicards/vmob-1.png";
-import vcard2 from "../../assets/LandingPage_image/Digicards/vmob-2.png";
-import vcard3 from "../../assets/LandingPage_image/Digicards/vmob-3.png";
-import vcard4 from "../../assets/LandingPage_image/Digicards/vmob-4.png";
-import vcard5 from "../../assets/LandingPage_image/Digicards/vmob-5.png";
-import vcard6 from "../../assets/LandingPage_image/Digicards/vmob-6.png";
-import vcard7 from "../../assets/LandingPage_image/Digicards/vmob-7.png";
+import vcard1 from "../../assets/Digicards/vmob-1.png";
+import vcard2 from "../../assets/Digicards/vmob-2.png";
+import vcard3 from "../../assets/Digicards/vmob-3.png";
+import vcard4 from "../../assets/Digicards/vmob-4.png";
+import vcard5 from "../../assets/Digicards/vmob-5.png";
+import vcard6 from "../../assets/Digicards/vmob-6.png";
+import vcard7 from "../../assets/Digicards/vmob-7.png";
 // import vcard8 from './assets/Digicards/vmob-8.png';
 
 import view1 from "../../assets/LandingPage_image/view/1.svg";
 import view2 from "../../assets/LandingPage_image/view/2.svg";
 import view3 from "../../assets/LandingPage_image/view/3.svg";
 
-import number1 from "../../assets/LandingPage_image/Digicards/number1.png";
-import number2 from "../../assets/LandingPage_image/Digicards/number2.png";
-import number3 from "../../assets/LandingPage_image/Digicards/number3.png";
+import number1 from "../../assets/Digicards/number1.png";
+import number2 from "../../assets/Digicards/number2.png";
+import number3 from "../../assets/Digicards/number3.png";
 import nfc from "../../assets/LandingPage_image/view/4.png";
 import Lottie from "react-lottie";
 
 
-import anime1 from "../../assets/LandingPage_image/animations/Animation - 1717142280104.json";
+import anime1 from "../../assets/animations/Animation - 1717142280104.json";
 
 import { toast, Toaster } from "react-hot-toast";
 import { motion as m } from "framer-motion";

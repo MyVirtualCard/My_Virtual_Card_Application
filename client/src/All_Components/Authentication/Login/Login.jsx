@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./Login.scss";
-import login_svg from "../../../assets/Authentication_image/login_image1.jpg";
+import login_svg from "../../../assets/SVG/Login/login_svg.png";
 import site_logo from "../../../assets/Authentication_image/BrandLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { Toaster, toast } from "react-hot-toast";
 import Context from "../../UseContext/Context";
 import ReCAPTCHA from "react-google-recaptcha";
+
 const Login = () => {
   let [loginLoader, setLoginLoader] = useState(false);
   let [capchaValue, setCapchaValue] = useState(null);
@@ -104,22 +105,6 @@ const Login = () => {
     <>
       <div className="login_container">
         <Toaster position="top-right"></Toaster>
-        <ul class="login_anime">
-        
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-
         <div className="right">
           <img src={login_svg} alt="" />
         </div>

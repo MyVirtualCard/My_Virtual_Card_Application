@@ -8,6 +8,15 @@ import ResetPassword from "./All_Components/Authentication/ResetPassword/ResetPa
 import ForgotPassword from "./All_Components/Authentication/ForgotPassword/ForgotPassword";
 import Login from "./All_Components/Authentication/Login/Login";
 import Register from "./All_Components/Authentication/Register/Register";
+import UserAdmin from "./All_Components/User_Admin_Dashboard/UserAdmin/UserAdmin";
+import User_Dashboard from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_Dashboard";
+import User_VCards from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_VCards";
+import VCard_URL_Form from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/VCard_URL_Form";
+import VCard_Form_Edit from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/VCard_Form_Edit";
+import Inquiries from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Inquiries";
+import BasicForm from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm";
+import UserAccountSetting from "./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting";
+
 const App = () => {
   //URL Name state:
   let [URL_Alies, setURL_Alies] = useState("");
@@ -438,6 +447,42 @@ const App = () => {
               path="/reset_password/:id/:token"
               element={<ResetPassword />}
             />
+                    <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
+              <Route
+                path={`/${userName}/uadmin/dashboard`}
+                element={<User_Dashboard />}
+              />
+              <Route
+                path={`/${userName}/uadmin/user_vcard`}
+                element={<User_VCards />}
+              />
+              {/* <Route
+                path={`/${userName}/uadmin/vcard_form/:URL_Alies`}
+                element={<VCard_Form />}
+              /> */}
+              <Route
+                path={`/${userName}/uadmin/create_new_vcard`}
+                element={<VCard_URL_Form />}
+              />
+
+              <Route
+                path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
+                element={<VCard_Form_Edit />}
+              />
+              <Route
+                path={`/${userName}/uadmin/inquiries`}
+                element={<Inquiries />}
+              />
+              <Route
+                path={`/${userName}/uadmin/vcard_form/basic_form`}
+                element={<BasicForm />}
+              />
+
+              <Route
+                path={`/${userName}/uadmin/account_setting`}
+                element={<UserAccountSetting />}
+              />
+            </Route>
           </Routes>
         </Context.Provider>
       </div>

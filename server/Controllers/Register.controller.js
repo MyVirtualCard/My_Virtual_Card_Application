@@ -60,7 +60,7 @@ export const RegisterUser = async (req, res) => {
 
         // const transporter = nodemailer.createTransport({
         //   service: "SMTP",
-        //   host: process.env.SMTP_HOST || 'smtp.myvirtualcard.in', // Correctly specify the SMTP host
+        //   host: process.env.SMTP_HOST, // Correctly specify the SMTP host
         //   port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
         //   secure: true, // Use true for 465, false for other ports
         //   auth: {

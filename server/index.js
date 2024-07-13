@@ -29,7 +29,7 @@ import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 
-let host_ip='https://www.api.myvirtualcard.in';
+let host_ip='http://localhost:3001';
 
 //App initialized
 let app = express();
@@ -42,27 +42,14 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 //Port initializing:
 let PORT = process.env.PORT || 3000;
-//Cors Policy connect frontend and backend with same port:
-// Allow requests from specific origins (replace with your frontend URL)
-// const allowedOrigins = ['http://myvirtualcard.in', 'http://www.myvirtualcard.in','https://myvirtualcard.in', 'https://www.myvirtualcard.in','http://143.110.186.19:5173'];
-
-
-// // Allow requests from specific origins
-// const corsOptions = {
-//   origin: 'https://www.myvirtualcard.in,http://localhost:5173', // Replace with your frontend domain
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   credentials: true, // if you need to send cookies or authentication headers
-//   optionsSuccessStatus: 204
-// };
-
 // Allow requests from your frontend domain
 const corsOptions = {
   origin: 'https://www.myvirtualcard.in',  // Replace with your actual frontend domain
   credentials: true,  // Allow cookies to be sent
   optionsSuccessStatus: 200
 };
-
 app.use(cors(corsOptions));
+// app.use(cors('*'))
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());

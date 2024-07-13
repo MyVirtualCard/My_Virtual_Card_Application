@@ -1,0 +1,31 @@
+.footer_container{
+    position: relative;
+    bottom: 0%;
+    width: 100%;
+
+    footer{
+        display: flex;
+        align-self: center;
+        justify-content: space-between;
+        height: 7vh;
+      
+        width: 100%;
+        border-top: 1px solid rgb(206, 206, 206);
+        padding: 1rem;
+
+        small{
+            font-size: 0.9rem;
+            font-weight: 550;
+
+            span{
+                color: royalblue;
+            }
+        }
+
+        p{
+            font-weight: 550;
+            color: darkolivegreen;
+        }
+
+    }
+}

@@ -1,0 +1,318 @@
+.user_vcards_container {
+  position: relative;
+  width: 100%;
+  padding: 2rem;
+
+  .Vcard_delete_popupBox{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 300px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.3);
+    padding: 10px;
+    z-index: 1000;
+    .popup_title{
+      padding: 10px;
+      font-size: 0.8rem;
+      font-weight: 550;
+      width: 100%;
+    }
+    .popup_actions{
+      width: 100%;
+      margin: 1rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+
+      .delete{
+
+        button{
+          padding: 6px 1rem;
+          outline: none;
+          border: transparent;
+          background-color: tomato;
+          color: white;
+          font-weight: 550;
+          font-size: 0.9rem;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: all 0.5s ease;
+
+      
+          &:hover{
+            box-shadow: 0px 4px 4px rgba(0,0,0,0.4);
+            scale: 1.05;
+            transition: all 0.5s ease;
+          }
+
+        }
+      }
+      .cancel{
+
+        button{
+          padding: 6px 1rem;
+          outline: none;
+          border: transparent;
+          background-color: rgb(44, 138, 117);
+          color: white;
+          font-weight: 550;
+          font-size: 0.9rem;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: all 0.5s ease;
+          &:hover{
+            box-shadow: 0px 4px 4px rgba(0,0,0,0.4);
+            scale: 1.05;
+            transition: all 0.5s ease;
+          }
+        }
+      }
+    }
+  }
+  .row_1 {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    .title{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      h5{
+  
+        font-weight: 550;
+      }
+      @media screen and (max-width:600px){
+        padding: 0rem 10px;
+      }
+    }
+    .actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 1rem;
+      flex: 1;
+
+      a {
+        text-decoration: none;
+
+        button {
+          padding: 10px 10px;
+          outline: none;
+          border: transparent;
+          background-color: #6571ff;
+          color: white;
+          // width: 200px;
+          font-size: 0.8rem;
+          border-radius: 5px;
+          transition: all 0.4s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+
+          i{
+            font-size: 1.2rem;
+            font-weight: 600;
+          }
+          &:hover {
+            background-color: #818cfc;
+            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            transition: all 0.4s ease;
+          }
+        }
+      }
+    }
+  }
+ 
+
+  .row_2 {
+    min-width: 100%;
+    width: auto;
+    // margin: 1rem 1rem;
+    position: relative;
+// background-color: #6571ff;
+    .appoinment_container {
+      margin: 1rem auto;
+      // padding: 1rem;
+.container{
+  min-width: 100%;
+  width: auto;
+  overflow-x: auto;
+  margin: auto;
+  .table {
+    min-width: 100%;
+    width: auto;
+    // margin: auto;
+    border-radius: 1rem;
+    border: transparent;
+    margin: auto;
+
+
+    thead {
+      // width: 100%;
+
+      tr {
+        // width: 100%;
+   
+        th {
+          width: auto;
+          padding: 0.7rem 0.5rem;
+          background-color: #f8f9fa;
+          font-size: 0.8rem;
+font-weight: 500;
+          color: rgb(22, 22, 22);
+        }
+     
+      }
+    }
+    tbody {
+      // width: 100%;
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px;
+        width: 100%;
+        font-size: 0.8rem;
+        font-weight: 550;
+        color: tomato;
+        vertical-align: middle;
+      }
+      tr {
+        // width: 100%;
+
+        td {
+          padding: 1rem 0rem;
+          font-size: 0.8rem;
+          vertical-align: middle;
+          font-weight: 500 !important;
+          color: rgb(99, 99, 99);
+          border-bottom: 1px solid rgb(230, 230, 230);
+
+a{
+text-decoration: none;
+font-size: 0.7rem;
+font-weight: 500;
+}
+          img{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+          object-position: center;
+          border: 1px solid gray;
+          box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+          }
+          i:nth-child(1) {
+            font-size: 1.5rem;
+            padding-left: 10px;
+            color: rgb(99, 99, 99);
+            cursor: pointer;
+
+            &:hover {
+              color: gray;
+            }
+          }
+          i:nth-child(2) {
+            font-size: 1.5rem;
+            padding-left: 10px;
+            color: rgb(95, 93, 255);
+            cursor: pointer;
+
+            &:hover {
+              color: rgb(66, 66, 66);
+            }
+          }
+          i:nth-child(3) {
+            font-size: 1.5rem;
+            padding-left: 10px;
+            color: royalblue;
+            cursor: pointer;
+
+            &:hover {
+              color: rgb(0, 0, 0);
+            }
+          }
+
+          &:nth-child(3) {
+            padding: 5px 10px;
+            vertical-align: middle;
+            color: green;
+            font-weight: 550;
+            font-size: 0.9rem;
+          }
+          &:nth-child(2) {
+            a {
+              text-decoration: none;
+            }
+          }
+          &:nth-child(4) {
+            i {
+              font-size: 1.5rem;
+         
+              color: #6571ff;
+            }
+            small{
+              padding: 5px 10px;
+              background-color: rgb(154, 250, 178);
+              border-radius: 5px;
+              color: #2e2e2e;
+              font-weight: 550;
+             }
+          }
+          &:nth-child(5) {
+            i {
+              font-size: 1.5rem;
+         
+              color: #6571ff;
+            }
+          
+          }
+          &:nth-child(6) {
+         small{
+          padding: 5px 10px;
+          background-color: gray;
+          border-radius: 5px;
+          color: #fff;
+          font-weight: 550;
+         }
+          
+          }
+        }
+        .plan{
+      color: rgb(152, 60, 228);
+  
+
+     
+        }
+     
+      }
+    }
+    @media screen and (max-width:600px){
+      min-width: 350%;
+    }
+    @media screen and (max-width:390px){
+      min-width: 450%;
+    }
+    @media screen and (max-width:800px){
+      min-width: 250%;
+    }
+  }
+}
+  
+    }
+  }
+  @media screen and (max-width:600px){
+    padding: 2rem 0px;
+  }
+}
