@@ -14,9 +14,13 @@ export const LoginUser = async (req, res) => {
         //Checking for already this email exist or not:
         let checkUser = await UserAuth.findOne({ email });
         if (!checkUser) {
-          res.status(400).json({message:`User Doesn't Exist`});
+         return res.status(400).json({message:`User Doesn't Exist`});
           // throw new Error ("User Doesn't Exist" );
-        } else {
+        };
+        if(checkUser.verified ===  false){
+          return res.status(400).json({message:`Email Not Verified!`});
+        }
+        else {
           //Compare current password and already registered password with bcryptjs:
           let verifyPassword = await bcryptjs.compare(
             password,

@@ -17,6 +17,8 @@ import Inquiries from "./All_Components/User_Admin_Dashboard/User_Admin_All_Comp
 import BasicForm from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm";
 import UserAccountSetting from "./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting";
 import Payment from "./All_Components/User_Admin_Dashboard/Payment/Payment";
+import VerifyOTP from "./All_Components/Authentication/VerifyOTP/VerifyOTP";
+import ResendOTP from "./All_Components/Authentication/ResendOTP/ResendOTP";
 
 const App = () => {
   //URL Name state:
@@ -433,16 +435,19 @@ const App = () => {
             {/* Landing Homepage */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/register" element={<Register />} />
+            {/* <Route path="/verify_OTP" element={<VerifyOTP />} /> */}
+            <Route path="/login" element={<Login />} />
             <Route
-              path="/login"
+              path="/verify_OTP"
               element={
                 user ? (
                   <Navigate to={`/${userName}/uadmin/dashboard`} />
                 ) : (
-                  <Login />
+                  <VerifyOTP />
                 )
               }
             />
+            <Route path="/resend_OTP" element={<ResendOTP />} />
             <Route path="/forgot_password" element={<ForgotPassword />} />
             <Route
               path="/reset_password/:id/:token"

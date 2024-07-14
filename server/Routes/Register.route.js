@@ -1,10 +1,12 @@
 import express from 'express';
-import { RegisterUser,ReadRegisteredUserAllData,ForgotPassword,ResetPassword,ReadRegisteredUserSpecificData,DeleteRegisteredUserSpecificData,UpdateRegisteredUserSpecificData } from '../Controllers/Register.controller.js';
+import { RegisterUser,ResendOTP,ReadRegisteredUserAllData,ForgotPassword,ResetPassword,ReadRegisteredUserSpecificData,DeleteRegisteredUserSpecificData,UpdateRegisteredUserSpecificData } from '../Controllers/Register.controller.js';
 // import { verifyToken } from '../Middleware/verifyToken.js';
 let router=express.Router();
 
 //Register User:
 router.post('/register',RegisterUser);
+//Resend OTP
+router.post('/resend_OTP',ResendOTP);
 //Get all Registered User Data
 router.get('/register',ReadRegisteredUserAllData);
 //forgot Password:

@@ -11,6 +11,7 @@ import Caddy from "caddy";
 import crypto from "crypto";
 //All api route importing
 import RegisterRoute from "./Routes/Register.route.js";
+import VerifyOTP from './Routes/VerifyOTP.route.js'
 import LoginRoute from "./Routes/Login.route.js";
 import VCardURL_Route from "./Routes/VCard_URL.route.js";
 import BasicDetailRoute from "./Routes/BasicDetail.route.js";
@@ -115,6 +116,7 @@ app.get("/", (req, res) => {
 });
 // Api All Routes:
 app.use("/auth", RegisterRoute);
+app.use('/auth',VerifyOTP);
 app.use("/currentplan", PlanDetailRoute);
 app.use("/auth", LoginRoute);
 app.use("/vcard_URL", VCardURL_Route);

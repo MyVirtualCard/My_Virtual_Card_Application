@@ -5,13 +5,16 @@ let OTPVerifySchema = new mongoose.Schema(
     userId: {
       type: String,
     },
+    userName:{
+     type:String
+    },
     OTP: {
       type: String,
     },
     createdAt:{
         type:Date
     },
-    updatedAt:{
+    expiredAt:{
         type:Date
     }
   },

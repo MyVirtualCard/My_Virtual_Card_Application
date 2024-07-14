@@ -244,7 +244,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("July 15, 2024 00:00:00").getTime();
+    const countdownDate = new Date("July 16, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -396,6 +396,11 @@ const LandingPage = () => {
         </div>
         <m.div className="slide_1_page" ref={HomeRef}>
           <ul className="slide_1_background">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
             <li></li>
             <li></li>
             <li></li>
