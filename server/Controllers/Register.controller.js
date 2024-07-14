@@ -110,7 +110,7 @@ export const ForgotPassword = async (req, res) => {
           expiresIn: "30d",
         });
         const transporter = nodemailer.createTransport({
-          service: "SMPT",
+          service:process.env.SERVICE,
           host: process.env.SMTP_HOST, // Correctly specify the SMTP host
           port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
           secure: true, // Use true for 465, false for other ports
@@ -173,7 +173,7 @@ export const ResetPassword = async (req, res) => {
               { password: HashPassword }
             );
             const transporter = nodemailer.createTransport({
-              service: "gmail",
+              service:process.env.SERVICE,
               host: process.env.SMTP_HOST, // Correctly specify the SMTP host
               port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
               secure: true, // Use true for 465, false for other ports
@@ -284,8 +284,8 @@ const SendOtpVerificationEmail = async (
   try {
     let OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com", // Correctly specify the SMTP host
+      service:process.env.SERVICE,
+      host: process.env.SMTP_HOST, // Correctly specify the SMTP host
       port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
       secure: true, // Use true for 465, false for other ports
       auth: {
