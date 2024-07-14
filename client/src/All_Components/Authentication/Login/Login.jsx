@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./Login.scss";
-import login_svg from "../../../assets/SVG/Login/login4.png";
+import login_svg from "../../../assets/SVG/Login/login_svg3.svg";
 import site_logo from "../../../assets/Authentication_image/BrandLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
