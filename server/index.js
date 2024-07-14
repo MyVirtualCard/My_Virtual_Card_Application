@@ -7,8 +7,8 @@ import path from "path";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import mongoose from "mongoose";
-import Caddy from 'caddy';
-
+import Caddy from "caddy";
+import crypto from "crypto";
 //All api route importing
 import RegisterRoute from "./Routes/Register.route.js";
 import LoginRoute from "./Routes/Login.route.js";
@@ -28,9 +28,7 @@ import TermConditionRoute from "./Routes/Terms&Condition.route.js";
 import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
-
-let host_ip='http://localhost:3001';
-
+let host_ip = "http://localhost:3001";
 //App initialized
 let app = express();
 app.use(Caddy.connect);
@@ -43,13 +41,13 @@ dotenv.config();
 //Port initializing:
 let PORT = process.env.PORT || 3000;
 // Allow requests from your frontend domain
-// const corsOptions = {
-//   origin: 'https://www.myvirtualcard.in',  // Replace with your actual frontend domain
-//   credentials: true,  // Allow cookies to be sent
-//   optionsSuccessStatus: 200
-// };
-// app.use(cors(corsOptions));
-app.use(cors('*'))
+const corsOptions = {
+  origin: 'https://myvirtualcard.in',  // Replace with your actual frontend domain
+  credentials: true,  // Allow cookies to be sent
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+// app.use(cors("*"));
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());
@@ -57,35 +55,64 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 //This will help you to allow file upload size limit
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
-app.use(express.static(path.join(__dirname, "client",'dist')));
+app.use(express.static(path.join(__dirname, "client", "dist")));
+
+// CCAvenue Configurations
+const merchant_id = process.env.MERCHANT_ID;
+const access_code = process.env.ACCESS_CODE;
+const working_key = process.env.WORKING_KEY;
+const redirect_url = process.env.REDIRECT_URL;
+const cancel_url = process.env.CANCEL_URL;
+
+app.post('/ccavenue/initiate', (req, res) => {
+  const order_id = req.body.order_id;
+  const amount = req.body.amount;
+  const currency = 'INR';
+  const redirect_url = process.env.REDIRECT_URL;
+  const cancel_url = process.env.CANCEL_URL;
+
+  // Encrypt request parameters
+  const params = `merchant_id=${merchant_id}&order_id=${order_id}&currency=${currency}&amount=${amount}&redirect_url=${redirect_url}&cancel_url=${cancel_url}`;
+  const encRequest = encrypt(params, working_key);
+
+  res.json({ encRequest, access_code });
+});
+
+function encrypt(data, working_key) {
+  const m = crypto.createHash('md5');
+  m.update(working_key);
+  const key = m.digest();
+  const iv = Buffer.alloc(16, 0); // Initialization vector
+  const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
+  let encrypted = cipher.update(data, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-  res.send('Welcome to Myvirtual VCard Application')
+  res.send("Welcome to Myvirtual VCard Application");
 });
-app.get("/demo_purpose", (req, res) => {
-  res.json({
-    products: [
-      {
-        id: 167,
-        title: "300 Touring", // sorted by title in ascending order
-        price: 28999.99,
-        /* rest product data */
-      },
-      {
-        id: 99,
-        title: "Amazon Echo Plus", // sorted by title in ascending order
-        price: 99.99,
-        /* rest product data */
-      },
-
-      // 30 items
-    ],
-    total: 194,
-    skip: 0,
-    limit: 30,
-  });
-});
-
 // Api All Routes:
 app.use("/auth", RegisterRoute);
 app.use("/currentplan", PlanDetailRoute);

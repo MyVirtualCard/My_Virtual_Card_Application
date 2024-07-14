@@ -37,6 +37,9 @@ let RegisterSchema = new mongoose.Schema(
     location: {
       type: String,
     },
+    verified:{
+      type:Boolean,
+    }
   },
   { timestamps: true }
 );

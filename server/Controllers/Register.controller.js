@@ -6,6 +6,7 @@ import jwt, { decode } from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import mailgen from "mailgen";
 import generateOTP from "../Helper/Mail.js";
+import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
 //Post data to mongodb -- > Register User  :
 export const RegisterUser = async (req, res) => {
   try {
@@ -19,6 +20,7 @@ export const RegisterUser = async (req, res) => {
       lastName,
       mobileNumber,
       location,
+      verified,
     } = req.body;
     //if user doesn't fill all those fields error through:
     if (
@@ -54,58 +56,26 @@ export const RegisterUser = async (req, res) => {
           lastName,
           mobileNumber,
           location,
+          verified: false,
         };
         //If doesn't exist created new user data to database:
         let createUser = new UserAuth(data);
-
-        // const transporter = nodemailer.createTransport({
-        //   service: "SMTP",
-        //   host: process.env.SMTP_HOST, // Correctly specify the SMTP host
-        //   port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-        //   secure: true, // Use true for 465, false for other ports
-        //   auth: {
-        //     user: process.env.GMAIL, // your Gmail address
-        //     pass: process.env.GMAIL_PASSWORD, // your Gmail password
-        //   },
-        //   logger: true, // Add this line
-        //   debug: true,  // Add this line
+        await createUser
+          .save()
+          .then((result) => {
+            SendOtpVerificationEmail(result, res);
+          })
+          .catch((error) => {
+            res.status(400).json({
+              status: "FAILED!",
+              message: "OTP Sending Failed",
+              error: error.message,
+            });
+          });
+        // res.status(201).json({
+        //   message: "User Registered Sucessfully",
+        //   data: createUser,
         // });
-
-        // let message = {
-        //   from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-        //   to: `${createUser.email}`, // list of receivers
-        //   subject: "Welcome to MyVirtual VCard Application✔", // Subject line
-        //   text: "You are Sucessfully Registered!", // plain text body
-        //   html: `
-        //   <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
-        //    <h2>Welcome to myvirtualcard</h2>
-        //    <h4> Your Account has been Sucessfully Created with us!</h4>
-        //   <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
-        //   <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
-        //   `, // html body
-        // };
-
-        // send mail with defined transport object
-        // transporter
-        //   .sendMail(message)
-        //   .then((info) => {
-        //     return res.status(201).json({
-        //       message: "Registered Sucessfully!",
-        //       emailMessage: "You should Receive an Email..",
-        //       info: info.messageId,
-        //       preview: nodemailer.getTestMessageUrl(info),
-        //       data: createUser,
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     return res.status(500).json({ message: error.message });
-        //   });
-        await createUser.save();
-
-        res.status(201).json({
-          message: "User Registered Sucessfully",
-          data: createUser,
-        });
       }
     }
   } catch (error) {
@@ -291,5 +261,58 @@ export const DeleteRegisteredUserSpecificData = async (req, res) => {
     res
       .status(400)
       .json({ message: "Profile Deleted Failed", error: error.message });
+  }
+};
+
+//Send otp verification email:
+
+const SendOtpVerificationEmail = async ({ _id, email }, res) => {
+  try {
+    let OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const transporter = nodemailer.createTransport({
+      service: "SMTP",
+      host: "mail.myvirtualcard.in", // Correctly specify the SMTP host
+      port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+      secure: true, // Use true for 465, false for other ports
+      auth: {
+        user: process.env.GMAIL, // your Gmail address
+        pass: process.env.GMAIL_PASSWORD, // your Gmail password
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      logger: true, // Add this line
+      debug: true, // Add this line
+    });
+    let mailOption = {
+      from: process.env.GMAIL,
+      to: email,
+      subject: "Verify Your Email!",
+      html: `<p>Enter <b>${OTP}</b> in the app to verify your Email to complete the site Two Factor Authentication!</p>`,
+    };
+
+    let hashedOTP = await bcryptjs.hash(OTP, 10);
+    let saveOTP = new User_OTP_VerifyModel({
+      userId: _id,
+      OTP: hashedOTP,
+      createdAt: Date.now(),
+      updatedAt: Date.now() + 3600000,
+    });
+
+    let SavedOTP = await saveOTP.save();
+
+    await transporter.sendMail(mailOption);
+    res.status(201).json({
+      status: "PENDING",
+      message: "OTP Sended On Your Email!",
+      data: SavedOTP,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "FAILED!",
+      message: "OTP Sending Failed",
+      error: error.message,
+    });
   }
 };

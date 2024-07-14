@@ -16,6 +16,7 @@ import VCard_Form_Edit from "./All_Components/User_Admin_Dashboard/User_Admin_Al
 import Inquiries from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Inquiries";
 import BasicForm from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm";
 import UserAccountSetting from "./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting";
+import Payment from "./All_Components/User_Admin_Dashboard/Payment/Payment";
 
 const App = () => {
   //URL Name state:
@@ -447,7 +448,8 @@ const App = () => {
               path="/reset_password/:id/:token"
               element={<ResetPassword />}
             />
-                    <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
+            <Route path="/payment" element={<Payment />} />
+            <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
               <Route
                 path={`/${userName}/uadmin/dashboard`}
                 element={<User_Dashboard />}
