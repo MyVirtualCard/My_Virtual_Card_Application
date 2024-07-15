@@ -284,7 +284,7 @@ const SendOtpVerificationEmail = async (
   try {
     let OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
     const transporter = nodemailer.createTransport({
-      service:process.env.SERVICE,
+      // service:process.env.SERVICE,
       host: process.env.SMTP_HOST, // Correctly specify the SMTP host
       port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
       secure: true, // Use true for 465, false for other ports
@@ -299,10 +299,10 @@ const SendOtpVerificationEmail = async (
       debug: true, // Add this line
     });
     let mailOption = {
-      from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+      from: `AristosTech India Private Ltd✔<${process.env.GMAIL}>`, // sender address
       to: `${email}`, // list of receivers
-      subject: "Verify Your MyVirtual VCard Application✔", // Subject line
-      text: "You are Sucessfully Registered!", // plain text body
+      subject: "Verify Your Authentication OTP!", // Subject line
+      text: "Verify Your Authentication OTP!", // plain text body
       html: `
           <h2>Hello,${firstName} &nbsp; ${lastName}</h2>
            <h2>Welcome to myvirtualcard</h2>
@@ -312,7 +312,7 @@ const SendOtpVerificationEmail = async (
           <h3>OTP Expire within <strong>1-min</strong></h3>
           <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
           <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
-          `, // html body
+          `,
     };
 
     let hashedOTP = await bcryptjs.hash(OTP, 10);
