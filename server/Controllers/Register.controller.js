@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import mailgen from "mailgen";
 import generateOTP from "../Helper/Mail.js";
 import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
+
 //Post data to mongodb -- > Register User  :
 export const RegisterUser = async (req, res) => {
   try {
@@ -77,22 +78,20 @@ export const RegisterUser = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
-export const ResendOTP=async(req,res)=>{
+export const ResendOTP = async (req, res) => {
   try {
-    let { userName,email } = req.body;
-    
-    if(!userName || !email){
+    let { userName, email } = req.body;
+
+    if (!userName || !email) {
       res.status(400).json({ message: "Please Provide All Details!" });
-    }else{
-      await User_OTP_VerifyModel.deleteMany({userName});
-      SendOtpVerificationEmail({userName:userName,email},res)
+    } else {
+      await User_OTP_VerifyModel.deleteMany({ userName });
+      SendOtpVerificationEmail({ userName: userName, email }, res);
     }
-  }
-  catch(err){
+  } catch (err) {
     res.status(400).json({ message: err.message });
   }
-}
+};
 export const ForgotPassword = async (req, res) => {
   let { email } = req.body;
   try {
@@ -110,7 +109,6 @@ export const ForgotPassword = async (req, res) => {
           expiresIn: "30d",
         });
         const transporter = nodemailer.createTransport({
-          service:process.env.SERVICE,
           host: process.env.SMTP_HOST, // Correctly specify the SMTP host
           port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
           secure: true, // Use true for 465, false for other ports
@@ -173,7 +171,6 @@ export const ResetPassword = async (req, res) => {
               { password: HashPassword }
             );
             const transporter = nodemailer.createTransport({
-              service:process.env.SERVICE,
               host: process.env.SMTP_HOST, // Correctly specify the SMTP host
               port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
               secure: true, // Use true for 465, false for other ports
@@ -274,26 +271,21 @@ export const DeleteRegisteredUserSpecificData = async (req, res) => {
       .json({ message: "Profile Deleted Failed", error: error.message });
   }
 };
-
 //Send otp verification email:
-
 const SendOtpVerificationEmail = async (
-  { _id, email,userName, firstName, lastName },
+  { _id, email, userName, firstName, lastName },
   res
 ) => {
   try {
     let OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
+
     const transporter = nodemailer.createTransport({
-      // service:process.env.SERVICE,
       host: process.env.SMTP_HOST, // Correctly specify the SMTP host
       port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
       secure: true, // Use true for 465, false for other ports
       auth: {
         user: process.env.GMAIL, // your Gmail address
         pass: process.env.GMAIL_PASSWORD, // your Gmail password
-      },
-      tls: {
-        rejectUnauthorized: false,
       },
       logger: true, // Add this line
       debug: true, // Add this line
@@ -318,7 +310,7 @@ const SendOtpVerificationEmail = async (
     let hashedOTP = await bcryptjs.hash(OTP, 10);
     let saveOTP = new User_OTP_VerifyModel({
       userId: _id,
-      userName:userName,
+      userName: userName,
       OTP: hashedOTP,
       createdAt: Date.now(),
       expiredAt: Date.now() + 60000,
@@ -326,16 +318,15 @@ const SendOtpVerificationEmail = async (
     let SavedOTP = await saveOTP.save();
     transporter.sendMail(mailOption, (error, info) => {
       if (error) {
-        console.error("Error sending OTP:", error);
-        return;
+        return res.status(401).json({ message: error.message });
       }
-      console.log("Message sent:", info.messageId);
-      console.log("Preview URL:", nodemailer.getTestMessageUrl(info));
-    });
-    return res.status(201).json({
-      status: "PENDING",
-      message: "Verification OTP Sended On Your Email!",
-      data: SavedOTP,
+      return res.status(201).json({
+        status: "PENDING",
+        message: "Verification OTP Sended On Your Email!",
+        data: SavedOTP,
+      });
+      // console.log("Message sent:", info.messageId);
+      // console.log("Preview URL:", nodemailer.getTestMessageUrl(info));
     });
   } catch (error) {
     return res.status(400).json({
@@ -345,30 +336,3 @@ const SendOtpVerificationEmail = async (
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
