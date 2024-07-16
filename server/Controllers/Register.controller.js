@@ -325,8 +325,6 @@ const SendOtpVerificationEmail = async (
         message: "Verification OTP Sended On Your Email!",
         data: SavedOTP,
       });
-      // console.log("Message sent:", info.messageId);
-      // console.log("Preview URL:", nodemailer.getTestMessageUrl(info));
     });
   } catch (error) {
     return res.status(400).json({
