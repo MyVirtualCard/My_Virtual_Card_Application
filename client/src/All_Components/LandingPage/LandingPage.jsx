@@ -3,6 +3,7 @@ import "./LandingPage.scss";
 import brand_logo from "../../assets/LandingPage_image/BrandLogo2.png";
 import { Link, NavLink } from "react-router-dom";
 import slide_1_image from "../../assets/LandingPage_image/slide-1.png";
+import illustraion from "../../assets/LandingPage_image/slide_right_svg.svg";
 // import offer_sale_gif from "./assets/Website_page_images/offer_price.gif";
 // import rocket from "./assets/animations/rocket.gif";
 import message from "../../assets/animations/message.gif";
@@ -34,7 +35,6 @@ import number2 from "../../assets/Digicards/number2.png";
 import number3 from "../../assets/Digicards/number3.png";
 import nfc from "../../assets/LandingPage_image/view/4.png";
 import Lottie from "react-lottie";
-
 
 import anime1 from "../../assets/animations/Animation - 1717142280104.json";
 
@@ -233,7 +233,16 @@ const LandingPage = () => {
   let [standardPlanExpand, setStandardPlanExpand] = useState(false);
   let [PremiumPlanExpand, setPremiumPlanExpand] = useState(false);
   let [showAnswer, setShowAnswer] = useState(false);
+  let [ImageToggle, setImageToggle] = useState(true);
 
+  useEffect(()=>{
+    setTimeout(() => {
+      setImageToggle(!ImageToggle);
+    }, 5000);
+  },[])
+
+
+  console.log(ImageToggle);
   // Offer timer
 
   let [Days, setDays] = useState("00");
@@ -244,7 +253,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("July 16, 2024 00:00:00").getTime();
+    const countdownDate = new Date("July 25, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -299,7 +308,6 @@ const LandingPage = () => {
   let PricingRef = useRef(null);
   let FAQRef = useRef(null);
   let ContactRef = useRef(null);
-
 
   let scrollToSection = (elementRef) => {
     window.scrollTo({
@@ -371,8 +379,6 @@ const LandingPage = () => {
     },
   };
 
-
-
   return (
     <>
       <m.div className="home_container">
@@ -439,38 +445,66 @@ const LandingPage = () => {
                 >
                   <m.ul>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(HomeRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(HomeRef), setSideNavToggle(false);
+                        }}
+                      >
                         Home{" "}
                       </NavLink>
                     </m.li>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(TemplateRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(TemplateRef), setSideNavToggle(false);
+                        }}
+                      >
                         {" "}
                         Templates
                       </NavLink>
                     </m.li>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(FeatureRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(FeatureRef), setSideNavToggle(false);
+                        }}
+                      >
                         Feature{" "}
                       </NavLink>
                     </m.li>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(NFCRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(NFCRef), setSideNavToggle(false);
+                        }}
+                      >
                         NFC
                       </NavLink>
                     </m.li>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(PricingRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(PricingRef), setSideNavToggle(false);
+                        }}
+                      >
                         Pricing{" "}
                       </NavLink>
                     </m.li>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(FAQRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(FAQRef), setSideNavToggle(false);
+                        }}
+                      >
                         FAQs{" "}
                       </NavLink>
                     </m.li>
                     <m.li variants={topNavAnime}>
-                      <NavLink onClick={() => scrollToSection(ContactRef)}>
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(ContactRef), setSideNavToggle(false);
+                        }}
+                      >
                         Contact
                       </NavLink>
                     </m.li>
@@ -516,7 +550,14 @@ const LandingPage = () => {
                 <m.p>
                   Experience the future of digital ID cards by AristosTech India
                   Pvt Ltd. Simplify identification with our secure virtual
-                  solution.
+                  solution.This will help u to create your brand quick and
+                  easily.Mangage your data dynamically from anytime change your
+                  VCard Design.
+                </m.p>
+                <m.p>
+                  We aren't compromising the quality of product but We can
+                  provide budget friendly price because client happiness only we
+                  are focusing!
                 </m.p>
               </m.div>
 
@@ -562,40 +603,8 @@ const LandingPage = () => {
                       <small>Seconds</small>
                     </div>
                   </m.div>
+
                   <div className="offer">
-                    {Hours && Minutes && Days && Minutes !== "00" ? (
-                      <div className="prices">
-                        <div className="old">
-                          <h5>Rs : 730</h5>
-                        </div>
-
-                        <div className="new">
-                          <h5>Rs : 365</h5>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="prices">
-                        <div className="old">
-                          <h5
-                            style={{ textDecoration: "none", color: "#4c3ce0" }}
-                          >
-                            Rs : 730
-                          </h5>
-                        </div>
-
-                        <div className="new">
-                          <h5
-                            style={{
-                              textDecoration: "line-through",
-                              color: "red",
-                            }}
-                          >
-                            Rs : 365
-                          </h5>
-                        </div>
-                      </div>
-                    )}
-
                     <div className="discount">
                       <strong>
                         {Hours && Minutes && Days && Minutes !== "00"
@@ -615,10 +624,44 @@ const LandingPage = () => {
                         )}
                       </strong>
                     </div>
+                    {Hours && Minutes && Days && Minutes !== "00" ? (
+                      <div className="prices">
+                        <div className="old">
+                          <h5>₹ 730</h5>
+                        </div>
+
+                        <div className="new">
+                          <h5>₹ 365</h5>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="prices">
+                        <div className="old">
+                          <h5
+                            style={{ textDecoration: "none", color: "#4c3ce0" }}
+                          >
+                            ₹ 730
+                          </h5>
+                        </div>
+
+                        <div className="new">
+                          <h5
+                            style={{
+                              textDecoration: "line-through",
+                              color: "red",
+                            }}
+                          >
+                            ₹ 365
+                          </h5>
+                        </div>
+                      </div>
+                    )}
                     <div className="actions">
                       {Hours && Minutes && Days && Minutes !== "00" ? (
                         <Link to="/register">
-                          <button>Enroll Now!</button>
+                          <button>
+                            Enroll Now!<i className="bx bxs-offer"></i>
+                          </button>
                         </Link>
                       ) : (
                         <a href="https://wa.me/9344482370" target="_blank">
@@ -636,7 +679,12 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
-              <m.img src={slide_1_image} alt="" />
+              {ImageToggle ? (
+                <m.img src={slide_1_image} alt="" />
+              ) : (
+                <m.img src={illustraion} alt="" />
+              )}
+
               <div className="message_gif">
                 <img
                   src={message}
@@ -674,19 +722,25 @@ const LandingPage = () => {
                   variants={right_slide_1Anime}
                 ></m.div>
               </m.div>
-              {/* <div className="social_medias_icons">
-                <div className="icon">
-                <i className='bx bxl-whatsapp' ></i>
-                </div>
-              </div> */}
             </m.div>
           </m.div>
+          <div className="svg_illustration">
+            <div className="image">
+              {/* <img src={illustraion} alt="illustration" /> */}
+            </div>
+          </div>
         </m.div>
-        {/* <div className="svg_curve">
-      
-     
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#523ab3" fillOpacity="1" d="M0,224L80,197.3C160,171,320,117,480,128C640,139,800,213,960,240C1120,267,1280,245,1360,234.7L1440,224L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg>
-        </div> */}
+        <div className="svg_curve">
+          {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#b29cff" fillOpacity="1" d="M0,224L80,197.3C160,171,320,117,480,128C640,139,800,213,960,240C1120,267,1280,245,1360,234.7L1440,224L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg> */}
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path
+              fill="#b29cff"
+              fill-opacity="1"
+              d="M0,64L80,80C160,96,320,128,480,117.3C640,107,800,53,960,69.3C1120,85,1280,171,1360,213.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
+            ></path>
+          </svg>
+        </div>
         {/* Slide2 */}
         <m.div className="slide_2_page" ref={TemplateRef}>
           <m.div
@@ -1017,7 +1071,6 @@ const LandingPage = () => {
           </m.div>
           <m.div className="slider_5_nfc_container">
             <m.div className="content_box">
-            
               <m.div
                 className="left"
                 variants={left_nfc_slide_5Anime}
@@ -1049,16 +1102,14 @@ const LandingPage = () => {
                 animate="show"
               >
                 <m.img src={nfc} alt="nfc" />
-               
               </m.div>
             </m.div>
           </m.div>
         </m.div>
         {/* Plan */}
-       
+
         <m.div className="slide_6_page" ref={PricingRef}>
           <m.div className="plan_heading" initial="hide" animate="show">
-       
             <m.h2 variants={plan_title_slide_6Anime}>
               Select the <span>Perfect Plan</span> for You
             </m.h2>
@@ -1079,7 +1130,6 @@ const LandingPage = () => {
               variants={plan_box_slide_5Anime}
               id={planExpand ? "expand" : "default"}
             >
-           
               <m.div
                 className="down_arrow"
                 onClick={() => setPlanExpand(!planExpand)}
@@ -1133,7 +1183,6 @@ const LandingPage = () => {
               variants={plan_box_slide_5Anime}
               id={standardPlanExpand ? "expand" : "default"}
             >
-              
               <div
                 className="down_arrow"
                 onClick={() => setStandardPlanExpand(!standardPlanExpand)}
@@ -1187,7 +1236,6 @@ const LandingPage = () => {
               variants={plan_box_slide_5Anime}
               id={PremiumPlanExpand ? "expand" : "default"}
             >
-             
               <div
                 className="down_arrow"
                 onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}

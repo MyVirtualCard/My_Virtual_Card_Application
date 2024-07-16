@@ -9,75 +9,6 @@ import generateOTP from "../Helper/Mail.js";
 import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
 
 //Post data to mongodb -- > Register User  :
-export const RegisterUser = async (req, res) => {
-  try {
-    //Get all those field data from body:
-    let {
-      profile,
-      email,
-      userName,
-      password,
-      firstName,
-      lastName,
-      mobileNumber,
-      location,
-      verified,
-    } = req.body;
-    //if user doesn't fill all those fields error through:
-    if (
-      !req.body.userName ||
-      !req.body.firstName ||
-      !req.body.email ||
-      !req.body.password
-    ) {
-      res.status(400).json({ message: "All * fields Mandatory!" });
-    } else {
-      let userNameVerify = await UserAuth.findOne({ userName: userName });
-      if (userNameVerify) {
-        return res
-          .status(400)
-          .json({ message: "This UserName Already Exist!" });
-      }
-      //Find user Already Exist with this email or not
-      let findUser = await UserAuth.findOne({ email: email });
-      //If exist through on error
-      if (findUser) {
-        res
-          .status(400)
-          .json({ message: "User Already Exist with this email!" });
-      } else {
-        //Hashing password encrypt to secure clients passwords :
-        let hashedPassword = await bcryptjs.hash(password, 10);
-        let data = {
-          profile,
-          email,
-          userName,
-          password: hashedPassword, //Password stored secure with hashing type
-          firstName,
-          lastName,
-          mobileNumber,
-          location,
-          verified: false,
-        };
-        let createUser = new UserAuth(data);
-        await createUser
-          .save()
-          .then((result) => {
-            SendOtpVerificationEmail(result, res);
-          })
-          .catch((error) => {
-            res.status(400).json({
-              status: "FAILED!",
-              message: "OTP Sending Failed",
-              error: error.message,
-            });
-          });
-      }
-    }
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
 // export const RegisterUser = async (req, res) => {
 //   try {
 //     //Get all those field data from body:
@@ -90,6 +21,7 @@ export const RegisterUser = async (req, res) => {
 //       lastName,
 //       mobileNumber,
 //       location,
+//       verified,
 //     } = req.body;
 //     //if user doesn't fill all those fields error through:
 //     if (
@@ -110,7 +42,7 @@ export const RegisterUser = async (req, res) => {
 //       let findUser = await UserAuth.findOne({ email: email });
 //       //If exist through on error
 //       if (findUser) {
-//         return res
+//         res
 //           .status(400)
 //           .json({ message: "User Already Exist with this email!" });
 //       } else {
@@ -125,65 +57,133 @@ export const RegisterUser = async (req, res) => {
 //           lastName,
 //           mobileNumber,
 //           location,
+//           verified: false,
 //         };
-//         //If doesn't exist created new user data to database:
 //         let createUser = new UserAuth(data);
-
-//         const transporter = nodemailer.createTransport({
-//           service: "SMPT",
-//           host: process.env.SMTP_HOST, // Correctly specify the SMTP host
-//           port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-//           secure: true, // Use true for 465, false for other ports
-//           auth: {
-//             user: process.env.GMAIL, // your Gmail address
-//             pass: process.env.GMAIL_PASSWORD, // your Gmail password
-//           },
-//           logger: true, // Add this line
-//           debug: true,  // Add this line
-//         });
-
-//         let message = {
-//           from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-//           to: `${createUser.email}`, // list of receivers
-//           subject: "Welcome to MyVirtual VCard Application✔", // Subject line
-//           text: "You are Sucessfully Registered!", // plain text body
-//           html: `
-//           <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
-//            <h2>Welcome to myvirtualcard</h2>
-//            <h4> Your Account has been Sucessfully Created with us!</h4>
-//           <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
-//           <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
-//           `, // html body
-//         };
-
-//         // send mail with defined transport object
-//         transporter
-//           .sendMail(message)
-//           .then((info) => {
-//             return res.status(201).json({
-//               message: "Registered Sucessfully!",
-//               emailMessage: "You should Receive an Email..",
-//               info: info.messageId,
-//               preview: nodemailer.getTestMessageUrl(info),
-//               data: createUser,
-//             });
+//         await createUser
+//           .save()
+//           .then((result) => {
+//             SendOtpVerificationEmail(result, res);
 //           })
 //           .catch((error) => {
-//             return res.status(500).json({ message: error.message });
+//             res.status(400).json({
+//               status: "FAILED!",
+//               message: "OTP Sending Failed",
+//               error: error.message,
+//             });
 //           });
-//         await createUser.save();
-     
-
-//         // res.status(201).json({
-//         //   message: "User Registered Sucessfully",
-//         //   data: createUser,
-//         // });
 //       }
 //     }
 //   } catch (error) {
 //     res.status(400).json({ message: error.message });
 //   }
 // };
+export const RegisterUser = async (req, res) => {
+  try {
+    //Get all those field data from body:
+    let {
+      profile,
+      email,
+      userName,
+      password,
+      firstName,
+      lastName,
+      mobileNumber,
+      location,
+    } = req.body;
+    //if user doesn't fill all those fields error through:
+    if (
+      !req.body.userName ||
+      !req.body.firstName ||
+      !req.body.email ||
+      !req.body.password
+    ) {
+      res.status(400).json({ message: "All * fields Mandatory!" });
+    } else {
+      let userNameVerify = await UserAuth.findOne({ userName: userName });
+      if (userNameVerify) {
+        return res
+          .status(400)
+          .json({ message: "This UserName Already Exist!" });
+      }
+      //Find user Already Exist with this email or not
+      let findUser = await UserAuth.findOne({ email: email });
+      //If exist through on error
+      if (findUser) {
+        return res
+          .status(400)
+          .json({ message: "User Already Exist with this email!" });
+      } else {
+        //Hashing password encrypt to secure clients passwords :
+        let hashedPassword = await bcryptjs.hash(password, 10);
+        let data = {
+          profile,
+          email,
+          userName,
+          password: hashedPassword, //Password stored secure with hashing type
+          firstName,
+          lastName,
+          mobileNumber,
+          location,
+        };
+        //If doesn't exist created new user data to database:
+        let createUser = new UserAuth(data);
+
+        const transporter = nodemailer.createTransport({
+          service: "SMPT",
+          host: process.env.SMTP_HOST, // Correctly specify the SMTP host
+          port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+          secure: true, // Use true for 465, false for other ports
+          auth: {
+            user: process.env.GMAIL, // your Gmail address
+            pass: process.env.GMAIL_PASSWORD, // your Gmail password
+          },
+          logger: true, // Add this line
+          debug: true,  // Add this line
+        });
+
+        let message = {
+          from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+          to: `${createUser.email}`, // list of receivers
+          subject: "Welcome to MyVirtual VCard Application✔", // Subject line
+          text: "You are Sucessfully Registered!", // plain text body
+          html: `
+          <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
+           <h2>Welcome to myvirtualcard</h2>
+           <h4> Your Account has been Sucessfully Created with us!</h4>
+          <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
+          <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
+          `, // html body
+        };
+
+        // send mail with defined transport object
+        transporter
+          .sendMail(message)
+          .then((info) => {
+            return res.status(201).json({
+              message: "Registered Sucessfully!",
+              emailMessage: "You should Receive an Email..",
+              info: info.messageId,
+              preview: nodemailer.getTestMessageUrl(info),
+              data: createUser,
+            });
+          })
+          .catch((error) => {
+            return res.status(500).json({ message: error.message });
+          });
+        await createUser.save();
+     
+
+        // res.status(201).json({
+        //   message: "User Registered Sucessfully",
+        //   data: createUser,
+        // });
+      }
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 export const ResendOTP = async (req, res) => {
   try {
@@ -422,7 +422,7 @@ const SendOtpVerificationEmail = async (
       expiredAt: Date.now() + 60000,
     });
     let SavedOTP = await saveOTP.save();
-      await transporter.sendMail(mailOption, (error, info) => {
+       transporter.sendMail(mailOption, (error, info) => {
       if (error) {
         return res.status(401).json({ message: error.message });
       }
