@@ -235,12 +235,11 @@ const LandingPage = () => {
   let [showAnswer, setShowAnswer] = useState(false);
   let [ImageToggle, setImageToggle] = useState(true);
 
-  useEffect(()=>{
+  useEffect(() => {
     setTimeout(() => {
       setImageToggle(!ImageToggle);
     }, 5000);
-  })
-
+  });
 
   console.log(ImageToggle);
   // Offer timer
@@ -409,12 +408,12 @@ const LandingPage = () => {
             <li></li>
             <li></li>
             <li></li>
+            {/* <li></li>
             <li></li>
             <li></li>
             <li></li>
             <li></li>
-            <li></li>
-            <li></li>
+            <li></li> */}
             <li></li>
             <li></li>
             <li></li>
@@ -685,13 +684,17 @@ const LandingPage = () => {
                 <m.img src={illustraion} alt="" />
               )}
 
-              <div className="message_gif">
-                <img
-                  src={message}
-                  alt="message"
-                  variants={right_slide_1Anime}
-                />
-              </div>
+              {ImageToggle ? (
+                <div className="message_gif">
+                  <img
+                    src={message}
+                    alt="message"
+                    variants={right_slide_1Anime}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
               <m.div className="extra_designs">
                 <m.div className="design1" variants={right_slide_1Anime}>
                   {/* <img
@@ -724,18 +727,13 @@ const LandingPage = () => {
               </m.div>
             </m.div>
           </m.div>
-          <div className="svg_illustration">
-            <div className="image">
-              {/* <img src={illustraion} alt="illustration" /> */}
-            </div>
-          </div>
         </m.div>
         <div className="svg_curve">
           {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#b29cff" fillOpacity="1" d="M0,224L80,197.3C160,171,320,117,480,128C640,139,800,213,960,240C1120,267,1280,245,1360,234.7L1440,224L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg> */}
 
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path
-              fill="#b29cff"
+              fill="#7c58ff"
               fill-opacity="1"
               d="M0,64L80,80C160,96,320,128,480,117.3C640,107,800,53,960,69.3C1120,85,1280,171,1360,213.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
             ></path>
@@ -925,15 +923,6 @@ const LandingPage = () => {
             </m.div>
           </m.div>
         </m.div>
-        <div className="svg_bottom_slice_3">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path
-              fill="#523ab3"
-              fillOpacity="1"
-              d="M0,96L1440,160L1440,0L0,0Z"
-            ></path>
-          </svg>
-        </div>
         {/* slide_4 */}
         <m.div className="slide_4_page">
           <m.div

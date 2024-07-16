@@ -17,7 +17,7 @@ export const LoginUser = async (req, res) => {
          return res.status(400).json({message:`User Doesn't Exist`});
           // throw new Error ("User Doesn't Exist" );
         };
-        if(checkUser.verified ===  false){
+        if(checkUser.verified ==  true){
           return res.status(400).json({message:`Email Not Verified!`});
         }
         else {
