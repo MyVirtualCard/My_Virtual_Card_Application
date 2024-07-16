@@ -239,7 +239,7 @@ const LandingPage = () => {
     setTimeout(() => {
       setImageToggle(!ImageToggle);
     }, 5000);
-  },[])
+  })
 
 
   console.log(ImageToggle);
