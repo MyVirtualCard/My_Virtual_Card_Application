@@ -406,8 +406,8 @@ const LandingPage = () => {
             <li></li>
             <li></li>
             <li></li>
-            <li></li>
-            <li></li>
+            {/* <li></li>
+            <li></li> */}
             {/* <li></li>
             <li></li>
             <li></li>
@@ -678,11 +678,11 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
-              {ImageToggle ? (
-                <m.img src={slide_1_image} alt="" />
-              ) : (
-                <m.img src={illustraion} alt="" />
-              )}
+             
+                <m.img src={slide_1_image} alt="" className={ImageToggle ? 'image_1_show':'image_1_hide'}/>
+            
+                <m.img src={illustraion} alt=""  className={!ImageToggle ? 'image_2_show':'image_2_hide'}/>
+           
 
               {ImageToggle ? (
                 <div className="message_gif">
