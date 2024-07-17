@@ -29,7 +29,6 @@ import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 import CCAvenueRoute from './Controllers/Payment.js'
-import axios from "axios";
 let host_ip = "http://localhost:3001";
 //App initialized
 let app = express();
@@ -59,16 +58,6 @@ app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-
-
-// CCAvenue Configurations
-const merchant_id = process.env.MERCHANT_ID;
-const access_code = process.env.ACCESS_CODE;
-const working_key = process.env.WORKING_KEY;
-const redirect_url = process.env.REDIRECT_URL;
-const cancel_url = process.env.CANCEL_URL;
-
-
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
   res.send("Welcome to Myvirtual VCard Application");
@@ -91,6 +80,7 @@ app.use("/bussinessDetail", BussinessHourDetailRoute);
 app.use("/popupBannerDetail", PopupBannerDetailRoute);
 app.use("/termConditionDetail", TermConditionRoute);
 app.use("/privacyPolicyDetail", PrivacyPolicyRoute);
+app.use('/ccavanue',CCAvenueRoute);
 app.use("/vcard", AllDataRoute);
 app.use("/vcard", AllDataDeleteRoute);
 //Setup Mongoose conncetion ;
