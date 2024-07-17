@@ -684,17 +684,15 @@ const LandingPage = () => {
                 <m.img src={illustraion} alt=""  className={!ImageToggle ? 'image_2_show':'image_2_hide'}/>
            
 
-              {ImageToggle ? (
-                <div className="message_gif">
+          
+                <div className="message_gif"  id={ImageToggle ? 'image_1_show':'image_1_hide'}>
                   <img
                     src={message}
                     alt="message"
                     variants={right_slide_1Anime}
                   />
                 </div>
-              ) : (
-                ""
-              )}
+          
               <m.div className="extra_designs">
                 <m.div className="design1" variants={right_slide_1Anime}>
                   {/* <img

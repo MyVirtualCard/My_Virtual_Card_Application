@@ -29,6 +29,7 @@ import TermConditionRoute from "./Routes/Terms&Condition.route.js";
 import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
+import axios from "axios";
 let host_ip = "http://localhost:3001";
 //App initialized
 let app = express();
@@ -58,6 +59,8 @@ app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
+
+
 // CCAvenue Configurations
 const merchant_id = process.env.MERCHANT_ID;
 const access_code = process.env.ACCESS_CODE;
@@ -65,32 +68,55 @@ const working_key = process.env.WORKING_KEY;
 const redirect_url = process.env.REDIRECT_URL;
 const cancel_url = process.env.CANCEL_URL;
 
-app.post('/ccavenue/initiate', (req, res) => {
-  const order_id = req.body.order_id;
-  const amount = req.body.amount;
-  const currency = 'INR';
-  const redirect_url = process.env.REDIRECT_URL;
-  const cancel_url = process.env.CANCEL_URL;
 
-  // Encrypt request parameters
-  const params = `merchant_id=${merchant_id}&order_id=${order_id}&currency=${currency}&amount=${amount}&redirect_url=${redirect_url}&cancel_url=${cancel_url}`;
-  const encRequest = encrypt(params, working_key);
 
-  res.json({ encRequest, access_code });
+app.post('/api/ccavenue/initiate-payment', async (req, res) => {
+  const { amount } = req.body;
+
+  const orderId = crypto.randomBytes(16).toString('hex');
+
+  const paymentData = {
+    merchant_id: merchant_id,
+    order_id: orderId,
+    currency: 'INR',
+    amount: amount,
+    redirect_url: redirect_url,
+    cancel_url: cancel_url,
+    language: 'EN',
+  };
+
+  const encryptedData = encrypt(paymentData);
+
+  const response = await axios.post('https://secure.ccavenue.com/transaction/initTrans', {
+    encRequest: encryptedData,
+    access_code: access_code
+  });
+
+  res.json({ redirectUrl: response.data });
 });
 
-function encrypt(data, working_key) {
-  const m = crypto.createHash('md5');
-  m.update(working_key);
-  const key = m.digest();
-  const iv = Buffer.alloc(16, 0); // Initialization vector
-  const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-  let encrypted = cipher.update(data, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
+app.post('/api/ccavenue/payment-response', (req, res) => {
+  const { encResp } = req.body;
+  const decryptedData = decrypt(encResp);
+
+  // Handle the response as per your business logic
+  res.send('Payment response received');
+});
+
+function encrypt(data) {
+  const encData = JSON.stringify(data);
+  const cipher = crypto.createCipheriv('aes-128-cbc', working_key, working_key.slice(0, 16));
+  let encrypted = cipher.update(encData, 'utf8', 'base64');
+  encrypted += cipher.final('base64');
   return encrypted;
 }
 
-
+function decrypt(data) {
+  const decipher = crypto.createDecipheriv('aes-128-cbc', working_key, working_key.slice(0, 16));
+  let decrypted = decipher.update(data, 'base64', 'utf8');
+  decrypted += decipher.final('utf8');
+  return JSON.parse(decrypted);
+}
 
 
 

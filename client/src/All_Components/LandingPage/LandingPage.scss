@@ -923,6 +923,16 @@ body {
          
           transition: transform 0.5s linear;
         }
+        #image_1_show{
+          transform: translateX(0px);
+          position: absolute;
+          transition: transform 0.5s linear;
+        }
+        #image_1_hide{
+          transform: translateX(700px);
+         
+          transition: transform 0.5s linear;
+        }
         .image_2_show{
           transform: translateX(0px);
           position: absolute;
@@ -937,7 +947,7 @@ body {
           z-index: 900;
           left: 60%;
           top: 50%;
-
+          transform: translateX(0px);
           img {
             width: 30px;
             height: 30px;
