@@ -19,6 +19,7 @@ import UserAccountSetting from "./All_Components/User_Admin_Dashboard/User_Profi
 import Payment from "./All_Components/User_Admin_Dashboard/Payment/Payment";
 import VerifyOTP from "./All_Components/Authentication/VerifyOTP/VerifyOTP";
 import ResendOTP from "./All_Components/Authentication/ResendOTP/ResendOTP";
+import PaymentResponse from "./All_Components/User_Admin_Dashboard/Payment/PaymentResponse";
 
 const App = () => {
   //URL Name state:
@@ -454,6 +455,7 @@ const App = () => {
               element={<ResetPassword />}
             />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/payment_response" element={<PaymentResponse/>}/>
             <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
               <Route
                 path={`/${userName}/uadmin/dashboard`}

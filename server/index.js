@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import Caddy from "caddy";
-import crypto from "crypto";
 //All api route importing
 import RegisterRoute from "./Routes/Register.route.js";
 import VerifyOTP from './Routes/VerifyOTP.route.js'
@@ -29,6 +28,7 @@ import TermConditionRoute from "./Routes/Terms&Condition.route.js";
 import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
+import CCAvenueRoute from './Controllers/Payment.js'
 import axios from "axios";
 let host_ip = "http://localhost:3001";
 //App initialized
@@ -67,73 +67,6 @@ const access_code = process.env.ACCESS_CODE;
 const working_key = process.env.WORKING_KEY;
 const redirect_url = process.env.REDIRECT_URL;
 const cancel_url = process.env.CANCEL_URL;
-
-
-
-app.post('/api/ccavenue/initiate-payment', async (req, res) => {
-  const { amount } = req.body;
-
-  const orderId = crypto.randomBytes(16).toString('hex');
-
-  const paymentData = {
-    merchant_id: merchant_id,
-    order_id: orderId,
-    currency: 'INR',
-    amount: amount,
-    redirect_url: redirect_url,
-    cancel_url: cancel_url,
-    language: 'EN',
-  };
-
-  const encryptedData = encrypt(paymentData);
-
-  const response = await axios.post('https://secure.ccavenue.com/transaction/initTrans', {
-    encRequest: encryptedData,
-    access_code: access_code
-  });
-
-  res.json({ redirectUrl: response.data });
-});
-
-app.post('/api/ccavenue/payment-response', (req, res) => {
-  const { encResp } = req.body;
-  const decryptedData = decrypt(encResp);
-
-  // Handle the response as per your business logic
-  res.send('Payment response received');
-});
-
-function encrypt(data) {
-  const encData = JSON.stringify(data);
-  const cipher = crypto.createCipheriv('aes-128-cbc', working_key, working_key.slice(0, 16));
-  let encrypted = cipher.update(encData, 'utf8', 'base64');
-  encrypted += cipher.final('base64');
-  return encrypted;
-}
-
-function decrypt(data) {
-  const decipher = crypto.createDecipheriv('aes-128-cbc', working_key, working_key.slice(0, 16));
-  let decrypted = decipher.update(data, 'base64', 'utf8');
-  decrypted += decipher.final('utf8');
-  return JSON.parse(decrypted);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.get("/", (req, res) => {
