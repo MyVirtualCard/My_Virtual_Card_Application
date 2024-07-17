@@ -12,7 +12,7 @@ const PaymentResponse = () => {
     const encResp = params.get('encResp');
 
     const handlePaymentResponse = async () => {
-      const response = await api.post('/api/payment-response', { encResp });
+      const response = await api.post('ccavanue/api/payment-response', { encResp });
       console.log(response.data);
     };
 

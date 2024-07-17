@@ -18,7 +18,7 @@ const Payment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await api.post('/api/initiate-payment', formData);
+    const response = await api.post('/ccavanue/api/initiate-payment', formData);
     const { encRequest, accessCode } = response.data;
 
     const form = document.createElement('form');
