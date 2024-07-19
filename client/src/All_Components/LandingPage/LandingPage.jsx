@@ -4,6 +4,7 @@ import brand_logo from "../../assets/LandingPage_image/BrandLogo2.png";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import slide_1_image from "../../assets/LandingPage_image/slide-1.png";
 import illustraion from "../../assets/LandingPage_image/slide_right_svg.svg";
+import discount from '../../assets/LandingPage_image/sticker.png'
 // import offer_sale_gif from "./assets/Website_page_images/offer_price.gif";
 // import rocket from "./assets/animations/rocket.gif";
 import message from "../../assets/animations/message.gif";
@@ -578,7 +579,7 @@ const LandingPage = () => {
               {/* //Timer_Box */}
 
               <m.div className="offer_container" variants={left_slide_1Anime}>
-                {/* <img src={offer_sale_gif} alt="" /> */}
+                <img src={discount} alt="" />
                 <m.div className="offer_box">
                   <m.div className="box">
                     <m.div className="time_box">
