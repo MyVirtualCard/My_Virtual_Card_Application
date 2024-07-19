@@ -2,30 +2,13 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background:linear-gradient(0deg,#019ca1,#00202f);
+  background: linear-gradient(0deg, #019ca1, #00202f);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   z-index: 100;
   overflow: hidden;
-// .svg_line{
-// position: fixed;
-// top: 0%;
-// left: 43%;
-// width:9%;
-// height: 100%;
 
-// text-align: start;
-// // text-align: center;
-// overflow: hidden;
-// z-index: 1002;
-// svg{
-//   display: inline-block;
-// height: 100%;
-
-
-// }
-// }
   .left {
     display: flex;
     flex: 0.5;
@@ -40,265 +23,249 @@
     // background:linear-gradient(180deg,#019ca1,#00202f);
     // border-top-right-radius: 5rem;
     // border-bottom-right-radius: 5rem;
-// border-right: 1px solid rgb(223, 223, 223);
-  
-.site_logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  cursor: pointer;
-z-index: 900;
-  img {
-    width: 220px;
-  }
-}
-.form_title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 1rem 0px;
-  gap: 10px;
-  width: 100%;
-  z-index: 600;
+    // border-right: 1px solid rgb(223, 223, 223);
 
-  h4 {
-    font-size: 1.3rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: #ffffff;
-  }
-  p {
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #6859ee;
-  }
-}
-    .moon_svg{
+    .site_logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      cursor: pointer;
+      z-index: 900;
+      img {
+        width: 220px;
+      }
+    }
+    .form_title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1rem 0px;
+      gap: 10px;
+      width: 100%;
+      z-index: 600;
+
+      h4 {
+        font-size: 1.3rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: #ffffff;
+      }
+      p {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #6859ee;
+      }
+    }
+    .moon_svg {
       position: absolute;
       top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-
-    z-index: 200;
-    svg{
-      transform: rotate(90deg);
-   z-index: 200;
+      left: 0%;
       width: 100%;
       height: 100%;
 
+      z-index: 200;
+      svg {
+        transform: rotate(90deg);
+        z-index: 200;
+        width: 100%;
+        height: 100%;
 
+        #Rectangle_4 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          animation: identifier 5s infinite linear;
+          @keyframes identifier {
+            from {
+              transform: rotate(360deg);
+            }
+            to {
+              transform: rotate(0deg);
+            }
+          }
+        }
+        #Rectangle_2 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          animation: identifier1 5s infinite linear;
+          @keyframes identifier1 {
+            from {
+              transform: rotate(-360deg);
+            }
+            to {
+              transform: rotate(0deg);
+            }
+          }
+        }
+        #Rectangle_6 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          transform: translateY(100px);
+          animation: identifier2 5s infinite linear;
+          @keyframes identifier2 {
+            from {
+              transform: rotate(-360deg) scale(0.5);
+            }
+            to {
+              transform: rotate(360deg) scale(1);
+            }
+          }
+        }
+        #Rectangle_5 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          transform: translateY(100px);
+          animation: identifier3 5s infinite linear;
+          @keyframes identifier3 {
+            from {
+              transform: rotate(360deg);
+            }
+            to {
+              transform: rotate(-360deg);
+            }
+          }
+        }
+        #Rectangle_7 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          display: none;
+        }
+        #Rectangle_3 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          border-radius: 10px;
+          transform: translateY(100px);
+          animation: identifier4 5s infinite linear;
+          @keyframes identifier4 {
+            from {
+              transform: rotate(-360deg);
+              border-radius: 2.5rem;
+            }
+            to {
+              transform: rotate(0deg);
+              border-radius: 0.5rem;
+            }
+          }
+        }
+        #Polygon_1 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          border-radius: 10px;
+          transform: translateY(100px);
+          animation: identifier5 15s infinite linear;
+          @keyframes identifier5 {
+            from {
+              transform: translateY(900px);
+              border-radius: 2.5rem;
+            }
+            to {
+              transform: translateY(600px);
+              border-radius: 0.5rem;
+            }
+          }
+        }
+        #Polygon_2 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          border-radius: 10px;
+          transform: translateY(100px);
+          animation: identifier7 25s infinite linear;
+          @keyframes identifier7 {
+            from {
+              transform: translateY(400px);
+              border-radius: 2.5rem;
+            }
+            to {
+              transform: translateY(-400px);
+              border-radius: 0.5rem;
+            }
+          }
+        }
+        #Polygon_3 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          border-radius: 10px;
+          transform: translateY(100px);
+          animation: identifier8 25s infinite linear;
+          @keyframes identifier8 {
+            from {
+              transform: translateY(0px);
+              border-radius: 2.5rem;
+            }
+            to {
+              transform: translateY(400px);
+              border-radius: 0.5rem;
+            }
+          }
+        }
+        #Star_1 {
+          position: relative;
+          color: red;
+          transform-origin: center;
+          transform-box: fill-box;
+          border-radius: 10px;
+          transform: translateY(100px);
+          animation: identifier6 5s infinite ease;
+          @keyframes identifier6 {
+            from {
+              scale: 0.5;
+            }
+            to {
+              scale: 1;
+            }
+          }
+        }
+      }
+    }
+    .image {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-#Rectangle_4{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-animation:identifier 5s infinite linear ;
-  @keyframes identifier {
-    from{
-      transform: rotate(360deg);
+      img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 500px;
+        z-index: 500;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
 
-    }
-    to{
-      transform: rotate(0deg);
-    }
-  }
-}
-#Rectangle_2{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-animation:identifier1 5s infinite linear ;
-  @keyframes identifier1 {
-    from{
-      transform: rotate(-360deg);
-
-    }
-    to{
-      transform: rotate(0deg);
-    }
-  }
-}
-#Rectangle_6{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  transform: translateY(100px);
-animation:identifier2 5s infinite linear ;
-  @keyframes identifier2 {
-    from{
-      transform: rotate(-360deg) scale(0.5) ;
-
-    }
-    to{
-      transform: rotate(360deg) scale(1);
-    }
-  }
-}
-#Rectangle_5{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  transform: translateY(100px);
-animation:identifier3 5s infinite linear ;
-  @keyframes identifier3 {
-    from{
-      transform: rotate(360deg);
-
-    }
-    to{
-      transform: rotate(-360deg);
-    }
-  }
-}
-#Rectangle_7{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-display: none;
-
-}
-#Rectangle_3{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  border-radius: 10px;
-  transform: translateY(100px);
-animation:identifier4 5s infinite linear ;
-  @keyframes identifier4 {
-    from{
-      transform: rotate(-360deg);
-      border-radius: 2.5rem;
-
-    }
-    to{
-      transform: rotate(0deg);
-      border-radius: 0.5rem;
-    }
-  }
-}
-#Polygon_1{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  border-radius: 10px;
-  transform: translateY(100px);
-animation:identifier5 15s infinite linear ;
-  @keyframes identifier5 {
-    from{
-      transform: translateY(800px);
-      border-radius: 2.5rem;
-
-    }
-    to{
-      transform: translateY(-800px);
-      border-radius: 0.5rem;
-    }
-  }
-}
-#Polygon_2{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  border-radius: 10px;
-  transform: translateY(100px);
-animation:identifier7 25s infinite linear ;
-  @keyframes identifier7 {
-    from{
-      transform: translateY(400px);
-      border-radius: 2.5rem;
-
-    }
-    to{
-      transform: translateY(-400px);
-      border-radius: 0.5rem;
-    }
-  }
-}
-#Polygon_3{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  border-radius: 10px;
-  transform: translateY(100px);
-animation:identifier8 25s infinite linear ;
-  @keyframes identifier8 {
-    from{
-      transform: translateY(0px);
-      border-radius: 2.5rem;
-
-    }
-    to{
-      transform: translateY(400px);
-      border-radius: 0.5rem;
-    }
-  }
-}
-#Star_1{
-  position: relative;
-  color: red;
-  transform-origin: center;
-  transform-box: fill-box;
-  border-radius: 10px;
-  transform: translateY(100px);
-animation:identifier6 5s infinite ease ;
-  @keyframes identifier6 {
-    from{
-      scale: 0.5;
-
-
-    }
-    to{
-      scale: 1;
-
-    }
-  }
-}
-    }
-    }
-.image{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-z-index: 500;
-    object-fit: cover;
-    object-position: center;
-
-  }
-}
-
-
-    .wave_svg{
+    .wave_svg {
       position: absolute;
       right: -125%;
       top: 0%;
       bottom: 0%;
       z-index: 100;
 
-      svg{
+      svg {
         width: 100%;
         height: 100%;
         z-index: 100;
@@ -326,10 +293,10 @@ z-index: 500;
 
     .box_container {
       width: 85%;
-      height: 90%;
+      height: 95%;
       // z-index: 600;
       overflow: scroll;
- 
+
       // background-image: url(../../assets/AddminPannel/dr12.jpg);
       // background-position: center;
       // background-repeat: no-repeat;
@@ -337,9 +304,9 @@ z-index: 500;
       // background: linear-gradient(#ffffff, #ffffff);
       // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       background: rgb(255, 255, 255);
-      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-      backdrop-filter: blur( 1px );
-      -webkit-backdrop-filter: blur( 1px );
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
       border-radius: 20px;
       outline: none;
       // border: 1px solid rgba( 255, 255, 255, 0.18 );
@@ -359,52 +326,51 @@ z-index: 500;
 
         //   padding: 0.5rem 1rem;
 
-      .current_form{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4rem;
-        width: 100%;
-        padding: 1rem 0px;
-  
-        background-color: #2F3F81;
-
-        button{
+        .current_form {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
-          font-weight: 500;
-          width: 100px;
-          color: #fff;
-          position: relative;
-          cursor: pointer;
+          gap: 4rem;
+          width: 100%;
+          padding: 1rem 0px;
 
-        .register_line{
-          width: 90%;
-          height: 4px;
-          background-color: #fced26;
-          border-radius: 5px;
-          position: absolute;
-          bottom: -10px;
-        }
-        .login_line{
-          width: 60%;
-          height: 4px;
-          background-color: rgb(252, 237, 38);
-          border-radius: 5px;
-          position: absolute;
-          bottom: -10px;
-        }
-        }
-        .activeRegister{
-color: #fced26;
-        }
-        .activelogin{
-          color: #fced26;
-        }
-      }
+          background-color: #2f3f81;
 
+          button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 500;
+            width: 100px;
+            color: #fff;
+            position: relative;
+            cursor: pointer;
+
+            .register_line {
+              width: 90%;
+              height: 4px;
+              background-color: #fced26;
+              border-radius: 5px;
+              position: absolute;
+              bottom: -10px;
+            }
+            .login_line {
+              width: 60%;
+              height: 4px;
+              background-color: rgb(252, 237, 38);
+              border-radius: 5px;
+              position: absolute;
+              bottom: -10px;
+            }
+          }
+          .activeRegister {
+            color: #fced26;
+          }
+          .activelogin {
+            color: #fced26;
+          }
+        }
 
         form {
           width: 90%;
@@ -415,9 +381,16 @@ color: #fced26;
           // justify-content: center;
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          grid-column-gap: 2rem;
+          grid-column-gap: 1rem;
           grid-row-gap: 0rem;
           margin: 1rem auto;
+          position: relative;
+          .form_title{
+            small{
+              color: blue;
+              font-weight: 550;
+            }
+          }
           // Profile logo
           .profile {
             margin: 10px auto;
@@ -427,7 +400,7 @@ color: #fced26;
             justify-content: center;
             width: 100%;
             position: relative;
-            margin: 1rem 0.2rem;
+            margin: 0.5rem 0.2rem;
 
             label {
               display: flex;
@@ -463,10 +436,12 @@ color: #fced26;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
             width: 100%;
+
             position: relative;
-            margin: 1rem 0.2rem;
+            margin: 0.7rem 0.2rem;
+            padding: 0px 0px 20px 0px;
 
             label {
               display: flex;
@@ -497,8 +472,8 @@ color: #fced26;
 
               @media screen and (max-width: 800px) {
                 left: 5%;
-                
-              background-color: #fff;
+
+                background-color: #fff;
               }
             }
 
@@ -509,7 +484,7 @@ color: #fced26;
               border: double 1px transparent;
               border-radius: 0.5rem;
 
-              background-image: linear-gradient(#FFF, #fff),
+              background-image: linear-gradient(#fff, #fff),
                 linear-gradient(to right, #818181, #a5a5a5);
 
               background-origin: border-box;
@@ -528,7 +503,7 @@ color: #fced26;
                 border: double 1px transparent;
                 border-radius: 0.3rem;
                 background-image: linear-gradient(#fff, #fff),
-                  linear-gradient(to right, #a0a0a0, #834ffc);
+                  linear-gradient(to right, #a0a0a0, #56f88c);
                 background-origin: border-box;
                 background-clip: padding-box, border-box;
                 transition: all 0.3s ease;
@@ -538,14 +513,24 @@ color: #fced26;
                 padding: 0.8rem 2rem;
                 width: 100%;
                 background-image: linear-gradient(#fff, #fff),
-                linear-gradient(to right, #818181, #a5a5a5);
+                  linear-gradient(to right, #818181, #a5a5a5);
               }
             }
 
+            .input_error {
+              border: 1px solid red;
+            }
+            .error {
+              position: absolute;
+              bottom: -5%;
+              color: red;
+              font-size: 0.7rem;
+              padding: 5px 0px 0px 0px;
+            }
             .icon {
               position: absolute;
               left: 2%;
-              top: 35%;
+              top: 22%;
 
               i {
                 font-size: 1.2rem;
@@ -558,6 +543,32 @@ color: #fced26;
                 top: 25%;
               }
             }
+            .success_icon {
+              position: absolute;
+              right: 2%;
+             display: block;
+              top: 22%;
+
+              i {
+                font-size: 1.2rem;
+                color: #1a8114;
+              }
+
+              @media screen and (max-width: 800px) {
+                position: absolute;
+                right: 2%;
+                top: 25%;
+              }
+            }
+            #success_hide {
+             display: none;
+            }
+            #success_show{
+              // position: absolute;
+              // right: 2%;
+              // top: 22%;
+           display: block;
+            }
             .show_pass {
               position: absolute;
               right: 5%;
@@ -565,7 +576,7 @@ color: #fced26;
 
               i {
                 font-size: 1rem;
-                color: #2F3F81;
+                color: #2f3f81;
                 cursor: pointer;
               }
 
@@ -604,7 +615,7 @@ color: #fced26;
             grid-column: 1/-1;
             align-items: center;
             justify-content: center;
-           
+
             position: relative;
 
             button {
@@ -637,7 +648,7 @@ color: #fced26;
             }
           }
           .or {
-           padding-top: 2rem;
+            padding-top: 2rem;
             width: 50%;
             grid-column: 1/-1;
             display: flex;
@@ -684,7 +695,7 @@ color: #fced26;
           }
         }
         .login_form {
-          width: 100%;
+          width: 90%;
           position: relative;
           // display: flex;
           // flex-direction: column;
@@ -694,47 +705,8 @@ color: #fced26;
           grid-template-columns: 1fr;
           grid-column-gap: 2rem;
           grid-row-gap: 0rem;
-          margin: 5rem auto;
-          // Profile logo
-          .profile {
-            margin: 10px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-            margin: 1rem 0.2rem;
+          margin: 2rem auto;
 
-            label {
-              display: flex;
-              align-items: center;
-              justify-content: flex-start;
-              gap: 1rem;
-              #profile_image {
-                min-width: 70px;
-                width: 70px;
-                min-height: 70px;
-                height: 70px;
-                object-fit: cover;
-                object-position: center;
-                border-radius: 1rem;
-                border: 2px solid #a0a0a0;
-                cursor: pointer;
-              }
-              span {
-                font-size: 0.7rem;
-                color: gray;
-                font-weight: bold;
-              }
-            }
-            input[type="file"] {
-              display: none;
-            }
-            @media screen and (max-width: 900px) {
-              margin: 0.8rem auto;
-            }
-          }
           .form_group {
             margin: 10px auto;
             display: flex;
@@ -754,7 +726,7 @@ color: #fced26;
               position: absolute;
               padding: 0px 4px;
               font-weight: bold;
-              left: 11%;
+              left: 7%;
               color: rgb(199, 197, 197);
               // background: linear-gradient(#000,tomato);
               -webkit-text-fill-color: rgb(43, 42, 42);
@@ -778,7 +750,7 @@ color: #fced26;
             }
 
             input {
-              width: 90%;
+              width: 100%;
               padding: 1rem 2.5rem;
               // border: 2px solid rgb(177, 238, 128);
               border: double 1px transparent;
@@ -803,8 +775,8 @@ color: #fced26;
               &:focus {
                 border: double 1px transparent;
                 border-radius: 0.3rem;
-                background-image: linear-gradient(white, white),
-                  linear-gradient(to right, #a0a0a0, #834ffc);
+                background-image: linear-gradient(#fff, #fff),
+                linear-gradient(to right, #a0a0a0, #56f88c);
                 background-origin: border-box;
                 background-clip: padding-box, border-box;
                 transition: all 0.3s ease;
@@ -818,10 +790,21 @@ color: #fced26;
               }
             }
 
+            .input_error {
+              border: 1px solid red;
+            }
+            .error {
+              position: absolute;
+              bottom: -5%;
+              left: 0%;
+              color: red;
+              font-size: 0.7rem;
+              padding: 5px 0px 0px 0px;
+            }
             .icon {
               position: absolute;
-              left: 7%;
-              top: 35%;
+              left: 2%;
+              top: 25%;
 
               i {
                 font-size: 1.4rem;
@@ -841,7 +824,7 @@ color: #fced26;
 
               i {
                 font-size: 1rem;
-                color: #2F3F81;
+                color: #2f3f81;
                 cursor: pointer;
               }
 
@@ -991,12 +974,12 @@ color: #fced26;
       }
       @media screen and (max-width: 500px) {
         width: 100%;
-        height: 100dvh;
+        height: 100vh;
         box-shadow: none;
-        padding: 10px 0px;
+        // padding: 10px 0px;
         border-radius: 0rem;
         background-image: none;
-        background-color: #fff;
+        // background-color: #fff;
       }
     }
   }
@@ -1029,17 +1012,22 @@ color: #fced26;
 .loader {
   width: 30px;
   aspect-ratio: 2;
-  --_g: no-repeat radial-gradient(circle closest-side,#ffffff 90%,#ffffff00);
-  background: 
-    var(--_g) 0%   50%,
-    var(--_g) 50%  50%,
-    var(--_g) 100% 50%;
-  background-size: calc(100%/3) 50%;
+  --_g: no-repeat radial-gradient(circle closest-side, #ffffff 90%, #ffffff00);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
   animation: l3 1s infinite linear;
 }
 @keyframes l3 {
-    20%{background-position:0%   0%, 50%  50%,100%  50%}
-    40%{background-position:0% 100%, 50%   0%,100%  50%}
-    60%{background-position:0%  50%, 50% 100%,100%   0%}
-    80%{background-position:0%  50%, 50%  50%,100% 100%}
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
 }

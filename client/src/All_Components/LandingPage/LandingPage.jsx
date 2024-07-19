@@ -550,8 +550,7 @@ const LandingPage = () => {
               <m.div className="summary" variants={left_slide_1Anime}>
                 <m.p>
                   Experience the future of digital ID cards by AristosTech India
-                  Pvt Ltd. Simplify identification with our secure virtual
-                  solution.
+                  Pvt Ltd.
                 </m.p>
                 {/* <m.p>
                   We aren't compromising the quality of product but We can
