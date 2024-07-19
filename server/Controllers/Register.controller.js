@@ -9,6 +9,7 @@ import generateOTP from "../Helper/Mail.js";
 import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
 
 //Post data to mongodb -- > Register User  :
+
 // export const RegisterUser = async (req, res) => {
 //   try {
 //     //Get all those field data from body:
@@ -78,6 +79,7 @@ import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
 //     res.status(400).json({ message: error.message });
 //   }
 // };
+
 export const RegisterUser = async (req, res) => {
   try {
     //Get all those field data from body:

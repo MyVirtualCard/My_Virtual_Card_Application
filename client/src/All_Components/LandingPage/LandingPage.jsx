@@ -244,7 +244,6 @@ const LandingPage = () => {
     }, 5000);
   });
 
-  console.log(ImageToggle);
   // Offer timer
 
   let [Days, setDays] = useState("00");
@@ -552,15 +551,13 @@ const LandingPage = () => {
                 <m.p>
                   Experience the future of digital ID cards by AristosTech India
                   Pvt Ltd. Simplify identification with our secure virtual
-                  solution.This will help u to create your brand quick and
-                  easily.Mangage your data dynamically from anytime change your
-                  VCard Design.
+                  solution.
                 </m.p>
-                <m.p>
+                {/* <m.p>
                   We aren't compromising the quality of product but We can
                   provide budget friendly price because client happiness only we
                   are focusing!
-                </m.p>
+                </m.p> */}
               </m.div>
 
               <m.div className="actions">
@@ -742,7 +739,7 @@ const LandingPage = () => {
 
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path
-              fill="#7c58ff"
+              fill="#007a87"
               fill-opacity="1"
               d="M0,64L80,80C160,96,320,128,480,117.3C640,107,800,53,960,69.3C1120,85,1280,171,1360,213.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
             ></path>
@@ -1122,6 +1119,59 @@ const LandingPage = () => {
             initial="hide"
             animate="show"
           >
+             {/* plan demo*/}
+             <m.div
+              className="plan"
+              variants={plan_box_slide_5Anime}
+              id={planExpand ? "expand" : "default"}
+            >
+              <m.div
+                className="down_arrow"
+                onClick={() => setPlanExpand(!planExpand)}
+              >
+                <i className="bx bxs-chevron-down bx-tada"></i>
+              </m.div>
+              <m.div className="plan_title">
+                <h3>DEMO PLAN</h3>
+              </m.div>
+              <m.div className="plan_price">
+                <h2>
+                  ₹ 10 <small>/day</small>
+                </h2>
+              </m.div>
+              <m.div className="card_count">
+                <p>
+                  Total VCard Provides : <span>01</span>
+                </p>
+              </m.div>
+
+              <m.div className="plan_action">
+                <Link to="/register">
+                  <button>Choose Plan</button>
+                </Link>
+              </m.div>
+              <m.div
+                className="plan_addon_service"
+                variants={plan_content_slide_5Anime}
+                initial="hide"
+                animate="show"
+              >
+                {plan_service_list.map((data, index) => {
+                  return (
+                    <m.div
+                      className="list"
+                      variants={plan_content_slide_5Anime}
+                      key={index}
+                    >
+                      <div className="icon">{data.icon}</div>
+                      <div className="text">
+                        <p>{data.text}</p>
+                      </div>
+                    </m.div>
+                  );
+                })}
+              </m.div>
+            </m.div>
             {/* plan1 */}
             <m.div
               className="plan"
@@ -1135,16 +1185,16 @@ const LandingPage = () => {
                 <i className="bx bxs-chevron-down bx-tada"></i>
               </m.div>
               <m.div className="plan_title">
-                <h3>Basic</h3>
+                <h3>BASIC PLAN</h3>
               </m.div>
               <m.div className="plan_price">
                 <h2>
-                  ₹ 365 <small>/Yearly</small>
+                  ₹ 599 <small>/Yearly</small>
                 </h2>
               </m.div>
               <m.div className="card_count">
                 <p>
-                  No of VCards : <span>05</span>
+                Total VCard Provides : <span>05</span>
                 </p>
               </m.div>
 
@@ -1188,16 +1238,16 @@ const LandingPage = () => {
                 <i className="bx bxs-chevron-down bx-tada"></i>
               </div>
               <div className="plan_title">
-                <h3>Standard</h3>
+                <h3>STANDARD PLAN</h3>
               </div>
               <div className="plan_price">
                 <h2>
-                  ₹ 799 <small>/Yearly</small>
+                  ₹ 899 <small>/Yearly</small>
                 </h2>
               </div>
               <div className="card_count">
                 <p>
-                  No of VCards : <span>02</span>
+                Total VCard Provides : <span>08</span>
                 </p>
               </div>
 
@@ -1241,16 +1291,16 @@ const LandingPage = () => {
                 <i className="bx bxs-chevron-down bx-tada"></i>
               </div>
               <div className="plan_title">
-                <h3>Premium</h3>
+                <h3>PREMIUM PLAN</h3>
               </div>
               <div className="plan_price">
                 <h2>
-                  ₹ 1499 <small>/Yearly</small>
+                  ₹ 1299 <small>/Yearly</small>
                 </h2>
               </div>
               <div className="card_count">
                 <p>
-                  No of VCards : <span>08</span>
+                Total VCard Provides : <span>10</span>
                 </p>
               </div>
 

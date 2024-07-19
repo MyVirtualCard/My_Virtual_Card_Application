@@ -1,57 +1,75 @@
+// components/PaymentForm.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Payment = () => {
-  const [formData, setFormData] = useState({
-    orderId: '',
-    amount: '',
-    customerId: '',
-    customerEmail: '',
-    customerPhone: '',
+const Payment= () => {
+  const [orderId, setOrderId] = useState('');
+  const [amount, setAmount] = useState('');
+  const [billingInfo, setBillingInfo] = useState({
+    billing_name: '',
+    billing_address: '',
+    billing_city: '',
+    billing_state: '',
+    billing_zip: '',
+    billing_country: '',
+    billing_tel: '',
+    billing_email: '',
   });
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await api.post('/ccavanue/api/initiate-payment', formData);
-    const { encRequest, accessCode } = response.data;
+    try {
+      const response = await api.post('/ccavanue/initiate-payment', {
+        orderId,
+        amount,
+        currency: 'INR',
+        redirectUrl: 'https://myvirtualcard.in/ccavanue/initiate-payment',
+        cancelUrl: 'https://myvirtualcard.in/ccavanue/cancel',
+        billingInfo,
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorageDatas.token}`,
+        },
+      });
 
-    const form = document.createElement('form');
-    form.action = 'https://secure.ccavenue.com/transaction/initTrans';
-    form.method = 'POST';
+      const { encRequest, access_code } = response.data;
 
-    const input1 = document.createElement('input');
-    input1.type = 'hidden';
-    input1.name = 'encRequest';
-    input1.value = encRequest;
-    form.appendChild(input1);
+      // Create form dynamically and submit to CCAvenue
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
 
-    const input2 = document.createElement('input');
-    input2.type = 'hidden';
-    input2.name = 'access_code';
-    input2.value = accessCode;
-    form.appendChild(input2);
+      const encRequestInput = document.createElement('input');
+      encRequestInput.type = 'hidden';
+      encRequestInput.name = 'encRequest';
+      encRequestInput.value = encRequest;
+      form.appendChild(encRequestInput);
 
-    document.body.appendChild(form);
-    form.submit();
+      const accessCodeInput = document.createElement('input');
+      accessCodeInput.type = 'hidden';
+      accessCodeInput.name = 'access_code';
+      accessCodeInput.value = access_code;
+      form.appendChild(accessCodeInput);
+
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error) {
+      console.error('Payment initiation error:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="orderId" placeholder="Order ID" onChange={handleChange} />
-      <input type="text" name="amount" placeholder="Amount" onChange={handleChange} />
-      <input type="text" name="customerId" placeholder="Customer ID" onChange={handleChange} />
-      <input type="email" name="customerEmail" placeholder="Customer Email" onChange={handleChange} />
-      <input type="tel" name="customerPhone" placeholder="Customer Phone" onChange={handleChange} />
+      <input type="text" value={orderId} onChange={(e) => setOrderId(e.target.value)} placeholder="Order ID" required />
+      <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" required />
+      {/* Add other billing fields here */}
       <button type="submit">Pay Now</button>
     </form>
   );
 };
 
 export default Payment;
-

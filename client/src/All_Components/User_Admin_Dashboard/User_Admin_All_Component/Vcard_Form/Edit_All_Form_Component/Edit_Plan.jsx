@@ -6,7 +6,7 @@ import standard from "../../../../../assets/animations/standard.gif";
 import basic from "../../../../../assets/animations/basic.gif";
 import enterprice from "../../../../../assets/animations/enterprice.gif";
 import { toast, Toaster } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Context from "../../../../UseContext/Context";
@@ -85,7 +85,7 @@ let Basic_Plans = [
     PlanName: "Basic",
     batches: basic,
     Duration: "Yearly",
-    PlanPrice: 365,
+    PlanPrice: 599,
     VCardCount: "05",
     Access: [
       {
@@ -167,7 +167,7 @@ let Standard_Plans = [
     PlanName: "Standard",
     batches: standard,
     Duration: "Yearly",
-    PlanPrice: 799,
+    PlanPrice: 899,
     VCardCount: "08",
     Access: [
       {
@@ -264,7 +264,7 @@ let EnterPrice_Plans = [
     PlanName: "Enterprises",
     batches: enterprice,
     Duration: "Yearly",
-    PlanPrice: 1499,
+    PlanPrice: 1299,
     VCardCount: "10",
     Access: [
       {
@@ -366,6 +366,7 @@ let EnterPrice_Plans = [
   },
 ];
 const Plan = () => {
+  let navigate=useNavigate();
   let {userName,URL_Alies}=useParams();
   let {
     currentPlan,
@@ -655,7 +656,7 @@ console.log(res.data.data[0])
                     className="action_div"
                     id={currentPlan === data.PlanName ? "activePlan" : ""}
                   >
-                    <button>
+                    <button onClick={navigate('/payment')}>
                       {currentPlan === data.PlanName
                         ? "Selected"
                         : "Choose Plan"}

@@ -2,7 +2,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
+  background:linear-gradient(0deg,#019ca1,#00202f);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -28,7 +28,7 @@
 // }
   .left {
     display: flex;
-    flex: 0.45;
+    flex: 0.5;
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
@@ -37,10 +37,10 @@
     height: 100%;
     position: relative;
     padding: 2rem;
-    background:linear-gradient(#7DC241,#7DC241);
+    // background:linear-gradient(180deg,#019ca1,#00202f);
     // border-top-right-radius: 5rem;
     // border-bottom-right-radius: 5rem;
-border-right: 1px solid rgb(223, 223, 223);
+// border-right: 1px solid rgb(223, 223, 223);
   
 .site_logo {
   display: flex;
@@ -48,7 +48,7 @@ border-right: 1px solid rgb(223, 223, 223);
   justify-content: center;
   width: 100%;
   cursor: pointer;
-
+z-index: 900;
   img {
     width: 220px;
   }
@@ -160,6 +160,14 @@ animation:identifier3 5s infinite linear ;
       transform: rotate(-360deg);
     }
   }
+}
+#Rectangle_7{
+  position: relative;
+  color: red;
+  transform-origin: center;
+  transform-box: fill-box;
+display: none;
+
 }
 #Rectangle_3{
   position: relative;
@@ -328,12 +336,13 @@ z-index: 500;
       // background-size: cover;
       // background: linear-gradient(#ffffff, #ffffff);
       // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      background: rgba( 255, 255, 255, 0.25 );
+      background: rgb(255, 255, 255);
       box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
       backdrop-filter: blur( 1px );
       -webkit-backdrop-filter: blur( 1px );
-      border-radius: 10px;
-      border: 1px solid rgba( 255, 255, 255, 0.18 );
+      border-radius: 20px;
+      outline: none;
+      // border: 1px solid rgba( 255, 255, 255, 0.18 );
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -357,6 +366,7 @@ z-index: 500;
         gap: 4rem;
         width: 100%;
         padding: 1rem 0px;
+  
         background-color: #2F3F81;
 
         button{
