@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Register.scss";
-import register_svg from "../../../assets/SVG/Register/register2.svg";
+import register_svg from "../../../assets/SVG/Register/register_png.png";
+import login_png from "../../../assets/SVG/Register/login_png.png";
 import site_logo from "../../../assets/LandingPage_image/BrandLogo2.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Context from "../../UseContext/Context";
@@ -355,7 +356,11 @@ const Register = () => {
             </svg>
           </div>
           <div className="image">
-            <img src={register_svg} alt="" />
+            {!AuthToggle ? (
+              <img src={register_svg} alt="" />
+            ) : (
+              <img src={login_png} alt="" />
+            )}
           </div>
 
           {/* <div className="wave_svg">
@@ -608,7 +613,7 @@ const Register = () => {
                   onSubmit={Login_formik.handleSubmit}
                   className="login_form"
                 >
-                    <div className="form_title">
+                  <div className="form_title">
                     <small>Welcome Back to Your Dashboard!</small>
                   </div>
                   {/* Email`` */}

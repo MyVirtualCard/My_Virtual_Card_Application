@@ -96,13 +96,14 @@
           color: red;
           transform-origin: center;
           transform-box: fill-box;
+          transform: translateX(-300px);
           animation: identifier1 5s infinite linear;
           @keyframes identifier1 {
             from {
-              transform: rotate(-360deg);
+              transform:   rotate(130deg);
             }
             to {
-              transform: rotate(0deg);
+              transform:  rotate(-130deg);
             }
           }
         }
@@ -221,23 +222,7 @@
             }
           }
         }
-        #Star_1 {
-          position: relative;
-          color: red;
-          transform-origin: center;
-          transform-box: fill-box;
-          border-radius: 10px;
-          transform: translateY(100px);
-          animation: identifier6 5s infinite ease;
-          @keyframes identifier6 {
-            from {
-              scale: 0.5;
-            }
-            to {
-              scale: 1;
-            }
-          }
-        }
+
       }
     }
     .image {
@@ -304,10 +289,10 @@
       // background: linear-gradient(#ffffff, #ffffff);
       // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       background: rgb(255, 255, 255);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.37);
       backdrop-filter: blur(1px);
       -webkit-backdrop-filter: blur(1px);
-      border-radius: 20px;
+      border-radius: 10px;
       outline: none;
       // border: 1px solid rgba( 255, 255, 255, 0.18 );
       display: flex;
