@@ -10,6 +10,17 @@
   z-index: 100;
   overflow: hidden;
 
+
+  .regiter_login_background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+    background:transparent;
+    overflow: hidden;
+    
+  }
   .left {
     display: flex;
     flex: 0.5;
@@ -82,6 +93,7 @@
           color: red;
           transform-origin: center;
           transform-box: fill-box;
+          transform: translateY(800px);
           animation: identifier 5s infinite linear;
           @keyframes identifier {
             from {
@@ -97,7 +109,7 @@
           color: red;
           transform-origin: center;
           transform-box: fill-box;
-          transform: translateX(-300px);
+          transform: translateY(-500px);
           animation: identifier1 5s infinite linear;
           @keyframes identifier1 {
             from {
@@ -113,7 +125,7 @@
           color: red;
           transform-origin: center;
           transform-box: fill-box;
-          transform: translateY(100px);
+          transform: translateY(600px);
           animation: identifier2 5s infinite linear;
           @keyframes identifier2 {
             from {
@@ -1016,4 +1028,314 @@
   80% {
     background-position: 0% 50%, 50% 50%, 100% 100%;
   }
+}
+
+
+@keyframes move {
+  100% {
+      transform: translate3d(0, 0, 1px) rotate(360deg);
+  }
+}
+
+// .background {
+//   position: fixed;
+//   width: 100vw;
+//   height: 100vh;
+//   top: 0;
+//   left: 0;
+//   background: #3E1E68;
+//   overflow: hidden;
+// }
+
+.regiter_login_background span {
+  width: 2.5vmin;
+  height: 2.5vmin;
+  border-radius: 2vmin;
+  backface-visibility: hidden;
+  position: absolute;
+  animation: move;
+  animation-duration: 38;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+
+.regiter_login_background span:nth-child(0) {
+  color: #ffffff;
+  top: 41%;
+  left: 17%;
+  animation-duration: 94s;
+  animation-delay: -69s;
+  transform-origin: 10vw 4vh;
+  box-shadow: -4vmin 0 0.7248461367848138vmin currentColor;
+}
+.regiter_login_background span:nth-child(1) {
+  color: #ffffff;
+  top: 35%;
+  left: 7%;
+  animation-duration: 105s;
+  animation-delay: -35s;
+  transform-origin: -8vw 18vh;
+  box-shadow: -4vmin 0 0.7710677134168265vmin currentColor;
+}
+.regiter_login_background span:nth-child(2) {
+  color: #ffffff;
+  top: 20%;
+  left: 1%;
+  animation-duration: 20s;
+  animation-delay: -37s;
+  transform-origin: -14vw 16vh;
+  box-shadow: 4vmin 0 0.852418380112848vmin currentColor;
+}
+.regiter_login_background span:nth-child(3) {
+  color: #ffffff;
+  top: 50%;
+  left: 55%;
+  animation-duration: 74s;
+  animation-delay: -85s;
+  transform-origin: 21vw -20vh;
+  box-shadow: 4vmin 0 1.2097723810322967vmin currentColor;
+}
+.regiter_login_background span:nth-child(4) {
+  color: #ffffff;
+  top: 59%;
+  left: 18%;
+  animation-duration: 68s;
+  animation-delay: -76s;
+  transform-origin: -8vw 19vh;
+  box-shadow: 4vmin 0 1.1512762137762655vmin currentColor;
+}
+.regiter_login_background span:nth-child(5) {
+  color: #ffffff;
+  top: 41%;
+  left: 25%;
+  animation-duration: 122s;
+  animation-delay: -96s;
+  transform-origin: 9vw 20vh;
+  box-shadow: 4vmin 0 1.418023901147754vmin currentColor;
+}
+.regiter_login_background span:nth-child(6) {
+  color: #ffffff;
+  top: 69%;
+  left: 89%;
+  animation-duration: 74s;
+  animation-delay: -77s;
+  transform-origin: 0vw 10vh;
+  box-shadow: 4vmin 0 1.23141353306967vmin currentColor;
+}
+.regiter_login_background span:nth-child(7) {
+  color: #ffffff;
+  top: 83%;
+  left: 57%;
+  animation-duration: 106s;
+  animation-delay: -79s;
+  transform-origin: 10vw 2vh;
+  box-shadow: -4vmin 0 1.0879698621903553vmin currentColor;
+}
+.regiter_login_background span:nth-child(8) {
+  color: #ffffff;
+  top: 7%;
+  left: 7%;
+  animation-duration: 37s;
+  animation-delay: -31s;
+  transform-origin: 0vw -21vh;
+  box-shadow: -4vmin 0 1.1385743399061494vmin currentColor;
+}
+.regiter_login_background span:nth-child(9) {
+  color: #ffffff;
+  top: 86%;
+  left: 17%;
+  animation-duration: 47s;
+  animation-delay: -63s;
+  transform-origin: 7vw -19vh;
+  box-shadow: -4vmin 0 0.6371178160109272vmin currentColor;
+}
+.regiter_login_background span:nth-child(10) {
+  color: #583C87;
+  top: 33%;
+  left: 27%;
+  animation-duration: 120s;
+  animation-delay: -94s;
+  transform-origin: -19vw 14vh;
+  box-shadow: -4vmin 0 1.0367025526882372vmin currentColor;
+}
+.regiter_login_background span:nth-child(11) {
+  color: #ffffff;
+  top: 3%;
+  left: 93%;
+  animation-duration: 36s;
+  animation-delay: -113s;
+  transform-origin: -22vw 15vh;
+  box-shadow: -4vmin 0 1.2408361923932942vmin currentColor;
+}
+.regiter_login_background span:nth-child(12) {
+  color: #ffffff;
+  top: 70%;
+  left: 69%;
+  animation-duration: 65s;
+  animation-delay: -15s;
+  transform-origin: -15vw -6vh;
+  box-shadow: -4vmin 0 0.7091945820214121vmin currentColor;
+}
+.regiter_login_background span:nth-child(13) {
+  color: #f3e742;
+  top: 31%;
+  left: 74%;
+  animation-duration: 24s;
+  animation-delay: -118s;
+  transform-origin: -14vw -14vh;
+  box-shadow: -4vmin 0 1.1421989973396873vmin currentColor;
+}
+.regiter_login_background span:nth-child(14) {
+  color: #e5fa2c;
+  top: 41%;
+  left: 73%;
+  animation-duration: 117s;
+  animation-delay: -61s;
+  transform-origin: -20vw -19vh;
+  box-shadow: 4vmin 0 1.4899077343044134vmin currentColor;
+}
+.regiter_login_background span:nth-child(15) {
+  color: #ee892b;
+  top: 79%;
+  left: 50%;
+  animation-duration: 79s;
+  animation-delay: -46s;
+  transform-origin: -2vw -3vh;
+  box-shadow: 4vmin 0 1.1746309637430363vmin currentColor;
+}
+.regiter_login_background span:nth-child(16) {
+  color: #dbce0d;
+  top: 77%;
+  left: 73%;
+  animation-duration: 37s;
+  animation-delay: -32s;
+  transform-origin: 3vw -1vh;
+  box-shadow: 4vmin 0 0.8934037232974565vmin currentColor;
+}
+.regiter_login_background span:nth-child(17) {
+  color: #ffffff;
+  top: 52%;
+  left: 8%;
+  animation-duration: 21s;
+  animation-delay: -107s;
+  transform-origin: -3vw -8vh;
+  box-shadow: 4vmin 0 0.9993241131766522vmin currentColor;
+}
+.regiter_login_background span:nth-child(18) {
+  color: #81df35;
+  top: 80%;
+  left: 39%;
+  animation-duration: 122s;
+  animation-delay: -103s;
+  transform-origin: 16vw 1vh;
+  box-shadow: -4vmin 0 1.1339361581893774vmin currentColor;
+}
+.regiter_login_background span:nth-child(19) {
+  color: #583C87;
+  top: 40%;
+  left: 45%;
+  animation-duration: 27s;
+  animation-delay: -119s;
+  transform-origin: -11vw 25vh;
+  box-shadow: 4vmin 0 0.8890168482541712vmin currentColor;
+}
+.regiter_login_background span:nth-child(20) {
+  color: #ffffff;
+  top: 100%;
+  left: 72%;
+  animation-duration: 123s;
+  animation-delay: -70s;
+  transform-origin: 25vw -10vh;
+  box-shadow: -4vmin 0 1.3872375876391054vmin currentColor;
+}
+.regiter_login_background span:nth-child(21) {
+  color: #FFACAC;
+  top: 32%;
+  left: 93%;
+  animation-duration: 119s;
+  animation-delay: -23s;
+  transform-origin: 18vw 0vh;
+  box-shadow: 4vmin 0 1.302632500529501vmin currentColor;
+}
+.regiter_login_background span:nth-child(22) {
+  color: #E45A84;
+  top: 39%;
+  left: 18%;
+  animation-duration: 20s;
+  animation-delay: -79s;
+  transform-origin: -17vw 9vh;
+  box-shadow: -4vmin 0 0.8503840970677692vmin currentColor;
+}
+.regiter_login_background span:nth-child(23) {
+  color: #583C87;
+  top: 47%;
+  left: 71%;
+  animation-duration: 31s;
+  animation-delay: -43s;
+  transform-origin: -3vw -10vh;
+  box-shadow: -4vmin 0 1.0193948362960241vmin currentColor;
+}
+.regiter_login_background span:nth-child(24) {
+  color: #583C87;
+  top: 29%;
+  left: 33%;
+  animation-duration: 34s;
+  animation-delay: -40s;
+  transform-origin: -19vw -13vh;
+  box-shadow: 4vmin 0 0.9302449572860403vmin currentColor;
+}
+.regiter_login_background span:nth-child(25) {
+  color: #583C87;
+  top: 64%;
+  left: 42%;
+  animation-duration: 42s;
+  animation-delay: -63s;
+  transform-origin: -19vw -1vh;
+  box-shadow: -4vmin 0 1.4258049201243526vmin currentColor;
+}
+.regiter_login_background span:nth-child(26) {
+  color: #E45A84;
+  top: 55%;
+  left: 29%;
+  animation-duration: 53s;
+  animation-delay: -63s;
+  transform-origin: 14vw 1vh;
+  box-shadow: 4vmin 0 0.7864242856610821vmin currentColor;
+}
+.regiter_login_background span:nth-child(27) {
+  color: #ffffff;
+  top: 55%;
+  left: 59%;
+  animation-duration: 53s;
+  animation-delay: -63s;
+  transform-origin: 14vw 1vh;
+  box-shadow: 4vmin 0 0.7864242856610821vmin currentColor;
+}
+.regiter_login_background span:nth-child(28) {
+  color: #ffffff;
+  top: 55%;
+  left: 69%;
+  animation-duration: 33s;
+  animation-delay: -23s;
+  transform-origin: 14vw 1vh;
+  box-shadow: 4vmin 0 0.7864242856610821vmin currentColor;
+}
+.regiter_login_background span:nth-child(29) {
+  color: #ffffff;
+  top: 15%;
+  left: 79%;
+  animation-duration: 63s;
+  animation-delay: -13s;
+  transform-origin: 14vw 1vh;
+  box-shadow: 4vmin 0 0.7864242856610821vmin currentColor;
+}
+.regiter_login_background span:nth-child(30) {
+  color: #ffffff;
+  top: 25%;
+  left: 89%;
+  animation-duration: 23s;
+  animation-delay: -13s;
+  transform-origin: 14vw 1vh;
+  box-shadow: 4vmin 0 0.7864242856610821vmin currentColor;
 }

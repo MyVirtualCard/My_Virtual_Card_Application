@@ -154,6 +154,41 @@ const Register = () => {
   return (
     <>
       <div className="register_container">
+
+<div class="regiter_login_background">
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+</div>
         <Toaster position="top-right" reverseOrder={false}></Toaster>
         <div className="left">
           <div
@@ -165,7 +200,7 @@ const Register = () => {
           <div className="form_title">
             <h4>Welcome to AristosTech Digital Card Creator!</h4>
           </div>
-          <div className="moon_svg">
+          {/* <div className="moon_svg">
             <svg
               width="1705"
               height="2039"
@@ -354,7 +389,7 @@ const Register = () => {
                 </filter>
               </defs>
             </svg>
-          </div>
+          </div> */}
           <div className="image">
             {!AuthToggle ? (
               <img src={register_svg} alt="" />
