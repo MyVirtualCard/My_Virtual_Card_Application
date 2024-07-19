@@ -9,22 +9,73 @@ import { convertToBase64 } from "../../Helper/convert";
 import { useFormik } from "formik";
 import { Toaster, toast } from "react-hot-toast";
 import { RegisterValidate } from "../../Helper/RegisterValidate";
-
+import ReCAPTCHA from "react-google-recaptcha";
 const Register = () => {
   let [registerLoader, setRegisterLoader] = useState(false);
+  let [loginLoader, setLoginLoader] = useState(false);
+  let [capchaValue, setCapchaValue] = useState(null);
+
   let navigate = useNavigate();
-  //  const baseURL =  import.meta.env.REACT_APP_API_URL
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  const handleSpeak = (userData) => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(
+        `Welcome ${userData.firstName} now u proceed to develop your brand..`
+      );
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert("Sorry, your browser does not support text to speech!");
+    }
+  };
+  let Login_formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      capchaValue: null,
+    },
+    validateOnChange: false,
+    validateOnBlur: false,
 
-  // const api = axios.create({
-  //     baseURL
-  // })
+    onSubmit: async (values) => {
+      setLoginLoader(true);
 
+      await api
+        .post('/auth/login', values)
+        .then((res) => {
+          toast.success(res.data.message);
+          setLoginLoader(false);
+          const datas = JSON.stringify({
+            userName: res?.data?.userName,
+            token: res?.data?.token,
+            id: res?.data?.id,
+            firstName: res?.data?.name,
+          });
+          localStorage.setItem("datas", datas);
+
+          let userData = JSON.parse(localStorage.getItem("datas"));
+
+          setTimeout(() => {
+            handleSpeak(userData);
+            navigate(`/${userData.userName}/uadmin/dashboard`);
+          }, 2000);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setLoginLoader(false);
+        });
+    },
+  });
+  function onChange(value) {
+    setCapchaValue(value);
+    console.log("Captcha value:", value);
+  }
   //All state data:
   let {
     show,
     setShow,
     profile,
     setProfile,
+    AuthToggle,setAuthToggle,
     userName,
     setUserName,
     firstName,
@@ -67,7 +118,7 @@ const Register = () => {
           toast.success(response.data.message);
           setRegisterLoader(false);
           setTimeout(() => {
-            navigate("/login");
+            setAuthToggle(true);
           }, 1500);
         })
         .catch((error) => {
@@ -99,9 +150,19 @@ const Register = () => {
       <div className="register_container">
         <Toaster position="top-right" reverseOrder={false}></Toaster>
         <div className="left">
+          
+          <div
+            className="site_logo"
+            onClick={() => (window.location.pathname = "/")}
+          >
+            <img src={site_logo} alt="logo" />
+          </div>
+          <div className="form_title">
+            <h4>Welcome to AristosTech Digital Card Creator!</h4>
+          </div>
           <div className="moon_svg">
           <svg width="1705" height="2039" viewBox="0 0 1705 2039" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Rectangle _2" d="M523.927 1293.37C525.267 1290.96 528.31 1290.09 530.725 1291.43L594.602 1326.87C597.016 1328.21 597.888 1331.25 596.548 1333.67L560.047 1399.45C558.707 1401.87 555.663 1402.74 553.249 1401.4L489.372 1365.95C486.957 1364.62 486.086 1361.57 487.426 1359.16L523.927 1293.37Z" fill="white"/>
+<path id="Rectangle_2" d="M523.927 1293.37C525.267 1290.96 528.31 1290.09 530.725 1291.43L594.602 1326.87C597.016 1328.21 597.888 1331.25 596.548 1333.67L560.047 1399.45C558.707 1401.87 555.663 1402.74 553.249 1401.4L489.372 1365.95C486.957 1364.62 486.086 1361.57 487.426 1359.16L523.927 1293.37Z" fill="white"/>
 <rect id="Rectangle_4" x="1239.52" y="717.189" width="108.122" height="107.498" rx="13.5" transform="rotate(-39.7086 1239.52 717.189)" stroke="white" stroke-width="3"/>
 <rect id="Rectangle_6" x="255.816" y="719.32" width="79.0505" height="81.2329" rx="13" transform="rotate(-39.7086 255.816 719.32)" stroke="white" stroke-width="4"/>
 <rect id="Rectangle_5" x="32.1123" y="1580.45" width="77.2182" height="82.2329" rx="18.5" transform="rotate(-39.7086 32.1123 1580.45)" stroke="white" stroke-width="3"/>
@@ -139,104 +200,189 @@ const Register = () => {
 </svg>
 
           </div>
-          <img src={register_svg} alt="" />
+          <div className="image">
+            <img src={register_svg} alt="" />
+          </div>
+
           <div className="wave_svg">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0E8BFF" fill-opacity="1" d="M0,160L30,165.3C60,171,120,181,180,202.7C240,224,300,256,360,234.7C420,213,480,139,540,117.3C600,96,660,128,720,122.7C780,117,840,75,900,90.7C960,107,1020,181,1080,192C1140,203,1200,149,1260,122.7C1320,96,1380,96,1410,96L1440,96L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill="#7DC241"
+                fill-opacity="1"
+                d="M0,160L30,165.3C60,171,120,181,180,202.7C240,224,300,256,360,234.7C420,213,480,139,540,117.3C600,96,660,128,720,122.7C780,117,840,75,900,90.7C960,107,1020,181,1080,192C1140,203,1200,149,1260,122.7C1320,96,1380,96,1410,96L1440,96L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"
+              ></path>
+            </svg>
           </div>
         </div>
         <div className="right">
           <div className="box_container">
-            <div className="site_logo" onClick={()=>window.location.pathname = '/'}>
-              <img src={site_logo} alt="logo" />
-            </div>
             <div className="right_form">
-              <div className="form_title">
-                <h4>Welcome to AristosTech Digital Card Creator!</h4>
-                <p>Create your new Account</p>
-              </div>
-              <div className="illustration">
-                {/* <img src={illustration} alt="illustration" /> */}
+              <div className="current_form">
+                <button onClick={()=>{setAuthToggle(false)}} className={!AuthToggle ? 'activeRegister':''}>Register<i className="fa-solid fa-user-plus"></i> {!AuthToggle ? <span className="register_line"></span> : ''}</button>
+                <button onClick={()=>{setAuthToggle(true)}} className={AuthToggle ? 'activelogin':''}>Login<i className="fa-solid fa-right-to-bracket"></i> {AuthToggle ? <span className="login_line"></span>:''}</button>
               </div>
 
-              <form action="" onSubmit={formik.handleSubmit}>
-                <div className="profile">
-                  <label htmlFor="profile">
-                    <img
-                      src={
-                        profile ||
-                        "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671116.jpg?t=st=1716289609~exp=1716293209~hmac=85426a92bcf5a66127c8aefaed7dbe191cbc90501ed2d55359a618b4d6fa08d4&w=740"
-                      }
-                      alt="avatar"
-                      id="profile_image"
+              {!AuthToggle ? (
+                <form action="" onSubmit={formik.handleSubmit}>
+                  <div className="profile">
+                    <label htmlFor="profile">
+                      <img
+                        src={
+                          profile ||
+                          "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671116.jpg?t=st=1716289609~exp=1716293209~hmac=85426a92bcf5a66127c8aefaed7dbe191cbc90501ed2d55359a618b4d6fa08d4&w=740"
+                        }
+                        alt="avatar"
+                        id="profile_image"
+                      />
+                      <i className="bx bxs-chevrons-left bx-flashing"></i>
+                      <span>Upload your profile</span>
+                    </label>
+                    <input
+                      onChange={onUpload}
+                      type="file"
+                      id="profile"
+                      name="profile"
+                      // {...formik.getFieldProps('profile')}
                     />
-                    <i className="bx bxs-chevrons-left bx-flashing"></i>
-                    <span>Upload your profile</span>
-                  </label>
+                  </div>
+                  {/* //UserName: */}
+                  <div className="form_group">
+                    <label htmlFor="userName">
+                      UserName{" "}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter Unique UserName "
+                      name="userName"
+                      id="userName"
+                      {...formik.getFieldProps("userName")}
+                    />
+                    <div className="icon">
+                      <i className="fa-solid fa-user-secret"></i>
+                    </div>
+                  </div>
+                  {/* //First Name */}
+                  <div className="form_group">
+                    <label htmlFor="firstName">
+                      FirstName{" "}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Eg: Jayakumar "
+                      name="firstName"
+                      id="firstName"
+                      {...formik.getFieldProps("firstName")}
+                    />
+                    <div className="icon">
+                      <i className="fa-solid fa-user"></i>
+                    </div>
+                  </div>
+                  {/* //Last Name */}
+                  <div className="form_group">
+                    <label htmlFor="lastName">
+                      LastName{" "}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Eg : Kumar or K"
+                      name="lastName"
+                      id="lastName"
+                      {...formik.getFieldProps("lastName")}
+                    />
+                    <div className="icon">
+                      <i className="fa-solid fa-user-tag"></i>
+                    </div>
+                  </div>
+                  {/* Email`` */}
+                  <div className="form_group">
+                    <label htmlFor="email">
+                      Email{" "}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="Eg : abc@gmail.com"
+                      name="email"
+                      id="email"
+                      {...formik.getFieldProps("email")}
+                    />
+                    <div className="icon">
+                      <i className="fa-solid fa-envelope"></i>
+                    </div>
+                  </div>
+                  {/* MobileNumber`` */}
+                  {/* <div className="form_group">
+                  <label htmlFor="mobileNumber">Mobile Number</label>
                   <input
-                    onChange={onUpload}
-                    type="file"
-                    id="profile"
-                    name="profile"
-                    // {...formik.getFieldProps('profile')}
-                  />
-                </div>
-                {/* //UserName: */}
-                <div className="form_group">
-                  <label htmlFor="userName">
-                    UserName{" "}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter Unique UserName "
-                    name="userName"
-                    id="userName"
-                    {...formik.getFieldProps("userName")}
+                    type="tel"
+                    placeholder="Eg : +91 6576579679"
+                    name="mobileNumber"
+                    id="mobileNumber"
+                    {...formik.getFieldProps("mobileNumber")}
                   />
                   <div className="icon">
-                    <i className="bx bxs-user"></i>
+                    <i className="bx bx-mobile"></i>
                   </div>
-                </div>
-                {/* //First Name */}
-                <div className="form_group">
-                  <label htmlFor="firstName">
-                    FirstName{" "}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Eg: Jayakumar "
-                    name="firstName"
-                    id="firstName"
-                    {...formik.getFieldProps("firstName")}
-                  />
-                  <div className="icon">
-                    <i className="bx bxs-user"></i>
+                </div> */}
+                  {/* Password`` */}
+                  <div className="form_group">
+                    <label htmlFor="password">
+                      Password{" "}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      name="password"
+                      id="password"
+                      {...formik.getFieldProps("password")}
+                    />
+                    <div className="icon">
+                      <i className="fa-solid fa-lock"></i>
+                    </div>
+
+                    <div className="show_pass" onClick={handleShow}>
+                      {!show ? (
+                        <i className="fa-solid fa-eye-slash"></i>
+                      ) : (
+                        <i className="fa-solid fa-eye"></i>
+                      )}
+                    </div>
                   </div>
-                </div>
-                {/* //Last Name */}
-                <div className="form_group">
-                  <label htmlFor="lastName">
-                    LastName{" "}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Eg : Kumar or K"
-                    name="lastName"
-                    id="lastName"
-                    {...formik.getFieldProps("lastName")}
-                  />
-                  <div className="icon">
-                    <i className="bx bxs-user-pin"></i>
+
+                  <div className="form_submit">
+                    <button type="submit">
+                      {registerLoader ? (
+                        <div className="loader"></div>
+                      ) : (
+                        <>
+                          Register
+                          <div className="rocket">
+                            <i className="bx bx-log-in bx-flashing"></i>
+                          </div>
+                        </>
+                      )}
+                    </button>
                   </div>
-                </div>
+                  {/* <div className="or">
+                  <p>or Continue</p>
+                </div> */}
+                </form>
+              ) : (
+                <form action="" onSubmit={Login_formik.handleSubmit} className="login_form">
                 {/* Email`` */}
                 <div className="form_group">
                   <label htmlFor="email">
@@ -250,29 +396,17 @@ const Register = () => {
                     placeholder="Eg : abc@gmail.com"
                     name="email"
                     id="email"
-                    {...formik.getFieldProps("email")}
+                    value={Login_formik.values.email}
+                    // onChange={(e) => setEmail(e.target.value)}
+                    {...Login_formik.getFieldProps("email")}
                   />
                   <div className="icon">
                     <i className="bx bxs-envelope"></i>
                   </div>
                 </div>
-                {/* MobileNumber`` */}
-                {/* <div className="form_group">
-                  <label htmlFor="mobileNumber">Mobile Number</label>
-                  <input
-                    type="tel"
-                    placeholder="Eg : +91 6576579679"
-                    name="mobileNumber"
-                    id="mobileNumber"
-                    {...formik.getFieldProps("mobileNumber")}
-                  />
-                  <div className="icon">
-                    <i className="bx bx-mobile"></i>
-                  </div>
-                </div> */}
                 {/* Password`` */}
                 <div className="form_group">
-                  <label htmlFor="password">
+                  <label htmlFor="email">
                     Password{" "}
                     <span>
                       <sup>*</sup>
@@ -283,7 +417,9 @@ const Register = () => {
                     placeholder="Password"
                     name="password"
                     id="password"
-                    {...formik.getFieldProps("password")}
+                    value={Login_formik.values.password}
+                    // onChange={(e) => setPassword(e.target.value)}
+                    {...Login_formik.getFieldProps("password")}
                   />
                   <div className="icon">
                     <i className="bx bxs-lock"></i>
@@ -298,13 +434,24 @@ const Register = () => {
                   </div>
                 </div>
 
+                <div className="forgot_password">
+                  <Link to="/forgot_password">
+                    <small>Forgot Password ?</small>
+                  </Link>
+                </div>
+                <div className="capcha">
+                  <ReCAPTCHA
+                    sitekey="6LdlmuYpAAAAAOOHZqQQExlLSFlXG5rQsXMF48wI"
+                    onChange={onChange}
+                  />
+                </div>
                 <div className="form_submit">
                   <button type="submit">
-                    {registerLoader ? (
+                    {loginLoader ? (
                       <div className="loader"></div>
                     ) : (
                       <>
-                        Register
+                        Sign In
                         <div className="rocket">
                           <i className="bx bx-log-in bx-flashing"></i>
                         </div>
@@ -312,16 +459,24 @@ const Register = () => {
                     )}
                   </button>
                 </div>
-                <div className="or">
-                  <p>or Continue</p>
-                </div>
-              </form>
 
-              <div className="signup_link">
-                <p>
-                  Already have an Account ? <Link to="/login">Login</Link>
-                </p>
-              </div>
+                <div className="admin_actions">
+                  {/* <Link to="/sadmin/dashboard">
+                    <button>
+                      Super Admin Login
+                      <i className="bx bx-log-in-circle bx-flashing"></i>
+                    </button>
+                  </Link> */}
+                  {/* <Link onClick={()=>{formik.values.email='aristostech@gmail.com',formik.values.password='123456'}}>
+                    <button>
+                      User Login{" "}
+                      <i className="bx bx-log-in-circle bx-flashing"></i>
+                    </button>
+                  </Link> */}
+                </div>
+            
+              </form>
+              )}
             </div>
           </div>
         </div>

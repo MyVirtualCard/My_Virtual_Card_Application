@@ -23,6 +23,7 @@ import PaymentResponse from "./All_Components/User_Admin_Dashboard/Payment/Payme
 
 const App = () => {
   //URL Name state:
+  let [AuthToggle, setAuthToggle] = useState(false);
   let [URL_Alies, setURL_Alies] = useState("");
   let [SideNavActions, setSideNavActions] = useState(false);
   let [profileOpen, setProfileOpen] = useState(false);
@@ -187,7 +188,7 @@ const App = () => {
   }, [navigate]);
 
   let [vcardSelection, setVcardSelection] = useState([]);
-
+console.log(AuthToggle)
   return (
     <>
       <div className="App_container">
@@ -195,7 +196,7 @@ const App = () => {
           value={{
             URL_Alies,
             setURL_Alies,
-
+AuthToggle,setAuthToggle,
             currentTemplate,
             setCurrentTemplate,
             savedTemplate,

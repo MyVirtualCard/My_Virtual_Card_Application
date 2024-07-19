@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import "./LandingPage.scss";
 import brand_logo from "../../assets/LandingPage_image/BrandLogo2.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import slide_1_image from "../../assets/LandingPage_image/slide-1.png";
 import illustraion from "../../assets/LandingPage_image/slide_right_svg.svg";
 // import offer_sale_gif from "./assets/Website_page_images/offer_price.gif";
@@ -62,6 +62,7 @@ import {
   qn_slide_7Anime,
   form_left_slide_8Anime,
 } from "./framer_Motion_Anime_Object";
+import Context from "../UseContext/Context";
 let plan_service_list = [
   {
     id: 1,
@@ -228,6 +229,8 @@ let questions = [
   },
 ];
 const LandingPage = () => {
+  let { AuthToggle, setAuthToggle } = useContext(Context);
+  let navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   let [planExpand, setPlanExpand] = useState(false);
   let [standardPlanExpand, setStandardPlanExpand] = useState(false);
@@ -510,8 +513,8 @@ const LandingPage = () => {
                   </m.ul>
                 </m.div>
                 <m.div className="actions" variants={topNavAnime}>
-                  <Link to="/login">
-                    <button>Login</button>
+                  <Link to="/register">
+                    <button onClick={setAuthToggle(true)}>Login</button>
                   </Link>
 
                   <div
@@ -563,7 +566,7 @@ const LandingPage = () => {
               <m.div className="actions">
                 <m.div className="start" variants={left_slide_1Anime}>
                   <Link to="/register">
-                    <button>
+                    <button onClick={setAuthToggle(false)}>
                       Get Started!<i className="bx bxs-user-plus bx-tada"></i>
                     </button>
                   </Link>
@@ -678,21 +681,29 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
-             
-                <m.img src={slide_1_image} alt="" className={ImageToggle ? 'image_1_show':'image_1_hide'}/>
-            
-                <m.img src={illustraion} alt=""  className={!ImageToggle ? 'image_2_show':'image_2_hide'}/>
-           
+              <m.img
+                src={slide_1_image}
+                alt=""
+                className={ImageToggle ? "image_1_show" : "image_1_hide"}
+              />
 
-          
-                <div className="message_gif"  id={ImageToggle ? 'image_1_show':'image_1_hide'}>
-                  <img
-                    src={message}
-                    alt="message"
-                    variants={right_slide_1Anime}
-                  />
-                </div>
-          
+              <m.img
+                src={illustraion}
+                alt=""
+                className={!ImageToggle ? "image_2_show" : "image_2_hide"}
+              />
+
+              <div
+                className="message_gif"
+                id={ImageToggle ? "image_1_show" : "image_1_hide"}
+              >
+                <img
+                  src={message}
+                  alt="message"
+                  variants={right_slide_1Anime}
+                />
+              </div>
+
               <m.div className="extra_designs">
                 <m.div className="design1" variants={right_slide_1Anime}>
                   {/* <img
