@@ -1,30 +1,36 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import "./LandingPage.scss";
-import brand_logo from "../../assets/LandingPage_image/BrandLogo2.png";
+import brand_logo from "../../assets/LandingPage_image/BrandLogo4.png";
 import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+// import Swiper and modules styles
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import vcard1 from "../../assets/Digicards/1.png";
+import vcard2 from "../../assets/Digicards/2.png";
+import vcard3 from "../../assets/Digicards/3.png";
+import vcard4 from "../../assets/Digicards/4.png";
+import vcard5 from "../../assets/Digicards/5.png";
+import vcard6 from "../../assets/Digicards/6.png";
+import vcard7 from "../../assets/Digicards/7.png";
+import vcard8 from "../../assets/Digicards/8.png";
 import slide_1_image from "../../assets/LandingPage_image/slide-1.png";
 import illustraion from "../../assets/LandingPage_image/slide_right_svg.svg";
-import discount from '../../assets/LandingPage_image/sticker.png'
-// import offer_sale_gif from "./assets/Website_page_images/offer_price.gif";
-// import rocket from "./assets/animations/rocket.gif";
+import discount from "../../assets/LandingPage_image/sticker.png";
+import slide1_back from "../../assets/LandingPage_image/slide1_back.png";
+import slide1_banner from "../../assets/LandingPage_image/slide1_banner.png";
 import message from "../../assets/animations/message.gif";
-// import slide_1_image from "./assets/Website_page_images/home_page_images.png";
-// import slide_1_image from "./assets/Website_page_images/home_page_right_image.svg";
-// import vcard1 from "./assets/Digicards/1.png";
-// import vcard2 from "./assets/Digicards/2.png";
-// import vcard3 from "./assets/Digicards/3.png";
-// import vcard4 from "./assets/Digicards/4.png";
-// import vcard5 from "./assets/Digicards/5.png";
-// import vcard6 from "./assets/Digicards/6.png";
-// import vcard7 from "./assets/Digicards/7.png";
-
-import vcard1 from "../../assets/Digicards/vmob-1.png";
-import vcard2 from "../../assets/Digicards/vmob-2.png";
-import vcard3 from "../../assets/Digicards/vmob-3.png";
-import vcard4 from "../../assets/Digicards/vmob-4.png";
-import vcard5 from "../../assets/Digicards/vmob-5.png";
-import vcard6 from "../../assets/Digicards/vmob-6.png";
-import vcard7 from "../../assets/Digicards/vmob-7.png";
+// import vcard1 from "../../assets/Digicards/vmob-1.png";
+// import vcard2 from "../../assets/Digicards/vmob-2.png";
+// import vcard3 from "../../assets/Digicards/vmob-3.png";
+// import vcard4 from "../../assets/Digicards/vmob-4.png";
+// import vcard5 from "../../assets/Digicards/vmob-5.png";
+// import vcard6 from "../../assets/Digicards/vmob-6.png";
+// import vcard7 from "../../assets/Digicards/vmob-7.png";
 // import vcard8 from './assets/Digicards/vmob-8.png';
 
 import view1 from "../../assets/LandingPage_image/view/1.svg";
@@ -400,7 +406,7 @@ const LandingPage = () => {
         {/* Up Arrow icon */}
         <div className="up" onClick={() => scrollToSection(HomeRef)}>
           {/* <small>Bring me Top</small> */}
-          <i className="bx bx-chevrons-up bx-fade-down"></i>
+          <i className="bx bx-chevrons-up"></i>
         </div>
         <m.div className="slide_1_page" ref={HomeRef}>
           <ul className="slide_1_background">
@@ -532,6 +538,9 @@ const LandingPage = () => {
             </m.div>
           </m.header>
           <m.div className="slide_1">
+            <div className="slide1_back">
+              {/* <img src={slide1_back} alt="" /> */}
+            </div>
             <m.div
               className="left"
               variants={left_slide_1Anime}
@@ -549,10 +558,10 @@ const LandingPage = () => {
                 </m.p>
               </m.div>
               <m.div className="summary" variants={left_slide_1Anime}>
-                <m.p>
+                {/* <m.p>
                   Experience the future of digital ID cards by AristosTech India
                   Pvt Ltd.
-                </m.p>
+                </m.p> */}
                 {/* <m.p>
                   We aren't compromising the quality of product but We can
                   provide budget friendly price because client happiness only we
@@ -564,14 +573,14 @@ const LandingPage = () => {
                 <m.div className="start" variants={left_slide_1Anime}>
                   <Link to="/register">
                     <button onClick={setAuthToggle(false)}>
-                      Get Started!<i className="bx bxs-user-plus bx-tada"></i>
+                      Get Started<i className="bx bxs-user-plus bx-tada"></i>
                     </button>
                   </Link>
                 </m.div>
                 <m.div className="enquiry" variants={left_slide_1Anime}>
                   <a href="https://wa.me/9344482370" target="_blank">
                     <button>
-                      For Enquiry!<i className="bx bxs-bell-ring bx-tada"></i>
+                      Pricing<i className="bx bxs-bell-ring bx-tada"></i>
                     </button>
                   </a>
                 </m.div>
@@ -579,24 +588,23 @@ const LandingPage = () => {
               {/* //Timer_Box */}
 
               <m.div className="offer_container" variants={left_slide_1Anime}>
-                <img src={discount} alt="" />
                 <m.div className="offer_box">
                   <m.div className="box">
                     <m.div className="time_box">
                       <h4>{Days}</h4>
                       <small>Day</small>
                     </m.div>
-                    <i className="bx bxs-chevrons-right bx-flashing"></i>
+                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
                     <div className="time_box">
                       <h4>{Hours}</h4>
                       <small>Hours</small>
                     </div>
-                    <i className="bx bxs-chevrons-right bx-flashing"></i>
+                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
                     <div className="time_box">
                       <h4>{Minutes}</h4>
                       <small>Minutes</small>
                     </div>
-                    <i className="bx bxs-chevrons-right bx-flashing"></i>
+                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
                     <div className="time_box">
                       <h4>{Seconds}</h4>
                       <small>Seconds</small>
@@ -626,11 +634,11 @@ const LandingPage = () => {
                     {Hours && Minutes && Days && Minutes !== "00" ? (
                       <div className="prices">
                         <div className="old">
-                          <h5>₹ 730</h5>
+                          <h5>₹ 1299</h5>
                         </div>
 
                         <div className="new">
-                          <h5>₹ 365</h5>
+                          <h5>₹ 599</h5>
                         </div>
                       </div>
                     ) : (
@@ -659,7 +667,7 @@ const LandingPage = () => {
                       {Hours && Minutes && Days && Minutes !== "00" ? (
                         <Link to="/register">
                           <button>
-                            Enroll Now!<i className="bx bxs-offer"></i>
+                            GRAB OFFER!<i className="bx bxs-offer"></i>
                           </button>
                         </Link>
                       ) : (
@@ -678,7 +686,8 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
-              <m.img
+              <img src={slide1_banner} alt="banner" />
+              {/* <m.img
                 src={slide_1_image}
                 alt=""
                 className={ImageToggle ? "image_1_show" : "image_1_hide"}
@@ -699,7 +708,7 @@ const LandingPage = () => {
                   alt="message"
                   variants={right_slide_1Anime}
                 />
-              </div>
+              </div> */}
 
               <m.div className="extra_designs">
                 <m.div className="design1" variants={right_slide_1Anime}>
@@ -707,7 +716,7 @@ const LandingPage = () => {
                     src={rocket}
                     alt="rocket"
                   /> */}
-                  <i className="bx bx-rocket"></i>
+                  {/* <i className="bx bx-rocket"></i> */}
                 </m.div>
                 <m.div
                   className="design2"
@@ -734,19 +743,9 @@ const LandingPage = () => {
             </m.div>
           </m.div>
         </m.div>
-        <div className="svg_curve">
-          {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#b29cff" fillOpacity="1" d="M0,224L80,197.3C160,171,320,117,480,128C640,139,800,213,960,240C1120,267,1280,245,1360,234.7L1440,224L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg> */}
 
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path
-              fill="#007a87"
-              fill-opacity="1"
-              d="M0,64L80,80C160,96,320,128,480,117.3C640,107,800,53,960,69.3C1120,85,1280,171,1360,213.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
-            ></path>
-          </svg>
-        </div>
         {/* Slide2 */}
-        <m.div className="slide_2_page" ref={TemplateRef}>
+             <m.div className="slide_2_page" ref={TemplateRef}>
           <m.div
             className="title"
             variants={title_slide_2Anime}
@@ -768,7 +767,7 @@ const LandingPage = () => {
             style={{
               whiteSpace: "nowrap",
 
-              // width: "100%",
+              width: "100%",
             }}
             variants={vcard_slide_2Anime}
             initial="hide"
@@ -1119,8 +1118,8 @@ const LandingPage = () => {
             initial="hide"
             animate="show"
           >
-             {/* plan demo*/}
-             <m.div
+            {/* plan demo*/}
+            <m.div
               className="plan"
               variants={plan_box_slide_5Anime}
               id={planExpand ? "expand" : "default"}
@@ -1194,7 +1193,7 @@ const LandingPage = () => {
               </m.div>
               <m.div className="card_count">
                 <p>
-                Total VCard Provides : <span>05</span>
+                  Total VCard Provides : <span>05</span>
                 </p>
               </m.div>
 
@@ -1247,7 +1246,7 @@ const LandingPage = () => {
               </div>
               <div className="card_count">
                 <p>
-                Total VCard Provides : <span>08</span>
+                  Total VCard Provides : <span>08</span>
                 </p>
               </div>
 
@@ -1300,7 +1299,7 @@ const LandingPage = () => {
               </div>
               <div className="card_count">
                 <p>
-                Total VCard Provides : <span>10</span>
+                  Total VCard Provides : <span>10</span>
                 </p>
               </div>
 
@@ -1453,7 +1452,7 @@ const LandingPage = () => {
             <m.div className="right" variants={form_left_slide_8Anime}>
               <m.div className="form_box" variants={form_left_slide_8Anime}>
                 <m.form action="" variants={form_left_slide_8Anime}>
-                  <div className="form_group">
+                  <div className="form_group double">
                     <input type="text" placeholder="Enter Your Name" />
                   </div>
                   <div className="form_group">
@@ -1483,13 +1482,13 @@ const LandingPage = () => {
         {/* Footer */}
         <div className="footer">
           <div className="company">
-            <p>Group of AristosTech India Pvt Ltd.</p>
+            <p>Group of AristosTech India Pvt Ltd</p>
           </div>
           <div className="aggrement">
-            <Link>
+            <Link to="/terms_condition">
               <p>Terms & Condition</p>
             </Link>
-            <Link>
+            <Link to="/privacy_condition">
               <p>Privacy Policy</p>
             </Link>
           </div>

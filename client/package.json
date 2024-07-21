@@ -40,6 +40,7 @@
     "react-router-dom": "^6.24.1",
     "react-toastify": "^10.0.5",
     "sass": "^1.77.6",
+    "swiper": "^11.1.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

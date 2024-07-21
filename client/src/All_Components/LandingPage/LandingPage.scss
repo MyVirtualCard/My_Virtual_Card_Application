@@ -37,7 +37,7 @@ body {
   .up {
     position: fixed;
     bottom: 2%;
-    right: 3%;
+    right: 1%;
     z-index: 1000;
     cursor: pointer;
     // background-color: #ffffff;
@@ -50,8 +50,8 @@ body {
     i {
       padding: 5px;
 
-      font-size: 1.5rem;
-      color: #363636;
+      font-size: 1.9rem;
+      color: #1625ff;
       border-radius: 0.3rem;
     }
     small {
@@ -63,17 +63,17 @@ body {
   .slide_1_page {
     position: relative;
     width: 100vw;
-    z-index: 50;
     height: 100vh;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2.5rem;
     // background: linear-gradient(360deg, #4022b8, #523ab3);
     background: linear-gradient(0deg, #007a87, #01324e);
-
+    // z-index: 100;
     header {
       position: relative;
       // top: 5%;
       width: 100vw;
       height: 10vh;
+      z-index: 900;
       padding: 1rem 3rem;
 
       .top_nav {
@@ -95,7 +95,7 @@ body {
           padding: 0px 2rem;
 
           img {
-            width: 180px;
+            width: 250px;
 
             @media screen and (max-width: 600px) {
               width: 150px;
@@ -155,8 +155,6 @@ body {
                   letter-spacing: 1px;
                   transition: width 0.4s linear;
 
-           
-
                   @media screen and (max-width: 600px) {
                     color: #444444;
                   }
@@ -167,14 +165,13 @@ body {
                 //   .active{
                 //     color: #9695ff !important;
                 //   }
-                &:nth-child(1){
-     
+                &:nth-child(1) {
                   width: 100%;
-               
+
                   border-radius: 2px;
                   transition: width 0.4s linear;
 
-                  a{
+                  a {
                     color: #d9fc40 !important;
                   }
                   &::after {
@@ -274,7 +271,7 @@ body {
               }
               &:nth-child(1) {
                 button {
-                  background-color: #006B79;
+                  background-color: #006b79;
                   color: #ffffff;
                   letter-spacing: 1px;
                   &:hover {
@@ -341,6 +338,24 @@ body {
       width: 90%;
       height: 90vh;
 
+      .slide1_back {
+        position: absolute;
+        top: 10%;
+        right: 0%;
+        background-image: url("../../assets/LandingPage_image/slide1_back.png");
+        opacity: 0.2;
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+        background-position: right;
+        background-size: contain;
+        background-repeat: no-repeat;
+        z-index: 1;
+        width: 100%;
+        height: 90%;
+      }
       .left {
         display: flex;
         flex: 0.5;
@@ -350,6 +365,7 @@ body {
         align-items: flex-start;
         justify-content: center;
         gap: 10px;
+        z-index: 600;
 
         .title {
           h3 {
@@ -359,29 +375,42 @@ body {
               font-size: 1.8rem;
             }
             @media screen and (max-width: 480px) {
-              font-size: 1.3rem;
+              font-size: 1.6rem;
             }
           }
           h4 {
             font-size: 1.5rem;
             color: #28e6ff;
-            font-weight: 400;
+            font-weight: 600;
             @media screen and (max-width: 600px) {
               font-size: 1.2rem;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              width: 100%;
             }
             @media screen and (max-width: 480px) {
               font-size: 1rem;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              width: 100%;
             }
           }
         }
         .sub_title {
           p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #eeeeee;
             font-weight: 500;
 
             @media screen and (max-width: 480px) {
               font-size: 0.9rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              text-align: center;
             }
           }
         }
@@ -401,27 +430,26 @@ body {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          gap: 0rem;
+          gap: 2rem;
           z-index: 500;
           margin: 0.5rem 0px;
           width: 100%;
 
           .start {
-            flex: 0.4;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            width: 100%;
             a {
               text-decoration: none;
               color: #312727;
               width: 50%;
               font-weight: 550;
+              font-size: 0.8rem;
               button {
-                width: 100%;
-                padding: 10px 1.5rem;
-                background-color: #ffffff;
-                border-radius: 5px;
+                width: 100px;
+                padding: 10px 1rem;
+                background-color: #20c8e0;
+                border-radius: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -433,13 +461,13 @@ body {
                   transition: all 0.4s ease;
                 }
                 @media screen and (max-width: 600px) {
-                  width: 100%;
+                  width: 100px;
 
                   margin: auto;
                   padding: 8px 0.5rem;
                 }
                 @media screen and (max-width: 950px) {
-                  width: 100%;
+                  width: 100px;
 
                   margin: auto;
                   padding: 8px 0.5rem;
@@ -447,7 +475,7 @@ body {
               }
               @media screen and (max-width: 600px) {
                 font-size: 0.7rem;
-                width: 80%;
+                width: 100px;
               }
             }
             @media screen and (max-width: 600px) {
@@ -458,21 +486,21 @@ body {
             }
           }
           .enquiry {
-            flex: 0.4;
+        
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            width: 100%;
             a {
               text-decoration: none;
-              color: #ffffff;
+              color: #333333;
               font-weight: 550;
               width: 50%;
+              font-size: 0.8rem;
               button {
-                width: 100%;
-                padding: 10px 1.5rem;
-                background-color: rgb(61, 61, 61);
-                border-radius: 5px;
+                width: 100px;
+                padding: 10px 1rem;
+                background-color: rgb(255, 255, 255);
+                border-radius: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -484,13 +512,13 @@ body {
                 }
 
                 @media screen and (max-width: 600px) {
-                  width: 100%;
+                  width: 100px;
 
                   margin: auto;
                   padding: 8px 0.5rem;
                 }
                 @media screen and (max-width: 950px) {
-                  width: 100%;
+                  width: 100px;
 
                   margin: auto;
                   padding: 8px 0.5rem;
@@ -510,14 +538,14 @@ body {
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 2rem;
             width: 100%;
             margin: auto;
           }
         }
         .offer_container {
           position: relative;
-          width: 100%;
+          width: 90%;
           z-index: 800;
           height: auto;
           padding: 2rem 0px;
@@ -526,7 +554,7 @@ body {
             mix-blend-mode: multiply;
             width: 80px;
             height: 80px;
-            z-index: 900;
+
             right: 8%;
             top: 15%;
 
@@ -538,11 +566,9 @@ body {
             width: 90%;
             z-index: 900;
             height: auto;
-            background: rgba(255, 255, 255, 0.377);
-            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-            backdrop-filter: blur( 0px );
-            -webkit-backdrop-filter: blur( 0px );
-            border-radius: 10px;
+            background: #20c8e0;
+
+            border-radius: 0px;
 
             display: flex;
             align-items: center;
@@ -551,7 +577,7 @@ body {
             padding: 2px 1rem;
             margin: 2rem 0px;
             box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+    
 
             .box {
               display: flex;
@@ -559,7 +585,7 @@ body {
               flex: 0.6;
               align-items: center;
               justify-content: flex-start;
-              gap: 0.5rem;
+              gap: 1.5rem;
               .time_box {
                 display: flex;
 
@@ -570,7 +596,8 @@ body {
                 width: 50px;
                 height: 60px;
                 border-radius: 5px;
-                background-color: #20244F;
+                background: linear-gradient(90deg, #014059, #006b7b);
+                border: 1px solid #fff;
 
                 h4 {
                   font-size: 1.2rem;
@@ -610,7 +637,7 @@ body {
                   width: 50px;
                 }
                 @media screen and (max-width: 480px) {
-                  background-color: #20244F;
+                  background-color: #20244f;
                 }
               }
               @media screen and (max-width: 950px) {
@@ -626,13 +653,14 @@ body {
               justify-content: flex-start;
               position: relative;
               padding: 10px 0px;
+              width: 100%;
 
               .prices {
                 display: flex;
                 flex: 0.5;
-                padding: 1rem 0px;
+                padding: 0rem 0px 1rem 0rem;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 gap: 2.5rem;
                 width: 100%;
 
@@ -641,14 +669,14 @@ body {
                     font-size: 0.9rem;
                     text-decoration: line-through;
                     font-weight: 550;
-                    color: rgb(255, 117, 53);
+                    color: #09465D;
                   }
                 }
                 .new {
                   h5 {
-                    font-size: 0.9rem;
-                    font-weight: 550;
-                    color: #4c3ce0;
+                    font-size:1.5rem;
+                    font-weight: 600;
+                    color: #09465D;
                   }
                 }
                 @media screen and (max-width: 950px) {
@@ -664,6 +692,8 @@ body {
                   justify-content: center;
                   gap: 10px;
                   font-size: 1rem;
+                  margin-left: 2rem;
+                  width: 100%;
 
                   sup {
                     i {
@@ -676,6 +706,7 @@ body {
               .actions {
                 position: absolute;
                 bottom: -20%;
+                right: -10%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -694,8 +725,9 @@ body {
                   padding: 0.5rem 1rem;
                   font-size: 0.7rem;
                   font-weight: 550;
-                  border-radius: 3px;
-                  background-color: #523ab3;
+                  border-radius: 10px;
+                  background: linear-gradient(90deg, #014059, #006b7b);
+                  border: 2px solid #f0bc59;
                   transition: all 0.3s ease;
 
                   i {
@@ -740,12 +772,15 @@ body {
               padding: 0.5rem;
             }
             @media screen and (max-width: 480px) {
-              height: auto;
+              width: 80vw;
+              place-content: center;
+              margin: auto !important;
             }
 
             @media screen and (max-width: 950px) {
-              width: 100%;
-              margin: 1rem auto 0rem auto;
+              width: 80vw;
+              place-content: center;
+              margin: auto !important;
             }
           }
         }
@@ -753,6 +788,8 @@ body {
           width: 100%;
           flex: 1;
           margin: auto;
+          align-items: center;
+          justify-content: center;
         }
         @media screen and (max-width: 950px) {
           flex: 100%;
@@ -845,7 +882,7 @@ body {
             height: 110px;
             background-color: #fff;
             position: absolute;
-            bottom: 10%;
+            bottom: 5%;
             left: 30%;
             display: flex;
             align-items: center;
@@ -858,7 +895,7 @@ body {
             .count {
               font-size: 2rem;
               font-weight: bold;
-              color: #523ab3;
+              color: #014059;
               @media screen and (max-width: 600px) {
                 font-size: 1.2rem;
               }
@@ -940,7 +977,23 @@ body {
           z-index: 800;
           transform: translateX(0px);
           filter: drop-shadow(0px 4px 5px rgba(162, 253, 223, 0.5));
-          transition: transform 0.5s linear;
+          animation: anime 5s linear infinite;
+          // transform-origin: center;
+          // transform-box: fill-box;
+   
+          @keyframes anime {
+            0% {
+              transform: translateY(0px);
+          
+            }
+            50% {
+              transform: translateY(20px);
+              
+            }
+            100%{
+              transform: translateY(0px);
+            }
+          }
           @media screen and (max-width: 600px) {
             width: 300px;
             height: 300px;
@@ -1067,7 +1120,7 @@ body {
       height: auto;
     }
     @media screen and (min-width: 1300px) {
-      height: auto;
+      height: 100vh;
     }
   }
   .svg_curve {
@@ -1090,13 +1143,14 @@ body {
   }
   .slide_2_page {
     position: relative;
-    bottom: 150px;
+    // bottom: 150px;
+    background-image: url('../../assets/LandingPage_image/Terms&Privacy/background1.jpg');
     width: 100%;
     height: auto !important;
     z-index: 500;
     // background-color: #1afdea;
     margin: 0rem auto 0rem auto;
-    padding: 0rem 0px;
+    padding:1rem;
     .title {
       position: relative;
       // top: -100px;
@@ -1131,20 +1185,21 @@ body {
       }
       @media screen and (max-width: 700px) {
         width: 100%;
-        top: -50px;
+
       }
       @media screen and (max-width: 950px) {
         width: 100%;
-        top: -70px;
+
         padding: 0.5px 1rem;
       }
     }
 
     .slide_2_container {
       width: 100%;
+
       position: relative;
       // top: -100px;
-      margin: 2rem auto 0rem auto;
+      margin: 1rem auto 0rem auto;
       height: auto;
       // background-color: cadetblue;
       border-radius: 0.5rem;
@@ -1154,24 +1209,24 @@ body {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 0.1rem;
+      gap: 1rem;
       flex-wrap: nowrap;
       overflow-x: scroll;
 
       .vcard {
-        width: 270px;
-        min-width: 270px;
-        height: auto;
+        width: 220px;
+        min-width: 220px;
+        height: 600px;
         overflow: hidden;
         overflow-x: hidden;
-        border-radius: 1rem;
+        border-radius: 0.2rem;
 
         z-index: 100;
-        // filter: drop-shadow(0px 4px 3px rgba(0, 0, 0, 0.3));
-        // box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
+        filter: drop-shadow(0px 4px 3px rgba(0, 0, 0, 0.3));
+        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
         img {
           width: 100%;
-          border-radius: 1rem;
+          border-radius: 0.2rem;
           object-fit: cover;
 
           object-position: center;
@@ -1193,13 +1248,12 @@ body {
         display: none;
       }
       @media screen and (max-width: 700px) {
-        top: -50px;
+        // top: -50px;
       }
     }
     @media screen and (max-width: 600px) {
-      bottom: 0px;
-      padding: 1rem 0.5rem;
-      margin: 3rem auto 0rem auto;
+      padding: 1rem 0.5rem 0px 0.5rem;
+      margin: 0rem auto 0rem auto;
     }
   }
 
@@ -1270,6 +1324,7 @@ body {
         gap: 1.5rem;
         height: 200px;
         background-color: #fff;
+        background-image: url("https://easy.razorpay.com/federated-bundles/onboarding/build/browser/static/src/App/Onboarding/images/background-frame.svg");
         box-shadow: 0px 2px 3px rgb(46, 46, 46);
         border-radius: 0.5rem;
         padding: 10px;
@@ -1406,11 +1461,12 @@ body {
           padding: 15px;
           // border: 1px solid royalblue;
           border-radius: 0.5rem;
+
           box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
             rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
             rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
           h3 {
-            color: #000080;
+            color: #09465D;
             font-size: 1.2rem;
             @media screen and (max-width: 600px) {
               font-size: 1rem;
@@ -1519,7 +1575,7 @@ body {
 
         border-radius: 0.5rem;
         background-color: #ffffff;
-  
+
         box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
           rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
           rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
@@ -1589,6 +1645,7 @@ body {
       margin-top: 8rem;
       padding: 1rem 0.5rem;
       background-color: #f4f8fd;
+      background-image: url("https://easy.razorpay.com/federated-bundles/onboarding/build/browser/static/src/App/Onboarding/images/background-frame.svg");
       z-index: 700;
 
       .content_box {
@@ -1793,19 +1850,22 @@ body {
     .plan_container_box {
       margin: 2rem auto;
       width: 95%;
+  
       height: auto;
       display: grid;
 
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
       grid-row-gap: 1.5rem;
       grid-column-gap: 1.5rem;
       place-items: center;
 
       .plan {
         width: 90%;
+        max-width: 90%;
 
         background-color: #fff;
-border: 3px solid rgb(127, 157, 253);
+        border: 3px solid rgb(127, 157, 253);
         overflow-y: hidden;
         position: relative;
         height: 750px;
@@ -1832,8 +1892,8 @@ border: 3px solid rgb(127, 157, 253);
             font-size: 1rem;
             padding: 5px;
             border-radius: 50%;
-            color: #272727;
-            background-color: #41fcc4;
+            color: #ffffff;
+            background-color: #065c6b;
             cursor: pointer;
           }
         }
@@ -1841,12 +1901,13 @@ border: 3px solid rgb(127, 157, 253);
           h3 {
             font-size: 1.3rem;
             color: rgb(53, 52, 52);
+            font-weight: 600;
           }
         }
         .plan_price {
           h2 {
             font-size: 2rem;
-            color: #6a43f8;
+            color: #09465D;
 
             small {
               font-size: 0.9rem;
@@ -1862,7 +1923,7 @@ border: 3px solid rgb(127, 157, 253);
 
             span {
               font-weight: bold;
-              color: rgb(248, 123, 51);
+              color: rgb(10, 147, 156);
             }
           }
         }
@@ -1887,7 +1948,7 @@ border: 3px solid rgb(127, 157, 253);
               padding: 0.6rem 1rem;
               width: 100%;
               background-color: #3a8365;
-   font-size: 0.8rem;
+              font-size: 0.8rem;
               border-radius: 5px;
               transition: all 0.3s ease;
               &:hover {
@@ -1965,6 +2026,10 @@ border: 3px solid rgb(127, 157, 253);
         grid-column-gap: 0.5rem;
         width: 100%;
       }
+      @media screen and (min-width: 1500px) {
+      
+        max-width: 60%;
+      }
     }
     @media screen and (max-width: 600px) {
       padding: 4rem 0.5rem;
@@ -1996,8 +2061,11 @@ border: 3px solid rgb(127, 157, 253);
     width: 100%;
     height: auto;
     padding: 2rem 0px;
-    background: linear-gradient(280deg, #ffffff, #ffffff);
-
+    // background: linear-gradient(280deg, #ffffff, #ffffff);
+    background-image: url("https://easy.razorpay.com/federated-bundles/onboarding/build/browser/static/src/App/Onboarding/images/background-frame.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     .slide_7_title {
       width: 100%;
       display: flex;
@@ -2041,7 +2109,7 @@ border: 3px solid rgb(127, 157, 253);
       .multi {
         padding: 0.6rem 1rem;
         border-radius: 5px;
-        background-color: #5659fd;
+        background-color: #09465D;
         font-weight: 550;
         color: #fff;
         cursor: pointer;
@@ -2101,7 +2169,7 @@ border: 3px solid rgb(127, 157, 253);
           .plus {
             i {
               font-size: 1.5rem;
-              color: #52c293 !important;
+              color: #09465D !important;
               cursor: pointer;
             }
           }
@@ -2262,7 +2330,8 @@ border: 3px solid rgb(127, 157, 253);
           form {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             grid-column-gap: 10px;
             grid-row-gap: 1rem;
             place-items: center;
@@ -2312,13 +2381,13 @@ border: 3px solid rgb(127, 157, 253);
               align-items: center;
               justify-content: center;
               button {
-                background-color: #523ab3;
+                background-color: #09465D;
                 border-radius: 5px;
                 padding: 0.5rem 1rem;
                 color: #fff;
                 transition: all 0.4s ease;
                 &:hover {
-                  border: 1px solid #523ab3;
+                  border: 1px solid #09465D;
                   background: transparent;
                   color: #000;
                   font-weight: 550;
@@ -2370,19 +2439,32 @@ border: 3px solid rgb(127, 157, 253);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-weight: 500;
+        font-weight: 550;
+        font-size: 0.9rem;
       }
     }
 
     .aggrement {
       display: flex;
       align-items: center;
+      vertical-align: middle;
       justify-content: center;
       gap: 10px;
       height: 50px;
 
       a {
+        height: 100%;
+ align-content: center;
         text-decoration: none;
+
+        p{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+          font-size: 0.8rem;
+          font-weight: 550;
+        }
       }
       @media screen and (max-width: 480px) {
         display: none;
@@ -2485,7 +2567,7 @@ button {
   right: 0;
   margin: 0;
   padding: 0;
-  z-index: -5;
+  z-index: 1;
   background: transparent;
   overflow: hidden;
 }
@@ -2590,3 +2672,5 @@ button {
   bottom: -32px;
   animation-delay: 28s;
 }
+
+

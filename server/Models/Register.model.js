@@ -30,6 +30,10 @@ let RegisterSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    terms:{
+     type:Boolean,
+     default:false
+    },
     mobileNumber: {
       type: Number,
       default:'+91',

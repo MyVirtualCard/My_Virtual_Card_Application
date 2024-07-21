@@ -20,6 +20,8 @@ import Payment from "./All_Components/User_Admin_Dashboard/Payment/Payment";
 import VerifyOTP from "./All_Components/Authentication/VerifyOTP/VerifyOTP";
 import ResendOTP from "./All_Components/Authentication/ResendOTP/ResendOTP";
 import PaymentResponse from "./All_Components/User_Admin_Dashboard/Payment/PaymentResponse";
+import Terms_Condition from "./All_Components/LandingPage/Terms&Condition/Terms_Condition";
+import Privacy_Policy from "./All_Components/LandingPage/PrivacyPolicy/Privacy_Policy";
 
 const App = () => {
   //URL Name state:
@@ -188,7 +190,7 @@ const App = () => {
   }, [navigate]);
 
   let [vcardSelection, setVcardSelection] = useState([]);
-console.log(AuthToggle)
+  console.log(AuthToggle);
   return (
     <>
       <div className="App_container">
@@ -196,7 +198,8 @@ console.log(AuthToggle)
           value={{
             URL_Alies,
             setURL_Alies,
-AuthToggle,setAuthToggle,
+            AuthToggle,
+            setAuthToggle,
             currentTemplate,
             setCurrentTemplate,
             savedTemplate,
@@ -456,7 +459,7 @@ AuthToggle,setAuthToggle,
               element={<ResetPassword />}
             />
             <Route path="/payment" element={<Payment />} />
-            <Route path="/payment_response" element={<PaymentResponse/>}/>
+            <Route path="/payment_response" element={<PaymentResponse />} />
             <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
               <Route
                 path={`/${userName}/uadmin/dashboard`}
@@ -493,6 +496,8 @@ AuthToggle,setAuthToggle,
                 element={<UserAccountSetting />}
               />
             </Route>
+            <Route path="/terms_condition" element={<Terms_Condition />} />
+            <Route path="/privacy_condition" element={<Privacy_Policy />} />
           </Routes>
         </Context.Provider>
       </div>

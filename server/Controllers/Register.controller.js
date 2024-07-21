@@ -92,13 +92,15 @@ export const RegisterUser = async (req, res) => {
       lastName,
       mobileNumber,
       location,
+      terms
     } = req.body;
     //if user doesn't fill all those fields error through:
     if (
       !req.body.userName ||
       !req.body.firstName ||
       !req.body.email ||
-      !req.body.password
+      !req.body.password||
+      !req.body.terms
     ) {
       res.status(400).json({ message: "All * fields Mandatory!" });
     } else {
@@ -127,6 +129,7 @@ export const RegisterUser = async (req, res) => {
           lastName,
           mobileNumber,
           location,
+          terms
         };
         //If doesn't exist created new user data to database:
         let createUser = new UserAuth(data);
