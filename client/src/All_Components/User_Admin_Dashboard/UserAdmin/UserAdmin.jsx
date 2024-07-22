@@ -71,7 +71,7 @@ const UserAdmin = () => {
 
   useEffect(() => {
 
-    api.get(`/auth/register/${userDetails.id}`)
+    api.get(`/auth/register/${userName}`)
       .then((res) => {
         console.log(res)
         setUserData(res.data.data);

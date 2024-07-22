@@ -1169,7 +1169,7 @@ const LandingPage = () => {
               </m.div>
               <m.div className="card_count">
                 <p>
-                  Total VCard Provides : <span>05</span>
+                No of VCard Design's Provided : <span>05</span>
                 </p>
               </m.div>
 
@@ -1222,7 +1222,7 @@ const LandingPage = () => {
               </div>
               <div className="card_count">
                 <p>
-                  Total VCard Provides : <span>08</span>
+                No of VCard Design's Provided : <span>08</span>
                 </p>
               </div>
 
@@ -1275,7 +1275,7 @@ const LandingPage = () => {
               </div>
               <div className="card_count">
                 <p>
-                  Total VCard Provides : <span>10</span>
+                No of VCard Design's Provided : <span>10</span>
                 </p>
               </div>
 

@@ -46,7 +46,7 @@ overflow: hidden;
         
         h6{
           font-size: 1rem;
-          color: royalblue;
+          color: #01324e;
         }
       }
       .plan_addon_service {
@@ -136,6 +136,10 @@ overflow: hidden;
       z-index: 300;
       padding: 5px 1.5rem;
       background-color: royalblue;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap:10px;
       color: #fff;
       border-radius: 0.3rem;
       transition: all 0.4s ease-in-out;
@@ -166,15 +170,16 @@ overflow: hidden;
   }
     .all_plans_container_box{
         width: 95%;
-        height: 80%;
+        height: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
         grid-row-gap: 1rem;
         grid-column-gap: 1rem;
-        place-items: start;
+        place-items: center;
+
 background-color: #fff;
 
-        margin: auto;
+        margin:1rem auto;
         padding: 10px;
 
         .plan {
@@ -207,7 +212,7 @@ background-color: #fff;
               i{
                 cursor: pointer;
                 font-size: 1.5rem;
-                color: tomato;
+                color: rgb(29, 119, 255);
                             }
             }
             .batches{
@@ -415,7 +420,8 @@ button {
 
    
   // outline: 2px solid skyblue;
-background-color: #70eeb9 !important;
+background-color: #81f2ff !important;
+color: #fff;
   }
 
   

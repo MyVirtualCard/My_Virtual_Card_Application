@@ -23,6 +23,7 @@ const UserAccountSetting = () => {
     email,
     setEmail,
     setLoader,
+    userName,
     currentPlan,
     setCurrentPlan,
     PlanPrice,
@@ -43,7 +44,7 @@ const UserAccountSetting = () => {
     setLoader(true);
     setFormSubmitLoader(true)
     api
-      .get(`/auth/register/${UserData.id}`)
+      .get(`/auth/register/${userName}`)
       .then((responce) => {
 
         setFormSubmitLoader(false)

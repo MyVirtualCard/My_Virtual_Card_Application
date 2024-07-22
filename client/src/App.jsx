@@ -20,6 +20,7 @@ import VerifyOTP from "./All_Components/Authentication/VerifyOTP/VerifyOTP";
 import ResendOTP from "./All_Components/Authentication/ResendOTP/ResendOTP";
 import Terms_Condition from "./All_Components/LandingPage/Terms&Condition/Terms_Condition";
 import Privacy_Policy from "./All_Components/LandingPage/PrivacyPolicy/Privacy_Policy";
+import PaymentSuccess from "./All_Components/User_Admin_Dashboard/Payment/PaymentSuccess";
 
 const App = () => {
   //URL Name state:
@@ -437,9 +438,20 @@ const App = () => {
           <Routes>
             {/* Landing Homepage */}
             <Route path="/" element={<LandingPage />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/register"
+              element={
+                user ? (
+                  <Navigate to={`/${userName}/uadmin/dashboard`} />
+                ) : (
+                  <Register />
+                )
+              }
+            />
+            {/* <Route path="/register" element={<Register />} /> */}
             {/* <Route path="/verify_OTP" element={<VerifyOTP />} /> */}
             <Route path="/login" element={<Login />} />
+            <Route path="/paymentsuccess" element={<PaymentSuccess/>}/>
             <Route
               path="/verify_OTP"
               element={

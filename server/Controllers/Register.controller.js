@@ -334,9 +334,9 @@ export const ReadRegisteredUserAllData = async (req, res) => {
 //Fetch data from mongodb -- > Get Specific Registered User Data  :
 export const ReadRegisteredUserSpecificData = async (req, res) => {
   try {
-    let { id } = req.params;
+    let { userName } = req.params;
     //Find user Already Exist with this email or not
-    let findUser = await UserAuth.findById(id);
+    let findUser = await UserAuth.findOne({userName});
     //If exist through on error
     if (findUser) {
       res.status(200).json({ message: "User data Fetched", data: findUser });

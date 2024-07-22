@@ -6,7 +6,7 @@ import standard from "../../../../../assets/animations/standard.gif";
 import basic from "../../../../../assets/animations/basic.gif";
 import enterprice from "../../../../../assets/animations/enterprice.gif";
 import { toast, Toaster } from "react-hot-toast";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Context from "../../../../UseContext/Context";
@@ -366,8 +366,8 @@ let EnterPrice_Plans = [
   },
 ];
 const Plan = () => {
-  let navigate=useNavigate();
-  let {userName,URL_Alies}=useParams();
+  let navigate = useNavigate();
+  let { URL_Alies } = useParams();
   let {
     currentPlan,
     setCurrentPlan,
@@ -375,11 +375,17 @@ const Plan = () => {
     setPlanPrice,
     FormSubmitLoader,
     setFormSubmitLoader,
+    userName,
   } = useContext(Context);
 
   let [currentAccessDetails, setCurrentAccessDetails] = useState();
   let [currentAccessActive, setCurrentAccessActive] = useState(false);
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  let [userData, setUserData] = useState();
+  const [amount, setAmount] = useState("");
+
+  console.log(amount, typeof amount);
+
   const [key, setKey] = useState(0);
 
   var reloadComponent = () => {
@@ -395,7 +401,7 @@ const Plan = () => {
   }
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
+  });
   async function handlePlanSubmit(e) {
     e.preventDefault();
     try {
@@ -413,10 +419,8 @@ const Plan = () => {
           },
         })
         .then((res) => {
-       
           toast.success(res.data.message);
           setFormSubmitLoader(false);
-       
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -427,42 +431,107 @@ const Plan = () => {
     }
   }
 
-  useEffect(() => {
-    api
-      .get(
-        `/currentplan/specificAll/${userName}`,
-        {
+  async function FetchUserRegisterData() {
+    try {
+      await api
+        .get(`/auth/register/${userName}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
-        }
-      )
+        })
+        .then((res) => {
+          setUserData(res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    api
+      .get(`/currentplan/specificAll/${userName}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorageDatas.token}`,
+        },
+      })
       .then((res) => {
-console.log(res.data.data[0])
-        if(res.data.data[0].currentPlan == null){
-            setCurrentPlan(null)
+        console.log(res.data.data[0]);
+        if (res.data.data[0].currentPlan == null) {
+          setCurrentPlan(null);
+        } else {
+          setCurrentPlan(res.data.data[0].currentPlan);
         }
-        else{
-          setCurrentPlan(res.data.data[0].currentPlan)
-        }
-
- 
-         
-     
       })
       .catch((error) => {
         console.log(error);
       });
+    FetchUserRegisterData();
   }, [FormSubmitLoader]);
 
   function handleAccessDetails(data) {
     setCurrentAccessDetails(data);
-    setCurrentAccessActive(true)
+    setCurrentAccessActive(true);
   }
+
+  async function handlePayment(e) {
+    e.preventDefault();
+    //Get key value:
+    const {
+      data: { key },
+    } = await api.get("/razorpay/getkey", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorageDatas.token}`,
+      },
+    });
+
+    const { data } = await api.post(
+      "/razorpay/checkout",
+      {
+        amount,
+        currency: "INR",
+        receipt: "receipt#1",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorageDatas.token}`,
+        },
+      }
+    );
+
+    const options = {
+      key, // Enter the Key ID generated from the Dashboard
+      amount: amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: `${userData.firstName}  ${userData.lastName}`,
+      description: "Demo ",
+      image: userData.profile,
+      order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      callback_url: `${api}/razorpay/paymentVerification`,
+      prefill: {
+        name: userData.firstName,
+        email: userData.email,
+        contact: userData.mobileNumber,
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#01324e",
+      },
+    };
+    var razor = new window.Razorpay(options);
+    razor.open();
+  }
+
   return (
     <>
-      <div className="plan_container" >
+      <div className="plan_container">
         {/* {currentAccessDetails === 1 ? (
           <>
             {Free_Plans.map((data, index) => {
@@ -500,9 +569,15 @@ console.log(res.data.data[0])
           <>
             {Basic_Plans.map((data, index) => {
               return (
-                <div className="plan_access_details" id={currentAccessActive ?'activeDetail':''}>
-                      <div className="plan_close" onClick={()=>setCurrentAccessActive(false)}>
-                  <i className='bx bx-message-x'></i>
+                <div
+                  className="plan_access_details"
+                  id={currentAccessActive ? "activeDetail" : ""}
+                >
+                  <div
+                    className="plan_close"
+                    onClick={() => setCurrentAccessActive(false)}
+                  >
+                    <i className="bx bx-message-x"></i>
                   </div>
                   <div className="plan_title">
                     <h6>{data.PlanName} Plan Access</h6>
@@ -532,9 +607,15 @@ console.log(res.data.data[0])
           <>
             {Standard_Plans.map((data, index) => {
               return (
-                <div className="plan_access_details" id={currentAccessActive ?'activeDetail':''}>
-                      <div className="plan_close" onClick={()=>setCurrentAccessActive(false)}>
-                  <i className='bx bx-message-x'></i>
+                <div
+                  className="plan_access_details"
+                  id={currentAccessActive ? "activeDetail" : ""}
+                >
+                  <div
+                    className="plan_close"
+                    onClick={() => setCurrentAccessActive(false)}
+                  >
+                    <i className="bx bx-message-x"></i>
                   </div>
                   <div className="plan_title">
                     <h6>{data.PlanName} Plan Access</h6>
@@ -564,9 +645,15 @@ console.log(res.data.data[0])
           <>
             {EnterPrice_Plans.map((data, index) => {
               return (
-                <div className="plan_access_details" id={currentAccessActive ?'activeDetail':''}>
-                  <div className="plan_close" onClick={()=>setCurrentAccessActive(false)}>
-                  <i className='bx bx-message-x'></i>
+                <div
+                  className="plan_access_details"
+                  id={currentAccessActive ? "activeDetail" : ""}
+                >
+                  <div
+                    className="plan_close"
+                    onClick={() => setCurrentAccessActive(false)}
+                  >
+                    <i className="bx bx-message-x"></i>
                   </div>
                   <div className="plan_title">
                     <h6>{data.PlanName} Plan Access</h6>
@@ -593,28 +680,37 @@ console.log(res.data.data[0])
           ""
         )}
         <Toaster position="top-right" />
-        <div id={currentAccessActive ? 'listView' :'listUnview'} >
-        <div className="plan_title">
-          <h5>{currentPlan != null ? "Plan Subscribed!" :"Choose Your Subscription"}</h5>
-          {currentPlan != null ? (
-            <div className="actions">
-              <button onClick={handlePlanSubmit} type="submit">
-                Save
-              </button>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-        <div className="note">
-          <small>
-            <b>Note : </b> Select your subscription plan to get more feature{" "}
-            <b>VCard Templates</b> and increase your site active duration etc..
-          </small>
-        </div>
-        <div className="all_plans_container_box">
-          {/* plan1 */}
-          {/* {Free_Plans.map((data, index) => {
+        <div id={currentAccessActive ? "listView" : "listUnview"}>
+          <div className="plan_title">
+            <h5>
+              {currentPlan != null
+                ? "Plan Subscribed!"
+                : "Choose Your Subscription"}
+            </h5>
+            {currentPlan != null ? (
+              <div className="actions">
+                <button
+                  onClick={handlePayment}
+                  type="submit"
+                  {...(currentPlan === null ? disabled : "")}
+                >
+                 <i className='bx bxs-bank'></i> Pay Now
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="note">
+            <small>
+              <b>Note : </b> Select your subscription plan to get more feature{" "}
+              <b>VCard Templates</b> and increase your site active duration
+              etc..
+            </small>
+          </div>
+          <div className="all_plans_container_box">
+            {/* plan1 */}
+            {/* {Free_Plans.map((data, index) => {
             return (
               <div
                 key={index}
@@ -667,180 +763,174 @@ console.log(res.data.data[0])
               </div>
             );
           })} */}
-          {Basic_Plans.map((data, index) => {
-            return (
-              <div
-                key={index}
-                className="plan"
-                id={currentPlan === data.PlanName ? "active" : ""}
-                // onClick={() => {
-                //   handle_Plan_Selection(data.PlanName),
-                //     setPlanPrice(data.PlanPrice);
-                // }}
-              >
+            {Basic_Plans.map((data, index) => {
+              return (
                 <div
-                  className="access_details_icons"
-                  title="details"
-                  onClick={() => handleAccessDetails(data.id)}
+                  key={index}
+                  className="plan"
+                  id={currentPlan === data.PlanName ? "active" : ""}
+                  // onClick={() => {
+                  //   handle_Plan_Selection(data.PlanName),
+                  //     setPlanPrice(data.PlanPrice);
+                  // }}
                 >
-                  <i className='bx bx-list-ul'></i>
-                </div>
-                <div className="batches">
-                  <img src={data.batches} alt="batch" />
-                </div>
-                <div className="plan_title">
-                  <h3>{data.PlanName}</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ {data.PlanPrice} <small>/{data.Duration}</small>
-                  </h2>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCards : <span>{data.VCardCount}</span>
-                  </p>
-                </div>
-
-                <div className="plan_action">
                   <div
-                    onClick={() => {
-                      setCurrentPlan(data.PlanName);
-                      handle_Plan_Selection(data.PlanName),
-                      setPlanPrice(data.PlanPrice);
-                    }}
-                    className="action_div"
-                    id={currentPlan === data.PlanName ? "activePlan" : ""}
+                    className="access_details_icons"
+                    title="details"
+                    onClick={() => handleAccessDetails(data.id)}
                   >
-                    <button>
-                      {currentPlan === data.PlanName
-                        ? "Selected"
-                        : "Choose Plan"}
-                    </button>
+                    <i className="bx bx-list-ul"></i>
+                  </div>
+                  <div className="batches">
+                    <img src={data.batches} alt="batch" />
+                  </div>
+                  <div className="plan_title">
+                    <h3>{data.PlanName}</h3>
+                  </div>
+                  <div className="plan_price">
+                    <h2>
+                      ₹ {data.PlanPrice} <small>/{data.Duration}</small>
+                    </h2>
+                  </div>
+                  <div className="card_count">
+                    <p>
+                      No of VCard Design's : <span>{data.VCardCount}</span>
+                    </p>
+                  </div>
+
+                  <div className="plan_action">
+                    <div
+                      onClick={() => {
+                        setCurrentPlan(data.PlanName);
+                        handle_Plan_Selection(data.PlanName),
+                          setPlanPrice(data.PlanPrice);
+                      }}
+                      className="action_div"
+                      id={currentPlan === data.PlanName ? "activePlan" : ""}
+                    >
+                      <button onClick={() => setAmount(Number(data.PlanPrice))}>
+                        {currentPlan === data.PlanName
+                          ? "Plan Selected"
+                          : "Choose Plan"}
+                      </button>
+                    </div>
                   </div>
                 </div>
-          
-              </div>
-            );
-          })}
-          {Standard_Plans.map((data, index) => {
-            return (
-              <div
-                key={index}
-                className="plan"
-         
-                // onClick={() => {
-                //   handle_Plan_Selection(data.PlanName),
-                //     setPlanPrice(data.PlanPrice);
-                // }}
-                id={currentPlan === data.PlanName ? "active" : ""}
-              >
+              );
+            })}
+            {Standard_Plans.map((data, index) => {
+              return (
                 <div
-                  className="access_details_icons"
-                  title="details"
-                  onClick={() => handleAccessDetails(data.id)}
+                  key={index}
+                  className="plan"
+                  // onClick={() => {
+                  //   handle_Plan_Selection(data.PlanName),
+                  //     setPlanPrice(data.PlanPrice);
+                  // }}
+                  id={currentPlan === data.PlanName ? "active" : ""}
                 >
-                    <i className='bx bx-list-ul'></i>
-                </div>
-                <div className="batches">
-                  <img src={data.batches} alt="batch" />
-                </div>
-                <div className="plan_title">
-                  <h3>{data.PlanName}</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ {data.PlanPrice} <small>/{data.Duration}</small>
-                  </h2>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCards : <span>{data.VCardCount}</span>
-                  </p>
-                </div>
-
-                <div className="plan_action">
                   <div
-                    onClick={() => {
-                      setCurrentPlan(data.PlanName);
-                      handle_Plan_Selection(data.PlanName),
-                      setPlanPrice(data.PlanPrice);
-                    }}
-                    className="action_div"
-                    id={currentPlan === data.PlanName ? "activePlan" : ""}
+                    className="access_details_icons"
+                    title="details"
+                    onClick={() => handleAccessDetails(data.id)}
                   >
-                    <button>
-                      {currentPlan === data.PlanName
-                        ? "Selected"
-                        : "Choose Plan"}
-                    </button>
+                    <i className="bx bx-list-ul"></i>
+                  </div>
+                  <div className="batches">
+                    <img src={data.batches} alt="batch" />
+                  </div>
+                  <div className="plan_title">
+                    <h3>{data.PlanName}</h3>
+                  </div>
+                  <div className="plan_price">
+                    <h2>
+                      ₹ {data.PlanPrice} <small>/{data.Duration}</small>
+                    </h2>
+                  </div>
+                  <div className="card_count">
+                    <p>
+                      No of VCard Design's : <span>{data.VCardCount}</span>
+                    </p>
+                  </div>
+
+                  <div className="plan_action">
+                    <div
+                      onClick={() => {
+                        setCurrentPlan(data.PlanName);
+                        handle_Plan_Selection(data.PlanName),
+                          setPlanPrice(data.PlanPrice);
+                      }}
+                      className="action_div"
+                      id={currentPlan === data.PlanName ? "activePlan" : ""}
+                    >
+                      <button onClick={() => setAmount(Number(data.PlanPrice))}>
+                        {currentPlan === data.PlanName
+                          ? "Plan Selected"
+                          : "Choose Plan"}
+                      </button>
+                    </div>
                   </div>
                 </div>
-           
-              </div>
-            );
-          })}
-          {EnterPrice_Plans.map((data, index) => {
-            return (
-              <div
-                key={index}
-                className="plan"
-         
-                // onClick={() => {
-                //   handle_Plan_Selection(data.PlanName),
-                //     setPlanPrice(data.PlanPrice);
-                // }}
-                id={currentPlan === data.PlanName ? "active" : ""}
-              >
+              );
+            })}
+            {EnterPrice_Plans.map((data, index) => {
+              return (
                 <div
-                  className="access_details_icons"
-                  title="details"
-                  onClick={() => handleAccessDetails(data.id)}
+                  key={index}
+                  className="plan"
+                  // onClick={() => {
+                  //   handle_Plan_Selection(data.PlanName),
+                  //     setPlanPrice(data.PlanPrice);
+                  // }}
+                  id={currentPlan === data.PlanName ? "active" : ""}
                 >
-                  <i className='bx bx-list-ul'></i>
-                </div>
-                <div className="batches">
-                  {/* <img src={data.batches} alt="batch" /> */}
-                  <i className='bx bxs-purchase-tag bx-tada' ></i>
-                </div>
-                <div className="plan_title">
-                  <h3>{data.PlanName}</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ {data.PlanPrice} <small>/{data.Duration}</small>
-                  </h2>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCards : <span>{data.VCardCount}</span>
-                  </p>
-                </div>
-
-                <div className="plan_action">
                   <div
-                    onClick={() => {
-                      setCurrentPlan(data.PlanName);
-                      handle_Plan_Selection(data.PlanName),
-                      setPlanPrice(data.PlanPrice);
-                    }}
-                    className="action_div"
-                    id={currentPlan === data.PlanName ? "activePlan" : ""}
+                    className="access_details_icons"
+                    title="details"
+                    onClick={() => handleAccessDetails(data.id)}
                   >
-                    <button>
-                      {currentPlan === data.PlanName
-                        ? "Selected"
-                        : "Choose Plan"}
-                    </button>
+                    <i className="bx bx-list-ul"></i>
+                  </div>
+                  <div className="batches">
+                    {/* <img src={data.batches} alt="batch" /> */}
+                    <i className="bx bxs-purchase-tag bx-tada"></i>
+                  </div>
+                  <div className="plan_title">
+                    <h3>{data.PlanName}</h3>
+                  </div>
+                  <div className="plan_price">
+                    <h2>
+                      ₹ {data.PlanPrice} <small>/{data.Duration}</small>
+                    </h2>
+                  </div>
+                  <div className="card_count">
+                    <p>
+                      No of VCard Design's : <span>{data.VCardCount}</span>
+                    </p>
+                  </div>
+
+                  <div className="plan_action">
+                    <div
+                      onClick={() => {
+                        setCurrentPlan(data.PlanName);
+                        handle_Plan_Selection(data.PlanName),
+                          setPlanPrice(data.PlanPrice);
+                      }}
+                      className="action_div"
+                      id={currentPlan === data.PlanName ? "activePlan" : ""}
+                    >
+                      <button onClick={() => setAmount(Number(data.PlanPrice))}>
+                        {currentPlan === data.PlanName
+                          ? "Plan Selected"
+                          : "Choose Plan"}
+                      </button>
+                    </div>
                   </div>
                 </div>
-        
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-        </div>
-    
       </div>
     </>
   );

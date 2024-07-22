@@ -14,7 +14,7 @@ router.post('/forgot_password',ForgotPassword);
 //Reset Passoword:
 router.post('/reset_password/:id/:token',ResetPassword);
 //Get Specific user Data
-router.get('/register/:id',ReadRegisteredUserSpecificData);
+router.get('/register/:userName',ReadRegisteredUserSpecificData);
 //Update Specific User Data:
 router.put('/register/:id',UpdateRegisteredUserSpecificData);
 //Delete Specific User Data:
