@@ -39,4 +39,4 @@ const PaymentResponse = () => {
   );
 };
 
-export default PaymentResponse;
+// export default PaymentResponse;

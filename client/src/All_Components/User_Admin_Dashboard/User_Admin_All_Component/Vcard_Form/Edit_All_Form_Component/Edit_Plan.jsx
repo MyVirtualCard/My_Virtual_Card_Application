@@ -463,7 +463,7 @@ console.log(res.data.data[0])
   return (
     <>
       <div className="plan_container" >
-        {currentAccessDetails === 1 ? (
+        {/* {currentAccessDetails === 1 ? (
           <>
             {Free_Plans.map((data, index) => {
               return (
@@ -495,7 +495,7 @@ console.log(res.data.data[0])
           </>
         ) : (
           ""
-        )}
+        )} */}
         {currentAccessDetails === 2 ? (
           <>
             {Basic_Plans.map((data, index) => {
@@ -614,7 +614,7 @@ console.log(res.data.data[0])
         </div>
         <div className="all_plans_container_box">
           {/* plan1 */}
-          {Free_Plans.map((data, index) => {
+          {/* {Free_Plans.map((data, index) => {
             return (
               <div
                 key={index}
@@ -666,7 +666,7 @@ console.log(res.data.data[0])
        
               </div>
             );
-          })}
+          })} */}
           {Basic_Plans.map((data, index) => {
             return (
               <div

@@ -257,7 +257,7 @@ const User_VCards = () => {
                           </td>
 
                           <td className="fw-light plan">
-                            <i class="bx bxs-group"></i>
+                            <i className="bx bxs-group"></i>
                           </td>
                           <td className="fw-light">
                             <small>
