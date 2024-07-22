@@ -618,16 +618,9 @@ const LandingPage = () => {
                           ? "50% Offer!"
                           : "Plan Expired!"}
                         {Hours && Minutes && Days && Minutes !== "00" ? (
-                          <sup>
-                            <i className="bx bxs-bell-minus bx-tada"></i>
-                          </sup>
+                         ''
                         ) : (
-                          <sup>
-                            <i
-                              className="bx bxs-bell-minus bx-tada"
-                              style={{ color: "red" }}
-                            ></i>
-                          </sup>
+                        ''
                         )}
                       </strong>
                     </div>
@@ -686,29 +679,12 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
+              <div className="title">
+              <h3>Design Your Digital Identity</h3>
+              <h4>Introducing Custom vCards</h4>
+              </div>
+      
               <img src={slide1_banner} alt="banner" />
-              {/* <m.img
-                src={slide_1_image}
-                alt=""
-                className={ImageToggle ? "image_1_show" : "image_1_hide"}
-              />
-
-              <m.img
-                src={illustraion}
-                alt=""
-                className={!ImageToggle ? "image_2_show" : "image_2_hide"}
-              />
-
-              <div
-                className="message_gif"
-                id={ImageToggle ? "image_1_show" : "image_1_hide"}
-              >
-                <img
-                  src={message}
-                  alt="message"
-                  variants={right_slide_1Anime}
-                />
-              </div> */}
 
               <m.div className="extra_designs">
                 <m.div className="design1" variants={right_slide_1Anime}>
@@ -1119,7 +1095,7 @@ const LandingPage = () => {
             animate="show"
           >
             {/* plan demo*/}
-            <m.div
+            {/* <m.div
               className="plan"
               variants={plan_box_slide_5Anime}
               id={planExpand ? "expand" : "default"}
@@ -1170,7 +1146,7 @@ const LandingPage = () => {
                   );
                 })}
               </m.div>
-            </m.div>
+            </m.div> */}
             {/* plan1 */}
             <m.div
               className="plan"
