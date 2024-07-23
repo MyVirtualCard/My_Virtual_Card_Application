@@ -85,7 +85,7 @@ let Basic_Plans = [
     PlanName: "Basic",
     batches: basic,
     Duration: "Yearly",
-    PlanPrice: 599,
+    PlanPrice: 100,
     VCardCount: "05",
     Access: [
       {

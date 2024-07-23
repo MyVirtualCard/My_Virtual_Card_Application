@@ -68,7 +68,7 @@ const User_VCards = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
+              Authorization: `Bearer ${userData.token}`,
             },
           }
         )
@@ -99,7 +99,7 @@ const User_VCards = () => {
       .get(`/templateDetail/specific/${userName}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorageDatas.token}`,
+          Authorization: `Bearer ${userData.token}`,
         },
       })
       .then((res) => {
@@ -144,6 +144,7 @@ const User_VCards = () => {
                   await api
                     .get(`/vcard_URL/${userName}`, {
                       headers: {
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${userData.token}`,
                       },
                     })
@@ -160,7 +161,7 @@ const User_VCards = () => {
                       }
                     })
                     .catch((error) => {
-                      console.log(error);
+                      console.log(error.message);
                     });
                 }}
                 className="fw-bolder"

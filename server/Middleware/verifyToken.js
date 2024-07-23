@@ -15,8 +15,6 @@ export const verifyToken = async (req, res, next) => {
 
       const decode = jwt.verify(token, process.env.SECRET_KEY);
       req.user = await UserAuth.findById(decode.id).select("password").select('userName');
-      res.header('Access-Control-Allow-Origin', 'https://myvirtualcard.in');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
       next()
     } catch (error) {
       return res.status(401).json({ error: "Not Autherized ,Wrong Token" });
