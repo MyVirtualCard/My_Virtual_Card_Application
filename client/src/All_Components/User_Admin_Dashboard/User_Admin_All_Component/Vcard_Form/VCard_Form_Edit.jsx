@@ -53,6 +53,7 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
           // toast.error('Choose Your Plan First!')
         }
       }).catch((error)=>{
+        console.log(error)
         toast.error(error.response.data.message)
       })
     }

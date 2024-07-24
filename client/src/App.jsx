@@ -178,6 +178,9 @@ const App = () => {
   let [SavedPlan, setSavedPlan] = useState(null);
   let [PlanPrice, setPlanPrice] = useState();
 
+  // PaymentPopup
+  let [PaymentSuccessPopup,setPaymentSuccessPopup]=useState(false);
+  
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -189,12 +192,12 @@ const App = () => {
   }, [navigate]);
 
   let [vcardSelection, setVcardSelection] = useState([]);
-  console.log(AuthToggle);
   return (
     <>
       <div className="App_container">
         <Context.Provider
           value={{
+            PaymentSuccessPopup,setPaymentSuccessPopup,
             URL_Alies,
             setURL_Alies,
             AuthToggle,

@@ -369,6 +369,8 @@ const Plan = () => {
   let navigate = useNavigate();
   let { URL_Alies } = useParams();
   let {
+    PaymentSuccessPopup,
+    setPaymentSuccessPopup,
     currentPlan,
     setCurrentPlan,
     PlanPrice,
@@ -502,8 +504,10 @@ const Plan = () => {
           },
           config
         );
-
-        alert("Payment Successful");
+        setTimeout(() => {
+          reloadComponent();
+        }, 15000);
+        setPaymentSuccessPopup(true);
         setPaymentPopup(false);
         setCurrentPlan(null);
       },
@@ -527,7 +531,6 @@ const Plan = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setPlanActive(res.data.data);
 
         setStatus(res.data.data[0].status);
@@ -545,7 +548,9 @@ const Plan = () => {
         setSeconds(Seconds - 1);
       }, 1000);
 
-      return () => {clearTimeout(timerId)};
+      return () => {
+        clearTimeout(timerId);
+      };
     }
   }, [Seconds]);
   function handleAccessDetails(data) {
@@ -562,7 +567,7 @@ const Plan = () => {
               <div className="note">
                 <p>
                   <strong>Note :</strong>&nbsp; If Your Payment created but not
-                  deduct any amount from your account retry payment after 5 min
+                  deduct any amount from your account retry payment after 1 min
                 </p>
               </div>
               <h4>
@@ -726,7 +731,7 @@ const Plan = () => {
           <div className="plan_title">
             <h5>
               {currentPlan != null
-                ? `${currentPlan } Plan Subscribed!`
+                ? `${currentPlan} Plan Subscribed!`
                 : "Choose Your Subscription"}
             </h5>
             {/* {currentPlan != null ? (

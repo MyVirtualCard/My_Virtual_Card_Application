@@ -12,14 +12,19 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 // import { Flip, toast, ToastContainer } from "react-toastify";
 import { Toaster, toast } from "react-hot-toast";
 import VCard_Form_Edit from "../User_Admin_All_Component/Vcard_Form/VCard_Form_Edit";
-
+import { frame as m } from "framer-motion";
 import VCard_URL_Form from "../User_Admin_All_Component/VCard_URL_Form";
 import Inquiries from "../User_Admin_All_Component/Inquiries";
+import paymentImage from "../../../assets/PaymentPopup/payment1.jpg";
+import Confetti from 'react-confetti'
 const UserAdmin = () => {
   let { Index } = useParams();
   let navigate = useNavigate();
+let [pieces,setPieces]=useState(150);
 
   let {
+    PaymentSuccessPopup,
+    setPaymentSuccessPopup,
     URL_Alies,
     userData,
     setUserData,
@@ -32,7 +37,6 @@ const UserAdmin = () => {
     setProfileOpen,
 
     setUser,
-
   } = useContext(Context);
 
   let [confirmPassToggle, setConfirmPassToggle] = useState(false);
@@ -56,7 +60,7 @@ const UserAdmin = () => {
       toast.success("LogOut successfully");
       setTimeout(() => {
         setUser(null);
-        navigate('/')
+        navigate("/");
         // window.location.pathname = "/";
       }, 2000);
     } catch (err) {
@@ -67,25 +71,80 @@ const UserAdmin = () => {
   let localStorageURL = localStorage.getItem("URL_Alies");
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
+  });
 
   useEffect(() => {
-
-    api.get(`/auth/register/${userName}`)
+    api
+      .get(`/auth/register/${userName}`)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setUserData(res.data.data);
       })
       .catch((error) => {
         console.log(error.response.data.message);
       });
-
-      
   }, []);
+  let [Seconds, setSeconds] = useState("15");
+  useEffect(() => {
+    if (Seconds > 0 && PaymentSuccessPopup === true) {  
+      const timerId = setTimeout(() => {
+        setSeconds(Seconds - 1);  
+        setTimeout(()=>{
+          setPieces(0)
+        },5000)
+      }, 1000);
+      return () => {
+        clearTimeout(timerId);
+      };
+    }
+  });
 
+
+  if (Seconds <= 0) {
+    setPaymentSuccessPopup(false);
+  }
+  console.log(Seconds, PaymentSuccessPopup);
   return (
     <>
       <div className="userAdmin_container">
+        {/* PaymentSuccess Popup */}
+        {PaymentSuccessPopup ? (
+          <div className="payment_popup_container">
+            <div className="popup">
+              <div className="left">
+                <h3>Your Plan has been Successfully Purchased!</h3>
+                <div className="content">
+                  <small>
+                    Now you proceed to build your Digital VCard Website ..There
+                    are lot of feature added on your site ..Like your basic data
+                    information , add all your social media link ,your service
+                    and products etc....{" "}
+                  </small>
+                </div>
+
+                <div className="timer_container">
+                  <div className="timer_content">
+                    <h3>Redirect back to your Dashboard..</h3>
+                    <h2>
+                      <small>Time remaining :</small>
+                      {Seconds}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <div className="right">
+                <img
+                  src="https://img.freepik.com/free-vector/hand-drawn-installment-illustration_23-2149397096.jpg?t=st=1721843233~exp=1721846833~hmac=8163043aca14596ef0924cecf201e2094b81fad4b2fac4cf0c91e20b49d45fb1&w=740"
+                  alt="payment"
+                />
+              </div>
+            </div>
+            <Confetti gravity={0.2} numberOfPieces={pieces}/>
+          </div>
+        ) : (
+          ""
+        )}
+
         {FormSubmitLoader ? (
           <div className="form_submit_loader">
             <div className="form_loader"></div>
@@ -100,7 +159,6 @@ const UserAdmin = () => {
         <div className="content_box">
           <div
             className="content_left"
-
             id={!SideNavActions ? "slideNavClose" : "SideNavOpen"}
           >
             <User_Admin_SideNavBar />
@@ -110,7 +168,11 @@ const UserAdmin = () => {
             onClick={() => {
               setConfirmPassToggle(false), setProfileOpen(false);
             }}
-            id={!SideNavActions ? "content_right_expand" : "content_right_minimize"}
+            id={
+              !SideNavActions
+                ? "content_right_expand"
+                : "content_right_minimize"
+            }
           >
             {window.location.pathname === `/${userName}/uadmin/dashboard` ? (
               <User_Dashboard />
@@ -123,7 +185,7 @@ const UserAdmin = () => {
             ) : (
               ""
             )}
-             {window.location.pathname === `/${userName}/uadmin/inquiries` ? (
+            {window.location.pathname === `/${userName}/uadmin/inquiries` ? (
               <Inquiries />
             ) : (
               ""
@@ -140,10 +202,11 @@ const UserAdmin = () => {
             ) : (
               ""
             )} */}
-          
+
             {window.location.pathname ==
-            `/${userName}/uadmin/vcard_form_edit/${URL_Alies}` || window.location.pathname ==
-            `/${userName}/uadmin/vcard_form_edit/${localStorageURL}` ? (
+              `/${userName}/uadmin/vcard_form_edit/${URL_Alies}` ||
+            window.location.pathname ==
+              `/${userName}/uadmin/vcard_form_edit/${localStorageURL}` ? (
               <VCard_Form_Edit />
             ) : (
               ""
@@ -154,7 +217,6 @@ const UserAdmin = () => {
             ) : (
               ""
             )}
-        
           </div>
 
           {/* //User Profile : */}
@@ -171,7 +233,9 @@ const UserAdmin = () => {
                 />
               </div>
               <div className="user_name">
-                <p>{userData.firstName} {userData.lastName}</p>
+                <p>
+                  {userData.firstName} {userData.lastName}
+                </p>
                 <small>{userData.email}</small>
               </div>
             </div>
