@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 const User_VCards = () => {
   // let { userName } = useParams();
   let navigate = useNavigate();
-  let { userName,setFormSubmitLoader } = useContext(Context);
+  let { userName, setFormSubmitLoader } = useContext(Context);
   let [CurrentPlan, setCurrentPlan] = useState();
   let [savedVCardTemplate, setSavedVCardTemplate] = useState([]);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
@@ -26,7 +26,7 @@ const User_VCards = () => {
   };
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
+  });
   useEffect(() => {
     setFormSubmitLoader(true);
     api
@@ -47,7 +47,7 @@ const User_VCards = () => {
 
   useEffect(() => {
     api
-      .get(`/currentplan/specificAll/${userName}`, {
+      .get(`/razorpay/specificUser/${userName}`, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },
@@ -63,15 +63,12 @@ const User_VCards = () => {
     setFormSubmitLoader(true);
     try {
       await api
-        .delete(
-          `/vcard/all_Data_Delete_API/${URL_Alies}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userData.token}`,
-            },
-          }
-        )
+        .delete(`/vcard/all_Data_Delete_API/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userData.token}`,
+          },
+        })
         .then((res) => {
           reloadComponent();
           toast.success("Your VCard Sucessfully Deleted!");

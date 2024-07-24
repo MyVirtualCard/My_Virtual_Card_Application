@@ -20,5 +20,4 @@ router.put('/register/:id',UpdateRegisteredUserSpecificData);
 //Delete Specific User Data:
 router.delete('/register/:id',DeleteRegisteredUserSpecificData);
 
-
 export default router;

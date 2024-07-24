@@ -39,7 +39,7 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
 });
   useEffect(()=>{
     try{
-      api.get(`/currentplan/specificAll/${userName}`,   {
+      api.get(`/razorpay/specificUser/${userName}`,   {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorageDatas.token}`,
@@ -50,7 +50,7 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
           setCurrentPlanActive(res.data.data.length)
         }
         else{
-          toast.error('Choose Your Plan First!')
+          // toast.error('Choose Your Plan First!')
         }
       }).catch((error)=>{
         toast.error(error.response.data.message)

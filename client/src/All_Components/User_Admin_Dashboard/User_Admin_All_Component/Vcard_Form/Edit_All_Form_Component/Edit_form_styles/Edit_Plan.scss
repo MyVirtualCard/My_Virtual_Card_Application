@@ -3,9 +3,52 @@
     width: 100%;
     height: 100%;
     padding: 1rem;
-
     overflow-y: scroll;
 
+.repayment_timer_container{
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+.note{
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 550;
+    color: gray;
+
+    strong{
+      color: green;
+    }
+  }
+}
+  .timer{
+
+    h4{
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: red;
+
+      small{
+        font-size: 0.7rem;
+        font-weight: 550;
+        color: gray;
+      }
+    }
+  }
+}
     .plan_access_details{
       position: absolute;
       width:35%;
@@ -176,12 +219,134 @@ overflow: hidden;
         grid-row-gap: 1rem;
         grid-column-gap: 1rem;
         place-items: center;
-
 background-color: #fff;
-
         margin:1rem auto;
         padding: 10px;
+        position: relative;
 
+            // Popup container
+    .popup_container{
+      position: absolute;
+ 
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff91;
+      border-radius: 10px;
+      z-index: 900;
+
+      .popup_box{
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        width: 50%;
+        height: 70%;
+        box-shadow: 0px 4px 5px rgba(0,0,0,0.5);
+        border-radius: 10px;
+        padding: 10px;
+        scale: 0;
+        transition: all 0.5s ease-in-out;
+        .popup_header{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+
+          h5{
+            color: #054e61;
+          }
+        }
+        .amount{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 10px;
+
+   h6{
+    padding: 10px 1rem;
+    // background-color: royalblue;
+    color: #424242;
+    border-radius: 10px;
+    font-size: 1.2rem;
+
+    small{
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+   }
+        }
+        .actions{
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          width: 100%;
+          height: 40%;
+
+          button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100px;
+            height: 40px;
+            border-radius: 5px;
+            padding: 0px 10px;
+            font-size: 0.9rem;
+            font-weight: 550;
+            cursor: pointer;
+
+            i{
+              font-size: 1.2rem;
+
+              &:nth-child(1){
+            
+               color: rgb(255, 255, 255);
+         
+           }
+
+            }
+
+            &:nth-child(1){
+            
+                 background-color: #468073;
+                 color: #fff;
+          
+            }
+            &:nth-child(2){
+            
+              background-color: tomato;
+              color: #fff;
+       
+         }
+
+         &:hover{
+          box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+         }
+          }
+      
+        }
+  
+      }
+
+      #activePaymentPopup{
+        scale: 1;
+        transition: all 0.5s ease-in-out;
+      }
+      #closePaymentPopup{
+        scale: 0;
+        transition: all 0.5s ease-in-out;
+      }
+
+    }
+    #activePaymentContainer{
+      scale: 1;
+      transition: all 0.5s ease-in-out;
+    }
+    #closePaymentContainer{
+      scale: 0;
+      transition: all 0.5s ease-in-out;
+    }
         .plan {
             width: 90%;
 
@@ -323,6 +488,10 @@ background-color: #fff;
                     transition: all 0.3s ease;
                   }
                 }
+                #disable{
+                  cursor: not-allowed;
+                  display: none;
+                }
               }
               #activePlan{
 
@@ -392,6 +561,7 @@ background-color: #fff;
      
         
     }
+
     &::-webkit-scrollbar {
         width: 3px;
         height: 4px;

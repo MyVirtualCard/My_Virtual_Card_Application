@@ -85,7 +85,7 @@ let Basic_Plans = [
     PlanName: "Basic",
     batches: basic,
     Duration: "Yearly",
-    PlanPrice: 100,
+    PlanPrice: 599,
     VCardCount: "05",
     Access: [
       {
@@ -380,21 +380,22 @@ const Plan = () => {
 
   let [currentAccessDetails, setCurrentAccessDetails] = useState();
   let [currentAccessActive, setCurrentAccessActive] = useState(false);
+  let [paymentPopup, setPaymentPopup] = useState(false);
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  let [status, setStatus] = useState(null);
   let [userData, setUserData] = useState();
   const [amount, setAmount] = useState("");
-
-  console.log(amount, typeof amount);
-
+  let [Seconds, setSeconds] = useState("60");
   const [key, setKey] = useState(0);
+  let [activePlan, setPlanActive] = useState([]);
 
   var reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
   function handle_Plan_Selection(getCurrentPlan) {
     setCurrentPlan(getCurrentPlan === currentPlan ? null : getCurrentPlan);
-    if (getCurrentPlan === currentPlan) {
-      toast.error("Select Your Plan!");
+    if (getCurrentPlan == currentPlan) {
+      // toast.error("Select Your Plan!");
     } else {
       toast.success(`${getCurrentPlan} Plan Selected!`);
     }
@@ -450,88 +451,129 @@ const Plan = () => {
       console.log(error);
     }
   }
+  const createOrder = async (amount, token) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const orderData = await api.post(
+      "/razorpay/create-order",
+      {
+        amount: amount,
+        currency: "INR",
+        receipt: "receipt#1",
+      },
+      config
+    );
+
+    return orderData.data;
+  };
+
+  //Razor Payment
+  const handlePayment = async (amount, token) => {
+    const order = await createOrder(amount, localStorageDatas.token);
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_API_KEY,
+      amount: order.amount,
+      currency: order.currency,
+      name: `${userData.firstName} ${userData.lastName}`,
+      description: "Test Transaction",
+      image: userData.profile,
+      order_id: order.id,
+      handler: async function (response) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        await api.post(
+          "/razorpay/verify-payment",
+          {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            currentPlan: currentPlan,
+          },
+          config
+        );
+
+        alert("Payment Successful");
+        setPaymentPopup(false);
+        setCurrentPlan(null);
+      },
+      prefill: {
+        name: "Test User",
+        email: "test.user@example.com",
+        contact: "9999999999",
+      },
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   useEffect(() => {
     api
-      .get(`/currentplan/specificAll/${userName}`, {
+      .get(`/razorpay/specificUser/${userName}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorageDatas.token}`,
         },
       })
       .then((res) => {
-        console.log(res.data.data[0]);
-        if (res.data.data[0].currentPlan == null) {
-          setCurrentPlan(null);
-        } else {
-          setCurrentPlan(res.data.data[0].currentPlan);
-        }
+        console.log(res);
+        setPlanActive(res.data.data);
+
+        setStatus(res.data.data[0].status);
+        setCurrentPlan(res.data.data[0].currentPlan);
       })
       .catch((error) => {
         console.log(error);
       });
     FetchUserRegisterData();
-  }, [FormSubmitLoader]);
+  }, [FormSubmitLoader,Seconds]);
 
+  useEffect(() => {
+    if (Seconds > 0) {
+      const timerId = setTimeout(() => {
+        setSeconds(Seconds - 1);
+      }, 1000);
+
+      return () => {clearTimeout(timerId)};
+    }
+  }, [Seconds]);
   function handleAccessDetails(data) {
     setCurrentAccessDetails(data);
     setCurrentAccessActive(true);
   }
 
-  async function handlePayment(e) {
-    e.preventDefault();
-    //Get key value:
-    const {
-      data: { key },
-    } = await api.get("/razorpay/getkey", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorageDatas.token}`,
-      },
-    });
-
-    const { data } = await api.post(
-      "/razorpay/checkout",
-      {
-        amount,
-        currency: "INR",
-        receipt: "receipt#1",
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorageDatas.token}`,
-        },
-      }
-    );
-
-    const options = {
-      key, // Enter the Key ID generated from the Dashboard
-      amount: amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: `${userData.firstName}  ${userData.lastName}`,
-      description: "Demo ",
-      image: userData.profile,
-      order_id: data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: `${api}/razorpay/paymentVerification`,
-      prefill: {
-        name: userData.firstName,
-        email: userData.email,
-        contact: userData.mobileNumber,
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#01324e",
-      },
-    };
-    var razor = new window.Razorpay(options);
-    razor.open();
-  }
-
   return (
     <>
       <div className="plan_container">
+        {status === "created" ? (
+          <div className="repayment_timer_container">
+            <div className="timer">
+              <div className="note">
+                <p>
+                  <strong>Note :</strong>&nbsp; If Your Payment created but not
+                  deduct any amount from your account retry payment after 5 min
+                </p>
+              </div>
+              <h4>
+                {Seconds} <small>-Seconds more to retry payment!</small>
+              </h4>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
         {/* {currentAccessDetails === 1 ? (
           <>
             {Free_Plans.map((data, index) => {
@@ -684,22 +726,22 @@ const Plan = () => {
           <div className="plan_title">
             <h5>
               {currentPlan != null
-                ? "Plan Subscribed!"
+                ? `${currentPlan } Plan Subscribed!`
                 : "Choose Your Subscription"}
             </h5>
-            {currentPlan != null ? (
+            {/* {currentPlan != null ? (
               <div className="actions">
                 <button
-                  onClick={handlePayment}
+                  onClick={()=>handlePayment(amount,localStorageDatas.token)}
                   type="submit"
-                  {...(currentPlan === null ? disabled : "")}
+                  {...currentPlan === null ? disabled : ""}
                 >
-                 <i className='bx bxs-bank'></i> Pay Now
+                  <i className="bx bxs-bank"></i> Pay Now
                 </button>
               </div>
             ) : (
               ""
-            )}
+            )} */}
           </div>
           <div className="note">
             <small>
@@ -708,7 +750,50 @@ const Plan = () => {
               etc..
             </small>
           </div>
+
           <div className="all_plans_container_box">
+            {/* Payment popup container */}
+
+            <div
+              className="popup_container"
+              id={
+                paymentPopup
+                  ? "activePaymentContainer"
+                  : "closePaymentContainer"
+              }
+            >
+              <div
+                className="popup_box"
+                id={paymentPopup ? "activePaymentPopup" : "closePaymentPopup"}
+              >
+                <div className="popup_header">
+                  <h5>Activate Your {currentPlan} Plan!</h5>
+                </div>
+                <div className="amount">
+                  <h6>
+                    Amount : <small>₹{amount}</small>
+                  </h6>
+                </div>
+
+                <div className="actions">
+                  <button
+                    onClick={() =>
+                      handlePayment(amount, localStorageDatas.token)
+                    }
+                  >
+                    <i className="bx bxs-bank"></i> Pay Now
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPaymentPopup(false), setCurrentPlan(null);
+                    }}
+                  >
+                    <i className="bx bx-x"></i> Close
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* plan1 */}
             {/* {Free_Plans.map((data, index) => {
             return (
@@ -808,7 +893,13 @@ const Plan = () => {
                       className="action_div"
                       id={currentPlan === data.PlanName ? "activePlan" : ""}
                     >
-                      <button onClick={() => setAmount(Number(data.PlanPrice))}>
+                      <button
+                        onClick={() => {
+                          setAmount(Number(data.PlanPrice)),
+                            setPaymentPopup(true);
+                        }}
+                        id={status == "created" ? "disable" : ""}
+                      >
                         {currentPlan === data.PlanName
                           ? "Plan Selected"
                           : "Choose Plan"}
@@ -863,7 +954,13 @@ const Plan = () => {
                       className="action_div"
                       id={currentPlan === data.PlanName ? "activePlan" : ""}
                     >
-                      <button onClick={() => setAmount(Number(data.PlanPrice))}>
+                      <button
+                        onClick={() => {
+                          setAmount(Number(data.PlanPrice)),
+                            setPaymentPopup(true);
+                        }}
+                        id={status == "created" ? "disable" : ""}
+                      >
                         {currentPlan === data.PlanName
                           ? "Plan Selected"
                           : "Choose Plan"}
@@ -919,7 +1016,13 @@ const Plan = () => {
                       className="action_div"
                       id={currentPlan === data.PlanName ? "activePlan" : ""}
                     >
-                      <button onClick={() => setAmount(Number(data.PlanPrice))}>
+                      <button
+                        onClick={() => {
+                          setAmount(Number(data.PlanPrice)),
+                            setPaymentPopup(true);
+                        }}
+                        id={status == "created" ? "disable" : ""}
+                      >
                         {currentPlan === data.PlanName
                           ? "Plan Selected"
                           : "Choose Plan"}

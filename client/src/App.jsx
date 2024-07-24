@@ -451,7 +451,7 @@ const App = () => {
             {/* <Route path="/register" element={<Register />} /> */}
             {/* <Route path="/verify_OTP" element={<VerifyOTP />} /> */}
             <Route path="/login" element={<Login />} />
-            <Route path="/paymentsuccess" element={<PaymentSuccess/>}/>
+
             <Route
               path="/verify_OTP"
               element={
@@ -504,7 +504,9 @@ const App = () => {
                 path={`/${userName}/uadmin/account_setting`}
                 element={<UserAccountSetting />}
               />
+
             </Route>
+            <Route path='/paymentsuccess' element={<PaymentSuccess />} />
             <Route path="/terms_condition" element={<Terms_Condition />} />
             <Route path="/privacy_condition" element={<Privacy_Policy />} />
           </Routes>

@@ -3,9 +3,9 @@ import currentPlan from "../Models/Plan.model.js";
 //Post plan detail data to database:
 export const PostPlanData = async (req, res) => {
   try {
-    if (!req.body.PlanPrice) {
-      return res.status(401).json({ message: "Plan Not been Choosen!" });
-    }
+    // if (!req.body.PlanPrice) {
+    //   return res.status(401).json({ message: "Plan Not been Choosen!" });
+    // }
     let getSpecificData = await currentPlan.find({ user: req.user.userName });
 
     if (getSpecificData.length >= 1) {
