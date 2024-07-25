@@ -1095,7 +1095,7 @@ const LandingPage = () => {
             animate="show"
           >
             {/* plan demo*/}
-            {/* <m.div
+            <m.div
               className="plan"
               variants={plan_box_slide_5Anime}
               id={planExpand ? "expand" : "default"}
@@ -1107,11 +1107,11 @@ const LandingPage = () => {
                 <i className="bx bxs-chevron-down bx-tada"></i>
               </m.div>
               <m.div className="plan_title">
-                <h3>DEMO PLAN</h3>
+                <h3>FREE PLAN</h3>
               </m.div>
               <m.div className="plan_price">
                 <h2>
-                  ₹ 10 <small>/day</small>
+                  ₹ 10 <small>30/day</small>
                 </h2>
               </m.div>
               <m.div className="card_count">
@@ -1146,7 +1146,7 @@ const LandingPage = () => {
                   );
                 })}
               </m.div>
-            </m.div> */}
+            </m.div> 
             {/* plan1 */}
             <m.div
               className="plan"

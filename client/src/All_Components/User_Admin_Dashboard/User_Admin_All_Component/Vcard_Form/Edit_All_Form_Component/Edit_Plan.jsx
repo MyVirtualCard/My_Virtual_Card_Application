@@ -14,10 +14,10 @@ import Context from "../../../../UseContext/Context";
 let Free_Plans = [
   {
     id: 1,
-    PlanName: "Demo",
+    PlanName: "Free Plan",
     batches:
       "https://img.icons8.com/external-bearicons-flat-bearicons/64/external-Free-Trial-miscellany-texts-and-badges-bearicons-flat-bearicons.png",
-    Duration: "1-Day",
+    Duration: "30-Days",
     PlanPrice: 10,
     VCardCount: "01",
     Access: [
@@ -579,7 +579,7 @@ const Plan = () => {
           ""
         )}
 
-        {/* {currentAccessDetails === 1 ? (
+        {currentAccessDetails === 1 ? (
           <>
             {Free_Plans.map((data, index) => {
               return (
@@ -611,7 +611,7 @@ const Plan = () => {
           </>
         ) : (
           ""
-        )} */}
+        )}
         {currentAccessDetails === 2 ? (
           <>
             {Basic_Plans.map((data, index) => {
@@ -800,7 +800,7 @@ const Plan = () => {
             </div>
 
             {/* plan1 */}
-            {/* {Free_Plans.map((data, index) => {
+            {Free_Plans.map((data, index) => {
             return (
               <div
                 key={index}
@@ -828,7 +828,7 @@ const Plan = () => {
                 </div>
                 <div className="card_count">
                   <p>
-                    No of VCards : <span>{data.VCardCount}</span>
+                    No of VCard Design's : <span>{data.VCardCount}</span>
                   </p>
                 </div>
 
@@ -842,9 +842,13 @@ const Plan = () => {
                     className="action_div"
                     id={currentPlan === data.PlanName ? "activePlan" : ""}
                   >
-                    <button onClick={navigate('/payment')}>
+                    <button    onClick={() => {
+                          setAmount(Number(data.PlanPrice)),
+                            setPaymentPopup(true);
+                        }}
+                        id={status == "created" ? "disable" : ""}>
                       {currentPlan === data.PlanName
-                        ? "Selected"
+                        ? "Plan Selected"
                         : "Choose Plan"}
                     </button>
                   </div>
@@ -852,7 +856,7 @@ const Plan = () => {
        
               </div>
             );
-          })} */}
+          })}
             {Basic_Plans.map((data, index) => {
               return (
                 <div
