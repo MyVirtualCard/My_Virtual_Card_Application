@@ -18,12 +18,7 @@ import vcard5 from "../../assets/Digicards/5.png";
 import vcard6 from "../../assets/Digicards/6.png";
 import vcard7 from "../../assets/Digicards/7.png";
 import vcard8 from "../../assets/Digicards/8.png";
-import slide_1_image from "../../assets/LandingPage_image/slide-1.png";
-import illustraion from "../../assets/LandingPage_image/slide_right_svg.svg";
-import discount from "../../assets/LandingPage_image/sticker.png";
-import slide1_back from "../../assets/LandingPage_image/slide1_back.png";
 import slide1_banner from "../../assets/LandingPage_image/slide1_banner.png";
-import message from "../../assets/animations/message.gif";
 // import vcard1 from "../../assets/Digicards/vmob-1.png";
 // import vcard2 from "../../assets/Digicards/vmob-2.png";
 // import vcard3 from "../../assets/Digicards/vmob-3.png";
@@ -42,11 +37,10 @@ import number2 from "../../assets/Digicards/number2.png";
 import number3 from "../../assets/Digicards/number3.png";
 import nfc from "../../assets/LandingPage_image/view/4.png";
 import Lottie from "react-lottie";
-
 import anime1 from "../../assets/animations/Animation - 1717142280104.json";
-
 import { toast, Toaster } from "react-hot-toast";
 import { motion as m } from "framer-motion";
+import offerImage from "../../assets/LandingPage_image/Offer/6.png";
 import {
   topNavAnime,
   left_slide_1Anime,
@@ -236,9 +230,10 @@ let questions = [
   },
 ];
 const LandingPage = () => {
-  let { AuthToggle, setAuthToggle } = useContext(Context);
+  let { AuthToggle, setAuthToggle, userName } = useContext(Context);
   let navigate = useNavigate();
   const scrollContainerRef = useRef(null);
+  let [TrialExpand, setTrialExpand] = useState(false);
   let [planExpand, setPlanExpand] = useState(false);
   let [standardPlanExpand, setStandardPlanExpand] = useState(false);
   let [PremiumPlanExpand, setPremiumPlanExpand] = useState(false);
@@ -261,7 +256,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("July 25, 2024 00:00:00").getTime();
+    const countdownDate = new Date("July 31, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -386,6 +381,7 @@ const LandingPage = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
 
   return (
     <>
@@ -519,9 +515,15 @@ const LandingPage = () => {
                   </m.ul>
                 </m.div>
                 <m.div className="actions" variants={topNavAnime}>
-                  <Link to="/register">
-                    <button onClick={setAuthToggle(true)}>Login</button>
-                  </Link>
+                  {localStorageDatas === null ? (
+                    <Link to="/register">
+                      <button onClick={setAuthToggle(true)}>Login</button>
+                    </Link>
+                  ) : (
+                    <Link to={`/${userName}/uadmin/dashboard`}>
+                      <button onClick={setAuthToggle(true)}><i className='bx bxs-dashboard'></i>Dashboard</button>
+                    </Link>
+                  )}
 
                   <div
                     className="menu"
@@ -588,7 +590,22 @@ const LandingPage = () => {
               {/* //Timer_Box */}
 
               <m.div className="offer_container" variants={left_slide_1Anime}>
+                {/* OfferImage */}
+                <div className="offer_image">
+                  <img src={offerImage} alt="offer" />
+                </div>
                 <m.div className="offer_box">
+                  <div className="spark">
+                  <Lottie
+                    options={defaultOptions}
+                    style={{
+                      height: 150,
+                      width: 150,
+                      position: "absolute",
+                      top: -50,
+                    }}
+                  />
+                  </div>
                   <m.div className="box">
                     <m.div className="time_box">
                       <h4>{Days}</h4>
@@ -617,17 +634,12 @@ const LandingPage = () => {
                         {Hours && Minutes && Days && Minutes !== "00"
                           ? "50% Offer!"
                           : "Plan Expired!"}
-                        {Hours && Minutes && Days && Minutes !== "00" ? (
-                         ''
-                        ) : (
-                        ''
-                        )}
                       </strong>
                     </div>
                     {Hours && Minutes && Days && Minutes !== "00" ? (
                       <div className="prices">
                         <div className="old">
-                          <h5>₹ 1299</h5>
+                          <h5>₹ 1200</h5>
                         </div>
 
                         <div className="new">
@@ -640,7 +652,7 @@ const LandingPage = () => {
                           <h5
                             style={{ textDecoration: "none", color: "#4c3ce0" }}
                           >
-                            ₹ 730
+                            ₹ 1200
                           </h5>
                         </div>
 
@@ -651,7 +663,7 @@ const LandingPage = () => {
                               color: "red",
                             }}
                           >
-                            ₹ 365
+                            ₹ 599
                           </h5>
                         </div>
                       </div>
@@ -680,10 +692,10 @@ const LandingPage = () => {
               animate="show"
             >
               <div className="title">
-              <h3>Design Your Digital Identity</h3>
-              <h4>Introducing Custom vCards</h4>
+                <h3>Design Your Digital Identity</h3>
+                <h4>Introducing Custom vCards</h4>
               </div>
-      
+
               <img src={slide1_banner} alt="banner" />
 
               <m.div className="extra_designs">
@@ -721,7 +733,7 @@ const LandingPage = () => {
         </m.div>
 
         {/* Slide2 */}
-             <m.div className="slide_2_page" ref={TemplateRef}>
+        <m.div className="slide_2_page" ref={TemplateRef}>
           <m.div
             className="title"
             variants={title_slide_2Anime}
@@ -1098,32 +1110,32 @@ const LandingPage = () => {
             <m.div
               className="plan"
               variants={plan_box_slide_5Anime}
-              id={planExpand ? "expand" : "default"}
+              id={TrialExpand ? "expand" : "default"}
             >
               <m.div
                 className="down_arrow"
-                onClick={() => setPlanExpand(!planExpand)}
+                onClick={() => setTrialExpand(!TrialExpand)}
               >
                 <i className="bx bxs-chevron-down bx-tada"></i>
               </m.div>
               <m.div className="plan_title">
-                <h3>FREE PLAN</h3>
+                <h3>TRIAL PLAN</h3>
               </m.div>
               <m.div className="plan_price">
                 <h2>
                   ₹ 10 <small>30/day</small>
                 </h2>
               </m.div>
-              <m.div className="card_count">
-                <p>
-                  Total VCard Provides : <span>01</span>
-                </p>
-              </m.div>
 
               <m.div className="plan_action">
                 <Link to="/register">
                   <button>Choose Plan</button>
                 </Link>
+              </m.div>
+              <m.div className="card_count">
+                <p>
+                  Total VCard Provides : <span>01</span>
+                </p>
               </m.div>
               <m.div
                 className="plan_addon_service"
@@ -1146,7 +1158,7 @@ const LandingPage = () => {
                   );
                 })}
               </m.div>
-            </m.div> 
+            </m.div>
             {/* plan1 */}
             <m.div
               className="plan"
@@ -1167,16 +1179,16 @@ const LandingPage = () => {
                   ₹ 599 <small>/Yearly</small>
                 </h2>
               </m.div>
-              <m.div className="card_count">
-                <p>
-                No of VCard Design's Provided : <span>05</span>
-                </p>
-              </m.div>
 
               <m.div className="plan_action">
                 <Link to="/register">
                   <button>Choose Plan</button>
                 </Link>
+              </m.div>
+              <m.div className="card_count">
+                <p>
+                  No of VCard Design's Provided : <span>05</span>
+                </p>
               </m.div>
               <m.div
                 className="plan_addon_service"
@@ -1220,16 +1232,16 @@ const LandingPage = () => {
                   ₹ 899 <small>/Yearly</small>
                 </h2>
               </div>
-              <div className="card_count">
-                <p>
-                No of VCard Design's Provided : <span>08</span>
-                </p>
-              </div>
 
               <div className="plan_action">
                 <Link to="/register">
                   <button>Choose Plan</button>
                 </Link>
+              </div>
+              <div className="card_count">
+                <p>
+                  No of VCard Design's Provided : <span>08</span>
+                </p>
               </div>
               <m.div
                 className="plan_addon_service"
@@ -1273,16 +1285,16 @@ const LandingPage = () => {
                   ₹ 1299 <small>/Yearly</small>
                 </h2>
               </div>
-              <div className="card_count">
-                <p>
-                No of VCard Design's Provided : <span>10</span>
-                </p>
-              </div>
 
               <div className="plan_action">
                 <Link to="/register">
                   <button>Choose Plan</button>
                 </Link>
+              </div>
+              <div className="card_count">
+                <p>
+                  No of VCard Design's Provided : <span>10</span>
+                </p>
               </div>
               <m.div
                 className="plan_addon_service"
@@ -1412,8 +1424,8 @@ const LandingPage = () => {
                 <i className="bx bx-current-location"></i>
                 <m.p variants={form_left_slide_8Anime}>
                   {" "}
-                  First Floor No. 113, Ankur Plaza, Old 52, Gopathi
-                  Narayanaswami Chetty Rd, T. Nagar, Chennai, Tamil Nadu 600017
+                  First Floor No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar,
+                  Chennai, India, Tamil Nadu 600017
                 </m.p>
               </m.div>
               <m.div className="list" variants={form_left_slide_8Anime}>

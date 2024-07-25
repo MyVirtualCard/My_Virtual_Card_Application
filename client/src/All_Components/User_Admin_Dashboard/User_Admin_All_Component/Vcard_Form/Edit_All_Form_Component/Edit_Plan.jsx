@@ -14,7 +14,7 @@ import Context from "../../../../UseContext/Context";
 let Free_Plans = [
   {
     id: 1,
-    PlanName: "Free Plan",
+    PlanName: "Trial Plan",
     batches:
       "https://img.icons8.com/external-bearicons-flat-bearicons/64/external-Free-Trial-miscellany-texts-and-badges-bearicons-flat-bearicons.png",
     Duration: "30-Days",
