@@ -10,22 +10,22 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import vcard1 from "../../assets/Digicards/1.png";
-import vcard2 from "../../assets/Digicards/2.png";
-import vcard3 from "../../assets/Digicards/3.png";
-import vcard4 from "../../assets/Digicards/4.png";
-import vcard5 from "../../assets/Digicards/5.png";
-import vcard6 from "../../assets/Digicards/6.png";
-import vcard7 from "../../assets/Digicards/7.png";
-import vcard8 from "../../assets/Digicards/8.png";
+// import vcard1 from "../../assets/Digicards/1.png";
+// import vcard2 from "../../assets/Digicards/2.png";
+// import vcard3 from "../../assets/Digicards/3.png";
+// import vcard4 from "../../assets/Digicards/4.png";
+// import vcard5 from "../../assets/Digicards/5.png";
+// import vcard6 from "../../assets/Digicards/6.png";
+// import vcard7 from "../../assets/Digicards/7.png";
+// import vcard8 from "../../assets/Digicards/8.png";
 import slide1_banner from "../../assets/LandingPage_image/slide1_banner.png";
-// import vcard1 from "../../assets/Digicards/vmob-1.png";
-// import vcard2 from "../../assets/Digicards/vmob-2.png";
-// import vcard3 from "../../assets/Digicards/vmob-3.png";
-// import vcard4 from "../../assets/Digicards/vmob-4.png";
-// import vcard5 from "../../assets/Digicards/vmob-5.png";
-// import vcard6 from "../../assets/Digicards/vmob-6.png";
-// import vcard7 from "../../assets/Digicards/vmob-7.png";
+import vcard1 from "../../assets/Digicards/vmob-1.png";
+import vcard2 from "../../assets/Digicards/vmob-2.png";
+import vcard3 from "../../assets/Digicards/vmob-3.png";
+import vcard4 from "../../assets/Digicards/vmob-4.png";
+import vcard5 from "../../assets/Digicards/vmob-5.png";
+import vcard6 from "../../assets/Digicards/vmob-6.png";
+import vcard7 from "../../assets/Digicards/vmob-7.png";
 // import vcard8 from './assets/Digicards/vmob-8.png';
 
 import view1 from "../../assets/LandingPage_image/view/1.svg";
@@ -517,7 +517,7 @@ const LandingPage = () => {
                 <m.div className="actions" variants={topNavAnime}>
                   {localStorageDatas === null ? (
                     <Link to="/register">
-                      <button onClick={setAuthToggle(true)}>Login</button>
+                      <button onClick={()=>{navigate('/register'),setAuthToggle(true)}}>Login</button>
                     </Link>
                   ) : (
                     <Link to={`/${userName}/uadmin/dashboard`}>
