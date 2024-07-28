@@ -568,7 +568,7 @@ body {
             width: 100%;
             height: 100%;
 
-            z-index: 1000;
+            z-index: 900;
            
 
             img {
@@ -599,7 +599,7 @@ body {
           }
           .offer_box {
             width: 90%;
-            z-index: 900;
+            z-index: 800;
             height: auto;
             background: #7ff3f7;
 
@@ -615,9 +615,9 @@ body {
 
             .spark{
 position: absolute;
-z-index: 1000;
-bottom: 30%;
-right: 28%;
+z-index: 1008;
+top: 10%;
+right: 10%;
             }
             .box {
               display: flex;

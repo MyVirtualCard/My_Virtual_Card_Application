@@ -10,76 +10,6 @@ import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
 
 //Post data to mongodb -- > Register User  :
 
-// export const RegisterUser = async (req, res) => {
-//   try {
-//     //Get all those field data from body:
-//     let {
-//       profile,
-//       email,
-//       userName,
-//       password,
-//       firstName,
-//       lastName,
-//       mobileNumber,
-//       location,
-//       verified,
-//     } = req.body;
-//     //if user doesn't fill all those fields error through:
-//     if (
-//       !req.body.userName ||
-//       !req.body.firstName ||
-//       !req.body.email ||
-//       !req.body.password
-//     ) {
-//       res.status(400).json({ message: "All * fields Mandatory!" });
-//     } else {
-//       let userNameVerify = await UserAuth.findOne({ userName: userName });
-//       if (userNameVerify) {
-//         return res
-//           .status(400)
-//           .json({ message: "This UserName Already Exist!" });
-//       }
-//       //Find user Already Exist with this email or not
-//       let findUser = await UserAuth.findOne({ email: email });
-//       //If exist through on error
-//       if (findUser) {
-//         res
-//           .status(400)
-//           .json({ message: "User Already Exist with this email!" });
-//       } else {
-//         //Hashing password encrypt to secure clients passwords :
-//         let hashedPassword = await bcryptjs.hash(password, 10);
-//         let data = {
-//           profile,
-//           email,
-//           userName,
-//           password: hashedPassword, //Password stored secure with hashing type
-//           firstName,
-//           lastName,
-//           mobileNumber,
-//           location,
-//           verified: false,
-//         };
-//         let createUser = new UserAuth(data);
-//         await createUser
-//           .save()
-//           .then((result) => {
-//             SendOtpVerificationEmail(result, res);
-//           })
-//           .catch((error) => {
-//             res.status(400).json({
-//               status: "FAILED!",
-//               message: "OTP Sending Failed",
-//               error: error.message,
-//             });
-//           });
-//       }
-//     }
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
-
 export const RegisterUser = async (req, res) => {
   try {
     //Get all those field data from body:
@@ -92,15 +22,14 @@ export const RegisterUser = async (req, res) => {
       lastName,
       mobileNumber,
       location,
-      terms
+      verified,
     } = req.body;
     //if user doesn't fill all those fields error through:
     if (
       !req.body.userName ||
       !req.body.firstName ||
       !req.body.email ||
-      !req.body.password||
-      !req.body.terms
+      !req.body.password
     ) {
       res.status(400).json({ message: "All * fields Mandatory!" });
     } else {
@@ -114,7 +43,7 @@ export const RegisterUser = async (req, res) => {
       let findUser = await UserAuth.findOne({ email: email });
       //If exist through on error
       if (findUser) {
-        return res
+        res
           .status(400)
           .json({ message: "User Already Exist with this email!" });
       } else {
@@ -129,65 +58,136 @@ export const RegisterUser = async (req, res) => {
           lastName,
           mobileNumber,
           location,
-          terms
+          verified: false,
         };
-        //If doesn't exist created new user data to database:
         let createUser = new UserAuth(data);
-
-        // const transporter = nodemailer.createTransport({
-        //   service: "SMPT",
-        //   host: process.env.SMTP_HOST, // Correctly specify the SMTP host
-        //   port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-        //   secure: true, // Use true for 465, false for other ports
-        //   auth: {
-        //     user: process.env.GMAIL, // your Gmail address
-        //     pass: process.env.GMAIL_PASSWORD, // your Gmail password
-        //   },
-        //   logger: true, // Add this line
-        //   debug: true,  // Add this line
-        // });
-
-        // let message = {
-        //   from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-        //   to: `${createUser.email}`, // list of receivers
-        //   subject: "Welcome to MyVirtual VCard Application✔", // Subject line
-        //   text: "You are Sucessfully Registered!", // plain text body
-        //   html: `
-        //   <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
-        //    <h2>Welcome to myvirtualcard</h2>
-        //    <h4> Your Account has been Sucessfully Created with us!</h4>
-        //   <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
-        //   <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
-        //   `, // html body
-        // };
-
-        // // send mail with defined transport object
-        // transporter
-        //   .sendMail(message)
-        //   .then((info) => {
-        //     return res.status(201).json({
-        //       message: "Registered Sucessfully!",
-        //       emailMessage: "You should Receive an Email..",
-        //       info: info.messageId,
-        //       preview: nodemailer.getTestMessageUrl(info),
-        //       data: createUser,
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     return res.status(500).json({ message: error.message });
-        //   });
-        await createUser.save();
-
-        res.status(201).json({
-          message: "User Registered Sucessfully",
-          data: createUser,
-        });
+        await createUser
+          .save()
+          .then((result) => {
+            SendOtpVerificationEmail(result, res);
+          })
+          .catch((error) => {
+            res.status(400).json({
+              status: "FAILED!",
+              message: "OTP Sending Failed",
+              error: error.message,
+            });
+          });
       }
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
+// export const RegisterUser = async (req, res) => {
+//   try {
+//     //Get all those field data from body:
+//     let {
+//       profile,
+//       email,
+//       userName,
+//       password,
+//       firstName,
+//       lastName,
+//       mobileNumber,
+//       location,
+//       terms,
+//     } = req.body;
+//     //if user doesn't fill all those fields error through:
+//     if (
+//       !req.body.userName ||
+//       !req.body.firstName ||
+//       !req.body.email ||
+//       !req.body.password ||
+//       !req.body.terms
+//     ) {
+//       res.status(400).json({ message: "All * fields Mandatory!" });
+//     } else {
+//       let userNameVerify = await UserAuth.findOne({ userName: userName });
+//       if (userNameVerify) {
+//         return res
+//           .status(400)
+//           .json({ message: "This UserName Already Exist!" });
+//       }
+//       //Find user Already Exist with this email or not
+//       let findUser = await UserAuth.findOne({ email: email });
+//       //If exist through on error
+//       if (findUser) {
+//         return res
+//           .status(400)
+//           .json({ message: "User Already Exist with this email!" });
+//       } else {
+//         //Hashing password encrypt to secure clients passwords :
+//         let hashedPassword = await bcryptjs.hash(password, 10);
+//         let data = {
+//           profile,
+//           email,
+//           userName,
+//           password: hashedPassword, //Password stored secure with hashing type
+//           firstName,
+//           lastName,
+//           mobileNumber,
+//           location,
+//           terms,
+//         };
+//         //If doesn't exist created new user data to database:
+//         let createUser = new UserAuth(data);
+
+//         // const transporter = nodemailer.createTransport({
+//         //   // service: "SMPT",
+//         //   host: process.env.SMTP_HOST, // Correctly specify the SMTP host
+//         //   port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+//         //   secure: true, // Use true for 465, false for other ports
+//         //   auth: {
+//         //     user: process.env.GMAIL, // your Gmail address
+//         //     pass: process.env.GMAIL_PASSWORD, // your Gmail password
+//         //   },
+//         //   logger: true, // Add this line
+//         //   debug: true,  // Add this line
+//         // });
+
+//         // let message = {
+//         //   from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+//         //   to: `${createUser.email}`, // list of receivers
+//         //   subject: "Welcome to MyVirtual VCard Application✔", // Subject line
+//         //   text: "You are Sucessfully Registered!", // plain text body
+//         //   html: `
+//         //   <h3>Hello,${createUser.firstName} &nbsp; ${createUser.lastName}</h3>
+//         //    <h2>Welcome to myvirtualcard</h2>
+//         //    <h4> Your Account has been Sucessfully Created with us!</h4>
+//         //   <p>A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.</p>
+//         //   <small><b>Visit Our Website</b> https://myvirtualcard.in</small>
+//         //   `, // html body
+//         // };
+
+//         // // send mail with defined transport object
+//         // transporter
+//         //   .sendMail(message)
+//         //   .then((info) => {
+//         //     return res.status(201).json({
+//         //       message: "Registered Sucessfully!",
+//         //       emailMessage: "You should Receive an Email..",
+//         //       info: info.messageId,
+//         //       preview: nodemailer.getTestMessageUrl(info),
+//         //       data: createUser,
+//         //     });
+//         //   })
+//         //   .catch((error) => {
+//         //     return res.status(500).json({ message: error.message });
+//         //   });
+//         await createUser.save();
+
+//         res.status(201).json({
+//           message: "User Registered Sucessfully",
+//           data: createUser,
+//         });
+//       }
+//     }
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 
 export const ResendOTP = async (req, res) => {
   try {
@@ -219,47 +219,54 @@ export const ForgotPassword = async (req, res) => {
         const token = jwt.sign({ id: checkUser._id }, process.env.SECRET_KEY, {
           expiresIn: "30d",
         });
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST, // Correctly specify the SMTP host
-          port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-          secure: true, // Use true for 465, false for other ports
-          auth: {
-            user: process.env.GMAIL, // your Gmail address
-            pass: process.env.GMAIL_PASSWORD, // your Gmail password
-          },
-          logger: true, // Add this line
-          debug: true, // Add this line
-        });
 
-        let message = {
-          from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-          to: `${checkUser.email}`, // list of receivers
-          subject: "Reset Your Password!", // Subject line
-          text: "Create Your New Product Key!", // plain text body
-          html: `
-          <h3>Hello,${checkUser.firstName} &nbsp; ${checkUser.lastName}</h3>
-          <p>If you forgot your old password u don't worry about it we will help you to update your new password with registered same email Addesss!</p>
-          <small><b>Reset Your Password ?</b><a href='http://localhost:5173/reset_password/${checkUser._id}/${token}'>Click Here!</a></small>
-          `, // html body
-        };
+        let NavigateLink=`/forgot_password/reset_password/${checkUser._id}/${token}`
+        res
+          .status(201)
+          .json({ message: "Change Your New Password!",data:NavigateLink});
 
-        // send mail with defined transport object
-        await transporter
-          .sendMail(message)
-          .then(() => {
-            res
-              .status(201)
-              .json({ message: "Check your Registered Email Address!" });
-          })
-          .catch((error) => {
-            return res.status(500).json({ message: error.message });
-          });
+        // const transporter = nodemailer.createTransport({
+        //   host: process.env.SMTP_HOST, // Correctly specify the SMTP host
+        //   port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+        //   secure: true, // Use true for 465, false for other ports
+        //   auth: {
+        //     user: process.env.GMAIL, // your Gmail address
+        //     pass: process.env.GMAIL_PASSWORD, // your Gmail password
+        //   },
+        //   logger: true, // Add this line
+        //   debug: true, // Add this line
+        // });
+
+        // let message = {
+        //   from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+        //   to: `${checkUser.email}`, // list of receivers
+        //   subject: "Reset Your Password!", // Subject line
+        //   text: "Create Your New Product Key!", // plain text body
+        //   html: `
+        //   <h3>Hello,${checkUser.firstName} &nbsp; ${checkUser.lastName}</h3>
+        //   <p>If you forgot your old password u don't worry about it we will help you to update your new password with registered same email Addesss!</p>
+        //   <small><b>Reset Your Password ?</b><a href='http://localhost:5173/reset_password/${checkUser._id}/${token}'>Click Here!</a></small>
+        //   `, // html body
+        // };
+
+        // // send mail with defined transport object
+        // await transporter
+        //   .sendMail(message)
+        //   .then(() => {
+        //     res
+        //       .status(201)
+        //       .json({ message: "Check your Registered Email Address!" });
+        //   })
+        //   .catch((error) => {
+        //     return res.status(500).json({ message: error.message });
+        //   });
       }
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
+
 //Reset Password post new password:
 export const ResetPassword = async (req, res) => {
   let { id, token } = req.params;
@@ -281,32 +288,33 @@ export const ResetPassword = async (req, res) => {
               { _id: id },
               { password: HashPassword }
             );
-            const transporter = nodemailer.createTransport({
-              host: process.env.SMTP_HOST, // Correctly specify the SMTP host
-              port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-              secure: true, // Use true for 465, false for other ports
-              auth: {
-                user: process.env.GMAIL, // your Gmail address
-                pass: process.env.GMAIL_PASSWORD, // your Gmail password
-              },
-            });
+            res.status(201).json({ message: "New Password Created!",data:checkUser });
+          //   const transporter = nodemailer.createTransport({
+          //     host: process.env.SMTP_HOST, // Correctly specify the SMTP host
+          //     port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+          //     secure: true, // Use true for 465, false for other ports
+          //     auth: {
+          //       user: process.env.GMAIL, // your Gmail address
+          //       pass: process.env.GMAIL_PASSWORD, // your Gmail password
+          //     },
+          //   });
 
-            let message = {
-              from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-              to: `${checkUser.email}`, // list of receivers
-              subject: "Password Updated!", // Subject line
-              text: "Your New Password Created Sucessfully!", // plain text body
-              html: `
-          <h3>Hello,${checkUser.firstName} &nbsp; ${checkUser.lastName}</h3>
-          <p>Your old password reseted sucessfully and updated your new password with your email address..Now you ready to login with latest new password..</p>
-          <small><b>Ready to Login ?</b><a href='http://localhost:5173/login'>Click Here to Login!</a></small>
-          `, // html body
-            };
+          //   let message = {
+          //     from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+          //     to: `${checkUser.email}`, // list of receivers
+          //     subject: "Password Updated!", // Subject line
+          //     text: "Your New Password Created Sucessfully!", // plain text body
+          //     html: `
+          // <h3>Hello,${checkUser.firstName} &nbsp; ${checkUser.lastName}</h3>
+          // <p>Your old password reseted sucessfully and updated your new password with your email address..Now you ready to login with latest new password..</p>
+          // <small><b>Ready to Login ?</b><a href='http://localhost:5173/login'>Click Here to Login!</a></small>
+          // `, // html body
+          //   };
 
-            // send mail with defined transport object
-            transporter.sendMail(message).then(() => {
-              res.status(201).json({ message: "New Password Created!" });
-            });
+          //   // send mail with defined transport object
+          //   transporter.sendMail(message).then(() => {
+          //     res.status(201).json({ message: "New Password Created!" });
+          //   });
           }
         }
       );
@@ -336,7 +344,7 @@ export const ReadRegisteredUserSpecificData = async (req, res) => {
   try {
     let { userName } = req.params;
     //Find user Already Exist with this email or not
-    let findUser = await UserAuth.findOne({userName});
+    let findUser = await UserAuth.findOne({ userName });
     //If exist through on error
     if (findUser) {
       res.status(200).json({ message: "User data Fetched", data: findUser });
@@ -426,16 +434,22 @@ const SendOtpVerificationEmail = async (
       expiredAt: Date.now() + 60000,
     });
     let SavedOTP = await saveOTP.save();
-    transporter.sendMail(mailOption, (error, info) => {
-      if (error) {
-        return res.status(401).json({ message: error.message });
-      }
-      return res.status(201).json({
-        status: "PENDING",
-        message: "Verification OTP Sended On Your Email!",
-        data: SavedOTP,
-      });
+    return res.status(201).json({
+      status: "PENDING",
+      message: "Verification OTP Sended!",
+      OTP: OTP,
+      data: SavedOTP,
     });
+    // transporter.sendMail(mailOption, (error, info) => {
+    //   if (error) {
+    //     return res.status(401).json({ message: error.message });
+    //   }
+    //   return res.status(201).json({
+    //     status: "PENDING",
+    //     message: "Verification OTP Sended On Your Email!",
+    //     data: SavedOTP,
+    //   });
+    // });
   } catch (error) {
     return res.status(400).json({
       status: "FAILED!",

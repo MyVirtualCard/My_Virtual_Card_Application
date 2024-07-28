@@ -11,6 +11,7 @@ const ResendOTP = () => {
   let [loginLoader, setLoginLoader] = useState(false);
   let navigate = useNavigate();
   let {
+    OTP_Value, setOTP_Value,
     userName,
     show,
     setShow,
@@ -46,6 +47,7 @@ const ResendOTP = () => {
       await api
         .post('/auth/resend_OTP', values)
         .then((res) => {
+          setOTP_Value(res.data.OTP)
           toast.success(res.data.message);
           setLoginLoader(false);
           setTimeout(() => {

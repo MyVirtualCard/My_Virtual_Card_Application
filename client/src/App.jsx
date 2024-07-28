@@ -181,6 +181,9 @@ const App = () => {
   // PaymentPopup
   let [PaymentSuccessPopup,setPaymentSuccessPopup]=useState(false);
   
+  //OTPValue Store:
+
+  let[OTP_Value,setOTP_Value]=useState()
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -197,6 +200,7 @@ const App = () => {
       <div className="App_container">
         <Context.Provider
           value={{
+            OTP_Value,setOTP_Value,
             PaymentSuccessPopup,setPaymentSuccessPopup,
             URL_Alies,
             setURL_Alies,
@@ -466,11 +470,13 @@ const App = () => {
               }
             />
             <Route path="/resend_OTP" element={<ResendOTP />} />
-            <Route path="/forgot_password" element={<ForgotPassword />} />
+            <Route path="/forgot_password" element={<ForgotPassword />}>
             <Route
-              path="/reset_password/:id/:token"
+              path="/forgot_password/reset_password/:id/:token"
               element={<ResetPassword />}
             />
+            </Route>
+           
 
             <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
               <Route

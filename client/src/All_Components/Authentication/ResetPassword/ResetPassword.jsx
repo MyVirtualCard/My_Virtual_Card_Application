@@ -32,7 +32,9 @@ const ResetPassword = () => {
   } = useContext(Context);
 
   let {id,token}=useParams();
-
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
   //Password Show hide :
   let handleShow = () => {
     let password = document.getElementById("password");
@@ -54,8 +56,8 @@ const ResetPassword = () => {
     onSubmit: async (values) => {
       setLoginLoader(true);
 
-      await axios
-        .post(`http://localhost:3001/auth/reset_password/${id}/${token}`, values)
+      await api
+        .post(`/auth/reset_password/${id}/${token}`, values)
         .then((res) => {
           toast.success(res.data.message);
           setLoginLoader(false)

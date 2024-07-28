@@ -10,6 +10,7 @@ import Context from "../../UseContext/Context";
 const VerifyOTP = () => {
   let [loginLoader, setLoginLoader] = useState(false);
   let [Seconds, setSeconds] = useState("60");
+  let [OTP_Popup, setOTP_Popup] = useState(false);
   useEffect(() => {
     if (Seconds > 0) {
       const timerId = setTimeout(() => {
@@ -18,47 +19,37 @@ const VerifyOTP = () => {
       return () => clearTimeout(timerId);
     }
   }, [Seconds]);
-//   const startTimer = () => {
-//     const countdownDate = new Date("00:00:00").getTime();
-//     interval = setInterval(() => {
-//       const now = new Date().getTime();
-//       const distance = 0 - 60000;
-//       const seconds = Math.floor((1000 * 60) / 1000);
+  useEffect(() => {
+    setTimeout(() => {
+      setOTP_Popup(true);
+    }, 3000);
+    setTimeout(() => {
+      setOTP_Popup(false);
+    }, 60000);
+  }, []);
+  //   const startTimer = () => {
+  //     const countdownDate = new Date("00:00:00").getTime();
+  //     interval = setInterval(() => {
+  //       const now = new Date().getTime();
+  //       const distance = 0 - 60000;
+  //       const seconds = Math.floor((1000 * 60) / 1000);
 
-//       if (seconds < 10) {
-//         setSeconds("0" + seconds);
-//       } else {
-//         setSeconds(seconds);
-//       }
-//     }, 1000);
-//   };
-//   let interval = useRef();
-//   useEffect(() => {
-//     startTimer();
-//     return () => {
-//       clearInterval(interval.current);
-//     };
-//   }, []);
+  //       if (seconds < 10) {
+  //         setSeconds("0" + seconds);
+  //       } else {
+  //         setSeconds(seconds);
+  //       }
+  //     }, 1000);
+  //   };
+  //   let interval = useRef();
+  //   useEffect(() => {
+  //     startTimer();
+  //     return () => {
+  //       clearInterval(interval.current);
+  //     };
+  //   }, []);
   let navigate = useNavigate();
-  let {
-    userName,
-    show,
-    setShow,
-    profile,
-    setProfile,
-    firstName,
-    setFirstName,
-    lastName,
-    setLastName,
-    mobileNumber,
-    setMobileNumber,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    loader,
-    setLoader,
-  } = useContext(Context);
+  let { OTP_Value, setOTP_Value, userName } = useContext(Context);
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
@@ -92,9 +83,26 @@ const VerifyOTP = () => {
   return (
     <>
       <div className="verify_container">
+        {/* OTP Popup */}
+        {OTP_Popup ? (
+          <div className="otp_container">
+            <div className="otp_popup">
+              <div className="close" onClick={()=>setOTP_Popup(false)}>
+              <i className='bx bxs-message-x'></i>
+              </div>
+              <div className="otp_title">
+                <h3>OTP</h3>
+              </div>
+              <div className="otp_value">{OTP_Value}</div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
         <Toaster position="top-right"></Toaster>
         <div className="right">
-        <div className="moon_svg">
+          <div className="moon_svg">
             <svg
               width="1705"
               height="1387"

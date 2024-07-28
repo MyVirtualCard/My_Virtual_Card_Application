@@ -521,7 +521,7 @@ const LandingPage = () => {
                     </Link>
                   ) : (
                     <Link to={`/${userName}/uadmin/dashboard`}>
-                      <button onClick={setAuthToggle(true)}><i className='bx bxs-dashboard'></i>Dashboard</button>
+                      <button onClick={setAuthToggle(true)}><i className='bx bxs-dashboard'></i>{userName}</button>
                     </Link>
                   )}
 

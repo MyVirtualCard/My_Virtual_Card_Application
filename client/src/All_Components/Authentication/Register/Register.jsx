@@ -78,6 +78,8 @@ const Register = () => {
   }
   //All state data:
   let {
+    OTP_Value,
+    setOTP_Value,
     show,
     setShow,
     profile,
@@ -124,11 +126,13 @@ const Register = () => {
       await api
         .post("/auth/register", values)
         .then((response) => {
+          setOTP_Value(response.data.OTP);
           toast.success(response.data.message);
           setRegisterLoader(false);
           setTimeout(() => {
             setAuthToggle(true);
             action.resetForm();
+            navigate("/verify_OTP");
           }, 1500);
         })
         .catch((error) => {
