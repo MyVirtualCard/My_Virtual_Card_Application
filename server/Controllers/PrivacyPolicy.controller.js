@@ -1,5 +1,5 @@
 import PrivacyPolicyModel from "../Models/PrivacyPolicy.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import Payment from "../Models/Payment.model.js";
 //Post basic detail data to database:
 
 export const PostPrivacyPolicyData = async (req, res) => {
@@ -7,7 +7,7 @@ export const PostPrivacyPolicyData = async (req, res) => {
     if (!req.body.PrivacyPolicy) {
       return res.status(401).json({ message: "Mandatory:Privacy Policy" });
     }
-    let checkCurrentPlan = await currentPlan.find({
+    let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
 
@@ -19,10 +19,10 @@ export const PostPrivacyPolicyData = async (req, res) => {
     } else {
       //Plan 2 and 3
       if (
-        checkCurrentPlan[0].PlanPrice === 10 ||
-        checkCurrentPlan[0].PlanPrice === 365 ||
-        checkCurrentPlan[0].PlanPrice === 799 ||
-        checkCurrentPlan[0].PlanPrice === 1499
+        checkCurrentPlan[0].amount === 10 ||
+        checkCurrentPlan[0].amount === 599 ||
+        checkCurrentPlan[0].amount === 899 ||
+        checkCurrentPlan[0].amount === 1299
       ) {
         //check images
         let checkPrivacyPolicyLength = await PrivacyPolicyModel.find({

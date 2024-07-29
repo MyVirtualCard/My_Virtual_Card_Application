@@ -1,6 +1,6 @@
 import ProductModel from "../Models/Products.model.js";
-import currentPlan from "../Models/Plan.model.js";
 import productUpload from "../Multer/product.js";
+import Payment from "../Models/Payment.model.js";
 import fs from "fs";
 import multer from "multer";
 
@@ -41,7 +41,7 @@ export const PostProductData =  (req, res) => {
         return res.status(400).json({ message: "No file choosen!" });
       }
 
-      let checkCurrentPlan = await currentPlan.find({
+      let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
 
@@ -57,10 +57,10 @@ export const PostProductData =  (req, res) => {
       } else {
         //Plan 2 and 3
         if (
-          checkCurrentPlan[0].PlanPrice === 10 ||
-          checkCurrentPlan[0].PlanPrice === 365 ||
-          checkCurrentPlan[0].PlanPrice === 799 ||
-          checkCurrentPlan[0].PlanPrice === 1499
+          checkCurrentPlan[0].amount === 10 ||
+          checkCurrentPlan[0].amount === 599 ||
+          checkCurrentPlan[0].amount === 899 ||
+          checkCurrentPlan[0].amount === 1299
         ) {
           //check images
           let checkProductLength = await ProductModel.find({
@@ -73,7 +73,7 @@ export const PostProductData =  (req, res) => {
               .status(400)
               .json({ message: "Product will not be there!", error: err });
           } else {
-            if (checkCurrentPlan[0].PlanPrice === 1499) {
+            if (checkCurrentPlan[0].amount === 1299) {
               //Basic Image File limit checked:
               if (checkProductLength.length < 10) {
                 // Create a new image instance and save to MongoDB
@@ -115,7 +115,7 @@ export const PostProductData =  (req, res) => {
                 });
               }
             }
-            if (checkCurrentPlan[0].PlanPrice === 799
+            if (checkCurrentPlan[0].amount === 899
             ) {
               //Basic Image File limit checked:
               if (checkProductLength.length < 5) {
@@ -158,7 +158,7 @@ export const PostProductData =  (req, res) => {
                 });
               }
             }
-            if (checkCurrentPlan[0].PlanPrice === 10) {
+            if (checkCurrentPlan[0].amount === 10) {
               //Basic Image File limit checked:
               if (checkProductLength.length < 0) {
                 res.status(400).json({
@@ -172,7 +172,7 @@ export const PostProductData =  (req, res) => {
                 });
               }
             }
-            if (checkCurrentPlan[0].PlanPrice === 365) {
+            if (checkCurrentPlan[0].amount === 599) {
               //Basic Image File limit checked:
               if (checkProductLength.length < 0) {
                 res.status(200).json({
@@ -254,7 +254,7 @@ export const updateSpecificUserData = async (req, res) => {
         return res.status(400).json({ message: "No file choosen!" });
       }
 
-      let checkCurrentPlan = await currentPlan.find({
+      let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
 
@@ -270,10 +270,10 @@ export const updateSpecificUserData = async (req, res) => {
       } else {
         //Plan 2 and 3
         if (
-          checkCurrentPlan[0].PlanPrice === 10 ||
-          checkCurrentPlan[0].PlanPrice === 365 ||
-          checkCurrentPlan[0].PlanPrice === 799 ||
-          checkCurrentPlan[0].PlanPrice === 1499
+          checkCurrentPlan[0].amount === 10 ||
+          checkCurrentPlan[0].amount === 599 ||
+          checkCurrentPlan[0].amount === 899 ||
+          checkCurrentPlan[0].amount === 1299
         ) {
           try {
             let { id } = req.params;

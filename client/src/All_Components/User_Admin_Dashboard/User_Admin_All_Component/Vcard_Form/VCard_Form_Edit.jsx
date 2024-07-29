@@ -26,48 +26,55 @@ import Edit_PrivacyPolicy from "./Edit_All_Form_Component/Edit_PrivacyPolicy";
 import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 
 const VCard_Form_Edit = () => {
-let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
+  let { URL_Alies } = useParams();
+  let {
+    userName,
+    setURL_Alies,
+    currentPlan,
+    setCurrentPlan,
+    currentTemplate,
+    setCurrentTemplate,
+  } = useContext(Context);
   let navigate = useNavigate();
-  let [CurrentPlanActive,setCurrentPlanActive]=useState(0);
-  let [formSliderToggle,setFormSliderToggle]=useState(false);
+  let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
+  let [formSliderToggle, setFormSliderToggle] = useState(false);
   let [userData, setUserData] = useState("jayakumar");
   let [ShowForm, setShowForm] = useState("Choose Your Plan");
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
-  useEffect(()=>{
-    try{
-      api.get(`/razorpay/specificUser/${userName}`,   {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorageDatas.token}`,
-        },
-      }).then((res)=>{
-         
-        if(res.data.data.length === 1){
-          setCurrentPlanActive(res.data.data.length)
-        }
-        else{
-          // toast.error('Choose Your Plan First!')
-        }
-      }).catch((error)=>{
-        console.log(error)
-        toast.error(error.response.data.message)
-      })
+  });
+  useEffect(() => {
+    try {
+      api
+        .get(`/razorpay/specificUser/${userName}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length === 1) {
+            setCurrentPlanActive(res.data.data.length);
+          } else {
+            // toast.error('Choose Your Plan First!')
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      toast.error(error.message);
     }
-    catch(error){
-      toast.error(error.message)
-    }
-  },[])
+  }, []);
   function handleFormShow(e) {
-    setFormSliderToggle(false)
-    if(CurrentPlanActive == 1){
+    setFormSliderToggle(false);
+    if (CurrentPlanActive == 1) {
       setShowForm(e.target.id);
-    }
-    else{
-      toast.error('Choose Your Plan First!')
+    } else {
+      toast.error("Choose Your Plan First!");
     }
   }
   let userDetails = JSON.parse(localStorage.getItem("datas"));
@@ -81,6 +88,29 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
         console.log(error.response.data.message);
       });
   }, []);
+  useEffect(() => {
+    try {
+      api
+        .get(`/templateDetail/specific/${userName}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setURL_Alies(res.data.data[0].URL_Alies
+          )
+          console.log(res.data.data[0])
+          setCurrentTemplate(res.data.data[0].currentTemplate);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <>
@@ -91,48 +121,64 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
           </div>
           <div className="back_action">
             <button
-            className="back"
-              onClick={() =>
-                navigate(`/${userName}/uadmin/user_vcard`)
-              }
+              className="back"
+              onClick={() => navigate(`/${userName}/uadmin/user_vcard`)}
             >
               Back
-              <i className='bx bx-exit' ></i>
+              <i className="bx bx-exit"></i>
             </button>
           </div>
         </div>
         <div className="vcard_form_box">
-        <div className="slider_icon" onClick={()=>setFormSliderToggle(!formSliderToggle)}>
-          <i className='bx bx-slider-alt' ></i>
+          <div
+            className="slider_icon"
+            onClick={() => setFormSliderToggle(!formSliderToggle)}
+          >
+            <i className="bx bx-slider-alt"></i>
           </div>
-        <div className="form_sidenav" id={!formSliderToggle ? "slideClose":'slideOpen'}>
-
-       
-        <div
+          <div
+            className="form_sidenav"
+            id={!formSliderToggle ? "slideClose" : "slideOpen"}
+          >
+            <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Choose Your Plan" ? "menu_active" : ""}
             >
               {/* <i className="bx bxs-spreadsheet" style={{ color: "green" }}></i> */}
-              <img width="24" height="24" src="https://img.icons8.com/3d-fluency/94/cash-in-hand.png" alt="cash-in-hand" id='Choose Your Plan'/>
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/3d-fluency/94/cash-in-hand.png"
+                alt="cash-in-hand"
+                id="Choose Your Plan"
+              />
 
-              <small id='Choose Your Plan'>Choose Your Plan</small>
+              <small id="Choose Your Plan">Choose Your Plan</small>
             </div>
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Basic Detail" ? "menu_active" : ""}
             >
-              <i className="bx bxs-user" style={{ color: "blue" }} id="Basic Detail"></i>
+              <i
+                className="bx bxs-user"
+                style={{ color: "blue" }}
+                id="Basic Detail"
+              ></i>
               <small id="Basic Detail">Basic Detail</small>
             </div>
-         
+
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "VCard Templates" ? "menu_active" : ""}
             >
-              <i className="bx bxs-spreadsheet" style={{ color: "green" }} id="VCard Templates"></i>
+              <i
+                className="bx bxs-spreadsheet"
+                style={{ color: "green" }}
+                id="VCard Templates"
+              ></i>
 
               <small id="VCard Templates">VCard Templates</small>
             </div>
@@ -141,7 +187,11 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Social Link - Website" ? "menu_active" : ""}
             >
-              <i className="bx bxs-planet" style={{ color: "tomato" }} id="Social Link - Website"></i>
+              <i
+                className="bx bxs-planet"
+                style={{ color: "tomato" }}
+                id="Social Link - Website"
+              ></i>
               <small id="Social Link - Website">Social Link - Website</small>
             </div>
             <div
@@ -149,7 +199,11 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Services" ? "menu_active" : ""}
             >
-              <i className="bx bx-trophy" style={{ color: "black" }} id="Services"></i>
+              <i
+                className="bx bx-trophy"
+                style={{ color: "black" }}
+                id="Services"
+              ></i>
               <small id="Services">Services</small>
             </div>
             <div
@@ -162,24 +216,31 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
                 style={{ color: "orange" }}
                 id="Products"
               ></i>
-              <small id='Products'>Products</small>
+              <small id="Products">Products</small>
             </div>
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Galleries" ? "menu_active" : ""}
             >
-              <i className="bx bxs-photo-album" style={{ color: "violet" }} id="Galleries"></i>
+              <i
+                className="bx bxs-photo-album"
+                style={{ color: "violet" }}
+                id="Galleries"
+              ></i>
               <small id="Galleries">Galleries</small>
             </div>
-       
+
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Testimonials" ? "menu_active" : ""}
             >
-              <i className="bx bxs-star" style={{ color: "red" }} id
-              ="Testimonials"></i>
+              <i
+                className="bx bxs-star"
+                style={{ color: "red" }}
+                id="Testimonials"
+              ></i>
               <small id="Testimonials">Testimonials</small>
             </div>
             <div
@@ -187,7 +248,11 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "PopUp Banner" ? "menu_active" : ""}
             >
-              <i className="bx bxs-image-add" style={{ color: "darkGray" }} id='PopUp Banner'></i>
+              <i
+                className="bx bxs-image-add"
+                style={{ color: "darkGray" }}
+                id="PopUp Banner"
+              ></i>
               <small id="PopUp Banner">PopUp Banner</small>
             </div>
             <div
@@ -195,7 +260,11 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Business Hours" ? "menu_active" : ""}
             >
-              <i className="bx bxs-hourglass" style={{ color: "skyblue" }} id="Business Hours"></i>
+              <i
+                className="bx bxs-hourglass"
+                style={{ color: "skyblue" }}
+                id="Business Hours"
+              ></i>
               <small id="Business Hours">Business Hours</small>
             </div>
             <div
@@ -211,8 +280,11 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Privacy Policy" ? "menu_active" : ""}
             >
-          
-              <i className='bx bxs-lock' style={{ color: "grey" }} id="Privacy Policy"></i>
+              <i
+                className="bx bxs-lock"
+                style={{ color: "grey" }}
+                id="Privacy Policy"
+              ></i>
               <small id="Privacy Policy">Privacy Policy</small>
             </div>
             <div
@@ -220,7 +292,11 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Terms & Conditions" ? "menu_active" : ""}
             >
-              <i className="bx bxs-notepad" style={{ color: "green" }} id="Terms & Conditions"></i>
+              <i
+                className="bx bxs-notepad"
+                style={{ color: "green" }}
+                id="Terms & Conditions"
+              ></i>
               <small id="Terms & Conditions">Terms & Conditions</small>
             </div>
             <div
@@ -228,20 +304,28 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Manage Sections" ? "menu_active" : ""}
             >
-              <i className="bx bxs-slideshow" style={{ color: "tomato" }} id="Manage Sections"></i>
+              <i
+                className="bx bxs-slideshow"
+                style={{ color: "tomato" }}
+                id="Manage Sections"
+              ></i>
               <small id="Manage Sections">Manage Sections</small>
             </div>
             <div className="progressing">
-            <small>On Working  Progress</small>
-            <i class='bx bx-chevrons-down bx-fade-down' ></i>
+              <small>On Working Progress</small>
+              <i class="bx bx-chevrons-down bx-fade-down"></i>
             </div>
-    
+
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Iframes" ? "menu_active" : ""}
             >
-              <i className="bx bx-shape-square" style={{ color: "grey" }} id="Iframes"></i>
+              <i
+                className="bx bx-shape-square"
+                style={{ color: "grey" }}
+                id="Iframes"
+              ></i>
               <small id="Iframes">Iframes</small>
             </div>
             <div
@@ -249,17 +333,24 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Appoinment" ? "menu_active" : ""}
             >
-              <i className="bx bxs-calendar" style={{ color: "royalBlue" }} id="Appoinment"></i>
-              <small id='Appoinment'>Appoinment</small>
+              <i
+                className="bx bxs-calendar"
+                style={{ color: "royalBlue" }}
+                id="Appoinment"
+              ></i>
+              <small id="Appoinment">Appoinment</small>
             </div>
-         
-         
+
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Dynamic VCard" ? "menu_active" : ""}
             >
-              <i className="bx bxs-landscape" style={{ color: "orange" }} id="Dynamic VCard"></i>
+              <i
+                className="bx bxs-landscape"
+                style={{ color: "orange" }}
+                id="Dynamic VCard"
+              ></i>
               <small id="Dynamic VCard">Dynamic VCard</small>
             </div>
             <div
@@ -267,23 +358,31 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
               onClick={handleFormShow}
               id={ShowForm === "Blog" ? "menu_active" : ""}
             >
-              <i className="bx bxl-blogger" style={{ color: "purple" }} id="Blog"></i>
+              <i
+                className="bx bxl-blogger"
+                style={{ color: "purple" }}
+                id="Blog"
+              ></i>
               <small id="Blog">Blog</small>
             </div>
-         
-          
+
             <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Fonts" ? "menu_active" : ""}
             >
-              <i className="bx bx-font-family" style={{ color: "skyblue" }} id="Fonts"></i>
+              <i
+                className="bx bx-font-family"
+                style={{ color: "skyblue" }}
+                id="Fonts"
+              ></i>
               <small id="Fonts">Fonts</small>
             </div>
-        
-           
           </div>
-          <div className="all_form_inputs" id={!formSliderToggle ? "formExpand":'formMinimize'}>
+          <div
+            className="all_form_inputs"
+            id={!formSliderToggle ? "formExpand" : "formMinimize"}
+          >
             {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}
             {ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}
             {ShowForm === "VCard Templates" ? <Edit_Select_Template /> : ""}
@@ -294,12 +393,12 @@ let{userName,currentPlan, setCurrentPlan,}=useContext(Context)
             {ShowForm === "Testimonials" ? <Edit_Testimonial /> : ""}
             {ShowForm === "Iframes" ? <Edit_Iframe /> : ""}
             {ShowForm === "Social Link - Website" ? <Edit_SocialMedias /> : ""}
-            {ShowForm === "Customize QR Code" ? <Edit_QR_Code/>:''}
+            {ShowForm === "Customize QR Code" ? <Edit_QR_Code /> : ""}
             {ShowForm === "PopUp Banner" ? <Edit_Banner /> : ""}
             {ShowForm === "Dynamic VCard" ? <Edit_Dynamic_VCard /> : ""}
             {ShowForm === "Appoinment" ? <Edit_Appoinment /> : ""}
             {ShowForm === "Business Hours" ? <Edit_Business_Hour /> : ""}
-            {ShowForm === 'Privacy Policy' ?  <Edit_PrivacyPolicy/>: ''}
+            {ShowForm === "Privacy Policy" ? <Edit_PrivacyPolicy /> : ""}
             {ShowForm === "Fonts" ? <Edit_Font /> : ""}
             {ShowForm === "Terms & Conditions" ? <Edit_Terms_Conditions /> : ""}
             {ShowForm === "Manage Sections" ? <Edit_Manage_Session /> : ""}

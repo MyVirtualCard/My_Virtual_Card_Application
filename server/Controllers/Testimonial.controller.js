@@ -1,6 +1,6 @@
 import TestimonialModel from "../Models/Testimonial.model.js";
-import currentPlan from "../Models/Plan.model.js";
 
+import Payment from "../Models/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const getTestimonialData = async (req, res) => {
@@ -27,7 +27,7 @@ export const postTestimonialData = async (req, res) => {
     if (!req.body.ClientName || !req.body.ClientFeedback) {
       return res.status(401).json({ message: "All * fields are Mandatory!" });
     }
-    let checkCurrentPlan = await currentPlan.find({
+    let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
 
@@ -43,10 +43,10 @@ export const postTestimonialData = async (req, res) => {
     } else {
       //Plan 2 and 3
       if (
-        checkCurrentPlan[0].PlanPrice === 10 ||
-        checkCurrentPlan[0].PlanPrice === 365 ||
-        checkCurrentPlan[0].PlanPrice === 799 ||
-        checkCurrentPlan[0].PlanPrice === 1499
+        checkCurrentPlan[0].amount === 10 ||
+        checkCurrentPlan[0].amount === 599 ||
+        checkCurrentPlan[0].amount === 899 ||
+        checkCurrentPlan[0].amount === 1299
       ) {
         //check images
         let checkTestimonialLength = await TestimonialModel.find({
@@ -58,7 +58,7 @@ export const postTestimonialData = async (req, res) => {
             .status(400)
             .json({ message: "Client Data not be there!" });
         } else {
-          if (checkCurrentPlan[0].PlanPrice === 1499) {
+          if (checkCurrentPlan[0].amount === 1299) {
             //Basic Image File limit checked:
             if (checkTestimonialLength.length < 6) {
               // Create a new image instance and save to MongoDB
@@ -93,7 +93,7 @@ export const postTestimonialData = async (req, res) => {
               });
             }
           }
-          if (checkCurrentPlan[0].PlanPrice === 799) {
+          if (checkCurrentPlan[0].amount === 899) {
             //Basic Image File limit checked:
             if (checkTestimonialLength.length < 4) {
               // Create a new image instance and save to MongoDB
@@ -129,7 +129,7 @@ export const postTestimonialData = async (req, res) => {
               });
             }
           }
-          if (checkCurrentPlan[0].PlanPrice === 365) {
+          if (checkCurrentPlan[0].amount === 599) {
             //Basic Image File limit checked:
             if (checkTestimonialLength.length < 2) {
               // Create a new image instance and save to MongoDB
@@ -164,7 +164,7 @@ export const postTestimonialData = async (req, res) => {
               });
             }
           }
-          if (checkCurrentPlan[0].PlanPrice === 10) {
+          if (checkCurrentPlan[0].amount === 10) {
             //Basic Image File limit checked:
             if (checkTestimonialLength.length < 1) {
               // Create a new image instance and save to MongoDB

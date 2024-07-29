@@ -119,7 +119,7 @@ const Terms_Conditions = () => {
       }
   return (
     <>
-      <div className="terms_container">
+      <div className="termsConition_container">
       <div className="title">
     {/* <h6>Link Your Social Medias</h6> */}
 

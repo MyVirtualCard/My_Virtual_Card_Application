@@ -9,8 +9,9 @@ import card4 from "../../../../../assets/Digicards/4.png";
 import card5 from "../../../../../assets/Digicards/5.png";
 import card6 from "../../../../../assets/Digicards/6.png";
 import card7 from "../../../../../assets/Digicards/7.png";
-import card8 from "../../../../../assets/Digicards/8.png";
+// import card8 from "../../../../../assets/Digicards/8.png";
 import card9 from "../../../../../assets/Digicards/9.png";
+import card8 from "../../../../../assets/Digicards/10.png";
 import Footer from "../../../UserAdmin_Footer/Footer";
 import selected_gif from "../../../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../../../assets/animations/touch.gif";
@@ -69,7 +70,7 @@ let StandardTemplate = [
   },
   {
     id: 6,
-    image: card6,
+    image: card7,
   },
   {
     id: 7,
@@ -103,7 +104,7 @@ let EnterpriceTemplate = [
   },
   {
     id: 6,
-    image: card6,
+    image: card7,
   },
   {
     id: 7,
@@ -111,15 +112,11 @@ let EnterpriceTemplate = [
   },
   {
     id: 8,
-    image: card8,
-  },
-  {
-    id: 9,
     image: card9,
   },
   {
-    id: 10,
-    image: card7,
+    id: 9,
+    image: card8,
   },
 ];
 
@@ -198,7 +195,7 @@ const Select_Template = () => {
   // }, [FormSubmitLoader]);
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
+  });
   async function fetchCurrentTemplate() {
     try {
       await api
@@ -241,16 +238,12 @@ const Select_Template = () => {
       values.currentTemplate = currentTemplate;
       values.URL_Alies = URL_Alies;
       await api
-        .post(
-          `/templateDetail/${URL_Alies}`,
-          values,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+        .post(`/templateDetail/${URL_Alies}`, values, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
           toast.success(res.data.message);
           setFormSubmitLoader(false);
@@ -264,13 +257,13 @@ const Select_Template = () => {
   });
 
   async function handleTemplateUpdate() {
-setFormSubmitLoader(true)
-    let data={
+    setFormSubmitLoader(true);
+    let data = {
       URL_Alies: URL_Alies,
-      currentTemplate
-    }
+      currentTemplate,
+    };
     api
-      .put(`/templateDetail/update_with_URL/${URL_Alies}`,data,  {
+      .put(`/templateDetail/update_with_URL/${URL_Alies}`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorageDatas.token}`,
@@ -279,12 +272,11 @@ setFormSubmitLoader(true)
       .then((res) => {
         setFormSubmitLoader(false);
         toast.success(res.data.message);
-     
       })
       .catch((error) => {
-        toast.error(error.response.data.message)
+        toast.error(error.response.data.message);
 
-        setFormSubmitLoader(false)
+        setFormSubmitLoader(false);
       });
   }
   return (
@@ -323,7 +315,7 @@ setFormSubmitLoader(true)
         <div className="row_two">
           {currentPlan != null ? (
             <div className="image_container">
-              {currentPlan === "Demo" ? (
+              {currentPlan === "Trial Plan" ? (
                 <>
                   {FreeTemplate.map((data, index) => {
                     return (

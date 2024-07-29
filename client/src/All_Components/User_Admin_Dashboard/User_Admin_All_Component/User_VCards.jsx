@@ -9,13 +9,20 @@ import toast from "react-hot-toast";
 const User_VCards = () => {
   // let { userName } = useParams();
   let navigate = useNavigate();
-  let { userName, setFormSubmitLoader } = useContext(Context);
+  let {
+    URL_Alies,
+    setURL_Alies,
+    userName,
+    setFormSubmitLoader,
+    setCurrentTemplate,
+    currentTemplate
+  } = useContext(Context);
   let [CurrentPlan, setCurrentPlan] = useState();
   let [savedVCardTemplate, setSavedVCardTemplate] = useState([]);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
   let [Yes, setYes] = useState(false);
   let [VCardCount, setVCardCount] = useState();
-  let [URL_Alies, setURL_Alies] = useState();
+  // let [URL_Alies, setURL_Alies] = useState();
   let userData = JSON.parse(localStorage.getItem("datas"));
 
   const [key, setKey] = useState(0);
@@ -36,6 +43,7 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
+        console.log(res.data.data);
         setFormSubmitLoader(false);
         setVCardCount(res.data.data);
       })
@@ -43,7 +51,7 @@ const User_VCards = () => {
         setFormSubmitLoader(false);
         console.log(error);
       });
-  }, [key]);
+  },[]);
 
   useEffect(() => {
     api
@@ -107,6 +115,28 @@ const User_VCards = () => {
         console.log(error);
       });
   }, []);
+  useEffect(() => {
+    try {
+      api
+        .get(`/templateDetail/specific/${userName}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setURL_Alies(res.data.data[0].URL_Alies);
+          console.log(res.data.data[0]);
+          setCurrentTemplate(res.data.data[0].currentTemplate);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <>
       <div className="user_vcards_container">
@@ -147,7 +177,7 @@ const User_VCards = () => {
                     })
                     .then((res) => {
                       console.log(res);
-                      if (res.data.length < 5) {
+                      if (res.data.length < 1) {
                         setFormSubmitLoader(false);
                         navigate(`/${userName}/uadmin/create_new_vcard`);
                       } else {
@@ -233,21 +263,33 @@ const User_VCards = () => {
                             <img src={data.Profile} alt="profile" />
                           </td>
                           <td className="fw-light">{data.VCardName}</td>
-                          <td className="fw-light text-center align-items-center">
-                            {" "}
-                            <a
-                              href={`https://www.myvirtualcard.in/${data.URL_Alies}`}
-                              target="_blank"
-                            >
-                              https://www.myvirtualcard.in/{data.URL_Alies}
-                            </a>
-                            <CopyToClipboard
-                              text={`https://www.myvirtualcard.in/${data.URL_Alies}`}
-                              onCopy={handleCopyURL}
-                            >
-                              <i className="bx bx-copy"></i>
-                            </CopyToClipboard>
-                          </td>
+                          {currentTemplate === null ? (
+                            <td className="fw-light text-center align-items-center">
+                               <small>Select your VCard templete First!</small>
+                            </td>
+                          ) : (
+                            <td className="fw-light text-center align-items-center">
+                              {" "}
+                              <a
+                                href={`${
+                                  import.meta.env.VITE_CLIENT_DOMAIN_URL
+                                }/${data.URL_Alies}`}
+                                target="_blank"
+                              >
+                                {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
+                                {data.URL_Alies}
+                              </a>
+                              <CopyToClipboard
+                                text={`${
+                                  import.meta.env.VITE_CLIENT_DOMAIN_URL
+                                }/${data.URL_Alies}`}
+                                onCopy={handleCopyURL}
+                              >
+                                <i className="bx bx-copy"></i>
+                              </CopyToClipboard>
+                            </td>
+                          )}
+
                           <td className="fw-light plan">
                             <small>
                               {CurrentPlan != null ? CurrentPlan : "No Plan"}

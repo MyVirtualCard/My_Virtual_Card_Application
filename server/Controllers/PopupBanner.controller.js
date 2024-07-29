@@ -1,5 +1,5 @@
 import PopupBannerModel from "../Models/PopupBanner.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import Payment from "../Models/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
 // export const GetPopupBannerData = async (req, res) => {
@@ -24,7 +24,7 @@ export const PostPopupBannerData = async (req, res) => {
     if (!req.body.BannerTitle || !req.body.BannerDescription) {
       return res.status(401).json({ message: "All * fields are Mandatory!" });
     }
-    let checkCurrentPlan = await currentPlan.find({
+    let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
     if (!checkCurrentPlan) {
@@ -35,10 +35,10 @@ export const PostPopupBannerData = async (req, res) => {
     } else {
       //Plan 2 and 3
       if (
-        checkCurrentPlan[0].PlanPrice === 10 ||
-        checkCurrentPlan[0].PlanPrice === 365 ||
-        checkCurrentPlan[0].PlanPrice === 799 ||
-        checkCurrentPlan[0].PlanPrice === 1499
+        checkCurrentPlan[0].amount === 10 ||
+        checkCurrentPlan[0].amount === 599 ||
+        checkCurrentPlan[0].amount === 899 ||
+        checkCurrentPlan[0].amount === 1299
       ) {
         //check images
         let checkPopupBannerLength = await PopupBannerModel.find({

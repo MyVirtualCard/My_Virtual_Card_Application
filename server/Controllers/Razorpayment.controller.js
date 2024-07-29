@@ -80,7 +80,7 @@ export const readSpecificUserAllData = async (req, res) => {
       // Runs every minute
       cron.schedule("* * * * *", async () => {
         const now = new Date();
-        const threeMinutesAgo = new Date(now.getTime() - 1 * 60 * 1000);
+        const threeMinutesAgo = new Date(now.getTime() - 3 * 60 * 1000);
 
         const result = await Payment.deleteMany({
           status: "created",

@@ -1,8 +1,8 @@
 import ServiceModel from "../Models/Services.model.js";
-import currentPlan from "../Models/Plan.model.js";
 import serviceUpload from "../Multer/service.js";
 import fs from "fs";
 import multer from "multer";
+import Payment from "../Models/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const GetServiceData = async (req, res) => {
@@ -44,7 +44,7 @@ export const PostServiceData = (req, res) => {
         return res.status(400).json({ message: "No file choosen!" });
       }
 
-      let checkCurrentPlan = await currentPlan.find({
+      let checkCurrentPlan = await Payment.find({
        user:req.user.userName
       });
 
@@ -60,10 +60,10 @@ export const PostServiceData = (req, res) => {
       } else {
         //Plan 2 and 3
         if (
-          checkCurrentPlan[0].PlanPrice === 10 ||
-          checkCurrentPlan[0].PlanPrice === 365 ||
-          checkCurrentPlan[0].PlanPrice === 799 ||
-          checkCurrentPlan[0].PlanPrice === 1499
+          checkCurrentPlan[0].amount === 10 ||
+          checkCurrentPlan[0].amount === 599 ||
+          checkCurrentPlan[0].amount === 899 ||
+          checkCurrentPlan[0].amount === 1299
         ) {
           //check images
           let checkServiceLength = await ServiceModel.find({
@@ -75,7 +75,7 @@ export const PostServiceData = (req, res) => {
               .status(400)
               .json({ message: "Service  not be there!", error: err });
           } else {
-            if (checkCurrentPlan[0].PlanPrice === 1499) {
+            if (checkCurrentPlan[0].amount === 1299) {
               //Basic Image File limit checked:
               if (checkServiceLength.length < 8) {
                 // Create a new image instance and save to MongoDB
@@ -109,7 +109,7 @@ export const PostServiceData = (req, res) => {
                 });
               }
             }
-            if (checkCurrentPlan[0].PlanPrice === 799) {
+            if (checkCurrentPlan[0].amount === 899) {
               //Basic Image File limit checked:
               if (checkServiceLength.length < 6) {
                 // Create a new image instance and save to MongoDB
@@ -149,7 +149,7 @@ export const PostServiceData = (req, res) => {
               }
             }
 
-            if (checkCurrentPlan[0].PlanPrice === 365) {
+            if (checkCurrentPlan[0].amount === 599) {
               if (checkServiceLength.length < 4) {
                 // Create a new image instance and save to MongoDB
                 const newService = new ServiceModel({
@@ -187,7 +187,7 @@ export const PostServiceData = (req, res) => {
                 });
               }
             }
-            if (checkCurrentPlan[0].PlanPrice === 10) {
+            if (checkCurrentPlan[0].amount === 10) {
               //Basic Image File limit checked:
               if (checkServiceLength.length < 0) {
                 res.status(400).json({
@@ -269,7 +269,7 @@ export const updateSpecificUserData = async (req, res) => {
         return res.status(400).json({ message: "No file choosen!" });
       }
 
-      let checkCurrentPlan = await currentPlan.find({
+      let checkCurrentPlan = await Payment.find({
         user:req.user.userName
       });
 
@@ -285,10 +285,10 @@ export const updateSpecificUserData = async (req, res) => {
       } else {
         //Plan 2 and 3
         if (
-          checkCurrentPlan[0].PlanPrice === 10 ||
-          checkCurrentPlan[0].PlanPrice === 365 ||
-          checkCurrentPlan[0].PlanPrice === 799 ||
-          checkCurrentPlan[0].PlanPrice === 1499
+          checkCurrentPlan[0].amount === 10 ||
+          checkCurrentPlan[0].amount === 599 ||
+          checkCurrentPlan[0].amount === 899 ||
+          checkCurrentPlan[0].amount === 1299
         ) {
           try {
             let { id } = req.params;

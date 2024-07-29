@@ -124,7 +124,7 @@ e.preventDefault();
   }
   return (
     <>
-      <div className="privacy_container">
+      <div className="privacyPolicy_container">
         <div className="title">
           {/* <h6>Link Your Social Medias</h6> */}
 

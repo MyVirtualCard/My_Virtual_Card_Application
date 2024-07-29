@@ -17,6 +17,8 @@ import VCard_URL_Form from "../User_Admin_All_Component/VCard_URL_Form";
 import Inquiries from "../User_Admin_All_Component/Inquiries";
 import paymentImage from "../../../assets/PaymentPopup/payment1.jpg";
 import Confetti from 'react-confetti'
+import Appoinment from "../User_Admin_All_Component/Appoinment";
+import ProductOrder from "../User_Admin_All_Component/ProductOrder";
 const UserAdmin = () => {
   let { Index } = useParams();
   let navigate = useNavigate();
@@ -72,7 +74,10 @@ let [pieces,setPieces]=useState(150);
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
-
+  const [key, setKey] = useState(0);
+  var reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
   useEffect(() => {
     api
       .get(`/auth/register/${userName}`)
@@ -84,16 +89,17 @@ let [pieces,setPieces]=useState(150);
         console.log(error.response.data.message);
       });
   }, []);
-  let [Seconds, setSeconds] = useState("15");
+  let [Seconds, setSeconds] = useState("5");
   useEffect(() => {
     if (Seconds > 0 && PaymentSuccessPopup === true) {  
       const timerId = setTimeout(() => {
         setSeconds(Seconds - 1);  
         setTimeout(()=>{
           setPieces(0)
-        },5000)
+        },4000)
       }, 1000);
       return () => {
+ 
         clearTimeout(timerId);
       };
     }
@@ -101,9 +107,9 @@ let [pieces,setPieces]=useState(150);
 
 
   if (Seconds <= 0) {
+    window.location.pathname =`${userName}/uadmin/user_vcard`;
     setPaymentSuccessPopup(false);
   }
-  console.log(Seconds, PaymentSuccessPopup);
   return (
     <>
       <div className="userAdmin_container">
@@ -187,6 +193,16 @@ let [pieces,setPieces]=useState(150);
             )}
             {window.location.pathname === `/${userName}/uadmin/inquiries` ? (
               <Inquiries />
+            ) : (
+              ""
+            )}
+               {window.location.pathname === `/${userName}/uadmin/product_order` ? (
+              <ProductOrder />
+            ) : (
+              ""
+            )}
+                   {window.location.pathname === `/${userName}/uadmin/appoinment` ? (
+              <Appoinment />
             ) : (
               ""
             )}

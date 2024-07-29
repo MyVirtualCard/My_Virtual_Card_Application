@@ -21,7 +21,7 @@ const User_Dashboard = () => {
                 <h4>10</h4>
                 <small>Active VCards</small>
               </div>
-              <ul className="background">
+              <ul className="dashboard_background">
                 <li></li>
                 <li></li>
                 <li></li>
@@ -48,7 +48,7 @@ const User_Dashboard = () => {
                 <h4>00</h4>
                 <small>No Of User Viewed</small>
               </div>
-              <ul className="background">
+              <ul className="dashboard_background">
                 <li></li>
                 <li></li>
                 <li></li>
@@ -75,7 +75,7 @@ const User_Dashboard = () => {
                 <h4>00</h4>
                 <small>Today inquiries</small>
               </div>
-              <ul className="background">
+              <ul className="dashboard_background">
                 <li></li>
                 <li></li>
                 <li></li>
@@ -102,7 +102,7 @@ const User_Dashboard = () => {
                 <h4>00</h4>
                 <small>Today Appointments</small>
               </div>
-              <ul className="background">
+              <ul className="dashboard_background">
                 <li></li>
                 <li></li>
                 <li></li>

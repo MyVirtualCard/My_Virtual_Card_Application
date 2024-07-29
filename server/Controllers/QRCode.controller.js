@@ -1,5 +1,5 @@
 import QRCodeModel from "../Models/QRCode.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import Payment from "../Models/Payment.model.js";
 import fs from "fs";
 import multer from "multer";
 // Import necessary functions from the url and path modules
@@ -48,7 +48,7 @@ export const PostGalleryData = async (req, res) => {
         return res.status(400).json({ message: "No file choosen!" });
       }
 
-      let checkCurrentPlan = await currentPlan.find({
+      let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
 
@@ -63,7 +63,7 @@ export const PostGalleryData = async (req, res) => {
         .json({ message: "Choose your Plan first!", error: err });
       }else{
     //Plan 2 and 3
-    if (checkCurrentPlan[0].PlanPrice === 10 || checkCurrentPlan[0].PlanPrice === 365 || checkCurrentPlan[0].PlanPrice === 799 || checkCurrentPlan[0].PlanPrice === 1499) {
+    if (checkCurrentPlan[0].amount === 10 || checkCurrentPlan[0].amount === 599 || checkCurrentPlan[0].amount === 899 || checkCurrentPlan[0].amount === 1299) {
       //check images
       let checkCurrentImages = await QRCodeModel.find({
         URL_Alies:req.params.URL_Alies
@@ -75,7 +75,7 @@ export const PostGalleryData = async (req, res) => {
           .json({ message: "Image will not be there!", error: err });
       } else {
       
-        if(checkCurrentPlan[0].PlanPrice === 1499){
+        if(checkCurrentPlan[0].amount === 1299){
             //Basic Image File limit checked:
         if (checkCurrentImages.length < 1) {
           // Create a new image instance and save to MongoDB
@@ -110,7 +110,7 @@ export const PostGalleryData = async (req, res) => {
           });
         }
         };
-        if(checkCurrentPlan[0].PlanPrice === 365 || checkCurrentPlan[0].PlanPrice === 799){
+        if(checkCurrentPlan[0].amount === 599 || checkCurrentPlan[0].amount === 899){
           //Basic Image File limit checked:
       if (checkCurrentImages.length < 1) {
         // Create a new image instance and save to MongoDB
@@ -142,7 +142,7 @@ export const PostGalleryData = async (req, res) => {
         });
       }
       }
-      if(checkCurrentPlan[0].PlanPrice === 10){
+      if(checkCurrentPlan[0].amount === 10){
         //Basic Image File limit checked:
     if (checkCurrentImages.length < 0) {
       // Create a new image instance and save to MongoDB

@@ -95,28 +95,14 @@ const User_Admin_SideNavBar = () => {
               </p>
             </NavLink>
           </div>
-          {/* <div className="menu">
-          <NavLink onClick={()=>window.location.pathname='/sadmin/vcards'} className={window.location.pathname === '/sadmin/vcards' ?    'activeMenu' : ''}>
-          <i className='bx bxs-card h-auto  d-flex align-self-center justify-content-center text-info'></i>
-        <p className={SideNavActions ? 'menuNamesHide':''}id='menuName'>VCards</p>
-          </NavLink>
-    
-        </div> */}
-          {/* <div className="menu">
-          <NavLink onClick={()=>window.location.pathname='/sadmin/sell_NFC_cards'} className={window.location.pathname === '/sadmin/sell_NFC_cards' ?    'activeMenu' : ''}>
-          <i className='bx bx-credit-card h-auto  d-flex align-self-center justify-content-center text-primary'></i>
-        <p className={SideNavActions ? 'menuNamesHide':''}id='menuName'>Sell NFC Cards</p>
-          </NavLink>
-   
-        </div> */}
           <div className="menu">
             <NavLink
-              to='/'
-              className={
-                window.location.pathname === "/sadmin/vcard_templates"
-                  ? "activeMenu"
-                  : ""
-              }
+                to={`/${userName}/uadmin/appoinment`}
+                className={
+                  window.location.pathname === `/${userName}/uadmin/appoinment`
+                    ? "activeMenu"
+                    : ""
+                }
             >
               <i className="bx bx-id-card h-auto  d-flex align-self-center justify-content-center text-warning"></i>
               <p
@@ -129,9 +115,9 @@ const User_Admin_SideNavBar = () => {
           </div>
           <div className="menu">
             <NavLink
-            to='/'
+              to={`/${userName}/uadmin/product_order`}
               className={
-                window.location.pathname === "/sadmin/cash_payments"
+                window.location.pathname === `/${userName}/uadmin/product_order`
                   ? "activeMenu"
                   : ""
               }
@@ -145,7 +131,7 @@ const User_Admin_SideNavBar = () => {
               </p>
             </NavLink>
           </div>
-          <div className="menu">
+          {/* <div className="menu">
             <NavLink
                  to='/'
               className={
@@ -162,8 +148,8 @@ const User_Admin_SideNavBar = () => {
                 Virtual Backgrounds
               </p>
             </NavLink>
-          </div>
-          <div className="menu">
+          </div> */}
+          {/* <div className="menu">
             <NavLink
                 to='/'
               className={
@@ -214,9 +200,9 @@ const User_Admin_SideNavBar = () => {
                 Storage
               </p>
             </NavLink>
-          </div>
+          </div> */}
 
-          <div className="menu">
+          {/* <div className="menu">
             <NavLink
            to='/'
               className={
@@ -233,7 +219,7 @@ const User_Admin_SideNavBar = () => {
                 Settings
               </p>
             </NavLink>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

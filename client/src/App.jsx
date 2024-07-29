@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
 import LandingPage from "./All_Components/LandingPage/LandingPage";
 import Context from "./All_Components/UseContext/Context";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -21,6 +22,18 @@ import ResendOTP from "./All_Components/Authentication/ResendOTP/ResendOTP";
 import Terms_Condition from "./All_Components/LandingPage/Terms&Condition/Terms_Condition";
 import Privacy_Policy from "./All_Components/LandingPage/PrivacyPolicy/Privacy_Policy";
 import PaymentSuccess from "./All_Components/User_Admin_Dashboard/Payment/PaymentSuccess";
+
+import NewCardDesign1 from "./All_Components/All_VCards/NewCardDesign1";
+import NewCardDesign2 from "./All_Components/All_VCards/NewCardDesign2";
+import NewCardDesign3 from "./All_Components/All_VCards/NewCardDesign3";
+import NewCardDesign4 from "./All_Components/All_VCards/NewCardDesign4";
+import NewCardDesign5 from "./All_Components/All_VCards/NewCardDesign5";
+import NewCardDesign6 from "./All_Components/All_VCards/NewCardDesign6";
+import NewCardDesign7 from "./All_Components/All_VCards/NewCardDesign7";
+import NewCardDesign8 from "./All_Components/All_VCards/NewCardDesign8";
+import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
+import Appoinment from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment";
+import ProductOrder from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder";
 
 const App = () => {
   //URL Name state:
@@ -179,11 +192,11 @@ const App = () => {
   let [PlanPrice, setPlanPrice] = useState();
 
   // PaymentPopup
-  let [PaymentSuccessPopup,setPaymentSuccessPopup]=useState(false);
-  
+  let [PaymentSuccessPopup, setPaymentSuccessPopup] = useState(false);
+
   //OTPValue Store:
 
-  let[OTP_Value,setOTP_Value]=useState()
+  let [OTP_Value, setOTP_Value] = useState();
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -195,13 +208,43 @@ const App = () => {
   }, [navigate]);
 
   let [vcardSelection, setVcardSelection] = useState([]);
+  const localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  const URL_Alies_LocalStorage = localStorage.getItem("URL_Alies");
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
+  useEffect(() => {
+    try {
+      api
+        .get(`/templateDetail/specific/${userName}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setURL_Alies(res.data.data[0].URL_Alies);
+          console.log(res.data.data[0]);
+          setCurrentTemplate(res.data.data[0].currentTemplate);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  console.log(currentTemplate, URL_Alies);
   return (
     <>
       <div className="App_container">
         <Context.Provider
           value={{
-            OTP_Value,setOTP_Value,
-            PaymentSuccessPopup,setPaymentSuccessPopup,
+            OTP_Value,
+            setOTP_Value,
+            PaymentSuccessPopup,
+            setPaymentSuccessPopup,
             URL_Alies,
             setURL_Alies,
             AuthToggle,
@@ -471,12 +514,11 @@ const App = () => {
             />
             <Route path="/resend_OTP" element={<ResendOTP />} />
             <Route path="/forgot_password" element={<ForgotPassword />}>
-            <Route
-              path="/forgot_password/reset_password/:id/:token"
-              element={<ResetPassword />}
-            />
+              <Route
+                path="/forgot_password/reset_password/:id/:token"
+                element={<ResetPassword />}
+              />
             </Route>
-           
 
             <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
               <Route
@@ -504,6 +546,14 @@ const App = () => {
                 path={`/${userName}/uadmin/inquiries`}
                 element={<Inquiries />}
               />
+                <Route
+                path={`/${userName}/uadmin/appoinment`}
+                element={<Appoinment />}
+              />
+                 <Route
+                path={`/${userName}/uadmin/product_order`}
+                element={<ProductOrder />}
+              />
               <Route
                 path={`/${userName}/uadmin/vcard_form/basic_form`}
                 element={<BasicForm />}
@@ -513,11 +563,86 @@ const App = () => {
                 path={`/${userName}/uadmin/account_setting`}
                 element={<UserAccountSetting />}
               />
-
             </Route>
-            <Route path='/paymentsuccess' element={<PaymentSuccess />} />
+            <Route path="/paymentsuccess" element={<PaymentSuccess />} />
             <Route path="/terms_condition" element={<Terms_Condition />} />
             <Route path="/privacy_condition" element={<Privacy_Policy />} />
+
+            {/*AllVardsTemplate */}
+
+            {currentTemplate == 1 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign1 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 2 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign2 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 3 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign3 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 4 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign4 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 5 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign5 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 6 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign6 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 7 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign7 />}
+              />
+            ) : (
+              ""
+            )}
+            {currentTemplate == 8 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign8 />}
+              />
+            ) : (
+              ""
+            )}
+              {currentTemplate == 9 ? (
+              <Route
+                path={`/${URL_Alies_LocalStorage}`}
+                element={<NewCardDesign9 />}
+              />
+            ) : (
+              ""
+            )}
+          
           </Routes>
         </Context.Provider>
       </div>

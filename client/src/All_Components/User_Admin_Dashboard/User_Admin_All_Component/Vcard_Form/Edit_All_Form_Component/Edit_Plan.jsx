@@ -387,7 +387,7 @@ const Plan = () => {
   let [status, setStatus] = useState(null);
   let [userData, setUserData] = useState();
   const [amount, setAmount] = useState("");
-  let [Seconds, setSeconds] = useState("60");
+  let [Seconds, setSeconds] = useState("180");
   const [key, setKey] = useState(0);
   let [activePlan, setPlanActive] = useState([]);
 
@@ -506,7 +506,7 @@ const Plan = () => {
         );
         setTimeout(() => {
           reloadComponent();
-        }, 15000);
+        }, 6000);
         setPaymentSuccessPopup(true);
         setPaymentPopup(false);
         setCurrentPlan(null);
@@ -567,7 +567,7 @@ const Plan = () => {
               <div className="note">
                 <p>
                   <strong>Note :</strong>&nbsp; If Your Payment created but not
-                  deduct any amount from your account retry payment after 1 min
+                  deduct any amount from your account retry payment after 3 min
                 </p>
               </div>
               <h4>

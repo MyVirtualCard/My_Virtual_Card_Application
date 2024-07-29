@@ -1,5 +1,4 @@
 import BussinessModel from "../Models/BussinessHour.model.js";
-import currentPlan from "../Models/Plan.model.js";
 
 //Read or get all user basicDetail data  from database:
 

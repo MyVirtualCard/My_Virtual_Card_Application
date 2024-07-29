@@ -248,9 +248,16 @@ font-weight: 500;
           &:nth-child(3) {
             padding: 5px 10px;
             vertical-align: middle;
-            color: green;
-            font-weight: 550;
+            color: rgb(70, 70, 70);
+            font-weight: 600;
             font-size: 0.9rem;
+
+            small{
+              font-size: 0.7rem;
+              font-weight: 550;
+              color: tomato;
+              text-decoration: line-through;
+            }
           }
           &:nth-child(2) {
             a {
