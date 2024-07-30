@@ -1,6 +1,7 @@
 import BasicDetails from "../Models/BasicDetail.model.js";
-import currentPlan from "../Models/Plan.model.js";
+
 import Vcard_URL from "../Models/Vcard_URL.model.js";
+import Payment from "../Models/Payment.model.js";
 //DiskStorage:
 
 //Get Async allback function..All user basicdata fetching :
@@ -35,7 +36,7 @@ export const postBasicAllData = async (req, res) => {
   ) {
     return res.status(401).json({ message: "All * fields Required" });
   }
-  let checkCurrentPlan = await currentPlan.find({
+  let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
 
@@ -47,10 +48,10 @@ export const postBasicAllData = async (req, res) => {
   } else {
     //All plan
     if (
-      checkCurrentPlan[0].PlanPrice === 10 ||
-      checkCurrentPlan[0].PlanPrice === 365 ||
-      checkCurrentPlan[0].PlanPrice === 799 ||
-      checkCurrentPlan[0].PlanPrice === 1499
+      checkCurrentPlan[0].amount === 10 ||
+      checkCurrentPlan[0].amount === 599 ||
+      checkCurrentPlan[0].amount === 899 ||
+      checkCurrentPlan[0].amount === 1299
     ) {
       let checkBasicDetailLength = await Vcard_URL.findOne({
         URL_Alies: req.params.URL_Alies

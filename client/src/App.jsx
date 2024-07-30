@@ -572,7 +572,7 @@ const App = () => {
 
             {currentTemplate == 1 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign1 />}
               />
             ) : (
@@ -580,7 +580,7 @@ const App = () => {
             )}
             {currentTemplate == 2 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+                path={`/:URL_Alies`}
                 element={<NewCardDesign2 />}
               />
             ) : (
@@ -588,7 +588,7 @@ const App = () => {
             )}
             {currentTemplate == 3 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign3 />}
               />
             ) : (
@@ -596,7 +596,7 @@ const App = () => {
             )}
             {currentTemplate == 4 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign4 />}
               />
             ) : (
@@ -604,7 +604,7 @@ const App = () => {
             )}
             {currentTemplate == 5 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign5 />}
               />
             ) : (
@@ -612,7 +612,7 @@ const App = () => {
             )}
             {currentTemplate == 6 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign6 />}
               />
             ) : (
@@ -620,7 +620,7 @@ const App = () => {
             )}
             {currentTemplate == 7 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign7 />}
               />
             ) : (
@@ -628,7 +628,7 @@ const App = () => {
             )}
             {currentTemplate == 8 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign8 />}
               />
             ) : (
@@ -636,7 +636,7 @@ const App = () => {
             )}
               {currentTemplate == 9 ? (
               <Route
-                path={`/${URL_Alies_LocalStorage}`}
+              path={`/:URL_Alies`}
                 element={<NewCardDesign9 />}
               />
             ) : (

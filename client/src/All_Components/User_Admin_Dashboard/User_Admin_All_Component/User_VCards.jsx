@@ -274,7 +274,7 @@ const User_VCards = () => {
                                 href={`${
                                   import.meta.env.VITE_CLIENT_DOMAIN_URL
                                 }/${data.URL_Alies}`}
-                                target="_blank"
+                              
                               >
                                 {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
                                 {data.URL_Alies}

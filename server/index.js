@@ -28,7 +28,6 @@ import TermConditionRoute from "./Routes/Terms&Condition.route.js";
 import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
-
 import RazorPaymentRoute from './Routes/Razorpayment.router.js'
 
 let host_ip = "http://localhost:3001";
