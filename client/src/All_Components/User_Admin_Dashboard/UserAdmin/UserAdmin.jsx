@@ -25,14 +25,14 @@ const UserAdmin = () => {
 let [pieces,setPieces]=useState(150);
 
   let {
+    URL_Alies, setURL_Alies,
     PaymentSuccessPopup,
     setPaymentSuccessPopup,
-    URL_Alies,
     userData,
     setUserData,
     userName,
     FormSubmitLoader,
-
+     setUserName,
     SideNavActions,
 
     profileOpen,
@@ -105,7 +105,29 @@ let [pieces,setPieces]=useState(150);
     }
   });
 
-
+  useEffect(() => {
+    try {
+      api
+        .get(`/templateDetail/specific/${userName}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userDetails.token}`,
+          },
+        })
+        .then((res) => {
+          setURL_Alies(res.data.data[0].URL_Alies);
+          console.log(res.data.data[0]);
+          setUserName(res.data.data[0].user)
+          setCurrentTemplate(res.data.data[0].currentTemplate);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   if (Seconds <= 0) {
     window.location.pathname =`${userName}/uadmin/user_vcard`;
     setPaymentSuccessPopup(false);

@@ -36,7 +36,7 @@ const NewCardDesign2 = () => {
   let [share, setShare] = useState(false);
   let [AllData, setAllData] = useState();
   let [SiteLoader, setSiteLoader] = useState(false);
-  console.log(AllData);
+
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -113,6 +113,8 @@ const NewCardDesign2 = () => {
     ),
   };
   let { URL_Alies } = useParams();
+  const currentUrl = window.location.pathname; // Full URL
+console.log(currentUrl)
   let [formData, setFormData] = useState({
     clientFullName1: "",
     clientEmail1: "",
@@ -322,7 +324,7 @@ const NewCardDesign2 = () => {
     setSiteLoader(true)
     try {
       await api
-        .get(`/vcard/allDataAPI/${URL_Alies}`)
+        .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
           setAllData(res.data.data);
           setSiteLoader(false)

@@ -217,13 +217,9 @@ const App = () => {
   useEffect(() => {
     try {
       api
-        .get(`/templateDetail/specific/${userName}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorageDatas.token}`,
-          },
-        })
+        .get(`/templateDetail/${URL_Alies_LocalStorage}`)
         .then((res) => {
+          console.log(res.data)
           setURL_Alies(res.data.data[0].URL_Alies);
           console.log(res.data.data[0]);
           setCurrentTemplate(res.data.data[0].currentTemplate);
@@ -236,7 +232,6 @@ const App = () => {
       console.log(error);
     }
   }, []);
-  console.log(currentTemplate, URL_Alies);
   return (
     <>
       <div className="App_container">
@@ -584,7 +579,7 @@ const App = () => {
             )}
             {currentTemplate == 2 ? (
               <Route
-                path={`/:URL_Alies`}
+                path='/:URL_Alies'
                 element={<NewCardDesign2 />}
               />
             ) : (
