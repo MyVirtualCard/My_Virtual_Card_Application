@@ -12,12 +12,23 @@ import ServiceData from '../Models/Services.model.js';
 import SocialMediaModel from '../Models/SocialMedia.model.js';
 import TestimonialModel from '../Models/Testimonial.model.js';
 import Current_VCardTemplate from '../Models/VCardTemplate.model.js';
+import Vcard_URL from '../Models/Vcard_URL.model.js';
+import QRCodeModel from '../Models/QRCode.model.js';
 
 router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
     try {
    
       let URL_Alies = req.params.URL_Alies;
         let result = {};
+
+        let getURLData = await Vcard_URL.find({ URL_Alies: URL_Alies, });
+    
+        if (!getURLData) {
+          res.status(400).json({ message: "url Data Not Found" });
+        } else {
+          result["Vcard_URL"] = getURLData;
+        };
+    
     
         let getSpecificData = await BasicDetails.find({ URL_Alies: URL_Alies, });
     
@@ -59,13 +70,13 @@ router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
           result["GalleryModel"] = GalleryDetails_data;
         }
     
-        // let QRCodeDetails_data = await QRCodeDetails.find({ user: userid });
+        let QRCodeDetails_data = await QRCodeModel.find({    URL_Alies: URL_Alies});
     
-        // if (!QRCodeDetails_data) {
-        //   res.status(400).json({ message: "Product Data Not Found" });
-        // } else {
-        //   result["QRCodeDetails"] = QRCodeDetails_data;
-        // }
+        if (!QRCodeDetails_data) {
+          res.status(400).json({ message: "QRCode Data Not Found" });
+        } else {
+          result["QRCodeModel"] = QRCodeDetails_data;
+        }
     
         let SocialMediaDetails_data = await SocialMediaModel.find({    URL_Alies: URL_Alies, });
     

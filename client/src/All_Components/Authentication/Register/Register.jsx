@@ -63,7 +63,7 @@ const Register = () => {
 
           setTimeout(() => {
             handleSpeak(userData);
-            navigate(`/${userData.userName}/uadmin/dashboard`);
+            navigate(`/${userData.userName}/uadmin/user_vcard`);
           }, 2000);
         })
         .catch((error) => {

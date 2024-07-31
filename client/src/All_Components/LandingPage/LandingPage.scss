@@ -98,16 +98,16 @@ body {
             width: 250px;
 
             @media screen and (max-width: 600px) {
-              width: 150px;
+              width: 210px;
             }
             @media screen and (max-width: 600px) {
-              width: 130px;
+              width: 210px;
             }
           }
           @media screen and (max-width: 600px) {
             flex: 0.5;
             width: 50%;
-            padding: 0px 0.5rem;
+            padding: 0px 0.2rem;
           }
         }
 
@@ -261,13 +261,15 @@ body {
             margin-left: 2rem;
             a {
               text-decoration: none;
-
+font-size: 0.8rem;
               button:nth-child(1) {
                 padding: 5px 1.5rem;
                 color: #fff;
+                font-size: 0.8rem;
                 border-radius: 5px;
                 @media screen and (max-width: 600px) {
-                  padding: 5px 1rem;
+                  padding: 5px 0.5rem;
+                  font-size: 0.7rem;
                 }
               }
               &:nth-child(1) {
@@ -280,10 +282,15 @@ body {
                   color: #000000;
                   font-weight: 550;
      
-                  font-size: 0.9rem;
+                  font-size: 0.8rem;
                   &:hover {
                     background-color: #f8f8f8;
                     color: #000;
+                  }
+
+                  @media screen and (max-width: 600px) {
+                  
+                    font-size: 0.7rem;
                   }
                 }
               }
@@ -319,6 +326,7 @@ body {
             }
             @media screen and (max-width: 900px) {
               width: 200px;
+              margin-left: 0rem;
             }
           }
           @media screen and (max-width: 600px) {
@@ -333,7 +341,7 @@ body {
       }
       @media screen and (max-width: 600px) {
         top: 0%;
-        padding: 0px 1rem;
+        padding: 0px 0.2rem;
       }
     }
     .slide_1 {

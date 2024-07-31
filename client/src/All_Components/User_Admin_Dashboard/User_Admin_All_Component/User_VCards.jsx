@@ -15,7 +15,8 @@ const User_VCards = () => {
     userName,
     setFormSubmitLoader,
     setCurrentTemplate,
-    currentTemplate
+    currentTemplate,
+    ShowForm, setShowForm,
   } = useContext(Context);
   let [CurrentPlan, setCurrentPlan] = useState();
   let [savedVCardTemplate, setSavedVCardTemplate] = useState([]);
@@ -136,6 +137,25 @@ const User_VCards = () => {
     } catch (error) {
       console.log(error);
     }
+  }, []);
+  useEffect(() => {
+    api
+      .get(`/razorpay/specificUser/${userName}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorageDatas.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data[0].status)
+        setPlanActive(res.data.data);
+        setShowForm('Basic Detail')
+        setStatus(res.data.data[0].status);
+        setCurrentPlan(res.data.data[0].currentPlan);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
   return (
     <>

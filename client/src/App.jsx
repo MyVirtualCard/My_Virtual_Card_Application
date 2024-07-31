@@ -179,7 +179,7 @@ const App = () => {
 
   let [TestimonialEdit, setTestimonialEdit] = useState(false);
   let [QRCodeEdit, setQRCodeEdit] = useState(false);
-
+  let [ShowForm, setShowForm] = useState("Choose Your Plan");
   //Super Admin pannel Register form
   let [AddUser, setAddUser] = useState(false);
   let [EditUser, setEditUser] = useState(false);
@@ -193,7 +193,8 @@ const App = () => {
 
   // PaymentPopup
   let [PaymentSuccessPopup, setPaymentSuccessPopup] = useState(false);
-
+  let [status, setStatus] = useState(null);
+  let [activePlan, setPlanActive] = useState([]);
   //OTPValue Store:
 
   let [OTP_Value, setOTP_Value] = useState();
@@ -241,6 +242,9 @@ const App = () => {
       <div className="App_container">
         <Context.Provider
           value={{
+            ShowForm, setShowForm,
+            activePlan, setPlanActive,
+            status, setStatus,
             OTP_Value,
             setOTP_Value,
             PaymentSuccessPopup,

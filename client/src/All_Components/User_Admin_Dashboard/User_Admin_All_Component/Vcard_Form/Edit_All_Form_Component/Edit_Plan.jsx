@@ -378,18 +378,21 @@ const Plan = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
+    status, setStatus,
+    activePlan, setPlanActive,
+    ShowForm, setShowForm,
   } = useContext(Context);
 
   let [currentAccessDetails, setCurrentAccessDetails] = useState();
   let [currentAccessActive, setCurrentAccessActive] = useState(false);
   let [paymentPopup, setPaymentPopup] = useState(false);
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
-  let [status, setStatus] = useState(null);
+ 
   let [userData, setUserData] = useState();
   const [amount, setAmount] = useState("");
   let [Seconds, setSeconds] = useState("180");
   const [key, setKey] = useState(0);
-  let [activePlan, setPlanActive] = useState([]);
+
 
   var reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
@@ -531,8 +534,9 @@ const Plan = () => {
         },
       })
       .then((res) => {
+        console.log(res.data.data[0].status)
         setPlanActive(res.data.data);
-
+setShowForm('Basic Detail')
         setStatus(res.data.data[0].status);
         setCurrentPlan(res.data.data[0].currentPlan);
       })

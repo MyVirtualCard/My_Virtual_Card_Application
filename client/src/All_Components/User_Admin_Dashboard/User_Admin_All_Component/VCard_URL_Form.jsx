@@ -67,7 +67,7 @@ const VCard_URL_Form = () => {
       URL_Alies: URL_Alies,
       VCardName: "",
       Occupation: "",
-      Description: "",
+      Description: '',
       Profile: "",
       Banner: "",
     },
@@ -76,9 +76,10 @@ const VCard_URL_Form = () => {
     validate: VCardURLValidate,
 
     onSubmit: async (values) => {
-      values = await Object.assign(values, { Profile: Profile || "" });
-      values = await Object.assign(values, { Banner: Banner || "" });
       values.Description = stripHtmlTags(Description);
+      values =  Object.assign(values, { Profile: Profile || "" });
+      values =  Object.assign(values, { Banner: Banner || "" });
+
       setFormSubmitLoader(true);
       await api
         .post("/vcard_URL", values, {
@@ -88,7 +89,6 @@ const VCard_URL_Form = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.data.URL_Alies)
           toast.success(res.data.message);
           setURL_Alies(res.data.data.URL_Alies);
           localStorage.setItem('URL_Alies',res.data.data.URL_Alies)

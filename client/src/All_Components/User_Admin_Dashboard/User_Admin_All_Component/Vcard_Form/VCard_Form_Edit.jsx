@@ -28,23 +28,31 @@ import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
   let {
+    ShowForm, setShowForm,
     userName,
     setURL_Alies,
     currentPlan,
     setCurrentPlan,
     currentTemplate,
     setCurrentTemplate,
+    status,
+    setStatus,
+    activePlan,
+    setPlanActive,
   } = useContext(Context);
   let navigate = useNavigate();
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
   let [formSliderToggle, setFormSliderToggle] = useState(false);
   let [userData, setUserData] = useState("jayakumar");
-  let [ShowForm, setShowForm] = useState("Choose Your Plan");
+ 
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
+
+
+
   useEffect(() => {
     try {
       api
@@ -98,9 +106,8 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
-          setURL_Alies(res.data.data[0].URL_Alies
-          )
-          console.log(res.data.data[0])
+          setURL_Alies(res.data.data[0].URL_Alies);
+          console.log(res.data.data[0]);
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
@@ -140,23 +147,25 @@ const VCard_Form_Edit = () => {
             className="form_sidenav"
             id={!formSliderToggle ? "slideClose" : "slideOpen"}
           >
-            <div
-              className="menu_item"
-              onClick={handleFormShow}
-              id={ShowForm === "Choose Your Plan" ? "menu_active" : ""}
-            >
-              {/* <i className="bx bxs-spreadsheet" style={{ color: "green" }}></i> */}
-              <img
-                width="24"
-                height="24"
-                src="https://img.icons8.com/3d-fluency/94/cash-in-hand.png"
-                alt="cash-in-hand"
-                id="Choose Your Plan"
-              />
+            {status != "successfull" ? (
+              <div
+                className="menu_item"
+                onClick={handleFormShow}
+                id={ShowForm === "Choose Your Plan" ? "menu_active" : ""}
+              >
+                {/* <i className="bx bxs-spreadsheet" style={{ color: "green" }}></i> */}
+                <img
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/3d-fluency/94/cash-in-hand.png"
+                  alt="cash-in-hand"
+                  id="Choose Your Plan"
+                />
 
-              <small id="Choose Your Plan">Choose Your Plan</small>
-            </div>
-            <div
+                <small id="Choose Your Plan">Choose Your Plan</small>
+              </div>
+            ) : (
+              <div
               className="menu_item"
               onClick={handleFormShow}
               id={ShowForm === "Basic Detail" ? "menu_active" : ""}
@@ -168,6 +177,9 @@ const VCard_Form_Edit = () => {
               ></i>
               <small id="Basic Detail">Basic Detail</small>
             </div>
+            )}
+
+      
 
             <div
               className="menu_item"
@@ -383,8 +395,18 @@ const VCard_Form_Edit = () => {
             className="all_form_inputs"
             id={!formSliderToggle ? "formExpand" : "formMinimize"}
           >
-            {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}
-            {ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}
+            {status == "successfull" ? (
+              <> {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}</>
+            ) : (
+              <>{ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}</>
+            )}
+
+            {/* {status != "successfull" ? (
+              <>{ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}</>
+            ) : (
+              ""
+            )} */}
+
             {ShowForm === "VCard Templates" ? <Edit_Select_Template /> : ""}
             {ShowForm === "Services" ? <Edit_Services /> : ""}
             {ShowForm === "Products" ? <Edit_Products /> : ""}

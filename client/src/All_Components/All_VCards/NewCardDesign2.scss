@@ -68,11 +68,11 @@
         position: relative;
         bottom: 30%;
         left: 10%;
-        width: 120px;
-        height: 120px;
+        width: 80px;
+        height: 80px;
         object-fit: cover;
         object-position: center;
-        border-radius: 2rem;
+        border-radius: 1rem;
         border: 2px solid #ffffff;
 
         @media screen and (max-width:600px){
@@ -105,11 +105,11 @@
 .card8_box2{
   position: relative;
   padding: 1rem;
-  margin: 2rem auto 0px auto;
+  margin: 0.5rem auto 0px auto;
   width: 100%;
   .social_medias{
     width: 100%;
-    padding: 1rem 0px;
+    padding: 0.5rem 0px 0px 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,6 +146,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  margin: 1rem auto 0.5rem auto;
 
   .summary{
     width: 90%;
@@ -167,7 +168,7 @@
 .card8_box4{
 position: relative;
 width: 100%;
-padding: 1rem 0.5rem;
+padding: 0rem 0.5rem;
 margin: auto;
 
 .contact_title{
@@ -514,7 +515,7 @@ margin: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 10px;
       padding: 1rem 1rem;
       background-color: #2c2e36;
@@ -525,6 +526,13 @@ margin: auto;
         i{
           font-size: 1.8rem;
           color: burlywood;
+        }
+
+        img{
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          object-position: center;
         }
       }
       .details{
@@ -537,9 +545,9 @@ margin: auto;
         justify-content: center;
 
         h4{
-          font-size: 1rem;
+          font-size: 0.9rem;
           letter-spacing: 1px;
-          font-weight: 500;
+          font-weight: 550;
         }
         small{
           width: 100%;
@@ -639,8 +647,8 @@ background-color: #1b1b1b;
     
 
           img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
             object-position: center;
             z-index: 900;
@@ -753,7 +761,7 @@ background-color: #1b1b1b;
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    filter: drop-shadow(0px 4px 4px rgba(255, 192, 76, 0.4));
+    filter: drop-shadow(0px 4px 6px #e9e9e97e);
     object-fit: cover;
     object-position: center;
   }
@@ -1010,20 +1018,20 @@ justify-content: flex-start;
   .qrcode_container {
     width: 100%;
     min-height: 300px;
-    background-image: url("../../assets/AllVCard_Image/VCard2/qrcode_back.jpg");
-    background-position: top;
+    background-image: url("https://img.freepik.com/free-vector/qr-code-scanning-concept-with-characters_23-2148632362.jpg?t=st=1722394580~exp=1722398180~hmac=f41effa6e5ecee1da3129f8309fb2d06eb5f63171d6ae0c201099eedbc99b097&w=740");
+    background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
     padding: 2rem;
     margin-top: 2rem;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: flex-end;
+    justify-content: center;
 
     .qrcode_box {
       width: 180px;
       height: 180px;
-      background-color: #e6e6e6a1;
+      background-color: #7fffff;
       position: relative;
       display: flex;
       flex-direction: column;
