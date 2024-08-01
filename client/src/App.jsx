@@ -36,6 +36,7 @@ import Appoinment from "./All_Components/User_Admin_Dashboard/User_Admin_All_Com
 import ProductOrder from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder";
 import NewCardDesign10 from "./All_Components/All_VCards/NewCardDesign10";
 import NewCardDesign11 from "./All_Components/All_VCards/NewCardDesign11";
+import NewCardDesign12 from "./All_Components/All_VCards/NewCardDesign12";
 
 const App = () => {
   //URL Name state:
@@ -621,6 +622,7 @@ const App = () => {
             )}
             <Route path="/newVard10" element={<NewCardDesign10 />} />
             <Route path="/Jayakumar" element={<NewCardDesign11 />} />
+            <Route path="/Taxi_Service" element={<NewCardDesign12 />} />
           </Routes>
         </Context.Provider>
       </div>
