@@ -7,10 +7,10 @@ import path from "path";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import mongoose from "mongoose";
-import Razorpay from 'razorpay';
+import Razorpay from "razorpay";
 //All api route importing
 import RegisterRoute from "./Routes/Register.route.js";
-import VerifyOTP from './Routes/VerifyOTP.route.js'
+import VerifyOTP from "./Routes/VerifyOTP.route.js";
 import LoginRoute from "./Routes/Login.route.js";
 import VCardURL_Route from "./Routes/VCard_URL.route.js";
 import BasicDetailRoute from "./Routes/BasicDetail.route.js";
@@ -28,7 +28,7 @@ import TermConditionRoute from "./Routes/Terms&Condition.route.js";
 import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
-import RazorPaymentRoute from './Routes/Razorpayment.router.js'
+import RazorPaymentRoute from "./Routes/Razorpayment.router.js";
 
 let host_ip = "http://localhost:3001";
 
@@ -44,9 +44,9 @@ dotenv.config();
 let PORT = process.env.PORT || 3000;
 // Allow requests from your frontend domain
 const corsOptions = {
-  origin: 'https://myvirtualcard.in',  // Replace with your actual frontend domain
-  credentials: true,  // Allow cookies to be sent
-  optionsSuccessStatus: 200
+  origin: "https://myvirtualcard.in", // Replace with your actual frontend domain
+  credentials: true, // Allow cookies to be sent
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 // app.use(cors('*'));
@@ -59,39 +59,11 @@ app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-
-
-
-
-
-
-
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
-  key_secret:process.env.RAZORPAY_API_SECRET,
+  key_secret: process.env.RAZORPAY_API_SECRET,
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
@@ -99,11 +71,11 @@ app.get("/", (req, res) => {
 });
 // Api All Routes:
 app.use("/auth", RegisterRoute);
-app.use('/auth',VerifyOTP);
-app.use('/razorpay',RazorPaymentRoute);
-app.get('/razorpay/getkey',((req,res)=>{
-  res.status(200).json({key:process.env.RAZORPAY_API_KEY})
-}))
+app.use("/auth", VerifyOTP);
+app.use("/razorpay", RazorPaymentRoute);
+app.get("/razorpay/getkey", (req, res) => {
+  res.status(200).json({ key: process.env.RAZORPAY_API_KEY });
+});
 app.use("/currentplan", PlanDetailRoute);
 app.use("/auth", LoginRoute);
 app.use("/vcard_URL", VCardURL_Route);

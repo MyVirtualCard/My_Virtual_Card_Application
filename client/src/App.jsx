@@ -34,6 +34,7 @@ import NewCardDesign8 from "./All_Components/All_VCards/NewCardDesign8";
 import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
 import Appoinment from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment";
 import ProductOrder from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder";
+import NewCardDesign10 from "./All_Components/All_VCards/NewCardDesign10";
 
 const App = () => {
   //URL Name state:
@@ -219,7 +220,7 @@ const App = () => {
       api
         .get(`/templateDetail/${URL_Alies_LocalStorage}`)
         .then((res) => {
-          console.log(res.data)
+          console.log(res.data);
           setURL_Alies(res.data.data[0].URL_Alies);
           console.log(res.data.data[0]);
           setCurrentTemplate(res.data.data[0].currentTemplate);
@@ -237,9 +238,12 @@ const App = () => {
       <div className="App_container">
         <Context.Provider
           value={{
-            ShowForm, setShowForm,
-            activePlan, setPlanActive,
-            status, setStatus,
+            ShowForm,
+            setShowForm,
+            activePlan,
+            setPlanActive,
+            status,
+            setStatus,
             OTP_Value,
             setOTP_Value,
             PaymentSuccessPopup,
@@ -545,11 +549,11 @@ const App = () => {
                 path={`/${userName}/uadmin/inquiries`}
                 element={<Inquiries />}
               />
-                <Route
+              <Route
                 path={`/${userName}/uadmin/appoinment`}
                 element={<Appoinment />}
               />
-                 <Route
+              <Route
                 path={`/${userName}/uadmin/product_order`}
                 element={<ProductOrder />}
               />
@@ -570,78 +574,51 @@ const App = () => {
             {/*AllVardsTemplate */}
 
             {currentTemplate == 1 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign1 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign1 />} />
             ) : (
               ""
             )}
             {currentTemplate == 2 ? (
-              <Route
-                path='/:URL_Alies'
-                element={<NewCardDesign2 />}
-              />
+              <Route path="/:URL_Alies" element={<NewCardDesign2 />} />
             ) : (
               ""
             )}
             {currentTemplate == 3 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign3 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign3 />} />
             ) : (
               ""
             )}
             {currentTemplate == 4 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign4 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign4 />} />
             ) : (
               ""
             )}
             {currentTemplate == 5 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign5 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign5 />} />
             ) : (
               ""
             )}
             {currentTemplate == 6 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign6 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign6 />} />
             ) : (
               ""
             )}
             {currentTemplate == 7 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign7 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign7 />} />
             ) : (
               ""
             )}
             {currentTemplate == 8 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign8 />}
-              />
+              <Route path={`/:URL_Alies`} element={<NewCardDesign8 />} />
             ) : (
               ""
             )}
-              {currentTemplate == 9 ? (
-              <Route
-              path={`/:URL_Alies`}
-                element={<NewCardDesign9 />}
-              />
+            {currentTemplate == 9 ? (
+              <Route path={`/:URL_Alies`} element={<NewCardDesign9 />} />
             ) : (
               ""
             )}
-          
+            <Route path="/newVard10" element={<NewCardDesign10 />} />
           </Routes>
         </Context.Provider>
       </div>
