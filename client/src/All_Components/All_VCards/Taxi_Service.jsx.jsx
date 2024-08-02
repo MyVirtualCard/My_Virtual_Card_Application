@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./NewCardDesign12.scss";
+import "./Taxi_Service.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
 
 import taxi from "../../assets/AllVCard_Image/VCard12/Taxi.png";
@@ -12,7 +12,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-const NewCardDesign12 = () => {
+const Taxi_Service = () => {
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -261,10 +261,11 @@ const NewCardDesign12 = () => {
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
           <div className="banner_image">
-            <img
+            {/* <img
               src="https://img.freepik.com/free-vector/online-application-call-taxi-service-by-smart-phone-set-location-destination_1150-48863.jpg?t=st=1722545066~exp=1722548666~hmac=83853f45de9bc8b77d3a66a5cd0d8b64c9eb60089f15fb39694af0c4a99191f8&w=900"
               className="banner"
-            />
+            /> */}
+            <img src="https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996" alt="banner" />
             <div className="overlay"></div>
           </div>
 
@@ -1118,4 +1119,4 @@ const NewCardDesign12 = () => {
   );
 };
 
-export default NewCardDesign12;
+export default Taxi_Service;

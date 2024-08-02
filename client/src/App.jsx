@@ -34,9 +34,12 @@ import NewCardDesign8 from "./All_Components/All_VCards/NewCardDesign8";
 import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
 import Appoinment from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment";
 import ProductOrder from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder";
-import NewCardDesign10 from "./All_Components/All_VCards/NewCardDesign10";
-import NewCardDesign11 from "./All_Components/All_VCards/NewCardDesign11";
-import NewCardDesign12 from "./All_Components/All_VCards/NewCardDesign12";
+//NewVCard templates
+import Taxi_Service from "./All_Components/All_VCards/Taxi_Service.jsx";
+import Gym_Trainer from "./All_Components/All_VCards/Gym_Trainer.jsx";
+import Manager from "./All_Components/All_VCards/Manager.jsx.jsx";
+import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
+
 
 const App = () => {
   //URL Name state:
@@ -620,9 +623,10 @@ const App = () => {
             ) : (
               ""
             )}
-            <Route path="/newVard10" element={<NewCardDesign10 />} />
-            <Route path="/Jayakumar" element={<NewCardDesign11 />} />
-            <Route path="/Taxi_Service" element={<NewCardDesign12 />} />
+            <Route path="/Gym_Trainer" element={<Gym_Trainer />} />
+            <Route path="/Jayakumar" element={<Manager />} />
+            <Route path="/Taxi_Service" element={<Taxi_Service />} />
+            <Route path="/Fashion_Designer" element={<Fashion_Designer />} />
           </Routes>
         </Context.Provider>
       </div>

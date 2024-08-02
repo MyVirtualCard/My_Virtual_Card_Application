@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./NewCardDesign11.scss";
+import "./Manager.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
 import hand from "../../assets/AllVCard_Image/VCard3/hand.gif";
 //Product Slider
@@ -11,7 +11,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Typewriter, Cursor } from "react-simple-typewriter";
-const NewCardDesign11 = () => {
+const Manager = () => {
   const [width, setWidth] = useState(window.innerWidth);
 
   let [feedbackForm, setFeedbackForm] = useState({
@@ -1074,4 +1074,4 @@ const NewCardDesign11 = () => {
   );
 };
 
-export default NewCardDesign11;
+export default Manager;
