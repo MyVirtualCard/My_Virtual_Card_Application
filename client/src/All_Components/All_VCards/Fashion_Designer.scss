@@ -853,6 +853,7 @@ text-align: center;
         margin-top: 0.5rem;
         padding: 1rem;
         border-radius: 0rem;
+        position: relative;
 
         .full_image {
           position: absolute;
@@ -866,7 +867,7 @@ text-align: center;
           margin: auto;
           width: 100%;
           height: 100%;
-          background: linear-gradient(#046d64, #046d64);
+          background: linear-gradient(#a661d4, #a661d4);
 
           // display: none;
 
@@ -1908,8 +1909,8 @@ text-align: center;
             }
           }
           img {
-            width: 60%;
-            height: 100%;
+            width: 40%;
+            height: 70%;
             object-fit: cover;
             object-position: center;
             border-radius: 0.4rem;
