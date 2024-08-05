@@ -33,6 +33,7 @@ import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import vCardsJS from "vcards-js";
+import { Triangle } from "react-loader-spinner";
 const NewCardDesign4 = () => {
   let [share, setShare] = useState(false);
   //create a new vCard
@@ -64,7 +65,6 @@ const NewCardDesign4 = () => {
     linkElement.click();
     document.body.removeChild(linkElement);
   }
-
 
   let [serviceLoad, setServiceLoad] = useState(false);
   console.log(serviceLoad);
@@ -309,757 +309,808 @@ const NewCardDesign4 = () => {
     let fullImageBox = document.getElementById("fullImageBox");
 
     fullImageBox.style.display = "none";
-  };
-    // Create a ref for the element you want to scroll to
-    const targetRef = useRef(null);
+  }
+  // Create a ref for the element you want to scroll to
+  const targetRef = useRef(null);
 
-    // Function to handle image click
-    const handleImageClick = () => {
-      // Scroll to the target element
-      targetRef.current.scrollIntoView({ behavior: 'smooth' });
-    };
+  // Function to handle image click
+  const handleImageClick = () => {
+    // Scroll to the target element
+    targetRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  let [SiteLoader, setSiteLoader] = useState(false);
+
+  let [VCard_URL_Data, setVCard_URL_Data] = useState();
+  let [BasicData, setBasicData] = useState();
+  let [VCardData, setVCardData] = useState();
+  let [GalleryData, setGalleryData] = useState();
+  let [TestimonialData, setTestimonialData] = useState();
+  let [ProductData, setProductData] = useState();
+  let [BlogData, setBlogData] = useState();
+  let [ServiceData, setServiceData] = useState();
+  let [QRCodeData, setQRCodeData] = useState();
+  let [SocialMediaData, setSocialMediaData] = useState();
+  const currentUrl = window.location.pathname; // Full URL
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
+  async function fetchAllData() {
+    setSiteLoader(true);
+    try {
+      await api
+        .get(`/vcard/allDataAPI${currentUrl}`)
+        .then((res) => {
+          setVCard_URL_Data(res.data.data.Vcard_URL);
+          setBasicData(res.data.data.BasicDetails);
+          setSocialMediaData(res.data.data.SocialMediaModel);
+          setGalleryData(res.data.data.GalleryModel);
+          setTestimonialData(res.data.data.TestimonialModel);
+          setServiceData(res.data.data.ServiceData);
+          setProductData(res.data.data.ProductModel);
+          setQRCodeData(res.data.data.QRCodeModel);
+          setSiteLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setSiteLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setSiteLoader(false);
+    }
+  }
+  useEffect(() => {
+    fetchAllData();
+  }, []);
   return (
     <>
-      <div className="newCard_design7_container">
-        <div id="card_design_box7">
-          {/* Banner */}
-
-          <div className="card7_box_1">
-            <LazyLoadImage
-              className="image1"
-              src={banner_img}
-              alt="banner"
-              effect="blur"
-              placeholderSrc={banner_img}
-            />
-            {/* <img src={banner_img} loading="lazy" alt="banner" /> */}
-            <LazyLoadImage
-              className="image2"
-              src={avatar}
-              alt="avatar"
-              effect="blur"
-              placeholderSrc={avatar}
-            />
-            {/* <img src={avatar} loading="lazy" alt="logo" /> */}
-          </div>
-          {/* Basic Detail */}
-
-          <div className="card7_box_2">
-            <div className="user_detail">
-              <h4>Punitha T</h4>
-              <small>Fashion Influencer</small>
-            </div>
-            <div className="social_medias">
-              <a href="#">
-                <i className="bx bxl-facebook"></i>
-              </a>
-              <a href="#">
-                <i className="bx bxl-whatsapp"></i>
-              </a>
-              <a href="#">
-                <i className="bx bxl-linkedin"></i>
-              </a>
-              <a href="#">
-                <i className="bx bxl-instagram-alt"></i>
-              </a>
-              <a href="#">
-                <i className="bx bxl-twitter"></i>
-              </a>
-              <a href="#">
-                <i className="bx bxl-youtube"></i>
-              </a>
-            </div>
-            <div className="user_summary">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                dolor, quos tempora commodi inventore nesciunt consectetur
-                molestias, quaerat sapiente molestiae cum sequi officiis magni
-                veniam.
-              </p>
-            </div>
-          </div>
-          {/* .Contact */}
-
-          <div className="card7_box_3">
-            <div className="contact_container">
-              <div className="contact_box">
-                <div className="contact_icon">
-                  <i className="bx bxs-envelope"></i>
-                </div>
-                <div className="contact_detail">
-                  <p>punitha@gmail.com</p>
-                  <small>Email</small>
-                </div>
-              </div>
-              <div className="contact_box">
-                <div className="contact_icon">
-                  <i className="bx bxs-phone-call"></i>
-                </div>
-                <div className="contact_detail">
-                  <p>+91 5246563465</p>
-                  <small>Mobile Number</small>
-                </div>
-              </div>
-              <div className="contact_box">
-                <div className="contact_icon">
-                  <i className="bx bxs-party"></i>
-                </div>
-                <div className="contact_detail">
-                  <p>18-03-2000</p>
-                  <small>Date Of Birth</small>
-                </div>
-              </div>
-              <div className="contact_box">
-                <div className="contact_icon">
-                  <i className="bx bx-current-location"></i>
-                </div>
-                <div className="contact_detail">
-                  <p>Trichy , Tamil Nadu</p>
-                  <small>Address</small>
-                </div>
-              </div>
-            </div>
-            <div className="add_to_contact">
-                <button onClick={generateVCF}>
-                  <i className="bx bxs-contact"></i>Add To Contact
-                </button>
-              </div>
-          </div>
-          {/* Service */}
-
-          <div className="card7_box_4">
-            <div className="service_title">
-              <h4>#&nbsp;Our Service's</h4>
-            </div>
-
-            <div className="service_container">
-              <div className="service_box">
-                <div className="icon">
-                  <i class="bx bxs-user-voice"></i>
-                </div>
-                <div className="service_detail">
-                  <h4>Branding</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Suscipit ad maxime accusantium quidem beatae repellat.
-                  </p>
-                </div>
-              </div>
-              <div className="service_box">
-                <div className="icon">
-                  <i className="bx bxs-news"></i>
-                </div>
-                <div className="service_detail">
-                  <h4>Advertising</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Suscipit ad maxime accusantium quidem beatae repellat.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Appoinment */}
-          <div className="card7_box_5">
-            <div className="appoinment_title">
-              <h4>#&nbsp;Make An Appoinment</h4>
-            </div>
-            <div className="appoinment_container">
-              <form action="">
-                <div className="form_group">
-                  {/* <label htmlFor="date">Pick A Date</label> */}
-                  <input
-                    type="date"
-                    placeholder="pick date"
-                    name="date"
-                    id="date"
-                  />
-                </div>
-                <div className="form_group">
-                  <div className="times">
-                    <input
-                      className="time_input"
-                      type="text"
-                      name="time"
-                      id="time"
-                      value="9.30 - 10.30"
-                      readOnly
-                    />
-                    <input
-                      className="time_input"
-                      type="text"
-                      name="time"
-                      value="11.00 - 12.00"
-                      id="time"
-                      readOnly
-                    />
-                    <input
-                      className="time_input"
-                      type="text"
-                      name="time"
-                      value="1.00 - 02.00"
-                      id="time"
-                      readOnly
-                    />
-                    <input
-                      className="time_input"
-                      type="text"
-                      name="time"
-                      value="4.30 - 05.30"
-                      id="time"
-                      readOnly
-                    />
-                  </div>
-                </div>
-
-                <div className="form_submit">
-                  <button>
-                    <img
-                      width="48"
-                      height="48"
-                      src="https://img.icons8.com/color/48/event-accepted.png"
-                      alt="event-accepted"
-                    />
-                    Book Appoinment
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          {/* Gallery */}
-
-          <div className="card7_box_6">
-            <div className="Gallery_title">
-              <h4>#&nbsp;Gallery</h4>
-            </div>
-
-            <div className="gallery_container">
-              <div className="full_image" id="fullImageBox">
-                <div className="close_Full_Image_gallery">
-                  <i
-                    class="bx bxs-message-square-x"
-                    onClick={closeFullImage}
-                  ></i>
-                </div>
-             
-                <img src={banner_img} alt="gallery" id="fullImage" />
-              </div>
-              <div className="col_1">
-                <LazyLoadImage
-                  src="https://plus.unsplash.com/premium_photo-1684783848257-daab2a974afd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFzaGlvbiUyMGluZmx1ZW5jZXJ8ZW58MHx8MHx8fDA%3D"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://plus.unsplash.com/premium_photo-1684783848257-daab2a974afd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFzaGlvbiUyMGluZmx1ZW5jZXJ8ZW58MHx8MHx8fDA%3D"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <LazyLoadImage
-                  src="https://images.unsplash.com/photo-1577060663859-4db8f31dc1da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://images.unsplash.com/photo-1577060663859-4db8f31dc1da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <LazyLoadImage
-                  src="https://images.unsplash.com/photo-1602742398695-745b5864dada?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://images.unsplash.com/photo-1602742398695-745b5864dada?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-              </div>
-              <div className="col_2">
-              <LazyLoadImage
-                  src="https://images.unsplash.com/photo-1512068549487-5e79d74c7fc3?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://images.unsplash.com/photo-1512068549487-5e79d74c7fc3?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-               
-              </div>
-
-              <div className="col_3">
-              <LazyLoadImage
-                  src="https://plus.unsplash.com/premium_photo-1684783848152-52135af8f0c5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://plus.unsplash.com/premium_photo-1684783848152-52135af8f0c5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                 <LazyLoadImage
-                  src="https://images.unsplash.com/photo-1511280303142-0051e93baeeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZmFzaGlvbiUyMGluZmx1ZW5jZXJ8ZW58MHx8MHx8fDA%3D"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://images.unsplash.com/photo-1511280303142-0051e93baeeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZmFzaGlvbiUyMGluZmx1ZW5jZXJ8ZW58MHx8MHx8fDA%3D"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                   <LazyLoadImage
-                  src="https://images.unsplash.com/photo-1563993297290-609c9406efcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmFzaGlvbiUyMGluZmx1ZW5jZXJ8ZW58MHx8MHx8fDA%3D"
-                  alt="avatar"
-                  effect="blur"
-                  placeholderSrc="https://images.unsplash.com/photo-1563993297290-609c9406efcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmFzaGlvbiUyMGluZmx1ZW5jZXJ8ZW58MHx8MHx8fDA%3D"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-               
-              </div>
-            </div>
-          </div>
-          {/* Testimonial */}
-          <div className="card7_box_7">
-            <div className="testimonial_title">
-              <h4>#&nbsp;Testimonial</h4>
-              <div className="smily">
-                <img
-                  width="64"
-                  height="64"
-                  src="https://img.icons8.com/external-flatart-icons-flat-flatarticons/64/external-smiley-love-flatart-icons-flat-flatarticons.png"
-                  alt="external-smiley-love-flatart-icons-flat-flatarticons"
-                />
-              </div>
-            </div>
-            <div className="Testimonial7">
-              <div className="testimonial_box">
-                <Carousel autoPlay="true" className="carousel">
-                  <div className="testimonial5_details">
-                    <div className="user_profile">
-                      <img src={banner_img} alt="logo" />
+      {SiteLoader ? (
+        <div className="newDesignLoader">
+          <small>Loading .....</small>
+          <Triangle
+            visible={true}
+            height="80"
+            width="80"
+            color="#ffffff"
+            ariaLabel="triangle-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      ) : (
+        <>
+          {VCard_URL_Data != undefined ? (
+            <div className="newCard_design7_container">
+              <div id="card_design_box7">
+                {/* Banner */}
+                {VCard_URL_Data.map((data, index) => {
+                  return (
+                    <div className="card7_box_1" key={index}>
+                      <LazyLoadImage
+                        className="image1"
+                        src={data.Banner || banner_img}
+                        alt="banner"
+                        effect="blur"
+                        placeholderSrc={banner_img}
+                      />
+                      {/* <img src={banner_img} loading="lazy" alt="banner" /> */}
+                      <LazyLoadImage
+                        className="image2"
+                        src={data.Profile || avatar}
+                        alt="avatar"
+                        effect="blur"
+                        placeholderSrc={avatar}
+                      />
+                      {/* <img src={avatar} loading="lazy" alt="logo" /> */}
                     </div>
+                  );
+                })}
 
-                    <div className="user_detail">
-                      <h4>Jayakumar V</h4>
-                      <small>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit.
-                      </small>
-                    </div>
+                {/* Basic Detail */}
 
-                    <div className="date">
-                      <small>__/__/____</small>
-                    </div>
-                  </div>
-                  <div className="testimonial5_details">
-                    <div className="user_profile">
-                      <img src={avatar} alt="logo" />
-                    </div>
-
-                    <div className="user_detail">
-                      <h4>Kodiyarasu C</h4>
-                      <small>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit.
-                      </small>
-                    </div>
-
-                    <div className="date">
-                      <small>__/__/____</small>
-                    </div>
-                  </div>
-                </Carousel>
-              </div>
-            </div>
-          </div>
-          {/* Products */}
-          <div className="card7_box_8">
-            <div className="product_title">
-              <h4>#&nbsp;Products</h4>
-            </div>
-            <div className="product_container">
-              <div className="product_box"  onClick={handleImageClick}>
-                <div className="product_image">
-                  <img
-                    src="https://images.unsplash.com/photo-1577060969681-e003a3f2af6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fGZhc2hpb24lMjBpbmZsdWVuY2VyfGVufDB8fDB8fHww"
-                    alt="product"
-                   
-                  />
-                </div>
-                <div className="product_title">
-                  <h3>No Headings</h3>
-                  <small>₹ 500</small>
-                </div>
-                <div className="product_summary">
-                  <small>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-                </div>
-              </div>
-              <div className="product_box" onClick={handleImageClick}>
-                <div className="product_image">
-                  <img
-                    src="https://media.istockphoto.com/id/1146921227/photo/young-woman-influencer-posing-for-social-media.webp?b=1&s=170667a&w=0&k=20&c=0bV65kVKIMhpsxwngDu-9PF-Ml_kUFZQFZbISGAxFLQ="
-                    alt="product"
-                  
-                  />
-                </div>
-                <div className="product_title">
-                  <h3>No Headings</h3>
-                  <small>₹ 800</small>
-                </div>
-                <div className="product_summary">
-                  <small>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-                </div>
-              </div>
-              <div className="product_box"  onClick={handleImageClick}>
-                <div className="product_image">
-                  <img
-                    src="https://media.istockphoto.com/id/1135152732/photo/friends-posing-for-their-social-media-post-photo.webp?b=1&s=170667a&w=0&k=20&c=y2zopn64kheVafYtAOkmoHEBkApZYAy6N7VD2uEhAV4="
-                    alt="product"
-                  />
-                </div>
-                <div className="product_title">
-                  <h3>No Headings</h3>
-                  <small>₹ 1500</small>
-                </div>
-                <div className="product_summary">
-                  <small>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-                </div>
-              </div>
-              <div className="product_box"  onClick={handleImageClick}>
-                <div className="product_image">
-                  <img
-                    src="https://media.istockphoto.com/id/1452785762/photo/woman-taking-selfie-on-staircase.webp?b=1&s=170667a&w=0&k=20&c=YRUucUn0dtSiUHIK1e33u1v8P_eh73ZWaph31A1zEfw="
-                    alt="product"
-                  />
-                </div>
-                <div className="product_title">
-                  <h3>No Headings</h3>
-                  <small>₹ 2000</small>
-                </div>
-                <div className="product_summary">
-                  <small>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* QR Code */}
-          <div className="card7_box_9">
-            <div className="qrcode_title">
-              <h4>#&nbsp;QR Code</h4>
-            </div>
-            <div className="qrcode_container">
-              <div className="qrcode_box">
-                <div className="logo">
-                  <img src={banner_img} alt="logo" />
-                </div>
-                <div className="qrcode">
-                  <img src={qrcode} alt="qrcode" />
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Feedback`` */}
-
-          <div className="card7_box_10">
-            <div className="feedback_title">
-              <h4>#&nbsp;FeedBack</h4>
-            </div>
-            <div className="feedback_container">
-              <form action="" onSubmit={feedbackFormik.handleSubmit}>
-                <div className="form_group">
-                  <label
-                    htmlFor="clientName_Input"
-                    className={`${
-                      feedbackFormik.errors.userName ? "error" : ""
-                    } `}
-                  >
-                    {feedbackFormik.touched.userName &&
-                    feedbackFormik.errors.userName
-                      ? feedbackFormik.errors.userName
-                      : "Your Name"}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter Your Name"
-                    name="userName"
-                    id="userName"
-                    // value={userName}
-                    // onChange={(e)=>setUserName(e.target.value)}
-                    value={feedbackFormik.values.userName}
-                    onChange={feedbackFormik.handleChange}
-                    onBlur={feedbackFormik.handleBlur}
-                  />
-                </div>
-                <div className="form_group">
-                  <label
-                    htmlFor="clientFeedBack_Input"
-                    className={`${
-                      feedbackFormik.errors.userFeedback ? "error" : ""
-                    } `}
-                  >
-                    {feedbackFormik.touched.userFeedback &&
-                    feedbackFormik.errors.userFeedback
-                      ? feedbackFormik.errors.userFeedback
-                      : "Your FeedBack"}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <textarea
-                    id="userFeedback"
-                    name="userFeedback"
-                    cols="30"
-                    rows="7"
-                    placeholder="Enter your Feedback"
-                    // value={userFeedback}
-                    // onChange={(e)=>setUserFeedback(e.target.value)}
-                    value={feedbackFormik.values.userFeedback}
-                    onChange={feedbackFormik.handleChange}
-                    onBlur={feedbackFormik.handleBlur}
-                  ></textarea>
-                </div>
-                <div className="form_group">
-                  <label
-                    htmlFor="clientName_Input"
-                    className={`${
-                      feedbackFormik.errors.currentRatting ? "error" : ""
-                    } `}
-                  >
-                    {feedbackFormik.touched.currentRatting &&
-                    feedbackFormik.errors.currentRatting
-                      ? feedbackFormik.errors.currentRatting
-                      : "Ratting"}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <div
-                    className="ratting_container"
-                    data-rating="0"
-                    name="currentRatting"
-                    id="currentRatting"
-                    onMouseOver={handleRatting}
-                    onMouseLeave={removeRatting}
-                    onClick={RattingSetted}
-                    // value={currentRatting}
-                    // onChange={(e)=>setCurrentRatting(e.target.value)}
-                    value={feedbackFormik.values.currentRatting}
-                    onChange={feedbackFormik.handleChange}
-                    onBlur={feedbackFormik.handleBlur}
-                  >
-                    <span className="ratting_star">
-                      <i className="bx bxs-star star" data-rating="1"></i>
-                    </span>
-                    <span className="ratting_star">
-                      <i className="bx bxs-star star" data-rating="2"></i>
-                    </span>
-                    <span className="ratting_star">
-                      <i className="bx bxs-star star" data-rating="3"></i>
-                    </span>
-                    <span className="ratting_star">
-                      <i className="bx bxs-star star" data-rating="4"></i>
-                    </span>
-                    <span className="ratting_star">
-                      <i className="bx bxs-star star" data-rating="5"></i>
-                    </span>
-                  </div>
-                </div>
-                <div className="form_actions">
-                  <button type="submit">
-                    <img
-                      width="48"
-                      height="48"
-                      src="https://img.icons8.com/fluency/48/send-comment.png"
-                      alt="send-comment"
-                    />
-                    Send Feedback
-                  </button>
-                </div>
-              </form>
-            </div>
-            {/* //Feedback messages */}
-            <div className="Feedback_container">
-              <div className="feeback_title">
-                {commentOpen ? (
-                  <button onClick={() => setCommentOpen(false)}>
-                    <i className="uil uil-feedback"></i>
-                    Hide All Feedbacks
-                  </button>
-                ) : (
-                  <button onClick={() => setCommentOpen(true)}>
-                    <i className="uil uil-feedback"></i>See All Feedbacks
-                  </button>
-                )}
-
-                {feedbackLoader ? (
-                  <span className="feedBack_loader"></span>
-                ) : (
-                  ""
-                )}
-              </div>
-
-              {commentOpen ? (
-                <div className="comment_box">
-                  {AllFeedBacks.map((data, index) => {
-                    return (
-                      <div className="message" key={index}>
-                        <div className="user_detail">
-                          <div className="profile">
-                            <img src={profile} alt="profile" />
-                          </div>
-                          <div className="details">
-                            <div className="userName">
-                              <p>
-                                {data.userName}
-                                <i className="bx bxs-user-check"></i>
-                              </p>
-                            </div>
-                            <div className="stars">
-                              <div
-                                className="ratting_container1"
-                                data-rating={data.currentRatting}
-                                name="currentRatting"
-                                // id="currentRatting"
-                                id={
-                                  data.currentRatting == 0
-                                    ? "noRatting"
-                                    : "" || data.currentRatting == 1
-                                    ? "singleRatting"
-                                    : "" || data.currentRatting == 2
-                                    ? "doubleRatting"
-                                    : "" || data.currentRatting == 3
-                                    ? "ThreeRatting"
-                                    : "" || data.currentRatting == 4
-                                    ? "fourRatting"
-                                    : "" || data.currentRatting == 5
-                                    ? "fullRatting"
-                                    : ""
-                                }
-                                value={data.currentRatting}
+                {BasicData.map((data, index) => {
+                  return (
+                    <div className="card7_box_2" key={index}>
+                      <div className="user_detail">
+                        <h4>
+                          {data.FirstName}&nbsp; {data.LastName}
+                        </h4>
+                        <small>{data.JobTitle}</small>
+                      </div>
+                      {SocialMediaData.map((data, index) => {
+                        return (
+                          <div className="social_medias" key={index}>
+                            {/* {SocialMediaData[0].Facebook !='' ? : ''} */}
+                            {SocialMediaData[0].Facebook != "" ? (
+                              <a href={data.Facebook} target="_blank">
+                                <i className="bx bxl-facebook"></i>
+                              </a>
+                            ) : (
+                              ""
+                            )}
+                            {SocialMediaData[0].WhatsUp != "" ? (
+                              <a
+                                href={`https://wa.me/${data.WhatsUp}?text=Hello%20there!`}
+                                target="_blank"
                               >
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="1"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="2"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="3"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="4"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="5"
-                                  ></i>
-                                </span>
+                                <i className="bx bxl-whatsapp"></i>
+                              </a>
+                            ) : (
+                              ""
+                            )}
+                            {SocialMediaData[0].LinkedIn != "" ? (
+                              <a href={data.LinkedIn} target="_blank">
+                                <i className="bx bxl-linkedin"></i>
+                              </a>
+                            ) : (
+                              ""
+                            )}
+
+                            {SocialMediaData[0].Instagram != "" ? (
+                              <a href={data.Instagram} target="_blank">
+                                <i className="bx bxl-instagram-alt"></i>
+                              </a>
+                            ) : (
+                              ""
+                            )}
+                            {SocialMediaData[0].Twiter != "" ? (
+                              <a href={data.Twiter} target="_blank">
+                                <i className="bx bxl-twitter"></i>
+                              </a>
+                            ) : (
+                              ""
+                            )}
+                            {SocialMediaData[0].Website != "" ? (
+                              <a href={data.Website} target="_blank">
+                                <i className="bx bx-globe"></i>
+                              </a>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        );
+                      })}
+
+                      {VCard_URL_Data.map((data, index) => {
+                        return (
+                          <div className="user_summary" key={index}>
+                            <p>{data.Description}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+
+                {/* .Contact */}
+
+                {BasicData.length > 0 ? (
+                  <>
+                    {BasicData.map((data, index) => {
+                      return (
+                        <div className="card7_box_3" key={index}>
+                          <div className="contact_container">
+                            <div className="contact_box">
+                              <div className="contact_icon">
+                                <i className="bx bxs-envelope"></i>
+                              </div>
+                              <div className="contact_detail">
+                                <p>{data.Email}</p>
+                                <small>Email</small>
+                              </div>
+                            </div>
+                            <div className="contact_box">
+                              <div className="contact_icon">
+                                <i className="bx bxs-phone-call"></i>
+                              </div>
+                              <div className="contact_detail">
+                                <p>+91 {data.MobileNumber}</p>
+                                <small>Mobile Number</small>
+                              </div>
+                            </div>
+                            {data.AlternateEmail ? (
+                              <div className="contact_box">
+                                <div className="contact_icon">
+                                  <i className="bx bxs-party"></i>
+                                </div>
+
+                                <div className="contact_detail">
+                                  <p>{data.AlternateEmail}</p>
+                                  <small>Alternate Email</small>
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            <div className="contact_box">
+                              <div className="contact_icon">
+                                <i className="bx bx-current-location"></i>
+                              </div>
+                              <div className="contact_detail">
+                                <p>{data.Location}</p>
+                                <small>Address</small>
                               </div>
                             </div>
                           </div>
+                          <div className="add_to_contact">
+                            <button onClick={generateVCF}>
+                              <i className="bx bxs-contact"></i>Add To Contact
+                            </button>
+                          </div>
                         </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  ""
+                )}
 
-                        <div className="comments">
-                          <i className="bx bx-chat"></i>
-                          <span>{data.userFeedback}</span>
+                {/* Service */}
+
+                {ServiceData.length > 0 ? (
+                  <div className="card7_box_4">
+                    <div className="service_title">
+                      <h4>#&nbsp;Our Service's</h4>
+                    </div>
+
+                    {ServiceData.map((data, index) => {
+                      return (
+                        <div className="service_container" key={index}>
+                          <div className="service_box">
+                            <div className="icon">
+                              {(
+                                <img src={data.ServiceImage} alt="service" />
+                              ) || <i class="bx bxs-user-voice"></i>}
+                            </div>
+                            <div className="service_detail">
+                              <h4>{data.ServiceName}</h4>
+                              <p>{data.ServiceDescription}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* Appoinment */}
+                <div className="card7_box_5">
+                  <div className="appoinment_title">
+                    <h4>#&nbsp;Make An Appoinment</h4>
+                  </div>
+                  <div className="appoinment_container">
+                    <form action="">
+                      <div className="form_group">
+                        {/* <label htmlFor="date">Pick A Date</label> */}
+                        <input
+                          type="date"
+                          placeholder="pick date"
+                          name="date"
+                          id="date"
+                        />
+                      </div>
+                      <div className="form_group">
+                        <div className="times">
+                          <input
+                            className="time_input"
+                            type="text"
+                            name="time"
+                            id="time"
+                            value="9.30 - 10.30"
+                            readOnly
+                          />
+                          <input
+                            className="time_input"
+                            type="text"
+                            name="time"
+                            value="11.00 - 12.00"
+                            id="time"
+                            readOnly
+                          />
+                          <input
+                            className="time_input"
+                            type="text"
+                            name="time"
+                            value="1.00 - 02.00"
+                            id="time"
+                            readOnly
+                          />
+                          <input
+                            className="time_input"
+                            type="text"
+                            name="time"
+                            value="4.30 - 05.30"
+                            id="time"
+                            readOnly
+                          />
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          {/* Inquries */}
-          <div className="card7_box_11" ref={targetRef}>
-            <div className="inquries_title">
-              <h4>#&nbsp;Inquries</h4>
-            </div>
-            <div className="inquiries_container5">
-              <form action="">
-                <div className="form_group">
-                  <label htmlFor="name">
-                    Name <sup style={{ color: "red" }}>*</sup>
-                  </label>
-                  <div className="input">
-                    <input type="text" placeholder="Your Name" />
-                    <i className="bx bxs-user-pin"></i>
+
+                      <div className="form_submit">
+                        <button>
+                          <img
+                            width="48"
+                            height="48"
+                            src="https://img.icons8.com/color/48/event-accepted.png"
+                            alt="event-accepted"
+                          />
+                          Book Appoinment
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-                <div className="form_group">
-                  <label htmlFor="email">
-                    Email <sup style={{ color: "red" }}>*</sup>
-                  </label>
-                  <div className="input">
-                    <input type="email" placeholder="Your Email" />
-                    <i className="bx bxs-envelope"></i>
+                {/* Gallery */}
+
+                {GalleryData.length > 0 ? (
+                  <div className="card7_box_6">
+                    <div className="Gallery_title">
+                      <h4>#&nbsp;Gallery</h4>
+                    </div>
+
+                    <div className="gallery_container">
+                      <div className="full_image" id="fullImageBox">
+                        <div className="close_Full_Image_gallery">
+                          <i
+                            class="bx bxs-message-square-x"
+                            onClick={closeFullImage}
+                          ></i>
+                        </div>
+
+                        <img src={banner_img} alt="gallery" id="fullImage" />
+                      </div>
+                      {GalleryData.map((data, index) => {
+                        return (
+                          <div className="col_1" key={index}>
+                            <LazyLoadImage
+                              src={data.GalleryImage}
+                              alt="avatar"
+                              effect="blur"
+                              placeholderSrc={data.GalleryImage}
+                              onClick={(e) => openFullImage(e.target.src)}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* Testimonial */}
+                {TestimonialData.length > 0 ? (
+                  <div className="card7_box_7">
+                    <div className="testimonial_title">
+                      <h4>#&nbsp;Testimonial</h4>
+                      <div className="smily">
+                        <img
+                          width="64"
+                          height="64"
+                          src="https://img.icons8.com/external-flatart-icons-flat-flatarticons/64/external-smiley-love-flatart-icons-flat-flatarticons.png"
+                          alt="external-smiley-love-flatart-icons-flat-flatarticons"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="Testimonial7">
+                      <div className="testimonial_box">
+                        <Carousel
+                          autoPlay="true"
+                          className="carousel"
+                          showThumbs={false}
+                        >
+                          {TestimonialData.map((data, index) => {
+                            return (
+                              <div className="testimonial5_details" key={index}>
+                                <div className="user_profile">
+                                  <img
+                                    src={data.ClientImage || banner_img}
+                                    alt="logo"
+                                  />
+                                </div>
+
+                                <div className="user_detail">
+                                  <h4>{data.ClientName}</h4>
+                                  <small>{data.ClientFeedback}</small>
+                                </div>
+
+                                <div className="date">
+                                  <small>
+                                    {" "}
+                                    {data.ClientReviewDate || "__/__/____"}
+                                  </small>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </Carousel>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* Products */}
+                {ProductData.length > 0 ? (
+                  <div className="card7_box_8">
+                    <div className="product_title">
+                      <h4>#&nbsp;Products</h4>
+                    </div>
+                    <div className="product_container">
+                      {ProductData.map((data, index) => {
+                        return (
+                          <div
+                            className="product_box"
+                            onClick={handleImageClick}
+                            key={index}
+                          >
+                            <div className="product_image">
+                              <img src={data.ProductImage} alt="product" />
+                            </div>
+                            <div className="product_title">
+                              <h3>{data.ProductName}</h3>
+                              <small>₹ {data.ProductPrice}</small>
+                            </div>
+                            <div className="product_summary">
+                              <small>{data.ProductDescription}</small>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* QR Code */}
+
+                {QRCodeData.length > 0 ? (
+                  <div className="card7_box_9">
+                    <div className="qrcode_title">
+                      <h4>#&nbsp;QR Code</h4>
+                    </div>
+                    <div className="qrcode_container">
+                      <div className="qrcode_box">
+                        <div className="logo">
+                          <img src={banner_img} alt="logo" />
+                        </div>
+                        {QRCodeData.map((data,index)=>{
+                          return(
+                            <div className="qrcode" key={index}>
+                            <img src={data.QRCodeImage} alt="qrcode" />
+                          </div>
+                          )
+  
+                        })}
+                    
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* Feedback`` */}
+
+                <div className="card7_box_10">
+                  <div className="feedback_title">
+                    <h4>#&nbsp;FeedBack</h4>
+                  </div>
+                  <div className="feedback_container">
+                    <form action="" onSubmit={feedbackFormik.handleSubmit}>
+                      <div className="form_group">
+                        <label
+                          htmlFor="clientName_Input"
+                          className={`${
+                            feedbackFormik.errors.userName ? "error" : ""
+                          } `}
+                        >
+                          {feedbackFormik.touched.userName &&
+                          feedbackFormik.errors.userName
+                            ? feedbackFormik.errors.userName
+                            : "Your Name"}
+                          <span>
+                            <sup>*</sup>
+                          </span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Enter Your Name"
+                          name="userName"
+                          id="userName"
+                          // value={userName}
+                          // onChange={(e)=>setUserName(e.target.value)}
+                          value={feedbackFormik.values.userName}
+                          onChange={feedbackFormik.handleChange}
+                          onBlur={feedbackFormik.handleBlur}
+                        />
+                      </div>
+                      <div className="form_group">
+                        <label
+                          htmlFor="clientFeedBack_Input"
+                          className={`${
+                            feedbackFormik.errors.userFeedback ? "error" : ""
+                          } `}
+                        >
+                          {feedbackFormik.touched.userFeedback &&
+                          feedbackFormik.errors.userFeedback
+                            ? feedbackFormik.errors.userFeedback
+                            : "Your FeedBack"}
+                          <span>
+                            <sup>*</sup>
+                          </span>
+                        </label>
+                        <textarea
+                          id="userFeedback"
+                          name="userFeedback"
+                          cols="30"
+                          rows="7"
+                          placeholder="Enter your Feedback"
+                          // value={userFeedback}
+                          // onChange={(e)=>setUserFeedback(e.target.value)}
+                          value={feedbackFormik.values.userFeedback}
+                          onChange={feedbackFormik.handleChange}
+                          onBlur={feedbackFormik.handleBlur}
+                        ></textarea>
+                      </div>
+                      <div className="form_group">
+                        <label
+                          htmlFor="clientName_Input"
+                          className={`${
+                            feedbackFormik.errors.currentRatting ? "error" : ""
+                          } `}
+                        >
+                          {feedbackFormik.touched.currentRatting &&
+                          feedbackFormik.errors.currentRatting
+                            ? feedbackFormik.errors.currentRatting
+                            : "Ratting"}
+                          <span>
+                            <sup>*</sup>
+                          </span>
+                        </label>
+                        <div
+                          className="ratting_container"
+                          data-rating="0"
+                          name="currentRatting"
+                          id="currentRatting"
+                          onMouseOver={handleRatting}
+                          onMouseLeave={removeRatting}
+                          onClick={RattingSetted}
+                          // value={currentRatting}
+                          // onChange={(e)=>setCurrentRatting(e.target.value)}
+                          value={feedbackFormik.values.currentRatting}
+                          onChange={feedbackFormik.handleChange}
+                          onBlur={feedbackFormik.handleBlur}
+                        >
+                          <span className="ratting_star">
+                            <i className="bx bxs-star star" data-rating="1"></i>
+                          </span>
+                          <span className="ratting_star">
+                            <i className="bx bxs-star star" data-rating="2"></i>
+                          </span>
+                          <span className="ratting_star">
+                            <i className="bx bxs-star star" data-rating="3"></i>
+                          </span>
+                          <span className="ratting_star">
+                            <i className="bx bxs-star star" data-rating="4"></i>
+                          </span>
+                          <span className="ratting_star">
+                            <i className="bx bxs-star star" data-rating="5"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div className="form_actions">
+                        <button type="submit">
+                          <img
+                            width="48"
+                            height="48"
+                            src="https://img.icons8.com/fluency/48/send-comment.png"
+                            alt="send-comment"
+                          />
+                          Send Feedback
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  {/* //Feedback messages */}
+                  <div className="Feedback_container">
+                    <div className="feeback_title">
+                      {commentOpen ? (
+                        <button onClick={() => setCommentOpen(false)}>
+                          <i className="uil uil-feedback"></i>
+                          Hide All Feedbacks
+                        </button>
+                      ) : (
+                        <button onClick={() => setCommentOpen(true)}>
+                          <i className="uil uil-feedback"></i>See All Feedbacks
+                        </button>
+                      )}
+
+                      {feedbackLoader ? (
+                        <span className="feedBack_loader"></span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+
+                    {commentOpen ? (
+                      <div className="comment_box">
+                        {AllFeedBacks.map((data, index) => {
+                          return (
+                            <div className="message" key={index}>
+                              <div className="user_detail">
+                                <div className="profile">
+                                  <img src={profile} alt="profile" />
+                                </div>
+                                <div className="details">
+                                  <div className="userName">
+                                    <p>
+                                      {data.userName}
+                                      <i className="bx bxs-user-check"></i>
+                                    </p>
+                                  </div>
+                                  <div className="stars">
+                                    <div
+                                      className="ratting_container1"
+                                      data-rating={data.currentRatting}
+                                      name="currentRatting"
+                                      // id="currentRatting"
+                                      id={
+                                        data.currentRatting == 0
+                                          ? "noRatting"
+                                          : "" || data.currentRatting == 1
+                                          ? "singleRatting"
+                                          : "" || data.currentRatting == 2
+                                          ? "doubleRatting"
+                                          : "" || data.currentRatting == 3
+                                          ? "ThreeRatting"
+                                          : "" || data.currentRatting == 4
+                                          ? "fourRatting"
+                                          : "" || data.currentRatting == 5
+                                          ? "fullRatting"
+                                          : ""
+                                      }
+                                      value={data.currentRatting}
+                                    >
+                                      <span className="ratting_star">
+                                        <i
+                                          className="bx bxs-star star1"
+                                          data-rating="1"
+                                        ></i>
+                                      </span>
+                                      <span className="ratting_star">
+                                        <i
+                                          className="bx bxs-star star1"
+                                          data-rating="2"
+                                        ></i>
+                                      </span>
+                                      <span className="ratting_star">
+                                        <i
+                                          className="bx bxs-star star1"
+                                          data-rating="3"
+                                        ></i>
+                                      </span>
+                                      <span className="ratting_star">
+                                        <i
+                                          className="bx bxs-star star1"
+                                          data-rating="4"
+                                        ></i>
+                                      </span>
+                                      <span className="ratting_star">
+                                        <i
+                                          className="bx bxs-star star1"
+                                          data-rating="5"
+                                        ></i>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="comments">
+                                <i className="bx bx-chat"></i>
+                                <span>{data.userFeedback}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
-                <div className="form_group">
-                  <label htmlFor="name">
-                    Phone <sup style={{ color: "red" }}>*</sup>
-                  </label>
-                  <div className="input">
-                    <input type="tel" placeholder="Enter Phone Number" />
-                    <i className="bx bxs-phone-call"></i>
+                {/* Inquries */}
+                <div className="card7_box_11" ref={targetRef}>
+                  <div className="inquries_title">
+                    <h4>#&nbsp;Inquries</h4>
+                  </div>
+                  <div className="inquiries_container5">
+                    <form action="">
+                      <div className="form_group">
+                        <label htmlFor="name">
+                          Name <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <input type="text" placeholder="Your Name" />
+                          <i className="bx bxs-user-pin"></i>
+                        </div>
+                      </div>
+                      <div className="form_group">
+                        <label htmlFor="email">
+                          Email <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <input type="email" placeholder="Your Email" />
+                          <i className="bx bxs-envelope"></i>
+                        </div>
+                      </div>
+                      <div className="form_group">
+                        <label htmlFor="name">
+                          Phone <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <input type="tel" placeholder="Enter Phone Number" />
+                          <i className="bx bxs-phone-call"></i>
+                        </div>
+                      </div>
+                      <div className="form_group">
+                        <label htmlFor="name">
+                          Message <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <textarea
+                            name="message"
+                            id="message"
+                            cols="30"
+                            rows="5"
+                            placeholder="Enter Your Message Here..."
+                          ></textarea>
+                          <i class="bx bxs-message-dots"></i>
+                        </div>
+                      </div>
+                      <div className="form_actions">
+                        <button type="submit">
+                          <img
+                            width="48"
+                            height="48"
+                            src="https://img.icons8.com/fluency/48/submit-for-approval.png"
+                            alt="submit-for-approval"
+                          />
+                          Submit
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-                <div className="form_group">
-                  <label htmlFor="name">
-                    Message <sup style={{ color: "red" }}>*</sup>
-                  </label>
-                  <div className="input">
-                    <textarea
-                      name="message"
-                      id="message"
-                      cols="30"
-                      rows="5"
-                      placeholder="Enter Your Message Here..."
-                    ></textarea>
-                    <i class="bx bxs-message-dots"></i>
+                {/* Footer */}
+                <div className="card7_box_12">
+                  <div className="footer_container">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 1440 320"
+                    >
+                      <path
+                        fill="#B20755"
+                        fill-opacity="1"
+                        d="M0,256L21.8,250.7C43.6,245,87,235,131,218.7C174.5,203,218,181,262,165.3C305.5,149,349,139,393,149.3C436.4,160,480,192,524,202.7C567.3,213,611,203,655,208C698.2,213,742,235,785,208C829.1,181,873,107,916,96C960,85,1004,139,1047,186.7C1090.9,235,1135,277,1178,277.3C1221.8,277,1265,235,1309,229.3C1352.7,224,1396,256,1418,272L1440,288L1440,0L1418.2,0C1396.4,0,1353,0,1309,0C1265.5,0,1222,0,1178,0C1134.5,0,1091,0,1047,0C1003.6,0,960,0,916,0C872.7,0,829,0,785,0C741.8,0,698,0,655,0C610.9,0,567,0,524,0C480,0,436,0,393,0C349.1,0,305,0,262,0C218.2,0,175,0,131,0C87.3,0,44,0,22,0L0,0Z"
+                      ></path>
+                    </svg>
+                    <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
                   </div>
                 </div>
-                <div className="form_actions">
-                  <button type="submit">
-                    <img
-                      width="48"
-                      height="48"
-                      src="https://img.icons8.com/fluency/48/submit-for-approval.png"
-                      alt="submit-for-approval"
-                    />
-                    Submit
-                  </button>
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
-          {/* Footer */}
-          <div className="card7_box_12">
-            <div className="footer_container">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                  fill="#B20755"
-                  fill-opacity="1"
-                  d="M0,256L21.8,250.7C43.6,245,87,235,131,218.7C174.5,203,218,181,262,165.3C305.5,149,349,139,393,149.3C436.4,160,480,192,524,202.7C567.3,213,611,203,655,208C698.2,213,742,235,785,208C829.1,181,873,107,916,96C960,85,1004,139,1047,186.7C1090.9,235,1135,277,1178,277.3C1221.8,277,1265,235,1309,229.3C1352.7,224,1396,256,1418,272L1440,288L1440,0L1418.2,0C1396.4,0,1353,0,1309,0C1265.5,0,1222,0,1178,0C1134.5,0,1091,0,1047,0C1003.6,0,960,0,916,0C872.7,0,829,0,785,0C741.8,0,698,0,655,0C610.9,0,567,0,524,0C480,0,436,0,393,0C349.1,0,305,0,262,0C218.2,0,175,0,131,0C87.3,0,44,0,22,0L0,0Z"
-                ></path>
-              </svg>
-              <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
-            </div>
-          </div>
-        </div>
-      </div>
+          ) : (
+            ""
+          )}
+        </>
+      )}
     </>
   );
 };

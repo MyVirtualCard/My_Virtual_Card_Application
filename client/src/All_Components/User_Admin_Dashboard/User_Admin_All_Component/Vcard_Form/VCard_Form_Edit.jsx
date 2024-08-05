@@ -28,7 +28,8 @@ import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
   let {
-    ShowForm, setShowForm,
+    ShowForm,
+    setShowForm,
     userName,
     setURL_Alies,
     currentPlan,
@@ -44,14 +45,12 @@ const VCard_Form_Edit = () => {
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
   let [formSliderToggle, setFormSliderToggle] = useState(false);
   let [userData, setUserData] = useState("jayakumar");
- 
+
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
-
-
 
   useEffect(() => {
     try {
@@ -127,6 +126,17 @@ const VCard_Form_Edit = () => {
             <h5>Update Your VCard</h5>
           </div>
           <div className="back_action">
+            {currentTemplate !=null ?    <a
+              className="back"
+            //  href={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/
+            //  ${URL_Alies}`}
+             target="_blank"
+             onClick={()=>window.location.pathname = `${URL_Alies}`}
+            >
+              Live Preview
+              <span className="material-symbols-outlined">preview</span>
+            </a>:''}
+         
             <button
               className="back"
               onClick={() => navigate(`/${userName}/uadmin/user_vcard`)}
@@ -166,20 +176,18 @@ const VCard_Form_Edit = () => {
               </div>
             ) : (
               <div
-              className="menu_item"
-              onClick={handleFormShow}
-              id={ShowForm === "Basic Detail" ? "menu_active" : ""}
-            >
-              <i
-                className="bx bxs-user"
-                style={{ color: "blue" }}
-                id="Basic Detail"
-              ></i>
-              <small id="Basic Detail">Basic Detail</small>
-            </div>
+                className="menu_item"
+                onClick={handleFormShow}
+                id={ShowForm === "Basic Detail" ? "menu_active" : ""}
+              >
+                <i
+                  className="bx bxs-user"
+                  style={{ color: "blue" }}
+                  id="Basic Detail"
+                ></i>
+                <small id="Basic Detail">Basic Detail</small>
+              </div>
             )}
-
-      
 
             <div
               className="menu_item"

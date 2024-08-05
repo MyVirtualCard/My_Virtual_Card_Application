@@ -114,7 +114,7 @@ const NewCardDesign2 = () => {
   };
   let { URL_Alies } = useParams();
   const currentUrl = window.location.pathname; // Full URL
-console.log(currentUrl)
+
   let [formData, setFormData] = useState({
     clientFullName1: "",
     clientEmail1: "",
@@ -220,7 +220,6 @@ console.log(currentUrl)
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
   const AutoplaySlider = withAutoplay(AwesomeSlider);
-
   //Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
@@ -338,10 +337,10 @@ console.log(currentUrl)
       setSiteLoader(false)
     }
   }
-
   useEffect(() => {
     fetchAllData();
   }, []);
+
   return (
     <>
       {SiteLoader ? (
@@ -413,7 +412,7 @@ console.log(currentUrl)
                             )}
 
                             {data.WhatsUp.length > 0 ? (
-                              <a href={data.WhatsUp} target="_blank">
+                              <a href={`https://wa.me/${data.WhatsUp}?text=Hello%20there!`} target="_blank">
                                 <i className="bx bxl-whatsapp"></i>
                               </a>
                             ) : (

@@ -20,7 +20,7 @@ const BasicForm = () => {
   let { setURL_Alies, FormSubmitLoader, setFormSubmitLoader, userName } =
     useContext(Context);
 
-    let[UpdateButtonToggle,setUpdateButtonToggle]=useState(false);
+  let [UpdateButtonToggle, setUpdateButtonToggle] = useState(false);
   let [BasicDetailLoader, setBasicDetailLoader] = useState(false);
   const [VCardName, setVCardName] = useState();
   const [Occupation, setOccupation] = useState();
@@ -67,28 +67,25 @@ const BasicForm = () => {
   };
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
+  });
   async function fetchURL_Form() {
     try {
       setFormSubmitLoader(true);
       api
-        .get(
-          `/vcard_URL/specific_vcard/${URL_Alies}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+        .get(`/vcard_URL/specific_vcard/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
-          setURL_Alies(URL_Alies)
+          setURL_Alies(URL_Alies);
           setVCardName(res.data.data.VCardName);
           setOccupation(res.data.data.Occupation);
           setDescription(res.data.data.Description);
           setProfile(res.data.data.Profile);
           setBanner(res.data.data.Banner);
-         
+
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -104,19 +101,15 @@ const BasicForm = () => {
     try {
       setFormSubmitLoader(true);
       api
-        .get(
-          `/basicDetail/${URL_Alies}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+        .get(`/basicDetail/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
-
-          if(res.data.data.length == 1){
-            setUpdateButtonToggle(true)
+          if (res.data.data.length == 1) {
+            setUpdateButtonToggle(true);
             setFirstName(res.data.data[0].FirstName);
             setLastName(res.data.data[0].LastName);
             setEmail(res.data.data[0].Email);
@@ -127,24 +120,18 @@ const BasicForm = () => {
             setJobTitle(res.data.data[0].JobTitle);
             setInquiryToggleSwitch(res.data.data[0].InquiryToggleSwitch);
             setQRToggleSwitch(res.data.data[0].QRToggleSwitch);
-            setAppoinmentToggleSwitch(
-              res.data.data[0].AppoinmentToggleSwitch
-            );
-            setAppoinmentToggleSwitch(
-              res.data.data[0].AppoinmentToggleSwitch
-            );
+            setAppoinmentToggleSwitch(res.data.data[0].AppoinmentToggleSwitch);
+            setAppoinmentToggleSwitch(res.data.data[0].AppoinmentToggleSwitch);
+            setFormSubmitLoader(false);
+          } else {
+            // toast.error('Basic Detail Not Created!');
+            setUpdateButtonToggle(false);
             setFormSubmitLoader(false);
           }
-          else{
-            // toast.error('Basic Detail Not Created!');
-            setUpdateButtonToggle(false)
-            setFormSubmitLoader(false)
-          }
-     
         })
         .catch((error) => {
           console.log(error.message);
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
@@ -153,7 +140,7 @@ const BasicForm = () => {
     }
   }
   useEffect(() => {
-    fetchURL_Form()
+    fetchURL_Form();
     fetchBasicData();
   }, [key]);
 
@@ -212,23 +199,19 @@ const BasicForm = () => {
       URL_Alies,
       VCardName,
       Occupation,
-      Description,
+      Description: stripHtmlTags(Description),
       Profile,
-      Banner
+      Banner,
     };
     setFormSubmitLoader(true);
     try {
       api
-        .put(
-          `/vcard_URL/update_by_vcardUrl/${URL_Alies}`,
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+        .put(`/vcard_URL/update_by_vcardUrl/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
           reloadComponent();
           toast.success(res.data.message);
@@ -243,8 +226,8 @@ const BasicForm = () => {
       toast.error(error.message);
     }
   }
-  async function handleBasicDetailSave(e){
-    setFormSubmitLoader(true)
+  async function handleBasicDetailSave(e) {
+    setFormSubmitLoader(true);
     e.preventDefault();
     let data = {
       URL_Alies,
@@ -262,23 +245,22 @@ const BasicForm = () => {
       ContactToggleSwitch,
     };
     await api
-    .post(`/basicDetail/${URL_Alies}`, data, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorageDatas.token}`,
-      },
-    })
-    .then((res) => {
-      reloadComponent()
-      toast.success(res.data.message);
-      setFormSubmitLoader(false);
-
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message);
-      console.log(error);
-      setFormSubmitLoader(false);
-    });
+      .post(`/basicDetail/${URL_Alies}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorageDatas.token}`,
+        },
+      })
+      .then((res) => {
+        reloadComponent();
+        toast.success(res.data.message);
+        setFormSubmitLoader(false);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        console.log(error);
+        setFormSubmitLoader(false);
+      });
   }
   async function handleBasicFormUpdate(e) {
     e.preventDefault();
@@ -299,18 +281,14 @@ const BasicForm = () => {
     setFormSubmitLoader(true);
     try {
       api
-        .put(
-          `/basicDetail/update_by_vcard_URL/${URL_Alies}`,
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+        .put(`/basicDetail/update_by_vcard_URL/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
-          reloadComponent()
+          reloadComponent();
           toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
@@ -338,7 +316,7 @@ const BasicForm = () => {
                 type="text"
                 placeholder="Enter VCard URL"
                 value={URL_Alies}
-                onChange={(e)=>setURL_Alies(e.target.value)}
+                onChange={(e) => setURL_Alies(e.target.value)}
                 // {...formik.getFieldProps("URL_Alies", URL_Alies)}
               />
             </div>
@@ -427,7 +405,6 @@ const BasicForm = () => {
                 />
               </div>
             </div>
-            
 
             <div className="form_submit_actions">
               <button className="save" type="submit">
@@ -435,7 +412,12 @@ const BasicForm = () => {
               </button>
             </div>
           </form>
-          <form encType="multipart/form-data" onSubmit={UpdateButtonToggle ? handleBasicFormUpdate : handleBasicDetailSave} >
+          <form
+            encType="multipart/form-data"
+            onSubmit={
+              UpdateButtonToggle ? handleBasicFormUpdate : handleBasicDetailSave
+            }
+          >
             <div className="form2_title">
               <h4>VCard Details</h4>
             </div>
@@ -531,7 +513,7 @@ const BasicForm = () => {
                 name="InquiryToggleSwitch"
                 type="checkbox"
                 checked={InquiryToggleSwitch}
-                onClick={()=>setInquiryToggleSwitch(!InquiryToggleSwitch)}
+                onClick={() => setInquiryToggleSwitch(!InquiryToggleSwitch)}
               />
             </div>
             <div className="actions">
@@ -541,19 +523,20 @@ const BasicForm = () => {
                 name="QRToggleSwitch"
                 type="checkbox"
                 checked={QRToggleSwitch}
-                onClick={()=>setQRToggleSwitch(!QRToggleSwitch)}
+                onClick={() => setQRToggleSwitch(!QRToggleSwitch)}
               />
             </div>
             <div className="actions">
               <p>Enable Appoinment:</p>
-       
-          
+
               <input
                 id="AppoinmentToggleSwitch"
                 name="AppoinmentToggleSwitch"
                 type="checkbox"
                 checked={AppoinmentToggleSwitch}
-                onClick={()=>setAppoinmentToggleSwitch(!AppoinmentToggleSwitch)}
+                onClick={() =>
+                  setAppoinmentToggleSwitch(!AppoinmentToggleSwitch)
+                }
               />
             </div>
             <div className="actions">
@@ -563,16 +546,20 @@ const BasicForm = () => {
                 name="ContactToggleSwitch"
                 type="checkbox"
                 checked={ContactToggleSwitch}
-                onClick={()=>setContactToggleSwitch(!ContactToggleSwitch)}
+                onClick={() => setContactToggleSwitch(!ContactToggleSwitch)}
               />
             </div>
 
             <div className="form_submit_actions">
-            {UpdateButtonToggle ? <button className="save" type="submit">
-                Update
-              </button> : <button className="save" type="submit" >
-                Save
-              </button>}  
+              {UpdateButtonToggle ? (
+                <button className="save" type="submit">
+                  Update
+                </button>
+              ) : (
+                <button className="save" type="submit">
+                  Save
+                </button>
+              )}
             </div>
           </form>
         </div>

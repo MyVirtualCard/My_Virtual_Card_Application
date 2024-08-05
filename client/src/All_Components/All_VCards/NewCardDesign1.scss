@@ -81,7 +81,7 @@ background: linear-gradient(#646464,#a8a8a8);
       .logo {
         z-index: 900;
         position: absolute;
-        left: 12%;
+        left: 6%;
         bottom: -12%;
         transform: translate(-0%, -12%);
         img {
@@ -110,7 +110,7 @@ background: linear-gradient(#646464,#a8a8a8);
         z-index: 900;
         position: absolute;
         right: 29%;
-        bottom: -5%;
+        bottom: -10%;
         transform: translate(-0%, -32%);
 
         .name {
@@ -165,7 +165,7 @@ background: linear-gradient(#646464,#a8a8a8);
         justify-content: flex-start;
         flex-wrap: wrap;
         gap: 1.9rem;
-
+margin: 1rem 0px;
         width: 100%;
 
         .link {

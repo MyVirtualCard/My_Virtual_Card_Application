@@ -39,6 +39,7 @@ import Taxi_Service from "./All_Components/All_VCards/Taxi_Service.jsx";
 import Gym_Trainer from "./All_Components/All_VCards/Gym_Trainer.jsx";
 import Manager from "./All_Components/All_VCards/Manager.jsx.jsx";
 import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
+import Business_Consultant from "./All_Components/All_VCards/Business_Consultant.jsx";
 
 
 const App = () => {
@@ -627,6 +628,7 @@ const App = () => {
             <Route path="/Jayakumar" element={<Manager />} />
             <Route path="/Taxi_Service" element={<Taxi_Service />} />
             <Route path="/Fashion_Designer" element={<Fashion_Designer />} />
+            <Route path="/Business_Consultant" element={<Business_Consultant />} />
           </Routes>
         </Context.Provider>
       </div>
