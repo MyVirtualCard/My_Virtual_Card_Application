@@ -14,7 +14,7 @@ import TestimonialModel from '../Models/Testimonial.model.js';
 import Current_VCardTemplate from '../Models/VCardTemplate.model.js';
 import Vcard_URL from '../Models/Vcard_URL.model.js';
 import QRCodeModel from '../Models/QRCode.model.js';
-
+import FeedbackModel from '../Models/Feedback.model.js';
 router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
     try {
    
@@ -121,7 +121,16 @@ router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
             res.status(400).json({ message: "VCard_Template Data Not Found" });
           } else {
             result["Current_VCardTemplate"] = VCardTemplateDetails_data;
-          }
+          };
+          // let FeedbackModelData = await FeedbackModel.find({
+          //   URL_Alies: URL_Alies,
+          // });
+      
+          // if (!FeedbackModelData) {
+          //   res.status(400).json({ message: "Feedback Data Not Found" });
+          // } else {
+          //   result["FeedbackModel"] = FeedbackModelData;
+          // }
         res.status(200).json({ data:result });
     
       } catch (error) {

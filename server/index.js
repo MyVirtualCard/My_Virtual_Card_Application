@@ -29,7 +29,7 @@ import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 import RazorPaymentRoute from "./Routes/Razorpayment.router.js";
-
+import FeedbackRoute from './Routes/Feedback.route.js'
 let host_ip = "http://localhost:3001";
 
 //App initialized
@@ -93,6 +93,7 @@ app.use("/termConditionDetail", TermConditionRoute);
 app.use("/privacyPolicyDetail", PrivacyPolicyRoute);
 app.use("/vcard", AllDataRoute);
 app.use("/vcard", AllDataDeleteRoute);
+app.use('/feedback',FeedbackRoute);
 //Setup Mongoose conncetion ;
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING)

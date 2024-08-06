@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import "./Taxi_Service.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
 
-import taxi from "../../assets/AllVCard_Image/VCard12/Taxi.png";
+import taxi from "../../assets/AllVCard_Image/Taxi_Service/Taxi.png";
+import Route_Image from "../../assets/AllVCard_Image/Taxi_Service/route.png";
+import Route_Image2 from "../../assets/AllVCard_Image/Taxi_Service/route2.png";
+import TripBanner_Image from "../../assets/AllVCard_Image/Taxi_Service/trip_banner.png";
+import RattingCar_Image from "../../assets/AllVCard_Image/Taxi_Service/ratting.png";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -257,9 +261,15 @@ const Taxi_Service = () => {
   });
   return (
     <div className="newcard_design12_container">
+      <div className="trip_banner">
+        <img src={TripBanner_Image} alt="trip" />
+      </div>
       <div className="newcard_design12_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
+          <div className="route_image">
+            <img src={Route_Image} alt="route" />
+          </div>
           <div className="banner_image">
             {/* <img
               src="https://img.freepik.com/free-vector/online-application-call-taxi-service-by-smart-phone-set-location-destination_1150-48863.jpg?t=st=1722545066~exp=1722548666~hmac=83853f45de9bc8b77d3a66a5cd0d8b64c9eb60089f15fb39694af0c4a99191f8&w=900"
@@ -508,6 +518,9 @@ const Taxi_Service = () => {
               Our Products
             </h3>
             {/* Contact */}
+          </div>
+          <div className="route_image2">
+            <img src={Route_Image2} alt="route" />
           </div>
           <div className="product_list_container">
             <Slide
@@ -809,6 +822,9 @@ const Taxi_Service = () => {
         </div>
         {/* Feedback */}
         <div className="row_10">
+          <div className="rattingcar_image">
+            <img src={RattingCar_Image} alt="ratting" />
+          </div>
           <div className="title">
             <h3>
               <span className="material-symbols-outlined">reviews</span>
@@ -942,7 +958,11 @@ const Taxi_Service = () => {
                   <span className="material-symbols-outlined">
                     thumbs_up_down
                   </span>
-                  See All Feedbacks
+                  See All Feedbacks <i className='bx bxs-bell-ring bx-tada' ></i>
+
+                  <div className="count">
+                    {AllFeedBacks.length}
+                  </div>
                 </button>
               )}
 

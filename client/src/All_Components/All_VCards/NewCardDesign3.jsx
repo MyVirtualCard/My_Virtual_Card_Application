@@ -482,7 +482,7 @@ const NewCardDesign3 = () => {
                   <>
                     {BasicData.map((data, index) => {
                       return (
-                        <div className="card9_box2">
+                        <div className="card9_box2" key={index}>
                           <div className="user_detail">
                             <h4>
                               {data.FirstName}&nbsp;{data.LastName}

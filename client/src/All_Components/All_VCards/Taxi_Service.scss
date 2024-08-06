@@ -11,21 +11,47 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(280deg,#141414,#696969);
-  // background-image: url("https://img.freepik.com/free-photo/abstract-brown-gradient-well-used-as-background-product-display_1258-53887.jpg?t=st=1722545340~exp=1722548940~hmac=83a6311e30e57b459c8fcdc7794082a848f2235cbd110eb29226bf7c55fe844c&w=900");
+  z-index: 2;
+  background: linear-gradient(280deg, #fdd976, #f3ff8c);
 
+.trip_banner{
+  position: fixed;
+  right: 5%;
+  top: 5%;
+
+  img{
+    width: 200px;
+  }
+}
   .newcard_design12_box {
     width: 450px;
     max-width: 450px;
     height: auto;
     background-color: #034b45;
     filter: drop-shadow(0px 4px 5px rgba(19, 175, 136, 0.4));
+    overflow: hidden;
+    z-index: 2;
     //BasicDetails and socialmedias and baner and logo
     .row_1 {
       width: 100%;
       max-height: 300px;
       height: 300px;
       position: relative;
+z-index: 1;
+      .route_image{
+        position: absolute;
+ bottom: 0%;
+ right: -50%;
+
+
+        img{
+          width:450px;
+  z-index: -1;
+  opacity: 1;
+
+
+        }
+      }
       .banner_image {
         width: 100%;
         max-height: 300px;
@@ -39,6 +65,7 @@
           height: 100%;
           object-fit: cover;
           object-position: center;
+         
         }
         .overlay {
           position: absolute;
@@ -72,8 +99,8 @@
             border-radius: 50%;
             object-fit: cover;
             object-position: center;
-            border: 2px solid #f0ff6c;
-            filter: drop-shadow(0px 4px 5px rgba(248, 225, 91, 0.4));
+            border: 2px solid #edfd58;
+            filter: drop-shadow(0px 4px 5px rgba(255, 255, 255, 0.4));
           }
         }
 
@@ -170,7 +197,7 @@
                     transform: translateY(-5px);
                   }
                   100% {
-                    transform: translateY(0px);
+                    transform: translateY(-10px);
                   }
                 }
               }
@@ -738,6 +765,18 @@
     .row_7 {
       width: 100%;
       padding: 1rem;
+position: relative;
+      .route_image2{
+        position: absolute;
+width: 100%;
+        img{
+          width: 100%;
+          height: 300px;
+          z-index: -2;
+          opacity: 0.7;
+          
+        }
+      }
       .title {
         width: 100%;
         display: flex;
@@ -781,20 +820,22 @@
         }
       }
       .product_list_container {
-        margin: 1rem auto;
+        margin: 1rem auto 0rem auto;
         width: 100%;
         // display: grid;
         // flex-wrap: wrap;
-        display: inline-block;
+      z-index: 1;
+      
 
         .product_list {
           width: 96%;
           max-width: 96%;
-          height: 120px;
+          height: 150px;
+          max-height: 150px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background-color: #058177d0;
+          background-color: #05746aef;
           border: 2px dashed #0b9185;
           border-radius: 0.5rem;
           overflow: scroll;
@@ -844,7 +885,7 @@
               align-items: center;
               justify-content: center;
               padding: 0.3rem 1rem;
-              background-color: #0a746b;
+              background-color: #074949;
               color: #fff;
               font-weight: 500;
               margin: auto;
@@ -1149,6 +1190,19 @@
     .row_10 {
       width: 100%;
       padding: 1rem;
+      position: relative;
+
+
+      .rattingcar_image{
+        position: absolute;
+bottom: 0%;
+left: -5%;
+
+        img{
+          width: 250px;
+            
+        }
+      }
       .title {
         width: 100%;
         display: flex;
@@ -1538,11 +1592,29 @@
             cursor: pointer;
             outline: none;
             border: transparent;
+            position: relative;
             font-weight: 600;
 
             i {
               font-size: 1.4rem;
               color: rgb(211, 211, 211);
+            }
+
+            .count{
+              position: absolute;
+              right: 5%;
+              top: 4%;
+
+              width: 15px;
+              height: 15px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              background-color: rgb(7, 134, 113);
+              color: #ffffff;
+              font-weight: 550;
+              font-size: 0.7rem
             }
           }
           .feedBack_loader {
@@ -1609,7 +1681,7 @@
           padding: 10px 5px;
           margin: 3rem auto;
           background: transparent;
-          background: linear-gradient(#6d6d6d, #6d6d6d);
+          background: linear-gradient(#d8ffa5, #feffc7);
           filter: drop-shadow(0px 4px 5px rgba(73, 73, 73, 0.5));
           border-radius: 5px;
 
@@ -2133,4 +2205,12 @@
   background: url("https://img.icons8.com/emoji/48/calendar-emoji.png")
     no-repeat center center;
   background-size: contain;
+}
+
+
+.title{
+
+  h3{
+    z-index: 2;
+  }
 }

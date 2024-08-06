@@ -34,6 +34,7 @@ import "react-awesome-slider/dist/styles.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import vCardsJS from "vcards-js";
 import { Triangle } from "react-loader-spinner";
+import { Toaster, toast } from "react-hot-toast";
 const NewCardDesign4 = () => {
   let [share, setShare] = useState(false);
   //create a new vCard
@@ -66,8 +67,8 @@ const NewCardDesign4 = () => {
     document.body.removeChild(linkElement);
   }
 
-  let [serviceLoad, setServiceLoad] = useState(false);
-  console.log(serviceLoad);
+  // let [serviceLoad, setServiceLoad] = useState(false);
+
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -196,52 +197,60 @@ const NewCardDesign4 = () => {
       StopConfetti();
     },
   });
-  let [feedbackForm, setFeedbackForm] = useState({
-    userName: "",
-    userFeedback: "",
-    currentRatting: 0,
-  });
+  // let [feedbackForm, setFeedbackForm] = useState({
+  //   ClientName: "",
+  //   ClientFeedback: "",
+  //   ClientRatting: 0,
+  // });
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
-  let [AllFeedBacks, setAllFeedBacks] = useState([]);
+
   const AutoplaySlider = withAutoplay(AwesomeSlider);
+  let [feedbackForm, setFeedbackForm] = useState({
+    ClientName: "",
+    ClientFeedback: "",
+    ClientRatting: 0,
+  });
 
   //Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
-      userName: "",
-      userFeedback: "",
-      currentRatting: 0,
+      URL_Alies: window.location.pathname,
+      ClientName: "",
+      ClientFeedback: "",
+      ClientRatting: feedbackForm.ClientRatting,
     },
 
     //Validation :
     validationSchema: Yup.object({
-      userName: Yup.string()
+      ClientName: Yup.string()
         .min(3, "Min 3 char required")
         .max(50, "Name must be 20 character or less")
         .required("Name is required"),
-      userFeedback: Yup.string()
+      ClientFeedback: Yup.string()
         .min(10, "Minimum 10 character required")
         .max(400, "Feedback must be 100 character or less")
         .required("Feedback is required"),
     }),
     //Form Submit :
     onSubmit: async (values) => {
-      setFeedbackForm({
-        userName: values.userName,
-        userFeedback: values.userFeedback,
-        currentRatting: values.currentRatting,
-      });
-      feedBackSubmit();
-      setTimeout(() => {
-        feedbackFormik.values.userName = "";
-        feedbackFormik.values.userFeedback = "";
-        feedbackFormik.values.currentRatting = 0;
-      }, 4000);
+      console.log(values);
+      setFeedbackLoader(true);
+      api
+        .post(`/feedback${window.location.pathname}`, values)
+        .then((res) => {
+          toast.success(res.data.message);
+          console.log(res);
+          setFeedbackLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setFeedbackLoader(false);
+        });
     },
   });
   //Start Ratting:
-  // let currentRatting=0;
+  // let ClientRatting=0;
   function handleRatting(e) {
     let star = e.target;
     // console.log(star,star.classList);
@@ -252,7 +261,7 @@ const NewCardDesign4 = () => {
   }
   //Remove Ratting:
   function removeRatting() {
-    highlightStar(feedbackForm.currentRatting);
+    highlightStar(feedbackForm.ClientRatting);
   }
   //Staring Setted
   function RattingSetted(e) {
@@ -260,9 +269,9 @@ const NewCardDesign4 = () => {
     let star = e.target;
     // console.log(star,star.classList);
     if (star.classList.contains("star")) {
-      feedbackForm.currentRatting = parseInt(star.dataset.rating, 10);
-      starRating.setAttribute("data-rating", feedbackForm.currentRatting);
-      highlightStar(feedbackForm.currentRatting);
+      feedbackForm.ClientRatting = parseInt(star.dataset.rating, 10);
+      starRating.setAttribute("data-rating", feedbackForm.ClientRatting);
+      highlightStar(feedbackForm.ClientRatting);
     }
   }
 
@@ -329,6 +338,7 @@ const NewCardDesign4 = () => {
   let [BlogData, setBlogData] = useState();
   let [ServiceData, setServiceData] = useState();
   let [QRCodeData, setQRCodeData] = useState();
+  let [AllFeedBacks, setAllFeedBacks] = useState();
   let [SocialMediaData, setSocialMediaData] = useState();
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
@@ -348,6 +358,7 @@ const NewCardDesign4 = () => {
           setServiceData(res.data.data.ServiceData);
           setProductData(res.data.data.ProductModel);
           setQRCodeData(res.data.data.QRCodeModel);
+          
           setSiteLoader(false);
         })
         .catch((error) => {
@@ -362,6 +373,13 @@ const NewCardDesign4 = () => {
   useEffect(() => {
     fetchAllData();
   }, []);
+  useEffect(()=>{
+    api.get(`/feedback${window.location.pathname}`).then((res)=>{
+      setAllFeedBacks(res.data.data)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[commentOpen])
   return (
     <>
       {SiteLoader ? (
@@ -381,6 +399,7 @@ const NewCardDesign4 = () => {
         <>
           {VCard_URL_Data != undefined ? (
             <div className="newCard_design7_container">
+              <Toaster position="top-right" reverseOrder={false} />
               <div id="card_design_box7">
                 {/* Banner */}
                 {VCard_URL_Data.map((data, index) => {
@@ -779,15 +798,13 @@ const NewCardDesign4 = () => {
                         <div className="logo">
                           <img src={banner_img} alt="logo" />
                         </div>
-                        {QRCodeData.map((data,index)=>{
-                          return(
+                        {QRCodeData.map((data, index) => {
+                          return (
                             <div className="qrcode" key={index}>
-                            <img src={data.QRCodeImage} alt="qrcode" />
-                          </div>
-                          )
-  
+                              <img src={data.QRCodeImage} alt="qrcode" />
+                            </div>
+                          );
                         })}
-                    
                       </div>
                     </div>
                   </div>
@@ -807,12 +824,12 @@ const NewCardDesign4 = () => {
                         <label
                           htmlFor="clientName_Input"
                           className={`${
-                            feedbackFormik.errors.userName ? "error" : ""
+                            feedbackFormik.errors.ClientName ? "error" : ""
                           } `}
                         >
-                          {feedbackFormik.touched.userName &&
-                          feedbackFormik.errors.userName
-                            ? feedbackFormik.errors.userName
+                          {feedbackFormik.touched.ClientName &&
+                          feedbackFormik.errors.ClientName
+                            ? feedbackFormik.errors.ClientName
                             : "Your Name"}
                           <span>
                             <sup>*</sup>
@@ -821,11 +838,11 @@ const NewCardDesign4 = () => {
                         <input
                           type="text"
                           placeholder="Enter Your Name"
-                          name="userName"
-                          id="userName"
-                          // value={userName}
+                          name="ClientName"
+                          id="ClientName"
+                          // value={ClientName}
                           // onChange={(e)=>setUserName(e.target.value)}
-                          value={feedbackFormik.values.userName}
+                          value={feedbackFormik.values.ClientName}
                           onChange={feedbackFormik.handleChange}
                           onBlur={feedbackFormik.handleBlur}
                         />
@@ -834,26 +851,26 @@ const NewCardDesign4 = () => {
                         <label
                           htmlFor="clientFeedBack_Input"
                           className={`${
-                            feedbackFormik.errors.userFeedback ? "error" : ""
+                            feedbackFormik.errors.ClientFeedback ? "error" : ""
                           } `}
                         >
-                          {feedbackFormik.touched.userFeedback &&
-                          feedbackFormik.errors.userFeedback
-                            ? feedbackFormik.errors.userFeedback
+                          {feedbackFormik.touched.ClientFeedback &&
+                          feedbackFormik.errors.ClientFeedback
+                            ? feedbackFormik.errors.ClientFeedback
                             : "Your FeedBack"}
                           <span>
                             <sup>*</sup>
                           </span>
                         </label>
                         <textarea
-                          id="userFeedback"
-                          name="userFeedback"
+                          id="ClientFeedback"
+                          name="ClientFeedback"
                           cols="30"
                           rows="7"
                           placeholder="Enter your Feedback"
-                          // value={userFeedback}
+                          // value={ClientFeedback}
                           // onChange={(e)=>setUserFeedback(e.target.value)}
-                          value={feedbackFormik.values.userFeedback}
+                          value={feedbackFormik.values.ClientFeedback}
                           onChange={feedbackFormik.handleChange}
                           onBlur={feedbackFormik.handleBlur}
                         ></textarea>
@@ -862,12 +879,12 @@ const NewCardDesign4 = () => {
                         <label
                           htmlFor="clientName_Input"
                           className={`${
-                            feedbackFormik.errors.currentRatting ? "error" : ""
+                            feedbackFormik.errors.ClientRatting ? "error" : ""
                           } `}
                         >
-                          {feedbackFormik.touched.currentRatting &&
-                          feedbackFormik.errors.currentRatting
-                            ? feedbackFormik.errors.currentRatting
+                          {feedbackFormik.touched.ClientRatting &&
+                          feedbackFormik.errors.ClientRatting
+                            ? feedbackFormik.errors.ClientRatting
                             : "Ratting"}
                           <span>
                             <sup>*</sup>
@@ -876,14 +893,14 @@ const NewCardDesign4 = () => {
                         <div
                           className="ratting_container"
                           data-rating="0"
-                          name="currentRatting"
-                          id="currentRatting"
+                          name="ClientRatting"
+                          id="ClientRatting"
                           onMouseOver={handleRatting}
                           onMouseLeave={removeRatting}
                           onClick={RattingSetted}
-                          // value={currentRatting}
+                          value={feedbackForm.ClientRatting}
                           // onChange={(e)=>setCurrentRatting(e.target.value)}
-                          value={feedbackFormik.values.currentRatting}
+                          // value={feedbackFormik.values.ClientRatting}
                           onChange={feedbackFormik.handleChange}
                           onBlur={feedbackFormik.handleBlur}
                         >
@@ -945,37 +962,40 @@ const NewCardDesign4 = () => {
                             <div className="message" key={index}>
                               <div className="user_detail">
                                 <div className="profile">
-                                  <img src={profile} alt="profile" />
+                                  <img
+                                    src="https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?t=st=1722896783~exp=1722900383~hmac=3628f6befbe82fb4e2642e0c0f1f836c946ba70bb2e17c5d12d5c839123aeb12&w=740"
+                                    alt="profile"
+                                  />
                                 </div>
                                 <div className="details">
-                                  <div className="userName">
+                                  <div className="ClientName">
                                     <p>
-                                      {data.userName}
+                                      {data.ClientName}
                                       <i className="bx bxs-user-check"></i>
                                     </p>
                                   </div>
                                   <div className="stars">
                                     <div
                                       className="ratting_container1"
-                                      data-rating={data.currentRatting}
-                                      name="currentRatting"
-                                      // id="currentRatting"
+                                      data-rating={data.ClientRatting}
+                                      name="ClientRatting"
+                                      // id="ClientRatting"
                                       id={
-                                        data.currentRatting == 0
+                                        data.ClientRatting == 0
                                           ? "noRatting"
-                                          : "" || data.currentRatting == 1
+                                          : "" || data.ClientRatting == 1
                                           ? "singleRatting"
-                                          : "" || data.currentRatting == 2
+                                          : "" || data.ClientRatting == 2
                                           ? "doubleRatting"
-                                          : "" || data.currentRatting == 3
+                                          : "" || data.ClientRatting == 3
                                           ? "ThreeRatting"
-                                          : "" || data.currentRatting == 4
+                                          : "" || data.ClientRatting == 4
                                           ? "fourRatting"
-                                          : "" || data.currentRatting == 5
+                                          : "" || data.ClientRatting == 5
                                           ? "fullRatting"
                                           : ""
                                       }
-                                      value={data.currentRatting}
+                                      value={data.ClientRatting}
                                     >
                                       <span className="ratting_star">
                                         <i
@@ -1014,7 +1034,7 @@ const NewCardDesign4 = () => {
 
                               <div className="comments">
                                 <i className="bx bx-chat"></i>
-                                <span>{data.userFeedback}</span>
+                                <span>{data.ClientFeedback}</span>
                               </div>
                             </div>
                           );

@@ -818,7 +818,8 @@ const Gym_Trainer = () => {
                   <span className="material-symbols-outlined">
                     thumbs_up_down
                   </span>
-                  See All Feedbacks
+                  See All Feedbacks<i className="bx bxs-bell-ring bx-tada"></i>
+                  <div className="count">{AllFeedBacks.length}</div>
                 </button>
               )}
 
@@ -977,16 +978,16 @@ const Gym_Trainer = () => {
 
         {/* Footer */}
         <div className="row_12">
-        <div className="footer_container">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                  fill="#2d2d2ee1"
-                  fill-opacity="1"
-                  d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
-                ></path>
-              </svg>
-              <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
-            </div>
+          <div className="footer_container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill="#2d2d2ee1"
+                fill-opacity="1"
+                d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+              ></path>
+            </svg>
+            <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
+          </div>
         </div>
       </div>
     </div>
