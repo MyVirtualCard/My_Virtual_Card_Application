@@ -12,6 +12,9 @@ import card7 from "../../../../../assets/Digicards/7.png";
 // import card8 from "../../../../../assets/Digicards/8.png";
 import card9 from "../../../../../assets/Digicards/9.png";
 import card8 from "../../../../../assets/Digicards/10.png";
+import Gym_Trainer from "../../../../../assets/Digicards/Gym_Trainer.png";
+import Taxi_Service from "../../../../../assets/Digicards/Taxi_Service.png";
+import Fashion_Desinger from "../../../../../assets/Digicards/Fashion_Designer.png";
 import Footer from "../../../UserAdmin_Footer/Footer";
 import selected_gif from "../../../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../../../assets/animations/touch.gif";
@@ -22,102 +25,102 @@ import { useFormik } from "formik";
 let FreeTemplate = [
   {
     id: 1,
-    image: card2,
+    image: Gym_Trainer,
   },
 ];
 let BasicTemplate = [
   {
     id: 1,
-    image: card2,
+    image: Gym_Trainer,
   },
   {
     id: 2,
-    image: card5,
+    image: Taxi_Service,
   },
   {
     id: 3,
-    image: card6,
+    image: Fashion_Desinger,
   },
-  {
-    id: 4,
-    image: card4,
-  },
-  {
-    id: 5,
-    image: card3,
-  },
+  // {
+  //   id: 4,
+  //   image: card4,
+  // },
+  // {
+  //   id: 5,
+  //   image: card3,
+  // },
 ];
 let StandardTemplate = [
   {
     id: 1,
-    image: card2,
+    image: Gym_Trainer,
   },
   {
     id: 2,
-    image: card5,
+    image: Taxi_Service,
   },
   {
     id: 3,
-    image: card6,
+    image: Fashion_Desinger,
   },
-  {
-    id: 4,
-    image: card4,
-  },
-  {
-    id: 5,
-    image: card3,
-  },
-  {
-    id: 6,
-    image: card7,
-  },
-  {
-    id: 7,
-    image: card1,
-  },
-  {
-    id: 8,
-    image: card8,
-  },
+  // {
+  //   id: 4,
+  //   image: card4,
+  // },
+  // {
+  //   id: 5,
+  //   image: card3,
+  // },
+  // {
+  //   id: 6,
+  //   image: card7,
+  // },
+  // {
+  //   id: 7,
+  //   image: card1,
+  // },
+  // {
+  //   id: 8,
+  //   image: card8,
+  // },
 ];
 let EnterpriceTemplate = [
   {
     id: 1,
-    image: card2,
+    image: Gym_Trainer,
   },
   {
     id: 2,
-    image: card5,
+    image: Taxi_Service,
   },
   {
     id: 3,
-    image: card6,
+    image: Fashion_Desinger,
   },
-  {
-    id: 4,
-    image: card4,
-  },
-  {
-    id: 5,
-    image: card3,
-  },
-  {
-    id: 6,
-    image: card7,
-  },
-  {
-    id: 7,
-    image: card1,
-  },
-  {
-    id: 8,
-    image: card9,
-  },
-  {
-    id: 9,
-    image: card8,
-  },
+  // {
+  //   id: 4,
+  //   image: card4,
+  // },
+  // {
+  //   id: 5,
+  //   image: card3,
+  // },
+  // {
+  //   id: 6,
+  //   image: card7,
+  // },
+  // {
+  //   id: 7,
+  //   image: card1,
+  // },
+  // {
+  //   id: 8,
+  //   image: card9,
+  // },
+  // {
+  //   id: 9,
+  //   image: card8,
+  // },
 ];
 
 const Select_Template = () => {

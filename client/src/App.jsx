@@ -579,7 +579,7 @@ const App = () => {
 
             {/*AllVardsTemplate */}
 
-            {currentTemplate == 1 ? (
+            {/* {currentTemplate == 1 ? (
               <Route path={`/:URL_Alies`} element={<NewCardDesign1 />} />
             ) : (
               ""
@@ -623,11 +623,26 @@ const App = () => {
               <Route path={`/:URL_Alies`} element={<NewCardDesign9 />} />
             ) : (
               ""
+            )} */}
+
+            {/* //New Tempaltes */}
+            
+             {currentTemplate == 1 ? (
+              <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
+            ) : (
+              ""
             )}
-            <Route path="/Gym_Trainer" element={<Gym_Trainer />} />
-            <Route path="/Jayakumar" element={<Manager />} />
-            <Route path="/Taxi_Service" element={<Taxi_Service />} />
-            <Route path="/Fashion_Designer" element={<Fashion_Designer />} />
+            {currentTemplate == 2 ? (
+             <Route path={`/:URL_Alies`} element={<Taxi_Service />} />
+            ) : (
+              ""
+            )}
+                {currentTemplate == 3 ? (
+             <Route path={`/:URL_Alies`} element={<Fashion_Designer />} />
+            ) : (
+              ""
+            )}
+            {/* <Route path="/Jayakumar" element={<Manager />} /> */}
             <Route path="/Business_Consultant" element={<Business_Consultant />} />
           </Routes>
         </Context.Provider>

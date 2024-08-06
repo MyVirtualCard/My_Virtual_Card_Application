@@ -15,6 +15,7 @@ import Current_VCardTemplate from '../Models/VCardTemplate.model.js';
 import Vcard_URL from '../Models/Vcard_URL.model.js';
 import QRCodeModel from '../Models/QRCode.model.js';
 import FeedbackModel from '../Models/Feedback.model.js';
+import BussinessModel from '../Models/BussinessHour.model.js';
 router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
     try {
    
@@ -121,6 +122,17 @@ router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
             res.status(400).json({ message: "VCard_Template Data Not Found" });
           } else {
             result["Current_VCardTemplate"] = VCardTemplateDetails_data;
+          };
+
+
+          let WorkingDayDetails_data = await BussinessModel.find({
+            URL_Alies: URL_Alies,
+          });
+      
+          if (!WorkingDayDetails_data) {
+            res.status(400).json({ message: "Bussiness Hour Data Not Found" });
+          } else {
+            result["BussinessModel"] = WorkingDayDetails_data;
           };
           // let FeedbackModelData = await FeedbackModel.find({
           //   URL_Alies: URL_Alies,

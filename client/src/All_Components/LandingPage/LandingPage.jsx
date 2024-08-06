@@ -520,7 +520,7 @@ const LandingPage = () => {
                       <button onClick={()=>{navigate('/register'),setAuthToggle(true)}}>Login</button>
                     </Link>
                   ) : (
-                    <Link to={`/${userName}/uadmin/dashboard`}>
+                    <Link to={`/${userName}/uadmin/user_vcard`}>
                       <button onClick={setAuthToggle(true)}><i className='bx bxs-dashboard'></i>{userName}</button>
                     </Link>
                   )}

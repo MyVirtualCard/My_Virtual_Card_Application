@@ -48,10 +48,12 @@
     margin-left: 1rem;
 
     .image1{
-        width: 70%;
-        height: 170px;
-        max-height:  170px;
-        min-height:  170px;
+        width: 400px;
+        max-width: 400px;
+        min-width: 400px;
+        height: 200px;
+        max-height:  200px;
+        min-height:  200px;
         object-fit:cover;
         object-position: center;
         border-top-right-radius: 7rem;
@@ -66,7 +68,7 @@
     .image2{
         position: absolute;
         bottom: 0%;
-        right: 20%;
+        right: 10%;
         width: 130px;
         height: 130px;
         max-height: 130px;
