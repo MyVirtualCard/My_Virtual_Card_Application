@@ -32,7 +32,8 @@ export const postBasicAllData = async (req, res) => {
     !req.body.LastName ||
     !req.body.Email ||
     !req.body.MobileNumber ||
-    !req.body.Location
+    !req.body.Location||
+    !req.body.Profession
   ) {
     return res.status(401).json({ message: "All * fields Required" });
   }
@@ -79,11 +80,7 @@ export const postBasicAllData = async (req, res) => {
             AlternateEmail: req.body.AlternateEmail,
             AlternateMobileNumber: req.body.AlternateMobileNumber,
             Location: req.body.Location,
-            JobTitle: req.body.JobTitle,
-            InquiryToggleSwitch: req.body.InquiryToggleSwitch,
-            QRToggleSwitch: req.body.QRToggleSwitch,
-            AppoinmentToggleSwitch: req.body.AppoinmentToggleSwitch,
-            ContactToggleSwitch: req.body.ContactToggleSwitch,
+            Profession: req.body.Profession,
           };
           let createDatas = new BasicDetails(data);
           try {

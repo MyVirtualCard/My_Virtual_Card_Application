@@ -39,22 +39,10 @@ let BasicDetailSchema=new mongoose.Schema({
         type:String,
         required:true 
     },
-    JobTitle:{
+    Profession:{
         type:String,
         required:true
-    },
-    InquiryToggleSwitch:{
-        type:Boolean
-    },
-    QRToggleSwitch:{
-        type:Boolean
-    },
-    AppoinmentToggleSwitch:{
-        type:Boolean
-    },
-    ContactToggleSwitch:{
-        type:Boolean
-    },
+    }
 },
 {timestamps:true}
 );

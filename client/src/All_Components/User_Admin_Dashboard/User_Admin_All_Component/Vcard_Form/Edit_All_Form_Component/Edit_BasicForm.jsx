@@ -11,7 +11,7 @@ import {
   convertToBase64Profile,
 } from "../../../../Helper/convert";
 import { useParams } from "react-router-dom";
-import { BasicDetailValidate } from "../../../../Helper/BasicDetailValiate";
+import { BasicDetailValidateShema } from "../../../../Helper/BasicDetailValiate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toaster, toast } from "react-hot-toast";
@@ -37,7 +37,7 @@ const BasicForm = () => {
   let [AlternateEmail, setAlternateEmail] = useState();
   let [AlternateMobileNumber, setAlternateMobileNumber] = useState();
   let [Location, setLocation] = useState();
-  let [JobTitle, setJobTitle] = useState();
+  let [Profession, setProfession] = useState();
   let [InquiryToggleSwitch, setInquiryToggleSwitch] = useState(true);
   let [QRToggleSwitch, setQRToggleSwitch] = useState(true);
   let [AppoinmentToggleSwitch, setAppoinmentToggleSwitch] = useState(false);
@@ -117,7 +117,7 @@ const BasicForm = () => {
             setAlternateEmail(res.data.data[0].AlternateEmail);
             setAlternateMobileNumber(res.data.data[0].AlternateMobileNumber);
             setLocation(res.data.data[0].Location);
-            setJobTitle(res.data.data[0].JobTitle);
+            setProfession(res.data.data[0].Profession);
             setInquiryToggleSwitch(res.data.data[0].InquiryToggleSwitch);
             setQRToggleSwitch(res.data.data[0].QRToggleSwitch);
             setAppoinmentToggleSwitch(res.data.data[0].AppoinmentToggleSwitch);
@@ -144,61 +144,12 @@ const BasicForm = () => {
     fetchBasicData();
   }, [key]);
 
-  // let formik = useFormik({
-  //   initialValues: {
-  //     VCardName: '',
-  //     Occupation: "",
-  //     Description: "",
-  //     Profile: undefined,
-  //     Banner: null,
-  //     BannerName: "",
-  //     FirstName: "",
-  //     LastName: "",
-  //     Email: "",
-  //     MobileNumber: "",
-  //     AlternateEmail: "",
-  //     AlternateMobileNumber: "",
-  //     Location: "",
-  //     JobTitle: "",
-  //     InquiryToggleSwitch: true,
-  //     QRToggleSwitch: true,
-  //     AppoinmentToggleSwitch: false,
-  //     ContactToggleSwitch: true,
-  //   },
-  //   validateOnChange: false,
-  //   validateOnBlur: false,
-  //   validate: BasicDetailValidate,
-
-  //   onSubmit: async (values) => {
-
-  //     values = await Object.assign(values, { Profile: Profile || "" });
-  //     values = await Object.assign(values, { Banner: Banner || "" });
-  //     values.Description = stripHtmlTags(Description);
-  //     setFormSubmitLoader(true);
-  //     await axios
-  //       .put(`http://localhost:3001/basicDetail/update_by_userName/${localStorageDatas.userName}`, values, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorageDatas.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         toast.success(res.data.message);
-  //         setFormSubmitLoader(false);
-  //       })
-  //       .catch((error) => {
-  //         toast.error(error.response.data.message);
-  //         console.log(error);
-  //         setFormSubmitLoader(false);
-  //       });
-  //   },
-  // });
+  
   async function handleURLFormUpdate(e) {
     e.preventDefault();
     let data = {
       URL_Alies,
       VCardName,
-      Occupation,
       Description: stripHtmlTags(Description),
       Profile,
       Banner,
@@ -238,7 +189,7 @@ const BasicForm = () => {
       AlternateEmail,
       AlternateMobileNumber,
       Location,
-      JobTitle,
+      Profession,
       InquiryToggleSwitch,
       QRToggleSwitch,
       AppoinmentToggleSwitch,
@@ -272,7 +223,7 @@ const BasicForm = () => {
       AlternateEmail,
       AlternateMobileNumber,
       Location,
-      JobTitle,
+      Profession,
       InquiryToggleSwitch,
       QRToggleSwitch,
       AppoinmentToggleSwitch,
@@ -301,13 +252,48 @@ const BasicForm = () => {
       toast.error(error.message);
     }
   }
+  let formik = useFormik({
+    initialValues: {
+      URL_Alies:URL_Alies,
+      FirstName:'',
+      LastName:'',
+      Email:'',
+      MobileNumber:'',
+      AlternateEmail:'',
+      AlternateMobileNumber:'',
+      Location:'',
+      Profession:'',
+    },
 
+    validationSchema: BasicDetailValidateShema,
+
+    onSubmit: async (values) => {
+      setFormSubmitLoader(true);
+      await api
+        .post(`/basicDetail/${URL_Alies}`, values, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          toast.success(res.data.message);
+      
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.log(error);
+          setFormSubmitLoader(false);
+        });
+    },
+  });
   return (
     <>
       <div className="basicform_container">
         <Toaster position="top-right" />
         <div className="form1_container_box">
-          <form encType="multipart/form-data" onSubmit={handleURLFormUpdate}>
+          <form onSubmit={handleURLFormUpdate}>
             <div className="form_group">
               <label htmlFor="URL_Alies">
                 VCard URL <sup>*</sup>
@@ -331,17 +317,7 @@ const BasicForm = () => {
                 onChange={(e) => setVCardName(e.target.value)}
               />
             </div>
-            <div className="form_group">
-              <label htmlFor="occupation">
-                Occupation<sup>*</sup>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Occupation"
-                value={Occupation}
-                onChange={(e) => setOccupation(e.target.value)}
-              />
-            </div>
+
             <div className="form_group">
               <label htmlFor="Description">
                 Description<sup>*</sup>
@@ -358,7 +334,7 @@ const BasicForm = () => {
             <div className="form_group double_col_inputs">
               <div className="first">
                 <label htmlFor="Profile">
-                  Profile Image <sup>*</sup>
+                  Company Logo <sup>*</sup>
                 </label>
                 <label htmlFor="Profile">
                   <img
@@ -382,7 +358,7 @@ const BasicForm = () => {
               </div>
               <div className="second">
                 <label htmlFor="Banner">
-                  Banner Image <sup>*</sup>
+                 Company Banner <sup>*</sup>
                 </label>
                 <label htmlFor="Banner">
                   <img
@@ -413,24 +389,35 @@ const BasicForm = () => {
             </div>
           </form>
           <form
-            encType="multipart/form-data"
+           
             onSubmit={
-              UpdateButtonToggle ? handleBasicFormUpdate : handleBasicDetailSave
+              UpdateButtonToggle ? handleBasicFormUpdate : formik.handleSubmit
             }
+
+            className="Form2"
           >
             <div className="form2_title">
               <h4>VCard Details</h4>
             </div>
             <div className="form_group">
-              <label htmlFor="firstName">
+              <label htmlFor="FirstName">
                 First Name<sup>*</sup>
               </label>
               <input
                 type="text"
+                id="FirstName"
+                name="FirstName"
                 placeholder="Enter Your FirstName"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 value={FirstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                className={
+                  formik.errors.FirstName && formik.touched.FirstName
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+               <div className="error">{formik.errors.FirstName}</div>
             </div>
             <div className="form_group">
               <label htmlFor="lastName">
@@ -439,9 +426,18 @@ const BasicForm = () => {
               <input
                 type="text"
                 placeholder="Enter Your LastName"
+                name="LastName"
+                id="LastName"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 value={LastName}
-                onChange={(e) => setLastName(e.target.value)}
+                className={
+                  formik.errors.LastName && formik.touched.LastName
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+                 <div className="error">{formik.errors.LastName}</div>
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -450,9 +446,17 @@ const BasicForm = () => {
               <input
                 type="email"
                 placeholder="Enter Your Email"
+                name="Email"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 value={Email}
-                onChange={(e) => setEmail(e.target.value)}
+                className={
+                  formik.errors.Email && formik.touched.Email
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+               <div className="error">{formik.errors.Email}</div>
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -461,17 +465,32 @@ const BasicForm = () => {
               <input
                 type="tel"
                 placeholder="Enter Your Phone Number"
+                name="MobileNumber"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 value={MobileNumber}
-                onChange={(e) => setMobileNumber(e.target.value)}
+                className={
+                  formik.errors.MobileNumber && formik.touched.MobileNumber
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+                <div className="error">{formik.errors.MobileNumber}</div>
             </div>
             <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Email</label>
               <input
                 type="email"
                 placeholder="Alternate Email"
+                name="AlternateEmail"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 value={AlternateEmail}
-                onChange={(e) => setAlternateEmail(e.target.value)}
+                className={
+                  formik.errors.AlternateEmail && formik.touched.AlternateEmail
+                    ? "input_error"
+                    : "input_success"
+                }
               />
             </div>
             <div className="form_group">
@@ -490,23 +509,39 @@ const BasicForm = () => {
               <input
                 type="text"
                 placeholder="Location"
+                name="Location"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 value={Location}
-                onChange={(e) => setLocation(e.target.value)}
+                className={
+                  formik.errors.Location && formik.touched.Location
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+              <div className="error">{formik.errors.Location}</div>
             </div>
             <div className="form_group">
               <label htmlFor="job">
-                Job Title<sup>*</sup>
+                Your Profession<sup>*</sup>
               </label>
               <input
                 type="text"
                 placeholder="Enter Job Title"
-                value={JobTitle}
-                onChange={(e) => setJobTitle(e.target.value)}
+                name="Profession"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={Profession}
+                className={
+                  formik.errors.Profession && formik.touched.Profession
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+                <div className="error">{formik.errors.Profession}</div>
             </div>
 
-            <div className="actions">
+            {/* <div className="actions">
               <p>Enable Inquiry Form :</p>
               <input
                 id="InquiryToggleSwitch"
@@ -538,17 +573,19 @@ const BasicForm = () => {
                   setAppoinmentToggleSwitch(!AppoinmentToggleSwitch)
                 }
               />
-            </div>
-            <div className="actions">
+            </div> */}
+            {/* <div className="actions">
               <p>Enable Add To Contact:</p>
               <input
                 id="ContactToggleSwitch"
                 name="ContactToggleSwitch"
                 type="checkbox"
-                checked={ContactToggleSwitch}
+                checked={formik.values.ContactToggleSwitch}
+                onChange={(e) => formik.setFieldValue('ContactToggleSwitch', e.checked)}
+                // checked={ContactToggleSwitch}
                 onClick={() => setContactToggleSwitch(!ContactToggleSwitch)}
               />
-            </div>
+            </div> */}
 
             <div className="form_submit_actions">
               {UpdateButtonToggle ? (

@@ -197,7 +197,7 @@ const User_VCards = () => {
                     })
                     .then((res) => {
                       console.log(res);
-                      if (res.data.length < 1) {
+                      if (res.data.length < 2) {
                         setFormSubmitLoader(false);
                         navigate(`/${userName}/uadmin/create_new_vcard`);
                       } else {

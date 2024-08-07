@@ -38,7 +38,6 @@ export const postVCardURLData = async (req, res) => {
   if (
     !req.body.URL_Alies ||
     !req.body.VCardName ||
-    !req.body.Occupation ||
     !req.body.Profile ||
     !req.body.Banner ||
     !req.body.Description
@@ -62,7 +61,6 @@ export const postVCardURLData = async (req, res) => {
       user: req.user.userName,
       URL_Alies: req.body.URL_Alies,
       VCardName: req.body.VCardName,
-      Occupation: req.body.Occupation,
       Description: req.body.Description,
       Profile: req.body.Profile,
       Banner: req.body.Banner,

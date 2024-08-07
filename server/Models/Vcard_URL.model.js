@@ -15,10 +15,6 @@ let Vcard_URL_Schema=new mongoose.Schema({
         type:String,
         required:true
     },
-    Occupation:{
-        type:String,
-        required:true
-    },
     Description:{
         type:String,
         required:true , 
