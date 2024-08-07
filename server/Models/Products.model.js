@@ -12,14 +12,14 @@ let ProductSchema = new mongoose.Schema(
     },
     ProductName: {
       type: String,
-      required: true,
+      // required: true,
     },
     ProductURL: {
       type: String,
     },
     ProductDescription: {
       type: String,
-      required: true,
+      // required: true,
     },
     ProductPrice: {
       type: Number,
@@ -28,13 +28,15 @@ let ProductSchema = new mongoose.Schema(
     },
     ProductImage:{
         type:String,
-        required:true
+        // required:true
+    },
+    ProductType:{
+      type:String,
+      // default:'ImageUpload'
+    },
+    ProductImageLink:{
+      type:String
     }
-    // ProductImage: {
-    //   data: Buffer,
-    //   contentType: String,
-    //   // type:String,
-    // },
   },
   { timestamps: true }
 );

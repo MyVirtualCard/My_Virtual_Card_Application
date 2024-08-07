@@ -69,15 +69,20 @@ const VCard_URL_Form = () => {
       VCardName: "",
       Description: "",
       Profile: "",
+      ProfileType: "ImageUpload",
+      BannerType: "ImageUpload",
+      ProfileAddress:'',
+      BannerAddress:'',
       Banner: "",
     },
 
     validationSchema: VCardURLValidateShema,
 
     onSubmit: async (values) => {
+
       values.Description = stripHtmlTags(Description);
-      values = Object.assign(values, { Profile: Profile || "" });
-      values = Object.assign(values, { Banner: Banner || "" });
+      values = Object.assign(values, { Profile: Profile || "https://img.freepik.com/free-vector/gradient-logo-template-with-abstract-shape_52683-14449.jpg?t=st=1723041211~exp=1723044811~hmac=baa013fc601740276f0c59eae32270220486062035a85e06c2b387a7219f60fb&w=740" });
+      values = Object.assign(values, { Banner: Banner || "https://img.freepik.com/free-vector/gradient-business-horizontal-banner_23-2149695708.jpg?t=st=1723041175~exp=1723044775~hmac=2b1a5164ec867890eb7afbf50cfe802e3add7e1fe89421619ca08be488de5fe3&w=1060" });
 
       setFormSubmitLoader(true);
       await api
@@ -151,6 +156,7 @@ const VCard_URL_Form = () => {
     handleURLErrorHandling();
   }, [formik.values.URL_Alies]);
 
+  console.log(formik.values.ProfileType)
   return (
     <>
       <div className="new_Vcard_url_container">
@@ -256,18 +262,18 @@ const VCard_URL_Form = () => {
               <div className="error">{formik.errors.VCardName}</div>
             </div>
 
-            <div className="form_group">
+            <div className="form_group editor">
               <label htmlFor="Description">
                 Description<sup>*</sup>
               </label>
               <Editor
                 id="Description"
                 name="Description"
-              
                 value={Description}
-                onTextChange={(e) =>
-                 { formik.setFieldValue("Description", e.htmlValue),setDescription(e.htmlValue)}
-                }
+                onTextChange={(e) => {
+                  formik.setFieldValue("Description", e.htmlValue),
+                    setDescription(e.htmlValue);
+                }}
                 onBlur={formik.handleBlur}
                 style={{ height: "150px" }}
                 placeholder="Enter Short Description..!"
@@ -280,61 +286,134 @@ const VCard_URL_Form = () => {
               <div className="desc_error">{formik.errors.Description}</div>
             </div>
             <div className="form_group double_col_inputs">
-              <div className="first">
-                <label htmlFor="Profile">
-                  Company Logo <sup>*</sup>
-                </label>
-                <label htmlFor="Logo">
-                  <img
-                    src={
-                      Profile != undefined
-                        ? Profile
-                        : "https://img.freepik.com/free-photo/3d-render-little-boy-with-eyeglasses-blue-shirt_1142-50994.jpg?t=st=1716040955~exp=1716044555~hmac=605273d0e1789be0644e11ceb509699fc6908463eed64554ad5184feb50cc3fa&w=740"
-                    }
-                    className="Profile"
-                    alt="Logo"
-                  />
-                  <i className="bx bxs-edit"></i>
-                </label>
-                <small>Allowed file types: png, jpg, jpeg.</small>
-                <input
-                  // onChange={onUploadProfile}
-
-                  name="Profile"
-                  id="Profile"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoChange}
-                  onBlur={formik.handleBlur}
-                />
-                <div className="profile_error">{formik.errors.Profile}</div>
+              <div className="image_upload_type">
+                <div className="logo_type">
+                  <label htmlFor="Profile">
+                    Company Logo 
+                  </label>
+                  <select
+                    name="ProfileType"
+                    onChange={formik.handleChange}
+                    value={formik.values.ProfileType}
+                  >
+                    <option value="ImageUpload">ImageUpload</option>
+                    <option value="Paste_ImageAddress">Paste_ImageAddress</option>
+                  </select>
+                </div>
+                <div className="banner_type">
+                  <label htmlFor="Banner">
+                    Company Banner 
+                  </label>
+                  <select name="BannerType"
+                    onChange={formik.handleChange}
+                    value={formik.values.BannerType}>
+                    <option  value="ImageUpload">ImageUpload</option>
+                    <option value="Paste_ImageAddress">Paste_ImageAddress</option>
+                  </select>
+                </div>
               </div>
-              <div className="second">
-                <label htmlFor="Banner">
-                  Company Banner <sup>*</sup>
+
+              <div className="images">
+
+                {/* LogoType */}
+                {formik.values.ProfileType == 'ImageUpload' ?
+                    <div className="first">
+                    <label htmlFor="Logo">
+                      <img
+                        src={
+                          Profile != undefined
+                            ? Profile
+                            : "https://img.freepik.com/free-photo/3d-render-little-boy-with-eyeglasses-blue-shirt_1142-50994.jpg?t=st=1716040955~exp=1716044555~hmac=605273d0e1789be0644e11ceb509699fc6908463eed64554ad5184feb50cc3fa&w=740"
+                        }
+                        className="Profile"
+                        alt="Logo"
+                      />
+                      {/* <i className="bx bxs-edit"></i> */}
+                    </label>
+                    <small>Allowed file types: png, jpg, jpeg.</small>
+                    <input
+                      // onChange={onUploadProfile}
+  
+                      name="Profile"
+                      id="Profile"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoChange}
+                      // onBlur={formik.handleBlur}
+                    />
+                    <div className="profile_error">{formik.errors.Profile}</div>
+                  </div>
+                :
+                <div className="form_group">
+                <label htmlFor="VCardName">
+                  Logo Imagess Address
                 </label>
-                <label htmlFor="Company_Banner">
-                  <img
-                    src={
-                      Banner != null
-                        ? Banner
-                        : "https://img.freepik.com/free-photo/cement-wall-floor-copy-space_53876-30237.jpg?t=st=1716040667~exp=1716044267~hmac=37c1f0faf9137d781a0aa0d1436b486b6e0a620fec789a836ab08533c16cbeeb&w=826"
-                    }
-                    className="Banner"
-                    alt="Banner"
-                  />
-                  <i className="bx bxs-edit"></i>
-                </label>
-                <small>Allowed file types: png, jpg, jpeg.</small>
                 <input
-                  type="file"
-                  name="Banner"
-                  id="Banner"
-                  accept="image/*"
-                  onChange={handleBannerChange}
+                  type="text"
+                  placeholder="Paste Your Image Address!"
+                  name="ProfileAddress"
+                  id="ProfileAddress"
                   onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.ProfileAddress}
+                  className={
+                    formik.errors.ProfileAddress && formik.touched.ProfileAddress
+                      ? "input_error"
+                      : "input_success"
+                  }
                 />
-                <div className="banner_error">{formik.errors.Banner}</div>
+                <div className="error">{formik.errors.ProfileAddress}</div>
+              </div>
+                }
+            {/* //Banner Type */}
+            {formik.values.BannerType == 'ImageUpload' ? 
+                  <div className="second">
+                  <label htmlFor="Company_Banner">
+                    <img
+                      src={
+                        Banner != null
+                          ? Banner
+                          : "https://img.freepik.com/free-photo/cement-wall-floor-copy-space_53876-30237.jpg?t=st=1716040667~exp=1716044267~hmac=37c1f0faf9137d781a0aa0d1436b486b6e0a620fec789a836ab08533c16cbeeb&w=826"
+                      }
+                      className="Banner"
+                      alt="Banner"
+                    />
+                    {/* <i className="bx bxs-edit"></i> */}
+                  </label>
+                  <small>Allowed file types: png, jpg, jpeg.</small>
+                  <input
+                    type="file"
+                    name="Banner"
+                    id="Banner"
+                    accept="image/*"
+                    onChange={handleBannerChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  <div className="banner_error">{formik.errors.Banner}</div>
+                </div>
+            : 
+            <div className="form_group">
+            <label htmlFor="VCardName">
+              Banner Imagess Address
+            </label>
+            <input
+              type="text"
+              placeholder="Paste Your Banner Address!"
+              name="BannerAddress"
+              id="BannerAddress"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.BannerAddress}
+              className={
+                formik.errors.BannerAddress && formik.touched.BannerAddress
+                  ? "input_error"
+                  : "input_success"
+              }
+            />
+            <div className="error">{formik.errors.BannerAddress}</div>
+          </div>
+            }
+          
               </div>
             </div>
 

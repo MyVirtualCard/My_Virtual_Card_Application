@@ -207,7 +207,7 @@ width: 100%;
     }
     .profile_error,.banner_error{
       position: absolute;
-      bottom: -12%;
+      bottom: -3%;
       
       color: red;
       font-size: 0.7rem;
@@ -265,101 +265,168 @@ width: 100%;
             
             }
           }
-       
+       .editor{
+        grid-column: span 1;
+       }
           .double_col_inputs {
             display: flex;
-            flex-direction: row !important;
-            align-items: flex-start;
-            justify-content: space-between;
-            .first {
-              flex: 0.5;
+            flex-direction: column !important;
+          
+            width: 100%;
+            height: 100%;
+         
+            align-items: center;
+            justify-content: flex-start;
+
+            .image_upload_type{
               display: flex;
-              flex-direction: column;
-              align-items: flex-start;
+              align-items: center;
               justify-content: space-between;
-              gap: 8px;
-              label {
-                font-size: 0.8rem;
-                font-weight: 500;
-                color: rgb(34, 34, 34) !important;
-                position: relative;
             
-    
-                width: 100%;
-                sup {
-                  color: red;
-                  font-weight: bold;
-                  margin-left: 3px;
+              width: 100%;
+
+              .logo_type{
+width: 50%;
+
+                select{
+                  outline: none;
+                  font-size: 0.8rem;
+                  font-weight: 500;
+                  color: royalblue;
+                  border: 1px solid gray;
+                border-radius: 5px;
+
+                option{
+                  font-weight: 500;
+                  color: rgb(83, 83, 83);
                 }
-    
-                .Profile {
-                  width: 90px;
-                  height: 90px;
-                  object-fit: cover;
-                  object-position: center;
-                  border-radius: 1rem;
-                  border: 2px solid rgb(94, 94, 94);
-                  position: relative;
-                  // cursor: pointer;
                 }
-                i{
-                  position: absolute;
-                  font-size: 1.5rem;
-                  color: #6571FE;
-                  left: 40%;
-                  top: -10%;
-                }
+
               }
-              small {
-                font-size: 0.7rem;
-                color: gray;
-                font-weight: 500;
+              .banner_type{
+width: 50%;
+// display: flex;
+// flex-direction: column;
+// align-items: center;
+
+                select{
+                  outline: none;
+                  font-size: 0.8rem;
+                  font-weight: 500;
+                  color: royalblue;
+                  border: 1px solid gray;
+                border-radius: 5px;
+
+                option{
+                  font-weight: 500;
+                  color: rgb(83, 83, 83);
+                }
+                }
+
               }
             }
-    
-            .second {
-              flex: 0.5;
+            .images{
               display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              justify-content: space-between;
+              align-items: center;
+              width: 100%;
               gap: 10px;
-              label {
-                font-size: 0.8rem;
-                font-weight: 500;
-                color: rgb(34, 34, 34) !important;
-                width: 100%;
-                position: relative;
-                sup {
-                  color: red;
-                  font-weight: bold;
-                  margin-left: 3px;
-                }
-    
-                .Banner {
-                  width: 150px;
-                  height: 90px;
-                  object-fit: cover;
-                  object-position: center;
-                  border-radius: 10px;
-                  border: 2px solid rgb(161, 161, 161);
+              justify-content: space-between;
+              .first {
+           
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 8px;
+                label {
+                  font-size: 0.8rem;
+                  font-weight: 500;
+                  color: rgb(34, 34, 34) !important;
                   position: relative;
-                  // cursor: pointer;
+              
+      
+                  width: 100%;
+                  sup {
+                    color: red;
+                    font-weight: bold;
+                    margin-left: 3px;
+                  }
+      
+                  .Profile {
+                    width: 90px;
+                    height: 90px;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 1rem;
+                    border: 2px solid rgb(94, 94, 94);
+                    position: relative;
+                    // cursor: pointer;
+                  }
+                  i{
+                    position: absolute;
+                    font-size: 1.5rem;
+                    color: #6571FE;
+                    left: 40%;
+                    top: -10%;
+                  }
                 }
-                i{
-                  position: absolute;
-                  font-size: 1.5rem;
-                  color: #6571FE;
-                  right: 20%;
-                  top: -13%;
+                small {
+                  font-size: 0.7rem;
+                  color: gray;
+                  font-weight: 500;
                 }
               }
-              small {
-                font-size: 0.7rem;
-                color: gray;
-                font-weight: 500;
+      
+              .second {
+               width: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items:center;
+                justify-content: space-between;
+              
+                gap: 10px;
+                label {
+                  font-size: 0.8rem;
+                  font-weight: 500;
+                  color: rgb(34, 34, 34) !important;
+                  width: 100%;
+                  position: relative;
+                  display: flex;
+                  align-items: center;
+                  justify-content: flex-start;
+                  sup {
+                    color: red;
+                    font-weight: bold;
+                    margin-left: 3px;
+                  }
+      
+                  .Banner {
+                    width: 150px;
+                    height: 90px;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 10px;
+                    border: 2px solid rgb(161, 161, 161);
+                    position: relative;
+                    // cursor: pointer;
+                  }
+                  i{
+                    position: absolute;
+                    font-size: 1.5rem;
+                    color: #6571FE;
+                    right: 20%;
+                    top: -13%;
+                  }
+                }
+                small {
+                  font-size: 0.7rem;
+                  color: gray;
+                  font-weight: 500;
+                }
               }
             }
+
           }
           .form2_title {
             width: 100%;
@@ -401,9 +468,9 @@ width: 100%;
               }
             }
     
-            input[type="text"],
-            input[type="email"],
-            input[type="tel"] {
+            input[type=text],
+            input[type=email],
+            input[type=tel] {
               padding: 8px 1rem;
               width: 100%;
               outline: none;
@@ -445,8 +512,8 @@ width: 100%;
             }
             input[type=file] {
               display: block;
-              width: 150px;
-              font-size: 0.6rem;
+              width: 200px;
+              font-size: 0.7rem;
               cursor: pointer;
             }
           }
@@ -468,7 +535,7 @@ width: 100%;
                 height: 100%;
             
               }
-              input[type="checkbox"]{
+              input[type=checkbox]{
                 width: 20px;
                 height: 20px;
                 // -webkit-appearance: none;

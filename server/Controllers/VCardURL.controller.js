@@ -38,8 +38,8 @@ export const postVCardURLData = async (req, res) => {
   if (
     !req.body.URL_Alies ||
     !req.body.VCardName ||
-    !req.body.Profile ||
-    !req.body.Banner ||
+    // !req.body.Profile ||
+    // !req.body.Banner ||
     !req.body.Description
   ) {
     return res.status(401).json({ message: "All * fields Required" });
@@ -64,6 +64,8 @@ export const postVCardURLData = async (req, res) => {
       Description: req.body.Description,
       Profile: req.body.Profile,
       Banner: req.body.Banner,
+      ProfileAddress:req.body.ProfileAddress,
+      BannerAddress:req.body.BannerAddress
     };
     let createDatas = new Vcard_URL(data);
     try {

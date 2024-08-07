@@ -22,25 +22,7 @@ export const GetProductData = async (req, res) => {
   }
 }
 //Post basic detail data to database:
-export const PostProductData =  (req, res) => {
-  productUpload(req, res, async (err) => {
-    if (err instanceof multer.MulterError) {
-      if (err.code === "LIMIT_FILE_SIZE") {
-        return res
-          .status(400)
-          .json({ message: "File size too large. Maximum limit is 2MB." });
-      }
-      return res.status(400).json({ message: err.message });
-    } else if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      res.status(400).json({ message: err });
-    } else {
-      if (!req.body.ProductImage) {
-        return res.status(400).json({ message: "No file choosen!" });
-      }
-
+export const PostProductData =  async(req, res) => {
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
@@ -84,6 +66,8 @@ export const PostProductData =  (req, res) => {
                   ProductDescription: req.body.ProductDescription,
                   ProductImage:req.body.ProductImage,
                   ProductURL: req.body.ProductURL,
+                  ProductType: req.body.ProductType,
+                  ProductImageLink:req.body.ProductImageLink,
                   ProductPrice: req.body.ProductPrice,
                   // ProductImage: {
                   //   data: fs.readFileSync("uploads/" + req.file.filename),
@@ -125,7 +109,8 @@ export const PostProductData =  (req, res) => {
                   URL_Alies:req.body.URL_Alies,
                   ProductName: req.body.ProductName,
                   ProductDescription: req.body.ProductDescription,
-
+                  ProductType: req.body.ProductType,
+                  ProductImageLink:req.body.ProductImageLink,
                   ProductURL: req.body.ProductURL,
                   ProductPrice: req.body.ProductPrice,
                   ProductImage:req.body.ProductImage
@@ -191,8 +176,8 @@ export const PostProductData =  (req, res) => {
           res.status(400).json({ message: "Plan not match!", error: err });
         }
       }
-    }
-  });
+  
+
 };
 
 ;
@@ -282,6 +267,8 @@ export const updateSpecificUserData = async (req, res) => {
               URL_Alies:req.body.URL_Alies,
               ProductName:req.body.ProductName,
               ProductURL:req.body.ProductURL,
+              ProductType: req.body.ProductType,
+              ProductImageLink:req.body.ProductImageLink,
               ProductPrice:req.body.ProductPrice,
               ProductDescription:req.body.ProductDescription
             };
@@ -305,23 +292,6 @@ export const updateSpecificUserData = async (req, res) => {
   });
  
 };
-// export const updateSpecificUserData = async (req, res) => {
-//   try {
-//     let { id } = req.params;
-//     let data = req.body;
-//     let updateSpecificData = await ProductModel.findByIdAndUpdate(id, data);
-
-//     if (!updateSpecificData) {
-//       res.status(400).json({ message: "Data Not Found!" });
-//     } else {
-//       res
-//         .status(201)
-//         .json({ message: "Data Updated!", data: updateSpecificData });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:
 export const deleteSpecificUserAllData = async (req, res) => {

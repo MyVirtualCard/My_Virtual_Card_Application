@@ -5,7 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import Context from "../../../../UseContext/Context";
-import { SocialMediaValidate } from "../../../../Helper/SocialMediaValidate";
+import {  SocialMediaValidateSchema } from "../../../../Helper/SocialMediaValidate";
 const SocialMedias = () => {
   let { URL_Alies } = useParams();
   let { FormSubmitLoader, setFormSubmitLoader, userName } =
@@ -103,10 +103,49 @@ const SocialMedias = () => {
   }
 
   //Save Function
-  async function handleFormSave(e) {
-    e.preventDefault();
-    let data = {
-      URL_Alies,
+  // async function handleFormSave(e) {
+  //   e.preventDefault();
+  //   let data = {
+  //     URL_Alies,
+  //     Facebook,
+  //     LinkedIn,
+  //     WhatsUp,
+  //     Instagram,
+  //     Twiter,
+  //     Website,
+  //     YouTube,
+  //     Github,
+  //   };
+  //   setFormSubmitLoader(true);
+  //   try {
+  //     api
+  //       .post(
+  //         `/socialMediaDetail/${URL_Alies}`,
+  //         data,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${localStorageDatas.token}`,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         console.log(res)
+  //         toast.success(res.data.message);
+  //         setFormSubmitLoader(false);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error)
+  //         toast.error(error.response.data.message);
+  //         setFormSubmitLoader(false);
+  //       });
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
+  let formik = useFormik({
+    initialValues: {
+      URL_Alies:URL_Alies,
       Facebook,
       LinkedIn,
       WhatsUp,
@@ -115,34 +154,33 @@ const SocialMedias = () => {
       Website,
       YouTube,
       Github,
-    };
-    setFormSubmitLoader(true);
-    try {
-      api
-        .post(
-          `/socialMediaDetail/${URL_Alies}`,
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+    },
+
+    validationSchema: SocialMediaValidateSchema,
+
+    onSubmit: async (values) => {
+      console.log(values)
+      setFormSubmitLoader(true);
+      await api
+        .post(`/socialMediaDetail/${URL_Alies}`, values, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
-          console.log(res)
           toast.success(res.data.message);
+
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          console.log(error)
           toast.error(error.response.data.message);
+          console.log(error);
           setFormSubmitLoader(false);
         });
-    } catch (error) {
-      toast.error(error.message);
-    }
-  }
+    },
+  });
+  console.log(UpdateToggle)
   return (
     <>
       <div className="socialmedia_component">
@@ -158,16 +196,18 @@ const SocialMedias = () => {
           </div>
         </div>
         <div className="all_socialmedias">
-          <form action="" onSubmit={UpdateToggle ? handleFormUpdate : handleFormSave}>
+          <form action="" onSubmit={UpdateToggle ? handleFormUpdate : formik.handleSubmit}>
             <div className="form_group ">
               <label htmlFor="Facebook">
                 <i className="bx bxl-facebook-square"></i>
               </label>
               <input
                 type="text"
+                   name="Facebook"
+                id="Facebook"
                 placeholder="https://www.facebook.com/"
-                value={Facebook}
-                onChange={(e) => setFacebook(e.target.value)}
+                value={UpdateToggle ? Facebook : formik.values.Facebook}
+                onChange={UpdateToggle ?(e) => setFacebook(e.target.value) : formik.handleChange  }
               />
             </div>
             <div className="form_group">
@@ -178,9 +218,18 @@ const SocialMedias = () => {
               <input
                 type="tel"
                 placeholder="+91 ..........."
-                value={WhatsUp}
-                onChange={(e) => setWhatsUp(e.target.value)}
+                name="WhatsUp"
+                id="WhatsUp"
+                onBlur={formik.handleBlur}
+                value={UpdateToggle ? WhatsUp : formik.values.WhatsUp}
+                onChange={UpdateToggle ? (e) => setWhatsUp(e.target.value) : formik.handleChange  }
+                className={
+                  formik.errors.WhatsUp && formik.touched.WhatsUp
+                    ? "input_error"
+                    : "input_success"
+                }
               />
+                    <div className="error">{formik.errors.WhatsUp}</div>
             </div>
             <div className="form_group">
               <label htmlFor="Instagram">
@@ -188,9 +237,13 @@ const SocialMedias = () => {
               </label>
               <input
                 type="text"
+                     name="Instagram"
+                id="Instagram"
                 placeholder="https://www.instagram.com/"
-                value={Instagram}
-                onChange={(e) => setInstagram(e.target.value)}
+                value={UpdateToggle ? Instagram : formik.values.Instagram}
+               
+                onChange={UpdateToggle ?(e) => setInstagram(e.target.value) : formik.handleChange  }
+               
               />
             </div>
             <div className="form_group">
@@ -199,9 +252,12 @@ const SocialMedias = () => {
               </label>
               <input
                 type="text"
+                             name="LinkedIn"
+                id="LinkedIn"
                 placeholder="https://www.linkedin.com/"
-                value={LinkedIn}
-                onChange={(e) => setLinkedIn(e.target.value)}
+                value={UpdateToggle ? LinkedIn : formik.values.LinkedIn}
+         
+                onChange={UpdateToggle ?(e) => setLinkedIn(e.target.value) : formik.handleChange  }
               />
             </div>
             <div className="form_group">
@@ -210,9 +266,12 @@ const SocialMedias = () => {
               </label>
               <input
                 type="text"
+                              name="Twiter"
+                id="Twiter"
                 placeholder="https://www.twiter.com/"
-                value={Twiter}
-                onChange={(e) => setTwiter(e.target.value)}
+                value={UpdateToggle ? Twiter : formik.values.Twiter}
+          
+                onChange={UpdateToggle ?(e) => setTwiter(e.target.value) : formik.handleChange  }
               />
             </div>
             <div className="form_group">
@@ -221,9 +280,12 @@ const SocialMedias = () => {
               </label>
               <input
                 type="text"
+                                 name="Github"
+                id="Github"
                 placeholder="https://www.github.com/"
-                value={Github}
-                onChange={(e) => setGithub(e.target.value)}
+                value={UpdateToggle ? Github : formik.values.Github}
+               
+                onChange={UpdateToggle ?(e) => setGithub(e.target.value) : formik.handleChange  }
               />
             </div>
             <div className="form_group">
@@ -232,9 +294,12 @@ const SocialMedias = () => {
               </label>
               <input
                 type="text"
+                                 name="YouTube"
+                id="YouTube"
                 placeholder="https://www.youtube.com/"
-                value={YouTube}
-                onChange={(e) => setYouTube(e.target.value)}
+                value={UpdateToggle ? YouTube : formik.values.YouTube}
+           
+                onChange={UpdateToggle ?(e) => setYouTube(e.target.value) : formik.handleChange  }
               />
             </div>
             <div className="form_group">
@@ -244,8 +309,9 @@ const SocialMedias = () => {
               <input
                 type="text"
                 placeholder="Your website link"
-                value={Website}
-                onChange={(e) => setWebsite(e.target.value)}
+                value={UpdateToggle ? Website : formik.values.Website}
+           
+                onChange={UpdateToggle ?(e) => setWebsite(e.target.value) : formik.handleChange  }
               />
             </div>
             <div className="form_submit_actions">

@@ -7,10 +7,13 @@ import Payment from "../Models/Payment.model.js";
 
 export const GetServiceData = async (req, res) => {
   try {
-    let datas = await ServiceModel.find({  URL_Alies: req.params.URL_Alies});
+    let datas = await ServiceModel.find({ URL_Alies: req.params.URL_Alies });
     if (!datas) {
-      res.status(400).json({ message: "Data not found!" ,  length: datas.length,
-        data: datas});
+      res.status(400).json({
+        message: "Data not found!",
+        length: datas.length,
+        data: datas,
+      });
     } else {
       res.status(201).json({
         message: "Data Fetched!",
@@ -23,209 +26,187 @@ export const GetServiceData = async (req, res) => {
   }
 };
 //Post basic detail data to database:
-export const PostServiceData = (req, res) => {
-  serviceUpload(req, res, async (err) => {
-    if (err instanceof multer.MulterError) {
-      if (err.code === "LIMIT_FILE_SIZE") {
-        return res
-          .status(400)
-          .json({
-            message: "Image File size too large. Maximum limit is 2MB.",
-          });
-      }
-      return res.status(400).json({ message: err.message });
-    } else if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      res.status(400).json({ message: err });
-    } else {
-      if (!req.body.ServiceImage) {
-        return res.status(400).json({ message: "No file choosen!" });
-      }
+export const PostServiceData = async (req, res) => {
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
+  });
 
-      let checkCurrentPlan = await Payment.find({
-       user:req.user.userName
+  if (!checkCurrentPlan) {
+    return res.status(400).json({ message: "Plan not be there!", error: err });
+  }
+  if (checkCurrentPlan.length <= 0) {
+    return res
+      .status(400)
+      .json({ message: "Choose your Plan first!", error: err });
+  } else {
+    //Plan 2 and 3
+    if (
+      checkCurrentPlan[0].amount === 10 ||
+      checkCurrentPlan[0].amount === 599 ||
+      checkCurrentPlan[0].amount === 899 ||
+      checkCurrentPlan[0].amount === 1299
+    ) {
+      //check images
+      let checkServiceLength = await ServiceModel.find({
+        URL_Alies: req.params.URL_Alies,
       });
 
-      if (!checkCurrentPlan) {
+      if (!checkServiceLength) {
         return res
           .status(400)
-          .json({ message: "Plan not be there!", error: err });
-      }
-      if (checkCurrentPlan.length <= 0) {
-        return res
-          .status(400)
-          .json({ message: "Choose your Plan first!", error: err });
+          .json({ message: "Service  not be there!", error: err });
       } else {
-        //Plan 2 and 3
-        if (
-          checkCurrentPlan[0].amount === 10 ||
-          checkCurrentPlan[0].amount === 599 ||
-          checkCurrentPlan[0].amount === 899 ||
-          checkCurrentPlan[0].amount === 1299
-        ) {
-          //check images
-          let checkServiceLength = await ServiceModel.find({
-            URL_Alies:req.params.URL_Alies
-          });
+        if (checkCurrentPlan[0].amount === 1299) {
+          //Basic Image File limit checked:
+          if (checkServiceLength.length < 8) {
+            // Create a new image instance and save to MongoDB
+            const newService = new ServiceModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ServiceName: req.body.ServiceName,
+              ServiceDescription: req.body.ServiceDescription,
+              ServiceURL: req.body.ServiceURL,
+              ServiceType: req.body.ServiceType,
+              ServiceIcon:req.body.ServiceIcon,
+              ServiceImage: req.body.ServiceImage,
+            });
 
-          if (!checkServiceLength) {
-            return res
-              .status(400)
-              .json({ message: "Service  not be there!", error: err });
-          } else {
-            if (checkCurrentPlan[0].amount === 1299) {
-              //Basic Image File limit checked:
-              if (checkServiceLength.length < 8) {
-                // Create a new image instance and save to MongoDB
-                const newService = new ServiceModel({
-                  user: req.user.userName,
-                  URL_Alies:req.body.URL_Alies,
-                  ServiceName: req.body.ServiceName,
-                  ServiceDescription: req.body.ServiceDescription,
-                  ServiceURL: req.body.ServiceURL,
-                  ServiceImage:req.body.ServiceImage
-                });
-
-                await newService
-                  .save()
-                  .then(() => {
-                    res.status(200).json({
-                      message: "Service uploaded!",
-                      data: newService,
-                    });
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    res.status(400).json({
-                      message: "Failed to save Service to database!",
-                    });
-                  });
-              } else {
-                res.status(400).json({
-                  message:
-                    "Max Service limit crossed..Enterprice plan Only accept 8  Service Details! ",
-                });
-              }
-            }
-            if (checkCurrentPlan[0].amount === 899) {
-              //Basic Image File limit checked:
-              if (checkServiceLength.length < 6) {
-                // Create a new image instance and save to MongoDB
-                const newService = new ServiceModel({
-                  user: req.user.userName,
-                  URL_Alies:req.body.URL_Alies,
-                  ServiceName: req.body.ServiceName,
-                  ServiceDescription: req.body.ServiceDescription,
-
-                  ServiceURL: req.body.ServiceURL,
-                  ServiceImage:req.body.ServiceImage
-                  // ServiceImage: {
-                  //   data: fs.readFileSync("uploads/" + req.file.filename),
-                  //   contentType: req.file.mimetype,
-                  // },
-                });
-
-                await newService
-                  .save()
-                  .then(() => {
-                    res.status(200).json({
-                      message: "Service uploaded!",
-                      data: newService,
-                    });
-                  })
-                  .catch((err) => {
-                    console.log(err.message);
-                    res.status(400).json({
-                      message: "Failed to save Service to database!",
-                    });
-                  });
-              } else {
-                res.status(400).json({
-                  message:
-                    "Max Service limit crossed..Standard plan Only accept 6  Service Details! ",
-                });
-              }
-            }
-
-            if (checkCurrentPlan[0].amount === 599) {
-              if (checkServiceLength.length < 4) {
-                // Create a new image instance and save to MongoDB
-                const newService = new ServiceModel({
-                  user: req.user.userName,
-                  URL_Alies:req.body.URL_Alies,
-                  ServiceName: req.body.ServiceName,
-                  ServiceDescription: req.body.ServiceDescription,
-
-                  ServiceURL: req.body.ServiceURL,
-                  ServiceImage:req.body.ServiceImage
-                  // ServiceImage: {
-                  //   data: fs.readFileSync("uploads/" + req.file.filename),
-                  //   contentType: req.file.mimetype,
-                  // },
-                });
-
-                await newService
-                  .save()
-                  .then(() => {
-                    res.status(200).json({
-                      message: "Service uploaded!",
-                      data: newService,
-                    });
-                  })
-                  .catch((err) => {
-                    console.log(err.message);
-                    res.status(400).json({
-                      message: "Failed to save Service to database!",
-                    });
-                  });
-              } else {
-                res.status(400).json({
-                  message:
-                    "Max Service limit crossed..Basic plan Only accept 4  Service Details! ",
-                });
-              }
-            }
-            if (checkCurrentPlan[0].amount === 10) {
-              //Basic Image File limit checked:
-              if (checkServiceLength.length < 0) {
-                res.status(400).json({
-                  message: "Service Access denied for Demo Plan!",
+            await newService
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Service uploaded!",
                   data: newService,
                 });
-              } else {
+              })
+              .catch((err) => {
+                console.log(err.message);
                 res.status(400).json({
-                  message: "Service Access denied for Demo Plan!",
+                  message: "Failed to save Service to database!",
                 });
-              }
-            }
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max Service limit crossed..Enterprice plan Only accept 8  Service Details! ",
+            });
           }
-        } else {
-          res.status(400).json({ message: "Plan not match!", error: err });
+        }
+        if (checkCurrentPlan[0].amount === 899) {
+          //Basic Image File limit checked:
+          if (checkServiceLength.length < 6) {
+            // Create a new image instance and save to MongoDB
+            const newService = new ServiceModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ServiceName: req.body.ServiceName,
+              ServiceDescription: req.body.ServiceDescription,
+              ServiceType: req.body.ServiceType,
+              ServiceURL: req.body.ServiceURL,
+              ServiceIcon:req.body.ServiceIcon,
+              ServiceImage: req.body.ServiceImage,
+              // ServiceImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
+            });
+
+            await newService
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Service uploaded!",
+                  data: newService,
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+                res.status(400).json({
+                  message: "Failed to save Service to database!",
+                });
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max Service limit crossed..Standard plan Only accept 6  Service Details! ",
+            });
+          }
+        }
+
+        if (checkCurrentPlan[0].amount === 599) {
+          if (checkServiceLength.length < 4) {
+            // Create a new image instance and save to MongoDB
+            const newService = new ServiceModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ServiceName: req.body.ServiceName,
+              ServiceDescription: req.body.ServiceDescription,
+              ServiceType: req.body.ServiceType,
+              ServiceURL: req.body.ServiceURL,
+              ServiceIcon:req.body.ServiceIcon,
+              ServiceImage: req.body.ServiceImage,
+              // ServiceImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
+            });
+
+            await newService
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Service uploaded!",
+                  data: newService,
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+                res.status(400).json({
+                  message: "Failed to save Service to database!",
+                });
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max Service limit crossed..Basic plan Only accept 4  Service Details! ",
+            });
+          }
+        }
+        if (checkCurrentPlan[0].amount === 10) {
+          //Basic Image File limit checked:
+          if (checkServiceLength.length < 0) {
+            res.status(400).json({
+              message: "Service Access denied for Demo Plan!",
+              data: newService,
+            });
+          } else {
+            res.status(400).json({
+              message: "Service Access denied for Demo Plan!",
+            });
+          }
         }
       }
+    } else {
+      res.status(400).json({ message: "Plan not match!", error: err });
     }
-  });
+  }
 };
-
-
 
 //   // //Read or get Specific User all Data  :
 export const getSpecificUserAllData = async (req, res) => {
   try {
-    let getSpecificData = await ServiceModel.find({    URL_Alies:req.params.URL_Alies });
+    let getSpecificData = await ServiceModel.find({
+      URL_Alies: req.params.URL_Alies,
+    });
 
     if (!getSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      res
-        .status(201)
-        .json({
-          message: "Data Fetched!",
-          length: getSpecificData.length,
-          data: getSpecificData,
-        });
+      res.status(201).json({
+        message: "Data Fetched!",
+        length: getSpecificData.length,
+        data: getSpecificData,
+      });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -249,95 +230,76 @@ export const getSpecificIdData = async (req, res) => {
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
-  serviceUpload(req, res, async (err) => {
-    if (err instanceof multer.MulterError) {
-      if (err.code === "LIMIT_FILE_SIZE") {
-        return res
-          .status(400)
-          .json({
-            message: "Image File size too large. Maximum limit is 2MB.",
-          });
-      }
-      return res.status(400).json({ message: err.message });
-    } else if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      res.status(400).json({ message: err });
-    } else {
-      if (!req.body.ServiceImage) {
-        return res.status(400).json({ message: "No file choosen!" });
-      }
-
-      let checkCurrentPlan = await Payment.find({
-        user:req.user.userName
-      });
-
-      if (!checkCurrentPlan) {
-        return res
-          .status(400)
-          .json({ message: "Plan not be there!"});
-      }
-      if (checkCurrentPlan.length != 1) {
-        return res
-          .status(400)
-          .json({ message: "Choose your Plan first!" });
-      } else {
-        //Plan 2 and 3
-        if (
-          checkCurrentPlan[0].amount === 10 ||
-          checkCurrentPlan[0].amount === 599 ||
-          checkCurrentPlan[0].amount === 899 ||
-          checkCurrentPlan[0].amount === 1299
-        ) {
-          try {
-            let { id } = req.params;
-            let data = {
-              ServiceImage:req.body.ServiceImage,
-              URL_Alies:req.body.URL_Alies,
-              ServiceName:req.body.ServiceName,
-              ServiceURL:req.body.ServiceURL,
-              ServiceDescription:req.body.ServiceDescription
-            };
-            let updateSpecificData = await ServiceModel.findByIdAndUpdate(id, data, { new: true, runValidators: true });
-        
-            if (!updateSpecificData) {
-              res.status(400).json({ message: "Data Not Found!" });
-            } else {
-              res
-                .status(201)
-                .json({ message: "Data Updated!", data: updateSpecificData });
-            }
-          } catch (error) {
-            res.status(400).json({ error: error.message, message:'Image File size too large. Maximum limit is 2MB.' });
-          }
-        } else {
-          res.status(400).json({ message: "Plan not match!"});
-        }
-      }
-    }
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
   });
- 
-};
 
+  if (!checkCurrentPlan) {
+    return res.status(400).json({ message: "Plan not be there!" });
+  }
+  if (checkCurrentPlan.length != 1) {
+    return res.status(400).json({ message: "Choose your Plan first!" });
+  } else {
+    //Plan 2 and 3
+    if (
+      checkCurrentPlan[0].amount === 10 ||
+      checkCurrentPlan[0].amount === 599 ||
+      checkCurrentPlan[0].amount === 899 ||
+      checkCurrentPlan[0].amount === 1299
+    ) {
+      try {
+        let { id } = req.params;
+        let data = {
+          ServiceImage: req.body.ServiceImage,
+          URL_Alies: req.body.URL_Alies,
+          ServiceName: req.body.ServiceName,
+          ServiceURL: req.body.ServiceURL,
+          ServiceType: req.body.ServiceType,
+          ServiceIcon:req.body.ServiceIcon,
+          ServiceDescription: req.body.ServiceDescription,
+        };
+        let updateSpecificData = await ServiceModel.findByIdAndUpdate(
+          id,
+          data,
+          { new: true, runValidators: true }
+        );
+
+        if (!updateSpecificData) {
+          res.status(400).json({ message: "Data Not Found!" });
+        } else {
+          res
+            .status(201)
+            .json({ message: "Data Updated!", data: updateSpecificData });
+        }
+      } catch (error) {
+        console.log(error.message)
+        res.status(400).json({
+       
+          error: error.message,
+          message: error.message,
+        });
+      }
+    } else {
+      res.status(400).json({ message: "Plan not match!" });
+    }
+  }
+};
 
 //Delete Specific User Bssic detail All data deleted By using user Id:
 export const deleteSpecificUserAllData = async (req, res) => {
   try {
     let deleteSpecificData = await ServiceModel.deleteMany({
-      URL_Alies:req.params.URL_Alies
+      URL_Alies: req.params.URL_Alies,
     });
 
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found" });
     } else {
-      res
-        .status(201)
-        .json({
-          message: "All Data Deleted!",
-          length: deleteSpecificData.length,
-          data: deleteSpecificData,
-        });
+      res.status(201).json({
+        message: "All Data Deleted!",
+        length: deleteSpecificData.length,
+        data: deleteSpecificData,
+      });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -363,4 +325,3 @@ export const deleteSpecificUserData = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-

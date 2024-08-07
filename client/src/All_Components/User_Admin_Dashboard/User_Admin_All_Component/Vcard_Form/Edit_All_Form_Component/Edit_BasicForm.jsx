@@ -42,7 +42,10 @@ const BasicForm = () => {
   let [QRToggleSwitch, setQRToggleSwitch] = useState(true);
   let [AppoinmentToggleSwitch, setAppoinmentToggleSwitch] = useState(false);
   let [ContactToggleSwitch, setContactToggleSwitch] = useState(true);
-
+  let [ProfileAddress, setProfileAddress] = useState();
+  let [BannerAddress, setBannerAddress] = useState();
+  let [ProfileType, setProfileType] = useState();
+  let [BannerType, setBannerType] = useState();
   let [imagePath, setImagePath] = useState(null);
   const [key, setKey] = useState(0);
 
@@ -85,7 +88,10 @@ const BasicForm = () => {
           setDescription(res.data.data.Description);
           setProfile(res.data.data.Profile);
           setBanner(res.data.data.Banner);
-
+          setProfileType(res.data.data.ProfileType);
+          setBannerType(res.data.data.BannerType);
+          setProfileAddress(res.data.data.ProfileAddress);
+          setBannerAddress(res.data.data.BannerAddress);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -144,7 +150,6 @@ const BasicForm = () => {
     fetchBasicData();
   }, [key]);
 
-  
   async function handleURLFormUpdate(e) {
     e.preventDefault();
     let data = {
@@ -153,6 +158,10 @@ const BasicForm = () => {
       Description: stripHtmlTags(Description),
       Profile,
       Banner,
+      ProfileType,
+      BannerType,
+      ProfileAddress,
+      BannerAddress,
     };
     setFormSubmitLoader(true);
     try {
@@ -254,15 +263,15 @@ const BasicForm = () => {
   }
   let formik = useFormik({
     initialValues: {
-      URL_Alies:URL_Alies,
-      FirstName:'',
-      LastName:'',
-      Email:'',
-      MobileNumber:'',
-      AlternateEmail:'',
-      AlternateMobileNumber:'',
-      Location:'',
-      Profession:'',
+      URL_Alies: URL_Alies,
+      FirstName: "",
+      LastName: "",
+      Email: "",
+      MobileNumber: "",
+      AlternateEmail: "",
+      AlternateMobileNumber: "",
+      Location: "",
+      Profession: "",
     },
 
     validationSchema: BasicDetailValidateShema,
@@ -278,7 +287,7 @@ const BasicForm = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
-      
+
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -288,6 +297,33 @@ const BasicForm = () => {
         });
     },
   });
+  const handleLogoChange = (event) => {
+    const Profile = event.currentTarget.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(Profile);
+    reader.onload = () => {
+      formik.setFieldValue("Profile", reader.result);
+      setProfile(reader.result);
+    };
+  };
+  const handleBannerChange = (event) => {
+    const Banner = event.currentTarget.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(Banner);
+    reader.onload = () => {
+      formik.setFieldValue("Banner", reader.result);
+      setBanner(reader.result);
+    };
+  };
+  // Handler function for the change event
+  const handleProfileTypeChange = (event) => {
+    setProfileType(event.target.value);
+  };
+  // Handler function for the change event
+  const handleBannerTypeChange = (event) => {
+    setBannerType(event.target.value);
+  };
+
   return (
     <>
       <div className="basicform_container">
@@ -331,7 +367,7 @@ const BasicForm = () => {
                 placeholder="Enter Short Description..!"
               />
             </div>
-            <div className="form_group double_col_inputs">
+            {/* <div className="form_group double_col_inputs">
               <div className="first">
                 <label htmlFor="Profile">
                   Company Logo <sup>*</sup>
@@ -380,8 +416,113 @@ const BasicForm = () => {
                   id="Banner"
                 />
               </div>
-            </div>
+            </div> */}
+            <div className="form_group double_col_inputs">
+              <div className="image_upload_type">
+                <div className="logo_type">
+                  <label htmlFor="Profile">Company Logo</label>
+                  <select
+                    name="ProfileType"
+                    onChange={handleProfileTypeChange}
+                    value={ProfileType}
+                  >
+                    <option>ImageUpload</option>
+                    <option>Paste_ImageAddress</option>
+                  </select>
+                </div>
+                <div className="banner_type">
+                  <label htmlFor="Banner">Company Banner</label>
+                  <select
+                    name="BannerType"
+                    onChange={handleBannerTypeChange}
+                    value={BannerType}
+                  >
+                    <option>ImageUpload</option>
+                    <option>Paste_ImageAddress</option>
+                  </select>
+                </div>
+              </div>
 
+              <div className="images">
+                {/* LogoType */}
+                {ProfileType == "ImageUpload" ? (
+                  <div className="first">
+                    <label htmlFor="Logo">
+                      <img
+                        src={
+                          Profile != undefined
+                            ? Profile
+                            : "https://img.freepik.com/free-photo/3d-render-little-boy-with-eyeglasses-blue-shirt_1142-50994.jpg?t=st=1716040955~exp=1716044555~hmac=605273d0e1789be0644e11ceb509699fc6908463eed64554ad5184feb50cc3fa&w=740"
+                        }
+                        className="Profile"
+                        alt="Logo"
+                      />
+                      {/* <i className="bx bxs-edit"></i> */}
+                    </label>
+                    <small>Allowed file types: png, jpg, jpeg.</small>
+                    <input
+                      // onChange={onUploadProfile}
+
+                      name="Profile"
+                      id="Profile"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoChange}
+                      // onBlur={formik.handleBlur}
+                    />
+                  </div>
+                ) : (
+                  <div className="form_group url_link_input_group">
+                    <label htmlFor="VCardName">Paste Logo Image Address</label>
+                    <input
+                      type="text"
+                      placeholder="Paste Your Image Address!"
+                      name="ProfileAddress"
+                      id="ProfileAddress"
+                      value={ProfileAddress}
+                      onChange={(e) => setProfileAddress(e.target.value)}
+                    />
+                  </div>
+                )}
+                {/* //Banner Type */}
+                {BannerType == "ImageUpload" ? (
+                  <div className="second">
+                    <label htmlFor="Company_Banner">
+                      <img
+                        src={
+                          Banner != null
+                            ? Banner
+                            : "https://img.freepik.com/free-photo/cement-wall-floor-copy-space_53876-30237.jpg?t=st=1716040667~exp=1716044267~hmac=37c1f0faf9137d781a0aa0d1436b486b6e0a620fec789a836ab08533c16cbeeb&w=826"
+                        }
+                        className="Banner"
+                        alt="Banner"
+                      />
+                      {/* <i className="bx bxs-edit"></i> */}
+                    </label>
+                    <small>Allowed file types: png, jpg, jpeg.</small>
+                    <input
+                      type="file"
+                      name="Banner"
+                      id="Banner"
+                      accept="image/*"
+                      onChange={handleBannerChange}
+                    />
+                  </div>
+                ) : (
+                  <div className="form_group url_link_input_group">
+                    <label htmlFor="VCardName">Paster Banner Image Address</label>
+                    <input
+                      type="text"
+                      placeholder="Paste Your Banner Address!"
+                      name="BannerAddress"
+                      id="BannerAddress"
+                      value={BannerAddress}
+                      onChange={(e) => setBannerAddress(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             <div className="form_submit_actions">
               <button className="save" type="submit">
                 Update
@@ -389,11 +530,9 @@ const BasicForm = () => {
             </div>
           </form>
           <form
-           
             onSubmit={
               UpdateButtonToggle ? handleBasicFormUpdate : formik.handleSubmit
             }
-
             className="Form2"
           >
             <div className="form2_title">
@@ -417,7 +556,7 @@ const BasicForm = () => {
                     : "input_success"
                 }
               />
-               <div className="error">{formik.errors.FirstName}</div>
+              <div className="error">{formik.errors.FirstName}</div>
             </div>
             <div className="form_group">
               <label htmlFor="lastName">
@@ -437,7 +576,7 @@ const BasicForm = () => {
                     : "input_success"
                 }
               />
-                 <div className="error">{formik.errors.LastName}</div>
+              <div className="error">{formik.errors.LastName}</div>
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -456,7 +595,7 @@ const BasicForm = () => {
                     : "input_success"
                 }
               />
-               <div className="error">{formik.errors.Email}</div>
+              <div className="error">{formik.errors.Email}</div>
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -475,7 +614,7 @@ const BasicForm = () => {
                     : "input_success"
                 }
               />
-                <div className="error">{formik.errors.MobileNumber}</div>
+              <div className="error">{formik.errors.MobileNumber}</div>
             </div>
             <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Email</label>
@@ -538,7 +677,7 @@ const BasicForm = () => {
                     : "input_success"
                 }
               />
-                <div className="error">{formik.errors.Profession}</div>
+              <div className="error">{formik.errors.Profession}</div>
             </div>
 
             {/* <div className="actions">
