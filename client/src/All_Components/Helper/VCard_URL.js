@@ -40,7 +40,7 @@ export let VCardURLValidateShema = Yup.object({
     .required("VCardName is required!"),
   Description: Yup.string()
     .min(15, "Min 15 letter required!")
-    .max(250, "Max 250 letter to be allowed!")
+    .max(500, "Max 500 letter to be allowed!")
     .required("Description is required!"),
   Profile: Yup.mixed()
     .notRequired()

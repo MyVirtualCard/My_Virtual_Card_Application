@@ -15,8 +15,7 @@ import { Triangle } from "react-loader-spinner";
 import { Toaster, toast } from "react-hot-toast";
 import loadingBack from "../../assets/LandingPage_image/aristostech_company_background.jpg";
 import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
-// Google Map
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+
 const Gym_Trainer = () => {
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackLoader, setFeedbackLoader] = useState(false);
@@ -271,19 +270,6 @@ const Gym_Trainer = () => {
       });
   }, [commentOpen]);
   const HtmlRenderer = ({ htmlString }) => {
-    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
-  };
-  //GoogleMap:
-  const mapContainerStyle = {
-    width: "100%",
-    height: "400px",
-  };
-
-  const center = {
-    lat: 37.7749, // Latitude
-    lng: -122.4194, // Longitude
-  };
-  const GoogleMapHtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
   return (
