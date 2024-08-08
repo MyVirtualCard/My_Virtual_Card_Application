@@ -93,6 +93,7 @@
       thead {
         tr {
           th {
+            text-align: center;
             padding: 10px;
             font-size: 0.7rem;
             font-weight: 600;
@@ -117,9 +118,13 @@
           td {
             padding: 0.5rem;
             font-size: 0.8rem;
+            text-align: center;
             font-weight: bold;
             color: rgb(105, 105, 105);
-
+i{
+  color: royalblue;
+  font-size: 2rem;
+}
             img {
               width: 90px;
               height: 60px;
@@ -379,10 +384,16 @@ color: rgb(94, 94, 94);
           }
           input[type=file] {
             display: block;
+            border: none;
             width: 100%;
-            display: block;
-            padding: 10px 0px;
-            font-size: 0.8rem;border: none;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-weight: 550;
+            outline: none;
+            color: #03796f;
+            cursor: pointer;
           }
           textarea {
             grid-column: 1/-1;

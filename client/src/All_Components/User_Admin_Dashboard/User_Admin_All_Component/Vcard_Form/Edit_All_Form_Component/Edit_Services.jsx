@@ -103,9 +103,7 @@ const Services = () => {
     onSubmit: async (values) => {
       setFormSubmitLoader(true);
       values = await Object.assign(values, {
-        ServiceImage:
-          ServiceImage ||
-          "https://img.freepik.com/premium-photo/hand-holds-icon-cancellation-symbol-cancel-icon-cross-mark-flat-red-icon-round-x-mark-cancel-button-wrong-cross-mark-rejection-declined-dark-background-banner-copy-space-place-text_150455-9901.jpg?w=900",
+        ServiceImage: ServiceImage || "",
       });
       values.ServiceDescription = stripHtmlTags(ServiceDescription);
       // const formData = new FormData();
@@ -369,12 +367,10 @@ const Services = () => {
           <table className="table rounded-3" id="example">
             <thead className="table-secondary rounded-3">
               <tr>
-                <th className="fw-bold" style={{ width: "10%" }}>
-                  IMAGE
+                <th className="fw-bold" style={{ width: "20%" }}>
+                  IMAGE OR ICON
                 </th>
-                <th className="fw-bold" style={{ width: "10%" }}>
-                  ICON
-                </th>
+
                 <th className="fw-bold" style={{ width: "20%" }}>
                   TITLE
                 </th>
@@ -396,27 +392,39 @@ const Services = () => {
                     return (
                       <tr key={index}>
                         <td className="h-100 align-middle">
-                          <img
-                            src={
-                              data.ServiceImage != "undefined"
-                                ? data.ServiceImage
-                                : `https://img.freepik.com/premium-photo/hand-holds-icon-cancellation-symbol-cancel-icon-cross-mark-flat-red-icon-round-x-mark-cancel-button-wrong-cross-mark-rejection-declined-dark-background-banner-copy-space-place-text_150455-9901.jpg?w=900`
-                            }
-                            alt="ServiceImage"
-                            name="ServiceImage"
-                          />
-                        </td>
-                        <td className="h-100 align-middle">
-                          {/* { data.  ServiceIcon != "undefined"
-                                ? data.ServiceIcon
-                                : `https://img.freepik.com/premium-photo/hand-holds-icon-cancellation-symbol-cancel-icon-cross-mark-flat-red-icon-round-x-mark-cancel-button-wrong-cross-mark-rejection-declined-dark-background-banner-copy-space-place-text_150455-9901.jpg?w=900`
-                             } */}
-                          {data.ServiceIcon.length > 0 ? (
-                            <HtmlRenderer htmlString={data.ServiceIcon} />
+                          {data.ServiceType == "ImageUpload" ? (
+                            <>
+                              {data.ServiceImage.length != 0 ? (
+                                <img
+                                  src={
+                                    data.ServiceImage != undefined
+                                      ? data.ServiceImage
+                                      : `https://img.freepik.com/premium-photo/hand-holds-icon-cancellation-symbol-cancel-icon-cross-mark-flat-red-icon-round-x-mark-cancel-button-wrong-cross-mark-rejection-declined-dark-background-banner-copy-space-place-text_150455-9901.jpg?w=900`
+                                  }
+                                  alt="ServiceImage"
+                                  name="ServiceImage"
+                                />
+                              ) : (
+                                "Null"
+                              )}
+                            </>
                           ) : (
-                            "Null"
+                            ""
+                          )}
+
+                          {data.ServiceType == "Icon_Tag" ? (
+                            <>
+                              {data.ServiceIcon.length > 0 ? (
+                                <HtmlRenderer htmlString={data.ServiceIcon} />
+                              ) : (
+                                "Null"
+                              )}
+                            </>
+                          ) : (
+                            ""
                           )}
                         </td>
+
                         <td className="h-100 align-middle">
                           {data.ServiceName}
                         </td>
@@ -725,7 +733,16 @@ const Services = () => {
                       Update
                     </button>
                   ) : (
-                    <button type="submit">Save</button>
+                    <>
+                      {formik.values.ServiceImage != null ||
+                      formik.values.ServiceIcon.length != 0 ? (
+                        <div className="save">
+                          <button type="submit">Save</button>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </>
                   )}
                 </div>
                 <div className="discard">

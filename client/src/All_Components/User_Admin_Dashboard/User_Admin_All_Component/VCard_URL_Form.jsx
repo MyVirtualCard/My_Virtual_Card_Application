@@ -81,8 +81,8 @@ const VCard_URL_Form = () => {
     onSubmit: async (values) => {
 
       values.Description = stripHtmlTags(Description);
-      values = Object.assign(values, { Profile: Profile || "https://img.freepik.com/free-vector/gradient-logo-template-with-abstract-shape_52683-14449.jpg?t=st=1723041211~exp=1723044811~hmac=baa013fc601740276f0c59eae32270220486062035a85e06c2b387a7219f60fb&w=740" });
-      values = Object.assign(values, { Banner: Banner || "https://img.freepik.com/free-vector/gradient-business-horizontal-banner_23-2149695708.jpg?t=st=1723041175~exp=1723044775~hmac=2b1a5164ec867890eb7afbf50cfe802e3add7e1fe89421619ca08be488de5fe3&w=1060" });
+      values = Object.assign(values, { Profile: Profile || "" });
+      values = Object.assign(values, { Banner: Banner || "" });
 
       setFormSubmitLoader(true);
       await api

@@ -7,7 +7,7 @@ import multer from "multer";
 //Read or get all user product data  from database:
 export const GetProductData = async (req, res) => {
   try {
-    let datas = await ProductModel.find({  URL_Alies: req.params.URL_Alies});
+    let datas = await ProductModel.find({ URL_Alies: req.params.URL_Alies });
     if (!datas) {
       res.status(400).json({ message: "Data not found!" });
     } else {
@@ -20,172 +20,159 @@ export const GetProductData = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-}
+};
 //Post basic detail data to database:
-export const PostProductData =  async(req, res) => {
-      let checkCurrentPlan = await Payment.find({
-        user: req.user.userName,
+export const PostProductData = async (req, res) => {
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
+  });
+
+  if (!checkCurrentPlan) {
+    return res.status(400).json({ message: "Plan not be there!", error: err });
+  }
+  if (checkCurrentPlan.length <= 0) {
+    return res
+      .status(400)
+      .json({ message: "Choose your Plan first!", error: err });
+  } else {
+    //Plan 2 and 3
+    if (
+      checkCurrentPlan[0].amount === 10 ||
+      checkCurrentPlan[0].amount === 599 ||
+      checkCurrentPlan[0].amount === 899 ||
+      checkCurrentPlan[0].amount === 1299
+    ) {
+      //check images
+      let checkProductLength = await ProductModel.find({
+        URL_Alies: req.params.URL_Alies,
       });
 
-      if (!checkCurrentPlan) {
+      if (!checkProductLength) {
         return res
           .status(400)
-          .json({ message: "Plan not be there!", error: err });
-      }
-      if (checkCurrentPlan.length <= 0) {
-        return res
-          .status(400)
-          .json({ message: "Choose your Plan first!", error: err });
+          .json({ message: "Product will not be there!", error: err });
       } else {
-        //Plan 2 and 3
-        if (
-          checkCurrentPlan[0].amount === 10 ||
-          checkCurrentPlan[0].amount === 599 ||
-          checkCurrentPlan[0].amount === 899 ||
-          checkCurrentPlan[0].amount === 1299
-        ) {
-          //check images
-          let checkProductLength = await ProductModel.find({
-            URL_Alies:req.params.URL_Alies
-          });
+        if (checkCurrentPlan[0].amount === 1299) {
+          //Basic Image File limit checked:
+          if (checkProductLength.length < 10) {
+            // Create a new image instance and save to MongoDB
+            const newProduct = new ProductModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ProductName: req.body.ProductName,
+              ProductDescription: req.body.ProductDescription,
+              ProductImage: req.body.ProductImage,
+              ProductURL: req.body.ProductURL,
+              ProductType: req.body.ProductType,
+              ProductImageLink: req.body.ProductImageLink,
+              ProductPrice: req.body.ProductPrice,
+              // ProductImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
+            });
 
-
-          if (!checkProductLength) {
-            return res
-              .status(400)
-              .json({ message: "Product will not be there!", error: err });
-          } else {
-            if (checkCurrentPlan[0].amount === 1299) {
-              //Basic Image File limit checked:
-              if (checkProductLength.length < 10) {
-                // Create a new image instance and save to MongoDB
-                const newProduct = new ProductModel({
-                  user: req.user.userName,
-                  URL_Alies:req.body.URL_Alies,
-                  ProductName: req.body.ProductName,
-                  ProductDescription: req.body.ProductDescription,
-                  ProductImage:req.body.ProductImage,
-                  ProductURL: req.body.ProductURL,
-                  ProductType: req.body.ProductType,
-                  ProductImageLink:req.body.ProductImageLink,
-                  ProductPrice: req.body.ProductPrice,
-                  // ProductImage: {
-                  //   data: fs.readFileSync("uploads/" + req.file.filename),
-                  //   contentType: req.file.mimetype,
-                  // },
-               
-                });
-
-               await newProduct
-                  .save()
-                  .then(() => {
-                    res.status(200).json({
-                      message: "Product uploaded!",
-                      data: newProduct,
-                    });
-                  })
-                  .catch((error) => {
-                     res.status(400).json({
-                      message: "Failed to save Product to database!",
-                      error:error.message
-                    
-                    });
-                  });
-              } else {
-                res.status(400).json({
-                  message:
-                    "Max Product Upload limit crossed..Only accept 10 Product Details! ",
-            
-                });
-              }
-            }
-            if (checkCurrentPlan[0].amount === 899
-            ) {
-              //Basic Image File limit checked:
-              if (checkProductLength.length < 5) {
-                // Create a new image instance and save to MongoDB
-                const newProduct = new ProductModel({
-                  user: req.user.userName,
-                  URL_Alies:req.body.URL_Alies,
-                  ProductName: req.body.ProductName,
-                  ProductDescription: req.body.ProductDescription,
-                  ProductType: req.body.ProductType,
-                  ProductImageLink:req.body.ProductImageLink,
-                  ProductURL: req.body.ProductURL,
-                  ProductPrice: req.body.ProductPrice,
-                  ProductImage:req.body.ProductImage
-                  // ProductImage: {
-                  //   data: fs.readFileSync("uploads/" + req.file.filename),
-                  //   contentType: req.file.mimetype,
-                  // },
-                });
-
-                await newProduct
-                  .save()
-                  .then(() => {
-                    res.status(200).json({
-                      message: "Product uploaded!",
-                      data: newProduct,
-                    });
-                  })
-                  .catch((err) => {
-                    console.log(err.message)
-                    res.status(400).json({
-                      message: "Failed to save product to database!",
-                 
-                    });
-                  });
-              } else {
-                res.status(400).json({
-                  message:
-                    "Max Product Upload limit crossed..Only accept 5 Product Details! ",
-                 
-                });
-              }
-            }
-            if (checkCurrentPlan[0].amount === 10) {
-              //Basic Image File limit checked:
-              if (checkProductLength.length < 0) {
-                res.status(400).json({
-                  message: "Product Access denied for Demo Plan!",
-                  data: newProduct,
-                });
-              } else {
-                res.status(400).json({
-                  message: "Product Access denied for Demo Plan!",
-             
-                });
-              }
-            }
-            if (checkCurrentPlan[0].amount === 599) {
-              //Basic Image File limit checked:
-              if (checkProductLength.length < 0) {
+            await newProduct
+              .save()
+              .then(() => {
                 res.status(200).json({
-                  message: "Product Access denied for Basic Plan!",
+                  message: "Product uploaded!",
                   data: newProduct,
                 });
-              } else {
+              })
+              .catch((error) => {
                 res.status(400).json({
-                  message: "Product Access denied for Basic Plan!",
-                
+                  message: "Failed to save Product to database!",
+                  error: error.message,
                 });
-              }
-            }
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max Product Upload limit crossed..Only accept 10 Product Details! ",
+            });
           }
-        } else {
-          res.status(400).json({ message: "Plan not match!", error: err });
+        }
+        if (checkCurrentPlan[0].amount === 899) {
+          //Basic Image File limit checked:
+          if (checkProductLength.length < 5) {
+            // Create a new image instance and save to MongoDB
+            const newProduct = new ProductModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ProductName: req.body.ProductName,
+              ProductDescription: req.body.ProductDescription,
+              ProductType: req.body.ProductType,
+              ProductImageLink: req.body.ProductImageLink,
+              ProductURL: req.body.ProductURL,
+              ProductPrice: req.body.ProductPrice,
+              ProductImage: req.body.ProductImage,
+              // ProductImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
+            });
+
+            await newProduct
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Product uploaded!",
+                  data: newProduct,
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+                res.status(400).json({
+                  message: "Failed to save product to database!",
+                });
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max Product Upload limit crossed..Only accept 5 Product Details! ",
+            });
+          }
+        }
+        if (checkCurrentPlan[0].amount === 10) {
+          //Basic Image File limit checked:
+          if (checkProductLength.length < 0) {
+            res.status(400).json({
+              message: "Product Access denied for Demo Plan!",
+              data: newProduct,
+            });
+          } else {
+            res.status(400).json({
+              message: "Product Access denied for Demo Plan!",
+            });
+          }
+        }
+        if (checkCurrentPlan[0].amount === 599) {
+          //Basic Image File limit checked:
+          if (checkProductLength.length < 0) {
+            res.status(200).json({
+              message: "Product Access denied for Basic Plan!",
+              data: newProduct,
+            });
+          } else {
+            res.status(400).json({
+              message: "Product Access denied for Basic Plan!",
+            });
+          }
         }
       }
-  
-
+    } else {
+      res.status(400).json({ message: "Plan not match!", error: err });
+    }
+  }
 };
-
-;
 
 //   // //Read or get Specific User all Data  :
 export const readSpecificUserAllData = async (req, res) => {
   try {
-    let getSpecificData = await ProductModel.find({    URL_Alies:req.params.URL_Alies });
+    let getSpecificData = await ProductModel.find({
+      URL_Alies: req.params.URL_Alies,
+    });
 
     if (!getSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
@@ -219,85 +206,67 @@ export const getSpecificIdData = async (req, res) => {
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
-  productUpload(req, res, async (err) => {
-    if (err instanceof multer.MulterError) {
-      if (err.code === "LIMIT_FILE_SIZE") {
-        return res
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
+  });
+
+  if (!checkCurrentPlan) {
+    return res.status(400).json({ message: "Plan not be there!" });
+  }
+  if (checkCurrentPlan.length <= 0) {
+    return res.status(400).json({ message: "Choose your Plan first!" });
+  } else {
+    //Plan 2 and 3
+    if (
+      checkCurrentPlan[0].amount === 10 ||
+      checkCurrentPlan[0].amount === 599 ||
+      checkCurrentPlan[0].amount === 899 ||
+      checkCurrentPlan[0].amount === 1299
+    ) {
+      try {
+        let { id } = req.params;
+        let data = {
+          ProductImage: req.body.ProductImage,
+          URL_Alies: req.body.URL_Alies,
+          ProductName: req.body.ProductName,
+          ProductURL: req.body.ProductURL,
+          ProductType: req.body.ProductType,
+          ProductImageLink: req.body.ProductImageLink,
+          ProductPrice: req.body.ProductPrice,
+          ProductDescription: req.body.ProductDescription,
+        };
+        let updateSpecificData = await ProductModel.findByIdAndUpdate(
+          id,
+          data,
+          { new: true, runValidators: true }
+        );
+
+        if (!updateSpecificData) {
+          res.status(400).json({ message: "Data Not Found!" });
+        } else {
+          res
+            .status(201)
+            .json({ message: "Data Updated!", data: updateSpecificData });
+        }
+      } catch (error) {
+        res
           .status(400)
           .json({
-            message: "Product Image File size too large. Maximum limit is 2MB.",
+            error: error.message,
+            message: error.message,
           });
       }
-      return res.status(400).json({ message: err.message });
-    } else if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      res.status(400).json({ message: err });
     } else {
-      if (!req.body.ProductImage) {
-        return res.status(400).json({ message: "No file choosen!" });
-      }
-
-      let checkCurrentPlan = await Payment.find({
-        user: req.user.userName,
-      });
-
-      if (!checkCurrentPlan) {
-        return res
-          .status(400)
-          .json({ message: "Plan not be there!"});
-      }
-      if (checkCurrentPlan.length <= 0) {
-        return res
-          .status(400)
-          .json({ message: "Choose your Plan first!" });
-      } else {
-        //Plan 2 and 3
-        if (
-          checkCurrentPlan[0].amount === 10 ||
-          checkCurrentPlan[0].amount === 599 ||
-          checkCurrentPlan[0].amount === 899 ||
-          checkCurrentPlan[0].amount === 1299
-        ) {
-          try {
-            let { id } = req.params;
-            let data = {
-              ProductImage:req.body.ProductImage,
-              URL_Alies:req.body.URL_Alies,
-              ProductName:req.body.ProductName,
-              ProductURL:req.body.ProductURL,
-              ProductType: req.body.ProductType,
-              ProductImageLink:req.body.ProductImageLink,
-              ProductPrice:req.body.ProductPrice,
-              ProductDescription:req.body.ProductDescription
-            };
-            let updateSpecificData = await ProductModel.findByIdAndUpdate(id, data, { new: true, runValidators: true });
-        
-            if (!updateSpecificData) {
-              res.status(400).json({ message: "Data Not Found!" });
-            } else {
-              res
-                .status(201)
-                .json({ message: "Data Updated!", data: updateSpecificData });
-            }
-          } catch (error) {
-            res.status(400).json({ error: error.message, message:'Image File size too large. Maximum limit is 2MB.' });
-          }
-        } else {
-          res.status(400).json({ message: "Plan not match!"});
-        }
-      }
+      res.status(400).json({ message: "Plan not match!" });
     }
-  });
- 
+  }
 };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:
 export const deleteSpecificUserAllData = async (req, res) => {
   try {
     let deleteSpecificData = await ProductModel.deleteMany({
-      URL_Alies:req.params.URL_Alies
+      URL_Alies: req.params.URL_Alies,
     });
 
     if (!deleteSpecificData) {
@@ -333,4 +302,3 @@ export const deleteSpecificUserData = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-

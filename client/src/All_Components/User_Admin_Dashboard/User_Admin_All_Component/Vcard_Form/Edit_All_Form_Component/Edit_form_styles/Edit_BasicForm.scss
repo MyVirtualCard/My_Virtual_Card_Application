@@ -66,6 +66,16 @@
     
         input[type=file] {
           display: block;
+          border: none;
+          width: 100%;
+          font-size: 0.7rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-weight: 550;
+          outline: none;
+          color: #03796f;
+          cursor: pointer;
         }
       }
       .double_col_inputs {
@@ -226,6 +236,28 @@ width: 50%;
             }
           }
           .url_link_input_group{
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+            img{
+              width: 100px;
+              max-width: 100px;
+              height: 100px;
+              max-height: 100px;
+              object-fit: cover;
+              object-position: center;
+              border-radius: 0.5rem;
+              border: 1px solid gray;
+            }
+            .banner_address_image{
+              width: 200px;
+              max-width: 200px;
+              height: 100px;
+              max-height: 100px;
+              object-fit: cover;
+              border: 1px solid gray;
+            }
             label{
               font-size: 0.6rem;
               font-weight: 550;
@@ -312,8 +344,15 @@ width: 50%;
         }
         input[type=file] {
           display: block;
-          width: 200px;
+          border: none;
+          width: 100%;
           font-size: 0.7rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-weight: 550;
+          outline: none;
+          color: #03796f;
           cursor: pointer;
         }
       }
@@ -512,6 +551,16 @@ height: 50px;
         }
         input[type=file] {
           display: block;
+          border: none;
+          width: 100%;
+          font-size: 0.7rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-weight: 550;
+          outline: none;
+          color: #03796f;
+          cursor: pointer;
         }
       }
         .actions {

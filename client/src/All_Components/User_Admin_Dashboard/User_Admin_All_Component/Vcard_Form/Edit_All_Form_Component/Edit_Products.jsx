@@ -103,7 +103,7 @@ const Products = () => {
       values = await Object.assign(values, {
         ProductImage:
           ProductImage ||
-          "  https://img.freepik.com/free-photo/abstract-blur-shopping-mall_1203-7916.jpg?t=st=1723075586~exp=1723079186~hmac=4dccd998ecc46e0047652ed0adfd2071199ad7157adeae0402d706b4ce95a1b1&w=900",
+          "",
       });
 
       setFormSubmitLoader(true);
@@ -188,6 +188,8 @@ const Products = () => {
           setProductURL(res.data.data.ProductURL);
           setProductDescription(res.data.data.ProductDescription);
           setProductImage(res.data.data.ProductImage);
+          setProductImageLink(res.data.data.ProductImageLink)
+          setProductType(res.data.data.ProductType)
           setProductId(res.data.data._id);
           setFormSubmitLoader(false);
         })
@@ -369,17 +371,39 @@ const Products = () => {
               {AllProduct != undefined ? (
                 <>
                   {AllProduct.map((data, index) => {
+
+                    console.log(data.ProductImage.length)
                     return (
                       <tr key={index}>
                         <td className="h-100 align-middle">
-                          <img
+                          {data.ProductType == 'ImageUpload' ? 
+                          <>
+                            {data.ProductImage.length !=0 ?   <img
                             src={
-                              data.ProductImage != "null"
+                              data.ProductImage.length != 0
                                 ? data.ProductImage
                                 : `https://img.freepik.com/free-photo/abstract-blur-shopping-mall_1203-7916.jpg?t=st=1723075586~exp=1723079186~hmac=4dccd998ecc46e0047652ed0adfd2071199ad7157adeae0402d706b4ce95a1b1&w=900`
                             }
                             alt="service_image"
-                          />
+                          /> :'Null'}
+                          </>
+                          : ''}
+                        
+                        {data.ProductType == 'Image_Address_Link' ?
+                        <>
+                        {data.ProductImageLink.length !=0 ?
+                          <img
+                          src={
+                            data.ProductImageLink.length != 0
+                              ? data.ProductImageLink
+                              : `https://img.freepik.com/free-photo/abstract-blur-shopping-mall_1203-7916.jpg?t=st=1723075586~exp=1723079186~hmac=4dccd998ecc46e0047652ed0adfd2071199ad7157adeae0402d706b4ce95a1b1&w=900`
+                          }
+                          alt="product_image"
+                        />
+                        : 'Null'}
+                        </>
+                        : ''}
+                      
                         </td>
                         <td className="h-100 align-middle">
                           {data.ProductName}
@@ -624,7 +648,7 @@ const Products = () => {
                           onBlur={formik.handleBlur}
                           onChange={
                             updateFormOpen
-                              ? (e) => setServiceIcon(e.target.value)
+                              ? (e) => setProductImageLink(e.target.value)
                               : formik.handleChange
                           }
                           value={
@@ -685,7 +709,7 @@ const Products = () => {
                           onBlur={formik.handleBlur}
                           onChange={
                             updateFormOpen
-                              ? (e) => setServiceIcon(e.target.value)
+                              ? (e) => setProductImageLink(e.target.value)
                               : formik.handleChange
                           }
                           value={

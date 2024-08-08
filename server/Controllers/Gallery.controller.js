@@ -30,24 +30,6 @@ export const GetGalleryData = async (req, res) => {
 };
 
 export const PostGalleryData = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err instanceof multer.MulterError) {
-      if (err.code === "LIMIT_FILE_SIZE") {
-        return res
-          .status(400)
-          .json({ message: "File size too large. Maximum limit is 2MB." });
-      }
-      return res.status(400).json({ message: err.message });
-    } else if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      res.status(400).json({ message: err });
-    } else {
-      if (!req.body.GalleryImage) {
-        return res.status(400).json({ message: "No file choosen!" });
-      }
-
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
@@ -82,13 +64,10 @@ export const PostGalleryData = async (req, res) => {
           const newImage = new GalleryModel({
             user: req.user.userName,
             URL_Alies:req.body.URL_Alies,
-            GalleryURL:req.body.GalleryURL,
-            GalleryName:req.body.GalleryName,
+            GalleryImageURL:req.body.GalleryImageURL,
+            GalleryType:req.body.GalleryType,
             GalleryImage:req.body.GalleryImage
-            // GalleryImage: {
-            //   data: fs.readFileSync( 'public/' + req.file.filename),
-            //   contentType: req.file.mimetype,
-            // },
+
           });
 
           newImage
@@ -119,17 +98,10 @@ export const PostGalleryData = async (req, res) => {
         const newImage = new GalleryModel({
           user: req.user.userName,
           URL_Alies:req.body.URL_Alies,
-          GalleryURL:req.body.GalleryURL,
+          GalleryImageURL:req.body.GalleryImageURL,
+          GalleryType:req.body.GalleryType,
           GalleryImage:req.body.GalleryImage
-          // GalleryName:req.body.GalleryName,
-          // GalleryImage: {
-          //   data: fs.readFileSync("public/" + req.file.filename),
-          //   contentType: req.file.mimetype,
-          // },
-          // GalleryImage: {
-          //   data: fs.readFileSync("uploads/" + req.file.filename),
-          //   contentType: req.file.mimetype,
-          // },
+    
         });
  
         newImage
@@ -160,17 +132,10 @@ export const PostGalleryData = async (req, res) => {
       const newImage = new GalleryModel({
         user: req.user.userName,
         URL_Alies:req.body.URL_Alies,
-        GalleryURL:req.body.GalleryURL,
+        GalleryImageURL:req.body.GalleryImageURL,
+        GalleryType:req.body.GalleryType,
         GalleryImage:req.body.GalleryImage,
-        // GalleryName:req.body.GalleryName,
-        // GalleryImage: {
-        //   data: fs.readFileSync("public/" + req.file.filename),
-        //   contentType: req.file.mimetype,
-        // },
-        // GalleryImage: {
-        //   data: fs.readFileSync("uploads/" + req.file.filename),
-        //   contentType: req.file.mimetype,
-        // },
+
       });
 
       newImage
@@ -203,8 +168,8 @@ export const PostGalleryData = async (req, res) => {
 
   
 
-    }
-  });
+
+
 };
 
 // //Read or get Specific User all Data  :
@@ -299,28 +264,3 @@ export const deleteSpecificUserData = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-//Post basic detail data to database:
-
-// export const PostGalleryData = async (req, res) => {
-//   try {
-//     if (!req.file.filename) {
-//       return res.status(401).json({ message: "All * fields are Mandatory" });
-//     } else {
-//       let data = {
-//         user: req.user.userName,
-//         GalleryImage: {
-//           data: fs.readFileSync("Gallery/" + req.file.filename),
-//           contentType:'image/png/jpg'
-//         },
-//         GalleryURL: req.body.GalleryURL,
-//       };
-
-//       const result = await GalleryModel.create(data);
-
-//       return res.status(201).json({ message: "Data saved!", data: result });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };

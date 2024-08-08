@@ -12,21 +12,12 @@ let GallerySchema=new mongoose.Schema({
 
       },
       GalleryImage:{
-        // data:Buffer,
-        // contentType:String,
         type:String,
-        required:true
-   
       },
-      GalleryName:{
-        // data:Buffer,
-        // contentType:String,
-        type:String,
-
-    
-      }
-    ,
-    GalleryURL:{
+      GalleryType:{
+        type:String
+      },
+      GalleryImageURL:{
         type:String
     }
 },

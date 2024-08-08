@@ -323,7 +323,7 @@ const BasicForm = () => {
   const handleBannerTypeChange = (event) => {
     setBannerType(event.target.value);
   };
-
+  console.log(ProfileAddress, BannerAddress);
   return (
     <>
       <div className="basicform_container">
@@ -367,56 +367,7 @@ const BasicForm = () => {
                 placeholder="Enter Short Description..!"
               />
             </div>
-            {/* <div className="form_group double_col_inputs">
-              <div className="first">
-                <label htmlFor="Profile">
-                  Company Logo <sup>*</sup>
-                </label>
-                <label htmlFor="Profile">
-                  <img
-                    src={
-                      Profile != undefined
-                        ? Profile
-                        : "https://img.freepik.com/free-photo/3d-render-little-boy-with-eyeglasses-blue-shirt_1142-50994.jpg?t=st=1716040955~exp=1716044555~hmac=605273d0e1789be0644e11ceb509699fc6908463eed64554ad5184feb50cc3fa&w=740"
-                    }
-                    className="Profile"
-                    alt="Profile"
-                  />
-                  <i className="bx bxs-edit"></i>
-                </label>
-                <small>Allowed file types: png, jpg, jpeg.</small>
-                <input
-                  onChange={onUploadProfile}
-                  type="file"
-                  name="Profile"
-                  id="Profile"
-                />
-              </div>
-              <div className="second">
-                <label htmlFor="Banner">
-                 Company Banner <sup>*</sup>
-                </label>
-                <label htmlFor="Banner">
-                  <img
-                    src={
-                      Banner != null
-                        ? Banner
-                        : "https://img.freepik.com/free-photo/cement-wall-floor-copy-space_53876-30237.jpg?t=st=1716040667~exp=1716044267~hmac=37c1f0faf9137d781a0aa0d1436b486b6e0a620fec789a836ab08533c16cbeeb&w=826"
-                    }
-                    className="Banner"
-                    alt="Banner"
-                  />
-                  <i className="bx bxs-edit"></i>
-                </label>
-                <small>Allowed file types: png, jpg, jpeg.</small>
-                <input
-                  type="file"
-                  onChange={onUploadBanner}
-                  name="Banner"
-                  id="Banner"
-                />
-              </div>
-            </div> */}
+
             <div className="form_group double_col_inputs">
               <div className="image_upload_type">
                 <div className="logo_type">
@@ -474,6 +425,19 @@ const BasicForm = () => {
                 ) : (
                   <div className="form_group url_link_input_group">
                     <label htmlFor="VCardName">Paste Logo Image Address</label>
+                    {!FormSubmitLoader ? (
+                      <img
+                        src={
+                          ProfileAddress != null || ProfileAddress != undefined
+                            ? ProfileAddress
+                            : ""
+                        }
+                        alt=""
+                      />
+                    ) : (
+                      ""
+                    )}
+
                     <input
                       type="text"
                       placeholder="Paste Your Image Address!"
@@ -490,7 +454,7 @@ const BasicForm = () => {
                     <label htmlFor="Company_Banner">
                       <img
                         src={
-                          Banner != null
+                          Banner != null || Banner != undefined
                             ? Banner
                             : "https://img.freepik.com/free-photo/cement-wall-floor-copy-space_53876-30237.jpg?t=st=1716040667~exp=1716044267~hmac=37c1f0faf9137d781a0aa0d1436b486b6e0a620fec789a836ab08533c16cbeeb&w=826"
                         }
@@ -510,7 +474,23 @@ const BasicForm = () => {
                   </div>
                 ) : (
                   <div className="form_group url_link_input_group">
-                    <label htmlFor="VCardName">Paster Banner Image Address</label>
+                    <label htmlFor="VCardName">
+                      Paster Banner Image Address
+                    </label>
+                    {!FormSubmitLoader ? (
+                      <img
+                        src={
+                          BannerAddress != null || BannerAddress != undefined
+                            ? BannerAddress
+                            : ""
+                        }
+                        alt=""
+                        className="banner_address_image"
+                      />
+                    ) : (
+                      ""
+                    )}
+
                     <input
                       type="text"
                       placeholder="Paste Your Banner Address!"
@@ -548,15 +528,20 @@ const BasicForm = () => {
                 name="FirstName"
                 placeholder="Enter Your FirstName"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={FirstName}
-                className={
-                  formik.errors.FirstName && formik.touched.FirstName
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setFirstName(e.target.value)
+                    : formik.handleChange
                 }
+                value={UpdateButtonToggle ? FirstName : formik.values.FirstName}
+                // className={
+                //   formik.errors.FirstName && formik.touched.FirstName
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
-              <div className="error">{formik.errors.FirstName}</div>
+              {UpdateButtonToggle ? "":   <div className="error">{formik.errors.FirstName}</div> }
+      
             </div>
             <div className="form_group">
               <label htmlFor="lastName">
@@ -568,15 +553,20 @@ const BasicForm = () => {
                 name="LastName"
                 id="LastName"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={LastName}
-                className={
-                  formik.errors.LastName && formik.touched.LastName
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setLastName(e.target.value)
+                    : formik.handleChange
                 }
+                value={UpdateButtonToggle ? LastName : formik.values.LastName}
+                // className={
+                //   formik.errors.LastName && formik.touched.LastName
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
-              <div className="error">{formik.errors.LastName}</div>
+              {UpdateButtonToggle ? "":    <div className="error">{formik.errors.LastName}</div>}
+      
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -587,15 +577,20 @@ const BasicForm = () => {
                 placeholder="Enter Your Email"
                 name="Email"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={Email}
-                className={
-                  formik.errors.Email && formik.touched.Email
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setEmail(e.target.value)
+                    : formik.handleChange
                 }
+                value={UpdateButtonToggle ? Email : formik.values.Email}
+                // className={
+                //   formik.errors.Email && formik.touched.Email
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
-              <div className="error">{formik.errors.Email}</div>
+              {UpdateButtonToggle ? '':    <div className="error">{formik.errors.Email}</div> }
+          
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -606,15 +601,22 @@ const BasicForm = () => {
                 placeholder="Enter Your Phone Number"
                 name="MobileNumber"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={MobileNumber}
-                className={
-                  formik.errors.MobileNumber && formik.touched.MobileNumber
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setMobileNumber(e.target.value)
+                    : formik.handleChange
                 }
+                value={
+                  UpdateButtonToggle ? MobileNumber : formik.values.MobileNumber
+                }
+                // className={
+                //   formik.errors.MobileNumber && formik.touched.MobileNumber
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
-              <div className="error">{formik.errors.MobileNumber}</div>
+              {UpdateButtonToggle ? '': <div className="error">{formik.errors.MobileNumber}</div>}
+              
             </div>
             <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Email</label>
@@ -623,13 +625,21 @@ const BasicForm = () => {
                 placeholder="Alternate Email"
                 name="AlternateEmail"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={AlternateEmail}
-                className={
-                  formik.errors.AlternateEmail && formik.touched.AlternateEmail
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setAlternateEmail(e.target.value)
+                    : formik.handleChange
                 }
+                value={
+                  UpdateButtonToggle
+                    ? AlternateEmail
+                    : formik.values.AlternateEmail
+                }
+                // className={
+                //   formik.errors.AlternateEmail && formik.touched.AlternateEmail
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
             </div>
             <div className="form_group">
@@ -637,8 +647,16 @@ const BasicForm = () => {
               <input
                 type="tel"
                 placeholder="Alternate Phone"
-                value={AlternateMobileNumber}
-                onChange={(e) => setAlternateMobileNumber(e.target.value)}
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setAlternateMobileNumber(e.target.value)
+                    : formik.handleChange
+                }
+                value={
+                  UpdateButtonToggle
+                    ? AlternateMobileNumber
+                    : formik.values.AlternateMobileNumber
+                }
               />
             </div>
             <div className="form_group">
@@ -650,15 +668,21 @@ const BasicForm = () => {
                 placeholder="Location"
                 name="Location"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={Location}
-                className={
-                  formik.errors.Location && formik.touched.Location
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setLocation(e.target.value)
+                    : formik.handleChange
                 }
+                value={UpdateButtonToggle ? Location : formik.values.Location}
+         
+                // className={
+                //   formik.errors.Location && formik.touched.Location
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
-              <div className="error">{formik.errors.Location}</div>
+              {UpdateButtonToggle ? "": <div className="error">{formik.errors.Location}</div>}
+          
             </div>
             <div className="form_group">
               <label htmlFor="job">
@@ -669,15 +693,22 @@ const BasicForm = () => {
                 placeholder="Enter Job Title"
                 name="Profession"
                 onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={Profession}
-                className={
-                  formik.errors.Profession && formik.touched.Profession
-                    ? "input_error"
-                    : "input_success"
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setProfession(e.target.value)
+                    : formik.handleChange
                 }
+                value={UpdateButtonToggle ? Profession : formik.values.Profession}
+            
+
+                // className={
+                //   formik.errors.Profession && formik.touched.Profession
+                //     ? "input_error"
+                //     : "input_success"
+                // }
               />
-              <div className="error">{formik.errors.Profession}</div>
+              {UpdateButtonToggle ? "": <div className="error">{formik.errors.Profession}</div>}
+             
             </div>
 
             {/* <div className="actions">
