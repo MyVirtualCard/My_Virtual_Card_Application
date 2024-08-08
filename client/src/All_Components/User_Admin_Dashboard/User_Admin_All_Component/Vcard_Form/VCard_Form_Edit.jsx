@@ -24,6 +24,7 @@ import Edit_Plan from "./Edit_All_Form_Component/Edit_Plan";
 import toast from "react-hot-toast";
 import Edit_PrivacyPolicy from "./Edit_All_Form_Component/Edit_PrivacyPolicy";
 import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
+import Edit_GoogleMap from "./Edit_All_Form_Component/Edit_GoogleMap";
 
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
@@ -266,6 +267,16 @@ const VCard_Form_Edit = () => {
             <div
               className="menu_item"
               onClick={handleFormShow}
+              id={ShowForm === "GoogleMap" ? "menu_active" : ""}
+            >
+           
+              <i class='bx bxs-map-alt'   style={{ color: "lightgreen" }}
+                id="GoogleMap"></i>
+              <small id="GoogleMap">GoogleMap</small>
+            </div>
+            <div
+              className="menu_item"
+              onClick={handleFormShow}
               id={ShowForm === "PopUp Banner" ? "menu_active" : ""}
             >
               <i
@@ -421,6 +432,7 @@ const VCard_Form_Edit = () => {
             {ShowForm === "Galleries" ? <Edit_Gallery /> : ""}
             {ShowForm === "Blog" ? <Edit_Blog /> : ""}
             {ShowForm === "Testimonials" ? <Edit_Testimonial /> : ""}
+            {ShowForm === "GoogleMap" ? <Edit_GoogleMap /> : ""}
             {ShowForm === "Iframes" ? <Edit_Iframe /> : ""}
             {ShowForm === "Social Link - Website" ? <Edit_SocialMedias /> : ""}
             {ShowForm === "Customize QR Code" ? <Edit_QR_Code /> : ""}

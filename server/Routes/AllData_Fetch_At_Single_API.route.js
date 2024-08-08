@@ -16,6 +16,7 @@ import Vcard_URL from '../Models/Vcard_URL.model.js';
 import QRCodeModel from '../Models/QRCode.model.js';
 import FeedbackModel from '../Models/Feedback.model.js';
 import BussinessModel from '../Models/BussinessHour.model.js';
+import GoogleMapModel from '../Models/GoogleMap.model.js';
 router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
     try {
    
@@ -39,13 +40,13 @@ router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
           result["BasicDetails"] = getSpecificData;
         };
     
-        // let ContactDetails_data = await ContactDetails.find({ user: userid });
+        let GoogleMap_data = await GoogleMapModel.find({   URL_Alies: URL_Alies});
     
-        // if (!ContactDetails_data) {
-        //   res.status(400).json({ message: "Specific Data Not Found" });
-        // } else {
-        //   result["ContactDetails"] = ContactDetails_data;
-        // }
+        if (!GoogleMap_data) {
+          res.status(400).json({ message: "GoogleMap Data Not Found" });
+        } else {
+          result["GoogleMapData"] = GoogleMap_data;
+        }
     
         let ServiceDetails_data = await ServiceData.find({   URL_Alies: URL_Alies, });
     

@@ -80,7 +80,7 @@ let [BannerLength,setBannerLength]=useState();
       URL_Alies,
       BannerTitle,
       BannerURL,
-      BannerDescription,
+      BannerDescription:stripHtmlTags(BannerDescription),
       BannerButtonName,
     };
     try {
@@ -113,7 +113,7 @@ let [BannerLength,setBannerLength]=useState();
       URL_Alies,
       BannerTitle,
       BannerURL,
-      BannerDescription,
+      BannerDescription:stripHtmlTags(BannerDescription),
       BannerButtonName,
     };
     try {

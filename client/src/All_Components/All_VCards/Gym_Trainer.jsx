@@ -15,11 +15,13 @@ import { Triangle } from "react-loader-spinner";
 import { Toaster, toast } from "react-hot-toast";
 import loadingBack from "../../assets/LandingPage_image/aristostech_company_background.jpg";
 import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
+// Google Map
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 const Gym_Trainer = () => {
   const [width, setWidth] = useState(window.innerWidth);
-
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
+  let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -216,6 +218,8 @@ const Gym_Trainer = () => {
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
   let [SocialMediaData, setSocialMediaData] = useState([]);
   let [BussinessHourData, setBussinessHourData] = useState([]);
+  let [GoogleMapData, setGoogleMapData] = useState([]);
+  let [PopUpBannerData, setPopUpBannerData] = useState([]);
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -227,6 +231,7 @@ const Gym_Trainer = () => {
         .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
           console.log(res.data.data);
+          setGoogleMapData(res.data.data.GoogleMapData);
           setVCard_URL_Data(res.data.data.Vcard_URL);
           setBasicData(res.data.data.BasicDetails);
           setSocialMediaData(res.data.data.SocialMediaModel);
@@ -236,8 +241,12 @@ const Gym_Trainer = () => {
           setProductData(res.data.data.ProductModel);
           setQRCodeData(res.data.data.QRCodeModel);
           setBussinessHourData(res.data.data.BussinessModel);
-
+          setPopUpBannerData(res.data.data.PopupBannerModel);
           setSiteLoader(false);
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+            setPopUpBannerToggle(true);
+          }, 5000);
         })
         .catch((error) => {
           console.log(error);
@@ -264,6 +273,19 @@ const Gym_Trainer = () => {
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
+  //GoogleMap:
+  const mapContainerStyle = {
+    width: "100%",
+    height: "400px",
+  };
+
+  const center = {
+    lat: 37.7749, // Latitude
+    lng: -122.4194, // Longitude
+  };
+  const GoogleMapHtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
   return (
     <>
       {SiteLoader ? (
@@ -271,7 +293,15 @@ const Gym_Trainer = () => {
           <div className="loadingbackground">
             {/* <img src={loadingBack} alt="loading" className="aris_back" /> */}
           </div>
-          <small> <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div></small>
+          <small>
+            {" "}
+            <div className="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </small>
           {/* <Triangle
             visible={true}
             height="80"
@@ -291,8 +321,51 @@ const Gym_Trainer = () => {
             <div className="newcard_design10_container">
               <Toaster position="top-right" reverseOrder={false} />
               <div className="newcard_design10_box">
-                {/* Banner and logo and details and socialMedias */}
+                {/* popupbanner */}
+                {PopUpBannerData.length > 0 ? (
+                  <>
+                    {PopUpBannerData.map((data, index) => {
+                      return (
+                        <div
+                          className="popup_container"
+                          id={popupBannerToggle ? "popupShow" : "popupHide"}
+                          key={index}
+                        >
+                          <div className="box">
+                            <div
+                              className="close_banner_icon"
+                              onClick={() => setPopUpBannerToggle(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                            <div className="banner_title">
+                              <h3>{data.BannerTitle || "Be In Touch"}</h3>
+                            </div>
+                            <div className="summary">
+                              <p>
+                                {data.BannerDescription ||
+                                  ` Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Quidem, ut?`}
+                              </p>
+                            </div>
+                            <div className="action">
+                              <a
+                                href={`mailto:${data.BannerURL}`}
+                                target="_blank"
+                              >
+                                {data.BannerButtonName || "Get In Touch"}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  ""
+                )}
 
+                {/* Banner and logo and details and socialMedias */}
                 {VCard_URL_Data.map((data, index) => {
                   console.log(data.BannerType);
                   return (
@@ -466,13 +539,13 @@ const Gym_Trainer = () => {
                                             target="_blank"
                                           >
                                             <i className="bx bxl-youtube"></i>
-                                            <small>Location</small>
+                                            <small>Youtube</small>
                                           </a>
                                         ) : (
                                           ""
                                         )}
 
-                                        {data.Website != "" ? (
+                                        {data.Website != "" && data.Website ? (
                                           <a
                                             href={data.Website}
                                             className="social_media_icon"
@@ -644,102 +717,163 @@ const Gym_Trainer = () => {
                         {/* Contact */}
                       </div>
                       <div className="time_list_container">
-                        <div className="time_list">
-                          <div className="day">
-                            <span>Monday</span>
-                          </div>
-                          <div className="time">
-                            <div className="start">
-                              <h6>Open Time</h6>
-                              <span>{BussinessHourData[0].Monday.from}AM</span>
+                        {BussinessHourData[0].Monday.from.length > 0 &&
+                        BussinessHourData[0].Monday.to.length > 0 ? (
+                          <div className="time_list">
+                            <div className="day">
+                              <span>Monday</span>
                             </div>
-                            <div className="end">
-                              <h6>Close Time</h6>
-                              <span>{BussinessHourData[0].Monday.to}PM</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="time_list">
-                          <div className="day">
-                            <span>Tuesday</span>
-                          </div>
-                          <div className="time">
-                            <div className="start">
-                              <h6>Open Time</h6>
-                              <span>{BussinessHourData[0].Tuesday.from}AM</span>
-                            </div>
-                            <div className="end">
-                              <h6>Close Time</h6>
-                              <span>{BussinessHourData[0].Tuesday.to}PM</span>
+                            <div className="time">
+                              <div className="start">
+                                <h6>Open Time</h6>
+                                <span>
+                                  {BussinessHourData[0].Monday.from}AM
+                                </span>
+                              </div>
+                              <div className="end">
+                                <h6>Close Time</h6>
+                                <span>{BussinessHourData[0].Monday.to}PM</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="time_list">
-                          <div className="day">
-                            <span>Wednesday</span>
-                          </div>
-                          <div className="time">
-                            <div className="start">
-                              <h6>Open Time</h6>
-                              <span>
-                                {BussinessHourData[0].Wednesday.from}AM
-                              </span>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Tuesday.from.length > 0 &&
+                        BussinessHourData[0].Tuesday.to.length > 0 ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Tuesday</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Tuesday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Tuesday.to}PM
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="end">
-                              <h6>Close Time</h6>
-                              <span>{BussinessHourData[0].Wednesday.to}PM</span>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Wednesday.from.length > 0 &&
+                        BussinessHourData[0].Wednesday.to.length > 0 ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Wednesday</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Wednesday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Wednesday.to}PM
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Thursday.from.length > 0 &&
+                        BussinessHourData[0].Thursday.to.length > 0 ? (
+                          <div className="time_list">
+                            <div className="day">
+                              <span>Thursday</span>
+                            </div>
+                            <div className="time">
+                              <div className="start">
+                                <h6>Open Time</h6>
+                                <span>
+                                  {BussinessHourData[0].Thursday.from}AM
+                                </span>
+                              </div>
+                              <div className="end">
+                                <h6>Close Time</h6>
+                                <span>
+                                  {BussinessHourData[0].Thursday.to}PM
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="time_list">
-                          <div className="day">
-                            <span>Thursday</span>
-                          </div>
-                          <div className="time">
-                            <div className="start">
-                              <h6>Open Time</h6>
-                              <span>
-                                {BussinessHourData[0].Thursday.from}AM
-                              </span>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Friday.from.length > 0 &&
+                        BussinessHourData[0].Friday.to.length > 0 ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Friday</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Friday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Friday.to}PM
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="end">
-                              <h6>Close Time</h6>
-                              <span>{BussinessHourData[0].Thursday.to}PM</span>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        {(BussinessHourData[0].Saturday.from.length > 0 &&
+                          BussinessHourData[0].Saturday.to.length > 0) ||
+                        BussinessHourData[0].Sunday.from.length > 0 ||
+                        BussinessHourData[0].Sunday.from.length ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Weekend Days</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Saturday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Saturday.to}PM
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="time_list">
-                          <div className="day">
-                            <span>Friday</span>
-                          </div>
-                          <div className="time">
-                            <div className="start">
-                              <h6>Open Time</h6>
-                              <span>{BussinessHourData[0].Friday.from}AM</span>
-                            </div>
-                            <div className="end">
-                              <h6>Close Time</h6>
-                              <span>{BussinessHourData[0].Friday.to}PM</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="time_list">
-                          <div className="day">
-                            <span>Weekend Days</span>
-                          </div>
-                          <div className="time">
-                            <div className="start">
-                              <h6>Open Time</h6>
-                              <span>
-                                {BussinessHourData[0].Saturday.from}AM
-                              </span>
-                            </div>
-                            <div className="end">
-                              <h6>Close Time</h6>
-                              <span>{BussinessHourData[0].Saturday.to}PM</span>
-                            </div>
-                          </div>
-                        </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                   </>
@@ -927,33 +1061,72 @@ const Gym_Trainer = () => {
                           {GalleryData.map((data, index) => {
                             return (
                               <div key={index}>
-                                {data.GallerType == 'ImageUpload' ? 
+                                {data.GallerType == "ImageUpload" ? (
                                   <img
-                                  src={
-                                    data.GalleryImage ||
-                                    "https://img.freepik.com/free-photo/young-adult-doing-indoor-sport-gym_23-2149205565.jpg?t=st=1722483193~exp=1722486793~hmac=582b97347ecbf83a7f71abf16c7dc7dc6287bdaa892fd409e0391f81788d2e1a&w=900"
-                                  }
-                                  alt="developer"
-                                  onClick={(e) => openFullImage(e.target.src)}
-                                />
-                                : ''}
+                                    src={
+                                      data.GalleryImage ||
+                                      "https://img.freepik.com/free-photo/young-adult-doing-indoor-sport-gym_23-2149205565.jpg?t=st=1722483193~exp=1722486793~hmac=582b97347ecbf83a7f71abf16c7dc7dc6287bdaa892fd409e0391f81788d2e1a&w=900"
+                                    }
+                                    alt="developer"
+                                    onClick={(e) => openFullImage(e.target.src)}
+                                  />
+                                ) : (
+                                  ""
+                                )}
 
-                                {data.GalleryType == 'Image_Address_URL' ? 
-                                <img
-                                src={
-                                  data.GalleryImageURL ||
-                                  "https://img.freepik.com/free-photo/young-adult-doing-indoor-sport-gym_23-2149205565.jpg?t=st=1722483193~exp=1722486793~hmac=582b97347ecbf83a7f71abf16c7dc7dc6287bdaa892fd409e0391f81788d2e1a&w=900"
-                                }
-                                alt="developer"
-                                onClick={(e) => openFullImage(e.target.src)}
-                              />
-                                : ''}
-                              
+                                {data.GalleryType == "Image_Address_URL" ? (
+                                  <img
+                                    src={
+                                      data.GalleryImageURL ||
+                                      "https://img.freepik.com/free-photo/young-adult-doing-indoor-sport-gym_23-2149205565.jpg?t=st=1722483193~exp=1722486793~hmac=582b97347ecbf83a7f71abf16c7dc7dc6287bdaa892fd409e0391f81788d2e1a&w=900"
+                                    }
+                                    alt="developer"
+                                    onClick={(e) => openFullImage(e.target.src)}
+                                  />
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             );
                           })}
                         </div>
                       </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+                {/* //QRCode */}
+                {QRCodeData.length > 0 ? (
+                  <>
+                    <div className="QRCode_container">
+                      <div className="title">
+                        <h3>
+                          <span className="material-symbols-outlined">
+                            qr_code_scanner
+                          </span>
+                          Scan To Pay
+                        </h3>
+                      </div>
+                      {QRCodeData.map((data,index)=>{
+                        return(
+                          <div className="QRCode_box" key={index}>
+                          <div className="qrimage">
+                            <img
+                              src={data.QRCodeImage || "https://img.freepik.com/free-photo/development-with-abstract-background_1134-414.jpg?t=st=1723162343~exp=1723165943~hmac=55fd99c4770a22210cefeb7b94dbe98fa6e155a5e76122af8f5529587663969a&w=900"}
+                              alt=""
+                            />
+                          </div>
+                          <div className="userProfile">
+                            <img
+                              src={VCard_URL_Data[0].Profile || "https://img.freepik.com/free-vector/creative-nerd-logo-template_23-2149218769.jpg?t=st=1723167960~exp=1723171560~hmac=ba06d878628bba2f95c10f1952d53d78fd9466c8481f491daecca840a61c5782&w=740"}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        )
+                      })}
+                   
                     </div>
                   </>
                 ) : (
@@ -1010,6 +1183,29 @@ const Gym_Trainer = () => {
                           })}
                         </Carousel>
                       </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+                {/* GoogleMap */}
+                {GoogleMapData.length > 0 ? (
+                  <>
+                    <div className="google_map_container">
+                      <div className="title">
+                        <h3>
+                          <span className="material-symbols-outlined">map</span>
+                          Live Location
+                        </h3>
+                        {/* Contact */}
+                      </div>
+                      {GoogleMapData.map((data, index) => {
+                        return (
+                          <div className="google_map" key={index}>
+                            <HtmlRenderer htmlString={data.GoogleIframe} />
+                          </div>
+                        );
+                      })}
                     </div>
                   </>
                 ) : (
