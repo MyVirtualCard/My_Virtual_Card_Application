@@ -16,7 +16,8 @@ const User_VCards = () => {
     setFormSubmitLoader,
     setCurrentTemplate,
     currentTemplate,
-    ShowForm, setShowForm,
+    ShowForm,
+    setShowForm,
   } = useContext(Context);
   let [CurrentPlan, setCurrentPlan] = useState();
   let [savedVCardTemplate, setSavedVCardTemplate] = useState([]);
@@ -52,7 +53,7 @@ const User_VCards = () => {
         setFormSubmitLoader(false);
         console.log(error);
       });
-  },[]);
+  }, []);
 
   useEffect(() => {
     api
@@ -147,9 +148,9 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data[0].status)
+        console.log(res.data.data[0].status);
         setPlanActive(res.data.data);
-        setShowForm('Basic Detail')
+        setShowForm("Basic Detail");
         setStatus(res.data.data[0].status);
         setCurrentPlan(res.data.data[0].currentPlan);
       })
@@ -280,12 +281,21 @@ const User_VCards = () => {
                       return (
                         <tr key={index}>
                           <td className="fw-light">
-                            <img src={data.Profile} alt="profile" />
+                            {data.ProfileType == "Paste_ImageAddress" ? (
+                              <img src={data.ProfileAddress} alt="profile" />
+                            ) : (
+                              ""
+                            )}
+                            {data.ProfileType == "ImageUpload" ? (
+                              <img src={data.Profile} alt="profile" />
+                            ) : (
+                              ""
+                            )}
                           </td>
                           <td className="fw-light">{data.VCardName}</td>
                           {currentTemplate === null ? (
                             <td className="fw-light text-center align-items-center">
-                               <small>Select your VCard templete First!</small>
+                              <small>Select your VCard templete First!</small>
                             </td>
                           ) : (
                             <td className="fw-light text-center align-items-center">
@@ -294,7 +304,7 @@ const User_VCards = () => {
                                 href={`${
                                   import.meta.env.VITE_CLIENT_DOMAIN_URL
                                 }/${data.URL_Alies}`}
-                              target="_blank"
+                                target="_blank"
                               >
                                 {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
                                 {data.URL_Alies}
