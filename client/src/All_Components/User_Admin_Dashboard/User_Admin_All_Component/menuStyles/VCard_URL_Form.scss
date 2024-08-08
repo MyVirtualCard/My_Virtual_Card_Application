@@ -438,6 +438,36 @@ width: 50%;
             }
 
           }
+          .url_link_input_group{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+           img{
+             width: 100px;
+             max-width: 100px;
+             height: 100px;
+             max-height: 100px;
+             object-fit: cover;
+             object-position: center;
+             border-radius: 0.5rem;
+             border: 1px solid gray;
+             margin-bottom: 15px;
+           }
+           .banner_address_image{
+             width: 200px;
+             max-width: 200px;
+             height: 100px;
+             max-height: 100px;
+             object-fit: cover;
+             border: 1px solid gray;
+             margin-bottom: 15px;
+           }
+           label{
+             font-size: 0.6rem;
+             font-weight: 550;
+           }
+         }
           .form2_title {
             width: 100%;
             display: flex;

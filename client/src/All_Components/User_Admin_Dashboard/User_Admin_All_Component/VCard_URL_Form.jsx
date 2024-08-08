@@ -156,7 +156,6 @@ const VCard_URL_Form = () => {
     handleURLErrorHandling();
   }, [formik.values.URL_Alies]);
 
-  console.log(formik.values.ProfileType)
   return (
     <>
       <div className="new_Vcard_url_container">
@@ -344,10 +343,11 @@ const VCard_URL_Form = () => {
                     <div className="profile_error">{formik.errors.Profile}</div>
                   </div>
                 :
-                <div className="form_group">
+                <div className="form_group url_link_input_group">
                 <label htmlFor="VCardName">
                   Logo Imagess Address
                 </label>
+                <img src={formik.values.ProfileAddress.length > 0 ?formik.values.ProfileAddress : 'https://img.freepik.com/free-vector/colorful-abstract-badge-logo-design_53876-35434.jpg?t=st=1723115756~exp=1723119356~hmac=e679e44082a14f31d2622c54384fd856a057f73ac6380c877d5f34dd10af7f62&w=740' } alt="ProfileAddress" />
                 <input
                   type="text"
                   placeholder="Paste Your Image Address!"
@@ -392,10 +392,11 @@ const VCard_URL_Form = () => {
                   <div className="banner_error">{formik.errors.Banner}</div>
                 </div>
             : 
-            <div className="form_group">
+            <div className="form_group url_link_input_group">
             <label htmlFor="VCardName">
               Banner Imagess Address
             </label>
+            <img src={formik.values.BannerAddress.length > 0 ?formik.values.BannerAddress :"https://img.freepik.com/premium-photo/two-hands-holding-blue-sign-front-white-background_350874-5506.jpg?w=900"} className="banner_address_image"/>
             <input
               type="text"
               placeholder="Paste Your Banner Address!"
