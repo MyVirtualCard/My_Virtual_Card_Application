@@ -25,7 +25,7 @@ export let ServiceValidateShema = Yup.object({
     .required("ServiceName is required!"),
     ServiceDescription: Yup.string()
     .min(15, "Min 15 letter's required!")
-    .max(50, "Max 250 letter to be allowed!")
+    .max(250, "Max 250 letter to be allowed!")
     .required("ServiceDescription is required!"),
     ServiceImage: Yup.mixed()
     .notRequired()
