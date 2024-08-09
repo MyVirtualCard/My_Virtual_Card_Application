@@ -73,7 +73,7 @@ const Gym_Trainer = () => {
     ClientRatting: 0,
   });
 
-  //Form Logic :
+  //Feedback Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
       URL_Alies: window.location.pathname,
@@ -353,7 +353,7 @@ const Gym_Trainer = () => {
 
                 {/* Banner and logo and details and socialMedias */}
                 {VCard_URL_Data.map((data, index) => {
-                  console.log(data.BannerType);
+             
                   return (
                     <div className="row_1" key={index}>
                       <div className="banner_image">
@@ -1094,32 +1094,36 @@ const Gym_Trainer = () => {
                           Scan To Pay
                         </h3>
                       </div>
-                      {QRCodeData.map((data,index)=>{
-                        return(
+                      {QRCodeData.map((data, index) => {
+                        return (
                           <div className="QRCode_box" key={index}>
-                          <div className="qrimage">
-                            <img
-                              src={data.QRCodeImage || "https://img.freepik.com/free-photo/development-with-abstract-background_1134-414.jpg?t=st=1723162343~exp=1723165943~hmac=55fd99c4770a22210cefeb7b94dbe98fa6e155a5e76122af8f5529587663969a&w=900"}
-                              alt=""
-                            />
+                            <div className="qrimage">
+                              <img
+                                src={
+                                  data.QRCodeImage ||
+                                  "https://img.freepik.com/free-photo/development-with-abstract-background_1134-414.jpg?t=st=1723162343~exp=1723165943~hmac=55fd99c4770a22210cefeb7b94dbe98fa6e155a5e76122af8f5529587663969a&w=900"
+                                }
+                                alt=""
+                              />
+                            </div>
+                            {VCard_URL_Data.map((data, index) => {
+                              return (
+                                <>
+                                  <div className="userProfile" key={index}>
+                                    <img
+                                      src={
+                                        data.Profile ||
+                                        "https://img.freepik.com/free-vector/creative-nerd-logo-template_23-2149218769.jpg?t=st=1723167960~exp=1723171560~hmac=ba06d878628bba2f95c10f1952d53d78fd9466c8481f491daecca840a61c5782&w=740"
+                                      }
+                                      alt=""
+                                    />
+                                  </div>
+                                </>
+                              );
+                            })}
                           </div>
-                          {VCard_URL_Data.map((data,index)=>{
-                            return(
-                              <>
-                                   <div className="userProfile" key={index}>
-                            <img
-                              src={data.Profile || "https://img.freepik.com/free-vector/creative-nerd-logo-template_23-2149218769.jpg?t=st=1723167960~exp=1723171560~hmac=ba06d878628bba2f95c10f1952d53d78fd9466c8481f491daecca840a61c5782&w=740"}
-                              alt=""
-                            />
-                          </div>
-                              </>
-                            )
-                          })}
-                     
-                        </div>
-                        )
+                        );
                       })}
-                   
                     </div>
                   </>
                 ) : (
@@ -1581,7 +1585,7 @@ const Gym_Trainer = () => {
               </div>
             </div>
           ) : (
-            ""
+            "VCard  Data not been Initiated!"
           )}
         </>
       )}
