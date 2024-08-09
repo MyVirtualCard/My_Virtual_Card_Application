@@ -211,6 +211,7 @@ console.log(currentTemplate)
           },
         })
         .then((res) => {
+          console.log(res.data.data)
           setVCardAdded(res.data.data.length);
           if (res.data.data.length <= 0) {
             setCurrentTemplate(null);

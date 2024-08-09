@@ -23,6 +23,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
+import axios from "axios";
+import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
+import { Toaster, toast } from "react-hot-toast";
 const Fashion_Designer = () => {
   let fashionIcons = [
     fashion1,
@@ -39,25 +42,30 @@ const Fashion_Designer = () => {
     fashion12,
   ];
   const [fashionIconIndex, setFashionIconIndex] = useState(0);
-    // /Fashion stress:
-    useEffect(() => {
-      if (fashionIconIndex >= 0) {
-        if (fashionIconIndex < fashionIcons.length) {
-          const timer = setTimeout(() => {
-            setFashionIconIndex(fashionIconIndex + 1);
-          }, 5000);
-  
-          // Cleanup the timer
-          return () => {
-            clearTimeout(timer);
-          };
-        }
+  let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
+  // /Fashion stress:
+  useEffect(() => {
+    if (fashionIconIndex >= 0) {
+      if (fashionIconIndex < fashionIcons.length) {
+        const timer = setTimeout(() => {
+          setFashionIconIndex(fashionIconIndex + 1);
+        }, 5000);
+
+        // Cleanup the timer
+        return () => {
+          clearTimeout(timer);
+        };
       }
-      if (fashionIconIndex === 12) {
-        setFashionIconIndex(0);
-      }
-    }, [fashionIconIndex]);
-  let bannerImages=['https://img.freepik.com/free-photo/female-fashion-designer-working-studio-sitting-desk_155003-17085.jpg?t=st=1722620141~exp=1722623741~hmac=2600260415736230b94f075a655befc0207fc4ddf7e9b441a4d218426cb75f81&w=900','https://img.freepik.com/free-photo/female-fashion-designer-working-studio-sitting-desk_155003-17084.jpg?t=st=1722629038~exp=1722632638~hmac=84f26cfbb8fa2162126520c8d085144c9d7a8eb2583d65b24a16f853d39f6682&w=900','https://img.freepik.com/free-photo/fashion-designer-woman-working-studio-sitting-desk_155003-2461.jpg?t=st=1722629056~exp=1722632656~hmac=d8f30ab33efe964a8a68faf2d322c1fcdc949f33aa574ccaf2c2befd985af241&w=900']
+    }
+    if (fashionIconIndex === 12) {
+      setFashionIconIndex(0);
+    }
+  }, [fashionIconIndex]);
+  let bannerImages = [
+    "https://img.freepik.com/free-photo/female-fashion-designer-working-studio-sitting-desk_155003-17085.jpg?t=st=1722620141~exp=1722623741~hmac=2600260415736230b94f075a655befc0207fc4ddf7e9b441a4d218426cb75f81&w=900",
+    "https://img.freepik.com/free-photo/female-fashion-designer-working-studio-sitting-desk_155003-17084.jpg?t=st=1722629038~exp=1722632638~hmac=84f26cfbb8fa2162126520c8d085144c9d7a8eb2583d65b24a16f853d39f6682&w=900",
+    "https://img.freepik.com/free-photo/fashion-designer-woman-working-studio-sitting-desk_155003-2461.jpg?t=st=1722629056~exp=1722632656~hmac=d8f30ab33efe964a8a68faf2d322c1fcdc949f33aa574ccaf2c2befd985af241&w=900",
+  ];
   const [bannerIndex, setBannerIndex] = useState(0);
   // /Fashion stress:
   useEffect(() => {
@@ -76,7 +84,7 @@ const Fashion_Designer = () => {
     if (bannerIndex === 3) {
       setBannerIndex(0);
     }
-  }, [fashionIconIndex])
+  }, [fashionIconIndex]);
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -85,7 +93,6 @@ const Fashion_Designer = () => {
   });
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
-  let [AllFeedBacks, setAllFeedBacks] = useState([]);
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -192,38 +199,41 @@ const Fashion_Designer = () => {
 
     fullImageBox.style.display = "none";
   }
-  //Form Logic :
+  //Feedback Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
-      userName: "",
-      userFeedback: "",
-      currentRatting: 0,
+      URL_Alies: window.location.pathname,
+      ClientName: "",
+      ClientFeedback: "",
+      ClientRatting: 0,
     },
 
     //Validation :
     validationSchema: Yup.object({
-      userName: Yup.string()
+      ClientName: Yup.string()
         .min(3, "Min 3 char required")
         .max(50, "Name must be 20 character or less")
         .required("Name is required"),
-      userFeedback: Yup.string()
+      ClientFeedback: Yup.string()
         .min(10, "Minimum 10 character required")
         .max(400, "Feedback must be 100 character or less")
         .required("Feedback is required"),
     }),
     //Form Submit :
     onSubmit: async (values) => {
-      setFeedbackForm({
-        userName: values.userName,
-        userFeedback: values.userFeedback,
-        currentRatting: values.currentRatting,
-      });
-      feedBackSubmit();
-      setTimeout(() => {
-        feedbackFormik.values.userName = "";
-        feedbackFormik.values.userFeedback = "";
-        feedbackFormik.values.currentRatting = 0;
-      }, 4000);
+      console.log(values);
+      setFeedbackLoader(true);
+      await api
+        .post(`/feedback${window.location.pathname}`, values)
+        .then((res) => {
+          toast.success(res.data.message);
+
+          setFeedbackLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setFeedbackLoader(false);
+        });
     },
   });
   //Start Ratting:
@@ -238,7 +248,7 @@ const Fashion_Designer = () => {
   }
   //Remove Ratting:
   function removeRatting() {
-    highlightStar(feedbackForm.currentRatting);
+    highlightStar(feedbackForm.ClientRatting);
   }
   //Staring Setted
   function RattingSetted(e) {
@@ -246,9 +256,9 @@ const Fashion_Designer = () => {
     let star = e.target;
     // console.log(star,star.classList);
     if (star.classList.contains("star")) {
-      feedbackForm.currentRatting = parseInt(star.dataset.rating, 10);
-      starRating.setAttribute("data-rating", feedbackForm.currentRatting);
-      highlightStar(feedbackForm.currentRatting);
+      feedbackForm.ClientRatting = parseInt(star.dataset.rating, 10);
+      starRating.setAttribute("data-rating", feedbackForm.ClientRatting);
+      highlightStar(feedbackForm.ClientRatting);
     }
   }
 
@@ -319,891 +329,1330 @@ const Fashion_Designer = () => {
       StopConfetti();
     },
   });
+  let [SiteLoader, setSiteLoader] = useState(false);
+
+  let [VCard_URL_Data, setVCard_URL_Data] = useState([]);
+  let [BasicData, setBasicData] = useState([]);
+  let [VCardData, setVCardData] = useState([]);
+  let [GalleryData, setGalleryData] = useState([]);
+  let [TestimonialData, setTestimonialData] = useState([]);
+  let [ProductData, setProductData] = useState([]);
+  let [BlogData, setBlogData] = useState([]);
+  let [ServiceData, setServiceData] = useState([]);
+  let [QRCodeData, setQRCodeData] = useState([]);
+  let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  let [SocialMediaData, setSocialMediaData] = useState([]);
+  let [BussinessHourData, setBussinessHourData] = useState([]);
+  let [GoogleMapData, setGoogleMapData] = useState([]);
+  let [PopUpBannerData, setPopUpBannerData] = useState([]);
+  const currentUrl = window.location.pathname; // Full URL
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
+  async function fetchAllData() {
+    setSiteLoader(true);
+    try {
+      await api
+        .get(`/vcard/allDataAPI${currentUrl}`)
+        .then((res) => {
+          console.log(res.data.data);
+          setGoogleMapData(res.data.data.GoogleMapData);
+          setVCard_URL_Data(res.data.data.Vcard_URL);
+          setBasicData(res.data.data.BasicDetails);
+          setSocialMediaData(res.data.data.SocialMediaModel);
+          setGalleryData(res.data.data.GalleryModel);
+          setTestimonialData(res.data.data.TestimonialModel);
+          setServiceData(res.data.data.ServiceData);
+          setProductData(res.data.data.ProductModel);
+          setQRCodeData(res.data.data.QRCodeModel);
+          setBussinessHourData(res.data.data.BussinessModel);
+          setPopUpBannerData(res.data.data.PopupBannerModel);
+          setSiteLoader(false);
+          setTimeout(() => {
+            // window.scrollTo(0, 0);
+            setPopUpBannerToggle(true);
+          }, 1000);
+        })
+        .catch((error) => {
+          console.log(error);
+          setSiteLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setSiteLoader(false);
+    }
+  }
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+  useEffect(() => {
+    api
+      .get(`/feedback${window.location.pathname}`)
+      .then((res) => {
+        setAllFeedBacks(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [commentOpen]);
+  const HtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
   return (
-    <div className="Fashion_Designer_container">
-      <div className="Fashion_Designer_box">
-        {/* Banner and logo and details and socialMedias */}
-        <div className="row_1">
-          <div className="banner_image">
-            <img
-              src={bannerImages[bannerIndex]}
-              alt="banner"
-            />
-            <div className="overlay"></div>
+    <>
+      {SiteLoader ? (
+        <div className="newDesignLoader3">
+          <div className="loadingbackground">
+            {/* <img src={loadingBack} alt="loading" className="aris_back" /> */}
           </div>
-          <div className="user_logo">
-            <img
-              src="https://img.freepik.com/free-vector/illustration-boutique-shop-logo-stamp-banner_53876-6837.jpg?t=st=1722621000~exp=1722624600~hmac=8fd421fab03a9aca1b30284602caf88db67da42fb9a12f5ee75fd202c87026f7&w=740"
-              alt="user_logo"
-            />
-          </div>
+          <small>
+            {" "}
+            <div className="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </small>
+          {/* <Triangle
+        visible={true}
+        height="80"
+        width="80"
+        color="#ffffff"
+        ariaLabel="triangle-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        className='logoLoader'
+        style={{zIndex:1}}
+      /> */}
+          <img src={trianglelogo} alt="LOGO" className="aris_logo" />
         </div>
-        {/* Summary */}
-        <div className="row_2">
-          <div className="user_details">
-            <div className="user_data">
-              <div className="user_information">
-                <h2>Marry Johnson</h2>
-                <p>
-                  Fashion Designer{" "}
-                  <img src={fashionIcons[fashionIconIndex]} alt="fashion" />
-                </p>
-              </div>
-              <div className="social_medias">
-                <a
-                  href="https://www.facebook.com/aristostechindia"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bxl-facebook"></i>
-                  <small>Facebook</small>
-                </a>
-                <a
-                  href="https://www.instagram.com/aristostech_india/"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bxl-instagram"></i>
-                  <small>Instagram</small>
-                </a>
-                <a
-                  href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bxl-whatsapp"></i>
-                  <small>Whatsup</small>
-                </a>
-                {/* <a href="#" className="social_media_icon">
-                  <i className="bx bxl-twitter"></i>
-                  <small>Twitter</small>
-                </a> */}
-                <a
-                  href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bx-map"></i>
-                  <small>Location</small>
-                </a>
-                <a
-                  href="https://www.aristostechindia.com/"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bx-globe"></i>
-                  <small>Website</small>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="summary">
-            <p>
-              We started from a traditional marketing background and emerged to
-              be a successful Digital Marketing Agency since Digitalisation has
-              begun to evolve.
-            </p>
-          </div>
-        </div>
-        {/* ContactDetails */}
-        <div className="row_3">
-          <div className="title">
-            <h3>#&nbsp;Contact Details</h3>
-            {/* Contact */}
-          </div>
+      ) : (
+        <>
+          {VCard_URL_Data != undefined ? (
+            <div className="Fashion_Designer_container">
+              <Toaster position="top-right" reverseOrder={false} />
+              <div className="Fashion_Designer_box">
+                {/* popupbanner */}
+                {PopUpBannerData.length > 0 ? (
+                  <>
+                    {PopUpBannerData.map((data, index) => {
+                      return (
+                        <div
+                          className="popup_container"
+                          id={popupBannerToggle ? "popupShow" : "popupHide"}
+                          key={index}
+                        >
+                          <div className="box">
+                            <div
+                              className="close_banner_icon"
+                              onClick={() => setPopUpBannerToggle(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                            <div className="banner_title">
+                              <h3>{data.BannerTitle || "Be In Touch"}</h3>
+                            </div>
+                            <div className="summary">
+                              <p>
+                                {data.BannerDescription ||
+                                  ` Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Quidem, ut?`}
+                              </p>
+                            </div>
+                            <div className="action">
+                              <a
+                                href={`mailto:${data.BannerURL}`}
+                                target="_blank"
+                              >
+                                {data.BannerButtonName || "Get In Touch"}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  ""
+                )}
+                {/* Banner and logo and details and socialMedias */}
+                {VCard_URL_Data.map((data, index) => {
+                  return (
+                    <>
+                      <div className="row_1" key={index}>
+                        <div className="banner_image">
+                          {data.BannerType == "Paste_ImageAddress" ? (
+                            <>
+                              <img
+                                src={
+                                  data.BannerAddress ||
+                                  "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
+                                }
+                                alt="banner"
+                              />
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {data.BannerType == "ImageUpload"
+                            ? data.Banner ||
+                              "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
+                            : ""}
+                          <div className="overlay"></div>
+                        </div>
+                        <div className="user_logo">
+                        {data.ProfileType == "ImageUpload" ? (
+                                <img
+                                  src={
+                                    data.Profile ||
+                                    "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
+                                  }
+                                  alt="user_logo"
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {data.ProfileType == "Paste_ImageAddress" ? (
+                                <img
+                                  src={
+                                    data.ProfileAddress ||
+                                    "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
+                                  }
+                                  alt="user_logo"
+                                />
+                              ) : (
+                                ""
+                              )}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
 
-          <div className="contact_list_container">
-            <div className="contact_list">
-              <div className="icons">
-                <i class="bx bxl-gmail"></i>
-                {/* <small>Email</small> */}
-              </div>
-
-              <div className="list_detail">
-                <p>jayakumarv@aristostech.in</p>
-              </div>
-            </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-mobile-vibration"></i>
-                {/* <small>Mobile Number</small> */}
-              </div>
-
-              <div className="list_detail">
-                <p>(+91) 93444 82370</p>
-              </div>
-            </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-envelope"></i>
-                {/* <small>Company Email</small> */}
-              </div>
-
-              <div className="list_detail">
-                <p>contact@aristostech.in</p>
-              </div>
-            </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-map-alt"></i>
-                {/* <small>Address</small> */}
-              </div>
-
-              <div className="list_detail">
-                <p>
-                  Ankur Plasa No-113 (Old 52) G.N Chetty Road T. Nagar
-                  Chennai-600017
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* AddtoContact */}
-          <div className="add_to_contact">
-            <button onClick={generateVCF}>
-              Add to Contact<i className="bx bxs-contact"></i>
-            </button>
-          </div>
-        </div>
-        {/* Services */}
-        <div className="row_4">
-          <div className="title">
-            <h3>#&nbsp;Our Services</h3>
-          </div>
-
-          <div className="service_list_container">
-            <div className="service_list">
-              <span className="material-symbols-outlined">palette</span>
-
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Color direction</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quasi nisi laborum reprehenderit sint doloribus ab!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">view_quilt</span>
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Catalog layout</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Gallery */}
-        <div className="row_8">
-          <div className="title">
-            <h3>#&nbsp;Gallery</h3>
-          </div>
-          <div className="gallery_container">
-            <div className="full_image" id="fullImageBox">
-              <div className="close_Full_Image_gallery">
-                <span
-                  className="material-symbols-outlined"
-                  onClick={closeFullImage}
-                >
-                  cancel
-                </span>
-              </div>
-              <img src={banner} alt="gallery" id="fullImage" />
-            </div>
-
-            <div className="gallery_box">
-              <Slide
-                slidesToScroll={1}
-                slidesToShow={width < 600 ? 2 : 2}
-                indicators={false}
-                autoplay
-                {...gallery_properties}
-                autoplayInterval={1000}
-              >
-                <img
-                  src="https://img.freepik.com/premium-vector/fashion-designer-violet-concept-with-people-scene-flat-cartoon-style-fashion-designer_198565-3738.jpg?w=900"
-                  alt="developer"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/fashion-designer-woman-working-studio-sitting-desk_155003-2462.jpg?t=st=1722621894~exp=1722625494~hmac=1a3a0dcf77f739b90a6a48cac1067710bf167740bb4e0125c3696d1f59f439ac&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/beautiful-woman-showing-new-dress_23-2147688748.jpg?t=st=1722621912~exp=1722625512~hmac=5f085dae3ea305898277cad38fc6def45f4ac3a9707fcf7e21872301dd9ff56e&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/emotional-funny-attractive-woman-holding-colorful-dresses-hanger-clothing-store_285396-4615.jpg?t=st=1722621932~exp=1722625532~hmac=76da5fd66d6aefca0f7e92a77f015312a2cb6367a26fa80f2ca671de6a747e32&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-              </Slide>
-            </div>
-          </div>
-        </div>
-
-        {/* Products */}
-        <div className="row_7">
-          <div className="title">
-            <h3>
+                {/* Summary */}
+                {BasicData.length >0 ? 
+                <>
+                      <div className="row_2">
+                  <div className="user_details">
+                    <div className="user_data">
+                      {BasicData.map((data,index)=>{
+                        return(
+                          <>
+                               <div className="user_information" key={index}>
+                        <h2>{data.FirstName} {data.LastName}</h2>
+                        <p>
+                          {data.Profession}
+                          {/* <img
+                            src={fashionIcons[fashionIconIndex]}
+                            alt="fashion"
+                          /> */}
+                        </p>
+                      </div>
+                          </>
+                        )
+                      })}
+                     {SocialMediaData.length>0 ? 
+                       <>
+                       {SocialMediaData.map((data, index) => {
+                         return (
+                           <div
+                             className="social_medias"
+                             key={index}
+                           >
+                             {data.Facebook != "" &&
+                             data.Facebook ? (
+                               <a
+                                 href={data.Facebook}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-facebook"></i>
+                                 <small>Facebook</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.WhatsUp != "" &&
+                             data.WhatsUp ? (
+                               <a
+                                 href={`https://wa.me/${data.WhatsUp}?text=Hello%20there!`}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-whatsapp"></i>
+                                 <small>Whatsup</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.Instagram != "" &&
+                             data.Instagram ? (
+                               <a
+                                 href={data.Instagram}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-instagram"></i>
+                                 <small>Instagram</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.LinkedIn != "" &&
+                             data.LinkedIn ? (
+                               <a
+                                 href={data.LinkedIn}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-linkedin-square"></i>
+                                 <small>LinkedIn</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.Github != "" &&
+                             data.Github ? (
+                               <a
+                                 href={data.Github}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-github"></i>
+                                 <small>Github</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.Twiter != "" &&
+                             data.Twiter ? (
+                               <a
+                                 href={data.Twiter}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-twitter"></i>
+                                 <small>Twitter</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.Youtube != "" &&
+                             data.Youtube ? (
+                               <a
+                                 href={data.Youtube}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bxl-youtube"></i>
+                                 <small>Youtube</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                             {data.Website != "" &&
+                             data.Website ? (
+                               <a
+                                 href={data.Website}
+                                 className="social_media_icon"
+                                 target="_blank"
+                               >
+                                 <i className="bx bx-globe"></i>
+                                 <small>Website</small>
+                               </a>
+                             ) : (
+                               ""
+                             )}
+                           </div>
+                         );
+                       })}
+                     </>
+                     : ""}
+                   
+                    </div>
+                  </div>
+                  {VCard_URL_Data.map((data,index)=>{
+                    return(
+                      <>
+                          <div className="summary" key={index}>
+                    <p>
+                    {data.Description || 'No Description!'}
+                    </p>
+                  </div>
+                      </>
+                    )
+                  })}
               
-              #&nbsp;Our Products
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="product_list_container">
-            <Slide
-              slidesToScroll={1}
-              slidesToShow={width < 600 ? 1 : 2}
-              indicators={true}
-              autoplay
-              {...properties}
-              autoplayInterval={500}
-            >
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/measuring-tape-still-life_23-2150404681.jpg?t=st=1722625614~exp=1722629214~hmac=978928d5c0263e973785df89a0ed957db40663e7c192cd597c77c8e54dffa261&w=900"
-                    alt="product"
-                  />
                 </div>
-                <div className="product_details">
-                  <h4>A Measuring Tape</h4>
-                  <small> The first tool is the humble measuring tape. That is something that every single fashion design equipment list will mandatorily have.</small>
-                  <button>₹ &nbsp;100</button>
+                </>
+                : ''}
+          
+                {/* ContactDetails */}
+                {BasicData.length > 0 ?
+                <>
+                     <div className="row_3">
+                  <div className="title">
+                    <h3>#&nbsp;Contact Details</h3>
+                   
+                  </div>
+
+                  {BasicData.map((data, index) => {
+                        return (
+                          <div className="contact_list_container" key={index}>
+                            <div className="contact_list">
+                              <div className="icons">
+                                <i className="bx bxl-gmail"></i>
+                                {/* <small>Personal Email</small> */}
+                              </div>
+
+                              <div className="list_detail">
+                                <p>
+                                  {data.Email || "jayakumarv@aristostech.in"}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="contact_list">
+                              <div className="icons">
+                                <i className="bx bx-mobile-vibration"></i>
+                                {/* <small>Mobile Number</small> */}
+                              </div>
+
+                              <div className="list_detail">
+                                <p>
+                                  {data.MobileNumber || "(+91) -----------"}
+                                </p>
+                              </div>
+                            </div>
+                            {data.AlternateEmail.length > 0 ? (
+                              <div className="contact_list">
+                                <div className="icons">
+                                  <i className="bx bx-envelope"></i>
+                                  {/* <small>Alternate Email</small> */}
+                                </div>
+
+                                <div className="list_detail">
+                                  <p>
+                                    {data.AlternateEmail ||
+                                      "contact@aristostech.in"}
+                                  </p>
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+
+                            {data.Location.length > 0 ? (
+                              <div className="contact_list">
+                                <div className="icons">
+                                  <i className="bx bx-map-alt"></i>
+                                  {/* <small>Address</small> */}
+                                </div>
+
+                                <div className="list_detail">
+                                  <p>{data.Location || "....."}</p>
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        );
+                      })}
+
+                  {/* AddtoContact */}
+                  <div className="add_to_contact">
+                    <button onClick={generateVCF}>
+                      Add to Contact<i className="bx bxs-contact"></i>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/fashion-designer-s-studio-with-essential-elements_23-2150414725.jpg?t=st=1722625741~exp=1722629341~hmac=84bd284f5b3aa92e8c6bc2b2520b06860816e2be217af9f0fef4fd680c2aa40d&w=900"
-                    alt="product"
-                  />
+                </>
+                : ''}
+           
+                {/* Services */}
+                {ServiceData.length > 0 ? 
+                <>
+                  <div className="row_4">
+                  <div className="title">
+                    <h3>#&nbsp;Our Services</h3>
+                  </div>
+
+                  <div className="service_list_container">
+                    {ServiceData.map((data,index)=>{
+                      return(
+                        <>
+                           <div className="service_list" key={index}>
+                                {data.ServiceType == "Icon_Tag" ? (
+                                  <>
+                                    <HtmlRenderer
+                                      htmlString={data.ServiceIcon}
+                                    />
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+                                {data.ServiceType == "ImageUpload" ? (
+                                  <>
+                                    <img src={data.ServiceImage} alt="" />
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+
+                                <div className="service_detail" id={data.ServiceType == 'Icon_Tag' ? "contentMargin":''}>
+                                  <div className="service_title">
+                                    <h4>{data.ServiceName || "Empty Data"}</h4>
+                                  </div>
+                                  <div className="service_summary">
+                                    <p>
+                                      {data.ServiceDescription ||
+                                        `Lorem ipsum dolor sit amet consectetur
+                                      adipisicing elit. Quasi nisi laborum
+                                      reprehenderit sint doloribus ab!`}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                        </>
+                      )
+                    })}
+                    {/* <div className="service_list">
+                      <span className="material-symbols-outlined">palette</span>
+
+                      <div className="service_detail">
+                        <div className="service_title">
+                          <h4>Color direction</h4>
+                        </div>
+                        <div className="service_summary">
+                          <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Quasi nisi laborum reprehenderit sint
+                            doloribus ab!
+                          </p>
+                        </div>
+                      </div>
+                    </div> */}
+             
+                  </div>
                 </div>
-                <div className="product_details">
-                  <h4>A Sharp Pair of Scissors</h4>
-                  <small> These are one of the main fashion design tools, whether one is a student or a professional. </small>
-                  <button>₹ &nbsp;350</button>
-                </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/top-view-colorful-threads-dark-wall_179666-39993.jpg?t=st=1722625823~exp=1722629423~hmac=7b18347c8a4ff121a9d2030a9acf3888bdfed350102502d7db5dae725ce7dcea&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4> Tailor’s Chalk</h4>
-                  <small>Another important fashion tool is tailor’s chalk. Designers keep an entire army of chalk with them!</small>
-                  <button>₹ &nbsp;150</button>
-                </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/needles-sewing-threads-used-by-hands-top-view_23-2148355047.jpg?t=st=1722625911~exp=1722629511~hmac=15241672681e221a6f947afa270937a85ee4edf8efc894d09ee89ad0716a1bfe&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4> Needles and Threads
-                  </h4>
-                  <small>These are also essentials in a fashion designer’s tool kit. They’re not usually used during the creation of the dress</small>
-                  <button>₹ &nbsp;450</button>
-                </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/natural-white-cotton-crumpled-soft-fabric-texture-background-surface_640221-220.jpg?t=st=1722625986~exp=1722629586~hmac=3a95d4ed209a4c8ed5f077c3003e02eb0e534128aa9f4fdd78dc3363d74b07d1&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4> Muslin Fabric
-                  </h4>
-                  <small>Muslin is a cotton fabric that can range in weight – from sheers to coarse material.</small>
-                  <button>₹ &nbsp;1000</button>
-                </div>
-              </div>
-            </Slide>
-          </div>
-        </div>
-        {/* //Appinment */}
-        <div className="row_6">
-          <div className="title">
-            <h3>
+                </>
+                :''}
               
-             #&nbsp;Make An Appoinment
-            </h3>
-          </div>
 
-          <div className="appinment_form_container">
-            <form className="appinment_form">
-              <div className="form_group">
-                <label htmlFor="date">Date</label>
-                <input
-                  type="date"
-                  name="data"
-                  id="date"
-                  className="date-input"
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="time">Time</label>
-                <select name="time" id="time">
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="01:00 PM">01:00 PM</option>
-                  <option value="03:00 PM">03:00 PM</option>
-                </select>
-              </div>
-              <div className="form_submit">
-                <button type="submit" className="submit-btn">
-                  Book Now
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+           
 
-        {/* Testimonial */}
-        <div className="row_9">
-          <div className="title">
-            <h3>
+                {/* Products */}
+                {ProductData.length>0? 
+                <>
+                    <div className="row_7">
+                  <div className="title">
+                    <h3>#&nbsp;Our Products</h3>
+                    {/* Contact */}
+                  </div>
+                  <div className="product_list_container">
+                    <Slide
+                      slidesToScroll={1}
+                      slidesToShow={width < 600 ? 1 : 2}
+                      indicators={true}
+                      autoplay
+                      {...properties}
+                      autoplayInterval={500}
+                    >
+                      {ProductData.map((data,index)=>{
+                        return(
+                          <>
+                              {data.ProductType == "ImageUpload" ? (
+                                  <div className="product_list">
+                                    <div className="product_image">
+                                      <img
+                                        src={
+                                          data.ProductImage ||
+                                          "https://img.freepik.com/free-vector/taxi-poster-with-realistic-yellow-public-service-car-with-reflection_1284-5444.jpg?t=st=1722540843~exp=1722544443~hmac=246e42b048cc2cd6debfbc2526ba1a7aaab7297900915186ff665942dffd3a3b&w=740"
+                                        }
+                                        alt="product"
+                                      />
+                                    </div>
+                                    <div className="product_details">
+                                      <h4>{data.ProductName}</h4>
+                                      <small> {data.ProductDescription}</small>
+                                      <button>₹ &nbsp;{data.ProductPrice}</button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {data.ProductType == "Image_Address_Link" ? (
+                                  <div className="product_list">
+                                    <div className="product_image">
+                                      <img
+                                        src={
+                                          data.ProductImageLink != undefined ||
+                                          data.ProductImageLink != null
+                                            ? data.ProductImageLink
+                                            : `https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114181.jpg?t=st=1722480930~exp=1722484530~hmac=b3e99f19f2f2261ec0d7c5f1da8914dbfa376f325e37125598579ea7d7eced3b&w=900`
+                                        }
+                                        alt="product"
+                                      />
+                                    </div>
+                                    <div className="product_details">
+                                      <h4>{data.ProductName || '...'}</h4>
+                                      <small>{data.ProductDescription || ''}</small>
+                                      <button>₹ &nbsp;{data.ProductPrice}</button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                          </>
+                        )
+                      })}
+
+                    
+                    </Slide>
+                  </div>
+                </div>
+                </>
+                : ''}
             
-              #&nbsp;Testimonial
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="testimonial_container">
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-              infiniteLoop
-              autoPlay
-            >
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
+                {/* //Appinment */}
+                <div className="row_6">
+                  <div className="title">
+                    <h3>#&nbsp;Make An Appoinment</h3>
+                  </div>
 
-                  <div className="client_name">
-                    <h4>John Doe</h4>
-                    <small>-Member</small>
+                  <div className="appinment_form_container">
+                    <form className="appinment_form">
+                      <div className="form_group">
+                        <label htmlFor="date">Date</label>
+                        <input
+                          type="date"
+                          name="data"
+                          id="date"
+                          className="date-input"
+                        />
+                      </div>
+                      <div className="form_group">
+                        <label htmlFor="time">Time</label>
+                        <select name="time" id="time">
+                          <option value="9:00 AM">9:00 AM</option>
+                          <option value="11:00 AM">11:00 AM</option>
+                          <option value="01:00 PM">01:00 PM</option>
+                          <option value="03:00 PM">03:00 PM</option>
+                        </select>
+                      </div>
+                      <div className="form_submit">
+                        <button type="submit" className="submit-btn">
+                          Book Now
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
-                    alt=""
-                  />
+                {/* Gallery */}
+                {GalleryData.length > 0 ? 
+                <>
+                     <div className="row_8">
+                  <div className="title">
+                    <h3>#&nbsp;Gallery</h3>
+                  </div>
+                  <div className="gallery_container">
+                    <div className="full_image" id="fullImageBox">
+                      <div className="close_Full_Image_gallery">
+                        <span
+                          className="material-symbols-outlined"
+                          onClick={closeFullImage}
+                        >
+                          cancel
+                        </span>
+                      </div>
+                      <img src={banner} alt="gallery" id="fullImage" />
+                    </div>
 
-                  <div className="client_name">
-                    <h4>Jayakumar </h4>
-                    <small>-CEO</small>
+                    <div className="gallery_box">
+                      <Slide
+                        slidesToScroll={1}
+                        slidesToShow={width < 600 ? 2 : 2}
+                        indicators={false}
+                        autoplay
+                        {...gallery_properties}
+                        autoplayInterval={1000}
+                      >
+                        {GalleryData.map((data,index)=>{
+                          return(
+                            <>
+                            <div key={index}>
+                            {data.GalleryType == "ImageUpload" ? (
+                                    <img
+                                      src={
+                                        data.GalleryImage ||
+                                        "https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
+                                      }
+                                      alt="developer"
+                                      onClick={(e) =>
+                                        openFullImage(e.target.src)
+                                      }
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                  {data.GalleryType == "Image_Address_URL" ? (
+                                    <img
+                                      src={
+                                        data.GalleryImageURL ||
+                                        "https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
+                                      }
+                                      alt="developer"
+                                      onClick={(e) =>
+                                        openFullImage(e.target.src)
+                                      }
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                            </div>
+                            </>
+                          )
+                        })}
+                       
+                        {/* <img
+                          src="https://img.freepik.com/free-photo/emotional-funny-attractive-woman-holding-colorful-dresses-hanger-clothing-store_285396-4615.jpg?t=st=1722621932~exp=1722625532~hmac=76da5fd66d6aefca0f7e92a77f015312a2cb6367a26fa80f2ca671de6a747e32&w=900"
+                          alt="dev"
+                          onClick={(e) => openFullImage(e.target.src)}
+                        />  */}
+                      </Slide>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Dinesh Kumar</h4>
-                    <small>-Member</small>
+                </>
+                : ''}
+                {/* Testimonial */}
+                {TestimonialData.length > 0 ? 
+                <>
+                     <div className="row_9">
+                  <div className="title">
+                    <h3>#&nbsp;Testimonial</h3>
+                    {/* Contact */}
+                  </div>
+                  <div className="testimonial_container">
+                    <Carousel
+                      showThumbs={false}
+                      showStatus={false}
+                      infiniteLoop
+                      autoPlay
+                    >
+                      {TestimonialData.map((data,index)=>{
+                        return(
+                          <div className="testimonial_list">
+                          <div className="client_feedback">
+                            <small>
+                            {data.ClientFeedback ||
+                                      ` Lorem ipsum dolor, sit amet consectetur adipisicing
+                              elit. Vel repellendus a ut! Architecto quis error
+                              porro nemo beatae perspiciatis omnis?`}
+                            </small>
+                          </div>
+                          <div className="client_detail">
+                            <img
+                              src={
+                                data.ClientImage ||
+                                "https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                              } alt='clientImage'/>
+  
+                            <div className="client_name">
+                            <h4>{data.ClientName}</h4>
+                            <small>-Member</small>
+                            </div>
+                          </div>
+                        </div>
+                        )
+                      })}
+                 
+                    </Carousel>
                   </div>
                 </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Punitha</h4>
-                    <small>-Member</small>
+                </>
+                : ''}
+           
+                {/* QRCode */}
+                {QRCodeData.length>0 ? 
+                <>
+                        <div className="row_12">
+                  <div className="title">
+                    <h3>#&nbsp;Scan To Pay</h3>
+                    {/* Contact */}
                   </div>
-                </div>
-              </div>
-            </Carousel>
-          </div>
-        </div>
-        {/* QRCode */}
-        <div className="row_12">
-          <div className="title">
-            <h3>
-              #&nbsp;QRCode
-            </h3>
-            {/* Contact */}
-          </div>
-
-          <div className="qrcode_container">
+         {QRCodeData.map((data,index)=>{
+          return(
+            <div className="qrcode_container" key={index}>
             <div className="qr_code_box">
               <h4>
-                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Ducimus, enim?
+              <small>Note :</small>If You want to buy any product with us directly scan to pay easily!
               </h4>
 
               <img
-                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
-                alt=""
-              />
+        src={data.QRCodeImage || "https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?t=st=1722540928~exp=1722544528~hmac=37be49c02a6f26b2ee598eeec0fc1b4f8133a5107efef5c3360142d745b6b58e&w=740"}
+        alt=""
+      />
             </div>
           </div>
-        </div>
-        {/* Opentime */}
-        <div className="row_5">
-          <div className="title">
-            <h3>
-              #&nbsp;Open&Close Time
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="time_list_container">
-            <div className="time_list">
-              <div className="day">
-                <span>Monday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
+          )
+         })}
+                 
                 </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Tuesday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Wednesday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Thursday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Friday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Weekend Days</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>11:00 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Feedback */}
-        <div className="row_10">
-          <div className="title">
-            <h3>
-            #&nbsp;Feedback
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="feedback_container">
-            <form action="" onSubmit={feedbackFormik.handleSubmit}>
-              <div className="form_group">
-                <label
-                  htmlFor="clientName_Input"
-                  className={`${
-                    feedbackFormik.errors.userName ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.userName &&
-                  feedbackFormik.errors.userName
-                    ? feedbackFormik.errors.userName
-                    : "Your Name"}
-                  <span>
-                    <sup>*</sup>
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Name"
-                  name="userName"
-                  id="userName"
-                  // value={userName}
-                  // onChange={(e)=>setUserName(e.target.value)}
-                  value={feedbackFormik.values.userName}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
-                />
-              </div>
-              <div className="form_group">
-                <label
-                  htmlFor="clientFeedBack_Input"
-                  className={`${
-                    feedbackFormik.errors.userFeedback ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.userFeedback &&
-                  feedbackFormik.errors.userFeedback
-                    ? feedbackFormik.errors.userFeedback
-                    : "Your FeedBack"}
-                  <span>
-                    <sup>*</sup>
-                  </span>
-                </label>
-                <textarea
-                  id="userFeedback"
-                  name="userFeedback"
-                  cols="30"
-                  rows="2"
-                  placeholder="Enter your Feedback"
-                  // value={userFeedback}
-                  // onChange={(e)=>setUserFeedback(e.target.value)}
-                  value={feedbackFormik.values.userFeedback}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
-                ></textarea>
-              </div>
-              <div className="form_group">
-                <label
-                  htmlFor="clientName_Input"
-                  className={`${
-                    feedbackFormik.errors.currentRatting ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.currentRatting &&
-                  feedbackFormik.errors.currentRatting
-                    ? feedbackFormik.errors.currentRatting
-                    : "Ratting"}
-                  <span>
-                    <sup>*</sup>
-                  </span>
-                </label>
-                <div
-                  className="ratting_container"
-                  data-rating="0"
-                  name="currentRatting"
-                  id="currentRatting"
-                  onMouseOver={handleRatting}
-                  onMouseLeave={removeRatting}
-                  onClick={RattingSetted}
-                  // value={currentRatting}
-                  // onChange={(e)=>setCurrentRatting(e.target.value)}
-                  value={feedbackFormik.values.currentRatting}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
-                >
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="1"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="2"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="3"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="4"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="5"></i>
-                  </span>
-                </div>
-              </div>
-              <div className="form_actions">
-                <button type="submit">
-                  <span className="material-symbols-outlined">send</span>
-                  Send Feedback
-                </button>
-              </div>
-            </form>
-          </div>
-          {/* //Feedback messages */}
-          <div className="Feedback_container_message">
-            <div className="feeback_title">
-              {commentOpen ? (
-                <button onClick={() => setCommentOpen(false)}>
-                  <span className="material-symbols-outlined">
-                    thumbs_up_down
-                  </span>
-                  Hide All Feedbacks
-                </button>
-              ) : (
-                <button onClick={() => setCommentOpen(true)}>
-                  <span className="material-symbols-outlined">
-                    thumbs_up_down
-                  </span>
-                  See All Feedbacks
-                </button>
-              )}
-
-              {feedbackLoader ? <span className="feedBack_loader"></span> : ""}
-            </div>
-
-            {commentOpen ? (
-              <div className="comment_box">
-                {AllFeedBacks.map((data, index) => {
-                  return (
-                    <div className="message" key={index}>
-                      <div className="user_detail">
-                        <div className="profile">
-                          <img src={profile} alt="profile" />
-                        </div>
-                        <div className="details">
-                          <div className="userName">
-                            <p>
-                              {data.userName}
-                              <i className="bx bxs-user-check"></i>
-                            </p>
+                </>
+                : ''}
+        
+                {/* Opentime */}
+                {BussinessHourData.length>0 ? 
+                <>
+                    <div className="row_5">
+                  <div className="title">
+                    <h3>#&nbsp;Open&Close Time</h3>
+                    {/* Contact */}
+                  </div>
+                  <div className="time_list_container">
+                        {BussinessHourData[0].Monday.from.length > 0 &&
+                        BussinessHourData[0].Monday.to.length > 0 ? (
+                          <div className="time_list">
+                            <div className="day">
+                              <span>Monday</span>
+                            </div>
+                            <div className="time">
+                              <div className="start">
+                                <h6>Open Time</h6>
+                                <span>
+                                  {BussinessHourData[0].Monday.from}AM
+                                </span>
+                              </div>
+                              <div className="end">
+                                <h6>Close Time</h6>
+                                <span>{BussinessHourData[0].Monday.to}PM</span>
+                              </div>
+                            </div>
                           </div>
-                          <div className="stars">
-                            <div
-                              className="ratting_container1"
-                              data-rating={data.currentRatting}
-                              name="currentRatting"
-                              // id="currentRatting"
-                              id={
-                                data.currentRatting == 0
-                                  ? "noRatting"
-                                  : "" || data.currentRatting == 1
-                                  ? "singleRatting"
-                                  : "" || data.currentRatting == 2
-                                  ? "doubleRatting"
-                                  : "" || data.currentRatting == 3
-                                  ? "ThreeRatting"
-                                  : "" || data.currentRatting == 4
-                                  ? "fourRatting"
-                                  : "" || data.currentRatting == 5
-                                  ? "fullRatting"
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Tuesday.from.length > 0 &&
+                        BussinessHourData[0].Tuesday.to.length > 0 ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Tuesday</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Tuesday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Tuesday.to}PM
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Wednesday.from.length > 0 &&
+                        BussinessHourData[0].Wednesday.to.length > 0 ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Wednesday</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Wednesday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Wednesday.to}PM
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Thursday.from.length > 0 &&
+                        BussinessHourData[0].Thursday.to.length > 0 ? (
+                          <div className="time_list">
+                            <div className="day">
+                              <span>Thursday</span>
+                            </div>
+                            <div className="time">
+                              <div className="start">
+                                <h6>Open Time</h6>
+                                <span>
+                                  {BussinessHourData[0].Thursday.from}AM
+                                </span>
+                              </div>
+                              <div className="end">
+                                <h6>Close Time</h6>
+                                <span>
+                                  {BussinessHourData[0].Thursday.to}PM
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+
+                        {BussinessHourData[0].Friday.from.length > 0 &&
+                        BussinessHourData[0].Friday.to.length > 0 ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Friday</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Friday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Friday.to}PM
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        {(BussinessHourData[0].Saturday.from.length > 0 &&
+                          BussinessHourData[0].Saturday.to.length > 0) ||
+                        BussinessHourData[0].Sunday.from.length > 0 ||
+                        BussinessHourData[0].Sunday.from.length ? (
+                          <>
+                            <div className="time_list">
+                              <div className="day">
+                                <span>Weekend Days</span>
+                              </div>
+                              <div className="time">
+                                <div className="start">
+                                  <h6>Open Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Saturday.from}AM
+                                  </span>
+                                </div>
+                                <div className="end">
+                                  <h6>Close Time</h6>
+                                  <span>
+                                    {BussinessHourData[0].Saturday.to}PM
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                </div>
+                </>
+                : ''}
+              {/* GoogleMap */}
+              {GoogleMapData.length > 0 ? (
+                  <>
+                    <div className="google_map_container">
+                    <div className="title">
+                    <h3>
+                    
+                   #&nbsp;Live Location
+          
+                    </h3>
+               
+                  </div>
+                   
+                      {GoogleMapData.map((data, index) => {
+                        return (
+                          <div className="google_map" key={index}>
+                            <HtmlRenderer htmlString={data.GoogleIframe} />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+                {/* Feedback */}
+                {VCard_URL_Data.length > 0 ||
+                BasicData.length > 0 ||
+                SocialMediaData.length > 0 ? 
+                <>
+                     <div className="row_10">
+                  {/* <div className="rattingcar_image">
+                    <img src={RattingCar_Image} alt="ratting" />
+                  </div> */}
+                  <div className="title">
+                    <h3>
+                     
+                      Feedback
+                      <span className="material-symbols-outlined">reviews</span>
+                    </h3>
+                    {/* Contact */}
+                  </div>
+                  <div className="feedback_container">
+                        <form action="" onSubmit={feedbackFormik.handleSubmit}>
+                          <div className="form_group">
+                            <label
+                              htmlFor="clientName_Input"
+                              className={`${
+                                feedbackFormik.errors.ClientName ? "error" : ""
+                              } `}
+                            >
+                              {feedbackFormik.touched.ClientName &&
+                              feedbackFormik.errors.ClientName
+                                ? feedbackFormik.errors.ClientName
+                                : "Your Name"}
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Enter Your Name"
+                              name="ClientName"
+                              id="ClientName"
+                              // value={userName}
+                              // onChange={(e)=>setUserName(e.target.value)}
+                              value={feedbackFormik.values.ClientName}
+                              onChange={feedbackFormik.handleChange}
+                              onBlur={feedbackFormik.handleBlur}
+                            />
+                          </div>
+                          <div className="form_group">
+                            <label
+                              htmlFor="clientFeedBack_Input"
+                              className={`${
+                                feedbackFormik.errors.ClientFeedback
+                                  ? "error"
                                   : ""
-                              }
-                              value={data.currentRatting}
+                              } `}
+                            >
+                              {feedbackFormik.touched.ClientFeedback &&
+                              feedbackFormik.errors.ClientFeedback
+                                ? feedbackFormik.errors.ClientFeedback
+                                : "Your FeedBack"}
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
+                            <textarea
+                              id="ClientFeedback"
+                              name="ClientFeedback"
+                              cols="30"
+                              rows="2"
+                              placeholder="Enter your Feedback"
+                              // value={userFeedback}
+                              // onChange={(e)=>setUserFeedback(e.target.value)}
+                              value={feedbackFormik.values.ClientFeedback}
+                              onChange={feedbackFormik.handleChange}
+                              onBlur={feedbackFormik.handleBlur}
+                            ></textarea>
+                          </div>
+                          <div className="form_group">
+                            <label
+                              htmlFor="clientName_Input"
+                              className={`${
+                                feedbackFormik.errors.ClientRatting
+                                  ? "error"
+                                  : ""
+                              } `}
+                            >
+                              {feedbackFormik.touched.ClientRatting &&
+                              feedbackFormik.errors.ClientRatting
+                                ? feedbackFormik.errors.ClientRatting
+                                : "Ratting"}
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
+                            <div
+                              className="ratting_container"
+                              data-rating="0"
+                              name="ClientRatting"
+                              id="ClientRatting"
+                              onMouseOver={handleRatting}
+                              onMouseLeave={removeRatting}
+                              onClick={RattingSetted}
+                              value={feedbackForm.ClientRatting}
+                              // onChange={(e)=>setCurrentRatting(e.target.value)}
+                              // value={feedbackFormik.ClientRatting}
+                              onChange={feedbackFormik.handleChange}
+                              onBlur={feedbackFormik.handleBlur}
                             >
                               <span className="ratting_star">
                                 <i
-                                  className="bx bxs-star star1"
+                                  className="bx bxs-star star"
                                   data-rating="1"
                                 ></i>
                               </span>
                               <span className="ratting_star">
                                 <i
-                                  className="bx bxs-star star1"
+                                  className="bx bxs-star star"
                                   data-rating="2"
                                 ></i>
                               </span>
                               <span className="ratting_star">
                                 <i
-                                  className="bx bxs-star star1"
+                                  className="bx bxs-star star"
                                   data-rating="3"
                                 ></i>
                               </span>
                               <span className="ratting_star">
                                 <i
-                                  className="bx bxs-star star1"
+                                  className="bx bxs-star star"
                                   data-rating="4"
                                 ></i>
                               </span>
                               <span className="ratting_star">
                                 <i
-                                  className="bx bxs-star star1"
+                                  className="bx bxs-star star"
                                   data-rating="5"
                                 ></i>
                               </span>
                             </div>
                           </div>
+                          <div className="form_actions">
+                            <button type="submit">
+                              <span className="material-symbols-outlined">
+                                send
+                              </span>
+                              Send Feedback
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                   {/* //Feedback messages */}
+                   <div className="Feedback_container_message">
+                        <div className="feeback_title">
+                          {commentOpen ? (
+                            <button onClick={() => setCommentOpen(false)}>
+                              <span className="material-symbols-outlined">
+                                thumbs_up_down
+                              </span>
+                              Hide All Feedbacks
+                            </button>
+                          ) : (
+                            <button onClick={() => setCommentOpen(true)}>
+                              <span className="material-symbols-outlined">
+                                thumbs_up_down
+                              </span>
+                              See All Feedbacks
+                              <i className="bx bxs-bell-ring bx-tada"></i>
+                              <div className="count">{AllFeedBacks.length}</div>
+                            </button>
+                          )}
+
+                          {feedbackLoader ? (
+                            <span className="feedBack_loader"></span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+
+                        {commentOpen ? (
+                          <div className="comment_box">
+                            {AllFeedBacks.map((data, index) => {
+                              return (
+                                <div className="message" key={index}>
+                                  <div className="user_detail">
+                                    <div className="profile">
+                                      <img
+                                        src="https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?t=st=1722896783~exp=1722900383~hmac=3628f6befbe82fb4e2642e0c0f1f836c946ba70bb2e17c5d12d5c839123aeb12&w=740"
+                                        alt="profile"
+                                      />
+                                    </div>
+                                    <div className="details">
+                                      <div className="userName">
+                                        <p>
+                                          {data.ClientName}
+                                          <i className="bx bxs-user-check"></i>
+                                        </p>
+                                      </div>
+                                      <div className="stars">
+                                        <div
+                                          className="ratting_container1"
+                                          data-rating={data.ClientRatting}
+                                          name="currentRatting"
+                                          // id="currentRatting"
+                                          id={
+                                            data.ClientRatting == 0
+                                              ? "noRatting"
+                                              : "" || data.ClientRatting == 1
+                                              ? "singleRatting"
+                                              : "" || data.ClientRatting == 2
+                                              ? "doubleRatting"
+                                              : "" || data.ClientRatting == 3
+                                              ? "ThreeRatting"
+                                              : "" || data.ClientRatting == 4
+                                              ? "fourRatting"
+                                              : "" || data.ClientRatting == 5
+                                              ? "fullRatting"
+                                              : ""
+                                          }
+                                          value={data.ClientRatting}
+                                        >
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="1"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="2"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="3"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="4"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="5"
+                                            ></i>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="comments">
+                                    <i className="bx bx-chat"></i>
+                                    <span>{data.ClientFeedback}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                </div>
+                </>
+                : ' '}
+
+                {/* Inquries */}
+                <div className="row_11">
+                  <div className="title">
+                    <h3>#&nbsp;Inquries</h3>
+                  </div>
+                  <div className="inquiries_container5">
+                    <form action="">
+                      <div className="form_group">
+                        <label htmlFor="name">
+                          Name <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <input type="text" placeholder="Your Name" />
+                          <i className="bx bxs-user-pin"></i>
                         </div>
                       </div>
-
-                      <div className="comments">
-                        <i className="bx bx-chat"></i>
-                        <span>{data.userFeedback}</span>
+                      <div className="form_group">
+                        <label htmlFor="email">
+                          Email <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <input type="email" placeholder="Your Email" />
+                          <i className="bx bxs-envelope"></i>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
+                      <div className="form_group">
+                        <label htmlFor="name">
+                          Phone <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <input type="tel" placeholder="Enter Phone Number" />
+                          <i className="bx bxs-phone-call"></i>
+                        </div>
+                      </div>
+                      <div className="form_group">
+                        <label htmlFor="name">
+                          Message <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <div className="input">
+                          <textarea
+                            name="message"
+                            id="message"
+                            cols="30"
+                            rows="2"
+                            placeholder="Enter Your Message Here..."
+                          ></textarea>
+                          <i class="bx bxs-message-dots"></i>
+                        </div>
+                      </div>
+                      <div className="form_actions">
+                        <button type="submit">
+                          <span className="material-symbols-outlined">
+                            send
+                          </span>
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
 
-        {/* Inquries */}
-        <div className="row_11">
-          <div className="title">
-            <h3>
-          
-              #&nbsp;Inquries
-            </h3>
-          </div>
-          <div className="inquiries_container5">
-            <form action="">
-              <div className="form_group">
-                <label htmlFor="name">
-                  Name <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <input type="text" placeholder="Your Name" />
-                  <i className="bx bxs-user-pin"></i>
+                {/* Footer */}
+                <div className="row_13">
+                  <div className="footer_container">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 1440 320"
+                    >
+                      <path
+                        fill="#be96d8b6"
+                        fill-opacity="1"
+                        d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+                      ></path>
+                    </svg>
+                    <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
+                  </div>
                 </div>
               </div>
-              <div className="form_group">
-                <label htmlFor="email">
-                  Email <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <input type="email" placeholder="Your Email" />
-                  <i className="bx bxs-envelope"></i>
-                </div>
-              </div>
-              <div className="form_group">
-                <label htmlFor="name">
-                  Phone <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <input type="tel" placeholder="Enter Phone Number" />
-                  <i className="bx bxs-phone-call"></i>
-                </div>
-              </div>
-              <div className="form_group">
-                <label htmlFor="name">
-                  Message <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <textarea
-                    name="message"
-                    id="message"
-                    cols="30"
-                    rows="2"
-                    placeholder="Enter Your Message Here..."
-                  ></textarea>
-                  <i class="bx bxs-message-dots"></i>
-                </div>
-              </div>
-              <div className="form_actions">
-                <button type="submit">
-                  <span className="material-symbols-outlined">send</span>
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="row_13">
-          <div className="footer_container">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#be96d8b6" fill-opacity="1" d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>
-            <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </>
+      )}
+    </>
   );
 };
 

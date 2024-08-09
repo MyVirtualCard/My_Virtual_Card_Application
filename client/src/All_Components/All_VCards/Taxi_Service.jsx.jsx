@@ -135,6 +135,7 @@ const Taxi_Service = () => {
 
     fullImageBox.style.display = "none";
   }
+  
    //Feedback Form Logic :
    let feedbackFormik = useFormik({
     initialValues: {
