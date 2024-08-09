@@ -245,7 +245,7 @@ const Gym_Trainer = () => {
           setTimeout(() => {
             window.scrollTo(0, 0);
             setPopUpBannerToggle(true);
-          }, 5000);
+          }, 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -1103,12 +1103,19 @@ const Gym_Trainer = () => {
                               alt=""
                             />
                           </div>
-                          <div className="userProfile">
+                          {VCard_URL_Data.map((data,index)=>{
+                            return(
+                              <>
+                                   <div className="userProfile" key={index}>
                             <img
-                              src={VCard_URL_Data[0].Profile || "https://img.freepik.com/free-vector/creative-nerd-logo-template_23-2149218769.jpg?t=st=1723167960~exp=1723171560~hmac=ba06d878628bba2f95c10f1952d53d78fd9466c8481f491daecca840a61c5782&w=740"}
+                              src={data.Profile || "https://img.freepik.com/free-vector/creative-nerd-logo-template_23-2149218769.jpg?t=st=1723167960~exp=1723171560~hmac=ba06d878628bba2f95c10f1952d53d78fd9466c8481f491daecca840a61c5782&w=740"}
                               alt=""
                             />
                           </div>
+                              </>
+                            )
+                          })}
+                     
                         </div>
                         )
                       })}
