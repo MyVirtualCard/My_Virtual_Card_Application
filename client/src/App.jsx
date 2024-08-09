@@ -239,6 +239,8 @@ const App = () => {
       console.log(error);
     }
   }, []);
+
+  console.log(currentTemplate)
   return (
     <>
       <div className="App_container">

@@ -133,8 +133,10 @@ const Select_Template = () => {
     setCurrentPlan,
     SavedPlan,
     setSavedPlan,
+    currentTemplate,
+    setCurrentTemplate,
   } = useContext(Context);
-  let [currentTemplate, setCurrentTemplate] = useState(null);
+  // let [currentTemplate, setCurrentTemplate] = useState(null);
   let [VCardAdded, setVCardAdded] = useState(0);
   let [savedTemplate, setSavedTemplate] = useState(null);
   function handle_Template_Selection(getCurrentId) {
@@ -149,7 +151,7 @@ const Select_Template = () => {
     }
   }
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
-
+console.log(currentTemplate)
   // useEffect(() => {
   //   axios
   //     .get(
@@ -263,7 +265,7 @@ const Select_Template = () => {
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
-      currentTemplate,
+      currentTemplate:currentTemplate,
     };
     api
       .put(`/templateDetail/update_with_URL/${URL_Alies}`, data, {

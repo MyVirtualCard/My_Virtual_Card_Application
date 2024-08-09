@@ -37,7 +37,8 @@ let [pieces,setPieces]=useState(150);
 
     profileOpen,
     setProfileOpen,
-
+    currentTemplate,
+    setCurrentTemplate,
     setUser,
   } = useContext(Context);
 
