@@ -437,8 +437,7 @@
 
             @media screen and (max-width: 600px) {
               gap: 0.6rem;
-              position: absolute;
-              bottom: -20px;
+           
             }
           }
         }
@@ -461,6 +460,9 @@
         font-size: 0.8rem;
         line-height: 1.5rem;
         text-align: start;
+      }
+      @media screen and (max-width: 900px) {
+        padding: 1rem 1rem 0rem 1rem;
       }
     }
     // ContactDetails

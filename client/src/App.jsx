@@ -221,55 +221,55 @@ const App = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
-  // useEffect(() => {
-  //   try {
-  //     api
-  //       .get(`/templateDetail/${URL_Alies_LocalStorage}`)
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         setURL_Alies(res.data.data[0].URL_Alies);
-  //         console.log(res.data.data[0]);
-  //         setCurrentTemplate(res.data.data[0].currentTemplate);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         toast.error(error.response.data.message);
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-
-  async function fetchCurrentTemplate() {
+  useEffect(() => {
     try {
-      await api
-        .get(`/templateDetail/specificAll/${URL_Alies}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorageDatas.token}`,
-          },
-        })
+      api
+        .get(`/templateDetail/${URL_Alies_LocalStorage}`)
         .then((res) => {
-          console.log(res.data.data)
-          // setVCardAdded(res.data.data.length);
-          if (res.data.data.length <= 0) {
-            setCurrentTemplate(null);
-          } else {
-            setCurrentTemplate(res.data.data[0].currentTemplate);
-            setURL_Alies(res.data.data[0].URL_Alies)
-          }
+          console.log(res.data);
+          setURL_Alies(res.data.data[0].URL_Alies);
+          console.log(res.data.data[0]);
+          setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
           console.log(error);
+          toast.error(error.response.data.message);
         });
     } catch (error) {
-      toast.error(error.message);
+      console.log(error);
     }
-  }
-  useEffect(() => {
-    fetchCurrentTemplate();
   }, []);
-  console.log(currentTemplate)
+
+  // async function fetchCurrentTemplate() {
+  //   try {
+  //     await api
+  //       .get(`/templateDetail/specificAll/${URL_Alies}`, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorageDatas.token}`,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         console.log(res.data.data)
+  //         // setVCardAdded(res.data.data.length);
+  //         if (res.data.data.length <= 0) {
+  //           setCurrentTemplate(null);
+  //         } else {
+  //           setCurrentTemplate(res.data.data[0].currentTemplate);
+  //           setURL_Alies(res.data.data[0].URL_Alies)
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // }
+  // useEffect(() => {
+  //   fetchCurrentTemplate();
+  // }, []);
+  // console.log(currentTemplate)
   return (
     <>
       <div className="App_container">
