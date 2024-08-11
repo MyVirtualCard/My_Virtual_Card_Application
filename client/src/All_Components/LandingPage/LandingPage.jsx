@@ -256,7 +256,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("August 10, 2024 00:00:00").getTime();
+    const countdownDate = new Date("August 20, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
