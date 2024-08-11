@@ -34,6 +34,9 @@ let serviceSchema = new mongoose.Schema(
     },
     ServiceIcon:{
       type:String
+    },
+    ServiceAddress:{
+      type:String
     }
   },
   { timestamps: true }

@@ -41,6 +41,10 @@ const VCard_Form_Edit = () => {
     setStatus,
     activePlan,
     setPlanActive,
+    successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen,
   } = useContext(Context);
   let navigate = useNavigate();
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
@@ -70,8 +74,11 @@ const VCard_Form_Edit = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
-          toast.error(error.response.data.message);
+         setErrorPopupOpen(true);
+         setErrorMessage(error.response.data.message);
+       setTimeout(()=>{
+        setErrorPopupOpen(false);
+       },5000)
         });
     } catch (error) {
       toast.error(error.message);
@@ -88,12 +95,17 @@ const VCard_Form_Edit = () => {
   let userDetails = JSON.parse(localStorage.getItem("datas"));
   useEffect(() => {
     api
-      .get(`/auth/register/${userDetails.id}`)
+      .get(`/auth/register/${userDetails.userName}`)
       .then((res) => {
         setUserData(res.data.data);
       })
       .catch((error) => {
-        console.log(error.response.data.message);
+        console.log(error.response.data.message)
+        setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },5000)
       });
   }, []);
   useEffect(() => {
@@ -107,12 +119,17 @@ const VCard_Form_Edit = () => {
         })
         .then((res) => {
           setURL_Alies(res.data.data[0].URL_Alies);
-          console.log(res.data.data[0]);
+     
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
-          console.log(error);
-          toast.error(error.response.data.message);
+       
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },5000)
+  
         });
     } catch (error) {
       console.log(error);
@@ -122,6 +139,29 @@ const VCard_Form_Edit = () => {
   return (
     <>
       <div className="vcard_form_container">
+        {/* Success and Error Popup */}
+        <div className="success_error_container">
+   
+           <div className="popup_success_box" id={successPopupOpen ? 'successOpen':'successClose'}>
+           <div className="popup_close"  onClick={()=>setSuccessPopupOpen(false)}>
+           <i className='bx bx-x'></i>
+           </div>
+               <div className="popup_message">
+                 {successMessage}
+               </div>
+          </div>
+      
+            {errorPopupOpen ? 
+           <div className="popup_error_box">
+           <div className="popup_close"  onClick={()=>setErrorPopupOpen(false)}>
+           <i className='bx bx-x'></i>
+           </div>
+               <div className="popup_message">
+                 {errorMessage}
+               </div>
+          </div>
+          :''}
+        </div>
         <div className="vcard_form_title">
           <div className="title">
             <h5>Update Your VCard</h5>

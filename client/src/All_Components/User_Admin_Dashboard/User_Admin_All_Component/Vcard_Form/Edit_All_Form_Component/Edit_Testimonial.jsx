@@ -17,7 +17,10 @@ const Testimonial = () => {
   let [updateFormOpen, setUpdateFormOpen] = useState(false);
   let [testimonialId, setTestimonialId] = useState();
   let [AllTestimonial, setAllTestimonial] = useState();
-  let { currentPlan, FormSubmitLoader, setFormSubmitLoader, userName } =
+  let { currentPlan, FormSubmitLoader, setFormSubmitLoader, userName,  successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen, } =
     useContext(Context);
     let[ClientCount,setClientCount]=useState(0)
   let [ClientName, setClientName] = useState();
@@ -54,11 +57,20 @@ const Testimonial = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
+
     }
   }
   useEffect(() => {
@@ -98,7 +110,12 @@ const Testimonial = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+
           reloadComponent();
           setClientCount(++ClientCount)
           setTimeout(() => {
@@ -112,8 +129,12 @@ const Testimonial = () => {
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
+    
           setFormSubmitLoader(false);
         });
     },
@@ -172,11 +193,19 @@ const Testimonial = () => {
         })
 
         .catch((error) => {
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
 
@@ -211,7 +240,11 @@ const Testimonial = () => {
         )
         .then((res) => {
           reloadComponent();
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
           setTimeout(() => {
             setUpdateFormOpen(false);
@@ -222,12 +255,19 @@ const Testimonial = () => {
           }, 1000);
         })
         .catch((error) => {
-          console.log(error);
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
   async function handleTestimonialDelete(id) {
@@ -243,16 +283,29 @@ const Testimonial = () => {
         })
         .then((res) => {
           reloadComponent();
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+
           setClientCount(--ClientCount)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
   return (

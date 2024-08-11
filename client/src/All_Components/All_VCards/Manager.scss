@@ -1,6 +1,7 @@
 .newcard_design11_container {
   width: 100vw;
-  height: 100vw;
+  min-height: 100vh;
+  height:auto;
   position: relative;
   display: flex;
   align-items: flex-start;

@@ -30,7 +30,8 @@ import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 import RazorPaymentRoute from "./Routes/Razorpayment.router.js";
 import FeedbackRoute from './Routes/Feedback.route.js';
-import GoogleMapRoute from './Routes/GoogleMap.route.js'
+import GoogleMapRoute from './Routes/GoogleMap.route.js';
+import ManageContentRoute from './Routes/ManageContent.route.js'
 let host_ip = "http://localhost:3001";
 
 //App initialized
@@ -96,6 +97,7 @@ app.use("/googlemapDetail", GoogleMapRoute);
 app.use("/vcard", AllDataRoute);
 app.use("/vcard", AllDataDeleteRoute);
 app.use('/feedback',FeedbackRoute);
+app.use('/manageContent',ManageContentRoute);
 //Setup Mongoose conncetion ;
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING)

@@ -19,6 +19,10 @@ const Products = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
+    successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen,
   } = useContext(Context);
   let [AllProduct, setAllProduct] = useState();
   let [ProductCount, setProductCount] = useState(0);
@@ -73,11 +77,21 @@ const Products = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+        setErrorMessage(error.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
+
+ setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -117,7 +131,12 @@ const Products = () => {
         .then((res) => {
           reloadComponent();
           setProductCount(++ProductCount);
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+      
           setFormSubmitLoader(false);
           setProductFormOpen(false);
           setUpdateFormOpen(false);
@@ -132,7 +151,11 @@ const Products = () => {
           }, []);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
           setFormSubmitLoader(false);
         });
     },
@@ -195,11 +218,16 @@ const Products = () => {
         })
 
         .catch((error) => {
-          console.log(error);
+         
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+        setErrorMessage(error.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
+
     }
   }
 
@@ -232,7 +260,11 @@ const Products = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
           setUpdateFormOpen(false);
           reloadComponent();
@@ -242,12 +274,21 @@ const Products = () => {
           }, 1000);
         })
         .catch((error) => {
-          console.log(error);
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+        setErrorMessage(error.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
+
+
     }
   }
   async function handleProductDelete(id) {
@@ -263,16 +304,29 @@ const Products = () => {
         })
         .then((res) => {
           setProductCount(--ProductCount);
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           reloadComponent();
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+        setErrorMessage(error.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
+
     }
   }
   const handleProductImageChange = (event) => {
@@ -382,7 +436,7 @@ const Products = () => {
                             src={
                               data.ProductImage.length != 0
                                 ? data.ProductImage
-                                : `https://img.freepik.com/free-photo/abstract-blur-shopping-mall_1203-7916.jpg?t=st=1723075586~exp=1723079186~hmac=4dccd998ecc46e0047652ed0adfd2071199ad7157adeae0402d706b4ce95a1b1&w=900`
+                                : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
                             }
                             alt="service_image"
                           /> :'Null'}
@@ -396,7 +450,7 @@ const Products = () => {
                           src={
                             data.ProductImageLink.length != 0
                               ? data.ProductImageLink
-                              : `https://img.freepik.com/free-photo/abstract-blur-shopping-mall_1203-7916.jpg?t=st=1723075586~exp=1723079186~hmac=4dccd998ecc46e0047652ed0adfd2071199ad7157adeae0402d706b4ce95a1b1&w=900`
+                              : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
                           }
                           alt="product_image"
                         />
@@ -613,9 +667,9 @@ const Products = () => {
                         <label htmlFor="Image">
                           <img
                             src={
-                              ProductImage != null
+                              ProductImage != null || ProductImage !=undefined
                                 ? ProductImage
-                                : "https://img.freepik.com/free-vector/autumn-background_23-2149054409.jpg?t=st=1715971926~exp=1715975526~hmac=064e47d99740a4e25fb7345c45d5bc744da1c1ad7f5f1e14668eaae2cc601381&w=900"
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                             }
                             alt="Image"
                           />
@@ -638,8 +692,34 @@ const Products = () => {
                         </div>
                       </>
                     ) : (
-                      <div className="form_group">
+                      <div className="form_group url_link_input_group">
+
+{updateFormOpen ? (
+                          <img
+                            src={
+                              ProductImageLink != null &&
+                              ProductImageLink != undefined &&
+                              ProductImageLink.length > 0
+                                ? ProductImageLink
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                            }
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            src={
+                              formik.values.ProductImageLink != null &&
+                              formik.values.ProductImageLink != undefined &&
+                              formik.values.ProductImageLink.length > 0
+                                ? formik.values.ProductImageLink
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                            }
+                            alt=""
+                            className="banner_address_image"
+                          />
+                        )}
                         <label htmlFor="VCardName">Paste Image Address</label>
+                  
                         <input
                           type="text"
                           placeholder="Eg : https://img.arstostech.com/premium-photo"
@@ -676,7 +756,7 @@ const Products = () => {
                             src={
                               ProductImage != null
                                 ? ProductImage
-                                : "https://img.freepik.com/free-vector/autumn-background_23-2149054409.jpg?t=st=1715971926~exp=1715975526~hmac=064e47d99740a4e25fb7345c45d5bc744da1c1ad7f5f1e14668eaae2cc601381&w=900"
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                             }
                             alt="Image"
                           />
@@ -699,8 +779,19 @@ const Products = () => {
                         </div>
                       </>
                     ) : (
-                      <div className="form_group">
-                        <label htmlFor="VCardName">Paste Image Address</label>
+                      <div className="form_group url_link_input_group">
+                           <img
+                          src={
+                            ProductImageLink != null &&
+                            ProductImageLink != undefined &&
+                            ProductImageLink.length > 0
+                              ? ProductImageLink
+                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                          }
+                          alt=""
+                          className="banner_address_image"
+                        />
+                        <label htmlFor="VCardName">Update Image Address</label>
                         <input
                           type="text"
                           placeholder="Eg : https://img.arstostech.com/premium-photo"
@@ -724,6 +815,15 @@ const Products = () => {
                               : "input_success"
                           }
                         />
+                                 <div className="clear_action">
+                          <button
+                            className="clear_btn"
+                            type="button"
+                            onClick={() => setProductImageLink("")}
+                          >
+                            clear
+                          </button>
+                        </div>
                         <div className="error">{formik.errors.ProductImageLink}</div>
                       </div>
                     )}
@@ -920,7 +1020,7 @@ const Products = () => {
                     src={
                       ProductImage != "null"
                         ? ProductImage
-                        : "https://img.freepik.com/free-vector/business-people-working-modern-eco-friendly-office-with-plants-flowers-biophilic-design-room-eco-friendly-workspace-green-office-concept-bright-vibrant-violet-isolated-illustration_335657-578.jpg?t=st=1719430048~exp=1719433648~hmac=20cfde827bdafe402c3db0c259f557d189ac027e0c9f731c0740eaa55c811581&w=900"
+                        : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                     }
                     alt="service"
                   />

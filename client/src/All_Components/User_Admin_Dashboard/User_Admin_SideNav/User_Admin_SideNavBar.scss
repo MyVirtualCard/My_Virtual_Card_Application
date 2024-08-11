@@ -195,8 +195,9 @@
 }
 
 .activeMenu {
-  background-color: #E0E3FF;
-  border-left: 4px solid #a361fa;
+  background-color: #CDF9FF;
+
+  border-left: 4px solid #6571FF;
   display: flex;
   align-self: center;
   justify-content: flex-start;
@@ -206,7 +207,7 @@
     background-color:none !important;
     border-radius: 5px;
     background: none !important;
-    color: #6220fd !important;
+    color: #4e4e4e !important;
   }
   .i {
     font-size: 1.9rem;

@@ -17,8 +17,20 @@ import * as Yup from "yup";
 import { Toaster, toast } from "react-hot-toast";
 const BasicForm = () => {
   let { URL_Alies } = useParams();
-  let { setURL_Alies, FormSubmitLoader, setFormSubmitLoader, userName } =
-    useContext(Context);
+  let {
+    setURL_Alies,
+    FormSubmitLoader,
+    setFormSubmitLoader,
+    userName,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
+  } = useContext(Context);
 
   let [UpdateButtonToggle, setUpdateButtonToggle] = useState(false);
   let [BasicDetailLoader, setBasicDetailLoader] = useState(false);
@@ -82,7 +94,6 @@ const BasicForm = () => {
           },
         })
         .then((res) => {
-          setURL_Alies(URL_Alies);
           setVCardName(res.data.data.VCardName);
           setOccupation(res.data.data.Occupation);
           setDescription(res.data.data.Description);
@@ -92,6 +103,7 @@ const BasicForm = () => {
           setBannerType(res.data.data.BannerType);
           setProfileAddress(res.data.data.ProfileAddress);
           setBannerAddress(res.data.data.BannerAddress);
+
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -99,7 +111,6 @@ const BasicForm = () => {
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      console.log(error);
       setFormSubmitLoader(false);
     }
   }
@@ -144,10 +155,79 @@ const BasicForm = () => {
       console.log(error);
       setFormSubmitLoader(false);
     }
+  };
+  let [BannerToggle,setBannerToggle]=useState(true);
+let[BussinessHourToggle,setBussinessHourToggle]=useState(true);
+let[GoogleMapToggle,setGoogleMapToggle]=useState(true);
+let[AppoinmentToggle,setAppoinmentToggle]=useState(true);
+let[ServiceToggle,setServiceToggle]=useState(true);
+let[ProductToggle,setProductToggle]=useState(true);
+let[GalleryToggle,setGalleryToggle]=useState(true);
+let[TestimonialToggle,setTestimonialToggle]=useState(true);
+let[QRCodeToggle,setQRCodeToggle]=useState(true);
+let[FeedbackFormToggle,setFeedbackFormToggle]=useState(true);
+let[InquiryFormToggle,setInquiryFormToggle]=useState(true);
+let[SocialMediaToggle,setSocialMediaToggle]=useState(true);
+let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
+  async function handleManageContentSubmit(e) {
+    // e.preventDefault();
+    setFormSubmitLoader(true);
+    let data = {
+      URL_Alies:URL_Alies,
+      BannerActive: BannerToggle,
+      BussinessHour: BussinessHourToggle,
+      GoogleMap:GoogleMapToggle,
+      Appoinment: AppoinmentToggle,
+      Service: ServiceToggle,
+      Product: ProductToggle,
+      Gallery: GalleryToggle,
+      Testimonial: TestimonialToggle,
+      QRCode: QRCodeToggle,
+      FeedbackForm: FeedbackFormToggle,
+      InquiryForm:InquiryFormToggle,
+      ContactDetails: ContactDetailsToggle,
+      SocialMedia:SocialMediaToggle,
+  
+    };
+    try {
+      await api
+        .post(`/manageContent/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setFormSubmitLoader(false);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          reloadComponent();
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+          reloadComponent();
+        })
+        .catch((error) => {
+
+          setFormSubmitLoader(false);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(() => {
+            setErrorPopupOpen(false);
+          }, 3000);
+        });
+    } catch (error) {
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(() => {
+        setErrorPopupOpen(false);
+      }, 3000);
+    }
   }
   useEffect(() => {
     fetchURL_Form();
     fetchBasicData();
+
   }, [key]);
 
   async function handleURLFormUpdate(e) {
@@ -174,53 +254,29 @@ const BasicForm = () => {
         })
         .then((res) => {
           reloadComponent();
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
+      
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
-  }
-  async function handleBasicDetailSave(e) {
-    setFormSubmitLoader(true);
-    e.preventDefault();
-    let data = {
-      URL_Alies,
-      FirstName,
-      LastName,
-      Email,
-      MobileNumber,
-      AlternateEmail,
-      AlternateMobileNumber,
-      Location,
-      Profession,
-      InquiryToggleSwitch,
-      QRToggleSwitch,
-      AppoinmentToggleSwitch,
-      ContactToggleSwitch,
-    };
-    await api
-      .post(`/basicDetail/${URL_Alies}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorageDatas.token}`,
-        },
-      })
-      .then((res) => {
-        reloadComponent();
-        toast.success(res.data.message);
-        setFormSubmitLoader(false);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        console.log(error);
-        setFormSubmitLoader(false);
-      });
   }
   async function handleBasicFormUpdate(e) {
     e.preventDefault();
@@ -249,16 +305,30 @@ const BasicForm = () => {
         })
         .then((res) => {
           reloadComponent();
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
+          
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+   
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      console.log(error)
+      // setErrorPopupOpen(true);
+      // setErrorMessage(error);
+      // setTimeout(()=>{
+      // setErrorPopupOpen(false)
+      // },3000)
     }
   }
   let formik = useFormik({
@@ -286,13 +356,22 @@ const BasicForm = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
-
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          handleManageContentSubmit()
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+      
+          reloadComponent();
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     },
@@ -323,7 +402,7 @@ const BasicForm = () => {
   const handleBannerTypeChange = (event) => {
     setBannerType(event.target.value);
   };
-  console.log(ProfileAddress, BannerAddress);
+
   return (
     <>
       <div className="basicform_container">
@@ -401,14 +480,19 @@ const BasicForm = () => {
                     <label htmlFor="Logo">
                       <img
                         src={
-                          Profile != undefined
+                          Profile != undefined && Profile.length > 0
                             ? Profile
-                            : "https://img.freepik.com/free-photo/3d-render-little-boy-with-eyeglasses-blue-shirt_1142-50994.jpg?t=st=1716040955~exp=1716044555~hmac=605273d0e1789be0644e11ceb509699fc6908463eed64554ad5184feb50cc3fa&w=740"
+                            : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
                         }
                         className="Profile"
                         alt="Logo"
                       />
-                      {/* <i className="bx bxs-edit"></i> */}
+                      <span
+                        className="material-symbols-outlined"
+                        onClick={() => setProfile(undefined)}
+                      >
+                        clear_all
+                      </span>
                     </label>
                     <small>Allowed file types: png, jpg, jpeg.</small>
                     <input
@@ -428,9 +512,11 @@ const BasicForm = () => {
                     {!FormSubmitLoader ? (
                       <img
                         src={
-                          ProfileAddress != null || ProfileAddress != undefined
+                          ProfileAddress != null &&
+                          ProfileAddress != undefined &&
+                          ProfileAddress.length > 0
                             ? ProfileAddress
-                            : ""
+                            : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
                         }
                         alt=""
                       />
@@ -446,6 +532,15 @@ const BasicForm = () => {
                       value={ProfileAddress}
                       onChange={(e) => setProfileAddress(e.target.value)}
                     />
+                    <div className="clear_action">
+                      <button
+                        className="clear_btn"
+                        type="button"
+                        onClick={() => setProfileAddress("")}
+                      >
+                        clear
+                      </button>
+                    </div>
                   </div>
                 )}
                 {/* //Banner Type */}
@@ -454,14 +549,23 @@ const BasicForm = () => {
                     <label htmlFor="Company_Banner">
                       <img
                         src={
-                          Banner != null || Banner != undefined
+                          Banner != null &&
+                          Banner != undefined &&
+                          Banner.length > 0
                             ? Banner
-                            : "https://img.freepik.com/free-photo/cement-wall-floor-copy-space_53876-30237.jpg?t=st=1716040667~exp=1716044267~hmac=37c1f0faf9137d781a0aa0d1436b486b6e0a620fec789a836ab08533c16cbeeb&w=826"
+                            : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                         }
                         className="Banner"
                         alt="Banner"
                       />
-                      {/* <i className="bx bxs-edit"></i> */}
+                      <span
+                        className="material-symbols-outlined"
+                        onClick={() => {
+                          setBanner(undefined);
+                        }}
+                      >
+                        clear_all
+                      </span>
                     </label>
                     <small>Allowed file types: png, jpg, jpeg.</small>
                     <input
@@ -480,9 +584,11 @@ const BasicForm = () => {
                     {!FormSubmitLoader ? (
                       <img
                         src={
-                          BannerAddress != null || BannerAddress != undefined
+                          BannerAddress != null &&
+                          BannerAddress != undefined &&
+                          BannerAddress.length > 0
                             ? BannerAddress
-                            : ""
+                            : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                         }
                         alt=""
                         className="banner_address_image"
@@ -499,13 +605,22 @@ const BasicForm = () => {
                       value={BannerAddress}
                       onChange={(e) => setBannerAddress(e.target.value)}
                     />
+                    <div className="clear_action">
+                      <button
+                        className="clear_btn"
+                        type="button"
+                        onClick={() => setBannerAddress("")}
+                      >
+                        clear
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
             <div className="form_submit_actions">
               <button className="save" type="submit">
-                Update
+                Update<span class="material-symbols-outlined">update</span>
               </button>
             </div>
           </form>
@@ -540,8 +655,11 @@ const BasicForm = () => {
                 //     : "input_success"
                 // }
               />
-              {UpdateButtonToggle ? "":   <div className="error">{formik.errors.FirstName}</div> }
-      
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.FirstName}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="lastName">
@@ -565,8 +683,11 @@ const BasicForm = () => {
                 //     : "input_success"
                 // }
               />
-              {UpdateButtonToggle ? "":    <div className="error">{formik.errors.LastName}</div>}
-      
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.LastName}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -589,8 +710,11 @@ const BasicForm = () => {
                 //     : "input_success"
                 // }
               />
-              {UpdateButtonToggle ? '':    <div className="error">{formik.errors.Email}</div> }
-          
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.Email}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="email">
@@ -615,8 +739,11 @@ const BasicForm = () => {
                 //     : "input_success"
                 // }
               />
-              {UpdateButtonToggle ? '': <div className="error">{formik.errors.MobileNumber}</div>}
-              
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.MobileNumber}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Email</label>
@@ -641,6 +768,11 @@ const BasicForm = () => {
                 //     : "input_success"
                 // }
               />
+                 {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.AlternateEmail}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Phone</label>
@@ -674,15 +806,18 @@ const BasicForm = () => {
                     : formik.handleChange
                 }
                 value={UpdateButtonToggle ? Location : formik.values.Location}
-         
+
                 // className={
                 //   formik.errors.Location && formik.touched.Location
                 //     ? "input_error"
                 //     : "input_success"
                 // }
               />
-              {UpdateButtonToggle ? "": <div className="error">{formik.errors.Location}</div>}
-          
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.Location}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="job">
@@ -698,8 +833,9 @@ const BasicForm = () => {
                     ? (e) => setProfession(e.target.value)
                     : formik.handleChange
                 }
-                value={UpdateButtonToggle ? Profession : formik.values.Profession}
-            
+                value={
+                  UpdateButtonToggle ? Profession : formik.values.Profession
+                }
 
                 // className={
                 //   formik.errors.Profession && formik.touched.Profession
@@ -707,60 +843,17 @@ const BasicForm = () => {
                 //     : "input_success"
                 // }
               />
-              {UpdateButtonToggle ? "": <div className="error">{formik.errors.Profession}</div>}
-             
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.Profession}</div>
+              )}
             </div>
-
-            {/* <div className="actions">
-              <p>Enable Inquiry Form :</p>
-              <input
-                id="InquiryToggleSwitch"
-                name="InquiryToggleSwitch"
-                type="checkbox"
-                checked={InquiryToggleSwitch}
-                onClick={() => setInquiryToggleSwitch(!InquiryToggleSwitch)}
-              />
-            </div>
-            <div className="actions">
-              <p>Enable QR Code :</p>
-              <input
-                id="QRToggleSwitch"
-                name="QRToggleSwitch"
-                type="checkbox"
-                checked={QRToggleSwitch}
-                onClick={() => setQRToggleSwitch(!QRToggleSwitch)}
-              />
-            </div>
-            <div className="actions">
-              <p>Enable Appoinment:</p>
-
-              <input
-                id="AppoinmentToggleSwitch"
-                name="AppoinmentToggleSwitch"
-                type="checkbox"
-                checked={AppoinmentToggleSwitch}
-                onClick={() =>
-                  setAppoinmentToggleSwitch(!AppoinmentToggleSwitch)
-                }
-              />
-            </div> */}
-            {/* <div className="actions">
-              <p>Enable Add To Contact:</p>
-              <input
-                id="ContactToggleSwitch"
-                name="ContactToggleSwitch"
-                type="checkbox"
-                checked={formik.values.ContactToggleSwitch}
-                onChange={(e) => formik.setFieldValue('ContactToggleSwitch', e.checked)}
-                // checked={ContactToggleSwitch}
-                onClick={() => setContactToggleSwitch(!ContactToggleSwitch)}
-              />
-            </div> */}
 
             <div className="form_submit_actions">
               {UpdateButtonToggle ? (
                 <button className="save" type="submit">
-                  Update
+                  Update<span class="material-symbols-outlined">update</span>
                 </button>
               ) : (
                 <button className="save" type="submit">

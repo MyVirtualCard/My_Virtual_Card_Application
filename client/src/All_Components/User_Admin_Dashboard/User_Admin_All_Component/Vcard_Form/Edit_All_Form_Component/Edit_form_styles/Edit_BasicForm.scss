@@ -149,6 +149,8 @@ width: 50%;
             align-items: flex-start;
             justify-content: space-between;
             gap: 8px;
+            position: relative;
+          
             label {
               font-size: 0.8rem;
               font-weight: 500;
@@ -164,6 +166,10 @@ width: 50%;
               }
   
               .Profile {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                place-items: center;
                 width: 90px;
                 height: 90px;
                 object-fit: cover;
@@ -171,7 +177,19 @@ width: 50%;
                 border-radius: 1rem;
                 border: 2px solid rgb(94, 94, 94);
                 position: relative;
-                // cursor: pointer;
+             
+              }
+              span{
+                position: absolute;
+                left: 44%;
+                top: 0%;
+                color: red;
+                font-size: 1.2rem;
+                cursor: pointer;
+  
+                &:hover{
+                  filter: drop-shadow(0px 4px 5px rgba(0,0,0,0.4));
+                }
               }
               i{
                 position: absolute;
@@ -194,6 +212,7 @@ width: 50%;
             flex-direction: column;
             align-items:center;
             justify-content: space-between;
+            position: relative;
           
             gap: 10px;
             label {
@@ -234,12 +253,28 @@ width: 50%;
               color: gray;
               font-weight: 500;
             }
+
+            span{
+              position: absolute;
+              right: 14%;
+              top: 0%;
+              color: red;
+              font-size: 1.2rem;
+              cursor: pointer;
+
+              &:hover{
+                filter: drop-shadow(0px 4px 5px rgba(0,0,0,0.4));
+              }
+            }
           }
           .url_link_input_group{
+            width: 50%;
              display: flex;
              flex-direction: column;
-             align-items: center;
+             gap: 0.5rem;
+             align-items: flex-start;
              justify-content: center;
+        
             img{
               width: 100px;
               max-width: 100px;
@@ -249,10 +284,44 @@ width: 50%;
               object-position: center;
               border-radius: 0.5rem;
               border: 1px solid gray;
+             
             }
+
+            input{
+              padding: 0.6rem 1rem !important;
+              font-size: 0.7rem;
+              position: relative;
+            }
+
+            .clear_action{
+              
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+
+              .clear_btn{
+      
+                background-color: tomato;
+                color: #fff;
+                font-size: 0.9rem;
+                padding: 0.2rem 1rem;
+                outline: none;
+                border: none;
+                border-radius: 0.2rem;
+                cursor: pointer;
+                font-weight: 550;
+                transition: all 0.5s ease;
+  
+                &:hover{
+                  box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+                  transition: all 0.5s ease;
+                }
+              }
+            }
+         
             .banner_address_image{
-              width: 200px;
-              max-width: 200px;
+              width: 150px;
+              max-width: 150px;
               height: 100px;
               max-height: 100px;
               object-fit: cover;
@@ -375,7 +444,7 @@ height: 50px;
             height: 100%;
         
           }
-          input[type="checkbox"]{
+          input[type=checkbox]{
             width: 20px;
             height: 20px;
             // -webkit-appearance: none;
@@ -422,20 +491,36 @@ height: 50px;
           button{
             outline: none;
             border: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             // width: 150px;
             padding: 7px 1rem;
             border-radius: 5px;
             font-weight: 500;
             font-size: 0.9rem;
+
+            span{
+              font-size: 1.2rem;
+            }
+
+         
           }
           .save{
             background-color: royalblue;
             color: #fff;
             transition: all 0.3s ease;
+  
             &:hover{
               background-color: rgb(105, 141, 248);
               box-shadow: 0px 4px 4px rgb(124, 124, 124);
               transition: all 0.3s ease;
+
+              span{
+                transform: rotate(360deg);
+                transition: transform 0.5s ease-in-out;
+              }
             }
           }
           .clear{

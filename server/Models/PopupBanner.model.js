@@ -27,7 +27,11 @@ let  PopupBannerSchema=new mongoose.Schema({
         type: String,
       default:'Go'
       },  
-});
+      BannerActive:{
+        type:Boolean,
+        default:false
+      }
+},{timestamps:true});
 
 
 let PopupBannerModel=mongoose.model('PopupBannerDetail',PopupBannerSchema);

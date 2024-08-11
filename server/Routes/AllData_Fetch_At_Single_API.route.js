@@ -17,6 +17,7 @@ import QRCodeModel from '../Models/QRCode.model.js';
 import FeedbackModel from '../Models/Feedback.model.js';
 import BussinessModel from '../Models/BussinessHour.model.js';
 import GoogleMapModel from '../Models/GoogleMap.model.js';
+import ManageContentModel from '../Models/ManageContent.model.js';
 router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
     try {
    
@@ -30,7 +31,14 @@ router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
         } else {
           result["Vcard_URL"] = getURLData;
         };
+
+        let getManageContentData = await ManageContentModel.find({ URL_Alies: URL_Alies, });
     
+        if (!getManageContentData) {
+          res.status(400).json({ message: "Manage Content Data Not Found" });
+        } else {
+          result["ManageContentData"] = getManageContentData;
+        };
     
         let getSpecificData = await BasicDetails.find({ URL_Alies: URL_Alies, });
     

@@ -219,6 +219,7 @@ const Gym_Trainer = () => {
   let [BussinessHourData, setBussinessHourData] = useState([]);
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
+  let[ManageContentData,setManageContent]=useState([]);
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -241,6 +242,7 @@ const Gym_Trainer = () => {
           setQRCodeData(res.data.data.QRCodeModel);
           setBussinessHourData(res.data.data.BussinessModel);
           setPopUpBannerData(res.data.data.PopupBannerModel);
+          setManageContent(res.data.data.ManageContentData)
           setSiteLoader(false);
           setTimeout(() => {
             window.scrollTo(0, 0);
@@ -308,7 +310,7 @@ const Gym_Trainer = () => {
               <Toaster position="top-right" reverseOrder={false} />
               <div className="newcard_design10_box">
                 {/* popupbanner */}
-                {PopUpBannerData.length > 0 ? (
+                {PopUpBannerData.length > 0 && ManageContentData[0].BannerActive ==  true ? (
                   <>
                     {PopUpBannerData.map((data, index) => {
                       return (
@@ -353,7 +355,6 @@ const Gym_Trainer = () => {
 
                 {/* Banner and logo and details and socialMedias */}
                 {VCard_URL_Data.map((data, index) => {
-             
                   return (
                     <div className="row_1" key={index}>
                       <div className="banner_image">
@@ -433,7 +434,7 @@ const Gym_Trainer = () => {
                                 );
                               })}
 
-                              {SocialMediaData.length > 0 ? (
+                              {SocialMediaData.length > 0 && ManageContentData[0].SocialMedia ==  true ? (
                                 <>
                                   {SocialMediaData.map((data, index) => {
                                     return (
@@ -575,7 +576,7 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* ContactDetails */}
-                {BasicData.length > 0 ? (
+                {BasicData.length > 0 && ManageContentData[0].ContactDetails ==  true ? (
                   <>
                     <div className="row_3">
                       <div className="title">
@@ -638,7 +639,7 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Services */}
-                {ServiceData.length > 0 ? (
+                {ServiceData.length > 0 && ManageContentData[0].Service ==  true ? (
                   <>
                     <div className="row_4">
                       <div className="title">
@@ -662,6 +663,16 @@ const Gym_Trainer = () => {
 
                               {data.ServiceType == "ImageUpload" ? (
                                 <img src={data.ServiceImage} alt="" />
+                              ) : (
+                                ""
+                              )}
+                              {data.ServiceType == "Image_Address_Link" ? (
+                                <>
+                                  <img
+                                    src={data.ServiceAddress}
+                                    alt="ServiceAddressImage"
+                                  />
+                                </>
                               ) : (
                                 ""
                               )}
@@ -693,7 +704,7 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Opentime */}
-                {BussinessHourData.length > 0 ? (
+                {BussinessHourData.length > 0 && ManageContentData[0].BussinessHour ==  true ? (
                   <>
                     <div className="row_5">
                       <div className="title">
@@ -868,7 +879,7 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Products */}
-                {ProductData.length > 0 ? (
+                {ProductData.length > 0 && ManageContentData[0].Product ==  true ? (
                   <>
                     <div className="row_7">
                       <div className="title">
@@ -965,7 +976,7 @@ const Gym_Trainer = () => {
                 {/* //Appinment */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0 ? (
+                SocialMediaData.length > 0 && ManageContentData[0].Appoinment ==  true ? (
                   <>
                     <div className="row_6">
                       <div className="title">
@@ -1012,7 +1023,7 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Gallery */}
-                {GalleryData.length > 0 ? (
+                {GalleryData.length > 0 && ManageContentData[0].Gallery ==  true ? (
                   <>
                     <div className="row_8">
                       <div className="title">
@@ -1083,7 +1094,7 @@ const Gym_Trainer = () => {
                   ""
                 )}
                 {/* //QRCode */}
-                {QRCodeData.length > 0 ? (
+                {QRCodeData.length > 0 && ManageContentData[0].QRCode ==  true ? (
                   <>
                     <div className="QRCode_container">
                       <div className="title">
@@ -1131,7 +1142,7 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Testimonial */}
-                {TestimonialData.length > 0 ? (
+                {TestimonialData.length > 0 && ManageContentData[0].Testimonial ==  true ? (
                   <>
                     <div className="row_9">
                       <div className="title">
@@ -1186,7 +1197,7 @@ const Gym_Trainer = () => {
                   ""
                 )}
                 {/* GoogleMap */}
-                {GoogleMapData.length > 0 ? (
+                {GoogleMapData.length > 0 && ManageContentData[0].GoogleMap ==  true ? (
                   <>
                     <div className="google_map_container">
                       <div className="title">
@@ -1210,9 +1221,9 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Feedback */}
-                {VCard_URL_Data.length > 0 ||
-                BasicData.length > 0 ||
-                SocialMediaData.length > 0 ? (
+                {VCard_URL_Data.length > 0 &&
+                BasicData.length > 0 &&
+                SocialMediaData.length > 0 && ManageContentData[0].FeedbackForm ==  true ? (
                   <>
                     <div className="row_10">
                       <div className="title">
@@ -1480,9 +1491,9 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Inquries */}
-                {VCard_URL_Data.length > 0 ||
-                BasicData.length > 0 ||
-                SocialMediaData.length > 0 ? (
+                {VCard_URL_Data.length > 0 &&
+                BasicData.length > 0 &&
+                SocialMediaData.length > 0 && ManageContentData[0].InquiryForm ==  true ? (
                   <>
                     <div className="row_11">
                       <div className="title">

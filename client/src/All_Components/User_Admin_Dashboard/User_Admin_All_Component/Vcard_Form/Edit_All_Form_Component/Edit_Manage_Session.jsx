@@ -1,121 +1,475 @@
-import React, { useState } from 'react'
-import './Edit_form_styles/Edit_Manage_Session.scss'
+import React, { useEffect, useState, useContext } from "react";
+import "./Edit_form_styles/Edit_Manage_Session.scss";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Context from "../../../../UseContext/Context";
 const Manage_Session = () => {
-let [HeaderCheckboxToggle,setHeaderCheckboxToggle]=useState(false);
-let [ContactCheckboxToggle,setContactCheckboxToggle]=useState(true);
-let [ServiceCheckboxToggle,setServiceCheckboxToggle]=useState(true);
-let [GalleriesCheckboxToggle,setGalleriesCheckboxToggle]=useState(true);
-let [ProductCheckboxToggle,setProductCheckboxToggle]=useState(true);
-let [TestimonialCheckboxToggle,setTestimonialCheckboxToggle]=useState(true);
-let [BlogCheckboxToggle,setBlogCheckboxToggle]=useState(true);
-let [BusinessCheckboxToggle,setBusinessCheckboxToggle]=useState(true);
-let [AppoinmentCheckboxToggle,setAppoinmentCheckboxToggle]=useState(true);
-let [BannerCheckboxToggle,setBannerCheckboxToggle]=useState(true);
+  let [ManageSessionToggle, setManageSessionToggle] = useState(false);
+
+  let [BannerToggle, setBannerToggle] = useState(true);
+  let [BussinessHourToggle, setBussinessHourToggle] = useState(true);
+  let [GoogleMapToggle, setGoogleMapToggle] = useState(true);
+  let [AppoinmentToggle, setAppoinmentToggle] = useState(true);
+  let [ServiceToggle, setServiceToggle] = useState(true);
+  let [ProductToggle, setProductToggle] = useState(true);
+  let [GalleryToggle, setGalleryToggle] = useState(true);
+  let [TestimonialToggle, setTestimonialToggle] = useState(true);
+  let [QRCodeToggle, setQRCodeToggle] = useState(true);
+  let [FeedbackFormToggle, setFeedbackFormToggle] = useState(true);
+  let [InquiryFormToggle, setInquiryFormToggle] = useState(true);
+  let [SocialMediaToggle, setSocialMediaToggle] = useState(true);
+  let [ContactDetailsToggle, setContactDetailsToggle] = useState(true);
+
+  const [key, setKey] = useState(0);
+  let { URL_Alies } = useParams();
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  let {
+    FormSubmitLoader,
+    setFormSubmitLoader,
+    userName,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
+  } = useContext(Context);
+  const reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
+  async function fetchCurrentManageContent() {
+    setFormSubmitLoader(true);
+    try {
+      await api
+        .get(`/manageContent/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length > 0) {
+             setManageSessionToggle(true);
+          }
+          else{
+            setManageSessionToggle(false);
+          }
+
+          setFormSubmitLoader(false);
+          setBannerToggle(res.data.data[0].BannerActive);
+          setBussinessHourToggle(res.data.data[0].BussinessHour);
+          setAppoinmentToggle(res.data.data[0].Appoinment);
+          setServiceToggle(res.data.data[0].Service);
+          setProductToggle(res.data.data[0].Product);
+          setGalleryToggle(res.data.data[0].Gallery);
+          setTestimonialToggle(res.data.data[0].Testimonial);
+          setQRCodeToggle(res.data.data[0].QRCode);
+          setFeedbackFormToggle(res.data.data[0].FeedbackForm);
+          setGoogleMapToggle(res.data.data[0].GoogleMap);
+          setInquiryFormToggle(res.data.data[0].InquiryForm)
+          setSocialMediaToggle(res.data.data[0].SocialMedia);
+          setContactDetailsToggle(res.data.data[0].ContactDetails);
+        })
+        .catch((error) => {
+          setErrorPopupOpen(true);
+          setManageSessionToggle(false);
+          setErrorMessage(error.message);
+          setTimeout(() => {
+            setErrorPopupOpen(false);
+          }, 3000);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCurrentManageContent();
+  }, [key]);
+  async function handleManageContentrSubmit(e) {
+    e.preventDefault();
+    setFormSubmitLoader(true);
+    let data = {
+      URL_Alies: URL_Alies,
+      BannerActive: BannerToggle,
+      BussinessHour: BussinessHourToggle,
+      GoogleMap: GoogleMapToggle,
+      Appoinment: AppoinmentToggle,
+      Service: ServiceToggle,
+      Product: ProductToggle,
+      Gallery: GalleryToggle,
+      Testimonial: TestimonialToggle,
+      QRCode: QRCodeToggle,
+      FeedbackForm: FeedbackFormToggle,
+      InquiryForm: InquiryFormToggle,
+      ContactDetails: ContactDetailsToggle,
+      SocialMedia: SocialMediaToggle,
+    };
+    try {
+      await api
+        .post(`/manageContent/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setFormSubmitLoader(false);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          reloadComponent();
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+          setManageSessionToggle(true);
+          reloadComponent();
+        })
+        .catch((error) => {
+          console.log(error);
+          setManageSessionToggle(false);
+          setFormSubmitLoader(false);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(() => {
+            setErrorPopupOpen(false);
+          }, 3000);
+        });
+    } catch (error) {
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(() => {
+        setErrorPopupOpen(false);
+      }, 3000);
+    }
+  }
+  async function handleManageContentUpdate(e) {
+    e.preventDefault();
+    setFormSubmitLoader(true);
+
+    let data = {
+      URL_Alies: URL_Alies,
+      BannerActive: BannerToggle,
+      BussinessHour: BussinessHourToggle,
+      GoogleMap: GoogleMapToggle,
+      Appoinment: AppoinmentToggle,
+      Service: ServiceToggle,
+      Product: ProductToggle,
+      Gallery: GalleryToggle,
+      Testimonial: TestimonialToggle,
+      QRCode: QRCodeToggle,
+      FeedbackForm: FeedbackFormToggle,
+      InquiryForm: InquiryFormToggle,
+      ContactDetails: ContactDetailsToggle,
+      SocialMedia: SocialMediaToggle,
+    };
+    try {
+      await api
+        .put(`/manageContent/update/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          reloadComponent();
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          setFormSubmitLoader(false);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(() => {
+            setErrorPopupOpen(false);
+          }, 3000);
+        });
+    } catch (error) {
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(() => {
+        setErrorPopupOpen(false);
+      }, 3000);
+    }
+  }
   return (
-<>
-<div className="manage_container">
-<div className="title">
-    <h6>Manage Your Sessions</h6>
-    <div className="note">
-      <small><span>Note :</span>It will help you to <span>Show (or) Remove </span>your specific session on your <span>VCard Website</span>..</small>
-    </div>
-  </div>
+    <>
+      <div className="manage_container">
+        <div className="title">
+          <h6>Manage Your Sessions</h6>
+          <div className="note">
+            <small>
+              <span>Note :</span>It will help you to{" "}
+              <span>Show (or) Remove </span>your specific session on your{" "}
+              <span>VCard Website</span>..
+            </small>
+          </div>
+        </div>
 
-  <div className="all_session_box">
-    <div className="session">
-       <div className="checkbox">
-      {HeaderCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setHeaderCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setHeaderCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Header</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {ContactCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setContactCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setContactCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Contact</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {ServiceCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setServiceCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setServiceCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Services</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {GalleriesCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setGalleriesCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setGalleriesCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Galleries</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {ProductCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setProductCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setProductCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Products</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {TestimonialCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setTestimonialCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setTestimonialCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Testimonial</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {BlogCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setBlogCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setBlogCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Blogs</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {BusinessCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setBusinessCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setBusinessCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Business Hour</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {AppoinmentCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setAppoinmentCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setAppoinmentCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Appoinments</p>
-    </div>
-    </div>
-    <div className="session">
-       <div className="checkbox">
-       {BannerCheckboxToggle ? <i className='bx bxs-checkbox-checked on' onClick={()=>setBannerCheckboxToggle(false)}></i>:<i className='bx bxs-checkbox off' onClick={()=>setBannerCheckboxToggle(true)}></i>} 
-    </div> 
-    <div className="session_name">
-        <p>Banner</p>
-    </div>
-    </div>
-
-  </div>
-  <div className="submit_actions">
-                <div className="save">
-                  <button type="submit">Save</button>
-                </div>
-                <div className="discard">
-                  <button>Discard</button>
-                </div>
-              </div>
-</div>
-</>
-  )
-}
+        <div className="all_session_box">
+          <div className="session">
+            <div className="checkbox">
+              {BannerToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setBannerToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setBannerToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>PopUp Banner</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {BussinessHourToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setBussinessHourToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setBussinessHourToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Bussiness Hour</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {GoogleMapToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setGoogleMapToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setGoogleMapToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Google Live Map</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {AppoinmentToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setAppoinmentToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setAppoinmentToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Appoinment Form</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {ServiceToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setServiceToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setServiceToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Service</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {ProductToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setProductToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setProductToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Product</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {GalleryToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setGalleryToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setGalleryToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Gallery's</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {TestimonialToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setTestimonialToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setTestimonialToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Testimonial</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {QRCodeToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setQRCodeToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setQRCodeToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>QRCode</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {FeedbackFormToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setFeedbackFormToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setFeedbackFormToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Feedback Form</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {InquiryFormToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setInquiryFormToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setInquiryFormToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Inquiry Form</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {SocialMediaToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setSocialMediaToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setSocialMediaToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>SocialMedia</p>
+            </div>
+          </div>
+          <div className="session">
+            <div className="checkbox">
+              {ContactDetailsToggle ? (
+                <i
+                  className="bx bxs-checkbox-checked on"
+                  onClick={() => setContactDetailsToggle(false)}
+                ></i>
+              ) : (
+                <i
+                  className="bx bxs-checkbox off"
+                  onClick={() => setContactDetailsToggle(true)}
+                ></i>
+              )}
+            </div>
+            <div className="session_name">
+              <p>Contact Details</p>
+            </div>
+          </div>
+        </div>
+        <div className="submit_actions">
+          <div className="save">
+            {ManageSessionToggle ? (
+              <button type="submit" onClick={handleManageContentUpdate}>
+                Update
+              </button>
+            ) : (
+              <button type="submit" onClick={handleManageContentrSubmit}>
+                Save
+              </button>
+            )}
+          </div>
+          <div className="discard">
+            <button>Discard</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Manage_Session;
-

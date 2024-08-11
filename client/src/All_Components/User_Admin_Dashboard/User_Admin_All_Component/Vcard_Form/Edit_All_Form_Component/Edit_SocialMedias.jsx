@@ -8,7 +8,10 @@ import Context from "../../../../UseContext/Context";
 import {  SocialMediaValidateSchema } from "../../../../Helper/SocialMediaValidate";
 const SocialMedias = () => {
   let { URL_Alies } = useParams();
-  let { FormSubmitLoader, setFormSubmitLoader, userName } =
+  let { FormSubmitLoader, setFormSubmitLoader, userName,    successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen } =
     useContext(Context);
   let [UpdateToggle, setUpdateToggle] = useState(false);
   //SOcialMedia :
@@ -57,7 +60,12 @@ const SocialMedias = () => {
           console.log(error.message);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
+     
     }
   }
   useEffect(() => {
@@ -90,59 +98,32 @@ const SocialMedias = () => {
           }
         )
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
+   setFormSubmitLoader(false);
     }
   }
 
-  //Save Function
-  // async function handleFormSave(e) {
-  //   e.preventDefault();
-  //   let data = {
-  //     URL_Alies,
-  //     Facebook,
-  //     LinkedIn,
-  //     WhatsUp,
-  //     Instagram,
-  //     Twiter,
-  //     Website,
-  //     YouTube,
-  //     Github,
-  //   };
-  //   setFormSubmitLoader(true);
-  //   try {
-  //     api
-  //       .post(
-  //         `/socialMediaDetail/${URL_Alies}`,
-  //         data,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${localStorageDatas.token}`,
-  //           },
-  //         }
-  //       )
-  //       .then((res) => {
-  //         console.log(res)
-  //         toast.success(res.data.message);
-  //         setFormSubmitLoader(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //         toast.error(error.response.data.message);
-  //         setFormSubmitLoader(false);
-  //       });
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
+  //Save SocialMedias
   let formik = useFormik({
     initialValues: {
       URL_Alies:URL_Alies,
@@ -169,18 +150,26 @@ const SocialMedias = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+
 
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
+
           setFormSubmitLoader(false);
         });
     },
   });
-  console.log(UpdateToggle)
   return (
     <>
       <div className="socialmedia_component">
@@ -317,7 +306,7 @@ const SocialMedias = () => {
             <div className="form_submit_actions">
               <div className="save">
                 {UpdateToggle ? (
-                  <button type="submit">Update</button>
+                  <button type="submit">Update<span class="material-symbols-outlined">update</span></button>
                 ) : (
                   <button type="submit">Save</button>
                 )}

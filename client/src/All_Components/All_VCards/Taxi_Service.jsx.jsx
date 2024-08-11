@@ -135,9 +135,9 @@ const Taxi_Service = () => {
 
     fullImageBox.style.display = "none";
   }
-  
-   //Feedback Form Logic :
-   let feedbackFormik = useFormik({
+
+  //Feedback Form Logic :
+  let feedbackFormik = useFormik({
     initialValues: {
       URL_Alies: window.location.pathname,
       ClientName: "",
@@ -173,7 +173,7 @@ const Taxi_Service = () => {
         });
     },
   });
- //Start Ratting:
+  //Start Ratting:
   // let currentRatting=0;
   function handleRatting(e) {
     let star = e.target;
@@ -282,6 +282,7 @@ const Taxi_Service = () => {
   let [BussinessHourData, setBussinessHourData] = useState([]);
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
+  let[ManageContentData,setManageContent]=useState([]);
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -304,6 +305,7 @@ const Taxi_Service = () => {
           setQRCodeData(res.data.data.QRCodeModel);
           setBussinessHourData(res.data.data.BussinessModel);
           setPopUpBannerData(res.data.data.PopupBannerModel);
+          setManageContent(res.data.data.ManageContentData)
           setSiteLoader(false);
           setTimeout(() => {
             // window.scrollTo(0, 0);
@@ -343,13 +345,14 @@ const Taxi_Service = () => {
             {/* <img src={loadingBack} alt="loading" className="aris_back" /> */}
           </div>
           <small>
-            {" "}
+      
             <div className="lds-ellipsis">
               <div></div>
               <div></div>
               <div></div>
               <div></div>
             </div>
+    
           </small>
           {/* <Triangle
         visible={true}
@@ -374,7 +377,7 @@ const Taxi_Service = () => {
               </div> */}
               <div className="newcard_design12_box">
                 {/* popupbanner */}
-                {PopUpBannerData.length > 0 ? (
+                {PopUpBannerData.length > 0  && ManageContentData[0].BannerActive ==  true ? (
                   <>
                     {PopUpBannerData.map((data, index) => {
                       return (
@@ -460,7 +463,7 @@ const Taxi_Service = () => {
                                     {data.Profession}
                                     {/* <img src={taxi} alt="taxi" /> */}
                                   </p>
-                                  {SocialMediaData.length > 0 ? (
+                                  {SocialMediaData.length > 0 && ManageContentData[0].SocialMedia ==  true  ? (
                                     <>
                                       {SocialMediaData.map((data, index) => {
                                         return (
@@ -631,13 +634,13 @@ const Taxi_Service = () => {
                 })}
 
                 {/* ContactDetails */}
-                {BasicData.length > 0 ? (
+                {BasicData.length > 0  && ManageContentData[0].ContactDetails ==  true ? (
                   <>
                     <div className="row_3">
                       <div className="title">
                         <h3>
-                           Contact Details
-                           <i className="bx bxs-phone-call"></i>
+                          Contact Details
+                          <i className="bx bxs-phone-call"></i>
                         </h3>
                         {/* Contact */}
                       </div>
@@ -717,12 +720,11 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Gallery */}
-                {GalleryData.length > 0 ? (
+                {GalleryData.length > 0  && ManageContentData[0].Gallery ==  true ? (
                   <>
                     <div className="row_8">
                       <div className="title">
                         <h3>
-                         
                           Gallery
                           <span className="material-symbols-outlined">
                             gallery_thumbnail
@@ -795,12 +797,12 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Services */}
-                {ServiceData.length > 0 ? (
+                {ServiceData.length > 0 && ManageContentData[0].Service ==  true  ? (
                   <>
                     <div className="row_4">
                       <div className="title">
                         <h3>
-                        Our Services   <i className="bx bx-support"></i>
+                          Our Services <i className="bx bx-support"></i>
                         </h3>
                       </div>
 
@@ -825,7 +827,16 @@ const Taxi_Service = () => {
                                 ) : (
                                   ""
                                 )}
-
+                                {data.ServiceType == "Image_Address_Link" ? (
+                                  <>
+                                    <img
+                                      src={data.ServiceAddress}
+                                      alt="ServiceAddressImage"
+                                    />
+                                  </>
+                                ) : (
+                                  ""
+                                )}
                                 <div className="service_detail">
                                   <div className="service_title">
                                     <h4>{data.ServiceName || "Empty Data"}</h4>
@@ -851,12 +862,11 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Products */}
-                {ProductData.length > 0 ? (
+                {ProductData.length > 0  && ManageContentData[0].Product ==  true ? (
                   <>
                     <div className="row_7">
                       <div className="title">
                         <h3>
-                       
                           Our Products
                           <span className="material-symbols-outlined">
                             no_crash
@@ -891,9 +901,11 @@ const Taxi_Service = () => {
                                       />
                                     </div>
                                     <div className="product_details">
-                                      <h4>{da}</h4>
-                                      <small> 1-4 passenger!</small>
-                                      <button>₹ &nbsp;1,500</button>
+                                      <h4>{data.ProductName}</h4>
+                                      <small> {data.ProductDescription}</small>
+                                      <button>
+                                        ₹ &nbsp;{data.ProductPrice}
+                                      </button>
                                     </div>
                                   </div>
                                 ) : (
@@ -913,9 +925,13 @@ const Taxi_Service = () => {
                                       />
                                     </div>
                                     <div className="product_details">
-                                      <h4>{data.ProductName || '...'}</h4>
-                                      <small>{data.ProductDescription || ''}</small>
-                                      <button>₹ &nbsp;{data.ProductPrice}</button>
+                                      <h4>{data.ProductName || "..."}</h4>
+                                      <small>
+                                        {data.ProductDescription || ""}
+                                      </small>
+                                      <button>
+                                        ₹ &nbsp;{data.ProductPrice}
+                                      </button>
                                     </div>
                                   </div>
                                 ) : (
@@ -924,8 +940,6 @@ const Taxi_Service = () => {
                               </>
                             );
                           })}
-
-                  
                         </Slide>
                       </div>
                     </div>
@@ -937,71 +951,72 @@ const Taxi_Service = () => {
                 {/* //Appinment */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0 ?  
-                <>
-                   <div className="row_6">
-                  <div className="title">
-                    <h3>
-                  
-                      Make An Appoinment
-                      <span className="material-symbols-outlined">groups</span>
-                    </h3>
-                  </div>
+                SocialMediaData.length > 0 && ManageContentData[0].Appoinment ==  true ? (
+                  <>
+                    <div className="row_6">
+                      <div className="title">
+                        <h3>
+                          Make An Appoinment
+                          <span className="material-symbols-outlined">
+                            groups
+                          </span>
+                        </h3>
+                      </div>
 
-                  <div className="appinment_form_container">
-                    <form className="appinment_form">
-                      <div className="form_group">
-                        <label htmlFor="date">Date</label>
-                        <input
-                          type="date"
-                          name="data"
-                          id="date"
-                          className="date-input"
-                        />
+                      <div className="appinment_form_container">
+                        <form className="appinment_form">
+                          <div className="form_group">
+                            <label htmlFor="date">Date</label>
+                            <input
+                              type="date"
+                              name="data"
+                              id="date"
+                              className="date-input"
+                            />
+                          </div>
+                          <div className="form_group">
+                            <label htmlFor="time">Time</label>
+                            <select name="time" id="time">
+                              <option value="9:00 AM">9:00 AM</option>
+                              <option value="11:00 AM">11:00 AM</option>
+                              <option value="01:00 PM">01:00 PM</option>
+                              <option value="03:00 PM">03:00 PM</option>
+                            </select>
+                          </div>
+                          <div className="form_submit">
+                            <button type="submit" className="submit-btn">
+                              Book Now
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <div className="form_group">
-                        <label htmlFor="time">Time</label>
-                        <select name="time" id="time">
-                          <option value="9:00 AM">9:00 AM</option>
-                          <option value="11:00 AM">11:00 AM</option>
-                          <option value="01:00 PM">01:00 PM</option>
-                          <option value="03:00 PM">03:00 PM</option>
-                        </select>
-                      </div>
-                      <div className="form_submit">
-                        <button type="submit" className="submit-btn">
-                          Book Now
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                </>
-                : ''}
-             
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
 
                 {/* Testimonial */}
-                {TestimonialData.length > 0 ?  
-                <>
-                 <div className="row_9">
-                  <div className="title">
-                    <h3>
-                    
-                      Testimonial
-                      <span className="material-symbols-outlined">
-                        settings_accessibility
-                      </span>
-                    </h3>
-                    {/* Contact */}
-                  </div>
-                  <div className="testimonial_container">
-                    <Carousel
-                      showThumbs={false}
-                      showStatus={false}
-                      infiniteLoop
-                      autoPlay
-                    >
-                     {TestimonialData.map((data, index) => {
+                {TestimonialData.length > 0  && ManageContentData[0].Testimonial ==  true ? (
+                  <>
+                    <div className="row_9">
+                      <div className="title">
+                        <h3>
+                          Testimonial
+                          <span className="material-symbols-outlined">
+                            settings_accessibility
+                          </span>
+                        </h3>
+                        {/* Contact */}
+                      </div>
+                      <div className="testimonial_container">
+                        <Carousel
+                          showThumbs={false}
+                          showStatus={false}
+                          infiniteLoop
+                          autoPlay
+                        >
+                          {TestimonialData.map((data, index) => {
                             return (
                               <div className="testimonial_list" key={index}>
                                 <div className="client_feedback">
@@ -1029,56 +1044,61 @@ const Taxi_Service = () => {
                               </div>
                             );
                           })}
-                   
-                 
-                    </Carousel>
-                  </div>
-                </div>
-                </>
-                : ''}
-               
-                {/* QRCode */}
-                {QRCodeData.length > 0 ?
-                <>
-                      <div className="row_12">
-                  <div className="title">
-                    <h3>
-                     Scan To Pay <i className="bx bx-qr-scan"></i>
-                    </h3>
-                    {/* Contact */}
-                  </div>
-{QRCodeData.map((data,index)=>{
-  return(
-    <div className="qrcode_container" key={index}>
-    <div className="qr_code_box">
-      <h4>
-        <small>Note :</small>If You want to buy any product with us directly scan to pay easily!
-      </h4>
+                        </Carousel>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
 
-      <img
-        src={data.QRCodeImage || "https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?t=st=1722540928~exp=1722544528~hmac=37be49c02a6f26b2ee598eeec0fc1b4f8133a5107efef5c3360142d745b6b58e&w=740"}
-        alt=""
-      />
-    </div>
-  </div>
-  )
-})}
-                 
-                </div>
-                </>
-                : ''}
-          
+                {/* QRCode */}
+                {QRCodeData.length > 0  && ManageContentData[0].QRCode ==  true ? (
+                  <>
+                    <div className="row_12">
+                      <div className="title">
+                        <h3>
+                          Scan To Pay <i className="bx bx-qr-scan"></i>
+                        </h3>
+                        {/* Contact */}
+                      </div>
+                      {QRCodeData.map((data, index) => {
+                        return (
+                          <div className="qrcode_container" key={index}>
+                            <div className="qr_code_box">
+                              <h4>
+                                <small>Note :</small>If You want to buy any
+                                product with us directly scan to pay easily!
+                              </h4>
+
+                              <img
+                                src={
+                                  data.QRCodeImage ||
+                                  "https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?t=st=1722540928~exp=1722544528~hmac=37be49c02a6f26b2ee598eeec0fc1b4f8133a5107efef5c3360142d745b6b58e&w=740"
+                                }
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+
                 {/* Opentime */}
-                {BussinessHourData.length > 0 ?
-                <>
+                {BussinessHourData.length > 0  && ManageContentData[0].BussinessHour ==  true ? (
+                  <>
                     <div className="row_5">
-                  <div className="title">
-                    <h3>
-                     Open&Close Time <i className="bx bx-timer"></i>
-                    </h3>
-                    {/* Contact */}
-                  </div>
-                  <div className="time_list_container">
+                      <div className="title">
+                        <h3>
+                          Open&Close Time <i className="bx bx-timer"></i>
+                        </h3>
+                        {/* Contact */}
+                      </div>
+                      <div className="time_list_container">
                         {BussinessHourData[0].Monday.from.length > 0 &&
                         BussinessHourData[0].Monday.to.length > 0 ? (
                           <div className="time_list">
@@ -1237,22 +1257,23 @@ const Taxi_Service = () => {
                           ""
                         )}
                       </div>
-                </div>
-                </>
-                : ''}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
                 {/* GoogleMap */}
-                {GoogleMapData.length > 0 ? (
+                {GoogleMapData.length > 0  && ManageContentData[0].GoogleMap ==  true ? (
                   <>
                     <div className="google_map_container">
-                    <div className="title">
-                    <h3>
-                    
-                    Live Location
-                    <span className="material-symbols-outlined">map</span>
-                    </h3>
-                    {/* Contact */}
-                  </div>
-                   
+                      <div className="title">
+                        <h3>
+                          Live Location
+                          <span className="material-symbols-outlined">map</span>
+                        </h3>
+                        {/* Contact */}
+                      </div>
+
                       {GoogleMapData.map((data, index) => {
                         return (
                           <div className="google_map" key={index}>
@@ -1266,23 +1287,24 @@ const Taxi_Service = () => {
                   ""
                 )}
                 {/* Feedback */}
-                {VCard_URL_Data.length > 0 ||
-                BasicData.length > 0 ||
-                SocialMediaData.length > 0 ? 
-                <>
-                     <div className="row_10">
-                  {/* <div className="rattingcar_image">
+                {VCard_URL_Data.length > 0 &&
+                BasicData.length > 0 &&
+                SocialMediaData.length > 0  && ManageContentData[0].FeedbackForm ==  true ? (
+                  <>
+                    <div className="row_10">
+                      {/* <div className="rattingcar_image">
                     <img src={RattingCar_Image} alt="ratting" />
                   </div> */}
-                  <div className="title">
-                    <h3>
-                     
-                      Feedback
-                      <span className="material-symbols-outlined">reviews</span>
-                    </h3>
-                    {/* Contact */}
-                  </div>
-                  <div className="feedback_container">
+                      <div className="title">
+                        <h3>
+                          Feedback
+                          <span className="material-symbols-outlined">
+                            reviews
+                          </span>
+                        </h3>
+                        {/* Contact */}
+                      </div>
+                      <div className="feedback_container">
                         <form action="" onSubmit={feedbackFormik.handleSubmit}>
                           <div className="form_group">
                             <label
@@ -1414,8 +1436,8 @@ const Taxi_Service = () => {
                           </div>
                         </form>
                       </div>
-                   {/* //Feedback messages */}
-                   <div className="Feedback_container_message">
+                      {/* //Feedback messages */}
+                      <div className="Feedback_container_message">
                         <div className="feeback_title">
                           {commentOpen ? (
                             <button onClick={() => setCommentOpen(false)}>
@@ -1531,84 +1553,88 @@ const Taxi_Service = () => {
                           ""
                         )}
                       </div>
-                </div>
-                </>
-                : ' '}
-           
+                    </div>
+                  </>
+                ) : (
+                  " "
+                )}
 
                 {/* Inquries */}
-                {VCard_URL_Data.length > 0 ||
-                BasicData.length > 0 ||
-                SocialMediaData.length > 0 ? 
-                <>
-                   <div className="row_11">
-                  <div className="title">
-                    <h3>
-                
-                      Inquries
-                      <span className="material-symbols-outlined">
-                        person_raised_hand
-                      </span>
-                    </h3>
-                  </div>
-                  <div className="inquiries_container5">
-                    <form action="">
-                      <div className="form_group">
-                        <label htmlFor="name">
-                          Name <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <input type="text" placeholder="Your Name" />
-                          <i className="bx bxs-user-pin"></i>
-                        </div>
-                      </div>
-                      <div className="form_group">
-                        <label htmlFor="email">
-                          Email <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <input type="email" placeholder="Your Email" />
-                          <i className="bx bxs-envelope"></i>
-                        </div>
-                      </div>
-                      <div className="form_group">
-                        <label htmlFor="name">
-                          Phone <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <input type="tel" placeholder="Enter Phone Number" />
-                          <i className="bx bxs-phone-call"></i>
-                        </div>
-                      </div>
-                      <div className="form_group">
-                        <label htmlFor="name">
-                          Message <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <textarea
-                            name="message"
-                            id="message"
-                            cols="30"
-                            rows="2"
-                            placeholder="Enter Your Message Here..."
-                          ></textarea>
-                          <i className="bx bxs-message-dots"></i>
-                        </div>
-                      </div>
-                      <div className="form_actions">
-                        <button type="submit">
+                {VCard_URL_Data.length > 0 &&
+                BasicData.length > 0 &&
+                SocialMediaData.length > 0  && ManageContentData[0].InquiryForm ==  true ? (
+                  <>
+                    <div className="row_11">
+                      <div className="title">
+                        <h3>
+                          Inquries
                           <span className="material-symbols-outlined">
-                            send
+                            person_raised_hand
                           </span>
-                          Submit
-                        </button>
+                        </h3>
                       </div>
-                    </form>
-                  </div>
-                </div>
-                </>
-                : ''}
-             
+                      <div className="inquiries_container5">
+                        <form action="">
+                          <div className="form_group">
+                            <label htmlFor="name">
+                              Name <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <input type="text" placeholder="Your Name" />
+                              <i className="bx bxs-user-pin"></i>
+                            </div>
+                          </div>
+                          <div className="form_group">
+                            <label htmlFor="email">
+                              Email <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <input type="email" placeholder="Your Email" />
+                              <i className="bx bxs-envelope"></i>
+                            </div>
+                          </div>
+                          <div className="form_group">
+                            <label htmlFor="name">
+                              Phone <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <input
+                                type="tel"
+                                placeholder="Enter Phone Number"
+                              />
+                              <i className="bx bxs-phone-call"></i>
+                            </div>
+                          </div>
+                          <div className="form_group">
+                            <label htmlFor="name">
+                              Message <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <textarea
+                                name="message"
+                                id="message"
+                                cols="30"
+                                rows="2"
+                                placeholder="Enter Your Message Here..."
+                              ></textarea>
+                              <i className="bx bxs-message-dots"></i>
+                            </div>
+                          </div>
+                          <div className="form_actions">
+                            <button type="submit">
+                              <span className="material-symbols-outlined">
+                                send
+                              </span>
+                              Submit
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
 
                 {/* Footer */}
                 <div className="row_13">

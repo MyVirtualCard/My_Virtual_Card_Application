@@ -12,7 +12,10 @@ import Context from "../../../../UseContext/Context";
 const Banner = () => {
   let { URL_Alies } = useParams();
 
-  let { FormSubmitLoader, setFormSubmitLoader, userName } =
+  let { FormSubmitLoader, setFormSubmitLoader, userName,  successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen,} =
     useContext(Context);
 
   let [PopupBannerId, setPopUpBannerId] = useState();
@@ -61,11 +64,19 @@ let [BannerLength,setBannerLength]=useState();
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   };
   
@@ -92,16 +103,28 @@ let [BannerLength,setBannerLength]=useState();
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
           reloadComponent();
         })
         .catch((error) => {
           setFormSubmitLoader(false);
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   };
 
@@ -129,15 +152,27 @@ let [BannerLength,setBannerLength]=useState();
           }
         )
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
           setFormSubmitLoader(false);
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   };
   
@@ -214,7 +249,9 @@ let [BannerLength,setBannerLength]=useState();
             </div>
 
             <div className="form_submit_actions">
-              {BannerLength == 1 ?     <button className="save" onClick={handleBannerUpdate}>Update</button> : <button className="save" onClick={handleBannerSubmit}>Save</button> }
+              {BannerLength == 1 ?        <button className="save" type="submit" onClick={handleBannerUpdate}>
+                  Update<span class="material-symbols-outlined">update</span>
+                </button> : <button className="save" onClick={handleBannerSubmit}>Save</button> }
             </div>
 
           </form>

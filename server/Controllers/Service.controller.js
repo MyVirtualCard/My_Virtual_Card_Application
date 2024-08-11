@@ -68,6 +68,7 @@ export const PostServiceData = async (req, res) => {
               ServiceURL: req.body.ServiceURL,
               ServiceType: req.body.ServiceType,
               ServiceIcon:req.body.ServiceIcon,
+              ServiceAddress:req.body.ServiceAddress,
               ServiceImage: req.body.ServiceImage,
             });
 
@@ -104,6 +105,7 @@ export const PostServiceData = async (req, res) => {
               ServiceType: req.body.ServiceType,
               ServiceURL: req.body.ServiceURL,
               ServiceIcon:req.body.ServiceIcon,
+              ServiceAddress:req.body.ServiceAddress,
               ServiceImage: req.body.ServiceImage,
               // ServiceImage: {
               //   data: fs.readFileSync("uploads/" + req.file.filename),
@@ -144,6 +146,7 @@ export const PostServiceData = async (req, res) => {
               ServiceType: req.body.ServiceType,
               ServiceURL: req.body.ServiceURL,
               ServiceIcon:req.body.ServiceIcon,
+              ServiceAddress:req.body.ServiceAddress,
               ServiceImage: req.body.ServiceImage,
               // ServiceImage: {
               //   data: fs.readFileSync("uploads/" + req.file.filename),
@@ -256,6 +259,7 @@ export const updateSpecificUserData = async (req, res) => {
           ServiceURL: req.body.ServiceURL,
           ServiceType: req.body.ServiceType,
           ServiceIcon:req.body.ServiceIcon,
+          ServiceAddress:req.body.ServiceAddress,
           ServiceDescription: req.body.ServiceDescription,
         };
         let updateSpecificData = await ServiceModel.findByIdAndUpdate(

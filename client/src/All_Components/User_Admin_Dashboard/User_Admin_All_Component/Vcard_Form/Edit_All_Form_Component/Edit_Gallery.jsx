@@ -25,6 +25,10 @@ const Gallery = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
+    successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen,
   } = useContext(Context);
 
   let [GalleryCount, setGalleryCount] = useState(0);
@@ -63,11 +67,20 @@ const Gallery = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
+  setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -109,7 +122,12 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+
           setFormSubmitLoader(false);
           setGalleryCount(++GalleryCount);
           setGalleryImage(null);
@@ -120,8 +138,11 @@ const Gallery = () => {
           }, 1000);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     },
@@ -170,11 +191,15 @@ const Gallery = () => {
         })
 
         .catch((error) => {
-          console.log(error);
+      ;
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
 
@@ -197,7 +222,12 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+
           setFormSubmitLoader(false);
           reloadComponent();
           setTimeout(() => {
@@ -206,12 +236,19 @@ const Gallery = () => {
           }, 1000);
         })
         .catch((error) => {
-          console.log(error);
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
   async function handleGalleryDelete(id) {
@@ -226,17 +263,30 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+
           setGalleryCount(--GalleryCount);
           setFormSubmitLoader(false);
           reloadComponent();
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
   const HtmlRenderer = ({ htmlString }) => {
@@ -431,7 +481,7 @@ const Gallery = () => {
                         src={
                           GalleryImage != undefined
                             ? GalleryImage
-                            : "https://img.freepik.com/free-vector/realistic-fog-background_23-2149115275.jpg?t=st=1715977908~exp=1715981508~hmac=1d533445708d92e0d4c40a4db9ebd8a90505fbfa07dcb1b58b5915f9fde4f028&w=900"
+                            : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                         }
                         alt="Image"
                       />
@@ -460,11 +510,22 @@ const Gallery = () => {
                     <div className="error">{formik.errors.GalleryImage}</div>
                   </>
                 ) : (
-                  <div className="form_group">
-                    <label htmlFor="GalleryURL">Image URL</label>
+                  <div className="form_group url_link_input_group">
+                       <img
+                            src={
+                              formik.values.GalleryImageURL != null &&
+                              formik.values.GalleryImageURL != undefined &&
+                              formik.values.GalleryImageURL.length > 0
+                                ? formik.values.GalleryImageURL
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                            }
+                            alt=""
+                            className="banner_address_image"
+                          />
+                    <label htmlFor="GalleryURL">Paste Image Address</label>
                     <input
                       type="text"
-                      placeholder="Paste Image URL"
+                        placeholder="Eg :https://img.asistostech.com/free-photo/"
                    name="GalleryImageURL"
                    id="GalleryImageURL"
                    value={formik.values.GalleryImageURL}
@@ -548,7 +609,7 @@ const Gallery = () => {
                         src={
                           GalleryImage != undefined
                             ? GalleryImage
-                            : "https://img.freepik.com/free-vector/realistic-fog-background_23-2149115275.jpg?t=st=1715977908~exp=1715981508~hmac=1d533445708d92e0d4c40a4db9ebd8a90505fbfa07dcb1b58b5915f9fde4f028&w=900"
+                            : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                         }
                         alt="Image"
                       />
@@ -577,14 +638,34 @@ const Gallery = () => {
                     <div className="error">{formik.errors.GalleryImage}</div>
                   </>
                 ) : (
-                  <div className="form_group">
-                    <label htmlFor="GalleryURL">Image URL</label>
+                  <div className="form_group url_link_input_group">
+                         <img
+                          src={
+                            GalleryImageURL != null &&
+                            GalleryImageURL != undefined &&
+                            GalleryImageURL.length > 0
+                              ? GalleryImageURL
+                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                          }
+                          alt=""
+                          className="banner_address_image"
+                        />
+                    <label htmlFor="GalleryURL">Update Image Address</label>
                     <input
                       type="text"
                       placeholder="Paste Image URL"
                       value={GalleryImageURL}
                       onChange={(e)=>setGalleryImageURL(e.target.value)}
                     />
+                       <div className="clear_action">
+                          <button
+                            className="clear_btn"
+                            type="button"
+                            onClick={() => setGalleryImageURL("")}
+                          >
+                            clear
+                          </button>
+                        </div>
                   </div>
                 )}
               </div>

@@ -21,6 +21,16 @@ export let BasicDetailValidateShema=Yup.object({
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
   ).required('Email is required!'),
+  AlternateEmail:Yup.string().notRequired().test(
+    'isEmptyOrWhitespace',
+    'Content cannot be empty or just whitespace',
+    value =>{
+  if(value){
+    return !isEmptyOrWhitespace(value)
+  }
+  return true
+    } 
+  ),
   MobileNumber:Yup.string().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',

@@ -54,14 +54,18 @@ let StandardTemplate = [
   {
     id: 1,
     image: Gym_Trainer,
+    TemplateName:'Gym Trainer'
   },
   {
     id: 2,
+  
     image: Taxi_Service,
+        TemplateName:'Taxi Service'
   },
   {
     id: 3,
     image: Fashion_Desinger,
+        TemplateName:'Fashion Designer'
   },
   // {
   //   id: 4,
@@ -135,6 +139,10 @@ const Select_Template = () => {
     setSavedPlan,
     currentTemplate,
     setCurrentTemplate,
+    successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen,
   } = useContext(Context);
   // let [currentTemplate, setCurrentTemplate] = useState(null);
   let [VCardAdded, setVCardAdded] = useState(0);
@@ -151,53 +159,7 @@ const Select_Template = () => {
     }
   }
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
-console.log(currentTemplate)
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `http://localhost:3001/templateDetail/specificAll/${localStorageDatas.userName}`,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorageDatas.token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
 
-  //       if (res.data.data[0].currentTemplate == undefined) {
-  //         setCurrentTemplate(null);
-  //       } else {
-  //         setCurrentTemplate(res.data.data[0].currentTemplate);
-  //         setSavedTemplate(res.data.data[0].currentTemplate);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [FormSubmitLoader]);
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `http://localhost:3001/currentplan/specificAll/${localStorageDatas.userName}`,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorageDatas.token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       if (res.data.data.length > 0) {
-  //      setCurrentPlan(res.data.data[0].currentPlan);
-  //         FormSubmitLoader(false)
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       FormSubmitLoader(false)
-  //     });
-  // }, [FormSubmitLoader]);
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
@@ -211,7 +173,6 @@ console.log(currentTemplate)
           },
         })
         .then((res) => {
-          console.log(res.data.data)
           setVCardAdded(res.data.data.length);
           if (res.data.data.length <= 0) {
             setCurrentTemplate(null);
@@ -223,7 +184,11 @@ console.log(currentTemplate)
           console.log(error);
         });
     } catch (error) {
-      toast.error(error.message);
+      setErrorPopupOpen(true);
+      setErrorMessage(error.message);
+      setTimeout(()=>{
+      setErrorPopupOpen(false)
+      },3000)
     }
   }
   useEffect(() => {
@@ -251,12 +216,19 @@ console.log(currentTemplate)
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          setSuccessPopupOpen(true);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error);
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
           setFormSubmitLoader(false);
         });
     },
@@ -277,10 +249,18 @@ console.log(currentTemplate)
       })
       .then((res) => {
         setFormSubmitLoader(false);
-        toast.success(res.data.message);
+        setSuccessPopupOpen(true);
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+          setSuccessPopupOpen(false);
+        }, 3000);
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        setErrorPopupOpen(true);
+        setErrorMessage(error.response.data.message);
+        setTimeout(()=>{
+        setErrorPopupOpen(false)
+        },3000)
 
         setFormSubmitLoader(false);
       });
@@ -306,7 +286,7 @@ console.log(currentTemplate)
             </button>
           ) : (
             <button onClick={handleTemplateUpdate} type="submit">
-              Update
+              Update<span class="material-symbols-outlined">update</span>
             </button>
           )}
 
@@ -452,8 +432,11 @@ console.log(currentTemplate)
                         ) : (
                           ""
                         )}
-
+                        <div className="vcard_name">
+                        <h4>{data.TemplateName}</h4>
+                        </div>
                         <div className="image_box">
+                          
                           <img src={data.image} alt="" />
                         </div>
                       </div>

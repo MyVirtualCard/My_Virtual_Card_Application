@@ -53,7 +53,7 @@ const User_VCards = () => {
         setFormSubmitLoader(false);
         console.log(error);
       });
-  }, []);
+  }, [key]);
 
   useEffect(() => {
     api
@@ -198,7 +198,7 @@ const User_VCards = () => {
                     })
                     .then((res) => {
                       console.log(res);
-                      if (res.data.length < 1) {
+                      if (res.data.length < 2) {
                         setFormSubmitLoader(false);
                         navigate(`/${userName}/uadmin/create_new_vcard`);
                       } else {
@@ -278,16 +278,17 @@ const User_VCards = () => {
                 <tbody className="bg-light text-center">
                   {VCardCount != undefined ? (
                     VCardCount.map((data, index) => {
+                      console.log(data.Profile)
                       return (
                         <tr key={index}>
                           <td className="fw-light">
-                            {data.ProfileType == "Paste_ImageAddress" ? (
-                              <img src={data.ProfileAddress} alt="profile" />
+                            {data.ProfileType == "Paste_ImageAddress"? (
+                              <img src={data.ProfileAddress.length > 0 && data.ProfileAddress != undefined ? data.ProfileAddress : 'https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740'} alt="profile" />
                             ) : (
                               ""
                             )}
                             {data.ProfileType == "ImageUpload" ? (
-                              <img src={data.Profile} alt="profile" />
+                              <img src={data.Profile.length > 0 && data.Profile !=undefined ? data.Profile :'https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740'} alt="profile" />
                             ) : (
                               ""
                             )}

@@ -205,6 +205,12 @@ const App = () => {
   //OTPValue Store:
 
   let [OTP_Value, setOTP_Value] = useState();
+
+  //Success and error popup state
+  let[successMessage,setSuccessMessage]=useState();
+  let[successPopupOpen,setSuccessPopupOpen]=useState(false);
+  let[errorMessage,setErrorMessage]=useState();
+  let[errorPopupOpen,setErrorPopupOpen]=useState(false)
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -275,6 +281,10 @@ const App = () => {
       <div className="App_container">
         <Context.Provider
           value={{
+            successMessage,setSuccessMessage,
+            successPopupOpen,setSuccessPopupOpen,
+            errorMessage,setErrorMessage,
+            errorPopupOpen,setErrorPopupOpen,
             ShowForm,
             setShowForm,
             activePlan,

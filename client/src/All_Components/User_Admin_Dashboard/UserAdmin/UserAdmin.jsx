@@ -83,7 +83,6 @@ let [pieces,setPieces]=useState(150);
     api
       .get(`/auth/register/${userName}`)
       .then((res) => {
-        console.log(res);
         setUserData(res.data.data);
       })
       .catch((error) => {

@@ -345,6 +345,7 @@ const Fashion_Designer = () => {
   let [BussinessHourData, setBussinessHourData] = useState([]);
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
+  let[ManageContentData,setManageContent]=useState([]);
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -355,7 +356,6 @@ const Fashion_Designer = () => {
       await api
         .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
-          console.log(res.data.data);
           setGoogleMapData(res.data.data.GoogleMapData);
           setVCard_URL_Data(res.data.data.Vcard_URL);
           setBasicData(res.data.data.BasicDetails);
@@ -367,6 +367,7 @@ const Fashion_Designer = () => {
           setQRCodeData(res.data.data.QRCodeModel);
           setBussinessHourData(res.data.data.BussinessModel);
           setPopUpBannerData(res.data.data.PopupBannerModel);
+          setManageContent(res.data.data.ManageContentData)
           setSiteLoader(false);
           setTimeout(() => {
             // window.scrollTo(0, 0);
@@ -434,11 +435,12 @@ const Fashion_Designer = () => {
               <Toaster position="top-right" reverseOrder={false} />
               <div className="Fashion_Designer_box">
                 {/* popupbanner */}
-                {PopUpBannerData.length > 0 ? (
+                {PopUpBannerData.length > 0 && ManageContentData[0].BannerActive ==  true ? (
                   <>
                     {PopUpBannerData.map((data, index) => {
                       return (
-                        <div
+                    <>
+                          <div
                           className="popup_container"
                           id={popupBannerToggle ? "popupShow" : "popupHide"}
                           key={index}
@@ -470,6 +472,9 @@ const Fashion_Designer = () => {
                             </div>
                           </div>
                         </div>
+                   
+                    </>
+                    
                       );
                     })}
                   </>
@@ -552,7 +557,7 @@ const Fashion_Designer = () => {
                           </>
                         )
                       })}
-                     {SocialMediaData.length>0 ? 
+                     {SocialMediaData.length>0  && ManageContentData[0].SocialMedia ==  true ? 
                        <>
                        {SocialMediaData.map((data, index) => {
                          return (
@@ -689,7 +694,7 @@ const Fashion_Designer = () => {
                 : ''}
           
                 {/* ContactDetails */}
-                {BasicData.length > 0 ?
+                {BasicData.length > 0 && ManageContentData[0].ContactDetails ==  true  ?
                 <>
                      <div className="row_3">
                   <div className="title">
@@ -771,7 +776,7 @@ const Fashion_Designer = () => {
                 : ''}
            
                 {/* Services */}
-                {ServiceData.length > 0 ? 
+                {ServiceData.length > 0 && ManageContentData[0].Service ==  true  ? 
                 <>
                   <div className="row_4">
                   <div className="title">
@@ -794,7 +799,14 @@ const Fashion_Designer = () => {
                                 )}
                                 {data.ServiceType == "ImageUpload" ? (
                                   <>
-                                    <img src={data.ServiceImage} alt="" />
+                                    <img src={data.ServiceImage} alt="Service Upload Image" />
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+                                   {data.ServiceType == "Image_Address_Link" ? (
+                                  <>
+                                    <img src={data.ServiceAddress} alt="ServiceAddressImage" />
                                   </>
                                 ) : (
                                   ""
@@ -843,7 +855,7 @@ const Fashion_Designer = () => {
            
 
                 {/* Products */}
-                {ProductData.length>0? 
+                {ProductData.length>0 && ManageContentData[0].Product ==  true ? 
                 <>
                     <div className="row_7">
                   <div className="title">
@@ -863,7 +875,7 @@ const Fashion_Designer = () => {
                         return(
                           <>
                               {data.ProductType == "ImageUpload" ? (
-                                  <div className="product_list">
+                                  <div className="product_list" key={index}>
                                     <div className="product_image">
                                       <img
                                         src={
@@ -916,6 +928,8 @@ const Fashion_Designer = () => {
                 : ''}
             
                 {/* //Appinment */}
+                {VCard_URL_Data.length>0 && ManageContentData[0].Appoinment ==  true ? 
+                <>
                 <div className="row_6">
                   <div className="title">
                     <h3>#&nbsp;Make An Appoinment</h3>
@@ -949,8 +963,11 @@ const Fashion_Designer = () => {
                     </form>
                   </div>
                 </div>
+                </>
+                : '' }
+                
                 {/* Gallery */}
-                {GalleryData.length > 0 ? 
+                {GalleryData.length > 0 &&  ManageContentData[0].Gallery ==  true? 
                 <>
                      <div className="row_8">
                   <div className="title">
@@ -1027,7 +1044,7 @@ const Fashion_Designer = () => {
                 </>
                 : ''}
                 {/* Testimonial */}
-                {TestimonialData.length > 0 ? 
+                {TestimonialData.length > 0 &&  ManageContentData[0].Testimonial ==  true? 
                 <>
                      <div className="row_9">
                   <div className="title">
@@ -1075,7 +1092,7 @@ const Fashion_Designer = () => {
                 : ''}
            
                 {/* QRCode */}
-                {QRCodeData.length>0 ? 
+                {QRCodeData.length>0 &&  ManageContentData[0].QRCode ==  true? 
                 <>
                         <div className="row_12">
                   <div className="title">
@@ -1104,7 +1121,7 @@ const Fashion_Designer = () => {
                 : ''}
         
                 {/* Opentime */}
-                {BussinessHourData.length>0 ? 
+                {BussinessHourData.length>0 &&  ManageContentData[0].BussinessHour ==  true? 
                 <>
                     <div className="row_5">
                   <div className="title">
@@ -1274,7 +1291,7 @@ const Fashion_Designer = () => {
                 </>
                 : ''}
               {/* GoogleMap */}
-              {GoogleMapData.length > 0 ? (
+              {GoogleMapData.length > 0 &&  ManageContentData[0].GoogleMap ==  true? (
                   <>
                     <div className="google_map_container">
                     <div className="title">
@@ -1299,9 +1316,9 @@ const Fashion_Designer = () => {
                   ""
                 )}
                 {/* Feedback */}
-                {VCard_URL_Data.length > 0 ||
-                BasicData.length > 0 ||
-                SocialMediaData.length > 0 ? 
+                {VCard_URL_Data.length > 0 &&
+                BasicData.length > 0 &&
+                SocialMediaData.length > 0 &&  ManageContentData[0].FeedbackForm ==  true? 
                 <>
                      <div className="row_10">
                   {/* <div className="rattingcar_image">
@@ -1569,7 +1586,11 @@ const Fashion_Designer = () => {
                 : ' '}
 
                 {/* Inquries */}
-                <div className="row_11">
+                {VCard_URL_Data.length > 0 &&
+                BasicData.length > 0 &&
+                SocialMediaData.length > 0 &&  ManageContentData[0].InquiryForm ==  true?  
+                <>
+                     <div className="row_11">
                   <div className="title">
                     <h3>#&nbsp;Inquries</h3>
                   </div>
@@ -1628,6 +1649,9 @@ const Fashion_Designer = () => {
                     </form>
                   </div>
                 </div>
+                </>
+                : ''}
+           
 
                 {/* Footer */}
                 <div className="row_13">

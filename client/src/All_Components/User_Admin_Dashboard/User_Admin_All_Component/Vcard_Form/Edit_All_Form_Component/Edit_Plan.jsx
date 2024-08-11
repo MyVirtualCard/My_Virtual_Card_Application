@@ -534,7 +534,7 @@ const Plan = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data[0].status)
+    
         setPlanActive(res.data.data);
 setShowForm('Basic Detail')
         setStatus(res.data.data[0].status);

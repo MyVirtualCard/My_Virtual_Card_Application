@@ -1,29 +1,11 @@
-import PopupBannerModel from "../Models/PopupBanner.model.js";
-import Payment from "../Models/Payment.model.js";
-//Read or get all user basicDetail data  from database:
 
-// export const GetPopupBannerData = async (req, res) => {
-//   try {
-//     let datas = await PopupBannerModel.find({ URL_Alies: req.params.URL_Alies});
-//     if (!datas) {
-//       res.status(400).json({ message: "Data not found!" });
-//     } else {
-//       res.status(201).json({
-//         message: "Data Fetched!",
-//         count: datas.length,
-//         data: datas,
-//       });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+import ManageContentModel from "../Models/ManageContent.model.js";
+import Payment from "../Models/Payment.model.js";
+
 //Post basic detail data to database:
-export const PostPopupBannerData = async (req, res) => {
+export const PostManageContentData = async (req, res) => {
   try {
-    if (!req.body.BannerTitle || !req.body.BannerDescription) {
-      return res.status(401).json({ message: "All * fields are Mandatory!" });
-    }
+
     let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
@@ -41,42 +23,50 @@ export const PostPopupBannerData = async (req, res) => {
         checkCurrentPlan[0].amount === 1299
       ) {
         //check images
-        let checkPopupBannerLength = await PopupBannerModel.find({
+        let checkPopupBannerLength = await ManageContentModel.find({
           URL_Alies: req.params.URL_Alies,
         });
 
         if (!checkPopupBannerLength) {
-          return res.status(400).json({ message: "Banner will not be there!" });
+          return res.status(400).json({ message: "ManageContent details not be there!" });
         } else {
           //Basic Image File limit checked:
           if (checkPopupBannerLength.length < 1) {
             // Create a new image instance and save to MongoDB
-            const newPopupBanner = new PopupBannerModel({
+            const newManageContent = new ManageContentModel({
               user: req.user.userName,
               URL_Alies: req.params.URL_Alies,
-              BannerTitle: req.body.BannerTitle,
-              BannerURL: req.body.BannerURL,
-              BannerActive:req.body.BannerActive,
-              BannerDescription: req.body.BannerDescription,
-              BannerButtonName: req.body.BannerButtonName,
+              BannerActive: req.body.BannerActive,
+              BussinessHour: req.body.BussinessHour,
+              GoogleMap:req.body.GoogleMap,
+              Appoinment: req.body.Appoinment,
+              Service: req.body.Service,
+              Product: req.body.Product,
+              Gallery: req.body.Gallery,
+              Testimonial: req.body.Testimonial,
+              QRCode: req.body.QRCode,
+              FeedbackForm: req.body.FeedbackForm,
+              InquiryForm: req.body.InquiryForm,
+              ContactDetails: req.body.ContactDetails,
+              SocialMedia:req.body.SocialMedia
             });
 
-            await newPopupBanner.save()
+            await newManageContent.save()
               .then(() => {
                 res.status(200).json({
                   message: "Popup Banner saved!",
-                  data: newPopupBanner,
+                  data: newManageContent,
                 });
               })
               .catch((err) => {
                 console.log(err);
                 res.status(400).json({
-                  message: "Failed to save popup Banner Details!",
+                  message: "Failed to save Manage Content Details!",
                 });
               });
           } else {
             res.status(400).json({
-              message: "Already Banner detail saved ! ",
+              message: "Already Manage Content detail saved ! ",
             });
           }
         }
@@ -92,7 +82,7 @@ export const PostPopupBannerData = async (req, res) => {
 // //Read or get Specific User all Data  :
 export const readSpecificUserData = async (req, res) => {
   try {
-    let getSpecificData = await PopupBannerModel.find({
+    let getSpecificData = await ManageContentModel.find({
       URL_Alies: req.params.URL_Alies,
     });
 
@@ -108,6 +98,7 @@ export const readSpecificUserData = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };
@@ -115,7 +106,7 @@ export const readSpecificUserData = async (req, res) => {
 export const getSpecificIdData = async (req, res) => {
   try {
     let { id } = req.params;
-    let getSpecificData = await PopupBannerModel.findById(id);
+    let getSpecificData = await ManageContentModel.findById(id);
 
     if (!getSpecificData) {
       res.status(400).json({ message: " Data Not Found!" });
@@ -134,7 +125,7 @@ export const updateSpecificUserData = async (req, res) => {
   try {
     let { id } = req.params;
     let data = req.body;
-    let updateSpecificData = await PopupBannerModel.findOneAndUpdate(
+    let updateSpecificData = await ManageContentModel.findOneAndUpdate(
       { URL_Alies: req.params.URL_Alies },
       data,
       { new: true }
@@ -156,7 +147,7 @@ export const updateSpecificUserData = async (req, res) => {
 //Delete Specific User Bssic detail All data deleted By using user Id:
 export const deleteSpecificUserAllData = async (req, res) => {
   try {
-    let deleteSpecificData = await PopupBannerModel.deleteMany({
+    let deleteSpecificData = await ManageContentModel.deleteMany({
       URL_Alies: req.params.URL_Alies,
     });
 
@@ -178,7 +169,7 @@ export const deleteSpecificUserData = async (req, res) => {
   try {
     let { id } = req.params;
 
-    let deleteSpecificData = await PopupBannerModel.findByIdAndDelete(id);
+    let deleteSpecificData = await ManageContentModel.findByIdAndDelete(id);
 
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found" });
