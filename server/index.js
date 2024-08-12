@@ -44,14 +44,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 //Port initializing:
 let PORT = process.env.PORT || 3000;
-// Allow requests from your frontend domain
-const corsOptions = {
-  origin: "https://myvirtualcard.in", // Replace with your actual frontend domain
-  credentials: true, // Allow cookies to be sent
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
-// app.use(cors('*'));
+
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());
@@ -60,7 +53,19 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(express.static(path.join(__dirname, "client", "dist")));
-
+// Allow requests from your frontend domain
+// const corsOptions = {
+//   origin: "https://myvirtualcard.in", // Replace with your actual frontend domain
+//   credentials: true, // Allow cookies to be sent
+//   optionsSuccessStatus: 200,
+// };
+// app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'https://myvirtualcard.in',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+}));
+// app.use(cors('*'));
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,

@@ -2,12 +2,13 @@ import * as Yup from "yup";
 
 const passwordRules =
   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{6,}$";
-
+// Custom method to check if the string is empty or contains only whitespace
+const isEmptyOrWhitespace = str => !str || /^\s*$/.test(str);  
 // Define the maximum file size in bytes (e.g., 5MB)
 const FILE_SIZE = 3 * 1024 * 1024;
 const MIN_FILE_SIZE = 0.02 * 1024 * 1024;
 // Define the allowed file types (e.g., jpeg and png)
-const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
+const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg","image/svg"];
 // Helper function to get the file type from a base64 string
 const getProfileFileType = (base64String) => {
   const match = base64String.match(/^data:(.*);base64,/);
@@ -34,11 +35,15 @@ const getFileSize = (base64String) => {
 };
 
 export let VCardURLValidateShema = Yup.object({
-  URL_Alies: Yup.string().required("URL_Alies is required!"),
-  VCardName: Yup.string()
+  URL_Alies: Yup.string().required("URL_Alies is required!").matches(/^\S.*\S$|^\S$/, 'Url_Alies cannot contain leading or trailing spaces').test('no-only-spaces', 'Username cannot be only spaces', value => value && value.trim().length > 0),
+  VCardName: Yup.string().test(
+    'isEmptyOrWhitespace',
+    'Content cannot be empty or just whitespace')
     .min(4, "Minimum 4 char required!")
     .required("VCardName is required!"),
-  Description: Yup.string()
+  Description: Yup.string().test(
+    'isEmptyOrWhitespace',
+    'Content cannot be empty or just whitespace')
     .min(15, "Min 15 letter required!")
     .max(500, "Max 500 letter to be allowed!")
     .required("Description is required!"),

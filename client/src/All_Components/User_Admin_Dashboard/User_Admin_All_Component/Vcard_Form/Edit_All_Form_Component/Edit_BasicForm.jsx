@@ -453,6 +453,7 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
                   <label htmlFor="Profile">Company Logo</label>
                   <select
                     name="ProfileType"
+                    id="ProfileType"
                     onChange={handleProfileTypeChange}
                     value={ProfileType}
                   >
@@ -464,6 +465,7 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
                   <label htmlFor="Banner">Company Banner</label>
                   <select
                     name="BannerType"
+                    id="BannerType"
                     onChange={handleBannerTypeChange}
                     value={BannerType}
                   >

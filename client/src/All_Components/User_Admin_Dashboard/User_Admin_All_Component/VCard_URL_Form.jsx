@@ -157,7 +157,6 @@ const VCard_URL_Form = () => {
     handleURLErrorHandling();
   }, [formik.values.URL_Alies]);
 
-  console.log(formik.values.ProfileAddress.length);
   return (
     <>
       <div className="new_Vcard_url_container">
@@ -292,6 +291,7 @@ const VCard_URL_Form = () => {
                   <label htmlFor="Profile">Company Logo</label>
                   <select
                     name="ProfileType"
+                    id="ProfileType"
                     onChange={formik.handleChange}
                     value={formik.values.ProfileType}
                   >
@@ -305,6 +305,7 @@ const VCard_URL_Form = () => {
                   <label htmlFor="Banner">Company Banner</label>
                   <select
                     name="BannerType"
+                    id="BannerType"
                     onChange={formik.handleChange}
                     value={formik.values.BannerType}
                   >
