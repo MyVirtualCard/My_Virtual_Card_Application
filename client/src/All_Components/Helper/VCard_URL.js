@@ -5,7 +5,7 @@ const passwordRules =
 
 // Define the maximum file size in bytes (e.g., 5MB)
 const FILE_SIZE = 3 * 1024 * 1024;
-const MIN_FILE_SIZE = 0.2 * 1024 * 1024;
+const MIN_FILE_SIZE = 0.02 * 1024 * 1024;
 // Define the allowed file types (e.g., jpeg and png)
 const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
 // Helper function to get the file type from a base64 string
@@ -52,7 +52,7 @@ export let VCardURLValidateShema = Yup.object({
     })
     .test(
       "fileSize",
-      "File size is too small..Min 220kb required!",
+      "File size is too small..Min 20kb required!",
       (value) => {
         if (value) {
           return value && getProfileFileSize(value) >= MIN_FILE_SIZE;
@@ -84,7 +84,7 @@ export let VCardURLValidateShema = Yup.object({
     })
     .test(
       "fileSize",
-      "File size is too small..Min 220kb required!",
+      "File size is too small..Min 20kb required!",
       (value) => {
         if (value) {
           return value && getProfileFileSize(value) >= MIN_FILE_SIZE;
