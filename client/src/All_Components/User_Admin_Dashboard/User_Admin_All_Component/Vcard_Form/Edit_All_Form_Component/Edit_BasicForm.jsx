@@ -103,8 +103,10 @@ const BasicForm = () => {
           setBannerType(res.data.data.BannerType);
           setProfileAddress(res.data.data.ProfileAddress);
           setBannerAddress(res.data.data.BannerAddress);
-
-          setFormSubmitLoader(false);
+setTimeout(()=>{
+  setFormSubmitLoader(false);
+},2000)
+       
         })
         .catch((error) => {
           console.log(error);

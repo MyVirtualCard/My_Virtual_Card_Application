@@ -498,8 +498,13 @@ const Taxi_Service = () => {
                           ""
                         )}
                         {data.BannerType == "ImageUpload"
-                          ? data.Banner ||
+                          ?        <img
+                          src={
+                            data.Banner ||
                             "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
+                          }
+                          alt="banner"
+                        />
                           : ""}
                         <div className="overlay"></div>
                       </div>
