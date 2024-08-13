@@ -7,7 +7,7 @@ import arrow from "../../../assets/SVG/Register/arrow.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Context from "../../UseContext/Context";
 import axios, { all } from "axios";
-import { convertToBase64 } from "../../Helper/convert";
+import { convertToBase64Profile } from "../../Helper/convert";
 import { useFormik } from "formik";
 import { Toaster, toast } from "react-hot-toast";
 import {
@@ -23,6 +23,16 @@ const Register = () => {
   let [capchaValue, setCapchaValue] = useState(null);
 
   let navigate = useNavigate();
+  const handleProfileImageChange = (event) => {
+    const ProfileImage = event.currentTarget.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(ProfileImage);
+    reader.onload = () => {
+      formik.setFieldValue("profile", reader.result);
+      setProfile(reader.result);
+    };
+  };
+
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
   const handleSpeak = (userData) => {
     if ("speechSynthesis" in window) {
@@ -120,7 +130,7 @@ const Register = () => {
     // validateOnChange: false,
     validationSchema: RegisterValidateSchema,
     onSubmit: async (values, action) => {
-      console.log(values);
+      
       setRegisterLoader(true);
 
       await api
@@ -142,9 +152,10 @@ const Register = () => {
         });
     },
   });
+  console.log(formik.values.profile)
   //Image convert to base 64 :
   const onUpload = async (e) => {
-    let base64 = await convertToBase64(e.target.files[0]);
+    let base64 = await convertToBase64Profile(e.target.files[0]);
     setProfile(base64);
   };
 
@@ -593,10 +604,11 @@ const Register = () => {
                       <span>Upload your profile</span>
                     </label>
                     <input
-                      onChange={onUpload}
+                 
                       type="file"
                       id="profile"
                       name="profile"
+                      onChange={handleProfileImageChange}
                       // {...formik.getFieldProps('profile')}
                     />
                   </div>

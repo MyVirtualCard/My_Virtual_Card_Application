@@ -1,27 +1,85 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-import LandingPage from "./All_Components/LandingPage/LandingPage";
 import Context from "./All_Components/UseContext/Context";
 import { Navigate, useNavigate } from "react-router-dom";
-import ResetPassword from "./All_Components/Authentication/ResetPassword/ResetPassword";
-import ForgotPassword from "./All_Components/Authentication/ForgotPassword/ForgotPassword";
-import Login from "./All_Components/Authentication/Login/Login";
-import Register from "./All_Components/Authentication/Register/Register";
-import UserAdmin from "./All_Components/User_Admin_Dashboard/UserAdmin/UserAdmin";
-import User_Dashboard from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_Dashboard";
-import User_VCards from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_VCards";
-import VCard_URL_Form from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/VCard_URL_Form";
-import VCard_Form_Edit from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/VCard_Form_Edit";
-import Inquiries from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Inquiries";
-import BasicForm from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm";
-import UserAccountSetting from "./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting";
-import VerifyOTP from "./All_Components/Authentication/VerifyOTP/VerifyOTP";
-import ResendOTP from "./All_Components/Authentication/ResendOTP/ResendOTP";
-import Terms_Condition from "./All_Components/LandingPage/Terms&Condition/Terms_Condition";
-import Privacy_Policy from "./All_Components/LandingPage/PrivacyPolicy/Privacy_Policy";
-import PaymentSuccess from "./All_Components/User_Admin_Dashboard/Payment/PaymentSuccess";
+const FallbackWithDelay = ({ delay, fallback }) => {
+  const [showFallback, setShowFallback] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFallback(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return showFallback ? fallback : null;
+};
+let LandingPage = lazy(() =>
+  import("./All_Components/LandingPage/LandingPage")
+);
+let ResetPassword = lazy(() =>
+  import("./All_Components/Authentication/ResetPassword/ResetPassword")
+);
+let ForgotPassword = lazy(() =>
+  import("./All_Components/Authentication/ForgotPassword/ForgotPassword")
+);
+let Login = lazy(() =>
+  import("./All_Components/Authentication/Login/Login")
+);
+let Register = lazy(() =>
+  import("./All_Components/Authentication/Register/Register")
+);
+let UserAdmin = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/UserAdmin/UserAdmin")
+);
+let User_Dashboard = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_Dashboard")
+);
+let User_VCards = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_VCards")
+);
+let VCard_URL_Form = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/VCard_URL_Form")
+);
+let VCard_Form_Edit = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/VCard_Form_Edit")
+);
+let Inquiries = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Inquiries")
+);
+let BasicForm = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm")
+);
+let UserAccountSetting = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting")
+);
+
+let VerifyOTP = lazy(() =>
+  import("./All_Components/Authentication/VerifyOTP/VerifyOTP")
+);
+let ResendOTP = lazy(() =>
+  import("./All_Components/Authentication/ResendOTP/ResendOTP")
+);
+let Terms_Condition = lazy(() =>
+  import("./All_Components/LandingPage/Terms&Condition/Terms_Condition")
+);
+let Privacy_Policy = lazy(() =>
+  import("./All_Components/LandingPage/PrivacyPolicy/Privacy_Policy")
+);
+let PaymentSuccess = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/Payment/PaymentSuccess")
+);
+let Appoinment = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment")
+);
+let ProductOrder = lazy(() =>
+  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder")
+);
+
+
 
 import NewCardDesign1 from "./All_Components/All_VCards/NewCardDesign1";
 import NewCardDesign2 from "./All_Components/All_VCards/NewCardDesign2";
@@ -32,16 +90,14 @@ import NewCardDesign6 from "./All_Components/All_VCards/NewCardDesign6";
 import NewCardDesign7 from "./All_Components/All_VCards/NewCardDesign7";
 import NewCardDesign8 from "./All_Components/All_VCards/NewCardDesign8";
 import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
-import Appoinment from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment";
-import ProductOrder from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder";
+
 //NewVCard templates
 import Taxi_Service from "./All_Components/All_VCards/Taxi_Service.jsx";
 import Gym_Trainer from "./All_Components/All_VCards/Gym_Trainer.jsx";
 import Manager from "./All_Components/All_VCards/Manager.jsx.jsx";
 import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
 import Business_Consultant from "./All_Components/All_VCards/Business_Consultant.jsx";
-
-
+import FallBack from "./Fallback/FallBack.jsx";
 
 const App = () => {
   //URL Name state:
@@ -208,10 +264,13 @@ const App = () => {
   let [OTP_Value, setOTP_Value] = useState();
 
   //Success and error popup state
-  let[successMessage,setSuccessMessage]=useState();
-  let[successPopupOpen,setSuccessPopupOpen]=useState(false);
-  let[errorMessage,setErrorMessage]=useState();
-  let[errorPopupOpen,setErrorPopupOpen]=useState(false)
+  let [successMessage, setSuccessMessage] = useState();
+  let [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  let [errorMessage, setErrorMessage] = useState();
+  let [errorPopupOpen, setErrorPopupOpen] = useState(false);
+
+  let [AllFeedback,setAllFeedback]=useState([]);
+  let [AllAppoinment,setAllAppoinment]=useState([]);
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -233,13 +292,11 @@ const App = () => {
       api
         .get(`/templateDetail/${URL_Alies_LocalStorage}`)
         .then((res) => {
-          console.log(res.data);
           setURL_Alies(res.data.data[0].URL_Alies);
-          console.log(res.data.data[0]);
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
-          console.log(error);
+
           toast.error(error.response.data.message);
         });
     } catch (error) {
@@ -282,10 +339,16 @@ const App = () => {
       <div className="App_container">
         <Context.Provider
           value={{
-            successMessage,setSuccessMessage,
-            successPopupOpen,setSuccessPopupOpen,
-            errorMessage,setErrorMessage,
-            errorPopupOpen,setErrorPopupOpen,
+            AllFeedback,setAllFeedback,
+            AllAppoinment,setAllAppoinment,
+            successMessage,
+            setSuccessMessage,
+            successPopupOpen,
+            setSuccessPopupOpen,
+            errorMessage,
+            setErrorMessage,
+            errorPopupOpen,
+            setErrorPopupOpen,
             ShowForm,
             setShowForm,
             activePlan,
@@ -536,92 +599,94 @@ const App = () => {
             setQRCodeEdit,
           }}
         >
-          <Routes>
-            {/* Landing Homepage */}
-            <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/register"
-              element={
-                user ? (
-                  <Navigate to={`/${userName}/uadmin/dashboard`} />
-                ) : (
-                  <Register />
-                )
-              }
-            />
-            {/* <Route path="/register" element={<Register />} /> */}
-            {/* <Route path="/verify_OTP" element={<VerifyOTP />} /> */}
-            <Route path="/login" element={<Login />} />
+          <Suspense fallback={<FallbackWithDelay loadingTime={1000} fallback={<FallBack/>}/>}>
+            <Routes>
+              {/* Landing Homepage */}
+              <Route path="/fallback" element={<FallBack/>}/>
+              <Route path="/" element={<LandingPage />} />
+              <Route
+                path="/register"
+                element={
+                  user ? (
+                    <Navigate to={`/${userName}/uadmin/dashboard`} />
+                  ) : (
+                    <Register />
+                  )
+                }
+              />
+              {/* <Route path="/register" element={<Register />} /> */}
+              {/* <Route path="/verify_OTP" element={<VerifyOTP />} /> */}
+              <Route path="/login" element={<Login />} />
 
-            <Route
-              path="/verify_OTP"
-              element={
-                user ? (
-                  <Navigate to={`/${userName}/uadmin/dashboard`} />
-                ) : (
-                  <VerifyOTP />
-                )
-              }
-            />
-            <Route path="/resend_OTP" element={<ResendOTP />} />
-            <Route path="/forgot_password" element={<ForgotPassword />}>
               <Route
-                path="/forgot_password/reset_password/:id/:token"
-                element={<ResetPassword />}
+                path="/verify_OTP"
+                element={
+                  user ? (
+                    <Navigate to={`/${userName}/uadmin/dashboard`} />
+                  ) : (
+                    <VerifyOTP />
+                  )
+                }
               />
-            </Route>
+              <Route path="/resend_OTP" element={<ResendOTP />} />
+              <Route path="/forgot_password" element={<ForgotPassword />}>
+                <Route
+                  path="/forgot_password/reset_password/:id/:token"
+                  element={<ResetPassword />}
+                />
+              </Route>
 
-            <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
-              <Route
-                path={`/${userName}/uadmin/dashboard`}
-                element={<User_Dashboard />}
-              />
-              <Route
-                path={`/${userName}/uadmin/user_vcard`}
-                element={<User_VCards />}
-              />
-              {/* <Route
+              <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
+                <Route
+                  path={`/${userName}/uadmin/dashboard`}
+                  element={<User_Dashboard />}
+                />
+                <Route
+                  path={`/${userName}/uadmin/user_vcard`}
+                  element={<User_VCards />}
+                />
+                {/* <Route
                 path={`/${userName}/uadmin/vcard_form/:URL_Alies`}
                 element={<VCard_Form />}
               /> */}
-              <Route
-                path={`/${userName}/uadmin/create_new_vcard`}
-                element={<VCard_URL_Form />}
-              />
+                <Route
+                  path={`/${userName}/uadmin/create_new_vcard`}
+                  element={<VCard_URL_Form />}
+                />
 
-              <Route
-                path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
-                element={<VCard_Form_Edit />}
-              />
-              <Route
-                path={`/${userName}/uadmin/inquiries`}
-                element={<Inquiries />}
-              />
-              <Route
-                path={`/${userName}/uadmin/appoinment`}
-                element={<Appoinment />}
-              />
-              <Route
-                path={`/${userName}/uadmin/product_order`}
-                element={<ProductOrder />}
-              />
-              <Route
-                path={`/${userName}/uadmin/vcard_form/basic_form`}
-                element={<BasicForm />}
-              />
+                <Route
+                  path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
+                  element={<VCard_Form_Edit />}
+                />
+                <Route
+                  path={`/${userName}/uadmin/inquiries`}
+                  element={<Inquiries />}
+                />
+                <Route
+                  path={`/${userName}/uadmin/appoinment`}
+                  element={<Appoinment />}
+                />
+                <Route
+                  path={`/${userName}/uadmin/product_order`}
+                  element={<ProductOrder />}
+                />
+                <Route
+                  path={`/${userName}/uadmin/vcard_form/basic_form`}
+                  element={<BasicForm />}
+                />
 
-              <Route
-                path={`/${userName}/uadmin/account_setting`}
-                element={<UserAccountSetting />}
-              />
-            </Route>
-            <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-            <Route path="/terms_condition" element={<Terms_Condition />} />
-            <Route path="/privacy_condition" element={<Privacy_Policy />} />
-            
-            {/*AllVardsTemplate */}
+                <Route
+                  path={`/${userName}/uadmin/account_setting`}
+                  element={<UserAccountSetting />}
+                />
+              </Route>
+              <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+              <Route path="/terms_condition" element={<Terms_Condition />} />
+              <Route path="/privacy_condition" element={<Privacy_Policy />} />
 
-            {/* {currentTemplate == 1 ? (
+              {/*AllVardsTemplate */}
+
+              {/* {currentTemplate == 1 ? (
               <Route path={`/:URL_Alies`} element={<NewCardDesign1 />} />
             ) : (
               ""
@@ -667,26 +732,30 @@ const App = () => {
               ""
             )} */}
 
-            {/* //New Tempaltes */}
-            
-             {URL_Alies == URL_Alies && currentTemplate === 1 ? (
-              <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
-            ) : (
-              ""
-            )}
-            {URL_Alies == URL_Alies && currentTemplate === 2 ? (
-             <Route path={`/:URL_Alies`} element={<Taxi_Service />} />
-            ) : (
-              ""
-            )}
-                {URL_Alies == URL_Alies && currentTemplate === 3 ? (
-             <Route path={`/:URL_Alies`} element={<Fashion_Designer />} />
-            ) : (
-              ""
-            )}
-            {/* <Route path="/Jayakumar" element={<Manager />} /> */}
-            <Route path="/Business_Consultant" element={<Business_Consultant />} />
-          </Routes>
+              {/* //New Tempaltes */}
+
+              {URL_Alies == URL_Alies && currentTemplate === 1 ? (
+                <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 2 ? (
+                <Route path={`/:URL_Alies`} element={<Taxi_Service />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 3 ? (
+                <Route path={`/:URL_Alies`} element={<Fashion_Designer />} />
+              ) : (
+                ""
+              )}
+              {/* <Route path="/Jayakumar" element={<Manager />} /> */}
+              <Route
+                path="/Business_Consultant"
+                element={<Business_Consultant />}
+              />
+            </Routes>
+          </Suspense>
         </Context.Provider>
       </div>
     </>

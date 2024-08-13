@@ -88,7 +88,7 @@ let [pieces,setPieces]=useState(150);
       .catch((error) => {
         console.log(error.response.data.message);
       });
-  }, []);
+  }, [FormSubmitLoader]);
   let [Seconds, setSeconds] = useState("5");
   useEffect(() => {
     if (Seconds > 0 && PaymentSuccessPopup === true) {  
@@ -116,7 +116,6 @@ let [pieces,setPieces]=useState(150);
         })
         .then((res) => {
           setURL_Alies(res.data.data[0].URL_Alies);
-          console.log(res.data.data[0]);
           setUserName(res.data.data[0].user)
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })

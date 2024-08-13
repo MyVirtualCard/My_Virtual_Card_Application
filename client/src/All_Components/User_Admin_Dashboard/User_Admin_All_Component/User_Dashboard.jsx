@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./menuStyles/User_Dashboard.scss";
 import Charts from "./Charts";
 import Feature from "./Feature";
 import BarChart from "./BarChart";
 import Pie from "./Pie";
 import Footer from "../UserAdmin_Footer/Footer";
+import Context from "../../UseContext/Context";
 const User_Dashboard = () => {
   let [chartsToggle, setChartsToggle] = useState(false);
+  let {    AllFeedback,setAllFeedback,
+    AllAppoinment,setAllAppoinment,}=useContext(Context);
   return (
     <>
       <div className="user_dashboard_container">
@@ -72,7 +75,7 @@ const User_Dashboard = () => {
               </div>
 
               <div className="details">
-                <h4>00</h4>
+              <h4>{AllFeedback.length <10 ? '0'+AllFeedback.length : AllFeedback.length}</h4>
                 <small>Today inquiries</small>
               </div>
               <ul className="dashboard_background">
@@ -99,7 +102,7 @@ const User_Dashboard = () => {
               </div>
 
               <div className="details">
-                <h4>00</h4>
+                <h4>{AllAppoinment.length <10 ? '0'+AllAppoinment.length : AllAppoinment.length}</h4>
                 <small>Today Appointments</small>
               </div>
               <ul className="dashboard_background">

@@ -5,16 +5,20 @@ body {
   overflow-x: hidden;
   overflow: scroll;
 
-&::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 4px !important;
     height: 4px;
-    background-color:transparent;
-    display: none;
-
+    background-color: transparent;
+    display: block;
+    background: #fff;
     border-radius: 5px;
   }
   &::-webkit-scrollbar-thumb {
-    background: #a8a8a8;
+    background: #03837c;
     border-radius: 5px;
+  }
+
+  button {
+    outline: none !important;
   }
 }

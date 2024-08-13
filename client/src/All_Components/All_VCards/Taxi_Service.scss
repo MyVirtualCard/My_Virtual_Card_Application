@@ -1131,7 +1131,7 @@
               justify-content: center;
               gap: 0.5rem;
               // width: 100%;
-              outline: none;
+              outline: none !important;
               padding: 6px 1rem;
               background-color: #1a8b8275;
               color: #ffffff;
@@ -2936,3 +2936,5 @@ color: #ffff;
     z-index: 2;
   }
 }
+
+

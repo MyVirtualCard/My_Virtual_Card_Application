@@ -11,7 +11,7 @@ router.get("/specific/:id", getSpecificIdData);
 //Update Specific user Single Data:
 router.put("/update/:URL_Alies", updateSpecificUserData);
 //Delete Specific user all Data in Basic Detail:
-router.delete("/deleteAll/:URL_Alies", deleteSpecificUserAllData);
+router.delete("/:URL_Alies", deleteSpecificUserAllData);
 //Delete Specific user document Data in Basic Detail:
 router.delete("/delete/:id", deleteSpecificUserData);
 

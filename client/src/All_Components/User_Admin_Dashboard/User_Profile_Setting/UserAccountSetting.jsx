@@ -54,17 +54,7 @@ const UserAccountSetting = () => {
         setEmail(responce.data.data.email);
         setMobileNumber(responce.data.data.mobileNumber);
         setLocation(responce.data.data.location);
-        // toast.success(responce.data.message, {
-        //   position: "top-right",
-        //   autoClose: 2000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        //   transition: Flip,
-        // });
+ 
         setLoader(false);
       })
       .catch((error) => {
@@ -104,6 +94,9 @@ const UserAccountSetting = () => {
         .then((res) => {
           setFormSubmitLoader(false)
           toast.success(res.data.message);
+          setTimeout(()=>{
+            navigate('/curious_coder/uadmin/user_vcard')
+          },2000)
           setUpdateLoader(false);
         })
         .catch((error) => {

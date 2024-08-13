@@ -277,7 +277,7 @@ const User_VCards = () => {
                 <tbody className="bg-light text-center">
                   {VCardCount != undefined ? (
                     VCardCount.map((data, index) => {
-                      console.log(data.Profile)
+                  
                       return (
                         <tr key={index}>
                           <td className="fw-light">

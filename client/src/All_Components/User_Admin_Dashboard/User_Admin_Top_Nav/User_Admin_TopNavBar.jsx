@@ -15,9 +15,22 @@ const User_Admin_TopNavBar = () => {
     setSideNavActions,
     profileOpen,
     setProfileOpen,
+    userName
   } = useContext(Context);
-
-
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
+  useEffect(() => {
+    api
+      .get(`/auth/register/${userName}`)
+      .then((res) => {
+        console.log(res.data.data)
+        setUserData(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  }, []);
 
   return (
     <>
@@ -51,7 +64,7 @@ const User_Admin_TopNavBar = () => {
             {/* <div className="mode">
               <i className="bx bx-moon"></i>
             </div> */}
-            <div className="user_profile">
+            <div className="user_profile" onClick={() => setProfileOpen(!profileOpen)}>
               <img
                 src={
                   userData.profile ||
@@ -60,7 +73,7 @@ const User_Admin_TopNavBar = () => {
                 alt="logo"
               />
             </div>
-            <div className="user_name">
+            <div className="user_name"  onClick={() => setProfileOpen(!profileOpen)}>
               <p>{userData.firstName ? userData.firstName : '' } {userData.lastName ? userData.lastName : ''}</p>
          
             </div>

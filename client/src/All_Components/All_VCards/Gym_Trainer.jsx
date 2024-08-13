@@ -334,9 +334,6 @@ const Gym_Trainer = () => {
     <>
       {SiteLoader ? (
         <div className="newDesignLoader1">
-          <div className="loadingbackground">
-            {/* <img src={loadingBack} alt="loading" className="aris_back" /> */}
-          </div>
           <small>
             {" "}
             <div className="lds-ellipsis">
@@ -346,17 +343,6 @@ const Gym_Trainer = () => {
               <div></div>
             </div>
           </small>
-          {/* <Triangle
-            visible={true}
-            height="80"
-            width="80"
-            color="#ffffff"
-            ariaLabel="triangle-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            className='logoLoader'
-            style={{zIndex:1}}
-          /> */}
           <img src={trianglelogo} alt="LOGO" className="aris_logo" />
         </div>
       ) : (

@@ -1,9 +1,9 @@
 //Image into base64 formate:
-export const convertToBase64Profile = (Profile) => {
+export const convertToBase64Profile = (profile) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
   
-      fileReader.readAsDataURL(Profile);
+      fileReader.readAsDataURL(profile);
   
       fileReader.onload = () => {
         resolve(fileReader.result);
