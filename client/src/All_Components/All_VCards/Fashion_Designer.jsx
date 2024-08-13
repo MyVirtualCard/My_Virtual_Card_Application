@@ -26,7 +26,30 @@ import vCardsJS from "vcards-js";
 import axios from "axios";
 import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
 import { Toaster, toast } from "react-hot-toast";
+import { InquiryValidateSchema } from "../Helper/InquiryValidate";
+import Context from "../UseContext/Context";
+import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
 const Fashion_Designer = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  //Success and error popup state
+  let[successMessage,setSuccessMessage]=useState();
+  let[successPopupOpen,setSuccessPopupOpen]=useState(false);
+  let[errorMessage,setErrorMessage]=useState();
+  let[errorPopupOpen,setErrorPopupOpen]=useState(false)
+let [InquiryLoader, setInquiryLoader] = useState(false);
+let [feedbackLoader, setFeedbackLoader] = useState(false);
+let [appoinmentLoader, setappoinmentLoader] = useState(false);
+let [commentOpen, setCommentOpen] = useState(false);
+let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
+let[FeedbackPopup,setFeedbackPopup]=useState(false)
+let[FeedbackPopupError,setFeedbackPopupError]=useState(false);
+let[AppoinmentPopup,setAppoinmentPopup]=useState(false)
+let[AppoinmentPopupError,setAppoinmentPopupError]=useState(false);
+let [feedbackForm, setFeedbackForm] = useState({
+  ClientName: "",
+  ClientFeedback: "",
+  ClientRatting: 0,
+});
   let fashionIcons = [
     fashion1,
     fashion2,
@@ -41,8 +64,8 @@ const Fashion_Designer = () => {
     fashion11,
     fashion12,
   ];
+
   const [fashionIconIndex, setFashionIconIndex] = useState(0);
-  let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
   // /Fashion stress:
   useEffect(() => {
     if (fashionIconIndex >= 0) {
@@ -85,14 +108,7 @@ const Fashion_Designer = () => {
       setBannerIndex(0);
     }
   }, [fashionIconIndex]);
-  const [width, setWidth] = useState(window.innerWidth);
-  let [feedbackForm, setFeedbackForm] = useState({
-    userName: "",
-    userFeedback: "",
-    currentRatting: 0,
-  });
-  let [feedbackLoader, setFeedbackLoader] = useState(false);
-  let [commentOpen, setCommentOpen] = useState(false);
+
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -199,43 +215,7 @@ const Fashion_Designer = () => {
 
     fullImageBox.style.display = "none";
   }
-  //Feedback Form Logic :
-  let feedbackFormik = useFormik({
-    initialValues: {
-      URL_Alies: window.location.pathname,
-      ClientName: "",
-      ClientFeedback: "",
-      ClientRatting: 0,
-    },
 
-    //Validation :
-    validationSchema: Yup.object({
-      ClientName: Yup.string()
-        .min(3, "Min 3 char required")
-        .max(50, "Name must be 20 character or less")
-        .required("Name is required"),
-      ClientFeedback: Yup.string()
-        .min(10, "Minimum 10 character required")
-        .max(400, "Feedback must be 100 character or less")
-        .required("Feedback is required"),
-    }),
-    //Form Submit :
-    onSubmit: async (values) => {
-      console.log(values);
-      setFeedbackLoader(true);
-      await api
-        .post(`/feedback${window.location.pathname}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-
-          setFeedbackLoader(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setFeedbackLoader(false);
-        });
-    },
-  });
   //Start Ratting:
   // let currentRatting=0;
   function handleRatting(e) {
@@ -274,59 +254,135 @@ const Fashion_Designer = () => {
       }
     });
   }
-  //Form Logic :
+       //Feedback Form Logic :
+       let feedbackFormik = useFormik({
+        initialValues: {
+          URL_Alies: window.location.pathname,
+          ClientName: "",
+          ClientFeedback: "",
+          ClientRatting: 0,
+        },
+    
+        //Validation :
+        validationSchema: Yup.object({
+          ClientName: Yup.string()
+            .min(3, "Min 3 char required")
+            .max(50, "Name must be 20 character or less")
+            .required("Name is required"),
+          ClientFeedback: Yup.string()
+            .min(10, "Minimum 10 character required")
+            .max(400, "Feedback must be 100 character or less")
+            .required("Feedback is required"),
+        }),
+        //Form Submit :
+        onSubmit: async (values) => {
+        setInquiryLoader(true)
+          setFeedbackLoader(true);
+          await api
+            .post(`/feedback${window.location.pathname}`, values)
+            .then((res) => {
+              setInquiryLoader(false)
+              setFeedbackPopup(true);
+              setInquiryLoader(false)
+              setSuccessMessage(res.data.message);
+              feedbackFormik.values.ClientName=''
+              feedbackFormik.values.ClientFeedback=''
+              setTimeout(() => {
+                setFeedbackPopup(false);
+              }, 2000);
+              setFeedbackLoader(false);
+            })
+            .catch((error) => {
+              setInquiryLoader(false)
+              setFeedbackPopupError(true);
+              setTimeout(() => {
+                setFeedbackPopupError(false);
+              }, 2000);
+              setErrorMessage(error.response.data.message);
+              setFeedbackLoader(false);
+            });
+        },
+      });
+  //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
-      clientFullName1: "",
-      clientEmail1: "",
-      clientMobileNumber1: "",
-      clientInquiries1: "",
+      Url_Alies: window.location.pathname,
+      Name: "",
+      Email: "",
+      MobileNumber: "",
+      Message: "",
     },
 
     //Validation :
-    validationSchema: Yup.object({
-      clientFullName1: Yup.string()
-        .min(3, "Min 3 char required")
-        .max(20, "Name must be 20 character or less")
-        .required("Name is required"),
-      clientEmail1: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-      clientMobileNumber1: Yup.string()
-        .min(10, "Invalid Mobile number")
-        .max(10, "Invalid Mobile number")
-        .required("MobileNumber is required"),
-      clientInquiries1: Yup.string()
-        .min(10, "Minimum 10 character required")
-        .max(100, "Inquiries must be 100 character or less")
-        .required("Inquiries is required"),
-    }),
+    validationSchema: InquiryValidateSchema,
     //Form Submit :
-    onSubmit: (values) => {
-      setFormData({
-        clientFullName1: values.clientFullName1,
-        clientEmail1: values.clientEmail1,
-        clientMobileNumber1: values.clientMobileNumber1,
-        clientInquiries1: values.clientInquiries1,
-      });
+    onSubmit: async (values) => {
+      setInquiryLoader(true)
+      await api
+        .post(`/inquiry${window.location.pathname}`, values)
+        .then((res) => {
+          formik.values.Name = "";
+          formik.values.Email = "";
+          formik.values.MobileNumber = "";
+          formik.values.Message = "";
 
-      sendEmail();
-      setLoading(!loading);
-      setConfetti(true);
-      setTimeout(() => {
-        setPopup(!popup);
-        setLoading(false);
-        setConfetti(!confetti);
-        formik.values.clientFullName1 = "";
-        formik.values.clientEmail1 = "";
-        formik.values.clientMobileNumber1 = "";
-        formik.values.clientInquiries1 = "";
-      }, 4000);
+          setSuccessPopupOpen(true);
+          setInquiryLoader(false)
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          setInquiryLoader(false)
+          setErrorPopupOpen(true);
+          setTimeout(() => {
+            setErrorPopupOpen(false);
+          }, 3000);
+          setErrorMessage(error.response.data.message);
+        });
+    },
+  });
+  //Appoinment form
+  let Appoinment_formik = useFormik({
+    initialValues: {
+      Url_Alies: window.location.pathname,
+      FullName: "",
+      MobileNumber: "",
+      Date: "",
+      Time:'',
+    },
 
-      setTimeout(() => {
-        setPopup(false);
-      }, 7000);
-      StopConfetti();
+    //Validation :
+    validationSchema: AppoinmentValidateSchema,
+    //Form Submit :
+    onSubmit: async (values) => {
+      setappoinmentLoader(true)
+      await api
+        .post(`/appoinment${window.location.pathname}`, values)
+        .then((res) => {
+          console.log(res)
+          formik.values.FullName = "";
+          formik.values.Time = "";
+          formik.values.MobileNumber = "";
+          formik.values.Date = "";
+
+          setAppoinmentPopup(true);
+          setappoinmentLoader(false)
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setAppoinmentPopup(false);
+          }, 3000);
+        })
+        .catch((error) => {
+        
+          setappoinmentLoader(false)
+          setAppoinmentPopupError(true);
+          setTimeout(() => {
+            setAppoinmentPopupError(false);
+          }, 3000);
+          setErrorMessage(error.response.data.message);
+        });
     },
   });
   let [SiteLoader, setSiteLoader] = useState(false);
@@ -864,6 +920,7 @@ const Fashion_Designer = () => {
                   </div>
                   <div className="product_list_container">
                     <Slide
+                    
                       slidesToScroll={1}
                       slidesToShow={width < 600 ? 1 : 2}
                       indicators={true}
@@ -926,7 +983,7 @@ const Fashion_Designer = () => {
                 </div>
                 </>
                 : ''}
-            
+         
                 {/* //Appinment */}
                 {VCard_URL_Data.length>0 && ManageContentData[0].Appoinment ==  true ? 
                 <>
@@ -934,40 +991,168 @@ const Fashion_Designer = () => {
                   <div className="title">
                     <h3>#&nbsp;Make An Appoinment</h3>
                   </div>
-
                   <div className="appinment_form_container">
-                    <form className="appinment_form">
-                      <div className="form_group">
-                        <label htmlFor="date">Date</label>
-                        <input
-                          type="date"
-                          name="data"
-                          id="date"
-                          className="date-input"
-                        />
+                           {/* Success and Error Popup */}
+                           <div className="popup_message_container">
+                          <div
+                            className="popup_success_box"
+                            id={
+                              AppoinmentPopup ? "successOpen" : "successClose"
+                            }
+                          >
+                            <div className="popup_message">
+                              {successMessage}
+                            </div>
+                            <div
+                              className="popup_close"
+                              onClick={() => setAppoinmentPopup(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                          </div>
+
+                          {AppoinmentPopupError ? (
+                            <div className="popup_error_box">
+                              <div className="popup_message">
+                                {errorMessage}
+                              </div>
+                              <div
+                                className="popup_close"
+                                onClick={() => setAppoinmentPopupError(false)}
+                              >
+                                <i className="bx bx-x"></i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <form className="appinment_form" onSubmit={Appoinment_formik.handleSubmit}>
+                        <div className="form_group">
+                        <label
+                              htmlFor="FullName"
+                              className={Appoinment_formik.errors.FullName ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.FullName ? Appoinment_formik.errors.FullName : `FullName`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <input
+                              type="text"
+                              name="FullName"
+                              id="FullName"
+                              value={Appoinment_formik.values.FullName}
+                              onChange={Appoinment_formik.handleChange}
+                              className={
+                                Appoinment_formik.errors.FullName && Appoinment_formik.touched.FullName
+                                  ? "input_error"
+                                  : "input_success"
+                              }
+                          //  className="date-input"
+                            />
+                          </div>
+                          <div className="form_group">
+                          <label
+                              htmlFor="MobileNumber"
+                              className={Appoinment_formik.errors.MobileNumber ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.MobileNumber ? Appoinment_formik.errors.MobileNumber : `MobileNumber`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <input
+                              type="tel"
+                              name="MobileNumber"
+                              id="MobileNumber"
+                              value={Appoinment_formik.values.MobileNumber}
+                              onChange={Appoinment_formik.handleChange}
+                              className={
+                                Appoinment_formik.errors.MobileNumber && Appoinment_formik.touched.MobileNumber
+                                  ? "input_error"
+                                  : "input_success"
+                              }
+                       
+                            />
+                          </div>
+                          <div className="form_group">
+                          <label
+                              htmlFor="Date"
+                              className={Appoinment_formik.errors.Date ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.Date ? Appoinment_formik.errors.Date : `Date`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <input
+                              type="date"
+                              name="Date"
+                              id="Date"
+                              value={Appoinment_formik.values.Date}
+                              onChange={Appoinment_formik.handleChange}
+                              className={` date-input
+                                ${Appoinment_formik.errors.Date && Appoinment_formik.touched.Date}
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                       
+                            />
+                          </div>
+                          <div className="form_group">
+                          <label
+                              htmlFor="Time"
+                              className={Appoinment_formik.errors.Time ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.Time ? Appoinment_formik.errors.Time : `Time`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <select 
+                            name="Time" 
+                            id="Time" 
+                            value={Appoinment_formik.values.Time}
+                              onChange={Appoinment_formik.handleChange}
+                              className={` date-input
+                                ${Appoinment_formik.errors.Time && Appoinment_formik.touched.Time}
+                                  ? "input_error"
+                                  : "input_success"
+                              `}>
+                            <option value=""></option>
+                              <option value="9:00 AM">9:00 AM</option>
+                              <option value="9:00 AM">10:00 AM</option>
+                              <option value="11:00 AM">11:00 AM</option>
+                              <option value="11:00 AM">12:00 AM</option>
+                              <option value="01:00 PM">01:00 PM</option>
+                              <option value="01:00 PM">02:00 PM</option>
+                              <option value="03:00 PM">03:00 PM</option>
+                              <option value="03:00 PM">04:00 PM</option>
+                              <option value="03:00 PM">05:00 PM</option>
+                              <option value="03:00 PM">06:00 PM</option>
+                            </select>
+                          </div>
+                          <div className="form_submit">
+                            <button type="submit" className="submit-btn">
+                            {appoinmentLoader ? (
+                                <span className="inquiryloader"></span>
+                              ) : (
+                                <span className="material-symbols-outlined">
+                                  send
+                                </span>
+                              )}
+                              Book Now
+                            </button>
+                            <button type="button" className="submit-btn" onClick={Appoinment_formik.resetForm}>
+                           
+                                <span class="material-symbols-outlined">
+                                clear_all
+                                </span>
+                           
+                              clear
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <div className="form_group">
-                        <label htmlFor="time">Time</label>
-                        <select name="time" id="time">
-                          <option value="9:00 AM">9:00 AM</option>
-                          <option value="11:00 AM">11:00 AM</option>
-                          <option value="01:00 PM">01:00 PM</option>
-                          <option value="03:00 PM">03:00 PM</option>
-                        </select>
-                      </div>
-                      <div className="form_submit">
-                        <button type="submit" className="submit-btn">
-                          Book Now
-                        </button>
-                      </div>
-                    </form>
-                  </div>
                 </div>
                 </>
                 : '' }
                 
-                {/* Gallery */}
-                {GalleryData.length > 0 &&  ManageContentData[0].Gallery ==  true? 
+                   {/* Gallery */}
+                   {GalleryData.length > 0 &&  ManageContentData[0].Gallery ==  true? 
                 <>
                      <div className="row_8">
                   <div className="title">
@@ -987,14 +1172,13 @@ const Fashion_Designer = () => {
                     </div>
 
                     <div className="gallery_box">
-                      <Slide
-                        slidesToScroll={1}
-                        slidesToShow={width < 600 ? 2 : 2}
-                        indicators={false}
-                        autoplay
-                        {...gallery_properties}
-                        autoplayInterval={1000}
-                      >
+                    <Slide
+                      showThumbs={false}
+                      showStatus={true}
+                      infiniteLoop
+                      autoPlay
+                      className="carousel"
+                    >
                         {GalleryData.map((data,index)=>{
                           return(
                             <>
@@ -1032,11 +1216,7 @@ const Fashion_Designer = () => {
                           )
                         })}
                        
-                        {/* <img
-                          src="https://img.freepik.com/free-photo/emotional-funny-attractive-woman-holding-colorful-dresses-hanger-clothing-store_285396-4615.jpg?t=st=1722621932~exp=1722625532~hmac=76da5fd66d6aefca0f7e92a77f015312a2cb6367a26fa80f2ca671de6a747e32&w=900"
-                          alt="dev"
-                          onClick={(e) => openFullImage(e.target.src)}
-                        />  */}
+                       
                       </Slide>
                     </div>
                   </div>
@@ -1053,8 +1233,8 @@ const Fashion_Designer = () => {
                   </div>
                   <div className="testimonial_container">
                     <Carousel
-                      showThumbs={false}
-                      showStatus={false}
+                      showThumbs={true}
+                      showStatus={true}
                       infiniteLoop
                       autoPlay
                     >
@@ -1333,6 +1513,41 @@ const Fashion_Designer = () => {
                     {/* Contact */}
                   </div>
                   <div className="feedback_container">
+                              {/* Success and Error Popup */}
+                              <div className="popup_message_container">
+                          <div
+                            className="popup_success_box"
+                            id={
+                              FeedbackPopup ? "successOpen" : "successClose"
+                            }
+                          >
+                            <div className="popup_message">
+                              {successMessage}
+                            </div>
+                            <div
+                              className="popup_close"
+                              onClick={() => setFeedbackPopup(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                          </div>
+
+                          {FeedbackPopupError ? (
+                            <div className="popup_error_box">
+                              <div className="popup_message">
+                                {errorMessage}
+                              </div>
+                              <div
+                                className="popup_close"
+                                onClick={() => setFeedbackPopupError(false)}
+                              >
+                                <i className="bx bx-x"></i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                         <form action="" onSubmit={feedbackFormik.handleSubmit}>
                           <div className="form_group">
                             <label
@@ -1595,59 +1810,171 @@ const Fashion_Designer = () => {
                     <h3>#&nbsp;Inquries</h3>
                   </div>
                   <div className="inquiries_container5">
-                    <form action="">
-                      <div className="form_group">
-                        <label htmlFor="name">
-                          Name <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <input type="text" placeholder="Your Name" />
-                          <i className="bx bxs-user-pin"></i>
+                        {/* Success and Error Popup */}
+                        <div className="popup_message_container">
+                          <div
+                            className="popup_success_box"
+                            id={
+                              successPopupOpen ? "successOpen" : "successClose"
+                            }
+                          >
+                            <div className="popup_message">
+                              {successMessage}
+                            </div>
+                            <div
+                              className="popup_close"
+                              onClick={() => setSuccessPopupOpen(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                          </div>
+
+                          {errorPopupOpen ? (
+                            <div className="popup_error_box">
+                              <div className="popup_message">
+                                {errorMessage}
+                              </div>
+                              <div
+                                className="popup_close"
+                                onClick={() => setErrorPopupOpen(false)}
+                              >
+                                <i className="bx bx-x"></i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
+                        <form action="" onSubmit={formik.handleSubmit}>
+                          <div className="form_group">
+                            <label
+                              htmlFor="name"
+                              className={formik.errors.Name ? "labelError" : ""}
+                            >
+                              {formik.errors.Name ? formik.errors.Name : `Name`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <input
+                                type="text"
+                                placeholder="Your Name"
+                                name="Name"
+                                id="Name"
+                                value={formik.values.Name}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.Name && formik.touched.Name
+                                    ? "input_error"
+                                    : "input_success"
+                                }
+                              />
+                              <i className="bx bxs-user-pin"></i>
+                            </div>
+                          </div>
+                          <div className="form_group">
+                            <label
+                              htmlFor="name"
+                              className={
+                                formik.errors.Email ? "labelError" : ""
+                              }
+                            >
+                              {formik.errors.Email
+                                ? formik.errors.Email
+                                : `Email`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <input
+                                type="email"
+                                placeholder="Your Email"
+                                name="Email"
+                                id="Email"
+                                value={formik.values.Email}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.Email && formik.touched.Email
+                                    ? "input_error"
+                                    : "input_success"
+                                }
+                              />
+                              <i className="bx bxs-envelope"></i>
+                            </div>
+                          </div>
+                          <div className="form_group">
+                            <label
+                              htmlFor="name"
+                              className={
+                                formik.errors.MobileNumber ? "labelError" : ""
+                              }
+                            >
+                              {formik.errors.MobileNumber
+                                ? formik.errors.MobileNumber
+                                : `MobileNumber`}
+                              {/* <sup style={{ color: "red" }}>*</sup> */}
+                            </label>
+                            <div className="input">
+                              <input
+                                type="tel"
+                                placeholder="Enter Mobile Number"
+                                name="MobileNumber"
+                                id="MobileNumber"
+                                value={formik.values.MobileNumber}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.MobileNumber &&
+                                  formik.touched.MobileNumber
+                                    ? "input_error"
+                                    : "input_success"
+                                }
+                              />
+                              <i className="bx bxs-phone-call"></i>
+                            </div>
+                          </div>
+                          <div className="form_group">
+                            <label
+                              htmlFor="name"
+                              className={
+                                formik.errors.Message ? "labelError" : ""
+                              }
+                            >
+                              {formik.errors.Message
+                                ? formik.errors.Message
+                                : `Message`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <div className="input">
+                              <textarea
+                                name="Message"
+                                id="Message"
+                                value={formik.values.Message}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.Message &&
+                                  formik.touched.Message
+                                    ? "input_error"
+                                    : "input_success"
+                                }
+                                cols="30"
+                                rows="4"
+                                placeholder="Enter Your Message Here..."
+                              ></textarea>
+                              <i className="bx bxs-message-dots"></i>
+                            </div>
+                          </div>
+                          <div className="form_actions">
+                            <button type="submit">
+                              {InquiryLoader ? (
+                                <span className="inquiryloader"></span>
+                              ) : (
+                                <span className="material-symbols-outlined">
+                                  send
+                                </span>
+                              )}
+                              Submit
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <div className="form_group">
-                        <label htmlFor="email">
-                          Email <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <input type="email" placeholder="Your Email" />
-                          <i className="bx bxs-envelope"></i>
-                        </div>
-                      </div>
-                      <div className="form_group">
-                        <label htmlFor="name">
-                          Phone <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <input type="tel" placeholder="Enter Phone Number" />
-                          <i className="bx bxs-phone-call"></i>
-                        </div>
-                      </div>
-                      <div className="form_group">
-                        <label htmlFor="name">
-                          Message <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <div className="input">
-                          <textarea
-                            name="message"
-                            id="message"
-                            cols="30"
-                            rows="2"
-                            placeholder="Enter Your Message Here..."
-                          ></textarea>
-                          <i class="bx bxs-message-dots"></i>
-                        </div>
-                      </div>
-                      <div className="form_actions">
-                        <button type="submit">
-                          <span className="material-symbols-outlined">
-                            send
-                          </span>
-                          Submit
-                        </button>
-                      </div>
-                    </form>
-                  </div>
                 </div>
                 </>
                 : ''}

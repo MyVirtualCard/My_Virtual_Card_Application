@@ -314,7 +314,7 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
           
         })
         .catch((error) => {
-   
+      console.log(error)
           setErrorPopupOpen(true);
           setErrorMessage(error.response.data.message);
           setTimeout(()=>{
@@ -779,6 +779,8 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
             <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Phone</label>
               <input
+              id="AlternateMobileNumber"
+            name="AlternateMobileNumber"
                 type="tel"
                 placeholder="Alternate Phone"
                 onChange={
@@ -792,6 +794,11 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
                     : formik.values.AlternateMobileNumber
                 }
               />
+                    {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.AlternateMobileNumber}</div>
+              )}
             </div>
             <div className="form_group">
               <label htmlFor="location">

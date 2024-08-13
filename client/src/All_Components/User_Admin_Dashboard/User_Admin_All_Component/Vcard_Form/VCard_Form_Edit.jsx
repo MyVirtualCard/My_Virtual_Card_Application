@@ -382,7 +382,7 @@ const VCard_Form_Edit = () => {
               ></i>
               <small id="Manage Sections">Manage Sections</small>
             </div>
-            <div className="progressing">
+            {/* <div className="progressing">
               <small>On Working Progress</small>
               <i class="bx bx-chevrons-down bx-fade-down"></i>
             </div>
@@ -448,7 +448,7 @@ const VCard_Form_Edit = () => {
                 id="Fonts"
               ></i>
               <small id="Fonts">Fonts</small>
-            </div>
+            </div> */}
           </div>
           <div
             className="all_form_inputs"

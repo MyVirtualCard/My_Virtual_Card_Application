@@ -45,7 +45,6 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         setFormSubmitLoader(false);
         setVCardCount(res.data.data);
       })

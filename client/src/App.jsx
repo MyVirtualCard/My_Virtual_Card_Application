@@ -42,6 +42,7 @@ import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
 import Business_Consultant from "./All_Components/All_VCards/Business_Consultant.jsx";
 
 
+
 const App = () => {
   //URL Name state:
   let [AuthToggle, setAuthToggle] = useState(false);
@@ -617,7 +618,7 @@ const App = () => {
             <Route path="/paymentsuccess" element={<PaymentSuccess />} />
             <Route path="/terms_condition" element={<Terms_Condition />} />
             <Route path="/privacy_condition" element={<Privacy_Policy />} />
-
+            
             {/*AllVardsTemplate */}
 
             {/* {currentTemplate == 1 ? (

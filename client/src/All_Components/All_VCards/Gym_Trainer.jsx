@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Gym_Trainer.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
 import hand from "../../assets/AllVCard_Image/VCard3/hand.gif";
 //Product Slider
-import { Slide } from "react-slideshow-image";
+import { Fade, Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
@@ -15,12 +15,31 @@ import { Triangle } from "react-loader-spinner";
 import { Toaster, toast } from "react-hot-toast";
 import loadingBack from "../../assets/LandingPage_image/aristostech_company_background.jpg";
 import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
+import { InquiryValidateSchema } from "../Helper/InquiryValidate";
+import Context from "../UseContext/Context";
+import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
 
 const Gym_Trainer = () => {
+  let {
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
+  } = useContext(Context);
   const [width, setWidth] = useState(window.innerWidth);
+  let [InquiryLoader, setInquiryLoader] = useState(false);
   let [feedbackLoader, setFeedbackLoader] = useState(false);
+  let [appoinmentLoader, setappoinmentLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
+  let[FeedbackPopup,setFeedbackPopup]=useState(false)
+  let[FeedbackPopupError,setFeedbackPopupError]=useState(false);
+  let[AppoinmentPopup,setAppoinmentPopup]=useState(false)
+  let[AppoinmentPopupError,setAppoinmentPopupError]=useState(false);
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -73,43 +92,7 @@ const Gym_Trainer = () => {
     ClientRatting: 0,
   });
 
-  //Feedback Form Logic :
-  let feedbackFormik = useFormik({
-    initialValues: {
-      URL_Alies: window.location.pathname,
-      ClientName: "",
-      ClientFeedback: "",
-      ClientRatting: 0,
-    },
 
-    //Validation :
-    validationSchema: Yup.object({
-      ClientName: Yup.string()
-        .min(3, "Min 3 char required")
-        .max(50, "Name must be 20 character or less")
-        .required("Name is required"),
-      ClientFeedback: Yup.string()
-        .min(10, "Minimum 10 character required")
-        .max(400, "Feedback must be 100 character or less")
-        .required("Feedback is required"),
-    }),
-    //Form Submit :
-    onSubmit: async (values) => {
-      console.log(values);
-      setFeedbackLoader(true);
-      await api
-        .post(`/feedback${window.location.pathname}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-
-          setFeedbackLoader(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setFeedbackLoader(false);
-        });
-    },
-  });
   //Start Ratting:
   // let currentRatting=0;
   function handleRatting(e) {
@@ -148,63 +131,137 @@ const Gym_Trainer = () => {
       }
     });
   }
-  //Form Logic :
+    //Feedback Form Logic :
+    let feedbackFormik = useFormik({
+      initialValues: {
+        URL_Alies: window.location.pathname,
+        ClientName: "",
+        ClientFeedback: "",
+        ClientRatting: 0,
+      },
+  
+      //Validation :
+      validationSchema: Yup.object({
+        ClientName: Yup.string()
+          .min(3, "Min 3 char required")
+          .max(50, "Name must be 20 character or less")
+          .required("Name is required"),
+        ClientFeedback: Yup.string()
+          .min(10, "Minimum 10 character required")
+          .max(400, "Feedback must be 100 character or less")
+          .required("Feedback is required"),
+      }),
+      //Form Submit :
+      onSubmit: async (values) => {
+      setInquiryLoader(true)
+        setFeedbackLoader(true);
+        await api
+          .post(`/feedback${window.location.pathname}`, values)
+          .then((res) => {
+            setInquiryLoader(false)
+            setFeedbackPopup(true);
+            setInquiryLoader(false)
+            setSuccessMessage(res.data.message);
+            setTimeout(() => {
+              setFeedbackPopup(false);
+            }, 2000);
+            setFeedbackLoader(false);
+          })
+          .catch((error) => {
+            setInquiryLoader(false)
+            setFeedbackPopupError(true);
+            setTimeout(() => {
+              setFeedbackPopupError(false);
+            }, 2000);
+            setErrorMessage(error.response.data.message);
+            setFeedbackLoader(false);
+          });
+      },
+    });
+  //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
-      clientFullName1: "",
-      clientEmail1: "",
-      clientMobileNumber1: "",
-      clientInquiries1: "",
+      Url_Alies: window.location.pathname,
+      Name: "",
+      Email: "",
+      MobileNumber: "",
+      Message: "",
     },
 
     //Validation :
-    validationSchema: Yup.object({
-      clientFullName1: Yup.string()
-        .min(3, "Min 3 char required")
-        .max(20, "Name must be 20 character or less")
-        .required("Name is required"),
-      clientEmail1: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-      clientMobileNumber1: Yup.string()
-        .min(10, "Invalid Mobile number")
-        .max(10, "Invalid Mobile number")
-        .required("MobileNumber is required"),
-      clientInquiries1: Yup.string()
-        .min(10, "Minimum 10 character required")
-        .max(100, "Inquiries must be 100 character or less")
-        .required("Inquiries is required"),
-    }),
+    validationSchema: InquiryValidateSchema,
     //Form Submit :
-    onSubmit: (values) => {
-      setFormData({
-        clientFullName1: values.clientFullName1,
-        clientEmail1: values.clientEmail1,
-        clientMobileNumber1: values.clientMobileNumber1,
-        clientInquiries1: values.clientInquiries1,
-      });
+    onSubmit: async (values) => {
+      setInquiryLoader(true)
+      await api
+        .post(`/inquiry${window.location.pathname}`, values)
+        .then((res) => {
+          formik.values.Name = "";
+          formik.values.Email = "";
+          formik.values.MobileNumber = "";
+          formik.values.Message = "";
 
-      sendEmail();
-      setLoading(!loading);
-      setConfetti(true);
-      setTimeout(() => {
-        setPopup(!popup);
-        setLoading(false);
-        setConfetti(!confetti);
-        formik.values.clientFullName1 = "";
-        formik.values.clientEmail1 = "";
-        formik.values.clientMobileNumber1 = "";
-        formik.values.clientInquiries1 = "";
-      }, 4000);
-
-      setTimeout(() => {
-        setPopup(false);
-      }, 7000);
-      StopConfetti();
+          setSuccessPopupOpen(true);
+          setInquiryLoader(false)
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          setInquiryLoader(false)
+          setErrorPopupOpen(true);
+          setTimeout(() => {
+            setErrorPopupOpen(false);
+          }, 3000);
+          setErrorMessage(error.response.data.message);
+        });
     },
   });
-  let [SiteLoader, setSiteLoader] = useState(false);
+  //Appoinment form
+  let Appoinment_formik = useFormik({
+    initialValues: {
+      Url_Alies: window.location.pathname,
+      FullName: "",
+      MobileNumber: "",
+      Date: "",
+      Time:'',
+    },
 
+    //Validation :
+    validationSchema: AppoinmentValidateSchema,
+    //Form Submit :
+    onSubmit: async (values) => {
+      setappoinmentLoader(true)
+      await api
+        .post(`/appoinment${window.location.pathname}`, values)
+        .then((res) => {
+          console.log(res)
+          formik.values.FullName = "";
+          formik.values.Time = "";
+          formik.values.MobileNumber = "";
+          formik.values.Date = "";
+
+          setAppoinmentPopup(true);
+          setappoinmentLoader(false)
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setAppoinmentPopup(false);
+          }, 3000);
+        })
+        .catch((error) => {
+        
+          setappoinmentLoader(false)
+          setAppoinmentPopupError(true);
+          setTimeout(() => {
+            setAppoinmentPopupError(false);
+          }, 3000);
+          setErrorMessage(error.response.data.message);
+        });
+    },
+  });
+
+  let [SiteLoader, setSiteLoader] = useState(false);
   let [VCard_URL_Data, setVCard_URL_Data] = useState([]);
   let [BasicData, setBasicData] = useState([]);
   let [VCardData, setVCardData] = useState([]);
@@ -219,7 +276,7 @@ const Gym_Trainer = () => {
   let [BussinessHourData, setBussinessHourData] = useState([]);
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
-  let[ManageContentData,setManageContent]=useState([]);
+  let [ManageContentData, setManageContent] = useState([]);
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -242,10 +299,9 @@ const Gym_Trainer = () => {
           setQRCodeData(res.data.data.QRCodeModel);
           setBussinessHourData(res.data.data.BussinessModel);
           setPopUpBannerData(res.data.data.PopupBannerModel);
-          setManageContent(res.data.data.ManageContentData)
+          setManageContent(res.data.data.ManageContentData);
           setSiteLoader(false);
           setTimeout(() => {
-            window.scrollTo(0, 0);
             setPopUpBannerToggle(true);
           }, 2000);
         })
@@ -310,7 +366,8 @@ const Gym_Trainer = () => {
               <Toaster position="top-right" reverseOrder={false} />
               <div className="newcard_design10_box">
                 {/* popupbanner */}
-                {PopUpBannerData.length > 0 && ManageContentData[0].BannerActive ==  true ? (
+                {PopUpBannerData.length > 0 &&
+                ManageContentData[0].BannerActive == true ? (
                   <>
                     {PopUpBannerData.map((data, index) => {
                       return (
@@ -434,7 +491,8 @@ const Gym_Trainer = () => {
                                 );
                               })}
 
-                              {SocialMediaData.length > 0 && ManageContentData[0].SocialMedia ==  true ? (
+                              {SocialMediaData.length > 0 &&
+                              ManageContentData[0].SocialMedia == true ? (
                                 <>
                                   {SocialMediaData.map((data, index) => {
                                     return (
@@ -576,7 +634,8 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* ContactDetails */}
-                {BasicData.length > 0 && ManageContentData[0].ContactDetails ==  true ? (
+                {BasicData.length > 0 &&
+                ManageContentData[0].ContactDetails == true ? (
                   <>
                     <div className="row_3">
                       <div className="title">
@@ -639,7 +698,8 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Services */}
-                {ServiceData.length > 0 && ManageContentData[0].Service ==  true ? (
+                {ServiceData.length > 0 &&
+                ManageContentData[0].Service == true ? (
                   <>
                     <div className="row_4">
                       <div className="title">
@@ -704,7 +764,8 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Opentime */}
-                {BussinessHourData.length > 0 && ManageContentData[0].BussinessHour ==  true ? (
+                {BussinessHourData.length > 0 &&
+                ManageContentData[0].BussinessHour == true ? (
                   <>
                     <div className="row_5">
                       <div className="title">
@@ -879,7 +940,8 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Products */}
-                {ProductData.length > 0 && ManageContentData[0].Product ==  true ? (
+                {ProductData.length > 0 &&
+                ManageContentData[0].Product == true ? (
                   <>
                     <div className="row_7">
                       <div className="title">
@@ -976,7 +1038,8 @@ const Gym_Trainer = () => {
                 {/* //Appinment */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0 && ManageContentData[0].Appoinment ==  true ? (
+                SocialMediaData.length > 0 &&
+                ManageContentData[0].Appoinment == true ? (
                   <>
                     <div className="row_6">
                       <div className="title">
@@ -990,29 +1053,158 @@ const Gym_Trainer = () => {
                       </div>
 
                       <div className="appinment_form_container">
-                        <form className="appinment_form">
-                          <div className="form_group">
-                            <label htmlFor="date">Date</label>
+                           {/* Success and Error Popup */}
+                           <div className="popup_message_container">
+                          <div
+                            className="popup_success_box"
+                            id={
+                              AppoinmentPopup ? "successOpen" : "successClose"
+                            }
+                          >
+                            <div className="popup_message">
+                              {successMessage}
+                            </div>
+                            <div
+                              className="popup_close"
+                              onClick={() => setAppoinmentPopup(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                          </div>
+
+                          {AppoinmentPopupError ? (
+                            <div className="popup_error_box">
+                              <div className="popup_message">
+                                {errorMessage}
+                              </div>
+                              <div
+                                className="popup_close"
+                                onClick={() => setAppoinmentPopupError(false)}
+                              >
+                                <i className="bx bx-x"></i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <form className="appinment_form" onSubmit={Appoinment_formik.handleSubmit}>
+                        <div className="form_group">
+                        <label
+                              htmlFor="FullName"
+                              className={Appoinment_formik.errors.FullName ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.FullName ? Appoinment_formik.errors.FullName : `FullName`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
                             <input
-                              type="date"
-                              name="data"
-                              id="date"
-                              className="date-input"
+                              type="text"
+                              name="FullName"
+                              id="FullName"
+                              value={Appoinment_formik.values.FullName}
+                              onChange={Appoinment_formik.handleChange}
+                              className={
+                                Appoinment_formik.errors.FullName && Appoinment_formik.touched.FullName
+                                  ? "input_error"
+                                  : "input_success"
+                              }
+                          //  className="date-input"
                             />
                           </div>
                           <div className="form_group">
-                            <label htmlFor="time">Time</label>
-                            <select name="time" id="time">
+                          <label
+                              htmlFor="MobileNumber"
+                              className={Appoinment_formik.errors.MobileNumber ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.MobileNumber ? Appoinment_formik.errors.MobileNumber : `MobileNumber`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <input
+                              type="tel"
+                              name="MobileNumber"
+                              id="MobileNumber"
+                              value={Appoinment_formik.values.MobileNumber}
+                              onChange={Appoinment_formik.handleChange}
+                              className={
+                                Appoinment_formik.errors.MobileNumber && Appoinment_formik.touched.MobileNumber
+                                  ? "input_error"
+                                  : "input_success"
+                              }
+                       
+                            />
+                          </div>
+                          <div className="form_group">
+                          <label
+                              htmlFor="Date"
+                              className={Appoinment_formik.errors.Date ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.Date ? Appoinment_formik.errors.Date : `Date`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <input
+                              type="date"
+                              name="Date"
+                              id="Date"
+                              value={Appoinment_formik.values.Date}
+                              onChange={Appoinment_formik.handleChange}
+                              className={` date-input
+                                ${Appoinment_formik.errors.Date && Appoinment_formik.touched.Date}
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                       
+                            />
+                          </div>
+                          <div className="form_group">
+                          <label
+                              htmlFor="Time"
+                              className={Appoinment_formik.errors.Time ? "labelError" : ""}
+                            >
+                              {Appoinment_formik.errors.Time ? Appoinment_formik.errors.Time : `Time`}
+                              <sup style={{ color: "red" }}>*</sup>
+                            </label>
+                            <select 
+                            name="Time" 
+                            id="Time" 
+                            value={Appoinment_formik.values.Time}
+                              onChange={Appoinment_formik.handleChange}
+                              className={` date-input
+                                ${Appoinment_formik.errors.Time && Appoinment_formik.touched.Time}
+                                  ? "input_error"
+                                  : "input_success"
+                              `}>
+                            <option value=""></option>
                               <option value="9:00 AM">9:00 AM</option>
+                              <option value="9:00 AM">10:00 AM</option>
                               <option value="11:00 AM">11:00 AM</option>
+                              <option value="11:00 AM">12:00 AM</option>
                               <option value="01:00 PM">01:00 PM</option>
+                              <option value="01:00 PM">02:00 PM</option>
                               <option value="03:00 PM">03:00 PM</option>
+                              <option value="03:00 PM">04:00 PM</option>
+                              <option value="03:00 PM">05:00 PM</option>
+                              <option value="03:00 PM">06:00 PM</option>
                             </select>
                           </div>
                           <div className="form_submit">
                             <button type="submit" className="submit-btn">
+                            {appoinmentLoader ? (
+                                <span className="inquiryloader"></span>
+                              ) : (
+                                <span className="material-symbols-outlined">
+                                  send
+                                </span>
+                              )}
                               Book Now
                             </button>
+                            <button type="button" className="submit-btn" onClick={Appoinment_formik.resetForm}>
+                           
+                           <span class="material-symbols-outlined">
+                           clear_all
+                           </span>
+                      
+                         clear
+                       </button>
                           </div>
                         </form>
                       </div>
@@ -1023,7 +1215,8 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Gallery */}
-                {GalleryData.length > 0 && ManageContentData[0].Gallery ==  true ? (
+                {GalleryData.length > 0 &&
+                ManageContentData[0].Gallery == true ? (
                   <>
                     <div className="row_8">
                       <div className="title">
@@ -1094,7 +1287,8 @@ const Gym_Trainer = () => {
                   ""
                 )}
                 {/* //QRCode */}
-                {QRCodeData.length > 0 && ManageContentData[0].QRCode ==  true ? (
+                {QRCodeData.length > 0 &&
+                ManageContentData[0].QRCode == true ? (
                   <>
                     <div className="QRCode_container">
                       <div className="title">
@@ -1142,7 +1336,8 @@ const Gym_Trainer = () => {
                 )}
 
                 {/* Testimonial */}
-                {TestimonialData.length > 0 && ManageContentData[0].Testimonial ==  true ? (
+                {TestimonialData.length > 0 &&
+                ManageContentData[0].Testimonial == true ? (
                   <>
                     <div className="row_9">
                       <div className="title">
@@ -1197,7 +1392,8 @@ const Gym_Trainer = () => {
                   ""
                 )}
                 {/* GoogleMap */}
-                {GoogleMapData.length > 0 && ManageContentData[0].GoogleMap ==  true ? (
+                {GoogleMapData.length > 0 &&
+                ManageContentData[0].GoogleMap == true ? (
                   <>
                     <div className="google_map_container">
                       <div className="title">
@@ -1223,7 +1419,8 @@ const Gym_Trainer = () => {
                 {/* Feedback */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0 && ManageContentData[0].FeedbackForm ==  true ? (
+                SocialMediaData.length > 0 &&
+                ManageContentData[0].FeedbackForm == true ? (
                   <>
                     <div className="row_10">
                       <div className="title">
@@ -1236,7 +1433,42 @@ const Gym_Trainer = () => {
                         {/* Contact */}
                       </div>
                       <div className="feedback_container">
-                        <form action="" onSubmit={feedbackFormik.handleSubmit}>
+                          {/* Success and Error Popup */}
+                          <div className="popup_message_container">
+                          <div
+                            className="popup_success_box"
+                            id={
+                              FeedbackPopup ? "successOpen" : "successClose"
+                            }
+                          >
+                            <div className="popup_message">
+                              {successMessage}
+                            </div>
+                            <div
+                              className="popup_close"
+                              onClick={() => setFeedbackPopup(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                          </div>
+
+                          {FeedbackPopupError ? (
+                            <div className="popup_error_box">
+                              <div className="popup_message">
+                                {errorMessage}
+                              </div>
+                              <div
+                                className="popup_close"
+                                onClick={() => setFeedbackPopupError(false)}
+                              >
+                                <i className="bx bx-x"></i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <form onSubmit={feedbackFormik.handleSubmit}>
                           <div className="form_group">
                             <label
                               htmlFor="clientName_Input"
@@ -1359,9 +1591,13 @@ const Gym_Trainer = () => {
                           </div>
                           <div className="form_actions">
                             <button type="submit">
-                              <span className="material-symbols-outlined">
-                                send
-                              </span>
+                            {InquiryLoader ? (
+                                <span className="inquiryloader"></span>
+                              ) : (
+                                <span className="material-symbols-outlined">
+                                  send
+                                </span>
+                              )}
                               Send Feedback
                             </button>
                           </div>
@@ -1493,7 +1729,8 @@ const Gym_Trainer = () => {
                 {/* Inquries */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0 && ManageContentData[0].InquiryForm ==  true ? (
+                SocialMediaData.length > 0 &&
+                ManageContentData[0].InquiryForm == true ? (
                   <>
                     <div className="row_11">
                       <div className="title">
@@ -1505,47 +1742,152 @@ const Gym_Trainer = () => {
                         </h3>
                       </div>
                       <div className="inquiries_container5">
-                        <form action="">
+                        {/* Success and Error Popup */}
+                        <div className="popup_message_container">
+                          <div
+                            className="popup_success_box"
+                            id={
+                              successPopupOpen ? "successOpen" : "successClose"
+                            }
+                          >
+                            <div className="popup_message">
+                              {successMessage}
+                            </div>
+                            <div
+                              className="popup_close"
+                              onClick={() => setSuccessPopupOpen(false)}
+                            >
+                              <i className="bx bx-x"></i>
+                            </div>
+                          </div>
+
+                          {errorPopupOpen ? (
+                            <div className="popup_error_box">
+                              <div className="popup_message">
+                                {errorMessage}
+                              </div>
+                              <div
+                                className="popup_close"
+                                onClick={() => setErrorPopupOpen(false)}
+                              >
+                                <i className="bx bx-x"></i>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <form action="" onSubmit={formik.handleSubmit}>
                           <div className="form_group">
-                            <label htmlFor="name">
-                              Name <sup style={{ color: "red" }}>*</sup>
+                            <label
+                              htmlFor="name"
+                              className={formik.errors.Name ? "labelError" : ""}
+                            >
+                              {formik.errors.Name ? formik.errors.Name : `Name`}
+                              <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <div className="input">
-                              <input type="text" placeholder="Your Name" />
+                              <input
+                                type="text"
+                                placeholder="Your Name"
+                                name="Name"
+                                id="Name"
+                                value={formik.values.Name}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.Name && formik.touched.Name
+                                    ? "input_error"
+                                    : "input_success"
+                                }
+                              />
                               <i className="bx bxs-user-pin"></i>
                             </div>
                           </div>
                           <div className="form_group">
-                            <label htmlFor="email">
-                              Email <sup style={{ color: "red" }}>*</sup>
+                            <label
+                              htmlFor="name"
+                              className={
+                                formik.errors.Email ? "labelError" : ""
+                              }
+                            >
+                              {formik.errors.Email
+                                ? formik.errors.Email
+                                : `Email`}
+                              <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <div className="input">
-                              <input type="email" placeholder="Your Email" />
+                              <input
+                                type="email"
+                                placeholder="Your Email"
+                                name="Email"
+                                id="Email"
+                                value={formik.values.Email}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.Email && formik.touched.Email
+                                    ? "input_error"
+                                    : "input_success"
+                                }
+                              />
                               <i className="bx bxs-envelope"></i>
                             </div>
                           </div>
                           <div className="form_group">
-                            <label htmlFor="name">
-                              Phone <sup style={{ color: "red" }}>*</sup>
+                            <label
+                              htmlFor="name"
+                              className={
+                                formik.errors.MobileNumber ? "labelError" : ""
+                              }
+                            >
+                              {formik.errors.MobileNumber
+                                ? formik.errors.MobileNumber
+                                : `MobileNumber`}
+                              {/* <sup style={{ color: "red" }}>*</sup> */}
                             </label>
                             <div className="input">
                               <input
                                 type="tel"
-                                placeholder="Enter Phone Number"
+                                placeholder="Enter Mobile Number"
+                                name="MobileNumber"
+                                id="MobileNumber"
+                                value={formik.values.MobileNumber}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.MobileNumber &&
+                                  formik.touched.MobileNumber
+                                    ? "input_error"
+                                    : "input_success"
+                                }
                               />
                               <i className="bx bxs-phone-call"></i>
                             </div>
                           </div>
                           <div className="form_group">
-                            <label htmlFor="name">
-                              Message <sup style={{ color: "red" }}>*</sup>
+                            <label
+                              htmlFor="name"
+                              className={
+                                formik.errors.Message ? "labelError" : ""
+                              }
+                            >
+                              {formik.errors.Message
+                                ? formik.errors.Message
+                                : `Message`}
+                              <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <div className="input">
                               <textarea
-                                name="message"
-                                id="message"
+                                name="Message"
+                                id="Message"
+                                value={formik.values.Message}
+                                onChange={formik.handleChange}
+                                className={
+                                  formik.errors.Message &&
+                                  formik.touched.Message
+                                    ? "input_error"
+                                    : "input_success"
+                                }
                                 cols="30"
-                                rows="2"
+                                rows="4"
                                 placeholder="Enter Your Message Here..."
                               ></textarea>
                               <i className="bx bxs-message-dots"></i>
@@ -1553,9 +1895,13 @@ const Gym_Trainer = () => {
                           </div>
                           <div className="form_actions">
                             <button type="submit">
-                              <span className="material-symbols-outlined">
-                                send
-                              </span>
+                              {InquiryLoader ? (
+                                <span className="inquiryloader"></span>
+                              ) : (
+                                <span className="material-symbols-outlined">
+                                  send
+                                </span>
+                              )}
                               Submit
                             </button>
                           </div>

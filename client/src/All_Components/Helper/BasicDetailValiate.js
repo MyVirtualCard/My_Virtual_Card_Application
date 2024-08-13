@@ -31,11 +31,21 @@ export let BasicDetailValidateShema=Yup.object({
   return true
     } 
   ),
-  MobileNumber:Yup.string().test(
+  MobileNumber:Yup.number().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
   ).min(10,'Min 10-digit required!').required('MobileNumber is required!'),
+  AlternateMobileNumber:Yup.number().test(
+    'isEmptyOrWhitespace',
+    'Content cannot be empty or just whitespace',
+    value => {
+      if(value){
+        return !isEmptyOrWhitespace(value)
+      }
+  return true;
+    }
+  ).min(10,'Min 10-digit required!'),
   Location:Yup.string().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',

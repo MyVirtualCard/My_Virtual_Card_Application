@@ -125,6 +125,7 @@ export const updateSpecificUserData = async (req, res) => {
   try {
     let { id } = req.params;
     let data = req.body;
+
     let updateSpecificData = await BasicDetails.findOneAndUpdate(
       { URL_Alies: req.params.URL_Alies },
       data
@@ -138,6 +139,7 @@ export const updateSpecificUserData = async (req, res) => {
         .json({ message: "Data Updated!", data: updateSpecificData });
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

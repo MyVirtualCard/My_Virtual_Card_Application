@@ -1,9 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import path from 'path';
 // Import necessary functions from the url and path modules
 import { fileURLToPath } from "url";
-import path from "path";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import mongoose from "mongoose";
@@ -31,7 +31,9 @@ import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 import RazorPaymentRoute from "./Routes/Razorpayment.router.js";
 import FeedbackRoute from './Routes/Feedback.route.js';
 import GoogleMapRoute from './Routes/GoogleMap.route.js';
-import ManageContentRoute from './Routes/ManageContent.route.js'
+import ManageContentRoute from './Routes/ManageContent.route.js';
+import InquiryRoute from './Routes/Inquiry.route.js';
+import AppoinmentRoute from './Routes/Appoinment.route.js'
 let host_ip = "http://localhost:3001";
 
 //App initialized
@@ -52,14 +54,10 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 //This will help you to allow file upload size limit
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
-app.use(express.static(path.join(__dirname, "client", "dist")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use(express.static(path.join(__dirname, "client", "dist")));
 // Allow requests from your frontend domain
-// const corsOptions = {
-//   origin: "https://myvirtualcard.in", // Replace with your actual frontend domain
-//   credentials: true, // Allow cookies to be sent
-//   optionsSuccessStatus: 200,
-// };
-// app.use(cors(corsOptions));
+
 app.use(cors({
   origin: 'https://myvirtualcard.in',
   methods: 'GET,POST,PUT,DELETE',
@@ -103,6 +101,8 @@ app.use("/vcard", AllDataRoute);
 app.use("/vcard", AllDataDeleteRoute);
 app.use('/feedback',FeedbackRoute);
 app.use('/manageContent',ManageContentRoute);
+app.use('/inquiry',InquiryRoute);
+app.use('/appoinment',AppoinmentRoute);
 //Setup Mongoose conncetion ;
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING)
