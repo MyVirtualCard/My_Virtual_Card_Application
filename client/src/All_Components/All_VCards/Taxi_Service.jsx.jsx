@@ -449,7 +449,7 @@ END:VCARD
         <>
           {VCard_URL_Data != undefined ? (
             <div className="newcard_design12_container">
-              <Toaster position="top-center" reverseOrder={false} />
+              {/* <Toaster position="top-center" reverseOrder={false} /> */}
               {/* <div className="trip_banner">
                 <img src={TripBanner_Image} alt="trip" />
               </div> */}

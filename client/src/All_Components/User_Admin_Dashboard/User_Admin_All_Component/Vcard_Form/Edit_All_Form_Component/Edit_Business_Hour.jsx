@@ -78,10 +78,12 @@ const Business_Hour = () => {
           }
         })
         .catch((error) => {
-          console.log(error.message);
+          toast.error(error.response.data.message)
+          setFormSubmitLoader(false);
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -125,6 +127,7 @@ const Business_Hour = () => {
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   //Update Function
@@ -164,6 +167,7 @@ const Business_Hour = () => {
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   return (

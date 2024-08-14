@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import "./Edit_form_styles/Edit_Manage_Session.scss";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import toast from 'react-hot-toast'
 import Context from "../../../../UseContext/Context";
 const Manage_Session = () => {
   let [ManageSessionToggle, setManageSessionToggle] = useState(false);
@@ -76,16 +77,13 @@ const Manage_Session = () => {
           setContactDetailsToggle(res.data.data[0].ContactDetails);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setManageSessionToggle(false);
-          setErrorMessage(error.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+          
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
       console.log(error);
+      setFormSubmitLoader(false);
     }
   }
 
@@ -121,12 +119,8 @@ const Manage_Session = () => {
         })
         .then((res) => {
           setFormSubmitLoader(false);
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          reloadComponent();
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+        
+          toast.success(res.data.message)
           setManageSessionToggle(true);
           reloadComponent();
         })
@@ -139,13 +133,12 @@ const Manage_Session = () => {
           setTimeout(() => {
             setErrorPopupOpen(false);
           }, 3000);
+          toast.error(error.response.data.message)
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+    console.log(error);
+    setFormSubmitLoader(false);
+
     }
   }
   async function handleManageContentUpdate(e) {
@@ -177,28 +170,19 @@ const Manage_Session = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          reloadComponent();
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+       
+          toast.success(res.data.message)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
           setFormSubmitLoader(false);
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+          
+          toast.error(error.response.data.message)
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+  console.log(error);
+  setFormSubmitLoader(false);
+          
     }
   }
   return (

@@ -95,7 +95,7 @@ export const PostProductData = async (req, res) => {
         }
         if (checkCurrentPlan[0].amount === 899) {
           //Basic Image File limit checked:
-          if (checkProductLength.length < 5) {
+          if (checkProductLength.length < 6) {
             // Create a new image instance and save to MongoDB
             const newProduct = new ProductModel({
               user: req.user.userName,
@@ -130,39 +130,96 @@ export const PostProductData = async (req, res) => {
           } else {
             res.status(400).json({
               message:
-                "Max Product Upload limit crossed..Only accept 5 Product Details! ",
+                "Max Product Upload limit crossed..Only accept 6 Product Details! ",
+            });
+          }
+        }
+      
+        if (checkCurrentPlan[0].amount === 599) {
+          //Basic Image File limit checked:
+          if (checkProductLength.length < 4) {
+            // Create a new image instance and save to MongoDB
+            const newProduct = new ProductModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ProductName: req.body.ProductName,
+              ProductDescription: req.body.ProductDescription,
+              ProductType: req.body.ProductType,
+              ProductImageLink: req.body.ProductImageLink,
+              ProductURL: req.body.ProductURL,
+              ProductPrice: req.body.ProductPrice,
+              ProductImage: req.body.ProductImage,
+              // ProductImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
+            });
+
+            await newProduct
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Product uploaded!",
+                  data: newProduct,
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+                res.status(400).json({
+                  message: "Failed to save product to database!",
+                });
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max Product Upload limit crossed..Only accept 4 Product Details! ",
             });
           }
         }
         if (checkCurrentPlan[0].amount === 10) {
           //Basic Image File limit checked:
-          if (checkProductLength.length < 0) {
-            res.status(400).json({
-              message: "Product Access denied for Demo Plan!",
-              data: newProduct,
+          if (checkProductLength.length < 2) {
+            // Create a new image instance and save to MongoDB
+            const newProduct = new ProductModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ProductName: req.body.ProductName,
+              ProductDescription: req.body.ProductDescription,
+              ProductType: req.body.ProductType,
+              ProductImageLink: req.body.ProductImageLink,
+              ProductURL: req.body.ProductURL,
+              ProductPrice: req.body.ProductPrice,
+              ProductImage: req.body.ProductImage,
+              // ProductImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
             });
+
+            await newProduct
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Product uploaded!",
+                  data: newProduct,
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+                res.status(400).json({
+                  message: "Failed to save product to database!",
+                });
+              });
           } else {
             res.status(400).json({
-              message: "Product Access denied for Demo Plan!",
-            });
-          }
-        }
-        if (checkCurrentPlan[0].amount === 599) {
-          //Basic Image File limit checked:
-          if (checkProductLength.length < 0) {
-            res.status(200).json({
-              message: "Product Access denied for Basic Plan!",
-              data: newProduct,
-            });
-          } else {
-            res.status(400).json({
-              message: "Product Access denied for Basic Plan!",
+              message:
+                "Max Product Upload limit crossed..Only accept 2 Product Details! ",
             });
           }
         }
       }
     } else {
-      res.status(400).json({ message: "Plan not match!", error: err });
+      res.status(400).json({ message: "Plan not match!", });
     }
   }
 };
@@ -246,7 +303,7 @@ export const updateSpecificUserData = async (req, res) => {
         } else {
           res
             .status(201)
-            .json({ message: "Data Updated!", data: updateSpecificData });
+            .json({ message: "Product Updated!", data: updateSpecificData });
         }
       } catch (error) {
         res
@@ -273,7 +330,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
       res.status(201).json({
-        message: "Data Deleted!",
+        message: "Product Deleted!",
         length: deleteSpecificData.length,
         data: deleteSpecificData,
       });
@@ -296,7 +353,7 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({ message: "Product Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -17,12 +17,21 @@ const Testimonial = () => {
   let [updateFormOpen, setUpdateFormOpen] = useState(false);
   let [testimonialId, setTestimonialId] = useState();
   let [AllTestimonial, setAllTestimonial] = useState();
-  let { currentPlan, FormSubmitLoader, setFormSubmitLoader, userName,  successMessage,setSuccessMessage,
-    successPopupOpen,setSuccessPopupOpen,
-    errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen, } =
-    useContext(Context);
-    let[ClientCount,setClientCount]=useState(0)
+  let {
+    currentPlan,
+    FormSubmitLoader,
+    setFormSubmitLoader,
+    userName,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
+  } = useContext(Context);
+  let [ClientCount, setClientCount] = useState(0);
   let [ClientName, setClientName] = useState();
   let [ClientFeedback, setClientFeedback] = useState("");
   let [ClientImage, setClientImage] = useState();
@@ -35,7 +44,7 @@ const Testimonial = () => {
   };
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-});
+  });
   async function fetchAllTestimonial() {
     setFormSubmitLoader(true);
     try {
@@ -52,25 +61,17 @@ const Testimonial = () => {
             setFormSubmitLoader(false);
           } else {
             setAllTestimonial(res.data.data);
-            setClientCount(res.data.data.length)
+            setClientCount(res.data.data.length);
             setFormSubmitLoader(false);
           }
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
-
+      console.log(error);
+      setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -110,14 +111,9 @@ const Testimonial = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
-
+          toast.success(res.data.message);
           reloadComponent();
-          setClientCount(++ClientCount)
+          setClientCount(++ClientCount);
           setTimeout(() => {
             values.ClientName = "";
             setClientImage(undefined);
@@ -129,12 +125,8 @@ const Testimonial = () => {
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
-    
+          toast.error(error.response.data.message);
+          setTestimonialFormOpen(false);
           setFormSubmitLoader(false);
         });
     },
@@ -169,6 +161,7 @@ const Testimonial = () => {
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   async function handleTestimonialEdit(id) {
@@ -193,19 +186,12 @@ const Testimonial = () => {
         })
 
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
 
@@ -228,23 +214,15 @@ const Testimonial = () => {
     };
     try {
       api
-        .put(
-          `/testimonialDetail/updateID/${testimonialId}`,
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
+        .put(`/testimonialDetail/updateID/${testimonialId}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
         .then((res) => {
           reloadComponent();
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
           setTimeout(() => {
             setUpdateFormOpen(false);
@@ -255,19 +233,12 @@ const Testimonial = () => {
           }, 1000);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   async function handleTestimonialDelete(id) {
@@ -283,29 +254,18 @@ const Testimonial = () => {
         })
         .then((res) => {
           reloadComponent();
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
 
-          setClientCount(--ClientCount)
+          toast.success(res.data.message);
+          setClientCount(--ClientCount);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   return (
@@ -313,35 +273,36 @@ const Testimonial = () => {
       <div className="update_testimonial_container">
         <div className="plan_title">
           <p>
-            <strong>{currentPlan} plan </strong>&nbsp; Subscribed!
+            <strong>{currentPlan} </strong>&nbsp; Subscribed!
           </p>
         </div>
         <div className="add_new_testimonial">
           <button onClick={() => setTestimonialFormOpen(true)}>
-          <i className='bx bx-plus'></i>Add Testimonial
+            <i className="bx bx-plus"></i>Add Testimonial
           </button>
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Demo" ? (
-                <>
+            {currentPlan === "Trial Plan" ? (
+              <>
                 <i class="bx bx-upload "></i>
                 <small>
-                Max Client Detail addOn limit :<strong> {ClientCount} / 1 </strong>
+                  Max Client Detail addOn limit :
+                  <strong> {ClientCount} / 2 </strong>
                 </small>
               </>
-     
             ) : (
               ""
             )}
 
             {currentPlan === "Basic" ? (
-           <>
-           <i class="bx bx-upload "></i>
-           <small>
-             Max Client Detail addOn limit :<strong> {ClientCount} / 2 </strong>
-           </small>
-         </>
+              <>
+                <i class="bx bx-upload "></i>
+                <small>
+                  Max Client Detail addOn limit :
+                  <strong> {ClientCount} / 4 </strong>
+                </small>
+              </>
             ) : (
               ""
             )}
@@ -350,7 +311,8 @@ const Testimonial = () => {
               <>
                 <i class="bx bx-upload "></i>
                 <small>
-                  Max Client Detail addOn limit :<strong> {ClientCount} / 4 </strong>
+                  Max Client Detail addOn limit :
+                  <strong> {ClientCount} / 6 </strong>
                 </small>
               </>
             ) : (
@@ -358,12 +320,13 @@ const Testimonial = () => {
             )}
 
             {currentPlan === "Enterprises" ? (
-                 <>
-                 <i class="bx bx-upload "></i>
-                 <small>
-                   Max Client Detail addOn limit :<strong> {ClientCount} / 6 </strong>
-                 </small>
-               </>
+              <>
+                <i class="bx bx-upload "></i>
+                <small>
+                  Max Client Detail addOn limit :
+                  <strong> {ClientCount} / 8 </strong>
+                </small>
+              </>
             ) : (
               ""
             )}
@@ -411,7 +374,7 @@ const Testimonial = () => {
                           <i
                             className="bx bxs-show"
                             style={{ color: "skyBlue" }}
-                            onClick={()=>handleTestimonialView(data._id)}
+                            onClick={() => handleTestimonialView(data._id)}
                           ></i>
                           <i
                             className="bx bx-edit"
@@ -443,187 +406,195 @@ const Testimonial = () => {
 
         {/* //Create New Service Form */}
 
-{testimonialFormOpen ?         <div
-          className="create_new_testimonial_container"
-          id={testimonialFormOpen ? "shadow_background" : ""}
-        >
+        {testimonialFormOpen ? (
           <div
-            className="create_new_testimonial_box"
-            id={testimonialFormOpen ? "testimonialOpen" : "testimonialClose"}
+            className="create_new_testimonial_container"
+            id={testimonialFormOpen ? "shadow_background" : ""}
           >
-            <div className="title">
-              <p>New Testimonial</p>
-              <i
-                className="bx bx-x"
-                onClick={() => setTestimonialFormOpen(false)}
-              ></i>
-            </div>
-            <form action="" onSubmit={formik.handleSubmit}>
-              <div className="form_group">
-                <label htmlFor="ClientName">
-                  Client Name <sup>*</sup>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Client Name"
-                  {...formik.getFieldProps("ClientName")}
-                />
+            <div
+              className="create_new_testimonial_box"
+              id={testimonialFormOpen ? "testimonialOpen" : "testimonialClose"}
+            >
+              <div className="title">
+                <p>New Testimonial</p>
+                <i
+                  className="bx bx-x"
+                  onClick={() => setTestimonialFormOpen(false)}
+                ></i>
               </div>
-
-              <div className="form_group">
-                <label htmlFor="ClientFeedback">
-                  Client Feedback <sup>*</sup>
-                </label>
-                <Editor
-                  {...formik.getFieldProps("ClientFeedback")}
-                  value={formik.values.ClientFeedback}
-                  onTextChange={(e) => setClientFeedback(e.htmlValue)}
-                  id="ClientFeedback"
-                  name="ClientFeedback"
-                  style={{ height: "130px" }}
-                  placeholder="Enter Short Description"
-                />
-                {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
-              </div>
-              <div className="form_group">
-                <label htmlFor="ClientReviewDate">
-                  Client Review Date <sup>*</sup>
-                </label>
-                <input
-                  type="date"
-                  placeholder="Enter Client Reviewed Date"
-                  value={formik.values.ClientReviewDate}
-                  {...formik.getFieldProps(
-                    "ClientReviewDate",
-                    ClientReviewDate
-                  )}
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="ClientImage">Client Image</label>
-                <label htmlFor="ClientImage">
-                  <img
-                    src={
-                      ClientImage != undefined
-                        ? ClientImage
-                        : "https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg"
-                    }
-                    alt="ClientImage"
+              <form action="" onSubmit={formik.handleSubmit}>
+                <div className="form_group">
+                  <label htmlFor="ClientName">
+                    Client Name <sup>*</sup>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Client Name"
+                    {...formik.getFieldProps("ClientName")}
                   />
-                  <i className="bx bxs-edit-location"></i>
-                </label>
-                <small>Allowed file types: png, jpg, jpeg.</small>
-                <input
-                  type="file"
-                  id="ClientImage"
-                  name="ClientImage"
-                  onChange={onUploadClientImage}
-                />
-              </div>
-              <div className="form_submit_actions">
-                <div className="save">
-                  <button type="submit">Save</button>
                 </div>
-                <div className="discard">
-                  <button type="button" onClick={formik.handleReset}>
-                    Clear
-                  </button>
+
+                <div className="form_group">
+                  <label htmlFor="ClientFeedback">
+                    Client Feedback <sup>*</sup>
+                  </label>
+                  <Editor
+                    {...formik.getFieldProps("ClientFeedback")}
+                    value={formik.values.ClientFeedback}
+                    onTextChange={(e) => setClientFeedback(e.htmlValue)}
+                    id="ClientFeedback"
+                    name="ClientFeedback"
+                    style={{ height: "130px" }}
+                    placeholder="Enter Short Description"
+                  />
+                  {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
                 </div>
-              </div>
-            </form>
+                <div className="form_group">
+                  <label htmlFor="ClientReviewDate">
+                    Client Review Date <sup>*</sup>
+                  </label>
+                  <input
+                    type="date"
+                    placeholder="Enter Client Reviewed Date"
+                    value={formik.values.ClientReviewDate}
+                    {...formik.getFieldProps(
+                      "ClientReviewDate",
+                      ClientReviewDate
+                    )}
+                  />
+                </div>
+                <div className="form_group">
+                  <label htmlFor="ClientImage">Client Image</label>
+                  <label htmlFor="ClientImage">
+                    <img
+                      src={
+                        ClientImage != undefined
+                          ? ClientImage
+                          : "https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg"
+                      }
+                      alt="ClientImage"
+                    />
+                    <i className="bx bxs-edit-location"></i>
+                  </label>
+                  <small>Allowed file types: png, jpg, jpeg.</small>
+                  <input
+                    type="file"
+                    id="ClientImage"
+                    name="ClientImage"
+                    onChange={onUploadClientImage}
+                  />
+                </div>
+                <div className="form_submit_actions">
+                  <div className="save">
+                    <button type="submit">Save</button>
+                  </div>
+                  <div className="discard">
+                    <button type="button" onClick={formik.handleReset}>
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>: ''}
+        ) : (
+          ""
+        )}
 
         {/* //update New Service Form */}
-        {updateFormOpen ?      <div
-          className="update_new_testimonial_container"
-          id={updateFormOpen ? "shadow_background" : ""}
-        >
+        {updateFormOpen ? (
           <div
-            className="update_new_testimonial_box"
-            id={
-              updateFormOpen
-                ? "testimonialUpdateOpen"
-                : "testimonialUpdateClose"
-            }
+            className="update_new_testimonial_container"
+            id={updateFormOpen ? "shadow_background" : ""}
           >
-            <div className="title">
-              <p>Update Testimonial</p>
-              <i
-                className="bx bx-x"
-                onClick={() => setUpdateFormOpen(false)}
-              ></i>
-            </div>
-            <form action="" onSubmit={handleTestimonialUpdate}>
-              <div className="form_group">
-                <label htmlFor="ClientName">
-                  Client Name <sup>*</sup>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Client Name"
-                  value={ClientName}
-                  onChange={(e) => setClientName(e.target.value)}
-                />
+            <div
+              className="update_new_testimonial_box"
+              id={
+                updateFormOpen
+                  ? "testimonialUpdateOpen"
+                  : "testimonialUpdateClose"
+              }
+            >
+              <div className="title">
+                <p>Update Testimonial</p>
+                <i
+                  className="bx bx-x"
+                  onClick={() => setUpdateFormOpen(false)}
+                ></i>
               </div>
-
-              <div className="form_group">
-                <label htmlFor="ClientFeedback">
-                  Client Feedback <sup>*</sup>
-                </label>
-                <Editor
-                  {...formik.getFieldProps("ClientFeedback", ClientFeedback)}
-                  value={formik.values.ClientFeedback}
-                  onTextChange={(e) => setClientFeedback(e.htmlValue)}
-                  s
-                  id="ClientFeedback"
-                  name="ClientFeedback"
-                  style={{ height: "130px" }}
-                  placeholder="Enter Short Description"
-                />
-                {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
-              </div>
-              <div className="form_group">
-                <label htmlFor="ClientReviewDate">
-                  Client Review Date <sup>*</sup>
-                </label>
-                <input
-                  type="date"
-                  placeholder="Enter Client Reviewed Date"
-                  value={ClientReviewDate}
-                  onChange={(e) => setClientReviewDate(e.target.value)}
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="ClientImage">Client Image</label>
-                <label htmlFor="ClientImage">
-                  <img
-                    src={
-                      ClientImage
-                        ? ClientImage
-                        : "https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg"
-                    }
-                    alt="ClientImage"
+              <form action="" onSubmit={handleTestimonialUpdate}>
+                <div className="form_group">
+                  <label htmlFor="ClientName">
+                    Client Name <sup>*</sup>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Client Name"
+                    value={ClientName}
+                    onChange={(e) => setClientName(e.target.value)}
                   />
-                  <i className="bx bxs-edit-location"></i>
-                </label>
-                <small>Allowed file types: png, jpg, jpeg.</small>
-                <input
-                  type="file"
-                  id="ClientImage"
-                  name="ClientImage"
-                  onChange={onUploadClientImage}
-                />
-              </div>
-              <div className="form_submit_actions">
-                <div className="save">
-                  <button type="submit">Update</button>
                 </div>
-              </div>
-            </form>
+
+                <div className="form_group">
+                  <label htmlFor="ClientFeedback">
+                    Client Feedback <sup>*</sup>
+                  </label>
+                  <Editor
+                    {...formik.getFieldProps("ClientFeedback", ClientFeedback)}
+                    value={formik.values.ClientFeedback}
+                    onTextChange={(e) => setClientFeedback(e.htmlValue)}
+                    s
+                    id="ClientFeedback"
+                    name="ClientFeedback"
+                    style={{ height: "130px" }}
+                    placeholder="Enter Short Description"
+                  />
+                  {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
+                </div>
+                <div className="form_group">
+                  <label htmlFor="ClientReviewDate">
+                    Client Review Date <sup>*</sup>
+                  </label>
+                  <input
+                    type="date"
+                    placeholder="Enter Client Reviewed Date"
+                    value={ClientReviewDate}
+                    onChange={(e) => setClientReviewDate(e.target.value)}
+                  />
+                </div>
+                <div className="form_group">
+                  <label htmlFor="ClientImage">Client Image</label>
+                  <label htmlFor="ClientImage">
+                    <img
+                      src={
+                        ClientImage
+                          ? ClientImage
+                          : "https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg"
+                      }
+                      alt="ClientImage"
+                    />
+                    <i className="bx bxs-edit-location"></i>
+                  </label>
+                  <small>Allowed file types: png, jpg, jpeg.</small>
+                  <input
+                    type="file"
+                    id="ClientImage"
+                    name="ClientImage"
+                    onChange={onUploadClientImage}
+                  />
+                </div>
+                <div className="form_submit_actions">
+                  <div className="save">
+                    <button type="submit">Update</button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>: ''}
-   
+        ) : (
+          ""
+        )}
+
         {/* //Testimonial  Detail Box */}
 
         <div
@@ -663,7 +634,9 @@ const Testimonial = () => {
               <div className="service_url">
                 <div className="service_title">Review Date</div>
                 <div className="name">
-                  <p>{ClientReviewDate != undefined ? ClientReviewDate : "N/A"}</p>
+                  <p>
+                    {ClientReviewDate != undefined ? ClientReviewDate : "N/A"}
+                  </p>
                 </div>
               </div>
               <div className="service_image">

@@ -73,19 +73,11 @@ const Services = () => {
           }
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+      
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+    console.log(error)
     }
   }
   useEffect(() => {
@@ -143,11 +135,7 @@ const Services = () => {
         })
         .then((res) => {
           setFormSubmitLoader(false);
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          toast.success(res.data.message)
           reloadComponent();
           setServiceCount(++ServiceCount);
           setTimeout(() => {
@@ -161,12 +149,10 @@ const Services = () => {
           }, 500);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+     
+       toast.error(error.response.data.message)
           setFormSubmitLoader(false);
+          setServiceFormOpen(false);
         });
     },
   });
@@ -239,11 +225,7 @@ const Services = () => {
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+     console.log(error)
     }
   }
 
@@ -276,11 +258,8 @@ const Services = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+       
+          toast.success(res.data.message)
           setUpdateFormOpen(false);
           setFormSubmitLoader(false);
           reloadComponent();
@@ -294,19 +273,14 @@ const Services = () => {
           }, 1000);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+          toast.error(error.response.data.message)
+          setServiceFormOpen(false)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+      toast.error(error.message)
+      setServiceFormOpen(false)
+      setFormSubmitLoader(false);
     }
   }
   async function handleServiceDelete(id) {
@@ -321,29 +295,19 @@ const Services = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          
+          toast.success(res.data.message)
           reloadComponent();
           setServiceCount(--ServiceCount);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+          
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+   console.log(error)
     }
   }
   const handleServiceChange = (event) => {
@@ -383,10 +347,12 @@ const Services = () => {
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Demo" ? (
+          {currentPlan === "Trial Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
-                <small>Demo Plan service access denied!</small>
+                <small>
+                  Max Service addOn limit :<strong> {ServiceCount} / 2 </strong>
+                </small>
               </>
             ) : (
               ""

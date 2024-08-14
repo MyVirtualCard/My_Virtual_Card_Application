@@ -158,6 +158,11 @@ setTimeout(()=>{
       setFormSubmitLoader(false);
     }
   };
+  useEffect(() => {
+    fetchURL_Form();
+    fetchBasicData();
+
+  }, [key]);
   let [BannerToggle,setBannerToggle]=useState(true);
 let[BussinessHourToggle,setBussinessHourToggle]=useState(true);
 let[GoogleMapToggle,setGoogleMapToggle]=useState(true);
@@ -201,36 +206,21 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
         })
         .then((res) => {
           setFormSubmitLoader(false);
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          reloadComponent();
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          toast.success(res.data.message)
           reloadComponent();
         })
         .catch((error) => {
 
           setFormSubmitLoader(false);
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(() => {
-            setErrorPopupOpen(false);
-          }, 3000);
+          toast.error(error.response.data.message)
+          
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorPopupOpen(false);
-      }, 3000);
+     console.log(error)
+     setFormSubmitLoader(false);
     }
   }
-  useEffect(() => {
-    fetchURL_Form();
-    fetchBasicData();
 
-  }, [key]);
 
   async function handleURLFormUpdate(e) {
     e.preventDefault();
@@ -256,28 +246,18 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
         })
         .then((res) => {
           reloadComponent();
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+     
+          toast.success(res.data.message)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
       
+      toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+   console.log(error)
+   setFormSubmitLoader(false);
     }
   }
   async function handleBasicFormUpdate(e) {
@@ -307,30 +287,18 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
         })
         .then((res) => {
           reloadComponent();
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          toast.success(res.data.message)
           setFormSubmitLoader(false);
           
         })
         .catch((error) => {
-      console.log(error)
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+      
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
       console.log(error)
-      // setErrorPopupOpen(true);
-      // setErrorMessage(error);
-      // setTimeout(()=>{
-      // setErrorPopupOpen(false)
-      // },3000)
+  
     }
   }
   let formik = useFormik({
@@ -358,22 +326,14 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          handleManageContentSubmit()
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
-      
+       
+      toast.success(res.data.message)
           reloadComponent();
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+        
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     },
@@ -408,7 +368,6 @@ let [ContactDetailsToggle,setContactDetailsToggle]=useState(true);
   return (
     <>
       <div className="basicform_container">
-        <Toaster position="top-right" />
         <div className="form1_container_box">
           <form onSubmit={handleURLFormUpdate}>
             <div className="form_group">

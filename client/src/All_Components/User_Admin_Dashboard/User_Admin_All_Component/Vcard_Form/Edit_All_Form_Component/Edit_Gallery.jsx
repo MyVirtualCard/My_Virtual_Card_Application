@@ -67,19 +67,12 @@ const Gallery = () => {
           }
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+   console.log(error.message)
   setFormSubmitLoader(false);
     }
   }
@@ -122,11 +115,8 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+       
+          toast.success(res.data.message)
 
           setFormSubmitLoader(false);
           setGalleryCount(++GalleryCount);
@@ -135,14 +125,14 @@ const Gallery = () => {
           reloadComponent();
           setTimeout(() => {
             setGalleryFormOpen(false);
-          }, 1000);
+          }, 500);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+        
+          toast.error(error.response.data.message)
+          setTimeout(() => {
+            setGalleryFormOpen(false);
+          }, 500);
           setFormSubmitLoader(false);
         });
     },
@@ -195,11 +185,8 @@ const Gallery = () => {
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      console.log(error)
+      setFormSubmitLoader(false);
     }
   }
 
@@ -222,12 +209,8 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
-
+       
+toast.success(res.data.message)
           setFormSubmitLoader(false);
           reloadComponent();
           setTimeout(() => {
@@ -236,19 +219,13 @@ const Gallery = () => {
           }, 1000);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+       
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      console.log(error)
+      setFormSubmitLoader(false);
     }
   }
   async function handleGalleryDelete(id) {
@@ -263,30 +240,19 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          toast.success(res.data.message)
 
           setGalleryCount(--GalleryCount);
           setFormSubmitLoader(false);
           reloadComponent();
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+    console.log(error)
+    setFormSubmitLoader(false);
     }
   }
   const HtmlRenderer = ({ htmlString }) => {
@@ -312,7 +278,7 @@ const Gallery = () => {
 
         <div className="plan_title">
           <p>
-            <strong>{currentPlan} plan </strong>&nbsp; Subscribed!
+            <strong>{currentPlan}  </strong>&nbsp; Subscribed!
           </p>
         </div>
         <div className="add_new_gallery">
@@ -322,10 +288,12 @@ const Gallery = () => {
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Demo" ? (
+            {currentPlan === "Trial Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
-                <small>Demo Plan Gallery access denied!</small>
+                <small>
+                  Max Image addOn limit :<strong> {GalleryCount} / 2</strong>
+                </small>
               </>
             ) : (
               ""
@@ -335,7 +303,7 @@ const Gallery = () => {
               <>
                 <i class="bx bx-upload "></i>
                 <small>
-                  Max Image addOn limit :<strong> {GalleryCount} / 4 </strong>
+                  Max Image addOn limit :<strong> {GalleryCount} / 4</strong>
                 </small>
               </>
             ) : (

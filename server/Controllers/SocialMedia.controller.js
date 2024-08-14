@@ -165,7 +165,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "SocialMedia's Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -184,7 +184,7 @@ export const updateSpecificUserData_id = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "SocialMedia's Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

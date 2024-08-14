@@ -49,9 +49,10 @@ let [BannerLength,setBannerLength]=useState();
           },
         })
         .then((res) => {
+  
           setBannerLength(res.data.data.length);
           if (res.data.data.length == 0) {
-            // toast.error("No Popup Banner added!");
+            toast.error("No Popup Banner added!");
             setFormSubmitLoader(false);
           } else {
             
@@ -64,19 +65,13 @@ let [BannerLength,setBannerLength]=useState();
           }
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+      
+        // toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   };
   
@@ -103,28 +98,20 @@ let [BannerLength,setBannerLength]=useState();
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+       
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
           reloadComponent();
+
         })
         .catch((error) => {
           setFormSubmitLoader(false);
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+
+          toast.error(error.response.data.message);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   };
 
@@ -152,27 +139,18 @@ let [BannerLength,setBannerLength]=useState();
           }
         )
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+         
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
           setFormSubmitLoader(false);
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
+       
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   };
   

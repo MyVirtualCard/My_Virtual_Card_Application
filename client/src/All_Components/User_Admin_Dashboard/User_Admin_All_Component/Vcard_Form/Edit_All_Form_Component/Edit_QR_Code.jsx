@@ -94,7 +94,7 @@ const Edit_QR_Code = () => {
       await api
         .post(`/QRCodeDetail/${URL_Alies}`, formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
@@ -111,7 +111,7 @@ const Edit_QR_Code = () => {
         })
         .catch((error) => {
           toast.error(error.response.data.message);
-          console.log(error);
+          setQRFormFormOpen(false);
           setFormSubmitLoader(false);
         });
     },
@@ -157,11 +157,12 @@ const Edit_QR_Code = () => {
         })
 
         .catch((error) => {
-          console.log(error);
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
 
@@ -197,12 +198,12 @@ const Edit_QR_Code = () => {
           }, 1000);
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   async function handleGalleryDelete(id) {
@@ -228,6 +229,7 @@ const Edit_QR_Code = () => {
         });
     } catch (error) {
       toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   return (
@@ -274,7 +276,7 @@ const Edit_QR_Code = () => {
             {currentPlan === "Demo" ? (
               <>
                 <i class="bx bx-upload "></i>
-                <small>Demo Plan QRCode access denied!</small>
+                <small>Trial Plan QRCode Image access denied!</small>
               </>
             ) : (
               ""
@@ -412,7 +414,7 @@ const Edit_QR_Code = () => {
                   <i className="bx bxs-edit-location"></i>
                 </label>
                 <p>
-                  <strong>Note :</strong> Max image size limit 2MB
+                  <strong>Note :</strong> Max image size limit 3MB
                 </p>
                 <small>Allowed file types: png, jpg, jpeg.</small>
 
@@ -476,7 +478,7 @@ const Edit_QR_Code = () => {
                   <i className="bx bxs-edit-location"></i>
                 </label>
                 <p>
-                  <strong>Note :</strong> Max image size limit 2MB
+                  <strong>Note :</strong> Max image size limit 3MB
                 </p>
                 <small>Allowed file types: png, jpg, jpeg.</small>
 

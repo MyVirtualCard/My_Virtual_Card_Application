@@ -86,7 +86,7 @@ export const postBasicAllData = async (req, res) => {
           try {
             await createDatas.save();
             return res.status(201).json({
-              message: "Data saved!",
+              message: "BasicDetail's saved!",
               length: createDatas.length,
               data: createDatas,
             });
@@ -136,7 +136,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "BasicDetail's Updated!", data: updateSpecificData });
     }
   } catch (error) {
     console.log(error)
@@ -173,7 +173,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({ message: "BasicDetail's Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -194,7 +194,7 @@ export const updateSpecificUserData_Id = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "BasicDetail Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -214,7 +214,7 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({ message: "BasicDetail's Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

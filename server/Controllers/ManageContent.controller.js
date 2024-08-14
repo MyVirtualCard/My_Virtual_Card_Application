@@ -54,7 +54,7 @@ export const PostManageContentData = async (req, res) => {
             await newManageContent.save()
               .then(() => {
                 res.status(200).json({
-                  message: "Popup Banner saved!",
+                  message: "Manage Content saved!",
                   data: newManageContent,
                 });
               })
@@ -136,7 +136,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "Manage Content Updated!", data: updateSpecificData });
     }
     
   } catch (error) {
@@ -156,7 +156,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted", data: deleteSpecificData });
+        .json({ message: "Manage Content Delted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -176,7 +176,7 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted", data: deleteSpecificData });
+        .json({ message: "Manage Content Deelted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

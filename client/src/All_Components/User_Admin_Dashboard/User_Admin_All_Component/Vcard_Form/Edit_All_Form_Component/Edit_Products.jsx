@@ -19,10 +19,14 @@ const Products = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
-    successMessage,setSuccessMessage,
-    successPopupOpen,setSuccessPopupOpen,
-    errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
   } = useContext(Context);
   let [AllProduct, setAllProduct] = useState();
   let [ProductCount, setProductCount] = useState(0);
@@ -77,21 +81,14 @@ const Products = () => {
           }
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+          toast.error(error.response.data.message);
+          setProductFormOpen(false);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-        setErrorMessage(error.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+console.log(error)
 
- setFormSubmitLoader(false);
+      setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -115,9 +112,7 @@ const Products = () => {
     onSubmit: async (values) => {
       values.ProductDescription = stripHtmlTags(ProductDescription);
       values = await Object.assign(values, {
-        ProductImage:
-          ProductImage ||
-          "",
+        ProductImage: ProductImage || "",
       });
 
       setFormSubmitLoader(true);
@@ -131,12 +126,8 @@ const Products = () => {
         .then((res) => {
           reloadComponent();
           setProductCount(++ProductCount);
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
-      
+        toast.success(res.data.message)
+
           setFormSubmitLoader(false);
           setProductFormOpen(false);
           setUpdateFormOpen(false);
@@ -151,12 +142,10 @@ const Products = () => {
           }, []);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+        toast.error(error.response.data.message)
           setFormSubmitLoader(false);
+          setProductFormOpen(false);
+          setUpdateFormOpen(false);
         });
     },
   });
@@ -211,23 +200,17 @@ const Products = () => {
           setProductURL(res.data.data.ProductURL);
           setProductDescription(res.data.data.ProductDescription);
           setProductImage(res.data.data.ProductImage);
-          setProductImageLink(res.data.data.ProductImageLink)
-          setProductType(res.data.data.ProductType)
+          setProductImageLink(res.data.data.ProductImageLink);
+          setProductType(res.data.data.ProductType);
           setProductId(res.data.data._id);
           setFormSubmitLoader(false);
         })
 
         .catch((error) => {
-         
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-        setErrorMessage(error.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
-
+    console.log(error)
     }
   }
 
@@ -260,11 +243,7 @@ const Products = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+
           setFormSubmitLoader(false);
           setUpdateFormOpen(false);
           reloadComponent();
@@ -272,23 +251,15 @@ const Products = () => {
             setProductImage(undefined);
             setProductFormOpen(false);
           }, 1000);
+          toast.success(res.data.message)
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message)
+          setProductFormOpen(false);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-        setErrorMessage(error.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
-
-
+    console.log(error)
     }
   }
   async function handleProductDelete(id) {
@@ -304,29 +275,18 @@ const Products = () => {
         })
         .then((res) => {
           setProductCount(--ProductCount);
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+    
+          toast.success(res.data.message)
           reloadComponent();
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+      
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-        setErrorMessage(error.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
-
+      console.log(error)
     }
   }
   const handleProductImageChange = (event) => {
@@ -365,10 +325,12 @@ const Products = () => {
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Demo" ? (
+          {currentPlan === "Trial Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
-                <small>Demo Plan Product access denied!</small>
+                <small>
+                  Max Product addOn limit :<strong> {ProductCount} / 2 </strong>
+                </small>
               </>
             ) : (
               ""
@@ -425,39 +387,47 @@ const Products = () => {
               {AllProduct != undefined ? (
                 <>
                   {AllProduct.map((data, index) => {
-
-                    console.log(data.ProductImage.length)
+                    console.log(data.ProductImage.length);
                     return (
                       <tr key={index}>
                         <td className="h-100 align-middle">
-                          {data.ProductType == 'ImageUpload' ? 
-                          <>
-                            {data.ProductImage.length !=0 ?   <img
-                            src={
-                              data.ProductImage.length != 0
-                                ? data.ProductImage
-                                : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                            }
-                            alt="service_image"
-                          /> :'Null'}
-                          </>
-                          : ''}
-                        
-                        {data.ProductType == 'Image_Address_Link' ?
-                        <>
-                        {data.ProductImageLink.length !=0 ?
-                          <img
-                          src={
-                            data.ProductImageLink.length != 0
-                              ? data.ProductImageLink
-                              : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                          }
-                          alt="product_image"
-                        />
-                        : 'Null'}
-                        </>
-                        : ''}
-                      
+                          {data.ProductType == "ImageUpload" ? (
+                            <>
+                              {data.ProductImage.length != 0 ? (
+                                <img
+                                  src={
+                                    data.ProductImage.length != 0
+                                      ? data.ProductImage
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="service_image"
+                                />
+                              ) : (
+                                "Null"
+                              )}
+                            </>
+                          ) : (
+                            ""
+                          )}
+
+                          {data.ProductType == "Image_Address_Link" ? (
+                            <>
+                              {data.ProductImageLink.length != 0 ? (
+                                <img
+                                  src={
+                                    data.ProductImageLink.length != 0
+                                      ? data.ProductImageLink
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="product_image"
+                                />
+                              ) : (
+                                "Null"
+                              )}
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </td>
                         <td className="h-100 align-middle">
                           {data.ProductName}
@@ -667,7 +637,7 @@ const Products = () => {
                         <label htmlFor="Image">
                           <img
                             src={
-                              ProductImage != null || ProductImage !=undefined
+                              ProductImage != null || ProductImage != undefined
                                 ? ProductImage
                                 : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
                             }
@@ -693,8 +663,7 @@ const Products = () => {
                       </>
                     ) : (
                       <div className="form_group url_link_input_group">
-
-{updateFormOpen ? (
+                        {updateFormOpen ? (
                           <img
                             src={
                               ProductImageLink != null &&
@@ -719,7 +688,7 @@ const Products = () => {
                           />
                         )}
                         <label htmlFor="VCardName">Paste Image Address</label>
-                  
+
                         <input
                           type="text"
                           placeholder="Eg : https://img.arstostech.com/premium-photo"
@@ -743,7 +712,9 @@ const Products = () => {
                               : "input_success"
                           }
                         />
-                        <div className="error">{formik.errors.ProductImageLink}</div>
+                        <div className="error">
+                          {formik.errors.ProductImageLink}
+                        </div>
                       </div>
                     )}
                   </>
@@ -780,7 +751,7 @@ const Products = () => {
                       </>
                     ) : (
                       <div className="form_group url_link_input_group">
-                           <img
+                        <img
                           src={
                             ProductImageLink != null &&
                             ProductImageLink != undefined &&
@@ -815,7 +786,7 @@ const Products = () => {
                               : "input_success"
                           }
                         />
-                                 <div className="clear_action">
+                        <div className="clear_action">
                           <button
                             className="clear_btn"
                             type="button"
@@ -824,7 +795,9 @@ const Products = () => {
                             clear
                           </button>
                         </div>
-                        <div className="error">{formik.errors.ProductImageLink}</div>
+                        <div className="error">
+                          {formik.errors.ProductImageLink}
+                        </div>
                       </div>
                     )}
                   </>

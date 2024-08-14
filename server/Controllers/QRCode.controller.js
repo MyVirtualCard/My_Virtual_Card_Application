@@ -15,7 +15,7 @@ import upload from "../Multer/config.js";
 
 export const GetGalleryData = async (req, res) => {
   try {
-    let datas = await QRCodeModel.find({URL_Alies: req.params.URL_Alies});
+    let datas = await QRCodeModel.find({ URL_Alies: req.params.URL_Alies });
     if (!datas) {
       res.status(400).json({ message: "Data not found" });
     } else {
@@ -30,168 +30,130 @@ export const GetGalleryData = async (req, res) => {
 };
 
 export const PostGalleryData = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err instanceof multer.MulterError) {
-      if (err.code === "LIMIT_FILE_SIZE") {
-        return res
-          .status(400)
-          .json({ message: "File size too large. Maximum limit is 2MB." });
-      }
-      return res.status(400).json({ message: err.message });
-    } else if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      res.status(400).json({ message: err });
-    } else {
-      if (!req.body.QRCodeImage) {
-        return res.status(400).json({ message: "No file choosen!" });
-      }
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
+  });
 
-      let checkCurrentPlan = await Payment.find({
-        user: req.user.userName,
-      });
-
-      if (!checkCurrentPlan) {
-        return res
-          .status(400)
-          .json({ message: "Choose your Plan first!", error: err });
-      }
-      if(checkCurrentPlan.length <=0){
-        return res
-        .status(400)
-        .json({ message: "Choose your Plan first!", error: err });
-      }else{
+  if (!checkCurrentPlan) {
+    return res
+      .status(400)
+      .json({ message: "Choose your Plan first!", error: err });
+  }
+  if (checkCurrentPlan.length <= 0) {
+    return res
+      .status(400)
+      .json({ message: "Choose your Plan first!", error: err });
+  } else {
     //Plan 2 and 3
-    if (checkCurrentPlan[0].amount === 10 || checkCurrentPlan[0].amount === 599 || checkCurrentPlan[0].amount === 899 || checkCurrentPlan[0].amount === 1299) {
+    if (
+      checkCurrentPlan[0].amount === 10 ||
+      checkCurrentPlan[0].amount === 599 ||
+      checkCurrentPlan[0].amount === 899 ||
+      checkCurrentPlan[0].amount === 1299
+    ) {
       //check images
       let checkCurrentImages = await QRCodeModel.find({
-        URL_Alies:req.params.URL_Alies
+        URL_Alies: req.params.URL_Alies,
       });
 
       if (!checkCurrentImages) {
         return res
           .status(400)
-          .json({ message: "Image will not be there!", error: err });
+          .json({ message: "QRCode Image  not be Inserted!", error: err });
       } else {
-      
-        if(checkCurrentPlan[0].amount === 1299){
-            //Basic Image File limit checked:
-        if (checkCurrentImages.length < 1) {
-          // Create a new image instance and save to MongoDB
-          const newImage = new QRCodeModel({
-            user: req.user.userName,
-            URL_Alies:req.body.URL_Alies,
-            QRCodeImage:req.body.QRCodeImage
-            // QRCodeImage: {
-            //   data: fs.readFileSync( 'public/' + req.file.filename),
-            //   contentType: req.file.mimetype,
-            // },
-          });
-
-          newImage
-            .save()
-            .then(() => {
-              res.status(200).json({
-                message: "Image uploaded!",
-                data: newImage,
-              });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: "Failed to save image to database!",
-             
-              });
-            });
-        } else {
-          res.status(400).json({
-            message: "Max QRCode Upload limit crossed!..Only accept 1 Images ",
-         
-          });
-        }
-        };
-        if(checkCurrentPlan[0].amount === 599 || checkCurrentPlan[0].amount === 899){
+        if (checkCurrentPlan[0].amount === 1299) {
           //Basic Image File limit checked:
-      if (checkCurrentImages.length < 1) {
-        // Create a new image instance and save to MongoDB
-        const newImage = new QRCodeModel({
-          user: req.user.userName,
-          URL_Alies:req.body.URL_Alies,
-          QRCodeImage:req.body.QRCodeImage
-       
-        });
- 
-        newImage
-          .save()
-          .then(() => {
-            res.status(200).json({
-              message: "Image uploaded!",
-              data: newImage,
+          if (checkCurrentImages.length < 1) {
+            // Create a new image instance and save to MongoDB
+            const newImage = new QRCodeModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              QRCodeImage: req.body.QRCodeImage,
+              // QRCodeImage: {
+              //   data: fs.readFileSync( 'public/' + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
             });
-          })
-          .catch((err) => {
+
+            newImage
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "QRCode Image uploaded!",
+                  data: newImage,
+                });
+              })
+              .catch((err) => {
+                res.status(400).json({
+                  message: "Failed to save QRCode Image to database!",
+                });
+              });
+          } else {
             res.status(400).json({
-              message: "Failed to save image to database!",
-          
+              message:
+                "Max QRCode Upload limit crossed!..Only accept 1 Images ",
             });
-          });
-      } else {
-        res.status(400).json({
-          message: "Max QRCode Upload limit crossed!..Only accept 1 Images ",
-    
-        });
-      }
-      }
-      if(checkCurrentPlan[0].amount === 10){
-        //Basic Image File limit checked:
-    if (checkCurrentImages.length < 0) {
-      // Create a new image instance and save to MongoDB
-      const newImage = new QRCodeModel({
-        user: req.user.userName,
-        URL_Alies:req.body.URL_Alies,
+          }
+        }
+        if (
+          checkCurrentPlan[0].amount === 599 ||
+          checkCurrentPlan[0].amount === 899
+        ) {
+          //Basic Image File limit checked:
+          if (checkCurrentImages.length < 1) {
+            // Create a new image instance and save to MongoDB
+            const newImage = new QRCodeModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              QRCodeImage: req.body.QRCodeImage,
+            });
 
-        QRCodeImage:req.body.QRCodeImage,
-     
-      });
-
-      newImage
-        .save()
-        .then(() => {
-          res.status(200).json({
-            message: "Image uploaded!",
-            data: newImage,
-          });
-        })
-        .catch((err) => {
-          res.status(400).json({
-            message: "Failed to save image to database!",
-        
-          });
-        });
-    } else {
-      res.status(400).json({
-        message: "Demo Plan Only accept 1 QRCode ",
-
-      });
-    }
-    };
+            newImage
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "QRCode Image uploaded!",
+                  data: newImage,
+                });
+              })
+              .catch((err) => {
+                res.status(400).json({
+                  message: "Failed to save QRCode image to database!",
+                });
+              });
+          } else {
+            res.status(400).json({
+              message:
+                "Max QRCode Upload limit crossed!..Only accept 1 Images ",
+            });
+          }
+        }
+        if (checkCurrentPlan[0].amount === 10) {
+          //Basic Image File limit checked:
+          if (checkCurrentImages.length < 0) {
+            res.status(400).json({
+              message: "QRCode Image Access denied for Trial Plan!",
+              data: newGoogleIframe,
+            });
+          } else {
+            res.status(400).json({
+              message: "QRCode Image Access denied for Trial Plan!",
+            });
+          }
+        }
       }
     } else {
       res.status(400).json({ message: "Plan not match!", error: err });
     }
-    
-      }
-
-  
-
-    }
-  });
+  }
 };
 
 // //Read or get Specific User all Data  :
 export const readSpecificUserAllData = async (req, res) => {
   try {
-    let getSpecificData = await QRCodeModel.find({  URL_Alies:req.params.URL_Alies });
+    let getSpecificData = await QRCodeModel.find({
+      URL_Alies: req.params.URL_Alies,
+    });
 
     if (!getSpecificData) {
       res.status(400).json({ message: " Data Not Found!" });
@@ -235,7 +197,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "QRCode Image Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -246,7 +208,7 @@ export const updateSpecificUserData = async (req, res) => {
 export const deleteSpecificUserAllData = async (req, res) => {
   try {
     let deleteSpecificData = await QRCodeModel.deleteMany({
-      URL_Alies:req.params.URL_Alies
+      URL_Alies: req.params.URL_Alies,
     });
 
     if (!deleteSpecificData) {
@@ -254,7 +216,10 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "All Data Deleted!", data: deleteSpecificData });
+        .json({
+          message: "All QRCode Data Deleted!",
+          data: deleteSpecificData,
+        });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -274,10 +239,9 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: " Data Deleted!", data: deleteSpecificData });
+        .json({ message: "QRCode Image Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-

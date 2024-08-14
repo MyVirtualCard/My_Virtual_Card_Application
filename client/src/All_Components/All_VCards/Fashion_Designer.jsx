@@ -530,7 +530,7 @@ END:VCARD
         <>
           {VCard_URL_Data != undefined ? (
             <div className="Fashion_Designer_container">
-              <Toaster position="top-center" reverseOrder={false} />
+              {/* <Toaster position="top-center" reverseOrder={false} /> */}
               <div className="Fashion_Designer_box">
                 {/* popupbanner */}
                 {PopUpBannerData.length > 0 && ManageContentData[0].BannerActive ==  true ? (

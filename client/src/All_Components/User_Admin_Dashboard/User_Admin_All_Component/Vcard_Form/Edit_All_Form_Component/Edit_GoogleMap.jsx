@@ -15,10 +15,14 @@ const Edit_GoogleMap = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
-    successMessage,setSuccessMessage,
-    successPopupOpen,setSuccessPopupOpen,
-    errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
   } = useContext(Context);
   const [key, setKey] = useState(0);
   let [updateFormOpen, setUpdateFormOpen] = useState(false);
@@ -53,20 +57,12 @@ const Edit_GoogleMap = () => {
           }
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
-
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -93,12 +89,8 @@ const Edit_GoogleMap = () => {
         })
         .then((res) => {
           reloadComponent();
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
 
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
           setUpdateFormOpen(true);
           setTimeout(() => {
@@ -106,11 +98,7 @@ const Edit_GoogleMap = () => {
           }, 2000);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     },
@@ -131,31 +119,18 @@ const Edit_GoogleMap = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
-
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
           setUpdateFormOpen(false);
           reloadComponent();
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
-
+      toast.error(error.message);
+      setFormSubmitLoader(false);
     }
   }
   return (
@@ -207,9 +182,13 @@ const Edit_GoogleMap = () => {
             <div className="form_submit_actions">
               {updateFormOpen ? (
                 <div className="save">
-                  <button className="save" type="submit" onClick={handleGoogleMapUpdate}>
-                  Update<span class="material-symbols-outlined">update</span>
-                </button>
+                  <button
+                    className="save"
+                    type="submit"
+                    onClick={handleGoogleMapUpdate}
+                  >
+                    Update<span class="material-symbols-outlined">update</span>
+                  </button>
                 </div>
               ) : (
                 <div className="save">

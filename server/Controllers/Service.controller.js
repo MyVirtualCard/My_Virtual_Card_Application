@@ -176,18 +176,58 @@ export const PostServiceData = async (req, res) => {
           }
         }
         if (checkCurrentPlan[0].amount === 10) {
-          //Basic Image File limit checked:
-          if (checkServiceLength.length < 0) {
-            res.status(400).json({
-              message: "Service Access denied for Demo Plan!",
-              data: newService,
+          if (checkServiceLength.length < 2) {
+            // Create a new image instance and save to MongoDB
+            const newService = new ServiceModel({
+              user: req.user.userName,
+              URL_Alies: req.body.URL_Alies,
+              ServiceName: req.body.ServiceName,
+              ServiceDescription: req.body.ServiceDescription,
+              ServiceType: req.body.ServiceType,
+              ServiceURL: req.body.ServiceURL,
+              ServiceIcon:req.body.ServiceIcon,
+              ServiceAddress:req.body.ServiceAddress,
+              ServiceImage: req.body.ServiceImage,
+              // ServiceImage: {
+              //   data: fs.readFileSync("uploads/" + req.file.filename),
+              //   contentType: req.file.mimetype,
+              // },
             });
+
+            await newService
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Service uploaded!",
+                  data: newService,
+                });
+              })
+              .catch((err) => {
+                console.log(err.message);
+                res.status(400).json({
+                  message: "Failed to save Service to database!",
+                });
+              });
           } else {
             res.status(400).json({
-              message: "Service Access denied for Demo Plan!",
+              message:
+                "Max Service limit crossed..Basic plan Only accept 2  Service Details! ",
             });
           }
         }
+        // if (checkCurrentPlan[0].amount === 10) {
+        //   //Basic Image File limit checked:
+        //   if (checkServiceLength.length < 0) {
+        //     res.status(400).json({
+        //       message: "Service Access denied for Demo Plan!",
+        //       data: newService,
+        //     });
+        //   } else {
+        //     res.status(400).json({
+        //       message: "Service Access denied for Demo Plan!",
+        //     });
+        //   }
+        // }
       }
     } else {
       res.status(400).json({ message: "Plan not match!", error: err });
@@ -273,7 +313,7 @@ export const updateSpecificUserData = async (req, res) => {
         } else {
           res
             .status(201)
-            .json({ message: "Data Updated!", data: updateSpecificData });
+            .json({ message: "Service Updated!", data: updateSpecificData });
         }
       } catch (error) {
         console.log(error.message)
@@ -300,7 +340,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
       res.status(400).json({ message: "Data Not Found" });
     } else {
       res.status(201).json({
-        message: "All Data Deleted!",
+        message: "All Services Deleted!",
         length: deleteSpecificData.length,
         data: deleteSpecificData,
       });
@@ -323,7 +363,7 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({ message: "Service Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

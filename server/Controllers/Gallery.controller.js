@@ -91,9 +91,9 @@ export const PostGalleryData = async (req, res) => {
           });
         }
         };
-        if(checkCurrentPlan[0].amount === 599 || checkCurrentPlan[0].amount === 899){
+        if(checkCurrentPlan[0].amount === 899){
           //Basic Image File limit checked:
-      if (checkCurrentImages.length < 5) {
+      if (checkCurrentImages.length < 6) {
         // Create a new image instance and save to MongoDB
         const newImage = new GalleryModel({
           user: req.user.userName,
@@ -120,11 +120,45 @@ export const PostGalleryData = async (req, res) => {
           });
       } else {
         res.status(400).json({
-          message: "Max Image Upload limit crossed!..Only accept 5 Images ",
+          message: "Max Image Upload limit crossed!..Only accept 6 Images ",
     
         });
       }
       }
+      if(checkCurrentPlan[0].amount === 599){
+        //Basic Image File limit checked:
+    if (checkCurrentImages.length < 4) {
+      // Create a new image instance and save to MongoDB
+      const newImage = new GalleryModel({
+        user: req.user.userName,
+        URL_Alies:req.body.URL_Alies,
+        GalleryImageURL:req.body.GalleryImageURL,
+        GalleryType:req.body.GalleryType,
+        GalleryImage:req.body.GalleryImage
+  
+      });
+
+      newImage
+        .save()
+        .then(() => {
+          res.status(200).json({
+            message: "Image uploaded!",
+            data: newImage,
+          });
+        })
+        .catch((err) => {
+          res.status(400).json({
+            message: "Failed to save image to database!",
+        
+          });
+        });
+    } else {
+      res.status(400).json({
+        message: "Max Image Upload limit crossed!..Only accept 4 Images ",
+  
+      });
+    }
+    }
       if(checkCurrentPlan[0].amount === 10){
         //Basic Image File limit checked:
     if (checkCurrentImages.length < 2) {
@@ -154,7 +188,7 @@ export const PostGalleryData = async (req, res) => {
         });
     } else {
       res.status(400).json({
-        message: "Demo Plan Only accept 2 Images ",
+        message: "Trial Plan Only accept 2 Images ",
 
       });
     }
@@ -219,7 +253,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({ message: "Image Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -238,7 +272,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "All Data Deleted!", data: deleteSpecificData });
+        .json({ message: "All Gallery Images Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -258,7 +292,7 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: " Data Deleted!", data: deleteSpecificData });
+        .json({ message: " Image Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

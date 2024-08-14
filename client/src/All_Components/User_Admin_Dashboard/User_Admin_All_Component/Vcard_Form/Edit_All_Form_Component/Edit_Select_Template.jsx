@@ -37,18 +37,7 @@ let BasicTemplate = [
     id: 2,
     image: Taxi_Service,
   },
-  {
-    id: 3,
-    image: Fashion_Desinger,
-  },
-  // {
-  //   id: 4,
-  //   image: card4,
-  // },
-  // {
-  //   id: 5,
-  //   image: card3,
-  // },
+
 ];
 let StandardTemplate = [
   {
@@ -181,14 +170,11 @@ const Select_Template = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          toast.error(error.response.data.message)
+       
         });
     } catch (error) {
-      setErrorPopupOpen(true);
-      setErrorMessage(error.message);
-      setTimeout(()=>{
-      setErrorPopupOpen(false)
-      },3000)
+      console.log(error)
     }
   }
   useEffect(() => {
@@ -216,19 +202,12 @@ const Select_Template = () => {
           },
         })
         .then((res) => {
-          setSuccessPopupOpen(true);
-          setSuccessMessage(res.data.message);
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+          toast.success(res.data.message)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
+
+          toast.error(error.response.data.message)
           setFormSubmitLoader(false);
         });
     },
@@ -249,18 +228,10 @@ const Select_Template = () => {
       })
       .then((res) => {
         setFormSubmitLoader(false);
-        setSuccessPopupOpen(true);
-        setSuccessMessage(res.data.message);
-        setTimeout(() => {
-          setSuccessPopupOpen(false);
-        }, 3000);
+        toast.success(res.data.message)
       })
       .catch((error) => {
-        setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },3000)
+       toast.error(error.response.data.message)
 
         setFormSubmitLoader(false);
       });
@@ -309,7 +280,7 @@ const Select_Template = () => {
                         className={
                           savedTemplate != null
                             ? "free_image"
-                            : "single_template"
+                            : "single_template trial_single_template"
                         }
                         key={index}
                         id={
@@ -339,7 +310,7 @@ const Select_Template = () => {
                         )}
 
                         <div
-                          className="image_box"
+                          className="image_box trial_template"
                           id={
                             currentTemplate === savedTemplate
                               ? "selected"

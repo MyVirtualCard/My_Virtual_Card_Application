@@ -1,5 +1,5 @@
 import BussinessModel from "../Models/BussinessHour.model.js";
-
+import Payment from "../Models/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const GetSocialMediaData = async (req, res) => {
@@ -8,13 +8,11 @@ export const GetSocialMediaData = async (req, res) => {
       URL_Alies: req.params.URL_Alies,
     });
     if (!datas) {
-      res
-        .status(400)
-        .json({
-          message: "Data not found!",
-          length: datas.length,
-          data: datas,
-        });
+      res.status(400).json({
+        message: "Data not found!",
+        length: datas.length,
+        data: datas,
+      });
     } else {
       res.status(201).json({
         message: "Data Fetched!",
@@ -28,16 +26,39 @@ export const GetSocialMediaData = async (req, res) => {
 };
 //Post basic detail data to database:
 export const PostSocialMediaData = async (req, res) => {
-  try {
-    //check images
-    let checkSocialMediaLength = await BussinessModel.findOne({
-      URL_Alies: req.params.URL_Alies,
-    });
 
-    if (!checkSocialMediaLength) {
-        // Create a new image instance and save to MongoDB
-        const newSocialMedia = new BussinessModel({
-          user: req.user.userName,
+    let checkCurrentPlan = await Payment.find({
+      user: req.user.userName,
+    });
+    if (!checkCurrentPlan) {
+      return res.status(400).json({ message: "Plan not be there!" });
+    }
+    if (checkCurrentPlan.length <= 0) {
+       res.status(400).json({ message: "Choose your Plan first!" });
+    } else {
+      //Plan 2 and 3
+      if (
+        checkCurrentPlan[0].amount === 10 ||
+        checkCurrentPlan[0].amount === 599 ||
+        checkCurrentPlan[0].amount === 899 ||
+        checkCurrentPlan[0].amount === 1299
+      ) {
+        //check images
+        let checkBussinessHour = await BussinessModel.find({
+          URL_Alies: req.params.URL_Alies,
+        });
+
+        if (!checkBussinessHour) {
+           res
+            .status(400)
+            .json({ message: "Bussiness Hour Data will not be Inserted!" });
+        } else {
+          if (checkCurrentPlan[0].amount === 1299) {
+            //Basic Image File limit checked:
+            if (checkBussinessHour.length < 1) {
+              // Create a new image instance and save to MongoDB
+              const newBussinessHour = new BussinessModel({
+                user: req.user.userName,
           URL_Alies: req.params.URL_Alies,
            Monday:{
             from:req.body.Monday.from,
@@ -67,83 +88,217 @@ export const PostSocialMediaData = async (req, res) => {
             from:req.body.Sunday.from,
             to:req.body.Sunday.to
            },
-
-        });
-
-        await newSocialMedia
-          .save()
-          .then(() => {
-            res.status(200).json({
-              message: "Bussiness Hour uploaded!",
-              data: newSocialMedia,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(400).json({
-              message: "Failed to save Bussiness Details!",
-            });
-          });
-    } else {
-      //SocialMedia Image File limit checked:
-      if (checkSocialMediaLength.length < 1) {
-        // Create a new image instance and save to MongoDB
-        const newSocialMedia = new BussinessModel({
-          user: req.user.userName,
-          URL_Alies: req.params.URL_Alies,
-          Monday:{
-            from:req.body.Monday.from,
-            to:req.body.Monday.to
-           },
-           Tuesday:{
-            from:req.body.Tuesday.from,
-            to:req.body.Tuesday.to
-           },
-           Wednesday:{
-            from:req.body.Wednesday.from,
-            to:req.body.Wednesday.to
-           },
-           Thursday:{
-            from:req.body.Thursday.from,
-            to:req.body.Thursday.to
-           },
-           Friday:{
-            from:req.body.Friday.from,
-            to:req.body.Friday.to
-           },
-           Saturday:{
-            from:req.body.Saturday.from,
-            to:req.body.Saturday.to
-           },
-           Sunday:{
-            from:req.body.Sunday.from,
-            to:req.body.Sunday.to
-           }
-        });
-
-        await newSocialMedia
-          .save()
-          .then(() => {
-            res.status(200).json({
-              message: "Bussiness Timing uploaded!",
-              data: newSocialMedia,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(400).json({
-              message: "Failed to save Bussiness Hour Details!",
-            });
-          });
+              });
+  
+              newBussinessHour
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Bussiness Timing uploaded!",
+                    data: newBussinessHour,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save Bussiness Timing to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Bussiness Timing Upload limit crossed!..Only accept 1 Data List ",
+              });
+            }
+          }
+          if (
+            checkCurrentPlan[0].amount === 599 ||
+            checkCurrentPlan[0].amount === 899
+          ) {
+            //Basic Image File limit checked:
+            if (checkBussinessHour.length < 1) {
+              // Create a new image instance and save to MongoDB
+              const newBussinessHour = new BussinessModel({
+                user: req.user.userName,
+                URL_Alies: req.params.URL_Alies,
+                 Monday:{
+                  from:req.body.Monday.from,
+                  to:req.body.Monday.to
+                 },
+                 Tuesday:{
+                  from:req.body.Tuesday.from,
+                  to:req.body.Tuesday.to
+                 },
+                 Wednesday:{
+                  from:req.body.Wednesday.from,
+                  to:req.body.Wednesday.to
+                 },
+                 Thursday:{
+                  from:req.body.Thursday.from,
+                  to:req.body.Thursday.to
+                 },
+                 Friday:{
+                  from:req.body.Friday.from,
+                  to:req.body.Friday.to
+                 },
+                 Saturday:{
+                  from:req.body.Saturday.from,
+                  to:req.body.Saturday.to
+                 },
+                 Sunday:{
+                  from:req.body.Sunday.from,
+                  to:req.body.Sunday.to
+                 },
+              });
+  
+              newBussinessHour
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Bussiness Timing  uploaded!",
+                    data: newBussinessHour,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save Bussiness Timing to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Bussiness Timing upload limit crossed!..Only accept 1 Data Insert ",
+              });
+            }
+          }
+          if (checkCurrentPlan[0].amount === 10) {
+            //Basic Image File limit checked:
+            if (checkBussinessHour.length < 0) {
+              res.status(400).json({
+                message: "Bussiness Timing Access denied for Trial Plan!",
+             
+              });
+            } else {
+              res.status(400).json({
+                message: "Bussiness Timing Access denied for Trial Plan!",
+              });
+            }
+          }
+    
+        }
       } else {
-        res.status(400).json({
-          message: "Already  your Bussiness Hour saved ! ",
-        });
-      }
+        res.status(400).json({ message: "Plan not match!" });
+      };
+
     }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+
+    // if (!checkSocialMediaLength) {
+    //     // Create a new image instance and save to MongoDB
+    //     const newSocialMedia = new BussinessModel({
+    //       user: req.user.userName,
+    //       URL_Alies: req.params.URL_Alies,
+    //        Monday:{
+    //         from:req.body.Monday.from,
+    //         to:req.body.Monday.to
+    //        },
+    //        Tuesday:{
+    //         from:req.body.Tuesday.from,
+    //         to:req.body.Tuesday.to
+    //        },
+    //        Wednesday:{
+    //         from:req.body.Wednesday.from,
+    //         to:req.body.Wednesday.to
+    //        },
+    //        Thursday:{
+    //         from:req.body.Thursday.from,
+    //         to:req.body.Thursday.to
+    //        },
+    //        Friday:{
+    //         from:req.body.Friday.from,
+    //         to:req.body.Friday.to
+    //        },
+    //        Saturday:{
+    //         from:req.body.Saturday.from,
+    //         to:req.body.Saturday.to
+    //        },
+    //        Sunday:{
+    //         from:req.body.Sunday.from,
+    //         to:req.body.Sunday.to
+    //        },
+
+    //     });
+
+    //     await newSocialMedia
+    //       .save()
+    //       .then(() => {
+    //         res.status(200).json({
+    //           message: "Bussiness Hour uploaded!",
+    //           data: newSocialMedia,
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //         res.status(400).json({
+    //           message: "Failed to save Bussiness Details!",
+    //         });
+    //       });
+    // } else {
+    //   //SocialMedia Image File limit checked:
+    //   if (checkSocialMediaLength.length < 1) {
+    //     // Create a new image instance and save to MongoDB
+    //     const newSocialMedia = new BussinessModel({
+    //       user: req.user.userName,
+    //       URL_Alies: req.params.URL_Alies,
+    //       Monday:{
+    //         from:req.body.Monday.from,
+    //         to:req.body.Monday.to
+    //        },
+    //        Tuesday:{
+    //         from:req.body.Tuesday.from,
+    //         to:req.body.Tuesday.to
+    //        },
+    //        Wednesday:{
+    //         from:req.body.Wednesday.from,
+    //         to:req.body.Wednesday.to
+    //        },
+    //        Thursday:{
+    //         from:req.body.Thursday.from,
+    //         to:req.body.Thursday.to
+    //        },
+    //        Friday:{
+    //         from:req.body.Friday.from,
+    //         to:req.body.Friday.to
+    //        },
+    //        Saturday:{
+    //         from:req.body.Saturday.from,
+    //         to:req.body.Saturday.to
+    //        },
+    //        Sunday:{
+    //         from:req.body.Sunday.from,
+    //         to:req.body.Sunday.to
+    //        }
+    //     });
+
+    //     await newSocialMedia
+    //       .save()
+    //       .then(() => {
+    //         res.status(200).json({
+    //           message: "Bussiness Timing uploaded!",
+    //           data: newSocialMedia,
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //         res.status(400).json({
+    //           message: "Failed to save Bussiness Hour Details!",
+    //         });
+    //       });
+    //   } else {
+    //     res.status(400).json({
+    //       message: "Already  your Bussiness Hour saved ! ",
+    //     });
+    //   }
+    // }
+
 };
 
 //Read or get Specific User all Data  :
@@ -202,7 +357,10 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({
+          message: "Bussiness Timing Updated!",
+          data: updateSpecificData,
+        });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -221,7 +379,10 @@ export const updateSpecificUserData_id = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Updated!", data: updateSpecificData });
+        .json({
+          message: "Bussiness Timing Updated!",
+          data: updateSpecificData,
+        });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -240,7 +401,10 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({
+          message: "Bussiness Timing Deleted!",
+          data: deleteSpecificData,
+        });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -260,7 +424,10 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({
+          message: "Bussiness Timing Deleted!",
+          data: deleteSpecificData,
+        });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

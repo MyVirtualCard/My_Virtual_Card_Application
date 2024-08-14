@@ -376,7 +376,7 @@ END:VCARD
         <>
           {VCard_URL_Data != undefined ? (
             <div className="newcard_design10_container">
-              <Toaster position="top-center" reverseOrder={false} />
+              {/* <Toaster position="top-center" reverseOrder={false} /> */}
               <div className="newcard_design10_box">
                 {/* popupbanner */}
                 {PopUpBannerData.length > 0 &&
@@ -1360,9 +1360,10 @@ END:VCARD
                         <img src={hand} alt="click" className="clickImg" />
                       </div> */}
                           {GalleryData.map((data, index) => {
+                            
                             return (
                               <div key={index}>
-                                {data.GallerType == "ImageUpload" ? (
+                                {data.GalleryType == "ImageUpload" ? (
                                   <img
                                     src={
                                       data.GalleryImage ||

@@ -81,47 +81,17 @@ export const PostGoogleMapData = async (req, res) => {
             });
           }
         }
-        // if (checkCurrentPlan[0].amount === 899) {
-        //   //Basic Image File limit checked:
-        //   if (checkMapLength.length < 1) {
-        //     // Create a new image instance and save to MongoDB
-        //     const newGoogleIframe = new GoogleMapModel({
-        //       user: req.user.userName,
-        //       URL_Alies: req.body.URL_Alies,
-        //       GoogleIframe: req.body.GoogleIframe,
-        //     });
 
-        //     await newGoogleIframe
-        //       .save()
-        //       .then(() => {
-        //         res.status(200).json({
-        //           message: "GoogleMap IFrame uploaded!",
-        //           data: newGoogleIframe,
-        //         });
-        //       })
-        //       .catch((err) => {
-        //         console.log(err.message);
-        //         res.status(400).json({
-        //           message: "Failed to save GoogleMap to database!",
-        //         });
-        //       });
-        //   } else {
-        //     res.status(400).json({
-        //       message:
-        //         "Max GoogleMap Upload limit crossed..Only accept 1 GoogleMap Details! ",
-        //     });
-        //   }
-        // }
         if (checkCurrentPlan[0].amount === 10) {
           //Basic Image File limit checked:
           if (checkMapLength.length < 0) {
             res.status(400).json({
-              message: "GoogleMap  Access denied for Demo Plan!",
+              message: "GoogleMap  Access denied for Trial Plan!",
               data: newGoogleIframe,
             });
           } else {
             res.status(400).json({
-              message: "GoogleMap Access denied for Demo Plan!",
+              message: "GoogleMap Access denied for Trial Plan!",
             });
           }
         }
@@ -205,7 +175,7 @@ export const updateSpecificUserData = async (req, res) => {
         } else {
           res
             .status(201)
-            .json({ message: "Data Updated!", data: updateSpecificData });
+            .json({ message: "Google Map URL Updated!", data: updateSpecificData });
         }
       } catch (error) {
         res
@@ -232,7 +202,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
       res.status(201).json({
-        message: "Data Deleted!",
+        message: "Google Map URL Deleted!",
         length: deleteSpecificData.length,
         data: deleteSpecificData,
       });
@@ -255,7 +225,7 @@ export const deleteSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Data Deleted!", data: deleteSpecificData });
+        .json({ message: "Google Map URL Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -86,22 +86,15 @@ const User_VCards = () => {
         })
         .then((res) => {
           reloadComponent();
-          setSuccessPopupOpen(true);
-          setSuccessMessage("Your VCard Sucessfully Deleted!");
-          setTimeout(() => {
-            setSuccessPopupOpen(false);
-          }, 3000);
+      
+          toast.success('Your VCard Sucessfully Deleted!')
           setFormSubmitLoader(false);
           setVcardDeleteToggle(false);
           localStorage.removeItem("URL_Alies");
         })
         .catch((error) => {
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },3000)
-          // toast.error("Failed to Delete!");
+        
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
@@ -112,11 +105,7 @@ const User_VCards = () => {
 
   const handleCopyURL = () => {
     setCopied(true);
-    setSuccessPopupOpen(true);
-    setSuccessMessage('Link Copied!');
-    setTimeout(() => {
-      setSuccessPopupOpen(false);
-    }, 3000);
+    toast.success('Link Copied!')
     setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
   };
   useEffect(() => {
@@ -247,11 +236,8 @@ const User_VCards = () => {
                         navigate(`/${userName}/uadmin/create_new_vcard`);
                       } else {
                         setFormSubmitLoader(false);
-                        setErrorPopupOpen(true);
-                        setErrorMessage('Already U Created Your VCard..One VCard Access U subscribed!');
-                        setTimeout(()=>{
-                        setErrorPopupOpen(false)
-                        },5000)
+                    
+                        toast.error('Already You Created Your VCard..One VCard Access You subscribed!')
                           setFormSubmitLoader(false);
                         
                       }

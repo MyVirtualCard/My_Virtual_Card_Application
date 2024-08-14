@@ -73,7 +73,7 @@ export const postVCardURLData = async (req, res) => {
       return res
         .status(201)
         .json({
-          message: "Data saved!",
+          message: "New VCard Created!",
           length: createDatas.length,
           data: createDatas,
         });

@@ -179,7 +179,7 @@ let [pieces,setPieces]=useState(150);
         ) : (
           ""
         )}
-        <Toaster position="top-center" style={{marginTop:'5rem'}} />
+ 
         <div className="top_navBar">
           <User_Admin_TopNavBar />
         </div>
