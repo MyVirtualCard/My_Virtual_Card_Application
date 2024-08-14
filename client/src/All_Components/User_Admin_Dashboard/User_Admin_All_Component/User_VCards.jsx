@@ -6,6 +6,7 @@ import Context from "../../UseContext/Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Footer from "../UserAdmin_Footer/Footer";
 const User_VCards = () => {
   // let { userName } = useParams();
   let navigate = useNavigate();
@@ -18,12 +19,17 @@ const User_VCards = () => {
     currentTemplate,
     ShowForm,
     setShowForm,
+    VCardCount, setVCardCount,
+    successMessage,setSuccessMessage,
+    successPopupOpen,setSuccessPopupOpen,
+    errorMessage,setErrorMessage,
+    errorPopupOpen,setErrorPopupOpen,
   } = useContext(Context);
   let [CurrentPlan, setCurrentPlan] = useState();
   let [savedVCardTemplate, setSavedVCardTemplate] = useState([]);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
   let [Yes, setYes] = useState(false);
-  let [VCardCount, setVCardCount] = useState();
+
   // let [URL_Alies, setURL_Alies] = useState();
   let userData = JSON.parse(localStorage.getItem("datas"));
 
@@ -80,13 +86,22 @@ const User_VCards = () => {
         })
         .then((res) => {
           reloadComponent();
-          toast.success("Your VCard Sucessfully Deleted!");
+          setSuccessPopupOpen(true);
+          setSuccessMessage("Your VCard Sucessfully Deleted!");
+          setTimeout(() => {
+            setSuccessPopupOpen(false);
+          }, 3000);
           setFormSubmitLoader(false);
           setVcardDeleteToggle(false);
           localStorage.removeItem("URL_Alies");
         })
         .catch((error) => {
-          toast.error("Failed to Delete!");
+          setErrorPopupOpen(true);
+          setErrorMessage(error.response.data.message);
+          setTimeout(()=>{
+          setErrorPopupOpen(false)
+          },3000)
+          // toast.error("Failed to Delete!");
           setFormSubmitLoader(false);
         });
     } catch (error) {
@@ -97,7 +112,11 @@ const User_VCards = () => {
 
   const handleCopyURL = () => {
     setCopied(true);
-    toast.success("Link Copied!");
+    setSuccessPopupOpen(true);
+    setSuccessMessage('Link Copied!');
+    setTimeout(() => {
+      setSuccessPopupOpen(false);
+    }, 3000);
     setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
   };
   useEffect(() => {
@@ -110,7 +129,7 @@ const User_VCards = () => {
       })
       .then((res) => {
         setSavedVCardTemplate(res.data.data);
-        console.log(res.data.data);
+
       })
       .catch((error) => {
         console.log(error);
@@ -126,13 +145,17 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-          setURL_Alies(res.data.data[0].URL_Alies);
-          console.log(res.data.data[0]);
-          setCurrentTemplate(res.data.data[0].currentTemplate);
+          console.log(res.data.data.length)
+          if(res.data.data.length > 0){
+            setURL_Alies(res.data.data[0].URL_Alies);
+            setCurrentTemplate(res.data.data[0].currentTemplate);
+          }
+           
         })
         .catch((error) => {
-          console.log(error);
-          toast.error(error.response.data.message);
+
+
+            setFormSubmitLoader(false);
         });
     } catch (error) {
       console.log(error);
@@ -147,7 +170,7 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data[0].status);
+       
         setPlanActive(res.data.data);
         setShowForm("Basic Detail");
         setStatus(res.data.data[0].status);
@@ -178,7 +201,29 @@ const User_VCards = () => {
         ) : (
           ""
         )}
-
+        {/* Success and Error Popup */}
+        <div className="success_error_container">
+   
+           <div className="popup_success_box" id={successPopupOpen ? 'successOpen':'successClose'}>
+           <div className="popup_close"  onClick={()=>setSuccessPopupOpen(false)}>
+           <i className='bx bx-x'></i>
+           </div>
+               <div className="popup_message">
+                 {successMessage}
+               </div>
+          </div>
+      
+            {errorPopupOpen ? 
+           <div className="popup_error_box">
+           <div className="popup_close"  onClick={()=>setErrorPopupOpen(false)}>
+           <i className='bx bx-x'></i>
+           </div>
+               <div className="popup_message">
+                 {errorMessage}
+               </div>
+          </div>
+          :''}
+        </div>
         <div className="row_1">
           <div className="title">
             <h5 className="fw-medium">All Your VCards</h5>
@@ -202,9 +247,13 @@ const User_VCards = () => {
                         navigate(`/${userName}/uadmin/create_new_vcard`);
                       } else {
                         setFormSubmitLoader(false);
-                        toast.error(
-                          "Already U Created Your VCard..One VCard Access U subscribed!  "
-                        );
+                        setErrorPopupOpen(true);
+                        setErrorMessage('Already U Created Your VCard..One VCard Access U subscribed!');
+                        setTimeout(()=>{
+                        setErrorPopupOpen(false)
+                        },5000)
+                          setFormSubmitLoader(false);
+                        
                       }
                     })
                     .catch((error) => {
@@ -384,6 +433,10 @@ const User_VCards = () => {
             </div>
           </div>
         </div>
+        {/* Footer */}
+        <div className="row_3">
+            <Footer />
+          </div>
       </div>
     </>
   );

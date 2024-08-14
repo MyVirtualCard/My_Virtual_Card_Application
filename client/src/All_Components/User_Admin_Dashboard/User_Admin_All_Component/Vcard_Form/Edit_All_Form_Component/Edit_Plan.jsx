@@ -730,7 +730,7 @@ setShowForm('Basic Detail')
         ) : (
           ""
         )}
-        <Toaster position="top-right" />
+        {/* <Toaster position="top-right" /> */}
         <div id={currentAccessActive ? "listView" : "listUnview"}>
           <div className="plan_title">
             <h5>

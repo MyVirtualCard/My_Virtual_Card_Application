@@ -139,11 +139,14 @@ let [feedbackForm, setFeedbackForm] = useState({
     document.body.removeChild(linkElement);
   }
   const buttonStyle = {
-    width: "0px",
-    background: "none",
-    opacity: 0,
+    width: "20px",
+    background: "white",
+    opacity: 1,
     border: "0px",
     padding: "0px",
+    borderRadius:'10px',
+    fontSize:'10px'
+  
   };
   const properties = {
     prevArrow: (
@@ -151,7 +154,8 @@ let [feedbackForm, setFeedbackForm] = useState({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          fill="#fff"
+          fill="#000"
+
         >
           <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
         </svg>
@@ -162,7 +166,7 @@ let [feedbackForm, setFeedbackForm] = useState({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          fill="#fff"
+          fill="#000"
         >
           <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
         </svg>
@@ -170,33 +174,45 @@ let [feedbackForm, setFeedbackForm] = useState({
     ),
   };
   const gallery_buttonStyle = {
-    width: "0px",
-    background: "none",
-    opacity: 0,
+    width: "20px",
+    height:"20px",
+    background: "white",
+    opacity: 1,
     border: "0px",
     padding: "0px",
+    borderRadius:'50%',
+    fontSize:'10px',
+    display:'flex',
+    alignItems:'center'
+    ,justifyContent:'center'
   };
   const gallery_properties = {
     prevArrow: (
       <button style={{ ...gallery_buttonStyle }}>
-        <svg
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
           fill="#fff"
         >
           <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
+        </svg> */}
+                <span style={{color:'black',fontSize:'15px',fontWeight:'600'}} className="material-symbols-outlined">
+chevron_left
+</span>
       </button>
     ),
     nextArrow: (
       <button style={{ ...gallery_buttonStyle }}>
-        <svg
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
           fill="#fff"
         >
           <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
+        </svg> */}
+        <span style={{color:'black',fontSize:'15px',fontWeight:'600'}} className="material-symbols-outlined">
+chevron_right
+</span>
       </button>
     ),
   };
@@ -402,6 +418,32 @@ let [feedbackForm, setFeedbackForm] = useState({
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
   let[ManageContentData,setManageContent]=useState([]);
+  const handleDownloadVCard = () => {
+    const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${BasicData.length > 0 ? BasicData[0].FirstName : ""}
+TEL;TYPE=cell:${BasicData.length > 0 ? BasicData[0].MobileNumber : ""}
+EMAIL:${BasicData.length > 0 ? BasicData[0].Email : ""}
+END:VCARD
+  `;
+
+    const blob = new Blob([vCardData], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    vCard.photo.attachFromUrl(
+      `${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].Profile : ""}`,
+      "JPEG"
+    );
+    link.download = `${
+      BasicData.length > 0 ? BasicData[0].FirstName : "card.vcf"
+    }.vcf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -488,7 +530,7 @@ let [feedbackForm, setFeedbackForm] = useState({
         <>
           {VCard_URL_Data != undefined ? (
             <div className="Fashion_Designer_container">
-              <Toaster position="top-right" reverseOrder={false} />
+              <Toaster position="top-center" reverseOrder={false} />
               <div className="Fashion_Designer_box">
                 {/* popupbanner */}
                 {PopUpBannerData.length > 0 && ManageContentData[0].BannerActive ==  true ? (
@@ -767,7 +809,9 @@ let [feedbackForm, setFeedbackForm] = useState({
                   {BasicData.map((data, index) => {
                         return (
                           <div className="contact_list_container" key={index}>
-                            <div className="contact_list">
+                            <a 
+                             href={`mailto:${data.Email ? data.Email : "#"}`}
+                            className="contact_list">
                               <div className="icons">
                                 <i className="bx bxl-gmail"></i>
                                 {/* <small>Personal Email</small> */}
@@ -778,8 +822,12 @@ let [feedbackForm, setFeedbackForm] = useState({
                                   {data.Email || "jayakumarv@aristostech.in"}
                                 </p>
                               </div>
-                            </div>
-                            <div className="contact_list">
+                            </a>
+                            <a 
+                               href={`tel:${
+                                data.MobileNumber ? data.MobileNumber : "#"
+                              }`}
+                            className="contact_list">
                               <div className="icons">
                                 <i className="bx bx-mobile-vibration"></i>
                                 {/* <small>Mobile Number</small> */}
@@ -790,9 +838,15 @@ let [feedbackForm, setFeedbackForm] = useState({
                                   {data.MobileNumber || "(+91) -----------"}
                                 </p>
                               </div>
-                            </div>
+                            </a>
                             {data.AlternateEmail.length > 0 ? (
-                              <div className="contact_list">
+                              <a 
+                              href={`mailto:${
+                                data.AlternateEmail
+                                  ? data.AlternateEmail
+                                  : "#"
+                              }`}
+                              className="contact_list">
                                 <div className="icons">
                                   <i className="bx bx-envelope"></i>
                                   {/* <small>Alternate Email</small> */}
@@ -804,13 +858,19 @@ let [feedbackForm, setFeedbackForm] = useState({
                                       "contact@aristostech.in"}
                                   </p>
                                 </div>
-                              </div>
+                              </a>
                             ) : (
                               ""
                             )}
 
                             {data.Location.length > 0 ? (
-                              <div className="contact_list">
+                              <a 
+                              href={`https://www.google.com/maps/search/?api=1&query=${
+                                data.Location
+                                  ? data.Location
+                                  : "No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017"
+                              }`}
+                              className="contact_list">
                                 <div className="icons">
                                   <i className="bx bx-map-alt"></i>
                                   {/* <small>Address</small> */}
@@ -819,7 +879,7 @@ let [feedbackForm, setFeedbackForm] = useState({
                                 <div className="list_detail">
                                   <p>{data.Location || "....."}</p>
                                 </div>
-                              </div>
+                              </a>
                             ) : (
                               ""
                             )}
@@ -829,7 +889,7 @@ let [feedbackForm, setFeedbackForm] = useState({
 
                   {/* AddtoContact */}
                   <div className="add_to_contact">
-                    <button onClick={generateVCF}>
+                    <button onClick={handleDownloadVCard}>
                       Add to Contact<i className="bx bxs-contact"></i>
                     </button>
                   </div>
@@ -849,7 +909,7 @@ let [feedbackForm, setFeedbackForm] = useState({
                     {ServiceData.map((data,index)=>{
                       return(
                         <>
-                           <div className="service_list" key={index}>
+                           <a  href={data.ServiceURL ? data.ServiceURL : ''}   className="service_list" key={index}>
                                 {data.ServiceType == "Icon_Tag" ? (
                                   <>
                                     <HtmlRenderer
@@ -887,7 +947,7 @@ let [feedbackForm, setFeedbackForm] = useState({
                                     </p>
                                   </div>
                                 </div>
-                              </div>
+                              </a>
                         </>
                       )
                     })}
@@ -951,6 +1011,20 @@ let [feedbackForm, setFeedbackForm] = useState({
                                     <div className="product_details">
                                       <h4>{data.ProductName}</h4>
                                       <small> {data.ProductDescription}</small>
+                                      <div className="actions">
+                                        <a
+                                          href={`${
+                                            data.ProductURL
+                                              ? data.ProductURL
+                                              : "#"
+                                          }`}
+                                        >
+                                          View Product
+                                        </a>
+                                        <span className="material-symbols-outlined">
+                                          link
+                                        </span>
+                                      </div>
                                       <button>₹ &nbsp;{data.ProductPrice}</button>
                                     </div>
                                   </div>
@@ -973,6 +1047,20 @@ let [feedbackForm, setFeedbackForm] = useState({
                                     <div className="product_details">
                                       <h4>{data.ProductName || '...'}</h4>
                                       <small>{data.ProductDescription || ''}</small>
+                                      <div className="actions">
+                                        <a
+                                          href={`${
+                                            data.ProductURL
+                                              ? data.ProductURL
+                                              : "#"
+                                          }`}
+                                        >
+                                          View Product
+                                        </a>
+                                        <span className="material-symbols-outlined">
+                                          link
+                                        </span>
+                                      </div>
                                       <button>₹ &nbsp;{data.ProductPrice}</button>
                                     </div>
                                   </div>
@@ -1179,11 +1267,12 @@ let [feedbackForm, setFeedbackForm] = useState({
 
                     <div className="gallery_box">
                     <Slide
-                      showThumbs={false}
-                      showStatus={true}
-                      infiniteLoop
-                      autoPlay
-                      className="carousel"
+                          slidesToScroll={1}
+                          slidesToShow={width < 600 ? 1 : 2}
+                          indicators={true}
+                          autoplay
+                          {...gallery_properties}
+                          autoplayInterval={500}
                     >
                         {GalleryData.map((data,index)=>{
                           return(

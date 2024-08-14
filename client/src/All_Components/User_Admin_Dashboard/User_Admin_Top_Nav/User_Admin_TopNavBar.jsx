@@ -15,16 +15,24 @@ const User_Admin_TopNavBar = () => {
     setSideNavActions,
     profileOpen,
     setProfileOpen,
-    userName
+    userName,
+    VCardCount,
+    setVCardCount,
   } = useContext(Context);
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
+  const [key, setKey] = useState(0);
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  // let VCardURL = JSON.parse(localStorage.getItem("URL_Alies"));
+  const reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
   useEffect(() => {
     api
       .get(`/auth/register/${userName}`)
       .then((res) => {
-        console.log(res.data.data)
+        console.log(res.data.data);
         setUserData(res.data.data);
       })
       .catch((error) => {
@@ -44,6 +52,13 @@ const User_Admin_TopNavBar = () => {
                 <Link to="/">
                   <img src={brand_logo} alt="logo" />
                 </Link>
+                <div className="current_menu">
+              {/* <p>{`${window.location.pathname.slice(1,30).charAt(7).toUpperCase()}${window.location.pathname.slice(9,30)}`}</p> */}
+              <p>{`${window.location.pathname.split("/")[1].toUpperCase() + "/"} ${
+                window.location.pathname.split("/")[3]
+              }`}</p>
+              <small></small>
+            </div>
               </div>
             )}
             {/* {SideNavActions ? "" : <h4>MyVirtualCard.in</h4>} */}
@@ -53,40 +68,87 @@ const User_Admin_TopNavBar = () => {
             >
               <i className="uil uil-bars"></i>
             </div>
-            <div className="current_menu">
-              {/* <p>{`${window.location.pathname.slice(1,30).charAt(7).toUpperCase()}${window.location.pathname.slice(9,30)}`}</p> */}
-              <p>{`${window.location.pathname.split("/")[1] + "/"} ${
-                window.location.pathname.split("/")[3]
-              }`}</p>
-            </div>
+         
           </div>
           <div className="topnav_right d-flex align-items-center justify-content-end">
             {/* <div className="mode">
               <i className="bx bx-moon"></i>
             </div> */}
-            <div className="user_profile" onClick={() => setProfileOpen(!profileOpen)}>
-              <img
-                src={
-                  userData.profile ||
-                  "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1715790254~exp=1715793854~hmac=ba7343c32c0eb17b5cadcdddf5f5ea1b4cc7510ce54d4436095344458fedb8ca&w=740"
-                }
-                alt="logo"
-              />
-            </div>
-            <div className="user_name"  onClick={() => setProfileOpen(!profileOpen)}>
-              <p>{userData.firstName ? userData.firstName : '' } {userData.lastName ? userData.lastName : ''}</p>
-         
-            </div>
-            <div
-                className="down_arrow"
+            {VCardCount.length > 0 ? (
+              <>
+                {VCardCount.map((data, index) => {
+                  return (
+                    <>
+                      <div
+                        className="user_profile"
+                        onClick={() => setProfileOpen(!profileOpen)}
+                        key={index}
+                      >
+                        {data.ProfileType == "Paste_ImageAddress" ? (
+                          <img
+                            src={
+                              data.ProfileAddress.length > 0 &&
+                              data.ProfileAddress != undefined
+                                ? data.ProfileAddress
+                                : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                            }
+                            alt="profile"
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {data.ProfileType == "ImageUpload" ? (
+                          <img
+                            src={
+                              data.Profile.length > 0 &&
+                              data.Profile != undefined
+                                ? data.Profile
+                                : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                            }
+                            alt="profile"
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </>
+                  );
+                })}
+              </>
+            ) : (
+              <div
+                className="user_profile"
                 onClick={() => setProfileOpen(!profileOpen)}
               >
-                {profileOpen ? (
-                  <i className="bx bx-chevron-up"></i>
-                ) : (
-                  <i className="bx bx-chevron-down bx-flashing"></i>
-                )}
+                <img
+                  src={
+                    userData.profile ||
+                    "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1715790254~exp=1715793854~hmac=ba7343c32c0eb17b5cadcdddf5f5ea1b4cc7510ce54d4436095344458fedb8ca&w=740"
+                  }
+                  alt="logo"
+                />
               </div>
+            )}
+
+            <div
+              className="user_name"
+              onClick={() => setProfileOpen(!profileOpen)}
+            >
+              <p>
+                {userData.firstName ? userData.firstName : ""}{" "}
+                {userData.lastName ? userData.lastName : ""}
+              </p>
+            </div>
+            <div
+              className="down_arrow"
+              onClick={() => setProfileOpen(!profileOpen)}
+            >
+              {profileOpen ? (
+                <i className="bx bx-chevron-up"></i>
+              ) : (
+                <i className="bx bx-chevron-down bx-flashing"></i>
+              )}
+            </div>
           </div>
         </div>
       </div>

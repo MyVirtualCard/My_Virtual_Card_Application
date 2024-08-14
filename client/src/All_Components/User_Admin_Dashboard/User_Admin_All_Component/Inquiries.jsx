@@ -3,6 +3,7 @@ import "./menuStyles/Inquiries.scss";
 import Context from "../../UseContext/Context";
 import axios from "axios";
 import {toast,Toaster,useToaster} from "react-hot-toast";
+import Footer from "../UserAdmin_Footer/Footer";
 const Inquiries = () => {
   let {
     URL_Alies,
@@ -324,6 +325,10 @@ notifications_active
             </div>
           </div>
         </div>
+                      {/* Footer */}
+                      <div className="row_3">
+            <Footer />
+          </div>
       </div>
     </>
   );

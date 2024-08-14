@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Taxi_Service.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
 
@@ -25,20 +25,20 @@ import Context from "../UseContext/Context";
 import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
 const Taxi_Service = () => {
   const [width, setWidth] = useState(window.innerWidth);
-    //Success and error popup state
-    let[successMessage,setSuccessMessage]=useState();
-    let[successPopupOpen,setSuccessPopupOpen]=useState(false);
-    let[errorMessage,setErrorMessage]=useState();
-    let[errorPopupOpen,setErrorPopupOpen]=useState(false)
+  //Success and error popup state
+  let [successMessage, setSuccessMessage] = useState();
+  let [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  let [errorMessage, setErrorMessage] = useState();
+  let [errorPopupOpen, setErrorPopupOpen] = useState(false);
   let [InquiryLoader, setInquiryLoader] = useState(false);
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [appoinmentLoader, setappoinmentLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
-  let[FeedbackPopup,setFeedbackPopup]=useState(false)
-  let[FeedbackPopupError,setFeedbackPopupError]=useState(false);
-  let[AppoinmentPopup,setAppoinmentPopup]=useState(false)
-  let[AppoinmentPopupError,setAppoinmentPopupError]=useState(false);
+  let [FeedbackPopup, setFeedbackPopup] = useState(false);
+  let [FeedbackPopupError, setFeedbackPopupError] = useState(false);
+  let [AppoinmentPopup, setAppoinmentPopup] = useState(false);
+  let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
   let [feedbackForm, setFeedbackForm] = useState({
     ClientName: "",
     ClientFeedback: "",
@@ -47,32 +47,6 @@ const Taxi_Service = () => {
   //create a new vCard
   var vCard = vCardsJS();
 
-  function generateVCF() {
-    //set properties
-    vCard.firstName = "Jayakumar";
-    vCard.middleName = "";
-    vCard.lastName = "V";
-    vCard.organization = "Aristostech India Private Limited,CEO";
-    vCard.photo.attachFromUrl(
-      "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1714999372~exp=1715002972~hmac=148ead13ab2f0dc4db7268fb984501266e0547e55d0bd1a6918e3e51ca5a5af4&w=740",
-      "JPEG"
-    );
-    vCard.workPhone = "+91 9344482370";
-    vCard.birthday = new Date(1985, 0, 1);
-    vCard.title = "Bussiness Man";
-    vCard.url = "https://www.aristostechindia.com/";
-    vCard.note = "Notes on Eric";
-
-    //save to file
-    // vCard.saveToFile('./eric-nesser.vcf');
-    const linkElement = document.createElement("a");
-    linkElement.setAttribute("href", `data:,${vCard.getFormattedString()}`);
-    linkElement.setAttribute("download", "card.vcf");
-    linkElement.style.display = "none";
-    document.body.appendChild(linkElement);
-    linkElement.click();
-    document.body.removeChild(linkElement);
-  }
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -151,7 +125,6 @@ const Taxi_Service = () => {
     fullImageBox.style.display = "none";
   }
 
-
   //Start Ratting:
   // let currentRatting=0;
   function handleRatting(e) {
@@ -190,55 +163,55 @@ const Taxi_Service = () => {
       }
     });
   }
-       //Feedback Form Logic :
-       let feedbackFormik = useFormik({
-        initialValues: {
-          URL_Alies: window.location.pathname,
-          ClientName: "",
-          ClientFeedback: "",
-          ClientRatting: 0,
-        },
-    
-        //Validation :
-        validationSchema: Yup.object({
-          ClientName: Yup.string()
-            .min(3, "Min 3 char required")
-            .max(50, "Name must be 20 character or less")
-            .required("Name is required"),
-          ClientFeedback: Yup.string()
-            .min(10, "Minimum 10 character required")
-            .max(400, "Feedback must be 100 character or less")
-            .required("Feedback is required"),
-        }),
-        //Form Submit :
-        onSubmit: async (values) => {
-        setInquiryLoader(true)
-          setFeedbackLoader(true);
-          await api
-            .post(`/feedback${window.location.pathname}`, values)
-            .then((res) => {
-              setInquiryLoader(false)
-              setFeedbackPopup(true);
-              setInquiryLoader(false)
-              setSuccessMessage(res.data.message);
-              feedbackFormik.values.ClientName=''
-              feedbackFormik.values.ClientFeedback=''
-              setTimeout(() => {
-                setFeedbackPopup(false);
-              }, 2000);
-              setFeedbackLoader(false);
-            })
-            .catch((error) => {
-              setInquiryLoader(false)
-              setFeedbackPopupError(true);
-              setTimeout(() => {
-                setFeedbackPopupError(false);
-              }, 2000);
-              setErrorMessage(error.response.data.message);
-              setFeedbackLoader(false);
-            });
-        },
-      });
+  //Feedback Form Logic :
+  let feedbackFormik = useFormik({
+    initialValues: {
+      URL_Alies: window.location.pathname,
+      ClientName: "",
+      ClientFeedback: "",
+      ClientRatting: 0,
+    },
+
+    //Validation :
+    validationSchema: Yup.object({
+      ClientName: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(50, "Name must be 20 character or less")
+        .required("Name is required"),
+      ClientFeedback: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(400, "Feedback must be 100 character or less")
+        .required("Feedback is required"),
+    }),
+    //Form Submit :
+    onSubmit: async (values) => {
+      setInquiryLoader(true);
+      setFeedbackLoader(true);
+      await api
+        .post(`/feedback${window.location.pathname}`, values)
+        .then((res) => {
+          setInquiryLoader(false);
+          setFeedbackPopup(true);
+          setInquiryLoader(false);
+          setSuccessMessage(res.data.message);
+          feedbackFormik.values.ClientName = "";
+          feedbackFormik.values.ClientFeedback = "";
+          setTimeout(() => {
+            setFeedbackPopup(false);
+          }, 2000);
+          setFeedbackLoader(false);
+        })
+        .catch((error) => {
+          setInquiryLoader(false);
+          setFeedbackPopupError(true);
+          setTimeout(() => {
+            setFeedbackPopupError(false);
+          }, 2000);
+          setErrorMessage(error.response.data.message);
+          setFeedbackLoader(false);
+        });
+    },
+  });
   //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
@@ -253,7 +226,7 @@ const Taxi_Service = () => {
     validationSchema: InquiryValidateSchema,
     //Form Submit :
     onSubmit: async (values) => {
-      setInquiryLoader(true)
+      setInquiryLoader(true);
       await api
         .post(`/inquiry${window.location.pathname}`, values)
         .then((res) => {
@@ -263,14 +236,14 @@ const Taxi_Service = () => {
           formik.values.Message = "";
 
           setSuccessPopupOpen(true);
-          setInquiryLoader(false)
+          setInquiryLoader(false);
           setSuccessMessage(res.data.message);
           setTimeout(() => {
             setSuccessPopupOpen(false);
           }, 3000);
         })
         .catch((error) => {
-          setInquiryLoader(false)
+          setInquiryLoader(false);
           setErrorPopupOpen(true);
           setTimeout(() => {
             setErrorPopupOpen(false);
@@ -286,33 +259,32 @@ const Taxi_Service = () => {
       FullName: "",
       MobileNumber: "",
       Date: "",
-      Time:'',
+      Time: "",
     },
 
     //Validation :
     validationSchema: AppoinmentValidateSchema,
     //Form Submit :
     onSubmit: async (values) => {
-      setappoinmentLoader(true)
+      setappoinmentLoader(true);
       await api
         .post(`/appoinment${window.location.pathname}`, values)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           formik.values.FullName = "";
           formik.values.Time = "";
           formik.values.MobileNumber = "";
           formik.values.Date = "";
 
           setAppoinmentPopup(true);
-          setappoinmentLoader(false)
+          setappoinmentLoader(false);
           setSuccessMessage(res.data.message);
           setTimeout(() => {
             setAppoinmentPopup(false);
           }, 3000);
         })
         .catch((error) => {
-        
-          setappoinmentLoader(false)
+          setappoinmentLoader(false);
           setAppoinmentPopupError(true);
           setTimeout(() => {
             setAppoinmentPopupError(false);
@@ -337,7 +309,60 @@ const Taxi_Service = () => {
   let [BussinessHourData, setBussinessHourData] = useState([]);
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
-  let[ManageContentData,setManageContent]=useState([]);
+  let [ManageContentData, setManageContent] = useState([]);
+  //   function generateVCF() {
+  //     //set properties
+  //     vCard.firstName = `${BasicData.length > 0 ? BasicData[0].FirstName : ''}`;
+  //     vCard.middleName = "";
+  //     vCard.lastName = `${BasicData.length > 0 ? BasicData[0].LastName:''}`;
+  //     vCard.organization = `${BasicData.length>0 ? BasicData[0].Profession:''}`;
+  //     vCard.photo.attachFromUrl(
+  //       `${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].Profile:''}`,
+  //       "JPEG"
+  //     );
+  //     vCard.workPhone = `${BasicData.length > 0 ?BasicData[0].MobileNumber:''}`;
+  //     vCard.birthday = new Date('');
+  //     vCard.title = "Bussiness Man";
+  //     vCard.url = `https://myvirtualcard.in/${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].URL_Alies : ''}`;
+  //     vCard.note = "Notes on Eric";
+  // console.log(vCard.firstName,vCard.lastName)
+  //     //save to file
+  //     // vCard.saveToFile('./eric-nesser.vcf');
+  //     const linkElement = document.createElement("a");
+  //     linkElement.setAttribute("href", `data:,${vCard.getFormattedString()}`);
+  //     linkElement.setAttribute("download", `${BasicData.length > 0 ?BasicData[0].FirstName:'card.vcf' }.vcf`);
+  //     // linkElement.setAttribute("download",'card.vcf');
+  //     linkElement.style.display = "none";
+  //     document.body.appendChild(linkElement);
+  //     linkElement.click();
+  //     document.body.removeChild(linkElement);
+  //   };
+  const handleDownloadVCard = () => {
+    const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${BasicData.length > 0 ? BasicData[0].FirstName : ""}
+TEL;TYPE=cell:${BasicData.length > 0 ? BasicData[0].MobileNumber : ""}
+EMAIL:${BasicData.length > 0 ? BasicData[0].Email : ""}
+END:VCARD
+  `;
+
+    const blob = new Blob([vCardData], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    vCard.photo.attachFromUrl(
+      `${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].Profile : ""}`,
+      "JPEG"
+    );
+    link.download = `${
+      BasicData.length > 0 ? BasicData[0].FirstName : "card.vcf"
+    }.vcf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -360,7 +385,7 @@ const Taxi_Service = () => {
           setQRCodeData(res.data.data.QRCodeModel);
           setBussinessHourData(res.data.data.BussinessModel);
           setPopUpBannerData(res.data.data.PopupBannerModel);
-          setManageContent(res.data.data.ManageContentData)
+          setManageContent(res.data.data.ManageContentData);
           setSiteLoader(false);
           setTimeout(() => {
             // window.scrollTo(0, 0);
@@ -400,14 +425,12 @@ const Taxi_Service = () => {
             {/* <img src={loadingBack} alt="loading" className="aris_back" /> */}
           </div>
           <small>
-      
             <div className="lds-ellipsis">
               <div></div>
               <div></div>
               <div></div>
               <div></div>
             </div>
-    
           </small>
           {/* <Triangle
         visible={true}
@@ -426,13 +449,14 @@ const Taxi_Service = () => {
         <>
           {VCard_URL_Data != undefined ? (
             <div className="newcard_design12_container">
-              <Toaster position="top-right" reverseOrder={false} />
+              <Toaster position="top-center" reverseOrder={false} />
               {/* <div className="trip_banner">
                 <img src={TripBanner_Image} alt="trip" />
               </div> */}
               <div className="newcard_design12_box">
                 {/* popupbanner */}
-                {PopUpBannerData.length > 0  && ManageContentData[0].BannerActive ==  true ? (
+                {PopUpBannerData.length > 0 &&
+                ManageContentData[0].BannerActive == true ? (
                   <>
                     {PopUpBannerData.map((data, index) => {
                       return (
@@ -497,15 +521,17 @@ const Taxi_Service = () => {
                         ) : (
                           ""
                         )}
-                        {data.BannerType == "ImageUpload"
-                          ?        <img
-                          src={
-                            data.Banner ||
-                            "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
-                          }
-                          alt="banner"
-                        />
-                          : ""}
+                        {data.BannerType == "ImageUpload" ? (
+                          <img
+                            src={
+                              data.Banner ||
+                              "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
+                            }
+                            alt="banner"
+                          />
+                        ) : (
+                          ""
+                        )}
                         <div className="overlay"></div>
                       </div>
 
@@ -523,7 +549,8 @@ const Taxi_Service = () => {
                                     {data.Profession}
                                     {/* <img src={taxi} alt="taxi" /> */}
                                   </p>
-                                  {SocialMediaData.length > 0 && ManageContentData[0].SocialMedia ==  true  ? (
+                                  {SocialMediaData.length > 0 &&
+                                  ManageContentData[0].SocialMedia == true ? (
                                     <>
                                       {SocialMediaData.map((data, index) => {
                                         return (
@@ -694,7 +721,8 @@ const Taxi_Service = () => {
                 })}
 
                 {/* ContactDetails */}
-                {BasicData.length > 0  && ManageContentData[0].ContactDetails ==  true ? (
+                {BasicData.length > 0 &&
+                ManageContentData[0].ContactDetails == true ? (
                   <>
                     <div className="row_3">
                       <div className="title">
@@ -707,7 +735,10 @@ const Taxi_Service = () => {
                       {BasicData.map((data, index) => {
                         return (
                           <div className="contact_list_container" key={index}>
-                            <div className="contact_list">
+                            <a
+                              href={`mailto:${data.Email ? data.Email : "#"}`}
+                              className="contact_list"
+                            >
                               <div className="icons">
                                 <i className="bx bxl-gmail"></i>
                                 <small>Personal Email</small>
@@ -718,8 +749,13 @@ const Taxi_Service = () => {
                                   {data.Email || "jayakumarv@aristostech.in"}
                                 </p>
                               </div>
-                            </div>
-                            <div className="contact_list">
+                            </a>
+                            <a
+                              href={`tel:${
+                                data.MobileNumber ? data.MobileNumber : "#"
+                              }`}
+                              className="contact_list"
+                            >
                               <div className="icons">
                                 <i className="bx bx-mobile-vibration"></i>
                                 <small>Mobile Number</small>
@@ -730,9 +766,16 @@ const Taxi_Service = () => {
                                   {data.MobileNumber || "(+91) -----------"}
                                 </p>
                               </div>
-                            </div>
+                            </a>
                             {data.AlternateEmail.length > 0 ? (
-                              <div className="contact_list">
+                              <a
+                                href={`mailto:${
+                                  data.AlternateEmail
+                                    ? data.AlternateEmail
+                                    : "#"
+                                }`}
+                                className="contact_list"
+                              >
                                 <div className="icons">
                                   <i className="bx bx-envelope"></i>
                                   <small>Alternate Email</small>
@@ -744,13 +787,21 @@ const Taxi_Service = () => {
                                       "contact@aristostech.in"}
                                   </p>
                                 </div>
-                              </div>
+                              </a>
                             ) : (
                               ""
                             )}
 
                             {data.Location.length > 0 ? (
-                              <div className="contact_list">
+                              <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${
+                                  data.Location
+                                    ? data.Location
+                                    : "No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017"
+                                }`}
+                                target="_blank"
+                                className="contact_list"
+                              >
                                 <div className="icons">
                                   <i className="bx bx-map-alt"></i>
                                   <small>Address</small>
@@ -759,7 +810,7 @@ const Taxi_Service = () => {
                                 <div className="list_detail">
                                   <p>{data.Location || "....."}</p>
                                 </div>
-                              </div>
+                              </a>
                             ) : (
                               ""
                             )}
@@ -769,7 +820,7 @@ const Taxi_Service = () => {
 
                       {/* AddtoContact */}
                       <div className="add_to_contact">
-                        <button onClick={generateVCF}>
+                        <button onClick={handleDownloadVCard}>
                           Add to Contact<i className="bx bxs-contact"></i>
                         </button>
                       </div>
@@ -780,7 +831,8 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Gallery */}
-                {GalleryData.length > 0  && ManageContentData[0].Gallery ==  true ? (
+                {GalleryData.length > 0 &&
+                ManageContentData[0].Gallery == true ? (
                   <>
                     <div className="row_8">
                       <div className="title">
@@ -857,7 +909,8 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Services */}
-                {ServiceData.length > 0 && ManageContentData[0].Service ==  true  ? (
+                {ServiceData.length > 0 &&
+                ManageContentData[0].Service == true ? (
                   <>
                     <div className="row_4">
                       <div className="title">
@@ -870,7 +923,11 @@ const Taxi_Service = () => {
                         {ServiceData.map((data, index) => {
                           return (
                             <>
-                              <div className="service_list" key={index}>
+                              <a
+                                href={data.ServiceURL ? data.ServiceURL : ""}
+                                className="service_list"
+                                key={index}
+                              >
                                 {data.ServiceType == "Icon_Tag" ? (
                                   <>
                                     <HtmlRenderer
@@ -910,7 +967,7 @@ const Taxi_Service = () => {
                                     </p>
                                   </div>
                                 </div>
-                              </div>
+                              </a>
                             </>
                           );
                         })}
@@ -922,7 +979,8 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Products */}
-                {ProductData.length > 0  && ManageContentData[0].Product ==  true ? (
+                {ProductData.length > 0 &&
+                ManageContentData[0].Product == true ? (
                   <>
                     <div className="row_7">
                       <div className="title">
@@ -963,6 +1021,20 @@ const Taxi_Service = () => {
                                     <div className="product_details">
                                       <h4>{data.ProductName}</h4>
                                       <small> {data.ProductDescription}</small>
+                                      <div className="actions">
+                                        <a
+                                          href={`${
+                                            data.ProductURL
+                                              ? data.ProductURL
+                                              : "#"
+                                          }`}
+                                        >
+                                          View Product
+                                        </a>
+                                        <span className="material-symbols-outlined">
+                                          link
+                                        </span>
+                                      </div>
                                       <button>
                                         ₹ &nbsp;{data.ProductPrice}
                                       </button>
@@ -989,6 +1061,20 @@ const Taxi_Service = () => {
                                       <small>
                                         {data.ProductDescription || ""}
                                       </small>
+                                      <div className="actions">
+                                        <a
+                                          href={`${
+                                            data.ProductURL
+                                              ? data.ProductURL
+                                              : "#"
+                                          }`}
+                                        >
+                                          View Product
+                                        </a>
+                                        <span className="material-symbols-outlined">
+                                          link
+                                        </span>
+                                      </div>
                                       <button>
                                         ₹ &nbsp;{data.ProductPrice}
                                       </button>
@@ -1011,7 +1097,8 @@ const Taxi_Service = () => {
                 {/* //Appinment */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0 && ManageContentData[0].Appoinment ==  true ? (
+                SocialMediaData.length > 0 &&
+                ManageContentData[0].Appoinment == true ? (
                   <>
                     <div className="row_6">
                       <div className="title">
@@ -1024,8 +1111,8 @@ const Taxi_Service = () => {
                       </div>
 
                       <div className="appinment_form_container">
-                           {/* Success and Error Popup */}
-                           <div className="popup_message_container">
+                        {/* Success and Error Popup */}
+                        <div className="popup_message_container">
                           <div
                             className="popup_success_box"
                             id={
@@ -1059,13 +1146,22 @@ const Taxi_Service = () => {
                             ""
                           )}
                         </div>
-                        <form className="appinment_form" onSubmit={Appoinment_formik.handleSubmit}>
-                        <div className="form_group">
-                        <label
+                        <form
+                          className="appinment_form"
+                          onSubmit={Appoinment_formik.handleSubmit}
+                        >
+                          <div className="form_group">
+                            <label
                               htmlFor="FullName"
-                              className={Appoinment_formik.errors.FullName ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.FullName
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.FullName ? Appoinment_formik.errors.FullName : `FullName`}
+                              {Appoinment_formik.errors.FullName
+                                ? Appoinment_formik.errors.FullName
+                                : `FullName`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <input
@@ -1075,19 +1171,26 @@ const Taxi_Service = () => {
                               value={Appoinment_formik.values.FullName}
                               onChange={Appoinment_formik.handleChange}
                               className={
-                                Appoinment_formik.errors.FullName && Appoinment_formik.touched.FullName
+                                Appoinment_formik.errors.FullName &&
+                                Appoinment_formik.touched.FullName
                                   ? "input_error"
                                   : "input_success"
                               }
-                          //  className="date-input"
+                              //  className="date-input"
                             />
                           </div>
                           <div className="form_group">
-                          <label
+                            <label
                               htmlFor="MobileNumber"
-                              className={Appoinment_formik.errors.MobileNumber ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.MobileNumber
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.MobileNumber ? Appoinment_formik.errors.MobileNumber : `MobileNumber`}
+                              {Appoinment_formik.errors.MobileNumber
+                                ? Appoinment_formik.errors.MobileNumber
+                                : `MobileNumber`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <input
@@ -1097,19 +1200,25 @@ const Taxi_Service = () => {
                               value={Appoinment_formik.values.MobileNumber}
                               onChange={Appoinment_formik.handleChange}
                               className={
-                                Appoinment_formik.errors.MobileNumber && Appoinment_formik.touched.MobileNumber
+                                Appoinment_formik.errors.MobileNumber &&
+                                Appoinment_formik.touched.MobileNumber
                                   ? "input_error"
                                   : "input_success"
                               }
-                       
                             />
                           </div>
                           <div className="form_group">
-                          <label
+                            <label
                               htmlFor="Date"
-                              className={Appoinment_formik.errors.Date ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.Date
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.Date ? Appoinment_formik.errors.Date : `Date`}
+                              {Appoinment_formik.errors.Date
+                                ? Appoinment_formik.errors.Date
+                                : `Date`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <input
@@ -1119,32 +1228,44 @@ const Taxi_Service = () => {
                               value={Appoinment_formik.values.Date}
                               onChange={Appoinment_formik.handleChange}
                               className={` date-input
-                                ${Appoinment_formik.errors.Date && Appoinment_formik.touched.Date}
+                                ${
+                                  Appoinment_formik.errors.Date &&
+                                  Appoinment_formik.touched.Date
+                                }
                                   ? "input_error"
                                   : "input_success"
                               `}
-                       
                             />
                           </div>
                           <div className="form_group">
-                          <label
+                            <label
                               htmlFor="Time"
-                              className={Appoinment_formik.errors.Time ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.Time
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.Time ? Appoinment_formik.errors.Time : `Time`}
+                              {Appoinment_formik.errors.Time
+                                ? Appoinment_formik.errors.Time
+                                : `Time`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
-                            <select 
-                            name="Time" 
-                            id="Time" 
-                            value={Appoinment_formik.values.Time}
+                            <select
+                              name="Time"
+                              id="Time"
+                              value={Appoinment_formik.values.Time}
                               onChange={Appoinment_formik.handleChange}
                               className={` date-input
-                                ${Appoinment_formik.errors.Time && Appoinment_formik.touched.Time}
+                                ${
+                                  Appoinment_formik.errors.Time &&
+                                  Appoinment_formik.touched.Time
+                                }
                                   ? "input_error"
                                   : "input_success"
-                              `}>
-                            <option value=""></option>
+                              `}
+                            >
+                              <option value=""></option>
                               <option value="9:00 AM">9:00 AM</option>
                               <option value="9:00 AM">10:00 AM</option>
                               <option value="11:00 AM">11:00 AM</option>
@@ -1159,7 +1280,7 @@ const Taxi_Service = () => {
                           </div>
                           <div className="form_submit">
                             <button type="submit" className="submit-btn">
-                            {appoinmentLoader ? (
+                              {appoinmentLoader ? (
                                 <span className="inquiryloader"></span>
                               ) : (
                                 <span className="material-symbols-outlined">
@@ -1168,12 +1289,14 @@ const Taxi_Service = () => {
                               )}
                               Book Now
                             </button>
-                            <button type="button" className="submit-btn" onClick={Appoinment_formik.resetForm}>
-                           
-                                <span class="material-symbols-outlined">
+                            <button
+                              type="button"
+                              className="submit-btn"
+                              onClick={Appoinment_formik.resetForm}
+                            >
+                              <span class="material-symbols-outlined">
                                 clear_all
-                                </span>
-                           
+                              </span>
                               clear
                             </button>
                           </div>
@@ -1186,7 +1309,8 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Testimonial */}
-                {TestimonialData.length > 0  && ManageContentData[0].Testimonial ==  true ? (
+                {TestimonialData.length > 0 &&
+                ManageContentData[0].Testimonial == true ? (
                   <>
                     <div className="row_9">
                       <div className="title">
@@ -1242,7 +1366,8 @@ const Taxi_Service = () => {
                 )}
 
                 {/* QRCode */}
-                {QRCodeData.length > 0  && ManageContentData[0].QRCode ==  true ? (
+                {QRCodeData.length > 0 &&
+                ManageContentData[0].QRCode == true ? (
                   <>
                     <div className="row_12">
                       <div className="title">
@@ -1278,7 +1403,8 @@ const Taxi_Service = () => {
                 )}
 
                 {/* Opentime */}
-                {BussinessHourData.length > 0  && ManageContentData[0].BussinessHour ==  true ? (
+                {BussinessHourData.length > 0 &&
+                ManageContentData[0].BussinessHour == true ? (
                   <>
                     <div className="row_5">
                       <div className="title">
@@ -1452,7 +1578,8 @@ const Taxi_Service = () => {
                   ""
                 )}
                 {/* GoogleMap */}
-                {GoogleMapData.length > 0  && ManageContentData[0].GoogleMap ==  true ? (
+                {GoogleMapData.length > 0 &&
+                ManageContentData[0].GoogleMap == true ? (
                   <>
                     <div className="google_map_container">
                       <div className="title">
@@ -1478,7 +1605,8 @@ const Taxi_Service = () => {
                 {/* Feedback */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0  && ManageContentData[0].FeedbackForm ==  true ? (
+                SocialMediaData.length > 0 &&
+                ManageContentData[0].FeedbackForm == true ? (
                   <>
                     <div className="row_10">
                       {/* <div className="rattingcar_image">
@@ -1494,13 +1622,11 @@ const Taxi_Service = () => {
                         {/* Contact */}
                       </div>
                       <div className="feedback_container">
-                              {/* Success and Error Popup */}
-                              <div className="popup_message_container">
+                        {/* Success and Error Popup */}
+                        <div className="popup_message_container">
                           <div
                             className="popup_success_box"
-                            id={
-                              FeedbackPopup ? "successOpen" : "successClose"
-                            }
+                            id={FeedbackPopup ? "successOpen" : "successClose"}
                           >
                             <div className="popup_message">
                               {successMessage}
@@ -1786,7 +1912,8 @@ const Taxi_Service = () => {
                 {/* Inquries */}
                 {VCard_URL_Data.length > 0 &&
                 BasicData.length > 0 &&
-                SocialMediaData.length > 0  && ManageContentData[0].InquiryForm ==  true ? (
+                SocialMediaData.length > 0 &&
+                ManageContentData[0].InquiryForm == true ? (
                   <>
                     <div className="row_11">
                       <div className="title">

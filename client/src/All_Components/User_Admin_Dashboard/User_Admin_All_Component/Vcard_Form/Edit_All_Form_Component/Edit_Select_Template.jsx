@@ -268,7 +268,7 @@ const Select_Template = () => {
   return (
     <>
       <div className="select_vcard_template_container">
-        <Toaster position="top-right" />
+        {/* <Toaster position="top-right" /> */}
         <div className="row_one">
           {currentTemplate == null ? (
             <h6>

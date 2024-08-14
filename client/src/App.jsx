@@ -271,6 +271,7 @@ const App = () => {
 
   let [AllFeedback,setAllFeedback]=useState([]);
   let [AllAppoinment,setAllAppoinment]=useState([]);
+  let [VCardCount, setVCardCount] = useState([]);
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -339,6 +340,7 @@ const App = () => {
       <div className="App_container">
         <Context.Provider
           value={{
+            VCardCount, setVCardCount,
             AllFeedback,setAllFeedback,
             AllAppoinment,setAllAppoinment,
             successMessage,

@@ -57,7 +57,7 @@ export const getSpecificUserAllData = async (req, res) => {
     });
 
     if (!getSpecificData) {
-      res.status(400).json({ message: "Data Not Found!" });
+      res.status(401).json({ message: "Data Not Found!" });
     }   
     else if(getSpecificData.length <=0){
       res.status(200).json({ message: "0 - Template selected! " , data:getSpecificData});
@@ -71,7 +71,7 @@ export const getSpecificUserAllData = async (req, res) => {
         });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(401).json({ error: error.message });
   }
 };
 // //Read or get Specific User all Data  :

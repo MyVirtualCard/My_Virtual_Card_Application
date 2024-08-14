@@ -526,7 +526,8 @@
           align-items: flex-start;
           gap: 0rem;
           justify-content: center;
-
+          cursor: pointer;
+          text-decoration: none;
           padding: 5px 0.5rem 0px 0.5rem;
           width: 100%;
           height: 100px;
@@ -534,7 +535,7 @@
           background-color: #1a8b8275;
 
           border-radius: 0.5rem;
-
+          transition: all 0.4s ease-in;
           .icons {
             display: flex;
             align-items: center;
@@ -546,6 +547,7 @@
               display: block;
               font-size: 1.5rem;
               padding: 5px;
+              color: #fff;
 
               border-radius: 5px;
               background-color: #1a8b82e8;
@@ -569,6 +571,7 @@
             justify-content: flex-start;
             overflow-x: scroll;
             padding-top: 10px;
+   
 
             p {
               width: 100%;
@@ -576,7 +579,7 @@
               align-items: flex-start;
 
               justify-content: flex-start;
-
+color: #fff;
               // display: block;
               font-size: 0.7rem;
               font-weight: 550;
@@ -590,6 +593,10 @@
             &::-webkit-scrollbar {
               display: none;
             }
+          }
+          &:hover{
+            filter: drop-shadow(0px 3px 4px rgba(14, 219, 226, 0.5));
+            transition: all 0.4s ease-in;
           }
           &::-webkit-scrollbar {
             display: none;
@@ -615,6 +622,8 @@
           align-items: center;
           justify-content: center;
           gap: 10px;
+        outline: none !important;
+        border: none;
 
           &:hover {
             background-color: #1caca075;
@@ -677,6 +686,8 @@
         margin: 1rem auto;
 
         .service_list {
+          text-decoration: none;
+      cursor: pointer;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -692,6 +703,7 @@
           width: 100%;
           height: 180px;
           border-radius: 1rem;
+          transition: all 0.4s ease-in-out;
           span {
             font-size: 1.9rem;
             padding: 5px;
@@ -730,6 +742,7 @@
               h4 {
                 font-size: 0.9rem;
                 font-weight: 550;
+                color: #ffff;
               }
             }
             .service_summary {
@@ -755,6 +768,11 @@
             }
           }
 
+          &:hover{
+            filter: drop-shadow(0px 4px 5px rgba(255, 255, 255, 0.4))  brightness(80%);
+           
+            transition: all 0.4s ease-in-out;
+          }
           @media screen and (max-width: 600px) {
             height: 200px;
           }
@@ -1286,7 +1304,8 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 10px;
 
             h4 {
               width: 100%;
@@ -1299,6 +1318,22 @@
               font-size: 0.8rem;
               display: flex;
               flex-wrap: wrap;
+            }
+            .actions{
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+
+              a{
+                font-size: 0.7rem;
+                color: yellow;
+              }
+              span{
+                color: rgb(255, 255, 255);
+                font-size: 1rem;
+              }
+        
             }
             button {
               width: 50%;

@@ -74,11 +74,12 @@ const VCard_Form_Edit = () => {
           }
         })
         .catch((error) => {
-         setErrorPopupOpen(true);
-         setErrorMessage(error.response.data.message);
-       setTimeout(()=>{
-        setErrorPopupOpen(false);
-       },5000)
+          console.log(error)
+      //    setErrorPopupOpen(true);
+      //    setErrorMessage(error.response.data.message);
+      //  setTimeout(()=>{
+      //   setErrorPopupOpen(false);
+      //  },5000)
         });
     } catch (error) {
       toast.error(error.message);
@@ -101,11 +102,11 @@ const VCard_Form_Edit = () => {
       })
       .catch((error) => {
         console.log(error.response.data.message)
-        setErrorPopupOpen(true);
-        setErrorMessage(error.response.data.message);
-        setTimeout(()=>{
-        setErrorPopupOpen(false)
-        },5000)
+        // setErrorPopupOpen(true);
+        // setErrorMessage(error.response.data.message);
+        // setTimeout(()=>{
+        // setErrorPopupOpen(false)
+        // },5000)
       });
   }, []);
   useEffect(() => {
@@ -123,12 +124,12 @@ const VCard_Form_Edit = () => {
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
-       
-          setErrorPopupOpen(true);
-          setErrorMessage(error.response.data.message);
-          setTimeout(()=>{
-          setErrorPopupOpen(false)
-          },5000)
+       console.log(error)
+          // setErrorPopupOpen(true);
+          // setErrorMessage(error.response.data.message);
+          // setTimeout(()=>{
+          // setErrorPopupOpen(false)
+          // },5000)
   
         });
     } catch (error) {
@@ -174,8 +175,10 @@ const VCard_Form_Edit = () => {
              target="_blank"
              onClick={()=>window.location.pathname = `${URL_Alies}`}
             >
-              Live Preview
-              <span className="material-symbols-outlined">preview</span>
+               Check Your VCard Live preview
+              <span className="material-symbols-outlined">
+live_tv
+</span>
             </a>:''}
          
             <button

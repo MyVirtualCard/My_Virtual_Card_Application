@@ -1,5 +1,6 @@
 import React from "react";
 import "./menuStyles/ProductOrder.scss";
+import Footer from "../UserAdmin_Footer/Footer";
 
 const ProductOrder = () => {
   return (
@@ -74,6 +75,10 @@ const ProductOrder = () => {
             </div>
           </div>
         </div>
+                              {/* Footer */}
+                              <div className="row_3">
+            <Footer />
+          </div>
       </div>
     </>
   );

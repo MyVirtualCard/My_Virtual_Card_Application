@@ -141,7 +141,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(280deg, #ffb35c, #ff9696);
+  background: linear-gradient(280deg, #ffffff, #fff896);
   // background-image: url("https://img.freepik.com/free-photo/abstract-brown-gradient-well-used-as-background-product-display_1258-53887.jpg?t=st=1722545340~exp=1722548940~hmac=83a6311e30e57b459c8fcdc7794082a848f2235cbd110eb29226bf7c55fe844c&w=900");
 
   .Fashion_Designer_box {
@@ -483,7 +483,8 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-
+          cursor: pointer;
+          text-decoration: none;
           // padding: 5px 0.5rem 0px 0.5rem;
           width: 100%;
           height: 100px;
@@ -492,7 +493,7 @@
 
           border-radius: 0.5rem;
           padding: 1rem 0.2rem 0rem 0.2rem;
-
+          transition: all 0.4s ease-in;
           .icons {
             display: flex;
             align-items: center;
@@ -537,7 +538,7 @@
 
               justify-content: center;
               text-align: center;
-
+color: #ffffff;
               // display: block;
               font-size: 0.7rem;
               font-weight: 550;
@@ -551,6 +552,10 @@
             &::-webkit-scrollbar {
               display: none;
             }
+          }
+          &:hover{
+            filter: drop-shadow(0px 3px 4px rgba(255, 255, 255, 0.5));
+            transition: all 0.4s ease-in;
           }
           &::-webkit-scrollbar {
             display: none;
@@ -567,7 +572,7 @@
 
         button {
           padding: 7px 1rem;
-          color: #e2e2e2;
+          color: #ffffff;
           background-color: #ca7cfd96;
           font-weight: 550;
           font-size: 0.8rem;
@@ -618,6 +623,8 @@
         margin: 1rem auto;
 
         .service_list {
+          text-decoration: none;
+          cursor: pointer;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -700,6 +707,7 @@
                 font-weight: 400;
                 text-align: center;
                 padding: 5px;
+                color: #fff;
               }
             }
 
@@ -709,6 +717,11 @@
           }
 #contentMargin{
   margin-top: 2rem;
+}
+&:hover{
+  filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.3))  brightness(110%);
+ 
+  transition: all 0.4s ease-in-out;
 }
           @media screen and (max-width: 600px) {
             height: 200px;
@@ -1129,27 +1142,28 @@
         .product_list {
           width: 96%;
           max-width: 96%;
-          height: 150px;
-          max-height: 150px;
+          height: 300px;
+          max-height: 300px;
           display: flex;
-          flex-direction: column;
+          flex-direction: column-reverse;
           align-items: center;
           justify-content: space-between;
 
           background-color: #d6aff0b6;
           border-radius: 0.5rem;
           overflow: scroll;
-          cursor: pointer;
+     
           // animation: productAnimeExpand 1s linear;
           transition: all 1s linear;
           .product_image {
             width: 100%;
-            height: 150px;
-            max-height: 150px;
-            margin: auto;
+            height:50%;
+            max-height: 50%;
+     
             display: flex;
             align-items: flex-start;
             justify-content: center;
+          
 
             img {
               width: 100%;
@@ -1159,18 +1173,20 @@
               object-position: center;
               // border-top-right-radius: 0.5rem;
               // border-top-left-radius: 0.5rem;
-              margin: auto;
+             
             }
           }
           .product_details {
             margin-top: 10px;
             padding: 0.5rem;
             width: 100%;
-            height: auto;
+            height: 50%;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            justify-content: center;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+            overflow-y: scroll;
 
             h4 {
               width: 100%;
@@ -1185,6 +1201,22 @@
               font-size: 0.8rem;
               display: flex;
 text-align: center;
+            }
+            .actions{
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+
+              a{
+                font-size: 0.7rem;
+                color: #08685b;
+              }
+              span{
+                color: #08685b;
+                font-size: 1rem;
+              }
+        
             }
             button {
               margin: 0.5rem auto;
@@ -1205,6 +1237,9 @@ text-align: center;
                 background-color: #d6aff0b6;
               }
             }
+            &::-webkit-scrollbar{
+              display: none;
+            }
           }
           &::-webkit-scrollbar {
             display: none;
@@ -1220,12 +1255,12 @@ text-align: center;
               height: 250px;
             }
           }
-          &:hover {
-            height: 320px;
-            max-height: 320px;
-            transition: height 1s linear;
-            // animation: productAnimeExpand 1s linear;
-          }
+          // &:hover {
+          //   height: 320px;
+          //   max-height: 320px;
+          //   transition: height 1s linear;
+          //   // animation: productAnimeExpand 1s linear;
+          // }
         }
       }
     }

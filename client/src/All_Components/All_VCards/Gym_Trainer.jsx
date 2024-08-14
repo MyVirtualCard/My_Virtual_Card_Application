@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Triangle } from "react-loader-spinner";
 import { Toaster, toast } from "react-hot-toast";
+import vCardsJS from "vcards-js";
 import loadingBack from "../../assets/LandingPage_image/aristostech_company_background.jpg";
 import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
 import { InquiryValidateSchema } from "../Helper/InquiryValidate";
@@ -20,6 +21,8 @@ import Context from "../UseContext/Context";
 import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
 
 const Gym_Trainer = () => {
+    //create a new vCard
+    var vCard = vCardsJS();
   let {
     successMessage,
     setSuccessMessage,
@@ -36,10 +39,10 @@ const Gym_Trainer = () => {
   let [appoinmentLoader, setappoinmentLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
-  let[FeedbackPopup,setFeedbackPopup]=useState(false)
-  let[FeedbackPopupError,setFeedbackPopupError]=useState(false);
-  let[AppoinmentPopup,setAppoinmentPopup]=useState(false)
-  let[AppoinmentPopupError,setAppoinmentPopupError]=useState(false);
+  let [FeedbackPopup, setFeedbackPopup] = useState(false);
+  let [FeedbackPopupError, setFeedbackPopupError] = useState(false);
+  let [AppoinmentPopup, setAppoinmentPopup] = useState(false);
+  let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -92,7 +95,6 @@ const Gym_Trainer = () => {
     ClientRatting: 0,
   });
 
-
   //Start Ratting:
   // let currentRatting=0;
   function handleRatting(e) {
@@ -131,53 +133,53 @@ const Gym_Trainer = () => {
       }
     });
   }
-    //Feedback Form Logic :
-    let feedbackFormik = useFormik({
-      initialValues: {
-        URL_Alies: window.location.pathname,
-        ClientName: "",
-        ClientFeedback: "",
-        ClientRatting: 0,
-      },
-  
-      //Validation :
-      validationSchema: Yup.object({
-        ClientName: Yup.string()
-          .min(3, "Min 3 char required")
-          .max(50, "Name must be 20 character or less")
-          .required("Name is required"),
-        ClientFeedback: Yup.string()
-          .min(10, "Minimum 10 character required")
-          .max(400, "Feedback must be 100 character or less")
-          .required("Feedback is required"),
-      }),
-      //Form Submit :
-      onSubmit: async (values) => {
-      setInquiryLoader(true)
-        setFeedbackLoader(true);
-        await api
-          .post(`/feedback${window.location.pathname}`, values)
-          .then((res) => {
-            setInquiryLoader(false)
-            setFeedbackPopup(true);
-            setInquiryLoader(false)
-            setSuccessMessage(res.data.message);
-            setTimeout(() => {
-              setFeedbackPopup(false);
-            }, 2000);
-            setFeedbackLoader(false);
-          })
-          .catch((error) => {
-            setInquiryLoader(false)
-            setFeedbackPopupError(true);
-            setTimeout(() => {
-              setFeedbackPopupError(false);
-            }, 2000);
-            setErrorMessage(error.response.data.message);
-            setFeedbackLoader(false);
-          });
-      },
-    });
+  //Feedback Form Logic :
+  let feedbackFormik = useFormik({
+    initialValues: {
+      URL_Alies: window.location.pathname,
+      ClientName: "",
+      ClientFeedback: "",
+      ClientRatting: 0,
+    },
+
+    //Validation :
+    validationSchema: Yup.object({
+      ClientName: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(50, "Name must be 20 character or less")
+        .required("Name is required"),
+      ClientFeedback: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(400, "Feedback must be 100 character or less")
+        .required("Feedback is required"),
+    }),
+    //Form Submit :
+    onSubmit: async (values) => {
+      setInquiryLoader(true);
+      setFeedbackLoader(true);
+      await api
+        .post(`/feedback${window.location.pathname}`, values)
+        .then((res) => {
+          setInquiryLoader(false);
+          setFeedbackPopup(true);
+          setInquiryLoader(false);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setFeedbackPopup(false);
+          }, 2000);
+          setFeedbackLoader(false);
+        })
+        .catch((error) => {
+          setInquiryLoader(false);
+          setFeedbackPopupError(true);
+          setTimeout(() => {
+            setFeedbackPopupError(false);
+          }, 2000);
+          setErrorMessage(error.response.data.message);
+          setFeedbackLoader(false);
+        });
+    },
+  });
   //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
@@ -192,7 +194,7 @@ const Gym_Trainer = () => {
     validationSchema: InquiryValidateSchema,
     //Form Submit :
     onSubmit: async (values) => {
-      setInquiryLoader(true)
+      setInquiryLoader(true);
       await api
         .post(`/inquiry${window.location.pathname}`, values)
         .then((res) => {
@@ -202,14 +204,14 @@ const Gym_Trainer = () => {
           formik.values.Message = "";
 
           setSuccessPopupOpen(true);
-          setInquiryLoader(false)
+          setInquiryLoader(false);
           setSuccessMessage(res.data.message);
           setTimeout(() => {
             setSuccessPopupOpen(false);
           }, 3000);
         })
         .catch((error) => {
-          setInquiryLoader(false)
+          setInquiryLoader(false);
           setErrorPopupOpen(true);
           setTimeout(() => {
             setErrorPopupOpen(false);
@@ -225,33 +227,32 @@ const Gym_Trainer = () => {
       FullName: "",
       MobileNumber: "",
       Date: "",
-      Time:'',
+      Time: "",
     },
 
     //Validation :
     validationSchema: AppoinmentValidateSchema,
     //Form Submit :
     onSubmit: async (values) => {
-      setappoinmentLoader(true)
+      setappoinmentLoader(true);
       await api
         .post(`/appoinment${window.location.pathname}`, values)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           formik.values.FullName = "";
           formik.values.Time = "";
           formik.values.MobileNumber = "";
           formik.values.Date = "";
 
           setAppoinmentPopup(true);
-          setappoinmentLoader(false)
+          setappoinmentLoader(false);
           setSuccessMessage(res.data.message);
           setTimeout(() => {
             setAppoinmentPopup(false);
           }, 3000);
         })
         .catch((error) => {
-        
-          setappoinmentLoader(false)
+          setappoinmentLoader(false);
           setAppoinmentPopupError(true);
           setTimeout(() => {
             setAppoinmentPopupError(false);
@@ -277,6 +278,32 @@ const Gym_Trainer = () => {
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
   let [ManageContentData, setManageContent] = useState([]);
+  const handleDownloadVCard = () => {
+    const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${BasicData.length > 0 ? BasicData[0].FirstName : ""}
+TEL;TYPE=cell:${BasicData.length > 0 ? BasicData[0].MobileNumber : ""}
+EMAIL:${BasicData.length > 0 ? BasicData[0].Email : ""}
+END:VCARD
+  `;
+
+    const blob = new Blob([vCardData], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    vCard.photo.attachFromUrl(
+      `${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].Profile : ""}`,
+      "JPEG"
+    );
+    link.download = `${
+      BasicData.length > 0 ? BasicData[0].FirstName : "card.vcf"
+    }.vcf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const currentUrl = window.location.pathname; // Full URL
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -349,7 +376,7 @@ const Gym_Trainer = () => {
         <>
           {VCard_URL_Data != undefined ? (
             <div className="newcard_design10_container">
-              <Toaster position="top-right" reverseOrder={false} />
+              <Toaster position="top-center" reverseOrder={false} />
               <div className="newcard_design10_box">
                 {/* popupbanner */}
                 {PopUpBannerData.length > 0 &&
@@ -634,42 +661,64 @@ const Gym_Trainer = () => {
                       {BasicData.map((data, index) => {
                         return (
                           <div className="contact_list_container" key={index}>
-                            <div className="contact_list">
+                            <a
+                              href={`mailto:${data.Email ? data.Email : "#"}`}
+                              className="contact_list"
+                            >
                               <i className="bx bxl-gmail"></i>
                               <div className="list_detail">
                                 <small>Email</small>
                                 <p>{data.Email || "Email not initiated!"}</p>
                               </div>
-                            </div>
-                            <div className="contact_list">
+                            </a>
+                            <a
+                              href={`tel:${
+                                data.MobileNumber ? data.MobileNumber : "#"
+                              }`}
+                              className="contact_list"
+                            >
                               <i className="bx bx-mobile-vibration"></i>
                               <div className="list_detail">
                                 <small>Mobile Number</small>
                                 <p>{data.MobileNumber || "+91 ......."}</p>
                               </div>
-                            </div>
+                            </a>
                             {data.AlternateEmail.length > 0 ? (
                               <>
-                                <div className="contact_list">
+                                <a
+                                  href={`mailto:${
+                                    data.AlternateEmail
+                                      ? data.AlternateEmail
+                                      : "#"
+                                  }`}
+                                  className="contact_list"
+                                >
                                   <i className="bx bx-envelope"></i>
                                   <div className="list_detail">
                                     <small>Alternate Email</small>
                                     <p>{data.AlternateEmail}</p>
                                   </div>
-                                </div>
+                                </a>
                               </>
                             ) : (
                               ""
                             )}
                             {data.Location.length > 0 ? (
                               <>
-                                <div className="contact_list">
+                                <a
+                                  href={`https://www.google.com/maps/search/?api=1&query=${
+                                    data.Location
+                                      ? data.Location
+                                      : "No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017"
+                                  }`}
+                                  className="contact_list"
+                                >
                                   <i className="bx bx-map-alt"></i>
                                   <div className="list_detail">
                                     <small>Address</small>
                                     <p>{data.Location}</p>
                                   </div>
-                                </div>
+                                </a>
                               </>
                             ) : (
                               ""
@@ -677,6 +726,13 @@ const Gym_Trainer = () => {
                           </div>
                         );
                       })}
+
+                      {/* AddtoContact */}
+                      <div className="add_to_contact">
+                        <button onClick={handleDownloadVCard}>
+                          Add to Contact<i className="bx bxs-contact"></i>
+                        </button>
+                      </div>
                     </div>
                   </>
                 ) : (
@@ -698,7 +754,11 @@ const Gym_Trainer = () => {
                       <div className="service_list_container">
                         {ServiceData.map((data, index) => {
                           return (
-                            <div className="service_list" key={index}>
+                            <a
+                              href={data.ServiceURL ? data.ServiceURL : ""}
+                              className="service_list"
+                              key={index}
+                            >
                               {data.ServiceType == "Icon_Tag" ? (
                                 <>
                                   <HtmlRenderer htmlString={data.ServiceIcon} />
@@ -739,7 +799,7 @@ const Gym_Trainer = () => {
                                   </p>
                                 </div>
                               </div>
-                            </div>
+                            </a>
                           );
                         })}
                       </div>
@@ -972,6 +1032,20 @@ const Gym_Trainer = () => {
                                           {" "}
                                           {data.ProductDescription || ""}
                                         </small>
+                                        <div className="actions">
+                                        <a
+                                          href={`${
+                                            data.ProductURL
+                                              ? data.ProductURL
+                                              : "#"
+                                          }`}
+                                        >
+                                          View Product
+                                        </a>
+                                        <span className="material-symbols-outlined">
+                                          link
+                                        </span>
+                                      </div>
                                         <button>
                                           ₹ &nbsp;{data.ProductPrice}
                                         </button>
@@ -1001,7 +1075,22 @@ const Gym_Trainer = () => {
                                       <small>
                                         {" "}
                                         {data.ProductDescription || ""}
+
                                       </small>
+                                      <div className="actions">
+                                        <a
+                                          href={`${
+                                            data.ProductURL
+                                              ? data.ProductURL
+                                              : "#"
+                                          }`}
+                                        >
+                                          View Product
+                                        </a>
+                                        <span className="material-symbols-outlined">
+                                          link
+                                        </span>
+                                      </div>
                                       <button>
                                         ₹ &nbsp;{data.ProductPrice}
                                       </button>
@@ -1039,8 +1128,8 @@ const Gym_Trainer = () => {
                       </div>
 
                       <div className="appinment_form_container">
-                           {/* Success and Error Popup */}
-                           <div className="popup_message_container">
+                        {/* Success and Error Popup */}
+                        <div className="popup_message_container">
                           <div
                             className="popup_success_box"
                             id={
@@ -1074,13 +1163,22 @@ const Gym_Trainer = () => {
                             ""
                           )}
                         </div>
-                        <form className="appinment_form" onSubmit={Appoinment_formik.handleSubmit}>
-                        <div className="form_group">
-                        <label
+                        <form
+                          className="appinment_form"
+                          onSubmit={Appoinment_formik.handleSubmit}
+                        >
+                          <div className="form_group">
+                            <label
                               htmlFor="FullName"
-                              className={Appoinment_formik.errors.FullName ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.FullName
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.FullName ? Appoinment_formik.errors.FullName : `FullName`}
+                              {Appoinment_formik.errors.FullName
+                                ? Appoinment_formik.errors.FullName
+                                : `FullName`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <input
@@ -1090,19 +1188,26 @@ const Gym_Trainer = () => {
                               value={Appoinment_formik.values.FullName}
                               onChange={Appoinment_formik.handleChange}
                               className={
-                                Appoinment_formik.errors.FullName && Appoinment_formik.touched.FullName
+                                Appoinment_formik.errors.FullName &&
+                                Appoinment_formik.touched.FullName
                                   ? "input_error"
                                   : "input_success"
                               }
-                          //  className="date-input"
+                              //  className="date-input"
                             />
                           </div>
                           <div className="form_group">
-                          <label
+                            <label
                               htmlFor="MobileNumber"
-                              className={Appoinment_formik.errors.MobileNumber ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.MobileNumber
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.MobileNumber ? Appoinment_formik.errors.MobileNumber : `MobileNumber`}
+                              {Appoinment_formik.errors.MobileNumber
+                                ? Appoinment_formik.errors.MobileNumber
+                                : `MobileNumber`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <input
@@ -1112,19 +1217,25 @@ const Gym_Trainer = () => {
                               value={Appoinment_formik.values.MobileNumber}
                               onChange={Appoinment_formik.handleChange}
                               className={
-                                Appoinment_formik.errors.MobileNumber && Appoinment_formik.touched.MobileNumber
+                                Appoinment_formik.errors.MobileNumber &&
+                                Appoinment_formik.touched.MobileNumber
                                   ? "input_error"
                                   : "input_success"
                               }
-                       
                             />
                           </div>
                           <div className="form_group">
-                          <label
+                            <label
                               htmlFor="Date"
-                              className={Appoinment_formik.errors.Date ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.Date
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.Date ? Appoinment_formik.errors.Date : `Date`}
+                              {Appoinment_formik.errors.Date
+                                ? Appoinment_formik.errors.Date
+                                : `Date`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <input
@@ -1134,32 +1245,44 @@ const Gym_Trainer = () => {
                               value={Appoinment_formik.values.Date}
                               onChange={Appoinment_formik.handleChange}
                               className={` date-input
-                                ${Appoinment_formik.errors.Date && Appoinment_formik.touched.Date}
+                                ${
+                                  Appoinment_formik.errors.Date &&
+                                  Appoinment_formik.touched.Date
+                                }
                                   ? "input_error"
                                   : "input_success"
                               `}
-                       
                             />
                           </div>
                           <div className="form_group">
-                          <label
+                            <label
                               htmlFor="Time"
-                              className={Appoinment_formik.errors.Time ? "labelError" : ""}
+                              className={
+                                Appoinment_formik.errors.Time
+                                  ? "labelError"
+                                  : ""
+                              }
                             >
-                              {Appoinment_formik.errors.Time ? Appoinment_formik.errors.Time : `Time`}
+                              {Appoinment_formik.errors.Time
+                                ? Appoinment_formik.errors.Time
+                                : `Time`}
                               <sup style={{ color: "red" }}>*</sup>
                             </label>
-                            <select 
-                            name="Time" 
-                            id="Time" 
-                            value={Appoinment_formik.values.Time}
+                            <select
+                              name="Time"
+                              id="Time"
+                              value={Appoinment_formik.values.Time}
                               onChange={Appoinment_formik.handleChange}
                               className={` date-input
-                                ${Appoinment_formik.errors.Time && Appoinment_formik.touched.Time}
+                                ${
+                                  Appoinment_formik.errors.Time &&
+                                  Appoinment_formik.touched.Time
+                                }
                                   ? "input_error"
                                   : "input_success"
-                              `}>
-                            <option value=""></option>
+                              `}
+                            >
+                              <option value=""></option>
                               <option value="9:00 AM">9:00 AM</option>
                               <option value="9:00 AM">10:00 AM</option>
                               <option value="11:00 AM">11:00 AM</option>
@@ -1174,7 +1297,7 @@ const Gym_Trainer = () => {
                           </div>
                           <div className="form_submit">
                             <button type="submit" className="submit-btn">
-                            {appoinmentLoader ? (
+                              {appoinmentLoader ? (
                                 <span className="inquiryloader"></span>
                               ) : (
                                 <span className="material-symbols-outlined">
@@ -1183,14 +1306,16 @@ const Gym_Trainer = () => {
                               )}
                               Book Now
                             </button>
-                            <button type="button" className="submit-btn" onClick={Appoinment_formik.resetForm}>
-                           
-                           <span class="material-symbols-outlined">
-                           clear_all
-                           </span>
-                      
-                         clear
-                       </button>
+                            <button
+                              type="button"
+                              className="submit-btn"
+                              onClick={Appoinment_formik.resetForm}
+                            >
+                              <span class="material-symbols-outlined">
+                                clear_all
+                              </span>
+                              clear
+                            </button>
                           </div>
                         </form>
                       </div>
@@ -1419,13 +1544,11 @@ const Gym_Trainer = () => {
                         {/* Contact */}
                       </div>
                       <div className="feedback_container">
-                          {/* Success and Error Popup */}
-                          <div className="popup_message_container">
+                        {/* Success and Error Popup */}
+                        <div className="popup_message_container">
                           <div
                             className="popup_success_box"
-                            id={
-                              FeedbackPopup ? "successOpen" : "successClose"
-                            }
+                            id={FeedbackPopup ? "successOpen" : "successClose"}
                           >
                             <div className="popup_message">
                               {successMessage}
@@ -1577,7 +1700,7 @@ const Gym_Trainer = () => {
                           </div>
                           <div className="form_actions">
                             <button type="submit">
-                            {InquiryLoader ? (
+                              {InquiryLoader ? (
                                 <span className="inquiryloader"></span>
                               ) : (
                                 <span className="material-symbols-outlined">

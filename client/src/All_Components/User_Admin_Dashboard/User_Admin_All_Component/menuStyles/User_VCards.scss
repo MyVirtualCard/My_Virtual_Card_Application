@@ -2,7 +2,93 @@
   position: relative;
   width: 100%;
   padding: 2rem;
+  .success_error_container {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+    .popup_success_box {
+      display: inline-block;
+      height: 40px;
+      background-color: lightgreen;
+      border-radius: 5px;
+      padding: 0px 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row-reverse;
+      gap: 1rem;
+      position: relative;
+      transition: transform 0.5s ease-in-out;
+      z-index: -1;
+      .popup_close {
+        position: relative;
+
+
+        i {
+          font-size: 1.4rem;
+          font-weight: 600;
+          color: rgb(255, 255, 255);
+          cursor: pointer;
+          transition: all 0.5s ease;
+          &:hover {
+            transform: rotate(90deg);
+            transition: all 0.5s ease;
+          }
+        }
+      }
+      .popup_message {
+        font-size: 0.9rem;
+        color: #fff;
+        font-weight: 550;
+      }
+    }
+    #successOpen{
+      transform: translateY(0px);
+      transition: transform 0.5s ease-in-out;
+    }
+    #successClose{
+      transform: translateY(-500px);
+      transition: transform 0.5s ease-in-out;
+    }
+    .popup_error_box {
+      display: inline-block;
+      height: 40px;
+      background-color: rgb(255, 177, 141) !important;
+      border-radius: 5px;
+      padding: 0px 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row-reverse;
+      gap: 1rem;
+      position: relative;
+z-index: -1;
+color: #ffff;
+      .popup_close {
+        position: relative;
+
+
+        i {
+          font-size: 1.4rem;
+          color: rgb(255, 255, 255);
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.5s ease;
+          &:hover {
+            transform: rotate(90deg);
+            transition: all 0.5s ease;
+          }
+        }
+      }
+      .popup_message {
+        font-size: 0.9rem;
+        color: #ffffff;
+        font-weight: 550;
+      }
+    }
+  }
   .Vcard_delete_popupBox{
     position: absolute;
     top: 50%;
@@ -319,6 +405,15 @@ font-weight: 500;
 }
   
     }
+  }
+  // Footer
+  .row_3{
+    width: 100%;
+    // padding: 1rem;
+    position: absolute;
+    z-index: -10;
+    bottom: 0%;
+    right: 0%;
   }
   @media screen and (max-width:600px){
     padding: 2rem 0px;

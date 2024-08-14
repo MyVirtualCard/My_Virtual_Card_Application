@@ -388,4 +388,14 @@ position: relative;
           }
         }
       }
+
+      // Footer
+      .row_3{
+        width: 100%;
+        // padding: 1rem;
+        position: absolute;
+        z-index: -10;
+        bottom: 0%;
+        right: 0%;
+      }
 }
