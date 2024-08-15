@@ -509,7 +509,7 @@ const Plan = () => {
         );
         setTimeout(() => {
           reloadComponent();
-        }, 6000);
+        }, 5000);
         setPaymentSuccessPopup(true);
         setPaymentPopup(false);
         setCurrentPlan(null);
@@ -536,7 +536,7 @@ const Plan = () => {
       .then((res) => {
     
         setPlanActive(res.data.data);
-setShowForm('Basic Detail')
+        setShowForm('VCard Templates')
         setStatus(res.data.data[0].status);
         setCurrentPlan(res.data.data[0].currentPlan);
       })

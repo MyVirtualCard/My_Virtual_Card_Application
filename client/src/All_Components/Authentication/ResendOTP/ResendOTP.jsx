@@ -65,7 +65,7 @@ const ResendOTP = () => {
   return (
     <>
       <div className="resend_container">
-        <Toaster position="top-right"></Toaster>
+    
         <div className="right">
         <div className="moon_svg">
             <svg

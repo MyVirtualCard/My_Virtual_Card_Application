@@ -104,7 +104,7 @@ const Login = () => {
   return (
     <>
       <div className="login_container">
-        <Toaster position="top-right"></Toaster>
+
         <div className="right">
         <div className="moon_svg">
           <svg width="1705" height="2039" viewBox="0 0 1705 2039" fill="none" xmlns="http://www.w3.org/2000/svg">

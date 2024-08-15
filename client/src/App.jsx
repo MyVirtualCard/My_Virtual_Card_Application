@@ -273,6 +273,8 @@ const App = () => {
   let [AllFeedback,setAllFeedback]=useState([]);
   let [AllAppoinment,setAllAppoinment]=useState([]);
   let [VCardCount, setVCardCount] = useState([]);
+
+  let[LiveLinkActivate,setLiveLinkActivate]=useState([])
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -351,6 +353,7 @@ const App = () => {
         }}/>
         <Context.Provider
           value={{
+            LiveLinkActivate,setLiveLinkActivate,
             VCardCount, setVCardCount,
             AllFeedback,setAllFeedback,
             AllAppoinment,setAllAppoinment,

@@ -24,8 +24,8 @@ import axios from "axios";
 import { useFormik } from "formik";
 let FreeTemplate = [
   {
-    id: 1,
-    image: Gym_Trainer,
+    id: 2,
+    image: Taxi_Service,
   },
 ];
 let BasicTemplate = [
@@ -128,6 +128,7 @@ const Select_Template = () => {
     setSavedPlan,
     currentTemplate,
     setCurrentTemplate,
+    setShowForm,
     successMessage,setSuccessMessage,
     successPopupOpen,setSuccessPopupOpen,
     errorMessage,setErrorMessage,
@@ -204,6 +205,9 @@ const Select_Template = () => {
         .then((res) => {
           toast.success(res.data.message)
           setFormSubmitLoader(false);
+          setTimeout(()=>{
+            setShowForm('Contact Details')
+          },1000)
         })
         .catch((error) => {
 
@@ -229,6 +233,9 @@ const Select_Template = () => {
       .then((res) => {
         setFormSubmitLoader(false);
         toast.success(res.data.message)
+        setTimeout(()=>{
+          setShowForm('Contact Details')
+        },2000)
       })
       .catch((error) => {
        toast.error(error.response.data.message)
@@ -243,11 +250,11 @@ const Select_Template = () => {
         <div className="row_one">
           {currentTemplate == null ? (
             <h6>
-              Select {currentPlan} Plan Template <sup>*</sup>
+              Select {currentPlan}  Template <sup>*</sup>
             </h6>
           ) : (
             <h6>
-              Selected {currentPlan} Plan Template <sup>*</sup>
+              Selected {currentPlan}  Template <sup>*</sup>
             </h6>
           )}
 

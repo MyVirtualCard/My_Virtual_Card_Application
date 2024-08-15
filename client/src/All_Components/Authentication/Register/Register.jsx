@@ -173,7 +173,7 @@ const Register = () => {
   return (
     <>
       <div className="register_container">
-        <Toaster position="top-right" reverseOrder={false}></Toaster>
+
         {/* Terms_Condition */}
         {OpenTermsCondition ? (
           <div

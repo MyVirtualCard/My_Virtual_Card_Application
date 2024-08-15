@@ -25,12 +25,14 @@ import toast from "react-hot-toast";
 import Edit_PrivacyPolicy from "./Edit_All_Form_Component/Edit_PrivacyPolicy";
 import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 import Edit_GoogleMap from "./Edit_All_Form_Component/Edit_GoogleMap";
+import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
   let {
     ShowForm,
     setShowForm,
+    setFormSubmitLoader,
     userName,
     setURL_Alies,
     currentPlan,
@@ -41,10 +43,16 @@ const VCard_Form_Edit = () => {
     setStatus,
     activePlan,
     setPlanActive,
-    successMessage,setSuccessMessage,
-    successPopupOpen,setSuccessPopupOpen,
-    errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
+    LiveLinkActivate,
+    setLiveLinkActivate,
   } = useContext(Context);
   let navigate = useNavigate();
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
@@ -69,17 +77,19 @@ const VCard_Form_Edit = () => {
         .then((res) => {
           if (res.data.data.length === 1) {
             setCurrentPlanActive(res.data.data.length);
+            setShowForm(res.data.data[0].status);
+            setShowForm("VCard Templates");
           } else {
             // toast.error('Choose Your Plan First!')
           }
         })
         .catch((error) => {
-          console.log(error)
-      //    setErrorPopupOpen(true);
-      //    setErrorMessage(error.response.data.message);
-      //  setTimeout(()=>{
-      //   setErrorPopupOpen(false);
-      //  },5000)
+          console.log(error);
+          //    setErrorPopupOpen(true);
+          //    setErrorMessage(error.response.data.message);
+          //  setTimeout(()=>{
+          //   setErrorPopupOpen(false);
+          //  },5000)
         });
     } catch (error) {
       toast.error(error.message);
@@ -101,7 +111,7 @@ const VCard_Form_Edit = () => {
         setUserData(res.data.data);
       })
       .catch((error) => {
-        console.log(error.response.data.message)
+        console.log(error.response.data.message);
         // setErrorPopupOpen(true);
         // setErrorMessage(error.response.data.message);
         // setTimeout(()=>{
@@ -120,21 +130,47 @@ const VCard_Form_Edit = () => {
         })
         .then((res) => {
           setURL_Alies(res.data.data[0].URL_Alies);
-     
+
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
-       console.log(error)
+          console.log(error);
           // setErrorPopupOpen(true);
           // setErrorMessage(error.response.data.message);
           // setTimeout(()=>{
           // setErrorPopupOpen(false)
           // },5000)
-  
         });
     } catch (error) {
       console.log(error);
     }
+  }, []);
+  async function fetchCurrentManageContent() {
+    setFormSubmitLoader(true);
+    try {
+      await api
+        .get(`/manageContent/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setLiveLinkActivate(res.data.data);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setFormSubmitLoader(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchCurrentManageContent();
   }, []);
 
   return (
@@ -142,45 +178,67 @@ const VCard_Form_Edit = () => {
       <div className="vcard_form_container">
         {/* Success and Error Popup */}
         <div className="success_error_container">
-   
-           <div className="popup_success_box" id={successPopupOpen ? 'successOpen':'successClose'}>
-           <div className="popup_close"  onClick={()=>setSuccessPopupOpen(false)}>
-           <i className='bx bx-x'></i>
-           </div>
-               <div className="popup_message">
-                 {successMessage}
-               </div>
+          <div
+            className="popup_success_box"
+            id={successPopupOpen ? "successOpen" : "successClose"}
+          >
+            <div
+              className="popup_close"
+              onClick={() => setSuccessPopupOpen(false)}
+            >
+              <i className="bx bx-x"></i>
+            </div>
+            <div className="popup_message">{successMessage}</div>
           </div>
-      
-            {errorPopupOpen ? 
-           <div className="popup_error_box">
-           <div className="popup_close"  onClick={()=>setErrorPopupOpen(false)}>
-           <i className='bx bx-x'></i>
-           </div>
-               <div className="popup_message">
-                 {errorMessage}
-               </div>
-          </div>
-          :''}
+
+          {errorPopupOpen ? (
+            <div className="popup_error_box">
+              <div
+                className="popup_close"
+                onClick={() => setErrorPopupOpen(false)}
+              >
+                <i className="bx bx-x"></i>
+              </div>
+              <div className="popup_message">{errorMessage}</div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="vcard_form_title">
           <div className="title">
             <h5>Update Your VCard</h5>
           </div>
+
           <div className="back_action">
-            {currentTemplate !=null ?    <a
-              className="back"
-            //  href={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/
-            //  ${URL_Alies}`}
-             target="_blank"
-             onClick={()=>window.location.pathname = `${URL_Alies}`}
-            >
-               Check Your VCard Live preview
-              <span className="material-symbols-outlined">
-live_tv
-</span>
-            </a>:''}
-         
+            {LiveLinkActivate.length > 0 ? (
+              <>
+                {currentTemplate != null ? (
+                  <a
+                    className="back"
+                    //  href={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/
+                    //  ${URL_Alies}`}
+                    target="_blank"
+                    onClick={() => {
+                      window.open(
+                        `${
+                          import.meta.env.VITE_CLIENT_DOMAIN_URL
+                        }/${URL_Alies}`,
+                        "_blank"
+                      );
+                    }}
+                  >
+                    Check Your VCard Live preview
+                    <span className="material-symbols-outlined">live_tv</span>
+                  </a>
+                ) : (
+                  ""
+                )}
+              </>
+            ) : (
+              ""
+            )}
+
             <button
               className="back"
               onClick={() => navigate(`/${userName}/uadmin/user_vcard`)}
@@ -224,11 +282,18 @@ live_tv
                 onClick={handleFormShow}
                 id={ShowForm === "Basic Detail" ? "menu_active" : ""}
               >
-                <i
+                {/* <i
                   className="bx bxs-user"
-                  style={{ color: "blue" }}
+                  style={{ color: "darkgray" }}
                   id="Basic Detail"
-                ></i>
+                ></i> */}
+                <span
+                  className="material-symbols-outlined"
+                  style={{ color: "royalblue" }}
+                  id="Basic Detail"
+                >
+                  info
+                </span>
                 <small id="Basic Detail">Basic Detail</small>
               </div>
             )}
@@ -238,13 +303,39 @@ live_tv
               onClick={handleFormShow}
               id={ShowForm === "VCard Templates" ? "menu_active" : ""}
             >
-              <i
+              {/* <i
                 className="bx bxs-spreadsheet"
                 style={{ color: "green" }}
                 id="VCard Templates"
-              ></i>
+              ></i> */}
+              <span
+                className="material-symbols-outlined"
+                style={{ color: "violet" }}
+                id="VCard Templates"
+              >
+                design_services
+              </span>
 
               <small id="VCard Templates">VCard Templates</small>
+            </div>
+            <div
+              className="menu_item"
+              onClick={handleFormShow}
+              id={ShowForm === "Contact Details" ? "menu_active" : ""}
+            >
+              {/* <i
+                className="bx bxs-spreadsheet"
+                style={{ color: "green" }}
+                id="Contact Details"
+              ></i> */}
+              <span
+                className="material-symbols-outlined"
+                style={{ color: "green" }}
+                id="Contact Details"
+              >
+                contact_page
+              </span>
+              <small id="Contact Details">Contact Details</small>
             </div>
             <div
               className="menu_item"
@@ -312,9 +403,11 @@ live_tv
               onClick={handleFormShow}
               id={ShowForm === "GoogleMap" ? "menu_active" : ""}
             >
-           
-              <i class='bx bxs-map-alt'   style={{ color: "lightgreen" }}
-                id="GoogleMap"></i>
+              <i
+                class="bx bxs-map-alt"
+                style={{ color: "lightgreen" }}
+                id="GoogleMap"
+              ></i>
               <small id="GoogleMap">GoogleMap</small>
             </div>
             <div
@@ -470,6 +563,7 @@ live_tv
             )} */}
 
             {ShowForm === "VCard Templates" ? <Edit_Select_Template /> : ""}
+            {ShowForm === "Contact Details" ? <Edit_ContactDetails /> : ""}
             {ShowForm === "Services" ? <Edit_Services /> : ""}
             {ShowForm === "Products" ? <Edit_Products /> : ""}
             {ShowForm === "Galleries" ? <Edit_Gallery /> : ""}

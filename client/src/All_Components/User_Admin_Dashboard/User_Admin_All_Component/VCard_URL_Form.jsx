@@ -19,7 +19,7 @@ import * as Yup from "yup";
 import { Toaster, toast } from "react-hot-toast";
 const VCard_URL_Form = () => {
   let navigate = useNavigate();
-  let { FormSubmitLoader, setFormSubmitLoader, userName } = useContext(Context);
+  let { FormSubmitLoader, setFormSubmitLoader, userName,setShowForm,status } = useContext(Context);
 
   let [All_URL_Alies, setAll_URL_Alies] = useState([]);
   let [URL_Alies, setURL_Alies] = useState("");
@@ -65,12 +65,14 @@ const VCard_URL_Form = () => {
       });
 
   }, []);
+
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
       VCardName: "",
       Description: "",
       Profile: "",
+
       ProfileType: "ImageUpload",
       BannerType: "ImageUpload",
       ProfileAddress: "",
@@ -97,10 +99,17 @@ const VCard_URL_Form = () => {
           toast.success(res.data.message);
           setURL_Alies(res.data.data.URL_Alies);
           localStorage.setItem("URL_Alies", res.data.data.URL_Alies);
+
+          if(status == 'successfull'){
+            setShowForm('Basic Detail')
+          }
+      
           setTimeout(() => {
+         
             navigate(
               `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
             );
+           
             //  window.location.pathname = `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
           }, 1000);
           setFormSubmitLoader(false);

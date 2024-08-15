@@ -24,6 +24,7 @@ const Gallery = () => {
     setCurrentPlan,
     FormSubmitLoader,
     setFormSubmitLoader,
+    setShowForm,
     userName,
     successMessage,setSuccessMessage,
     successPopupOpen,setSuccessPopupOpen,
@@ -117,15 +118,35 @@ const Gallery = () => {
         .then((res) => {
        
           toast.success(res.data.message)
-
+          if(currentPlan === "Trial Plan" && GalleryCount == 2){
+            setTimeout(()=>{
+              setShowForm('Testimonials')
+            },500)
+          };
+          if(currentPlan === "Basic" && GalleryCount == 4){
+            setTimeout(()=>{
+              setShowForm('Testimonials')
+            },500)
+          };
+          if(currentPlan === "Standard" && GalleryCount == 6){
+            setTimeout(()=>{
+              setShowForm('Testimonials')
+            },500)
+          };
+          if(currentPlan === "Enterprises" && GalleryCount ==10){
+            setTimeout(()=>{
+              setShowForm('Testimonials')
+            },500)
+          };
           setFormSubmitLoader(false);
           setGalleryCount(++GalleryCount);
           setGalleryImage(null);
           setGalleryImageURL = "";
-          reloadComponent();
+          
           setTimeout(() => {
             setGalleryFormOpen(false);
-          }, 500);
+            reloadComponent();
+          }, 1000);
         })
         .catch((error) => {
         
@@ -282,9 +303,35 @@ toast.success(res.data.message)
           </p>
         </div>
         <div className="add_new_gallery">
-          <button onClick={() => setGalleryFormOpen(true)}>
-            <i className="bx bx-plus"></i>Add Gallery
-          </button>
+        {currentPlan === "Trial Plan" && GalleryCount != 2 ? (
+                  <button onClick={() => setGalleryFormOpen(true)}>
+                  <i className="bx bx-plus"></i>Add New Gallery
+                </button>
+          ) : (
+      ''
+          )}
+          {currentPlan === "Basic" && GalleryCount != 4 ? (
+                     <button onClick={() => setGalleryFormOpen(true)}>
+                     <i className="bx bx-plus"></i>Add New Gallery
+                   </button>
+          ) : (
+           ''
+          )}
+          {currentPlan === "Standard" && GalleryCount != 6 ? (
+                     <button onClick={() => setGalleryFormOpen(true)}>
+                     <i className="bx bx-plus"></i>Add New Gallery
+                   </button>
+          ) : (
+      ''
+          )}
+          {currentPlan === "Enterprises" && GalleryCount != 10 ? (
+             <button onClick={() => setGalleryFormOpen(true)}>
+             <i className="bx bx-plus"></i>Add New Gallery
+           </button>
+          ) : (
+          ''
+          )}
+     
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">

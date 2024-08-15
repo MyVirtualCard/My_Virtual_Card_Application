@@ -100,7 +100,6 @@ const VerifyOTP = () => {
           ""
         )}
 
-        <Toaster position="top-right"></Toaster>
         <div className="right">
           <div className="moon_svg">
             <svg

@@ -19,6 +19,7 @@ const Products = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
+    setShowForm,
     successMessage,
     setSuccessMessage,
     successPopupOpen,
@@ -124,22 +125,48 @@ console.log(error)
           },
         })
         .then((res) => {
-          reloadComponent();
+          setUpdateFormOpen(false);
+          formik.setFieldValue(
+            "ProductDescription",
+            ''
+          ),
+          formik.values.ProductDescription=''
+        setProductDescription('')
+          formik.handleReset();
+  
+
           setProductCount(++ProductCount);
         toast.success(res.data.message)
 
           setFormSubmitLoader(false);
-          setProductFormOpen(false);
-          setUpdateFormOpen(false);
 
-          setTimeout(() => {
-            values.ProductName = "";
-            values.ProductPrice = "";
-            values.ProductURL = "";
-            (values.ProductImageLink = ""), (values.ProductDescription = "");
-            values.ProductImage = undefined;
-            setProductImage(undefined);
-          }, []);
+          if(currentPlan === "Trial Plan" && ProductCount ==2){
+            setTimeout(()=>{
+              setShowForm('Galleries')
+            },2000)
+          };
+          if(currentPlan === "Basic" && ProductCount ==4){
+            setTimeout(()=>{
+              setShowForm('Galleries')
+            },2000)
+          };
+          if(currentPlan === "Standard" && ProductCount ==6){
+            setTimeout(()=>{
+              setShowForm('Galleries')
+            },2000)
+          };
+          if(currentPlan === "Enterprises" && ProductCount ==10){
+            setTimeout(()=>{
+              setShowForm('Galleries')
+            },2000)
+          };
+
+             setTimeout(()=>{
+              setProductFormOpen(false);
+              reloadComponent();
+             },1000)
+      
+    
         })
         .catch((error) => {
         toast.error(error.response.data.message)
@@ -149,6 +176,7 @@ console.log(error)
         });
     },
   });
+
   async function handleProductView(id) {
     setProductViewToggle(true);
     try {
@@ -311,17 +339,55 @@ console.log(error)
       <div className="product_container">
         <div className="product_plan_title">
           <p>
-            <strong>{currentPlan} plan </strong>&nbsp; Subscribed!
+            <strong>{currentPlan}  </strong>&nbsp; Subscribed!
           </p>
         </div>
         <div className="add_new_product">
-          <button
-            onClick={() => {
-              setProductFormOpen(true), setUpdateFormOpen(false);
-            }}
-          >
-            <i className="bx bx-plus"></i>Add Product
-          </button>
+        {currentPlan === "Trial Plan" && ProductCount != 2 ? (
+                 <button
+                 onClick={() => {
+                   setProductFormOpen(true), setUpdateFormOpen(false);
+                 }}
+               >
+                 <i className="bx bx-plus"></i>Add New Product
+               </button>
+          ) : (
+      ''
+          )}
+          {currentPlan === "Basic" && ProductCount != 4 ? (
+                 <button
+                 onClick={() => {
+                   setProductFormOpen(true), setUpdateFormOpen(false);
+                 }}
+               >
+                 <i className="bx bx-plus"></i>Add New Product
+               </button>
+          ) : (
+           ''
+          )}
+          {currentPlan === "Standard" && ProductCount != 6 ? (
+                  <button
+                  onClick={() => {
+                    setProductFormOpen(true), setUpdateFormOpen(false);
+                  }}
+                >
+                  <i className="bx bx-plus"></i>Add New Product
+                </button>
+          ) : (
+      ''
+          )}
+          {currentPlan === "Enterprises" && ProductCount != 10 ? (
+                <button
+                onClick={() => {
+                  setProductFormOpen(true), setUpdateFormOpen(false);
+                }}
+              >
+                <i className="bx bx-plus"></i>Add New Product
+              </button>
+          ) : (
+          ''
+          )}
+      
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
@@ -377,20 +443,20 @@ console.log(error)
               <tr>
                 <th className="fw-bold">PRODUCT IMAGE</th>
 
-                <th className="fw-bold">PRODUCT NAME</th>
-                <th className="fw-bold">PRODUCT DESCRIPTION</th>
-                <th className="fw-bold"> PRICE</th>
-                <th className="fw-bold">ACTIONS</th>
+                <th className="fw-bold" style={{ width: "20%" }}>PRODUCT NAME</th>
+                <th className="fw-bold" style={{ width: "30%" }}>PRODUCT DESCRIPTION</th>
+                <th className="fw-bold" style={{ width: "10%" }}> PRICE</th>
+                <th className="fw-bold" style={{ width: "20%" }}>ACTIONS</th>
               </tr>
             </thead>
             <tbody className=" shadow-sm">
               {AllProduct != undefined ? (
                 <>
                   {AllProduct.map((data, index) => {
-                    console.log(data.ProductImage.length);
+       
                     return (
                       <tr key={index}>
-                        <td className="h-100 align-middle">
+                        <td className="h-100 align-middle" style={{ width: "20%" }}>
                           {data.ProductType == "ImageUpload" ? (
                             <>
                               {data.ProductImage.length != 0 ? (
@@ -429,16 +495,16 @@ console.log(error)
                             ""
                           )}
                         </td>
-                        <td className="h-100 align-middle">
+                        <td className="h-100 align-middle" style={{ width: "20%" }}>
                           {data.ProductName}
                         </td>
-                        <td className="h-100 align-middle">
+                        <td className="h-100 align-middle" style={{ width: "30%" }}>
                           {data.ProductDescription}
                         </td>
-                        <td className="h-100 align-middle">
+                        <td className="h-100 align-middle" style={{ width: "10%" }}>
                           Rs:&nbsp;{data.ProductPrice}
                         </td>
-                        <td className="h-100 align-middle">
+                        <td className="h-100 align-middle" style={{ width: "20%" }}>
                           <i
                             className="bx bxs-show"
                             style={{ color: "skyBlue" }}
@@ -503,7 +569,7 @@ console.log(error)
                   onBlur={formik.handleBlur}
                   onChange={
                     updateFormOpen
-                      ? handleProductTypeChange
+                      ? (e)=>setProductName(e.target.value)
                       : formik.handleChange
                   }
                   value={
@@ -582,9 +648,9 @@ console.log(error)
                 </label>
 
                 <Editor
-                  // {...formik.getFieldProps("ProductDescription")}
                   id="ProductDescription"
                   name="ProductDescription"
+                  {...formik.getFieldProps("ProductDescription")}
                   value={
                     updateFormOpen
                       ? ProductDescription

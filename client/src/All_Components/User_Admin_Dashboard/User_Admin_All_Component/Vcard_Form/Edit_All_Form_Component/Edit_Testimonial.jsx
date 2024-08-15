@@ -24,6 +24,7 @@ const Testimonial = () => {
     userName,
     successMessage,
     setSuccessMessage,
+    setShowForm,
     successPopupOpen,
     setSuccessPopupOpen,
     errorMessage,
@@ -114,6 +115,26 @@ const Testimonial = () => {
           toast.success(res.data.message);
           reloadComponent();
           setClientCount(++ClientCount);
+          if (currentPlan === "Trial Plan" && ClientCount == 2) {
+            setTimeout(() => {
+              setShowForm("GoogleMap");
+            }, 2000);
+          }
+          if (currentPlan === "Basic" && ClientCount == 4) {
+            setTimeout(() => {
+              setShowForm("GoogleMap");
+            }, 2000);
+          }
+          if (currentPlan === "Standard" && ClientCount == 6) {
+            setTimeout(() => {
+              setShowForm("GoogleMap");
+            }, 2000);
+          }
+          if (currentPlan === "Enterprises" && ClientCount == 8) {
+            setTimeout(() => {
+              setShowForm("GoogleMap");
+            }, 2000);
+          }
           setTimeout(() => {
             values.ClientName = "";
             setClientImage(undefined);
@@ -277,9 +298,34 @@ const Testimonial = () => {
           </p>
         </div>
         <div className="add_new_testimonial">
-          <button onClick={() => setTestimonialFormOpen(true)}>
-            <i className="bx bx-plus"></i>Add Testimonial
-          </button>
+          {currentPlan === "Trial Plan" && ClientCount != 2 ? (
+            <button onClick={() => setTestimonialFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Testimonial
+            </button>
+          ) : (
+            ""
+          )}
+          {currentPlan === "Basic" && ClientCount != 4 ? (
+            <button onClick={() => setTestimonialFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Testimonial
+            </button>
+          ) : (
+            ""
+          )}
+          {currentPlan === "Standard" && ClientCount != 6 ? (
+            <button onClick={() => setTestimonialFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Testimonial
+            </button>
+          ) : (
+            ""
+          )}
+          {currentPlan === "Enterprises" && ClientCount != 8 ? (
+            <button onClick={() => setTestimonialFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Testimonial
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">

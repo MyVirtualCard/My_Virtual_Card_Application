@@ -11,7 +11,9 @@ const SocialMedias = () => {
   let { FormSubmitLoader, setFormSubmitLoader, userName,    successMessage,setSuccessMessage,
     successPopupOpen,setSuccessPopupOpen,
     errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen } =
+    setShowForm,
+    errorPopupOpen,setErrorPopupOpen,  LiveLinkActivate,
+    setLiveLinkActivate, } =
     useContext(Context);
   let [UpdateToggle, setUpdateToggle] = useState(false);
   //SOcialMedia :
@@ -100,6 +102,9 @@ const SocialMedias = () => {
         .then((res) => {
           toast.success(res.data.message)
           setFormSubmitLoader(false);
+          setTimeout(()=>{
+            setShowForm('Services')
+          },2000)
         })
         .catch((error) => {
       
@@ -140,6 +145,9 @@ const SocialMedias = () => {
         })
         .then((res) => {
           toast.success(res.data.message)
+          setTimeout(()=>{
+            setShowForm('Services')
+          },2000)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -148,6 +156,34 @@ const SocialMedias = () => {
         });
     },
   });
+  async function fetchCurrentManageContent() {
+    setFormSubmitLoader(true);
+    try {
+      await api
+        .get(`/manageContent/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setLiveLinkActivate(res.data.data);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setFormSubmitLoader(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchCurrentManageContent();
+  }, []);
+
   return (
     <>
       <div className="socialmedia_component">

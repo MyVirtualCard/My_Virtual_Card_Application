@@ -20,6 +20,7 @@ const Services = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
+    setShowForm,
     successMessage,
     setSuccessMessage,
     successPopupOpen,
@@ -73,11 +74,10 @@ const Services = () => {
           }
         })
         .catch((error) => {
-      
           setFormSubmitLoader(false);
         });
     } catch (error) {
-    console.log(error)
+      console.log(error);
     }
   }
   useEffect(() => {
@@ -110,21 +110,11 @@ const Services = () => {
     validationSchema: ServiceValidateShema,
 
     onSubmit: async (values) => {
+      values.ServiceDescription = stripHtmlTags(ServiceDescription);
       setFormSubmitLoader(true);
       values = await Object.assign(values, {
         ServiceImage: ServiceImage || "",
       });
-      values.ServiceDescription = stripHtmlTags(ServiceDescription);
-      // const formData = new FormData();
-
-      // formData.append("URL_Alies", URL_Alies);
-      // formData.append("ServiceImage", ServiceImage);
-      // formData.append("ServiceName", values.ServiceName);
-      // formData.append("ServiceURL", values.ServiceURL);
-      // formData.append(
-      //   "ServiceDescription",
-      //   (values.ServiceDescription = stripHtmlTags(ServiceDescription))
-      // );
 
       await api
         .post(`/serviceDetail/${URL_Alies}`, values, {
@@ -134,23 +124,43 @@ const Services = () => {
           },
         })
         .then((res) => {
+          setUpdateFormOpen(false);
+          toast.success(res.data.message);
+          formik.setFieldValue("ServiceDescription", ""),
+            (formik.values.ServiceDescription = "");
+          setServiceDescription("");
+          formik.handleReset();
           setFormSubmitLoader(false);
-          toast.success(res.data.message)
-          reloadComponent();
-          setServiceCount(++ServiceCount);
-          setTimeout(() => {
-            values.ServiceName = "";
 
-            values.ServiceURL = "";
-            values.ServiceDescription = " ";
-            values.ServiceImage = undefined;
+          setServiceCount(++ServiceCount);
+          if (currentPlan === "Trial Plan" && ServiceCount == 2) {
+            setTimeout(() => {
+              setShowForm("Products");
+            }, 2000);
+          }
+          if (currentPlan === "Basic" && ServiceCount == 4) {
+            setTimeout(() => {
+              setShowForm("Products");
+            }, 2000);
+          }
+          if (currentPlan === "Standard" && ServiceCount == 6) {
+            setTimeout(() => {
+              setShowForm("Products");
+            }, 2000);
+          }
+          if (currentPlan === "Enterprises" && ServiceCount == 8) {
+            setTimeout(() => {
+              setShowForm("Products");
+            }, 2000);
+          }
+          setTimeout(() => {
             setServiceImage(undefined);
             setServiceFormOpen(false);
+            reloadComponent();
           }, 500);
         })
         .catch((error) => {
-     
-       toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
           setServiceFormOpen(false);
         });
@@ -225,7 +235,7 @@ const Services = () => {
           setFormSubmitLoader(false);
         });
     } catch (error) {
-     console.log(error)
+      console.log(error);
     }
   }
 
@@ -258,11 +268,13 @@ const Services = () => {
           },
         })
         .then((res) => {
-       
-          toast.success(res.data.message)
+          toast.success(res.data.message);
           setUpdateFormOpen(false);
           setFormSubmitLoader(false);
           reloadComponent();
+          setTimeout(() => {
+            setShowForm("Products");
+          }, 2000);
           setTimeout(() => {
             setServiceName("");
             setServiceURL("");
@@ -273,13 +285,13 @@ const Services = () => {
           }, 1000);
         })
         .catch((error) => {
-          toast.error(error.response.data.message)
-          setServiceFormOpen(false)
+          toast.error(error.response.data.message);
+          setServiceFormOpen(false);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message)
-      setServiceFormOpen(false)
+      toast.error(error.message);
+      setServiceFormOpen(false);
       setFormSubmitLoader(false);
     }
   }
@@ -295,19 +307,17 @@ const Services = () => {
           },
         })
         .then((res) => {
-          
-          toast.success(res.data.message)
+          toast.success(res.data.message);
           reloadComponent();
           setServiceCount(--ServiceCount);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-   console.log(error)
+      console.log(error);
     }
   }
   const handleServiceChange = (event) => {
@@ -332,22 +342,59 @@ const Services = () => {
       <div className="update_service_container">
         <div className="service_plan_title">
           <p>
-            <strong>{currentPlan} plan </strong>&nbsp; Subscribed!
+            <strong>{currentPlan} </strong>&nbsp; Subscribed!
           </p>
         </div>
 
         <div className="add_new_service">
-          <button
+          {currentPlan === "Trial Plan" && ServiceCount != 2 ? (
+            <button
             onClick={() => {
               setServiceFormOpen(true), setUpdateFormOpen(false);
             }}
           >
-            <i className="bx bx-plus"></i>Add Service
+            <i className="bx bx-plus"></i>Add New Service
           </button>
+          ) : (
+      ''
+          )}
+          {currentPlan === "Basic" && ServiceCount != 4 ? (
+          <button
+          onClick={() => {
+            setServiceFormOpen(true), setUpdateFormOpen(false);
+          }}
+        >
+          <i className="bx bx-plus"></i>Add New Service
+        </button>
+          ) : (
+           ''
+          )}
+          {currentPlan === "Standard" && ServiceCount != 6 ? (
+             <button
+             onClick={() => {
+               setServiceFormOpen(true), setUpdateFormOpen(false);
+             }}
+           >
+             <i className="bx bx-plus"></i>Add New Service
+           </button>
+          ) : (
+      ''
+          )}
+          {currentPlan === "Enterprises" && ServiceCount != 8 ? (
+              <button
+              onClick={() => {
+                setServiceFormOpen(true), setUpdateFormOpen(false);
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Service
+            </button>
+          ) : (
+          ''
+          )}
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
-          {currentPlan === "Trial Plan" ? (
+            {currentPlan === "Trial Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>
@@ -554,7 +601,7 @@ const Services = () => {
                   onBlur={formik.handleBlur}
                   onChange={
                     updateFormOpen
-                      ? handleServiceTypeChange
+                      ? (e) => setServiceName(e.target.value)
                       : formik.handleChange
                   }
                   value={
@@ -595,8 +642,8 @@ const Services = () => {
                   Description <sup>*</sup>
                 </label>
                 <Editor
-                  id="ServiceDescription"
-                  name="ServiceDescription"
+                
+                  {...formik.getFieldProps("ServiceDescription")}
                   value={
                     updateFormOpen
                       ? ServiceDescription
@@ -613,7 +660,9 @@ const Services = () => {
                             setServiceDescription(e.htmlValue);
                         }
                   }
-                  onBlur={formik.handleBlur}
+                  handleBlur={formik.handleBlur}
+                    id="ServiceDescription"
+                  name="ServiceDescription"
                   style={{ height: "130px" }}
                   placeholder="Enter Short Description"
                   className={
@@ -650,87 +699,229 @@ const Services = () => {
                     </option>
                   </select>
                 </div>
-              </div>
-              {!updateFormOpen ? (
-                <>
-                  {/* //Image Upload */}
-                  {formik.values.ServiceType == "ImageUpload" ? (
-                    <div className="form_group serviceImage">
-                      {/* <label htmlFor="ServiceImage">Service Icon</label> */}
+                {!updateFormOpen ? (
+                  <>
+                    {/* //Image Upload */}
+                    {formik.values.ServiceType == "ImageUpload" ? (
+                      <div className="form_group serviceImage">
+                        {/* <label htmlFor="ServiceImage">Service Icon</label> */}
 
-                      <label htmlFor="Image">
-                        <img
-                          src={
-                            ServiceImage != undefined
-                              ? ServiceImage
-                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                          }
-                          alt="Image"
-                        />
-                        {/* <i className="bx bxs-edit-location"></i> */}
-                      </label>
-                      <input
-                        type="file"
-                        id="ServiceImage"
-                        name="ServiceImage"
-                        accept="image/*"
-                        onChange={handleServiceChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      <div className="profile_error">
-                        {formik.errors.ServiceImage}
-                      </div>
-                      <p>
-                        <strong>Note :</strong> Max file size limit 3MB
-                      </p>
-                      <small>Allowed file types: png, jpg, jpeg,.gif.</small>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-
-                  {/* //Icon_Tag Upload*/}
-                  {formik.values.ServiceType == "Icon_Tag" ? (
-                    <>
-                      <div className="form_group">
-                        <label htmlFor="VCardName">Paste Icon Tag</label>
+                        <label htmlFor="Image">
+                          <img
+                            src={
+                              ServiceImage != undefined
+                                ? ServiceImage
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                            }
+                            alt="Image"
+                          />
+                          {/* <i className="bx bxs-edit-location"></i> */}
+                        </label>
                         <input
-                          type="text"
-                          placeholder="Eg : <i className='box box-open'></i>"
-                          name="ServiceIcon"
-                          id="ServiceIcon"
+                          type="file"
+                          id="ServiceImage"
+                          name="ServiceImage"
+                          accept="image/*"
+                          onChange={handleServiceChange}
                           onBlur={formik.handleBlur}
-                          onChange={
-                            updateFormOpen
-                              ? (e) => setServiceIcon(e.target.value)
-                              : formik.handleChange
-                          }
-                          value={
-                            updateFormOpen
-                              ? ServiceIcon
-                              : formik.values.ServiceIcon
-                          }
-                          className={
-                            formik.errors.ServiceIcon &&
-                            formik.touched.ServiceIcon
-                              ? "input_error"
-                              : "input_success"
-                          }
                         />
-                        <div className="error">{formik.errors.ServiceIcon}</div>
+                        <div className="profile_error">
+                          {formik.errors.ServiceImage}
+                        </div>
+                        <p>
+                          <strong>Note :</strong> Max file size limit 3MB
+                        </p>
+                        <small>Allowed file types: png, jpg, jpeg,.gif.</small>
                       </div>
-                    </>
-                  ) : (
-                    ""
-                  )}
+                    ) : (
+                      ""
+                    )}
 
-                  {/* //ImageAddress Upload */}
-                  {formik.values.ServiceType == "Image_Address_Link" ? (
-                    <div className="form_group serviceImage">
-                      {/* <label htmlFor="ServiceImage">Service Icon</label> */}
+                    {/* //Icon_Tag Upload*/}
+                    {formik.values.ServiceType == "Icon_Tag" ? (
+                      <>
+                        <div className="form_group">
+                          <label htmlFor="VCardName">Paste Icon Tag</label>
+                          <input
+                            type="text"
+                            placeholder="Eg : <i className='box box-open'></i>"
+                            name="ServiceIcon"
+                            id="ServiceIcon"
+                            onBlur={formik.handleBlur}
+                            onChange={
+                              updateFormOpen
+                                ? (e) => setServiceIcon(e.target.value)
+                                : formik.handleChange
+                            }
+                            value={
+                              updateFormOpen
+                                ? ServiceIcon
+                                : formik.values.ServiceIcon
+                            }
+                            className={
+                              formik.errors.ServiceIcon &&
+                              formik.touched.ServiceIcon
+                                ? "input_error"
+                                : "input_success"
+                            }
+                          />
+                          <div className="error">
+                            {formik.errors.ServiceIcon}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      ""
+                    )}
 
-                      <label htmlFor="Image">
-                        {updateFormOpen ? (
+                    {/* //ImageAddress Upload */}
+                    {formik.values.ServiceType == "Image_Address_Link" ? (
+                      <div className="form_group serviceImage">
+                        {/* <label htmlFor="ServiceImage">Service Icon</label> */}
+
+                        <label htmlFor="Image">
+                          {updateFormOpen ? (
+                            <img
+                              src={
+                                ServiceAddress != null &&
+                                ServiceAddress != undefined &&
+                                ServiceAddress.length > 0
+                                  ? ServiceAddress
+                                  : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                              }
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              src={
+                                formik.values.ServiceAddress != null &&
+                                formik.values.ServiceAddress != undefined &&
+                                formik.values.ServiceAddress.length > 0
+                                  ? formik.values.ServiceAddress
+                                  : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                              }
+                              alt=""
+                            />
+                          )}
+
+                          {/* <i className="bx bxs-edit-location"></i> */}
+                        </label>
+                        <div className="form_group url_link_input_group">
+                          <label htmlFor="VCardName">Paste Image Address</label>
+                          <input
+                            type="text"
+                            placeholder="Eg :https://img.asistostech.com/free-photo/"
+                            name="ServiceAddress"
+                            id="ServiceAddress"
+                            onBlur={formik.handleBlur}
+                            onChange={
+                              updateFormOpen
+                                ? (e) => setServiceAddress(e.target.value)
+                                : formik.handleChange
+                            }
+                            value={
+                              updateFormOpen
+                                ? ServiceAddress
+                                : formik.values.ServiceAddress
+                            }
+                            className={
+                              formik.errors.ServiceAddress &&
+                              formik.touched.ServiceAddress
+                                ? "input_error"
+                                : "input_success"
+                            }
+                          />
+
+                          <div className="error">
+                            {formik.errors.ServiceAddress}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {/* ImageUploadUpdate */}
+                    {ServiceType == "ImageUpload" ? (
+                      <div className="form_group serviceImage">
+                        {/* <label htmlFor="ServiceImage">Service Icon</label> */}
+
+                        <label htmlFor="Image">
+                          <img
+                            src={
+                              ServiceImage != undefined
+                                ? ServiceImage
+                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                            }
+                            alt="Image"
+                          />
+                          {/* <i className="bx bxs-edit-location"></i> */}
+                        </label>
+                        <input
+                          type="file"
+                          id="ServiceImage"
+                          name="ServiceImage"
+                          accept="image/*"
+                          onChange={handleServiceChange}
+                          onBlur={formik.handleBlur}
+                        />
+                        <div className="profile_error">
+                          {formik.errors.ServiceImage}
+                        </div>
+                        <p>
+                          <strong>Note :</strong> Max file size limit 3MB
+                        </p>
+                        <small>Allowed file types: png, jpg, jpeg,.gif.</small>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
+                    {/* ServiceIConUpdate */}
+                    {ServiceType == "Icon_Tag" ? (
+                      <>
+                        <div className="form_group">
+                          <label htmlFor="VCardName">Paste Icon Tag</label>
+                          <input
+                            type="text"
+                            placeholder="Eg : <i className='box box-open'></i>"
+                            name="ServiceIcon"
+                            id="ServiceIcon"
+                            onBlur={formik.handleBlur}
+                            onChange={
+                              updateFormOpen
+                                ? (e) => setServiceIcon(e.target.value)
+                                : formik.handleChange
+                            }
+                            value={
+                              updateFormOpen
+                                ? ServiceIcon
+                                : formik.values.ServiceIcon
+                            }
+                            className={
+                              formik.errors.ServiceIcon &&
+                              formik.touched.ServiceIcon
+                                ? "input_error"
+                                : "input_success"
+                            }
+                          />
+                          <div className="error">
+                            {formik.errors.ServiceIcon}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      ""
+                    )}
+
+                    {/* ServiceAddessUpdate */}
+                    {ServiceType == "Image_Address_Link" ? (
+                      <div className="form_group serviceImage">
+                        {/* <label htmlFor="ServiceImage">Service Icon</label> */}
+
+                        <label htmlFor="Image">
                           <img
                             src={
                               ServiceAddress != null &&
@@ -741,173 +932,37 @@ const Services = () => {
                             }
                             alt=""
                           />
-                        ) : (
-                          <img
-                            src={
-                              formik.values.ServiceAddress != null &&
-                              formik.values.ServiceAddress != undefined &&
-                              formik.values.ServiceAddress.length > 0
-                                ? formik.values.ServiceAddress
-                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                            }
-                            alt=""
+                          {/* <i className="bx bxs-edit-location"></i> */}
+                        </label>
+                        <div className="form_group url_link_input_group">
+                          <label htmlFor="VCardName">
+                            Update Image Address
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Eg :https://img.asistostech.com/free-photo/"
+                            name="ServiceAddress"
+                            id="ServiceAddress"
+                            value={ServiceAddress}
+                            onChange={(e) => setServiceAddress(e.target.value)}
                           />
-                        )}
-
-                        {/* <i className="bx bxs-edit-location"></i> */}
-                      </label>
-                      <div className="form_group url_link_input_group">
-                        <label htmlFor="VCardName">Paste Image Address</label>
-                        <input
-                          type="text"
-                          placeholder="Eg :https://img.asistostech.com/free-photo/"
-                          name="ServiceAddress"
-                          id="ServiceAddress"
-                          onBlur={formik.handleBlur}
-                          onChange={
-                            updateFormOpen
-                              ? (e) => setServiceAddress(e.target.value)
-                              : formik.handleChange
-                          }
-                          value={
-                            updateFormOpen
-                              ? ServiceAddress
-                              : formik.values.ServiceAddress
-                          }
-                          className={
-                            formik.errors.ServiceAddress &&
-                            formik.touched.ServiceAddress
-                              ? "input_error"
-                              : "input_success"
-                          }
-                        />
-
-                        <div className="error">
-                          {formik.errors.ServiceAddress}
+                          <div className="clear_action">
+                            <button
+                              className="clear_btn"
+                              type="button"
+                              onClick={() => setServiceAddress("")}
+                            >
+                              clear
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </>
-              ) : (
-                <>
-                  {/* ImageUploadUpdate */}
-                  {ServiceType == "ImageUpload" ? (
-                    <div className="form_group serviceImage">
-                      {/* <label htmlFor="ServiceImage">Service Icon</label> */}
-
-                      <label htmlFor="Image">
-                        <img
-                          src={
-                            ServiceImage != undefined
-                              ? ServiceImage
-                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                          }
-                          alt="Image"
-                        />
-                        {/* <i className="bx bxs-edit-location"></i> */}
-                      </label>
-                      <input
-                        type="file"
-                        id="ServiceImage"
-                        name="ServiceImage"
-                        accept="image/*"
-                        onChange={handleServiceChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      <div className="profile_error">
-                        {formik.errors.ServiceImage}
-                      </div>
-                      <p>
-                        <strong>Note :</strong> Max file size limit 3MB
-                      </p>
-                      <small>Allowed file types: png, jpg, jpeg,.gif.</small>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-
-                  {/* ServiceIConUpdate */}
-                  {ServiceType == "Icon_Tag" ? (
-                    <>
-                      <div className="form_group">
-                        <label htmlFor="VCardName">Paste Icon Tag</label>
-                        <input
-                          type="text"
-                          placeholder="Eg : <i className='box box-open'></i>"
-                          name="ServiceIcon"
-                          id="ServiceIcon"
-                          onBlur={formik.handleBlur}
-                          onChange={
-                            updateFormOpen
-                              ? (e) => setServiceIcon(e.target.value)
-                              : formik.handleChange
-                          }
-                          value={
-                            updateFormOpen
-                              ? ServiceIcon
-                              : formik.values.ServiceIcon
-                          }
-                          className={
-                            formik.errors.ServiceIcon &&
-                            formik.touched.ServiceIcon
-                              ? "input_error"
-                              : "input_success"
-                          }
-                        />
-                        <div className="error">{formik.errors.ServiceIcon}</div>
-                      </div>
-                    </>
-                  ) : (
-                    ""
-                  )}
-
-                  {/* ServiceAddessUpdate */}
-                  {ServiceType == "Image_Address_Link" ? (
-                    <div className="form_group serviceImage">
-                      {/* <label htmlFor="ServiceImage">Service Icon</label> */}
-
-                      <label htmlFor="Image">
-                        <img
-                          src={
-                            ServiceAddress != null &&
-                            ServiceAddress != undefined &&
-                            ServiceAddress.length > 0
-                              ? ServiceAddress
-                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                          }
-                          alt=""
-                        />
-                        {/* <i className="bx bxs-edit-location"></i> */}
-                      </label>
-                      <div className="form_group url_link_input_group">
-                        <label htmlFor="VCardName">Update Image Address</label>
-                        <input
-                          type="text"
-                          placeholder="Eg :https://img.asistostech.com/free-photo/"
-                          name="ServiceAddress"
-                          id="ServiceAddress"
-                          value={ServiceAddress}
-                          onChange={(e) => setServiceAddress(e.target.value)}
-                        />
-                        <div className="clear_action">
-                          <button
-                            className="clear_btn"
-                            type="button"
-                            onClick={() => setServiceAddress("")}
-                          >
-                            clear
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </>
-              )}
+                    ) : (
+                      ""
+                    )}
+                  </>
+                )}
+              </div>
 
               <div className="form_submit_actions">
                 <div className="save">

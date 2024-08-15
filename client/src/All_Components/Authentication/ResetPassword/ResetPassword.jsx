@@ -77,8 +77,7 @@ const ResetPassword = () => {
   return (
     <>
       <div className="login_container">
-        <Toaster position="top-right"></Toaster>
- 
+
 
         <div className="right">
           <img src={image} alt="" />

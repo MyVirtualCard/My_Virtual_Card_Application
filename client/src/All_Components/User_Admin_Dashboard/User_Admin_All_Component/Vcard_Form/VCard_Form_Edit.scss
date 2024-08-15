@@ -97,14 +97,19 @@ z-index: -1;
     margin: 1rem auto;
 
     .title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3rem;
       h5 {
         font-size: 1.2rem;
         color: #181818;
-        font-weight: 500;
+        font-weight: 550;
         @media screen and (max-width: 600px) {
           font-size: 0.9rem;
         }
       }
+  
     }
     .back_action {
       width: 50%;
@@ -112,6 +117,29 @@ z-index: -1;
       align-items: center;
       justify-content: flex-end;
       gap: 5rem;
+      a {
+        background-color: rgb(67, 133, 255) !important;
+        font-size: 0.8rem;
+        color: rgb(255, 255, 255) !important;
+        cursor: pointer;
+        border-radius: 5px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease-in;
+        font-weight: 550;
+        text-decoration: none;
+        padding: 5px 1rem;
+        &:hover {
+          background-color: rgb(67, 133, 255) !important;
+          scale: 1 !important;
+          border: none !important;
+          color: #fff;
+          box-shadow: 0px 4px 5px #00000066;
+          transition: all 0.2s ease-in;
+        }
+      }
       button {
         padding: 6px 1rem !important;
         background-color: rgb(85, 85, 85) !important;
@@ -139,28 +167,7 @@ z-index: -1;
           transition: all 0.2s ease-in;
         }
       }
-      a {
-        background-color: transparent !important;
-        font-size: 0.6rem;
-        color: rgb(53, 83, 255) !important;
-        cursor: pointer;
-        border-radius: 5px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        transition: all 0.3s ease-in;
-        font-weight: 550;
-        text-decoration: none;
-        padding: 5px 1rem;
-        &:hover {
-          background-color: transparent !important;
-          scale: 1 !important;
-          border: none !important;
-          box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
-          transition: all 0.2s ease-in;
-        }
-      }
+
     }
     @media screen and (max-width: 600px) {
       padding: 0rem 1rem;
