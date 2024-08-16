@@ -228,7 +228,7 @@ const VCard_Form_Edit = () => {
                       );
                     }}
                   >
-                    Check Your VCard Live preview
+                    VCard Live preview
                     <span className="material-symbols-outlined">live_tv</span>
                   </a>
                 ) : (

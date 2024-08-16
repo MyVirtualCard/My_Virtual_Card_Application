@@ -1,8 +1,15 @@
 import React, { useContext, useState } from "react";
 import "./Register.scss";
-import register_svg from "../../../assets/SVG/Register/register_png.png";
-import login_png from "../../../assets/SVG/Register/login_png.png";
-import site_logo from "../../../assets/LandingPage_image/BrandLogo2.png";
+import backImage from "../../../assets/LandingPage_image/slide1_back.png";
+import brand_logo from "../../../assets/LandingPage_image/BrandLogo4.png";
+import card1 from "../../../assets/Digicards/vmob-1.png";
+import card2 from "../../../assets/Digicards/vmob-2.png";
+import card3 from "../../../assets/Digicards/vmob-3.png";
+import card4 from "../../../assets/Digicards/vmob-4.png";
+import card5 from "../../../assets/Digicards/vmob-5.png";
+import card6 from "../../../assets/Digicards/vmob-6.png";
+import card7 from "../../../assets/Digicards/vmob-7.png";
+
 import arrow from "../../../assets/SVG/Register/arrow.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Context from "../../UseContext/Context";
@@ -10,18 +17,52 @@ import axios, { all } from "axios";
 import { convertToBase64Profile } from "../../Helper/convert";
 import { useFormik } from "formik";
 import { Toaster, toast } from "react-hot-toast";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 import {
   LoginValidateSchema,
   RegisterValidateSchema,
 } from "../../Helper/RegisterValidate.js";
 import ReCAPTCHA from "react-google-recaptcha";
 const Register = () => {
+  const [width, setWidth] = useState(window.innerWidth);
   let [registerLoader, setRegisterLoader] = useState(false);
   let [loginLoader, setLoginLoader] = useState(false);
   let [OpenTermsCondition, setOpenTermsCondition] = useState(false);
   let [OpenPrivacyCondition, setOpenPrivacyCondition] = useState(false);
   let [capchaValue, setCapchaValue] = useState(null);
-
+  let images = [
+    {
+      id: 1,
+      image: card1,
+    },
+    {
+      id: 2,
+      image: card2,
+    },
+    {
+      id: 3,
+      image: card3,
+    },
+    {
+      id: 4,
+      image: card4,
+    },
+    {
+      id: 5,
+      image: card5,
+    },
+    {
+      id: 6,
+      image: card6,
+    },
+    {
+      id: 7,
+      image: card7,
+    },
+  ];
   let navigate = useNavigate();
   const handleProfileImageChange = (event) => {
     const ProfileImage = event.currentTarget.files[0];
@@ -84,7 +125,6 @@ const Register = () => {
   });
   function onChange(value) {
     setCapchaValue(value);
-    console.log("Captcha value:", value);
   }
   //All state data:
   let {
@@ -130,7 +170,6 @@ const Register = () => {
     // validateOnChange: false,
     validationSchema: RegisterValidateSchema,
     onSubmit: async (values, action) => {
-      
       setRegisterLoader(true);
 
       await api
@@ -152,7 +191,7 @@ const Register = () => {
         });
     },
   });
-  console.log(formik.values.profile)
+
   //Image convert to base 64 :
   const onUpload = async (e) => {
     let base64 = await convertToBase64Profile(e.target.files[0]);
@@ -169,11 +208,44 @@ const Register = () => {
         : password.setAttribute("type", "password");
     }
   };
+  const buttonStyle = {
+    background: "white",
+    opacity: 1,
+    border: "0px",
+    padding: "0px",
+    borderRadius: "10px",
+    fontSize: "10px",
+  };
+  const properties = {
+    prevArrow: (
+      <button style={{ ...buttonStyle }}>
+        {/* <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#000"
 
+        >
+          
+          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
+        </svg> */}
+        <i
+          className="bx bxs-left-arrow"
+          style={{ fontSize: "2rem", color: "gray" }}
+        ></i>
+      </button>
+    ),
+    nextArrow: (
+      <button style={{ ...buttonStyle }}>
+        <i
+          className="bx bxs-right-arrow"
+          style={{ fontSize: "2rem", color: "gray" }}
+        ></i>
+      </button>
+    ),
+  };
   return (
     <>
-      <div className="register_container">
-
+      <div className="register_container" id={AuthToggle ? 'login_back':'register_back'}>
         {/* Terms_Condition */}
         {OpenTermsCondition ? (
           <div
@@ -535,32 +607,51 @@ const Register = () => {
         ) : (
           ""
         )}
-
-        {/* LeftSide */}
-        <div className="left">
-          <div
-            className="site_logo"
-            onClick={() => (window.location.pathname = "/")}
-          >
-            <img src={site_logo} alt="logo" />
-          </div>
-          <div className="form_title">
-            <h4>Welcome to AristosTech Digital Card Creator!</h4>
-          </div>
-
-          <div className="image">
-            {!AuthToggle ? (
-              <img src={register_svg} alt="" />
-            ) : (
-              <img src={login_png} alt="" />
-            )}
-          </div>
+{/* Extra design anime */}
+<div className="extra_designs">
+  <div className="design1">
+  </div>
+  <div className="design2">
+  </div>
+  <div className="design3">
+  </div>
+  <div className="design4">
+  </div>
+  <div className="design5">
+  </div>
+  <div className="design6">
+  </div>
+  {/* //Circle right */}
+  {/* <div className="design7">
+  </div> */}
+    {/* //Circle left */}
+    {/* <div className="design8">
+  </div> */}
+</div>
+        <div className="brand_logo">
+          <img src={brand_logo} alt="logo" />
         </div>
-        {/* RightSide */}
-        <div className="right">
-          <div className="box_container">
-            <div className="right_form">
-              <div className="current_form">
+        <div className="box_container">
+          <div className="right_image">
+      
+              <Slide
+                slidesToScroll={1}
+                slidesToShow={width < 600 ? 1 : 1}
+                indicators={true}
+                autoplay
+                {...properties}
+                autoplayInterval={500}
+
+                className='slider'
+              >
+                {images.map((data, index) => {
+                  return <img src={data.image} alt="image" key={index} />;
+                })}
+              </Slide>
+       
+          </div>
+          <div className="left_form">
+            {/* <div className="current_form">
                 <button
                   onClick={() => {
                     setAuthToggle(false);
@@ -583,152 +674,152 @@ const Register = () => {
                   Login<i className="fa-solid fa-right-to-bracket"></i>{" "}
                   {AuthToggle ? <span className="login_line"></span> : ""}
                 </button>
-              </div>
+              </div> */}
 
-              {!AuthToggle ? (
-                <form action="" onSubmit={formik.handleSubmit}>
-                  <div className="form_title">
-                    <small>Create Your New Account!</small>
-                  </div>
-                  <div className="profile">
-                    <label htmlFor="profile">
-                      <img
-                        src={
-                          profile ||
-                          "https://img.freepik.com/free-vector/augmented-reality-background-with-device_23-2147811120.jpg?t=st=1721595408~exp=1721599008~hmac=5b849f76312a573bac855a356ea52e7b12033019bb24dd246522571528ecebf6&w=740"
-                        }
-                        alt="avatar"
-                        id="profile_image"
-                      />
-                      <i className="bx bxs-chevrons-left bx-flashing"></i>
-                      <span>Upload your profile</span>
-                    </label>
-                    <input
-                 
-                      type="file"
-                      id="profile"
-                      name="profile"
-                      onChange={handleProfileImageChange}
-                      // {...formik.getFieldProps('profile')}
-                    />
-                  </div>
-                  {/* //UserName: */}
-                  <div className="form_group">
-                    <label htmlFor="userName">
-                      UserName{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Unique UserName "
-                      name="userName"
-                      id="userName"
-                      value={formik.values.userName}
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      className={
-                        formik.errors.userName && formik.touched.userName
-                          ? "input_error"
-                          : ""
+            {!AuthToggle ? (
+              <form action="" onSubmit={formik.handleSubmit}>
+                <div className="form_title">
+                  <h4>Welcome to Digital VCard Application</h4>
+                  <small>Create Your New Account!</small>
+                </div>
+                <div className="profile">
+                  <label htmlFor="profile">
+                    <img
+                      src={
+                        profile ||
+                        "https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436191.jpg?t=st=1723845752~exp=1723849352~hmac=c7cc78b9fe2688fbed4419bcf848748026a37a50ea38821c89c15f77f776dd2f&w=740"
                       }
-                      // {...formik.getFieldProps("userName")}
+                      alt="avatar"
+                      id="profile_image"
                     />
-                    <div className="error">{formik.errors.userName}</div>
-                    <div className="icon">
-                      <i className="fa-solid fa-user-secret"></i>
-                    </div>
+                    <i className="bx bxs-chevrons-left bx-flashing"></i>
+                    <span>Upload your profile</span>
+                  </label>
+                  <input
+                    type="file"
+                    id="profile"
+                    name="profile"
+                    onChange={handleProfileImageChange}
+                    // {...formik.getFieldProps('profile')}
+                  />
+                </div>
+                {/* //UserName: */}
+                <div className="form_group">
+                  <label htmlFor="userName">
+                    UserName{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Unique UserName "
+                    name="userName"
+                    id="userName"
+                    value={formik.values.userName}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    className={
+                      formik.errors.userName && formik.touched.userName
+                        ? "input_error"
+                        : ""
+                    }
+                    // {...formik.getFieldProps("userName")}
+                  />
+                  <div className="error">{formik.errors.userName}</div>
+                  <div className="icon">
+                    <i className="fa-solid fa-user-secret"></i>
                   </div>
-                  {/* //First Name */}
-                  <div className="form_group">
-                    <label htmlFor="firstName">
-                      FirstName{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Eg: Jayakumar "
-                      name="firstName"
-                      id="firstName"
-                      value={formik.values.firstName}
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      className={
-                        formik.errors.firstName && formik.touched.firstName
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("firstName")}
-                    />
-                    <div className="error">{formik.errors.firstName}</div>
-                    <div className="icon">
-                      <i className="fa-solid fa-user"></i>
-                    </div>
-                    {/* <div className='success_icon' >
+                </div>
+                {/* //First Name */}
+                <div className="form_group">
+                  <label htmlFor="firstName">
+                    FirstName{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Eg: Joyal "
+                    name="firstName"
+                    id="firstName"
+                    value={formik.values.firstName}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    className={
+                      formik.errors.firstName && formik.touched.firstName
+                        ? "input_error"
+                        : ""
+                    }
+                    // {...formik.getFieldProps("firstName")}
+                  />
+                  <div className="error">{formik.errors.firstName}</div>
+                  <div className="icon">
+                    <i className="fa-solid fa-user"></i>
+                  </div>
+                  {/* <div className='success_icon' >
                     <i className="fa-solid fa-circle-check"></i>
                     </div> */}
+                </div>
+                {/* //Last Name */}
+                <div className="form_group">
+                  <label htmlFor="lastName">
+                    LastName{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Eg : James or M"
+                    name="lastName"
+                    id="lastName"
+                    value={formik.values.lastName}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    className={
+                      formik.errors.lastName && formik.touched.lastName
+                        ? "input_error"
+                        : ""
+                    }
+                    // {...formik.getFieldProps("lastName")}
+                  />
+                  <div className="error">{formik.errors.lastName}</div>
+                  <div className="icon">
+                    <i className="fa-solid fa-user-tag"></i>
                   </div>
-                  {/* //Last Name */}
-                  <div className="form_group">
-                    <label htmlFor="lastName">
-                      LastName{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Eg : Kumar or K"
-                      name="lastName"
-                      id="lastName"
-                      value={formik.values.lastName}
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      className={
-                        formik.errors.lastName && formik.touched.lastName
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("lastName")}
-                    />
-                    <div className="error">{formik.errors.lastName}</div>
-                    <div className="icon">
-                      <i className="fa-solid fa-user-tag"></i>
-                    </div>
+                </div>
+                {/* Email`` */}
+                <div className="form_group">
+                  <label htmlFor="email">
+                    Email{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Eg : demo@gmail.com"
+                    name="email"
+                    id="email"
+                    value={formik.values.email}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    className={
+                      formik.errors.email && formik.touched.email
+                        ? "input_error"
+                        : ""
+                    }
+                    // {...formik.getFieldProps("email")}
+                  />
+                  <div className="error">{formik.errors.email}</div>
+                  <div className="icon">
+                    <i className="fa-solid fa-envelope"></i>
                   </div>
-                  {/* Email`` */}
-                  <div className="form_group">
-                    <label htmlFor="email">
-                      Email{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="Eg : abc@gmail.com"
-                      name="email"
-                      id="email"
-                      value={formik.values.email}
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      className={
-                        formik.errors.email && formik.touched.email
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("email")}
-                    />
-                    <div className="error">{formik.errors.email}</div>
-                    <div className="icon">
-                      <i className="fa-solid fa-envelope"></i>
-                    </div>
-                  </div>
-                  {/* MobileNumber`` */}
-                  {/* <div className="form_group">
+                </div>
+                {/* MobileNumber`` */}
+                {/* <div className="form_group">
                   <label htmlFor="mobileNumber">Mobile Number</label>
                   <input
                     type="tel"
@@ -741,206 +832,228 @@ const Register = () => {
                     <i className="bx bx-mobile"></i>
                   </div>
                 </div> */}
-                  {/* Password`` */}
-                  <div className="form_group">
-                    <label htmlFor="password">
-                      Password{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
+                {/* Password`` */}
+                <div className="form_group">
+                  <label htmlFor="password">
+                    Password{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    id="password"
+                    value={formik.values.password}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    className={
+                      formik.errors.password && formik.touched.password
+                        ? "input_error"
+                        : ""
+                    }
+                    // {...formik.getFieldProps("password")}
+                  />
+                  <div className="error">{formik.errors.password}</div>
+                  <div className="icon">
+                    <i className="fa-solid fa-lock"></i>
+                  </div>
+
+                  <div className="show_pass" onClick={handleShow}>
+                    {!show ? (
+                      <i className="fa-solid fa-eye-slash"></i>
+                    ) : (
+                      <i className="fa-solid fa-eye"></i>
+                    )}
+                  </div>
+                </div>
+                <div className="aggrement">
+                  <div className="form_group_checkbox">
                     <input
-                      type="password"
-                      placeholder="Password"
-                      name="password"
-                      id="password"
-                      value={formik.values.password}
-                      onBlur={formik.handleBlur}
+                      type="checkbox"
+                      name="terms"
+                      onClick={() => setFieldValue("terms", true)}
+                      id="terms"
                       onChange={formik.handleChange}
+                      value={formik.values.terms}
+                      onBlur={formik.handleBlur}
                       className={
-                        formik.errors.password && formik.touched.password
+                        formik.errors.terms && formik.touched.terms
                           ? "input_error"
                           : ""
                       }
-                      // {...formik.getFieldProps("password")}
                     />
-                    <div className="error">{formik.errors.password}</div>
-                    <div className="icon">
-                      <i className="fa-solid fa-lock"></i>
-                    </div>
+                    <label htmlFor="terms">
+                      By signing up to create an account I accept Company's{" "}
+                      <Link onClick={() => setOpenTermsCondition(true)}>
+                        Terms of Use
+                      </Link>{" "}
+                      and{" "}
+                      <Link onClick={() => setOpenPrivacyCondition(true)}>
+                        Privacy Policy
+                      </Link>
+                    </label>
+                  </div>
+                  <div className="error">{formik.errors.terms}</div>
+                </div>
 
-                    <div className="show_pass" onClick={handleShow}>
-                      {!show ? (
-                        <i className="fa-solid fa-eye-slash"></i>
-                      ) : (
-                        <i className="fa-solid fa-eye"></i>
-                      )}
-                    </div>
+                <div className="form_submit">
+                  <button type="submit">
+                    {registerLoader ? (
+                      <div className="loader"></div>
+                    ) : (
+                      <>
+                        Register
+                        <div className="rocket">
+                          <i className="bx bx-log-in bx-flashing"></i>
+                        </div>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="or">
+                  <p>
+                    Already u have an account ?{" "}
+                    <span
+                      onClick={() => {
+                        setAuthToggle(true);
+                      }}
+                      className={AuthToggle ? "activelogin" : ""}
+                    >
+                      Login
+                    </span>
+                  </p>
+                </div>
+              </form>
+            ) : (
+              <form
+                action=""
+                onSubmit={Login_formik.handleSubmit}
+                className="login_form"
+              >
+                   <div className="form_title">
+                  <h4>Welcome Back to Digital VCard Application</h4>
+                  <small>Login With Your Account!</small>
+                </div>
+                {/* Email`` */}
+                <div className="form_group">
+                  <label htmlFor="email">
+                    Email{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Eg : abc@gmail.com"
+                    name="email"
+                    id="email"
+                    value={Login_formik.values.email}
+                    onBlur={Login_formik.handleBlur}
+                    onChange={Login_formik.handleChange}
+                    className={
+                      Login_formik.errors.email && Login_formik.touched.email
+                        ? "input_error"
+                        : ""
+                    }
+                  />
+                  <div className="error">{Login_formik.errors.email}</div>
+                  <div className="icon">
+                    <i className="bx bxs-envelope"></i>
                   </div>
-                  <div className="aggrement">
-                    <div className="form_group_checkbox">
-                      <input
-                        type="checkbox"
-                        name="terms"
-                        onClick={() => setFieldValue("terms", true)}
-                        id="terms"
-                        onChange={formik.handleChange}
-                        value={formik.values.terms}
-                        onBlur={formik.handleBlur}
-                        className={
-                          formik.errors.terms && formik.touched.terms
-                            ? "input_error"
-                            : ""
-                        }
-                      />
-                      <label htmlFor="terms">
-                        By signing up to create an account I accept Company's{" "}
-                        <Link onClick={() => setOpenTermsCondition(true)}>
-                          Terms of Use
-                        </Link>{" "}
-                        and{" "}
-                        <Link onClick={() => setOpenPrivacyCondition(true)}>
-                          Privacy Policy
-                        </Link>
-                      </label>
-                    </div>
-                    <div className="error">{formik.errors.terms}</div>
+                </div>
+                {/* Password`` */}
+                <div className="form_group">
+                  <label htmlFor="email">
+                    Password{" "}
+                    <span>
+                      <sup>*</sup>
+                    </span>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    id="password"
+                    value={Login_formik.values.password}
+                    onBlur={Login_formik.handleBlur}
+                    onChange={Login_formik.handleChange}
+                    className={
+                      Login_formik.errors.password &&
+                      Login_formik.touched.password
+                        ? "input_error"
+                        : ""
+                    }
+                  />
+                  <div className="error">{Login_formik.errors.password}</div>
+                  <div className="icon">
+                    <i className="bx bxs-lock"></i>
                   </div>
 
-                  <div className="form_submit">
-                    <button type="submit">
-                      {registerLoader ? (
-                        <div className="loader"></div>
-                      ) : (
-                        <>
-                          Register
-                          <div className="rocket">
-                            <i className="bx bx-log-in bx-flashing"></i>
-                          </div>
-                        </>
-                      )}
-                    </button>
+                  <div className="show_pass" onClick={handleShow}>
+                    {!show ? (
+                      <i className="bx bx-low-vision"></i>
+                    ) : (
+                      <i className="bx bxs-show"></i>
+                    )}
                   </div>
-                  {/* <div className="or">
-                  <p>or Continue</p>
+                </div>
+
+                <div className="forgot_password">
+                  <Link to="/forgot_password">
+                    <small>Forgot Password ?</small>
+                  </Link>
+                </div>
+                {/* <div className="capcha">
+                  <ReCAPTCHA
+                    sitekey="6LdlmuYpAAAAAOOHZqQQExlLSFlXG5rQsXMF48wI"
+                    onChange={onChange}
+                  />
                 </div> */}
-                </form>
-              ) : (
-                <form
-                  action=""
-                  onSubmit={Login_formik.handleSubmit}
-                  className="login_form"
-                >
-                  <div className="form_title">
-                    <small>Welcome Back to MyVirtualCard!</small>
-                  </div>
-                  {/* Email`` */}
-                  <div className="form_group">
-                    <label htmlFor="email">
-                      Email{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="Eg : abc@gmail.com"
-                      name="email"
-                      id="email"
-                      value={Login_formik.values.email}
-                      onBlur={Login_formik.handleBlur}
-                      onChange={Login_formik.handleChange}
-                      className={
-                        Login_formik.errors.email && Login_formik.touched.email
-                          ? "input_error"
-                          : ""
-                      }
-                    />
-                    <div className="error">{Login_formik.errors.email}</div>
-                    <div className="icon">
-                      <i className="bx bxs-envelope"></i>
-                    </div>
-                  </div>
-                  {/* Password`` */}
-                  <div className="form_group">
-                    <label htmlFor="email">
-                      Password{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      name="password"
-                      id="password"
-                      value={Login_formik.values.password}
-                      onBlur={Login_formik.handleBlur}
-                      onChange={Login_formik.handleChange}
-                      className={
-                        Login_formik.errors.password &&
-                        Login_formik.touched.password
-                          ? "input_error"
-                          : ""
-                      }
-                    />
-                    <div className="error">{Login_formik.errors.password}</div>
-                    <div className="icon">
-                      <i className="bx bxs-lock"></i>
-                    </div>
-
-                    <div className="show_pass" onClick={handleShow}>
-                      {!show ? (
-                        <i className="bx bx-low-vision"></i>
-                      ) : (
-                        <i className="bx bxs-show"></i>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="forgot_password">
-                    <Link to="/forgot_password">
-                      <small>Forgot Password ?</small>
-                    </Link>
-                  </div>
-                  <div className="capcha">
-                    <ReCAPTCHA
-                      sitekey="6LdlmuYpAAAAAOOHZqQQExlLSFlXG5rQsXMF48wI"
-                      onChange={onChange}
-                    />
-                  </div>
-                  <div className="form_submit">
-                    <button type="submit">
-                      {loginLoader ? (
-                        <div className="loader"></div>
-                      ) : (
-                        <>
-                          Sign In
-                          <div className="rocket">
-                            <i className="bx bx-log-in bx-flashing"></i>
-                          </div>
-                        </>
-                      )}
-                    </button>
-                  </div>
-
-                  <div className="admin_actions">
-                    {/* <Link to="/sadmin/dashboard">
+                <div className="form_submit">
+                  <button type="submit">
+                    {loginLoader ? (
+                      <div className="loader"></div>
+                    ) : (
+                      <>
+                        Sign In
+                        <div className="rocket">
+                          <i className="bx bx-log-in bx-flashing"></i>
+                        </div>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="or">
+                  <p>
+                    You not have an account ?{" "}
+                    <span
+                      onClick={() => {
+                        setAuthToggle(false);
+                      }}
+                      className={AuthToggle ? "activelogin" : ""}
+                    >
+                      Register
+                    </span>
+                  </p>
+                </div>
+                <div className="admin_actions">
+                  {/* <Link to="/sadmin/dashboard">
                     <button>
                       Super Admin Login
                       <i className="bx bx-log-in-circle bx-flashing"></i>
                     </button>
                   </Link> */}
-                    {/* <Link onClick={()=>{formik.values.email='aristostech@gmail.com',formik.values.password='123456'}}>
+                  {/* <Link onClick={()=>{formik.values.email='aristostech@gmail.com',formik.values.password='123456'}}>
                     <button>
                       User Login{" "}
                       <i className="bx bx-log-in-circle bx-flashing"></i>
                     </button>
                   </Link> */}
-                  </div>
-                </form>
-              )}
-            </div>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>

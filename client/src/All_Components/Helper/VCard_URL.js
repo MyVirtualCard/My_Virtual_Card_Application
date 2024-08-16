@@ -34,7 +34,7 @@ const getFileSize = (base64String) => {
 };
 
 export let VCardURLValidateShema = Yup.object({
-  URL_Alies: Yup.string().required("URL_Alies is required!"),
+  URL_Alies: Yup.string().trim().required("URL_Alies is required!"),
   VCardName: Yup.string()
     .min(4, "Minimum 4 char required!")
     .required("VCardName is required!"),

@@ -9,11 +9,14 @@ let Vcard_URL_Schema=new mongoose.Schema({
       URL_Alies:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        lowercase: true, // This will convert the value to lowercase before storing
+        trim: true, // This removes any leading or trailing whitespace
       },
     VCardName:{
         type:String,
-        required:true
+        required:true,
+   
     },
     Description:{
         type:String,
@@ -49,7 +52,12 @@ let Vcard_URL_Schema=new mongoose.Schema({
 {timestamps:true}
 );
 
-
+// Alternative way: Using pre-save middleware
+Vcard_URL_Schema.pre('save', function (next) {
+    this.URL_Alies = this.URL_Alies.toLowerCase();
+    this.URL_Alies=this.URL_Alies.trim();
+    next();
+  });
 
 let Vcard_URL=mongoose.model('Vcard_URL',Vcard_URL_Schema);
 

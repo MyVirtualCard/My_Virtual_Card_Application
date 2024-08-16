@@ -3,7 +3,7 @@ body {
   height: 100vh;
   scroll-snap-align: start;
   overflow-x: hidden;
-  overflow: scroll;
+  overflow-y: hidden;
 
   &::-webkit-scrollbar {
     width: 4px !important;

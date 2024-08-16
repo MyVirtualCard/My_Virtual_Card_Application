@@ -16,7 +16,7 @@ export let BasicDetailValidateShema=Yup.object({
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
   ).min(1,'Min 1-char required!').required('LastName is required!'),
-  Email:Yup.string().test(
+  Email:Yup.string().trim().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
