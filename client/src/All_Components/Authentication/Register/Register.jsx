@@ -607,6 +607,13 @@ const Register = () => {
         ) : (
           ""
         )}
+        {/* Home page button */}
+
+        <div className="home_page">
+          <Link to='/'>
+          <i className='bx bxs-home'></i>Home
+          </Link>
+        </div>
 {/* Extra design anime */}
 <div className="extra_designs">
   <div className="design1">
@@ -645,7 +652,7 @@ const Register = () => {
                 className='slider'
               >
                 {images.map((data, index) => {
-                  return <img src={data.image} alt="image" key={index} />;
+                  return <img src={data.image} alt="image" key={index} />
                 })}
               </Slide>
        
@@ -1030,7 +1037,7 @@ const Register = () => {
                     You not have an account ?{" "}
                     <span
                       onClick={() => {
-                        setAuthToggle(false);
+                        setAuthToggle(false)
                       }}
                       className={AuthToggle ? "activelogin" : ""}
                     >
