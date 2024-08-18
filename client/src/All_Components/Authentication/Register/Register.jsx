@@ -1516,7 +1516,7 @@ const Register = () => {
                       </div>
                       <div className="form_group">
                         <label htmlFor="email">
-                          Password{" "}
+                          New Password{" "}
                           <span>
                             <sup>*</sup>
                           </span>
