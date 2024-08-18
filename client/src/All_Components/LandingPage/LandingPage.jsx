@@ -386,7 +386,6 @@ const LandingPage = () => {
   return (
     <>
       <m.div className="home_container">
-        <Toaster position="top-right" />
 
         {/* whatsup_icons */}
         <m.div className="whatsup">

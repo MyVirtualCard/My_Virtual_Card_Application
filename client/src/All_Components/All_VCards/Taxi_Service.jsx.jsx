@@ -710,12 +710,12 @@ END:VCARD
                 {VCard_URL_Data.map((data, index) => {
                   return (
                     <div className="row_2" key={index}>
-                      <p>
-                        {data.Description ||
+                      <div  dangerouslySetInnerHTML={{ __html: data.Description }}>
+                        {/* {data.Description ||
                           `We started from a traditional marketing background and
                       emerged to be a successful Digital Marketing Agency since
-                      Digitalisation has begun to evolve.`}
-                      </p>
+                      Digitalisation has begun to evolve.`} */}
+                      </div>
                     </div>
                   );
                 })}

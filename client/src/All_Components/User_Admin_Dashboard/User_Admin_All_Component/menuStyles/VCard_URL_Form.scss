@@ -217,7 +217,7 @@
             bottom: -10%;
           }
         }
-        input[type="file"] {
+        input[type=file] {
           display: block;
           border: none;
           width: 100%;
@@ -275,6 +275,14 @@
       }
       .editor {
         grid-column: span 1;
+      }
+      .quill{
+        border: 1px solid rgb(110, 110, 110) !important;
+        height: 250px !important;
+        width: 100% !important;
+      }
+      .ql-container{
+border: none;
       }
       .double_col_inputs {
         display: flex;
@@ -560,9 +568,9 @@
           }
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"] {
+        input[type=text],
+        input[type=email],
+        input[type=tel] {
           padding: 8px 1rem;
           width: 100%;
           outline: none;

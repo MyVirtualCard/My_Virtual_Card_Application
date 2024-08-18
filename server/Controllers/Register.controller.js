@@ -61,6 +61,7 @@ export const RegisterUser = async (req, res) => {
           verified: false,
         };
         let createUser = new UserAuth(data);
+
         await createUser
           .save()
           .then((result) => {
@@ -220,10 +221,10 @@ export const ForgotPassword = async (req, res) => {
           expiresIn: "30d",
         });
 
-        let NavigateLink=`/forgot_password/reset_password/${checkUser._id}/${token}`
+        let NavigateLink = `${checkUser._id}/${token}`;
         res
           .status(201)
-          .json({ message: "Change Your New Password!",data:NavigateLink});
+          .json({ message: "Change Your New Password!", data: NavigateLink });
 
         // const transporter = nodemailer.createTransport({
         //   host: process.env.SMTP_HOST, // Correctly specify the SMTP host
@@ -288,33 +289,35 @@ export const ResetPassword = async (req, res) => {
               { _id: id },
               { password: HashPassword }
             );
-            res.status(201).json({ message: "New Password Created!",data:checkUser });
-          //   const transporter = nodemailer.createTransport({
-          //     host: process.env.SMTP_HOST, // Correctly specify the SMTP host
-          //     port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
-          //     secure: true, // Use true for 465, false for other ports
-          //     auth: {
-          //       user: process.env.GMAIL, // your Gmail address
-          //       pass: process.env.GMAIL_PASSWORD, // your Gmail password
-          //     },
-          //   });
+            res
+              .status(201)
+              .json({ message: "New Password Created!", data: checkUser });
+            //   const transporter = nodemailer.createTransport({
+            //     host: process.env.SMTP_HOST, // Correctly specify the SMTP host
+            //     port: process.env.SMTP_PORT, // Use 465 for SSL or 587 for TLS
+            //     secure: true, // Use true for 465, false for other ports
+            //     auth: {
+            //       user: process.env.GMAIL, // your Gmail address
+            //       pass: process.env.GMAIL_PASSWORD, // your Gmail password
+            //     },
+            //   });
 
-          //   let message = {
-          //     from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
-          //     to: `${checkUser.email}`, // list of receivers
-          //     subject: "Password Updated!", // Subject line
-          //     text: "Your New Password Created Sucessfully!", // plain text body
-          //     html: `
-          // <h3>Hello,${checkUser.firstName} &nbsp; ${checkUser.lastName}</h3>
-          // <p>Your old password reseted sucessfully and updated your new password with your email address..Now you ready to login with latest new password..</p>
-          // <small><b>Ready to Login ?</b><a href='http://localhost:5173/login'>Click Here to Login!</a></small>
-          // `, // html body
-          //   };
+            //   let message = {
+            //     from: `AristosTech India Private Ltd <${process.env.GMAIL}>`, // sender address
+            //     to: `${checkUser.email}`, // list of receivers
+            //     subject: "Password Updated!", // Subject line
+            //     text: "Your New Password Created Sucessfully!", // plain text body
+            //     html: `
+            // <h3>Hello,${checkUser.firstName} &nbsp; ${checkUser.lastName}</h3>
+            // <p>Your old password reseted sucessfully and updated your new password with your email address..Now you ready to login with latest new password..</p>
+            // <small><b>Ready to Login ?</b><a href='http://localhost:5173/login'>Click Here to Login!</a></small>
+            // `, // html body
+            //   };
 
-          //   // send mail with defined transport object
-          //   transporter.sendMail(message).then(() => {
-          //     res.status(201).json({ message: "New Password Created!" });
-          //   });
+            //   // send mail with defined transport object
+            //   transporter.sendMail(message).then(() => {
+            //     res.status(201).json({ message: "New Password Created!" });
+            //   });
           }
         }
       );
@@ -434,11 +437,37 @@ const SendOtpVerificationEmail = async (
       expiredAt: Date.now() + 60000,
     });
     let SavedOTP = await saveOTP.save();
-    return res.status(201).json({
+    //Checking for already this email exist or not:
+    let checkUser = await UserAuth.findOne({ userName });
+    if (!checkUser) {
+      return res.status(400).json({ message: `UserName Doesn't Exist!` });
+      // throw new Error ("User Doesn't Exist" );
+    }
+    //Create token for specific user:
+    let token = jwt.sign(
+      {
+        id: checkUser.id,
+        email: checkUser.email,
+        name: checkUser.firstName,
+        userName: checkUser.userName,
+      }, //Token payload stored our  data
+      process.env.SECRET_KEY,
+      { expiresIn: "30d" }
+    );
+    //Token verify:
+    if (!token) {
+      return res.status(400).json({ message: "Token not found " });
+    }
+
+    res.status(201).json({
       status: "PENDING",
       message: "Verification OTP Sended!",
       OTP: OTP,
       data: SavedOTP,
+      token: token,
+      id: checkUser.id,
+      userName: checkUser.userName,
+      name: checkUser.firstName,
     });
     // transporter.sendMail(mailOption, (error, info) => {
     //   if (error) {

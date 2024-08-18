@@ -17,9 +17,11 @@ export const LoginUser = async (req, res) => {
         return res.status(400).json({ message: `User Doesn't Exist` });
         // throw new Error ("User Doesn't Exist" );
       }
-      if (checkUser.verified == false) {
-        return res.status(400).json({ message: `Email Not Verified!` });
-      } else {
+      // if (checkUser.verified == false) {
+      //   return res.status(400).json({ message: `Email Not Verified!` });
+      // } ;
+      
+    
         //Compare current password and already registered password with bcryptjs:
         let verifyPassword = await bcryptjs.compare(
           password,
@@ -53,7 +55,7 @@ export const LoginUser = async (req, res) => {
             message: "User Login Sucessfully ",
           });
         }
-      }
+ 
       // const response=await axios.post(`https://www.google.com/recaptcha/api/siteverify`,null,{
       //   params:{
       //     secret:'6LdlmuYpAAAAAC3FfLOpVtzNgRGL8l_kMWkpHp-B',

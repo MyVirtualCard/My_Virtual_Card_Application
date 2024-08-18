@@ -6,6 +6,8 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import axios from "axios";
 import Context from "../../../../UseContext/Context";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import {
   convertToBase64Banner,
   convertToBase64Profile,
@@ -37,7 +39,25 @@ const BasicForm = () => {
   const [VCardName, setVCardName] = useState();
   const [Occupation, setOccupation] = useState();
   const [Description, setDescription] = useState();
+  //Editor
+  const modules = {
+    toolbar: [
+      [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+      [{size: []}],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, 
+       {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']                                         
+    ],
+  };
 
+  const formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image'
+  ];
   const [Profile, setProfile] = useState();
 
   let [Banner, setBanner] = useState();
@@ -298,11 +318,28 @@ const BasicForm = () => {
               <label htmlFor="Description">
                 Description<sup>*</sup>
               </label>
-              <Editor
+              {/* <Editor
                 value={Description}
                 onTextChange={(e) => setDescription(e.htmlValue)}
                 id="Description"
                 name="Description"
+                style={{ height: "180px" }}
+                placeholder="Enter Short Description..!"
+              /> */}
+              <ReactQuill
+              modules={modules}
+              formats={formats}
+                theme="snow"
+                id="Description"
+                name="Description"
+                value={Description}
+                // onTextChange={(e) => {
+                //   formik.setFieldValue("Description", e.htmlValue),
+                //     setDescription(e.htmlValue);
+                // }}
+                onChange={(e) => {
+                  setDescription(e);
+                }}
                 style={{ height: "180px" }}
                 placeholder="Enter Short Description..!"
               />

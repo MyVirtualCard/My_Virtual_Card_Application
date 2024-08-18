@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import Razorpay from "razorpay";
+import multer from "multer";
 //All api route importing
 import RegisterRoute from "./Routes/Register.route.js";
 import VerifyOTP from "./Routes/VerifyOTP.route.js";
@@ -73,6 +74,18 @@ export const instance = new Razorpay({
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
   res.send("Welcome to Myvirtual VCard Application");
+});
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage });
+
+app.post('/upload-endpoint', upload.single('file'), (req, res) => {
+  res.json({ fileName: req.file.filename, filePath: `/uploads/${req.file.filename}` });
 });
 // Api All Routes:
 app.use("/auth", RegisterRoute);

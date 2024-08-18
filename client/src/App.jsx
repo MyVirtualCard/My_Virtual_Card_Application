@@ -99,10 +99,15 @@ import Manager from "./All_Components/All_VCards/Manager.jsx.jsx";
 import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
 import Business_Consultant from "./All_Components/All_VCards/Business_Consultant.jsx";
 import FallBack from "./Fallback/FallBack.jsx";
+import ImageCropAndUpload from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ImageCropper.jsx";
 
 const App = () => {
   //URL Name state:
   let [AuthToggle, setAuthToggle] = useState(false);
+  let [ForgotPassToggle, setForgotPassToggle] = useState(false);
+  let [ResetPassToggle, setResetPassToggle] = useState(false);
+  let[VerifyOTPToggle,setVerifyOTPToggle]=useState(false);
+  let[ResendOTPToggle,setResendOTPToggle]=useState(false)
   let [URL_Alies, setURL_Alies] = useState("");
   let [SideNavActions, setSideNavActions] = useState(false);
   let [profileOpen, setProfileOpen] = useState(false);
@@ -353,6 +358,10 @@ const App = () => {
         }}/>
         <Context.Provider
           value={{
+            ForgotPassToggle, setForgotPassToggle,
+            ResetPassToggle, setResetPassToggle,
+            VerifyOTPToggle,setVerifyOTPToggle,
+            ResendOTPToggle,setResendOTPToggle,
             LiveLinkActivate,setLiveLinkActivate,
             VCardCount, setVCardCount,
             AllFeedback,setAllFeedback,
@@ -699,7 +708,7 @@ const App = () => {
               <Route path="/paymentsuccess" element={<PaymentSuccess />} />
               <Route path="/terms_condition" element={<Terms_Condition />} />
               <Route path="/privacy_condition" element={<Privacy_Policy />} />
-
+<Route path='/image_upload' element={<ImageCropAndUpload/>}/>
               {/*AllVardsTemplate */}
 
               {/* {currentTemplate == 1 ? (

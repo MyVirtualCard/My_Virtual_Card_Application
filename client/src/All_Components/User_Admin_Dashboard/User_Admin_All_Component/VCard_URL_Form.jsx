@@ -6,6 +6,8 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/saga-blue/theme.css"; // theme
 import "primereact/resources/primereact.min.css"; // core css
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import axios from "axios";
 import Context from "../../UseContext/Context";
 import {
@@ -27,7 +29,7 @@ const VCard_URL_Form = () => {
   let [BasicDetailLoader, setBasicDetailLoader] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [VCardName, setVCardName] = useState();
-  const [Description, setDescription] = useState();
+  const [Description, setDescription] = useState('');
   const [Profile, setProfile] = useState();
   let [Banner, setBanner] = useState();
   const stripHtmlTags = (html) => {
@@ -65,7 +67,21 @@ const VCard_URL_Form = () => {
       });
 
   }, []);
-
+  //Editor
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+      ],
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
@@ -276,7 +292,7 @@ const VCard_URL_Form = () => {
               <label htmlFor="Description">
                 Description<sup>*</sup>
               </label>
-              <Editor
+              {/* <Editor
                 id="Description"
                 name="Description"
                 value={Description}
@@ -292,7 +308,29 @@ const VCard_URL_Form = () => {
                     ? "input_error"
                     : "input_success"
                 }
-              />
+              /> */}
+              <ReactQuill 
+               modules={modules}
+              theme="snow"    
+              id="Description"
+                name="Description"
+                value={Description}
+                // onTextChange={(e) => {
+                //   formik.setFieldValue("Description", e.htmlValue),
+                //     setDescription(e.htmlValue);
+                // }}
+                onChange={(e) => {
+                  formik.setFieldValue("Description", e),
+                    setDescription(e);
+                }}
+                onBlur={formik.handleBlur}
+                style={{ height: "150px" }}
+                placeholder="Enter Short Description..!"
+                className={
+                  formik.errors.Description && formik.touched.Description
+                    ? "input_error"
+                    : "input_success"
+                } />
               <div className="desc_error">{formik.errors.Description}</div>
             </div>
             <div className="form_group double_col_inputs">
