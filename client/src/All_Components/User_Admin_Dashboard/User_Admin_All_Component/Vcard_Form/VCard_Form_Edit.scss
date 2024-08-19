@@ -198,7 +198,7 @@ z-index: -1;
       top: -0.5%;
       left: 6%;
       z-index: 10;
-
+display: none  !important;
       width: 30px;
       height: 30px;
       background-color: #0a7a7a;
@@ -220,8 +220,8 @@ z-index: -1;
           filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
         }
       }
-      @media screen and (max-width: 950px) {
-        display: block;
+      @media screen and (max-width: 700px) {
+        display: block !important;
       }
     }
     // SideNav Style
