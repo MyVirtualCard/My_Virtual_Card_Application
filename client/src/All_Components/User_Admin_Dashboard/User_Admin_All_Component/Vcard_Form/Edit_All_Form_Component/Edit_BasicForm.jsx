@@ -314,7 +314,7 @@ const BasicForm = () => {
               />
             </div>
 
-            <div className="form_group">
+            <div className="form_group description">
               <label htmlFor="Description">
                 Description<sup>*</sup>
               </label>
@@ -340,7 +340,7 @@ const BasicForm = () => {
                 onChange={(e) => {
                   setDescription(e);
                 }}
-                style={{ height: "180px" }}
+                // style={{ height: "180px" }}
                 placeholder="Enter Short Description..!"
               />
             </div>

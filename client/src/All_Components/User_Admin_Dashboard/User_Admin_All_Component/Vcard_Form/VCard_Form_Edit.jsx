@@ -229,7 +229,9 @@ const VCard_Form_Edit = () => {
                     }}
                   >
                     VCard Live preview
-                    <span className="material-symbols-outlined">live_tv</span>
+                    <span className="material-symbols-outlined">
+visibility
+</span>
                   </a>
                 ) : (
                   ""
@@ -253,7 +255,12 @@ const VCard_Form_Edit = () => {
             className="slider_icon"
             onClick={() => setFormSliderToggle(!formSliderToggle)}
           >
-            <i className="bx bx-slider-alt"></i>
+            {!formSliderToggle ? 
+                  <i className='bx bxs-chevrons-right bx-flashing' ></i>
+            : 
+            <i className='bx bxs-chevrons-left bx-flashing' ></i>
+            }
+     
           </div>
           <div
             className="form_sidenav"

@@ -16,7 +16,7 @@ import {
 } from "../../Helper/convert";
 import { useNavigate } from "react-router-dom";
 import { VCardURLValidateShema } from "../../Helper/VCard_URL";
-import { useFormik } from "formik";
+import { Field, useFormik } from "formik";
 import * as Yup from "yup";
 import { Toaster, toast } from "react-hot-toast";
 const VCard_URL_Form = () => {
@@ -82,11 +82,24 @@ const VCard_URL_Form = () => {
       ['clean'],
     ],
   };
+  const handlePaste = (e) => {
+    // Custom handling of pasted content
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedData = clipboardData.getData('Text');
+
+    // Optionally process pastedData here
+
+    setDescription((prevValue) => prevValue + pastedData);
+    e.preventDefault(); // Prevent default paste behavior if necessary
+  };
+  const handleChange = (content) => {
+    setDescription(content);
+  };
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
       VCardName: "",
-      Description: "",
+      Description: Description,
       Profile: "",
 
       ProfileType: "ImageUpload",
@@ -292,7 +305,7 @@ const VCard_URL_Form = () => {
               <label htmlFor="Description">
                 Description<sup>*</sup>
               </label>
-              {/* <Editor
+              <Editor
                 id="Description"
                 name="Description"
                 value={Description}
@@ -308,21 +321,19 @@ const VCard_URL_Form = () => {
                     ? "input_error"
                     : "input_success"
                 }
-              /> */}
-              <ReactQuill 
+              />
+           
+              {/* <ReactQuill 
                modules={modules}
               theme="snow"    
               id="Description"
                 name="Description"
-                value={Description}
-                // onTextChange={(e) => {
-                //   formik.setFieldValue("Description", e.htmlValue),
-                //     setDescription(e.htmlValue);
-                // }}
-                onChange={(e) => {
-                  formik.setFieldValue("Description", e),
-                    setDescription(e);
+                value={formik.values.Description}
+                onTextChange={(e) => {
+                  formik.setFieldValue("Description", e.htmlValue),
+                    setDescription(e.htmlValue);
                 }}
+                // onChange={(value) => setFieldValue('Description', value)}
                 onBlur={formik.handleBlur}
                 style={{ height: "150px" }}
                 placeholder="Enter Short Description..!"
@@ -330,7 +341,7 @@ const VCard_URL_Form = () => {
                   formik.errors.Description && formik.touched.Description
                     ? "input_error"
                     : "input_success"
-                } />
+                } /> */}
               <div className="desc_error">{formik.errors.Description}</div>
             </div>
             <div className="form_group double_col_inputs">

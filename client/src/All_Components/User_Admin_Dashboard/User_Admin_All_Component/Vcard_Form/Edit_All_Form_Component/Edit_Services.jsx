@@ -6,12 +6,15 @@ import { Editor as UpdateEditor } from "primereact/editor";
 import "primereact/resources/themes/saga-blue/theme.css"; // Choose a theme
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { convertToBase64ServiceImage } from "../../../../Helper/convert";
 import Context from "../../../../UseContext/Context";
 import { ServiceValidateShema } from "../../../../Helper/ServiceValidate";
+import { modules, formats } from "../../Quill";
 const Services = () => {
   let { URL_Alies } = useParams();
   let {
@@ -43,6 +46,7 @@ const Services = () => {
   let [ServiceType, setServiceType] = useState();
   let [ServiceIcon, setServiceIcon] = useState();
   let [ServiceAddress, setServiceAddress] = useState();
+
   const [filename, setFilename] = useState("Choose File");
   const [key, setKey] = useState(0);
 
@@ -125,10 +129,14 @@ const Services = () => {
         })
         .then((res) => {
           setUpdateFormOpen(false);
+          setServiceFormOpen(false);
           toast.success(res.data.message);
           formik.setFieldValue("ServiceDescription", ""),
             (formik.values.ServiceDescription = "");
           setServiceDescription("");
+          values.ServiceDescription = stripHtmlTags("");
+          values.ServiceImage = undefined;
+          setServiceImage(undefined);
           formik.handleReset();
           setFormSubmitLoader(false);
 
@@ -273,9 +281,6 @@ const Services = () => {
           setFormSubmitLoader(false);
           reloadComponent();
           setTimeout(() => {
-            setShowForm("Products");
-          }, 2000);
-          setTimeout(() => {
             setServiceName("");
             setServiceURL("");
 
@@ -308,8 +313,9 @@ const Services = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
-          reloadComponent();
+
           setServiceCount(--ServiceCount);
+          reloadComponent();
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -349,50 +355,69 @@ const Services = () => {
         <div className="add_new_service">
           {currentPlan === "Trial Plan" && ServiceCount != 2 ? (
             <button
-            onClick={() => {
-              setServiceFormOpen(true), setUpdateFormOpen(false);
-            }}
-          >
-            <i className="bx bx-plus"></i>Add New Service
-          </button>
-          ) : (
-      ''
-          )}
-          {currentPlan === "Basic" && ServiceCount != 4 ? (
-          <button
-          onClick={() => {
-            setServiceFormOpen(true), setUpdateFormOpen(false);
-          }}
-        >
-          <i className="bx bx-plus"></i>Add New Service
-        </button>
-          ) : (
-           ''
-          )}
-          {currentPlan === "Standard" && ServiceCount != 6 ? (
-             <button
-             onClick={() => {
-               setServiceFormOpen(true), setUpdateFormOpen(false);
-             }}
-           >
-             <i className="bx bx-plus"></i>Add New Service
-           </button>
-          ) : (
-      ''
-          )}
-          {currentPlan === "Enterprises" && ServiceCount != 8 ? (
-              <button
               onClick={() => {
-                setServiceFormOpen(true), setUpdateFormOpen(false);
+                setServiceFormOpen(true), setUpdateFormOpen(false),
+                setServiceImage(undefined),
+                (formik.values.ServiceImage = undefined),
+                setServiceDescription(undefined),
+                (formik.values.ServiceDescription = stripHtmlTags(""));
+
               }}
             >
               <i className="bx bx-plus"></i>Add New Service
             </button>
           ) : (
-          ''
+            ""
+          )}
+          {currentPlan === "Basic" && ServiceCount != 4 ? (
+            <button
+              onClick={() => {
+                setServiceFormOpen(true), setUpdateFormOpen(false),
+                setServiceImage(undefined),
+                (formik.values.ServiceImage = undefined),
+                setServiceDescription(undefined),
+                (formik.values.ServiceDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Service
+            </button>
+          ) : (
+            ""
+          )}
+          {currentPlan === "Standard" && ServiceCount != 6 ? (
+            <button
+              onClick={() => {
+                setServiceFormOpen(true), setUpdateFormOpen(false),
+                setServiceImage(undefined),
+                (formik.values.ServiceImage = undefined),
+                setServiceDescription(undefined),
+                (formik.values.ServiceDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Service
+            </button>
+          ) : (
+            ""
+          )}
+          {currentPlan === "Enterprises" && ServiceCount != 8 ? (
+            <button
+              onClick={() => {
+                setServiceFormOpen(true), setUpdateFormOpen(false),
+                setServiceImage(undefined),
+                (formik.values.ServiceImage = undefined),
+                setServiceDescription(undefined),
+                (formik.values.ServiceDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Service
+            </button>
+          ) : (
+            ""
           )}
         </div>
-        <div className="plan_based_service_add_note">
+        {!serviceFormOpen ? 
+        <>
+                <div className="plan_based_service_add_note">
           <div className="note">
             {currentPlan === "Trial Plan" ? (
               <>
@@ -440,7 +465,7 @@ const Services = () => {
           </div>
         </div>
         <div className="service_list_table table-responsive container w-100 rounded-3">
-          <table className="table rounded-3" id="example">
+          <table className="table table-borderless rounded-3" id="example">
             <thead className="table-secondary rounded-3">
               <tr>
                 <th className="fw-bold" style={{ width: "20%" }}>
@@ -462,7 +487,7 @@ const Services = () => {
               </tr>
             </thead>
             <tbody className="shadow-sm">
-              {AllService != undefined ? (
+              {AllService != undefined && AllService.length > 0 ? (
                 <>
                   {AllService.map((data, index) => {
                     return (
@@ -564,16 +589,19 @@ const Services = () => {
             </tbody>
           </table>
         </div>
-
+        </>
+        : 
+        <>
+        
         {/* //Create New Service Form */}
 
         <div
           className="create_new_service_container"
-          id={serviceFormOpen ? "shadow_background" : ""}
+          // id={serviceFormOpen ? "shadow_background" : ""}
         >
           <div
             className="create_new_service_box"
-            id={serviceFormOpen ? "serviceOpen" : "serviceClose"}
+            // id={serviceFormOpen ? "serviceOpen" : "serviceClose"}
           >
             <div className="title">
               <p>{updateFormOpen ? "Update Service" : "New Service"}</p>
@@ -637,12 +665,11 @@ const Services = () => {
                 />
                 <div className="error">{formik.errors.ServiceURL}</div>
               </div>
-              <div className="form_group editor">
+              <div className="form_group description">
                 <label htmlFor="ServiceDescription">
                   Description <sup>*</sup>
                 </label>
-                <Editor
-                
+                {/* <Editor
                   {...formik.getFieldProps("ServiceDescription")}
                   value={
                     updateFormOpen
@@ -661,7 +688,7 @@ const Services = () => {
                         }
                   }
                   handleBlur={formik.handleBlur}
-                    id="ServiceDescription"
+                  id="ServiceDescription"
                   name="ServiceDescription"
                   style={{ height: "130px" }}
                   placeholder="Enter Short Description"
@@ -671,7 +698,40 @@ const Services = () => {
                       ? "input_error"
                       : "input_success"
                   }
+                /> */}
+                <ReactQuill
+                modules={modules}
+                formats={formats}
+                       id="ServiceDescription"
+                name="ServiceDescription"
+                {...formik.getFieldProps("ServiceDescription")}
+                value={
+                  updateFormOpen
+                    ? ServiceDescription
+                    : formik.values.ServiceDescription
+                }
+                onChange={
+                  updateFormOpen
+                    ? (e) => setServiceDescription(e)
+                    : (e) => {
+                        formik.setFieldValue(
+                          "ServiceDescription",
+                          e
+                        ),
+                          setServiceDescription(e);
+                      }
+                }
+
+                // style={{ height: "180px",border:'none' }}
+                placeholder="Enter Short Description"
+                className={
+                  formik.errors.ServiceDescription &&
+                  formik.touched.ServiceDescription
+                    ? "input_error"
+                    : "input_success"
+                }
                 />
+
                 <div className="desc_error">
                   {formik.errors.ServiceDescription}
                 </div>
@@ -984,15 +1044,22 @@ const Services = () => {
                     </>
                   )}
                 </div>
-                <div className="discard">
-                  <button type="button" onClick={formik.handleReset}>
-                    Clear
-                  </button>
-                </div>
+                {!serviceFormOpen ? 
+                 <div className="discard">
+                 <button type="button" onClick={formik.handleReset}>
+                   Clear
+                 </button>
+               </div>
+                : ''}
+               
               </div>
             </form>
           </div>
         </div>
+        </>
+        }
+
+
 
         {/* //Update  Service Form */}
 

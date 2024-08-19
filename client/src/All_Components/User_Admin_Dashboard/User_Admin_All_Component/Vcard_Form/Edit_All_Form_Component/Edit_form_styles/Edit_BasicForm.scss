@@ -8,13 +8,17 @@
     width: 100%;
     height: auto;
     padding: 1rem;
+    margin: auto;
 
     form {
       display: grid;
       width: 100%;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 3rem 2rem;
-      place-items: start;
+      // grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: 1fr 1fr ;
+      gap: 2rem 2rem;
+      place-items: center;
+      margin: auto;
+
 
       .form_group {
         display: flex;
@@ -23,6 +27,7 @@
         justify-content: flex-start;
         gap: 5px;
         width: 100%;
+        margin: auto;
 
         label {
           font-size: 0.8rem;
@@ -84,7 +89,26 @@
           color: #03796f;
           cursor: pointer;
         }
+
+        @media  screen and (max-width:700px){
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          width: 90% !important;
+          margin: auto !important;
+        }
       }
+      // .description{
+      //  height: 300px !important;
+
+      //  @media screen and (max-width:700px){
+      //   height: auto !important;
+      // }
+      // }
+      .ql-editor{
+        height: 200px !important;
+       }
       .double_col_inputs {
         display: flex;
         flex-direction: column !important;
@@ -550,7 +574,25 @@ height: 50px;
               transition: all 0.3s ease;
             }
           }
+          @media screen and (max-width:700px){
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+          }
         }
+
+        @media screen and (max-width:700px){
+          // grid-template-columns: 1fr ;
+           grid-template-columns:1fr;
+           gap: 1rem 0rem;
+           width: 100%;
+           margin: auto;
+        }
+    }
+    @media screen and (max-width:700px){
+      width: 100%;
+      padding: 1rem 0rem;
     }
   }
 

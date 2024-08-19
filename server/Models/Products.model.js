@@ -24,7 +24,6 @@ let ProductSchema = new mongoose.Schema(
     ProductPrice: {
       type: Number,
       default: 0,
-      required: true,
     },
     ProductImage:{
         type:String,

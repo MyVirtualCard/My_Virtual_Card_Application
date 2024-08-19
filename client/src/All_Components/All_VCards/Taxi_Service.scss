@@ -293,7 +293,7 @@
       .user_details {
         position: absolute;
         width: 100%;
-        bottom: -15px;
+        bottom: -5px;
         left: 0px;
         padding: 0px 1rem;
         display: flex;
@@ -306,7 +306,7 @@
           height: 100px;
           min-height: 100px;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
 
           img {
             width: 100%;
@@ -375,7 +375,6 @@
             display: flex;
             align-items: flex-start;
             justify-content: flex-start;
-            flex-wrap: wrap;
             gap: 1rem;
             width: 100%;
             //  flex-wrap: wrap;
@@ -420,7 +419,8 @@
               small {
                 display: none;
                 position: absolute;
-                transition: all 0.4s ease-in-out;
+      
+                transition: all 0.4s linear;
               }
 
               &:hover small {
@@ -432,7 +432,7 @@
                 font-size: 0.5rem;
                 font-weight: 550;
                 letter-spacing: 1px;
-                transition: all 0.4s ease-in-out;
+                transition: all 0.4s linear;
               }
             }
 
@@ -1583,16 +1583,15 @@ color: #fff;
       .testimonial_container {
         margin: 1rem auto;
         width: 100%;
-        height: 150px;
-        max-height: 150px;
+        height: 120px;
+        max-height: 120px;
 
         .testimonial_list {
           margin: 1rem 1rem;
           width: 90%;
-          height: 100%;
-          min-height: 150px;
+          height: 150px;
           background-color: #1a8b8275;
-          overflow-y: auto;
+          overflow-y: scroll;
           margin: auto;
           display: flex;
           flex-direction: column-reverse;

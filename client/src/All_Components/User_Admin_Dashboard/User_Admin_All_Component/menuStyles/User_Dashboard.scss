@@ -164,9 +164,11 @@ z-index: -100;
             th{
               padding: 0.7rem 0.5rem;
               background-color: #f8f9fa;
+              background-color: #424242;
+              text-align: center;
               font-size: 0.9rem;
-              font-weight: 500 !important;
-              color: rgb(49, 49, 49);
+              font-weight: 550 !important;
+              color: rgb(255, 255, 255);
             }
           }
         }
@@ -183,7 +185,8 @@ z-index: -100;
               font-size: 0.8rem;
               vertical-align: middle;
               font-weight: 500 !important;
-              color: rgb(99, 99, 99);
+              background-color: rgb(216, 251, 255);
+              color: rgb(43, 43, 43);
               border-bottom: 1px solid rgb(230, 230, 230);
             }
           }

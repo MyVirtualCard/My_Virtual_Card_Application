@@ -318,17 +318,17 @@ const Edit_QR_Code = () => {
         </div>
         {!fullImageToggle ? (
           <div className="gallery_list_table table-responsive container w-100 rounded-3">
-            <table className="table rounded-3" id="example">
+            <table className="table table-borderless rounded-3" id="example">
               <thead className="table-secondary rounded-3">
                 <tr>
-                  <th className="fw-bold">COUNT</th>
-                  <th className="fw-bold">IMAGE</th>
+                  <th className="fw-bold" style={{ width: "20%" }}>COUNT</th>
+                  <th className="fw-bold" style={{ width: "50%" }}>IMAGE</th>
 
-                  <th className="fw-bold">ACTIONS</th>
+                  <th className="fw-bold" style={{ width: "30%" }}>ACTIONS</th>
                 </tr>
               </thead>
               <tbody className=" shadow-sm">
-                {AllQRCode != undefined ? (
+                {AllQRCode != undefined && AllQRCode.length !=0? (
                   <>
                     {AllQRCode.map((data, index) => {
                       return (

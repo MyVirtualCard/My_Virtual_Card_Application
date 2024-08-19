@@ -41,7 +41,8 @@
     form {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      // grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: 1fr 1fr ;
       grid-column-gap: 1.5rem;
       grid-row-gap: 2.5rem;
       place-items: center;
@@ -249,6 +250,16 @@
             }
           }
         }
+        @media screen and (max-width:700px){
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 1rem;
+        }
+      }
+      @media screen and (max-width:700px){
+grid-template-columns: 1fr;
+place-items: center;
       }
     }
 

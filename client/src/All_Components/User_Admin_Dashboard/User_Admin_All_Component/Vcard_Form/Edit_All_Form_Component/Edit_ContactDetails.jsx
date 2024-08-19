@@ -415,7 +415,7 @@ const Edit_ContactDetails = () => {
                 <div className="error">{formik.errors.AlternateEmail}</div>
               )}
             </div>
-            <div className="form_group">
+            {/* <div className="form_group">
               <label htmlFor="alternateEmail">Alternate Phone</label>
               <input
                 id="AlternateMobileNumber"
@@ -440,7 +440,7 @@ const Edit_ContactDetails = () => {
                   {formik.errors.AlternateMobileNumber}
                 </div>
               )}
-            </div>
+            </div> */}
             <div className="form_group">
               <label htmlFor="location">
                 Location<sup>*</sup>

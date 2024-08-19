@@ -42,9 +42,8 @@
     .business_box{
         display: grid;
         grid-template-columns: repeat(auto-fit , minmax(350px,1fr));
-        grid-column-gap: 1rem;
-        grid-row-gap: 2.5rem;
-        place-items: start;
+ gap: 1rem;
+        place-items: center;
         margin: 2rem auto;
       
 
@@ -52,7 +51,8 @@
         display: flex;
         flex: 1;
         width: 100%;
-        align-items: center;
+        align-items: flex-start;
+        flex-direction: column;
         justify-content: space-evenly;
         gap: 10px;
 border-left: 4px solid rgb(144, 151, 255);
@@ -67,7 +67,13 @@ padding-left: 10px;
 
         }
 
-        .to{
+        .times{
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 10px;
+          width: 90%;
+          .to{
             display: flex;
             flex: 0.1;
             align-items: center;
@@ -85,7 +91,8 @@ padding-left: 10px;
         }
 
         input{
-            flex: 0.5;
+            flex: 0.9;
+            width: 90%;
             border: 1px solid rgb(255, 255, 255);
             background-color: #a7ffd6;
             // box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
@@ -96,14 +103,16 @@ padding-left: 10px;
            
 
         }
+        }
+
     
        } 
        .form_submit_actions {
         display: flex;
         align-items: center;
         width: 100%;
-        grid-column: 1/-1;
-        justify-content: flex-end;
+        // grid-column: 1/-1;
+        justify-content: center;
         gap: 1rem;
 
         .save {

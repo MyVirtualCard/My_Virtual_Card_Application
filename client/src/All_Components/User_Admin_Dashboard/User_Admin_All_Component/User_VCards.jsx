@@ -293,9 +293,9 @@ const User_VCards = () => {
         </div>
         <div className="row_2">
           <div className="appoinment_container  ">
-            <div className="container table-responsive">
+            <div className="container  table-responsive  rounded-10">
               <table
-                className="table table-borderless table-hover rounded-3"
+                className="table table-borderless table-hover"
                 id="example"
               >
                 <thead className="bg-primary">

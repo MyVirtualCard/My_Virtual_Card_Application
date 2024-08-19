@@ -202,7 +202,10 @@
       
             transition: all 1s ease-in-out;
           }
-          
+          @media screen and (max-width:700px){
+          height: 800px;
+width: 90% !important;
+          } 
         }
         .single_template {
           width: 20% !important;
@@ -486,8 +489,8 @@
       border-radius: 5px;
     }
 
-    @media screen and (max-width:600px){
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    @media screen and (max-width:700px){
+      grid-template-columns:1fr;
     }
       }
       .noplans{

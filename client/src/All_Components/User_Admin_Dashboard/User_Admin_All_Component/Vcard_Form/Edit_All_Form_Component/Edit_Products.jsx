@@ -7,6 +7,9 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { modules, formats } from "../../Quill";
 import { Toaster, toast } from "react-hot-toast";
 import { convertToBase64ProductImage } from "../../../../Helper/convert";
 import { ProductValidateShema } from "../../../../Helper/ProductValidate";
@@ -87,7 +90,7 @@ const Products = () => {
           setFormSubmitLoader(false);
         });
     } catch (error) {
-console.log(error)
+      console.log(error);
 
       setFormSubmitLoader(false);
     }
@@ -126,50 +129,47 @@ console.log(error)
         })
         .then((res) => {
           setUpdateFormOpen(false);
-          formik.setFieldValue(
-            "ProductDescription",
-            ''
-          ),
-          formik.values.ProductDescription=''
-        setProductDescription('')
+          formik.setFieldValue("ProductDescription", ""),
+            (formik.values.ProductDescription = "");
+          setProductDescription("");
+          values.ProductDescription = stripHtmlTags("");
+          values.ProductImage = undefined;
+          setProductImage(undefined);
           formik.handleReset();
-  
 
           setProductCount(++ProductCount);
-        toast.success(res.data.message)
+          toast.success(res.data.message);
 
           setFormSubmitLoader(false);
 
-          if(currentPlan === "Trial Plan" && ProductCount ==2){
-            setTimeout(()=>{
-              setShowForm('Galleries')
-            },2000)
-          };
-          if(currentPlan === "Basic" && ProductCount ==4){
-            setTimeout(()=>{
-              setShowForm('Galleries')
-            },2000)
-          };
-          if(currentPlan === "Standard" && ProductCount ==6){
-            setTimeout(()=>{
-              setShowForm('Galleries')
-            },2000)
-          };
-          if(currentPlan === "Enterprises" && ProductCount ==10){
-            setTimeout(()=>{
-              setShowForm('Galleries')
-            },2000)
-          };
+          if (currentPlan === "Trial Plan" && ProductCount == 2) {
+            setTimeout(() => {
+              setShowForm("Galleries");
+            }, 2000);
+          }
+          if (currentPlan === "Basic" && ProductCount == 4) {
+            setTimeout(() => {
+              setShowForm("Galleries");
+            }, 2000);
+          }
+          if (currentPlan === "Standard" && ProductCount == 6) {
+            setTimeout(() => {
+              setShowForm("Galleries");
+            }, 2000);
+          }
+          if (currentPlan === "Enterprises" && ProductCount == 10) {
+            setTimeout(() => {
+              setShowForm("Galleries");
+            }, 2000);
+          }
 
-             setTimeout(()=>{
-              setProductFormOpen(false);
-              reloadComponent();
-             },1000)
-      
-    
+          setTimeout(() => {
+            setProductFormOpen(false);
+            reloadComponent();
+          }, 1000);
         })
         .catch((error) => {
-        toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
           setProductFormOpen(false);
           setUpdateFormOpen(false);
@@ -238,7 +238,7 @@ console.log(error)
           setFormSubmitLoader(false);
         });
     } catch (error) {
-    console.log(error)
+      console.log(error);
     }
   }
 
@@ -271,7 +271,6 @@ console.log(error)
           },
         })
         .then((res) => {
-
           setFormSubmitLoader(false);
           setUpdateFormOpen(false);
           reloadComponent();
@@ -279,15 +278,15 @@ console.log(error)
             setProductImage(undefined);
             setProductFormOpen(false);
           }, 1000);
-          toast.success(res.data.message)
+          toast.success(res.data.message);
         })
         .catch((error) => {
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setProductFormOpen(false);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-    console.log(error)
+      console.log(error);
     }
   }
   async function handleProductDelete(id) {
@@ -303,18 +302,17 @@ console.log(error)
         })
         .then((res) => {
           setProductCount(--ProductCount);
-    
-          toast.success(res.data.message)
+
+          toast.success(res.data.message);
           reloadComponent();
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-      
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   const handleProductImageChange = (event) => {
@@ -339,59 +337,80 @@ console.log(error)
       <div className="product_container">
         <div className="product_plan_title">
           <p>
-            <strong>{currentPlan}  </strong>&nbsp; Subscribed!
+            <strong>{currentPlan} </strong>&nbsp; Subscribed!
           </p>
         </div>
         <div className="add_new_product">
-        {currentPlan === "Trial Plan" && ProductCount != 2 ? (
-                 <button
-                 onClick={() => {
-                   setProductFormOpen(true), setUpdateFormOpen(false);
-                 }}
-               >
-                 <i className="bx bx-plus"></i>Add New Product
-               </button>
+          {currentPlan === "Trial Plan" && ProductCount != 2 ? (
+            <button
+              onClick={() => {
+                setProductFormOpen(true),
+                  setUpdateFormOpen(false),
+                  setProductImage(undefined),
+                  (formik.values.ProductImage = undefined),
+                  setProductDescription(undefined),
+                  (formik.values.ProductDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Product
+            </button>
           ) : (
-      ''
+            ""
           )}
           {currentPlan === "Basic" && ProductCount != 4 ? (
-                 <button
-                 onClick={() => {
-                   setProductFormOpen(true), setUpdateFormOpen(false);
-                 }}
-               >
-                 <i className="bx bx-plus"></i>Add New Product
-               </button>
+            <button
+              onClick={() => {
+                setProductFormOpen(true),
+                  setUpdateFormOpen(false),
+                  setProductImage(undefined),
+                  (formik.values.ProductImage = undefined),
+                  setProductDescription(undefined),
+                  (formik.values.ProductDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Product
+            </button>
           ) : (
-           ''
+            ""
           )}
           {currentPlan === "Standard" && ProductCount != 6 ? (
-                  <button
-                  onClick={() => {
-                    setProductFormOpen(true), setUpdateFormOpen(false);
-                  }}
-                >
-                  <i className="bx bx-plus"></i>Add New Product
-                </button>
+            <button
+              onClick={() => {
+                setProductFormOpen(true),
+                  setUpdateFormOpen(false),
+                  setProductImage(undefined),
+                  (formik.values.ProductImage = undefined),
+                  setProductDescription(undefined),
+                  (formik.values.ProductDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Product
+            </button>
           ) : (
-      ''
+            ""
           )}
           {currentPlan === "Enterprises" && ProductCount != 10 ? (
-                <button
-                onClick={() => {
-                  setProductFormOpen(true), setUpdateFormOpen(false);
-                }}
-              >
-                <i className="bx bx-plus"></i>Add New Product
-              </button>
+            <button
+              onClick={() => {
+                setProductFormOpen(true),
+                  setUpdateFormOpen(false),
+                  setProductImage(undefined),
+                  (formik.values.ProductImage = undefined),
+                  setProductDescription(undefined),
+                  (formik.values.ProductDescription = stripHtmlTags(""));
+              }}
+            >
+              <i className="bx bx-plus"></i>Add New Product
+            </button>
           ) : (
-          ''
+            ""
           )}
-      
         </div>
-        <div className="plan_based_service_add_note">
+        {!productFormOpen ? 
+        <>
+                <div className="plan_based_service_add_note">
           <div className="note">
-          {currentPlan === "Trial Plan" ? (
+            {currentPlan === "Trial Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>
@@ -438,25 +457,36 @@ console.log(error)
           </div>
         </div>
         <div className="product_list_table table-responsive container w-100 rounded-3">
-          <table className="table rounded-3" id="example">
+          <table className="table table-borderless rounded-3" id="example">
             <thead className="table-secondary rounded-3">
               <tr>
                 <th className="fw-bold">PRODUCT IMAGE</th>
 
-                <th className="fw-bold" style={{ width: "20%" }}>PRODUCT NAME</th>
-                <th className="fw-bold" style={{ width: "30%" }}>PRODUCT DESCRIPTION</th>
-                <th className="fw-bold" style={{ width: "10%" }}> PRICE</th>
-                <th className="fw-bold" style={{ width: "20%" }}>ACTIONS</th>
+                <th className="fw-bold" style={{ width: "20%" }}>
+                  PRODUCT NAME
+                </th>
+                <th className="fw-bold" style={{ width: "30%" }}>
+                  PRODUCT DESCRIPTION
+                </th>
+                <th className="fw-bold" style={{ width: "10%" }}>
+                  {" "}
+                  PRICE
+                </th>
+                <th className="fw-bold" style={{ width: "20%" }}>
+                  ACTIONS
+                </th>
               </tr>
             </thead>
             <tbody className=" shadow-sm">
-              {AllProduct != undefined ? (
+              {AllProduct != undefined && AllProduct.length !=0 ? (
                 <>
                   {AllProduct.map((data, index) => {
-       
                     return (
                       <tr key={index}>
-                        <td className="h-100 align-middle" style={{ width: "20%" }}>
+                        <td
+                          className="h-100 align-middle"
+                          style={{ width: "20%" }}
+                        >
                           {data.ProductType == "ImageUpload" ? (
                             <>
                               {data.ProductImage.length != 0 ? (
@@ -495,16 +525,28 @@ console.log(error)
                             ""
                           )}
                         </td>
-                        <td className="h-100 align-middle" style={{ width: "20%" }}>
+                        <td
+                          className="h-100 align-middle"
+                          style={{ width: "20%" }}
+                        >
                           {data.ProductName}
                         </td>
-                        <td className="h-100 align-middle" style={{ width: "30%" }}>
+                        <td
+                          className="h-100 align-middle"
+                          style={{ width: "30%" }}
+                        >
                           {data.ProductDescription}
                         </td>
-                        <td className="h-100 align-middle" style={{ width: "10%" }}>
+                        <td
+                          className="h-100 align-middle"
+                          style={{ width: "10%" }}
+                        >
                           Rs:&nbsp;{data.ProductPrice}
                         </td>
-                        <td className="h-100 align-middle" style={{ width: "20%" }}>
+                        <td
+                          className="h-100 align-middle"
+                          style={{ width: "20%" }}
+                        >
                           <i
                             className="bx bxs-show"
                             style={{ color: "skyBlue" }}
@@ -535,16 +577,18 @@ console.log(error)
             </tbody>
           </table>
         </div>
+        </>
+        : 
+        <>
+                {/* //Create New Product Form */}
 
-        {/* //Create New Product Form */}
-
-        <div
+                <div
           className="create_new_product_container"
-          id={productFormOpen ? "shadow_background" : ""}
+          // id={productFormOpen ? "shadow_background" : ""}
         >
           <div
             className="create_new_product_box"
-            id={productFormOpen ? "productOpen" : "productClose"}
+            // id={productFormOpen ? "productOpen" : "productClose"}
           >
             <div className="title">
               <p>{updateFormOpen ? "Update Product" : "New Product"}</p>
@@ -569,7 +613,7 @@ console.log(error)
                   onBlur={formik.handleBlur}
                   onChange={
                     updateFormOpen
-                      ? (e)=>setProductName(e.target.value)
+                      ? (e) => setProductName(e.target.value)
                       : formik.handleChange
                   }
                   value={
@@ -617,9 +661,7 @@ console.log(error)
                 />
               </div>
               <div className="form_group">
-                <label htmlFor="ProductPrice">
-                  Price<sup>*</sup>
-                </label>
+                <label htmlFor="ProductPrice">Price</label>
                 <input
                   type="text"
                   placeholder="Enter Product Price"
@@ -646,7 +688,7 @@ console.log(error)
                 <label htmlFor="ProductDescription">
                   Description <sup>*</sup>
                 </label>
-
+                {/* 
                 <Editor
                   id="ProductDescription"
                   name="ProductDescription"
@@ -669,6 +711,28 @@ console.log(error)
                   }
                   placeholder="Enter Short Description"
                   style={{ height: "130px" }}
+                /> */}
+                <ReactQuill
+                  modules={modules}
+                  formats={formats}
+                  id="ProductDescription"
+                  name="ProductDescription"
+                  {...formik.getFieldProps("ProductDescription")}
+                  value={
+                    updateFormOpen
+                      ? ProductDescription
+                      : formik.values.ProductDescription
+                  }
+                  onChange={
+                    updateFormOpen
+                      ? (e) => setProductDescription(e)
+                      : (e) => {
+                          formik.setFieldValue("ProductDescription", e),
+                            setProductDescription(e);
+                        }
+                  }
+                  placeholder="Enter Short Description"
+                  // style={{ height: "180px" }}
                 />
                 <div className="error">{formik.errors.ProductDescription}</div>
               </div>
@@ -879,15 +943,25 @@ console.log(error)
                     <button type="submit">Save</button>
                   )}
                 </div>
+                {!updateFormOpen ?  
                 <div className="discard">
-                  <button type="button" onClick={formik.handleReset}>
-                    Clear
-                  </button>
-                </div>
+                <button type="button" onClick={formik.handleReset}>
+                  Clear
+                </button>
+              </div>
+                : ''}
+                
               </div>
             </form>
           </div>
         </div>
+        </>
+        }
+
+
+
+
+
         {/* //uPDATE  Product Form */}
 
         {/* <div

@@ -139,6 +139,13 @@ z-index: -1;
           box-shadow: 0px 4px 5px #00000066;
           transition: all 0.2s ease-in;
         }
+
+        @media screen and (max-width:900px){
+          display: block !important;
+          width: 100%;
+          display: none !important;
+
+        }
       }
       button {
         padding: 6px 1rem !important;
@@ -184,19 +191,30 @@ z-index: -1;
     align-items: center;
     justify-content: flex-start;
     padding: 0.5rem 0px;
-    overflow: scroll;
     position: relative;
 
     .slider_icon {
       position: absolute;
-      top: 0.5%;
+      top: -0.5%;
       left: 6%;
       z-index: 10;
-      display: none;
+
+      width: 30px;
+      height: 30px;
+      background-color: #0a7a7a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       i {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 1.1rem;
-        color: royalblue;
+        color: rgb(255, 255, 255);
         cursor: pointer;
         &:hover {
           filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4));
@@ -208,13 +226,13 @@ z-index: -1;
     }
     // SideNav Style
     .form_sidenav {
-      position: sticky;
+      position: relative;
       left: 0%;
       top: 0%;
       display: flex;
       flex-direction: column;
-      flex: 0.2;
-      width: 100%;
+      // flex: 0.2;
+      width: 20%;
       height: 100%;
       align-items: center;
       justify-content: flex-start;
@@ -301,13 +319,30 @@ z-index: -1;
 
     // Forms style
     .all_form_inputs {
+      position: relative;
       display: flex;
-      flex: 0.8;
-      width: 100%;
+      // flex: 0.8;
+      width: 80%;
       height: 100%;
+      overflow-y: scroll;
       align-items: flex-start;
       justify-content: flex-start;
       // background-color: #818181;
+
+
+      &::-webkit-scrollbar {
+        width: 4px;
+
+        background-color: rgb(255, 255, 255);
+        border-radius: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        width: 3px;
+        height: 4px;
+        background-color: #ffdbba;
+        border-radius: 5px;
+      }
       @media screen and (max-width: 1000px) {
         flex: 0.65;
       }

@@ -26,10 +26,14 @@ const Gallery = () => {
     setFormSubmitLoader,
     setShowForm,
     userName,
-    successMessage,setSuccessMessage,
-    successPopupOpen,setSuccessPopupOpen,
-    errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
   } = useContext(Context);
 
   let [GalleryCount, setGalleryCount] = useState(0);
@@ -68,13 +72,12 @@ const Gallery = () => {
           }
         })
         .catch((error) => {
-          
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-   console.log(error.message)
-  setFormSubmitLoader(false);
+      console.log(error.message);
+      setFormSubmitLoader(false);
     }
   }
   useEffect(() => {
@@ -90,8 +93,6 @@ const Gallery = () => {
       setGalleryImage(reader.result);
     };
   };
-
-
 
   let formik = useFormik({
     initialValues: {
@@ -116,41 +117,40 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-       
-          toast.success(res.data.message)
-          if(currentPlan === "Trial Plan" && GalleryCount == 2){
-            setTimeout(()=>{
-              setShowForm('Testimonials')
-            },500)
-          };
-          if(currentPlan === "Basic" && GalleryCount == 4){
-            setTimeout(()=>{
-              setShowForm('Testimonials')
-            },500)
-          };
-          if(currentPlan === "Standard" && GalleryCount == 6){
-            setTimeout(()=>{
-              setShowForm('Testimonials')
-            },500)
-          };
-          if(currentPlan === "Enterprises" && GalleryCount ==10){
-            setTimeout(()=>{
-              setShowForm('Testimonials')
-            },500)
-          };
+          toast.success(res.data.message);
+          if (currentPlan === "Trial Plan" && GalleryCount == 2) {
+            setTimeout(() => {
+              setShowForm("Testimonials");
+            }, 500);
+          }
+          if (currentPlan === "Basic" && GalleryCount == 4) {
+            setTimeout(() => {
+              setShowForm("Testimonials");
+            }, 500);
+          }
+          if (currentPlan === "Standard" && GalleryCount == 6) {
+            setTimeout(() => {
+              setShowForm("Testimonials");
+            }, 500);
+          }
+          if (currentPlan === "Enterprises" && GalleryCount == 10) {
+            setTimeout(() => {
+              setShowForm("Testimonials");
+            }, 500);
+          }
           setFormSubmitLoader(false);
           setGalleryCount(++GalleryCount);
           setGalleryImage(null);
           setGalleryImageURL = "";
-          
+          values.GalleryImageURL=''
+
           setTimeout(() => {
             setGalleryFormOpen(false);
             reloadComponent();
           }, 1000);
         })
         .catch((error) => {
-        
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setTimeout(() => {
             setGalleryFormOpen(false);
           }, 500);
@@ -202,11 +202,10 @@ const Gallery = () => {
         })
 
         .catch((error) => {
-      ;
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setFormSubmitLoader(false);
     }
   }
@@ -230,8 +229,7 @@ const Gallery = () => {
           },
         })
         .then((res) => {
-       
-toast.success(res.data.message)
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
           reloadComponent();
           setTimeout(() => {
@@ -240,12 +238,11 @@ toast.success(res.data.message)
           }, 1000);
         })
         .catch((error) => {
-       
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setFormSubmitLoader(false);
     }
   }
@@ -261,19 +258,19 @@ toast.success(res.data.message)
           },
         })
         .then((res) => {
-          toast.success(res.data.message)
+          toast.success(res.data.message);
 
           setGalleryCount(--GalleryCount);
           setFormSubmitLoader(false);
           reloadComponent();
         })
         .catch((error) => {
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     } catch (error) {
-    console.log(error)
-    setFormSubmitLoader(false);
+      console.log(error);
+      setFormSubmitLoader(false);
     }
   }
   const HtmlRenderer = ({ htmlString }) => {
@@ -299,39 +296,38 @@ toast.success(res.data.message)
 
         <div className="plan_title">
           <p>
-            <strong>{currentPlan}  </strong>&nbsp; Subscribed!
+            <strong>{currentPlan} </strong>&nbsp; Subscribed!
           </p>
         </div>
         <div className="add_new_gallery">
-        {currentPlan === "Trial Plan" && GalleryCount != 2 ? (
-                  <button onClick={() => setGalleryFormOpen(true)}>
-                  <i className="bx bx-plus"></i>Add New Gallery
-                </button>
+          {currentPlan === "Trial Plan" && GalleryCount != 2 ? (
+            <button onClick={() => setGalleryFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Gallery
+            </button>
           ) : (
-      ''
+            ""
           )}
           {currentPlan === "Basic" && GalleryCount != 4 ? (
-                     <button onClick={() => setGalleryFormOpen(true)}>
-                     <i className="bx bx-plus"></i>Add New Gallery
-                   </button>
+            <button onClick={() => setGalleryFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Gallery
+            </button>
           ) : (
-           ''
+            ""
           )}
           {currentPlan === "Standard" && GalleryCount != 6 ? (
-                     <button onClick={() => setGalleryFormOpen(true)}>
-                     <i className="bx bx-plus"></i>Add New Gallery
-                   </button>
+            <button onClick={() => setGalleryFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Gallery
+            </button>
           ) : (
-      ''
+            ""
           )}
           {currentPlan === "Enterprises" && GalleryCount != 10 ? (
-             <button onClick={() => setGalleryFormOpen(true)}>
-             <i className="bx bx-plus"></i>Add New Gallery
-           </button>
+            <button onClick={() => setGalleryFormOpen(true)}>
+              <i className="bx bx-plus"></i>Add New Gallery
+            </button>
           ) : (
-          ''
+            ""
           )}
-     
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
@@ -382,39 +378,69 @@ toast.success(res.data.message)
         </div>
         {!fullImageToggle ? (
           <div className="gallery_list_table table-responsive container w-100 rounded-3">
-            <table className="table rounded-3" id="example">
+            <table className="table table-borderless rounded-3" id="example">
               <thead className="table-secondary rounded-3">
                 <tr>
-                  <th className="fw-bold" style={{ width: "20%" }}>
+                  <th className="fw-bold" style={{ width: "10%" }}>
                     COUNT
                   </th>
-                  <th className="fw-bold" style={{ width: "20%" }}>
+                  <th className="fw-bold" style={{ width: "50%" }}>
                     UPLOAD IMAGE
                   </th>
-                  <th className="fw-bold" style={{ width: "30%" }}>
-                     URL Image
-                  </th>
+               
                   <th className="fw-bold" style={{ width: "30%" }}>
                     ACTIONS
                   </th>
                 </tr>
               </thead>
               <tbody className=" shadow-sm">
-                {AllGallery != undefined ? (
+                {AllGallery != undefined && AllGallery.length != 0 ? (
                   <>
                     {AllGallery.map((data, index) => {
-
-                      console.log(data.GalleryImageURL.length)
+                  
                       return (
                         <tr key={index}>
                           <td className="h-100 align-middle">{index + 1}</td>
                           <td className="h-100 align-middle">
-                           {data.GalleryImage.length > 0 ? <img src={data.GalleryImage} alt="gallery_image" />: "Null"} 
+                          {data.GalleryType == "ImageUpload" ? (
+                            <>
+                              {data.GalleryImage.length != 0 ? (
+                                <img
+                                  src={
+                                    data.GalleryImage.length != 0
+                                      ? data.GalleryImage
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="service_image"
+                                />
+                              ) : (
+                                "Null"
+                              )}
+                            </>
+                          ) : (
+                            ""
+                          )}
+
+                          {data.GalleryType == "Image_Address_URL" ? (
+                            <>
+                              {data.GalleryImageURL.length != 0 ? (
+                                <img
+                                  src={
+                                    data.GalleryImageURL.length != 0
+                                      ? data.GalleryImageURL
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="product_image"
+                                />
+                              ) : (
+                                "Null"
+                              )}
+                            </>
+                          ) : (
+                            ""
+                          )}
                           </td>
-                          <td className="h-100 align-middle fw-semibold">
-                            {data.GalleryImageURL.length > 0 ?   <img src={data.GalleryImageURL} alt="gallery_image" />: 'Null'}
-                        
-                          </td>
+                    
                           <td className="h-100 align-middle">
                             <i
                               className="bx bxs-show"
@@ -438,9 +464,11 @@ toast.success(res.data.message)
                   </>
                 ) : (
                   <tr>
-                    <td colSpan="6" className="text-center">
+                    <td></td>
+                    <td colSpan="1" className="text-center">
                       No Gallery Images Added!
                     </td>
+                    <td></td>
                   </tr>
                 )}
               </tbody>
@@ -516,7 +544,8 @@ toast.success(res.data.message)
                       // onChange={formik.handleChange}
                       // value={formik.values.GalleryImage}
                       className={
-                        formik.errors.GalleryImage && formik.touched.GalleryImage
+                        formik.errors.GalleryImage &&
+                        formik.touched.GalleryImage
                           ? "input_error"
                           : "input_success"
                       }
@@ -526,45 +555,49 @@ toast.success(res.data.message)
                   </>
                 ) : (
                   <div className="form_group url_link_input_group">
-                       <img
-                            src={
-                              formik.values.GalleryImageURL != null &&
-                              formik.values.GalleryImageURL != undefined &&
-                              formik.values.GalleryImageURL.length > 0
-                                ? formik.values.GalleryImageURL
-                                : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                            }
-                            alt=""
-                            className="banner_address_image"
-                          />
+                    <img
+                      src={
+                        formik.values.GalleryImageURL != null &&
+                        formik.values.GalleryImageURL != undefined &&
+                        formik.values.GalleryImageURL.length > 0
+                          ? formik.values.GalleryImageURL
+                          : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                      }
+                      alt=""
+                      className="banner_address_image"
+                    />
                     <label htmlFor="GalleryURL">Paste Image Address</label>
                     <input
                       type="text"
-                        placeholder="Eg :https://img.asistostech.com/free-photo/"
-                   name="GalleryImageURL"
-                   id="GalleryImageURL"
-                   value={formik.values.GalleryImageURL}
-                   onChange={formik.handleChange}
+                      placeholder="Eg :https://img.asistostech.com/free-photo/"
+                      name="GalleryImageURL"
+                      id="GalleryImageURL"
+                      value={formik.values.GalleryImageURL}
+                      onChange={formik.handleChange}
                       className={
-                        formik.errors.GalleryImageURL && formik.touched.GalleryImageURL
+                        formik.errors.GalleryImageURL &&
+                        formik.touched.GalleryImageURL
                           ? "input_error"
                           : "input_success"
                       }
-
-                      
                     />
-                           <div className="url_error">{formik.errors.GalleryImageURL}</div>
+                    <div className="url_error">
+                      {formik.errors.GalleryImageURL}
+                    </div>
                   </div>
                 )}
               </div>
 
               <div className="form_submit_actions">
-                {formik.values.GalleryImage != null || formik.values.GalleryImageURL.length != 0 ?  <div className="save">
-                  <button type="submit" >
-                    Save
-                  </button>
-                </div>: ''}
-              
+                {formik.values.GalleryImage != null ||
+                formik.values.GalleryImageURL.length != 0 ? (
+                  <div className="save">
+                    <button type="submit">Save</button>
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 <div className="discard">
                   <button
                     type="button"
@@ -587,7 +620,7 @@ toast.success(res.data.message)
             className="update_new_gellery_box"
             id={updateFormOpen ? "galleryUpdateOpen" : "galleryUpdateClose"}
           >
-        <div className="title">
+            <div className="title">
               <p>Update Gallery</p>
               <i
                 className="bx bx-x"
@@ -604,8 +637,7 @@ toast.success(res.data.message)
                       id="GalleryType"
                       value={GalleryType}
                       onBlur={formik.handleBlur}
-                      onChange={(e)=>setGalleryType(e.target.value)}
-                   
+                      onChange={(e) => setGalleryType(e.target.value)}
                     >
                       <option value="ImageUpload">ImageUpload</option>
                       <option value="Image_Address_URL">
@@ -654,33 +686,33 @@ toast.success(res.data.message)
                   </>
                 ) : (
                   <div className="form_group url_link_input_group">
-                         <img
-                          src={
-                            GalleryImageURL != null &&
-                            GalleryImageURL != undefined &&
-                            GalleryImageURL.length > 0
-                              ? GalleryImageURL
-                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                          }
-                          alt=""
-                          className="banner_address_image"
-                        />
+                    <img
+                      src={
+                        GalleryImageURL != null &&
+                        GalleryImageURL != undefined &&
+                        GalleryImageURL.length > 0
+                          ? GalleryImageURL
+                          : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                      }
+                      alt=""
+                      className="banner_address_image"
+                    />
                     <label htmlFor="GalleryURL">Update Image Address</label>
                     <input
                       type="text"
                       placeholder="Paste Image URL"
                       value={GalleryImageURL}
-                      onChange={(e)=>setGalleryImageURL(e.target.value)}
+                      onChange={(e) => setGalleryImageURL(e.target.value)}
                     />
-                       <div className="clear_action">
-                          <button
-                            className="clear_btn"
-                            type="button"
-                            onClick={() => setGalleryImageURL("")}
-                          >
-                            clear
-                          </button>
-                        </div>
+                    <div className="clear_action">
+                      <button
+                        className="clear_btn"
+                        type="button"
+                        onClick={() => setGalleryImageURL("")}
+                      >
+                        clear
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

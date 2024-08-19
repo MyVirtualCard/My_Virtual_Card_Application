@@ -5,6 +5,9 @@ import { Editor } from "primereact/editor";
 import "primereact/resources/themes/saga-blue/theme.css"; // Choose a theme
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { modules,formats } from "../../Quill";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
@@ -147,7 +150,7 @@ const Testimonial = () => {
         })
         .catch((error) => {
           toast.error(error.response.data.message);
-          setTestimonialFormOpen(false);
+          // setTestimonialFormOpen(false);
           setFormSubmitLoader(false);
         });
     },
@@ -327,7 +330,9 @@ const Testimonial = () => {
             ""
           )}
         </div>
-        <div className="plan_based_service_add_note">
+        {!testimonialFormOpen && !updateFormOpen ? 
+        <>
+                <div className="plan_based_service_add_note">
           <div className="note">
             {currentPlan === "Trial Plan" ? (
               <>
@@ -379,7 +384,7 @@ const Testimonial = () => {
           </div>
         </div>
         <div className="testimonial_list_table table-responsive container w-100 rounded-3">
-          <table className="table rounded-3" id="example">
+          <table className="table table-borderless rounded-3" id="example">
             <thead className="table-secondary rounded-3">
               <tr>
                 <th className="fw-bold">COUNT</th>
@@ -391,7 +396,7 @@ const Testimonial = () => {
               </tr>
             </thead>
             <tbody className=" shadow-sm">
-              {AllTestimonial != undefined ? (
+              {AllTestimonial != undefined && AllTestimonial.length !=0 ? (
                 <>
                   {AllTestimonial.map((data, index) => {
                     return (
@@ -447,19 +452,18 @@ const Testimonial = () => {
             </tbody>
           </table>
         </div>
-
-        {/* //Create New Service Form */}
-
-        {/* //Create New Service Form */}
-
-        {testimonialFormOpen ? (
+        </>
+        : <>
+        
+        {/* //Create Testimonial Form */}
+           {testimonialFormOpen ? (
           <div
             className="create_new_testimonial_container"
-            id={testimonialFormOpen ? "shadow_background" : ""}
+            // id={testimonialFormOpen ? "shadow_background" : ""}
           >
             <div
               className="create_new_testimonial_box"
-              id={testimonialFormOpen ? "testimonialOpen" : "testimonialClose"}
+              // id={testimonialFormOpen ? "testimonialOpen" : "testimonialClose"}
             >
               <div className="title">
                 <p>New Testimonial</p>
@@ -479,22 +483,6 @@ const Testimonial = () => {
                     {...formik.getFieldProps("ClientName")}
                   />
                 </div>
-
-                <div className="form_group">
-                  <label htmlFor="ClientFeedback">
-                    Client Feedback <sup>*</sup>
-                  </label>
-                  <Editor
-                    {...formik.getFieldProps("ClientFeedback")}
-                    value={formik.values.ClientFeedback}
-                    onTextChange={(e) => setClientFeedback(e.htmlValue)}
-                    id="ClientFeedback"
-                    name="ClientFeedback"
-                    style={{ height: "130px" }}
-                    placeholder="Enter Short Description"
-                  />
-                  {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
-                </div>
                 <div className="form_group">
                   <label htmlFor="ClientReviewDate">
                     Client Review Date <sup>*</sup>
@@ -510,6 +498,22 @@ const Testimonial = () => {
                   />
                 </div>
                 <div className="form_group">
+                  <label htmlFor="ClientFeedback">
+                    Client Feedback <sup>*</sup>
+                  </label>
+                  <Editor
+                    {...formik.getFieldProps("ClientFeedback")}
+                    value={formik.values.ClientFeedback}
+                    onTextChange={(e) => setClientFeedback(e.htmlValue)}
+                    id="ClientFeedback"
+                    name="ClientFeedback"
+                    style={{ height: "130px" }}
+                    placeholder="Enter Short Description"
+                  />
+                  {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
+                </div>
+             
+                <div className="form_group" style={{placeItems:'center'}}>
                   <label htmlFor="ClientImage">Client Image</label>
                   <label htmlFor="ClientImage">
                     <img
@@ -546,20 +550,20 @@ const Testimonial = () => {
         ) : (
           ""
         )}
-
+        
         {/* //update New Service Form */}
         {updateFormOpen ? (
           <div
             className="update_new_testimonial_container"
-            id={updateFormOpen ? "shadow_background" : ""}
+            // id={updateFormOpen ? "shadow_background" : ""}
           >
             <div
               className="update_new_testimonial_box"
-              id={
-                updateFormOpen
-                  ? "testimonialUpdateOpen"
-                  : "testimonialUpdateClose"
-              }
+              // id={
+              //   updateFormOpen
+              //     ? "testimonialUpdateOpen"
+              //     : "testimonialUpdateClose"
+              // }
             >
               <div className="title">
                 <p>Update Testimonial</p>
@@ -580,23 +584,6 @@ const Testimonial = () => {
                     onChange={(e) => setClientName(e.target.value)}
                   />
                 </div>
-
-                <div className="form_group">
-                  <label htmlFor="ClientFeedback">
-                    Client Feedback <sup>*</sup>
-                  </label>
-                  <Editor
-                    {...formik.getFieldProps("ClientFeedback", ClientFeedback)}
-                    value={formik.values.ClientFeedback}
-                    onTextChange={(e) => setClientFeedback(e.htmlValue)}
-                    s
-                    id="ClientFeedback"
-                    name="ClientFeedback"
-                    style={{ height: "130px" }}
-                    placeholder="Enter Short Description"
-                  />
-                  {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
-                </div>
                 <div className="form_group">
                   <label htmlFor="ClientReviewDate">
                     Client Review Date <sup>*</sup>
@@ -607,6 +594,22 @@ const Testimonial = () => {
                     value={ClientReviewDate}
                     onChange={(e) => setClientReviewDate(e.target.value)}
                   />
+                </div>
+                <div className="form_group">
+                  <label htmlFor="ClientFeedback">
+                    Client Feedback <sup>*</sup>
+                  </label>
+                  <Editor
+                    {...formik.getFieldProps("ClientFeedback", ClientFeedback)}
+                    value={ClientFeedback}
+                    onTextChange={(e) => setClientFeedback(e.htmlValue)}
+                    s
+                    id="ClientFeedback"
+                    name="ClientFeedback"
+                    style={{ height: "130px" }}
+                    placeholder="Enter Short Description"
+                  />
+                  {/* <textarea name="client_description" id="client_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
                 </div>
                 <div className="form_group">
                   <label htmlFor="ClientImage">Client Image</label>
@@ -640,6 +643,13 @@ const Testimonial = () => {
         ) : (
           ""
         )}
+        </>}
+
+
+
+
+     
+
 
         {/* //Testimonial  Detail Box */}
 

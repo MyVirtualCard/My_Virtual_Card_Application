@@ -193,8 +193,8 @@ const SocialMedias = () => {
           <div className="note">
             <small>
               <span>Note :</span>Link all your social media with in https URL
-              except <span>whatsup</span> ..Whatsup should paste your{" "}
-              <span>10 digit mobile number with country code</span>.
+              except <span>whatsup</span> ..WhatsApp Field should Add your{" "}
+              <span>10 digit mobile number </span>.
             </small>
           </div>
         </div>
@@ -220,7 +220,7 @@ const SocialMedias = () => {
               </label>
               <input
                 type="tel"
-                placeholder="+91 ..........."
+                placeholder="Enter Your WhatsApp MobileNumber"
                 name="WhatsUp"
                 id="WhatsUp"
                 onBlur={formik.handleBlur}

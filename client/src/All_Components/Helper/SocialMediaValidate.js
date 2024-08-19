@@ -12,7 +12,7 @@ export let SocialMediaValidateSchema=Yup.object({
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
-  ).min(13,'WhatsUp Number must be 13 digits with Country code !').required('WhatsUp is required!').max(13,'Invalid WhatsUp Number!'),
+  ).min(10,'WhatsApp Number must be 10 digits !').required('WhatsApp Number is required!').max(13,'Invalid WhatsApp Number!'),
 
 }
 );

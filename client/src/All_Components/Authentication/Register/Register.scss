@@ -2,13 +2,14 @@
   position: relative;
   width: 100vw;
   height: 100vh;
+  max-height: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
   gap: 1rem;
   z-index: 100;
-  overflow: hidden;
+  overflow-y: scroll;
   transition: all 0.5s linear;
 
   .otp_container{
@@ -1058,7 +1059,8 @@ z-index: 2;
 }
     .box_container {
       width:80%;
-      height: 550px;
+      // height: 550px;
+      height: auto;
       // z-index: 600;
       overflow-y: scroll;
 
@@ -1899,6 +1901,19 @@ height: 500px;
       }
     }
   
+    &::-webkit-scrollbar{
+      display: block;
+      width: 4px;
+      height: 4px;
+      background-color: #ffffff00;
+      border-radius: 4px;
+
+    }
+    &::-webkit-scrollbar-thumb{
+      width: 4px;
+      background-color: #e2e2e2;
+      height: 10px;
+    }
   @media screen and (max-width: 900px) {
     display: flex;
     align-items: flex-start;

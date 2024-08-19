@@ -1,7 +1,9 @@
 .user_vcards_container {
   position: relative;
   width: 100%;
-  padding: 2rem;
+  height: 100%;
+  overflow-x: hidden;
+  padding: 1rem;
   .success_error_container {
     position: absolute;
     top: 5%;
@@ -230,18 +232,20 @@ color: #ffff;
     .appoinment_container {
       margin: 1rem auto;
       // padding: 1rem;
+      width: 100%;
 .container{
-  min-width: 100%;
-  width: auto;
-  overflow-x: auto;
-  margin: auto;
+  width: 100%;
+
+
   .table {
     min-width: 100%;
     width: auto;
     // margin: auto;
-    border-radius: 1rem;
+
     border: transparent;
     margin: auto;
+
+
 
 
     thead {
@@ -253,10 +257,10 @@ border: 1px solid rgb(228, 228, 228);
         th {
           width: auto;
           padding: 0.7rem 0.5rem;
-          background-color: #f8f9fa;
+          background-color: #424242;
           font-size: 0.8rem;
-font-weight: 500;
-          color: rgb(22, 22, 22);
+font-weight: 560 !important;
+          color: rgb(255, 255, 255);
         }
      
       }
@@ -277,13 +281,13 @@ font-weight: 500;
       }
       tr {
         // width: 100%;
-
         td {
           padding: 1rem 0rem;
           font-size: 0.8rem;
           vertical-align: middle;
           font-weight: 500 !important;
-          color: rgb(99, 99, 99);
+          background-color: rgb(216, 251, 255);
+          color: rgb(43, 43, 43);
           border-bottom: 1px solid rgb(230, 230, 230);
 
 a{

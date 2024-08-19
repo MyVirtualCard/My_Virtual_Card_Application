@@ -14,7 +14,7 @@ const ProductOrder = () => {
 
           <div className="appoinment_container table-responsive  ">
             <div className="container">
-              <table className="table table-hover rounded-3" id="example">
+              <table className="table table-borderless table-hover rounded-3" id="example">
                 <thead>
                   <tr>
                     <th

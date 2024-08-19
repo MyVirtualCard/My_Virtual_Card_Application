@@ -187,6 +187,7 @@ const Business_Hour = () => {
         <form className="business_box" method="POST" onSubmit={BussinessCount < 1 ? handleFormSave : handleFormUpdate}>
           <div class="cs-form">
             <h5>Monday</h5>
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -203,9 +204,12 @@ const Business_Hour = () => {
               value={Monday.to}
               onChange={(e) => setMonday({ ...Monday, to: e.target.value })}
             />
+            </div>
+  
           </div>
           <div class="cs-form">
             <h5>Tuesday</h5>
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -222,9 +226,12 @@ const Business_Hour = () => {
               value={Tuesday.to}
               onChange={(e) => setTuesday({ ...Tuesday, to: e.target.value })}
             />
+            </div>
+
           </div>
           <div class="cs-form">
             <h5>Wednesday</h5>
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -245,9 +252,13 @@ const Business_Hour = () => {
                 setWednesday({ ...Wednesday, to: e.target.value })
               }
             />
+            </div>
+
           </div>
           <div class="cs-form">
             <h5>Thursday</h5>
+
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -266,9 +277,13 @@ const Business_Hour = () => {
               value={Thursday.to}
               onChange={(e) => setThursday({ ...Thursday, to: e.target.value })}
             />
+            </div>
+     
           </div>
           <div class="cs-form">
             <h5>Friday</h5>
+
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -285,9 +300,12 @@ const Business_Hour = () => {
               value={Friday.to}
               onChange={(e) => setFriday({ ...Friday, to: e.target.value })}
             />
+            </div>
+ 
           </div>
           <div class="cs-form">
             <h5>Saturday</h5>
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -306,9 +324,12 @@ const Business_Hour = () => {
               value={Saturday.to}
               onChange={(e) => setSaturday({ ...Saturday, to: e.target.value })}
             />
+            </div>
+     
           </div>
           <div class="cs-form">
             <h5>Sunday</h5>
+            <div className="times">
             <input
               type="time"
               class="form-control"
@@ -325,6 +346,8 @@ const Business_Hour = () => {
               value={Sunday.to}
               onChange={(e) => setSunday({ ...Sunday, to: e.target.value })}
             />
+            </div>
+
           </div>
           <div className="form_submit_actions">
             {BussinessCount < 1 ? (

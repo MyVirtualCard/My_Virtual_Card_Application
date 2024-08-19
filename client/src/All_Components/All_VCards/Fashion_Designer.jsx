@@ -685,7 +685,7 @@ END:VCARD
                              {data.WhatsUp != "" &&
                              data.WhatsUp ? (
                                <a
-                                 href={`https://wa.me/${data.WhatsUp}?text=Hello%20there!`}
+                                 href={`https://wa.me/+91${data.WhatsUp}?text=Hello%20there!`}
                                  className="social_media_icon"
                                  target="_blank"
                                >
