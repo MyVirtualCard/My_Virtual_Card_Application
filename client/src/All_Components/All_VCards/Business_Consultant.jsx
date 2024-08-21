@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Business_Consultant.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
-
-
+//service Slider
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -13,6 +15,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 const Business_Consultant = () => {
+
+  let style={
+    $root_text_color: '#ffffff',
+    $root_text_second_color: '#F96921',
+  }
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -22,6 +29,10 @@ const Business_Consultant = () => {
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
+
+  const HtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -51,34 +62,26 @@ const Business_Consultant = () => {
     linkElement.click();
     document.body.removeChild(linkElement);
   }
+  //gallery
   const buttonStyle = {
-    width: "0px",
+    width: "20px",
     background: "none",
-    opacity: 0,
+    opacity: 1,
     border: "0px",
     padding: "0px",
+    borderRadius: "10px",
+    fontSize: "10px",
+    color: "#F96921",
   };
   const properties = {
     prevArrow: (
       <button style={{ ...buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
+        <span className="material-symbols-outlined">swipe_left</span>
       </button>
     ),
     nextArrow: (
       <button style={{ ...buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
+        <span className="material-symbols-outlined">swipe_right</span>
       </button>
     ),
   };
@@ -112,6 +115,30 @@ const Business_Consultant = () => {
         </svg>
       </button>
     ),
+  };
+
+  //Service
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 2,
+    slidesToScroll:width < 700 ? 1 : 2,
+  };
+  //Product
+  const product_settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 2,
+    slidesToScroll:width < 700 ? 1 : 2,
+    rtl: true,            // Scroll from left to right
+    arrows: true           // Show navigation arrows
+
   };
   //Gallery Functionality
   //openFullImage preview:
@@ -260,13 +287,19 @@ const Business_Consultant = () => {
       <div className="Business_Consultant_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
-        <div className="slide_svg">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fill-opacity="1" d="M0,320L1440,32L1440,0L0,0Z"></path></svg>
-          <div className="overlay"></div>
+          <div className="slide_svg">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill="#ffffff"
+                fill-opacity="1"
+                d="M0,320L1440,32L1440,0L0,0Z"
+              ></path>
+            </svg>
+            <div className="overlay"></div>
           </div>
           <div className="banner_image">
             <img
-              src='https://img.freepik.com/free-photo/business-people-discussing-project-plans-meeting_9975-22767.jpg?t=st=1722633434~exp=1722637034~hmac=c9d023ae9b02b034d790b616dd87d15a3a3c09723510ce1802200545255e07b8&w=1060'
+              src="https://img.freepik.com/free-photo/business-people-discussing-project-plans-meeting_9975-22767.jpg?t=st=1722633434~exp=1722637034~hmac=c9d023ae9b02b034d790b616dd87d15a3a3c09723510ce1802200545255e07b8&w=1060"
               alt="banner"
             />
             <div className="overlay"></div>
@@ -280,15 +313,11 @@ const Business_Consultant = () => {
         </div>
         {/* Summary */}
         <div className="row_2">
-
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
                 <h2>Waquor Younous</h2>
-                <p>
-                  Business Consultant{" "}
-                 
-                </p>
+                <p>Business Consultant </p>
               </div>
               <div className="social_medias">
                 <a
@@ -348,7 +377,6 @@ const Business_Consultant = () => {
         </div>
         {/* ContactDetails */}
         <div className="row_3">
-
           <div className="contact_list_container">
             <div className="contact_list">
               <div className="icons">
@@ -405,11 +433,13 @@ const Business_Consultant = () => {
         {/* Services */}
         <div className="row_4">
           <div className="title">
-            <h3>#&nbsp;Our Services</h3>
+            <h3>Our Services</h3>
           </div>
 
           <div className="service_list_container">
-            <div className="service_list">
+            <Slider {...settings}>
+            {/* //service_icon list */}
+            {/* <div className="service_list">
               <span className="material-symbols-outlined">palette</span>
 
               <div className="service_detail">
@@ -437,13 +467,76 @@ const Business_Consultant = () => {
                   </p>
                 </div>
               </div>
+            </div> */}
+            {/* //service_image list */}
+            <div className="img_service_list">
+              <div className="service_image">
+                <img
+                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
+                  alt="service"
+                />
+              </div>
+              <div className="img_service_detail">
+                <div className="service_title">
+                  <h4>Knowledge of diverse business</h4>
+                </div>
+                <div className="img_service_summary">
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Sint vero tenetur aliquid totam qui ipsam?
+                  </p>
+                </div>
+              </div>
             </div>
+            <div className="img_service_list">
+              <div className="service_image">
+                <img
+                  src="https://img.freepik.com/free-photo/close-up-business-partner-sitting-front-manager-looking-document_23-2147838536.jpg?t=st=1724258439~exp=1724262039~hmac=6aeddc50ea9f6c6996bb3fafe83382ee2ddfed32f0c72a7efde9ca6df2ebbaf5&w=900"
+                  alt="service"
+                />
+              </div>
+              <div className="img_service_detail">
+                <div className="service_title">
+                  <h4>Outstanding communication</h4>
+                </div>
+                <div className="img_service_summary">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Cumque alias similique, recusandae, at, iste aperiam maiores
+                    quis quia incidunt mollitia laudantium corrupti laboriosam
+                    harum molestias!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="img_service_list">
+              <div className="service_image">
+                <img
+                  src="https://img.freepik.com/free-photo/group-businesspeople-working-graph-office_23-2147838537.jpg?t=st=1724258500~exp=1724262100~hmac=66ad26cf021b5cfa52c872a98e80231c0553b641b256bf2bfa7f45aa339d8335&w=740"
+                  alt="service"
+                />
+              </div>
+              <div className="img_service_detail">
+                <div className="service_title">
+                  <h4> creative problem-solving</h4>
+                </div>
+                <div className="img_service_summary">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Cumque alias similique, recusandae, at, iste aperiam maiores
+                    quis quia incidunt mollitia laudantium corrupti laboriosam
+                    harum molestias!
+                  </p>
+                </div>
+              </div>
+            </div>
+            </Slider>
           </div>
         </div>
         {/* Gallery */}
         <div className="row_8">
           <div className="title">
-            <h3>#&nbsp;Gallery</h3>
+            <h3>Gallery</h3>
           </div>
           <div className="gallery_container">
             <div className="full_image" id="fullImageBox">
@@ -462,28 +555,28 @@ const Business_Consultant = () => {
               <Slide
                 slidesToScroll={1}
                 slidesToShow={width < 600 ? 2 : 2}
-                indicators={false}
+                indicators={true}
                 autoplay
-                {...gallery_properties}
+                {...properties}
                 autoplayInterval={1000}
               >
                 <img
-                  src="https://img.freepik.com/premium-vector/fashion-designer-violet-concept-with-people-scene-flat-cartoon-style-fashion-designer_198565-3738.jpg?w=900"
+                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
                   alt="developer"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://img.freepik.com/free-photo/fashion-designer-woman-working-studio-sitting-desk_155003-2462.jpg?t=st=1722621894~exp=1722625494~hmac=1a3a0dcf77f739b90a6a48cac1067710bf167740bb4e0125c3696d1f59f439ac&w=900"
+                  src="https://img.freepik.com/free-photo/working-online-project_1098-14828.jpg?t=st=1724258616~exp=1724262216~hmac=01da90dcb13e89f46c280ea2614c460b5414bf2e4ca2b3915c51c8808e6b0f5f&w=900"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://img.freepik.com/free-photo/beautiful-woman-showing-new-dress_23-2147688748.jpg?t=st=1722621912~exp=1722625512~hmac=5f085dae3ea305898277cad38fc6def45f4ac3a9707fcf7e21872301dd9ff56e&w=900"
+                  src="https://img.freepik.com/free-photo/two-colleagues-working-together-office-white-studio_155003-13076.jpg?t=st=1724258635~exp=1724262235~hmac=b20acfb2149769f4cffb7ff8376b7da5db2c424ecc5268cfdf15f3ce1f9c43c8&w=900"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://img.freepik.com/free-photo/emotional-funny-attractive-woman-holding-colorful-dresses-hanger-clothing-store_285396-4615.jpg?t=st=1722621932~exp=1722625532~hmac=76da5fd66d6aefca0f7e92a77f015312a2cb6367a26fa80f2ca671de6a747e32&w=900"
+                  src="https://img.freepik.com/free-photo/pensive-concentrated-managers-standing-modern-cafe_1262-17088.jpg?t=st=1724258653~exp=1724262253~hmac=4f3bcd7c4576293a2d2ad54d310796f0a01a60f024e0c89a128035134f80182c&w=900"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
@@ -495,98 +588,87 @@ const Business_Consultant = () => {
         {/* Products */}
         <div className="row_7">
           <div className="title">
-            <h3>
-              
-              #&nbsp;Our Products
-            </h3>
+            <h3>Our Products</h3>
             {/* Contact */}
           </div>
           <div className="product_list_container">
-            <Slide
-              slidesToScroll={1}
-              slidesToShow={width < 600 ? 1 : 2}
-              indicators={true}
-              autoplay
-              {...properties}
-              autoplayInterval={500}
+            <Slider {...product_settings}
+             
             >
               <div className="product_list">
+                <div className="product_title">
+                <h4>Product Design</h4>
+                </div>
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-photo/measuring-tape-still-life_23-2150404681.jpg?t=st=1722625614~exp=1722629214~hmac=978928d5c0263e973785df89a0ed957db40663e7c192cd597c77c8e54dffa261&w=900"
+                    src="https://img.freepik.com/free-vector/productivity-concept-background_23-2147991016.jpg?t=st=1724258763~exp=1724262363~hmac=a05c962ff921b749efe32fdab93c3b03143787e7a0e641f0d16df646029cdea4&w=740"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>A Measuring Tape</h4>
-                  <small> The first tool is the humble measuring tape. That is something that every single fashion design equipment list will mandatorily have.</small>
-                  <button>₹ &nbsp;100</button>
+             
+                  <small>
+                    {" "}
+                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut eveniet cupiditate magnam eos perspiciatis harum enim obcaecati dolor numquam iusto?
+               
+                  </small>
+                  <div className="link">
+                  <a href="#">More Detail</a>
+                  </div>
                 </div>
               </div>
               <div className="product_list">
+              <div className="product_title">
+                <h4>Business Process & Advisory</h4>
+                </div>
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-photo/fashion-designer-s-studio-with-essential-elements_23-2150414725.jpg?t=st=1722625741~exp=1722629341~hmac=84bd284f5b3aa92e8c6bc2b2520b06860816e2be217af9f0fef4fd680c2aa40d&w=900"
+                    src="https://img.freepik.com/premium-vector/coworkers-dialog-discussion_82574-9401.jpg?w=740"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>A Sharp Pair of Scissors</h4>
-                  <small> These are one of the main fashion design tools, whether one is a student or a professional. </small>
-                  <button>₹ &nbsp;350</button>
+                
+                  <small>
+                    {" "}
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo eveniet sint, nihil iusto in veniam corporis non pariatur ducimus harum.
+                  
+                  </small>
+                  <div className="link">
+                  <a href="#">More Detail</a>
+                  </div>
                 </div>
               </div>
               <div className="product_list">
+              <div className="product_title">
+                <h4>Training</h4>
+                </div>
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-photo/top-view-colorful-threads-dark-wall_179666-39993.jpg?t=st=1722625823~exp=1722629423~hmac=7b18347c8a4ff121a9d2030a9acf3888bdfed350102502d7db5dae725ce7dcea&w=900"
+                    src="https://img.freepik.com/free-photo/front-view-teamwork-coworkers-office_23-2148339344.jpg?t=st=1724258757~exp=1724262357~hmac=97a24f1f818e59893720b0af245b866910a10e66c9fd29a8ab586ee34ebbf514&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4> Tailor’s Chalk</h4>
-                  <small>Another important fashion tool is tailor’s chalk. Designers keep an entire army of chalk with them!</small>
-                  <button>₹ &nbsp;150</button>
+              
+                  <small>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, saepe? Tempore cupiditate aliquid sint eius amet neque numquam fugiat eveniet!
+                    
+                  </small>
+                  <div className="link">
+                  <a href="#">More Detail</a>
+                  </div>
+             
                 </div>
               </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/needles-sewing-threads-used-by-hands-top-view_23-2148355047.jpg?t=st=1722625911~exp=1722629511~hmac=15241672681e221a6f947afa270937a85ee4edf8efc894d09ee89ad0716a1bfe&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4> Needles and Threads
-                  </h4>
-                  <small>These are also essentials in a fashion designer’s tool kit. They’re not usually used during the creation of the dress</small>
-                  <button>₹ &nbsp;450</button>
-                </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/natural-white-cotton-crumpled-soft-fabric-texture-background-surface_640221-220.jpg?t=st=1722625986~exp=1722629586~hmac=3a95d4ed209a4c8ed5f077c3003e02eb0e534128aa9f4fdd78dc3363d74b07d1&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4> Muslin Fabric
-                  </h4>
-                  <small>Muslin is a cotton fabric that can range in weight – from sheers to coarse material.</small>
-                  <button>₹ &nbsp;1000</button>
-                </div>
-              </div>
-            </Slide>
+           
+            </Slider>
           </div>
         </div>
         {/* //Appinment */}
         <div className="row_6">
           <div className="title">
-            <h3>
-              
-             #&nbsp;Make An Appoinment
-            </h3>
+            <h3>Make An Appoinment</h3>
           </div>
 
           <div className="appinment_form_container">
@@ -621,10 +703,7 @@ const Business_Consultant = () => {
         {/* Testimonial */}
         <div className="row_9">
           <div className="title">
-            <h3>
-            
-              #&nbsp;Testimonial
-            </h3>
+            <h3>Testimonial</h3>
             {/* Contact */}
           </div>
           <div className="testimonial_container">
@@ -720,9 +799,7 @@ const Business_Consultant = () => {
         {/* QRCode */}
         <div className="row_12">
           <div className="title">
-            <h3>
-              #&nbsp;QRCode
-            </h3>
+            <h3>QRCode</h3>
             {/* Contact */}
           </div>
 
@@ -743,9 +820,7 @@ const Business_Consultant = () => {
         {/* Opentime */}
         <div className="row_5">
           <div className="title">
-            <h3>
-              #&nbsp;Open&Close Time
-            </h3>
+            <h3>Open&Close Time</h3>
             {/* Contact */}
           </div>
           <div className="time_list_container">
@@ -841,12 +916,21 @@ const Business_Consultant = () => {
             </div>
           </div>
         </div>
+                {/* GoogleMap */}
+
+                <div className="google_map_container">
+          <div className="title">
+            <h3>Live Location</h3>
+          </div>
+
+          <div className="google_map">
+            <HtmlRenderer htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`} />
+          </div>
+        </div>
         {/* Feedback */}
         <div className="row_10">
           <div className="title">
-            <h3>
-            #&nbsp;Feedback
-            </h3>
+            <h3>Feedback</h3>
             {/* Contact */}
           </div>
           <div className="feedback_container">
@@ -1073,10 +1157,7 @@ const Business_Consultant = () => {
         {/* Inquries */}
         <div className="row_11">
           <div className="title">
-            <h3>
-          
-              #&nbsp;Inquries
-            </h3>
+            <h3>Inquries</h3>
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1135,7 +1216,13 @@ const Business_Consultant = () => {
         {/* Footer */}
         <div className="row_13">
           <div className="footer_container">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#be96d8b6" fill-opacity="1" d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill={style.$root_text_second_color}
+                fill-opacity="1"
+                d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+              ></path>
+            </svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>

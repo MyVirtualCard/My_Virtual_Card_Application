@@ -11,6 +11,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Typewriter, Cursor } from "react-simple-typewriter";
+import axios from "axios";
 const Manager = () => {
 
   const [width, setWidth] = useState(window.innerWidth);
@@ -21,7 +22,6 @@ const Manager = () => {
   });
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
-  let [AllFeedBacks, setAllFeedBacks] = useState([]);
   //service
   const buttonStyle = {
     width: "20px",
@@ -214,6 +214,7 @@ const Manager = () => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
   //Appoinment form
+
   // let Appoinment_formik = useFormik({
   //   initialValues: {
   //     Url_Alies: window.location.pathname,
@@ -255,6 +256,53 @@ const Manager = () => {
   //       });
   //   },
   // });
+  let [SiteLoader, setSiteLoader] = useState(false);
+
+  let [VCard_URL_Data, setVCard_URL_Data] = useState([]);
+  let [BasicData, setBasicData] = useState([]);
+  let [VCardData, setVCardData] = useState([]);
+  let [GalleryData, setGalleryData] = useState([]);
+  let [TestimonialData, setTestimonialData] = useState([]);
+  let [ProductData, setProductData] = useState([]);
+  let [BlogData, setBlogData] = useState([]);
+  let [ServiceData, setServiceData] = useState([]);
+  let [QRCodeData, setQRCodeData] = useState([]);
+  let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  let [SocialMediaData, setSocialMediaData] = useState([]);
+  let [BussinessHourData, setBussinessHourData] = useState([]);
+  let [GoogleMapData, setGoogleMapData] = useState([]);
+  let [PopUpBannerData, setPopUpBannerData] = useState([]);
+  let[ManageContentData,setManageContent]=useState([]);
+  const handleDownloadVCard = () => {
+    const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${BasicData.length > 0 ? BasicData[0].FirstName : ""}
+TEL;TYPE=cell:${BasicData.length > 0 ? BasicData[0].MobileNumber : ""}
+EMAIL:${BasicData.length > 0 ? BasicData[0].Email : ""}
+END:VCARD
+  `;
+
+    const blob = new Blob([vCardData], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    vCard.photo.attachFromUrl(
+      `${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].Profile : ""}`,
+      "JPEG"
+    );
+    link.download = `${
+      BasicData.length > 0 ? BasicData[0].FirstName : "card.vcf"
+    }.vcf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  const currentUrl = window.location.pathname; // Full URL
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
   return (
     <div className="newcard_design11_container">
       <div className="newcard_design11_box">
@@ -358,7 +406,7 @@ const Manager = () => {
           </div>
 
           <div className="contact_list_container">
-            <div className="contact_list">
+            <a className="contact_list">
               <div className="icon">
               <i class="bx bxl-gmail"></i>
               <small>Email</small>
@@ -368,8 +416,8 @@ const Manager = () => {
                
                 <p>jayakumarv@aristostech.in</p>
               </div>
-            </div>
-            <div className="contact_list">
+            </a>
+            <a className="contact_list">
               <div className="icon">
               <i className="bx bx-mobile-vibration"></i>
               <small>Mobile Number</small>
@@ -379,8 +427,8 @@ const Manager = () => {
                 
                 <p>(+91) 93444 82370</p>
               </div>
-            </div>
-            <div className="contact_list">
+            </a>
+            <a className="contact_list">
           <div className="icon">
           <i className="bx bx-envelope"></i>
           <small>Company Email</small>
@@ -389,8 +437,8 @@ const Manager = () => {
              
                 <p>contact@aristostech.in</p>
               </div>
-            </div>
-            <div className="contact_list">
+            </a>
+            <a className="contact_list">
      <div className="icon">
      <i className="bx bx-map-alt"></i>
      <small>Address</small>
@@ -402,8 +450,14 @@ const Manager = () => {
                   Chennai-600017
                 </p>
               </div>
-            </div>
+            </a>
           </div>
+                   {/* AddtoContact */}
+                   <div className="add_to_contact">
+                    <button onClick={handleDownloadVCard}>
+                      Add to Contact<i className="bx bxs-contact"></i>
+                    </button>
+                  </div>
         </div>
 
         {/* Services */}
@@ -432,6 +486,10 @@ const Manager = () => {
                   <div className="service_title">
                     <h4>Business analysis</h4>
                   </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
                   <div className="service_summary">
                     <p>
                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil maiores hic sint, natus eveniet voluptate perferendis. Eligendi repellat libero natus?
@@ -447,6 +505,10 @@ const Manager = () => {
                   <div className="service_title">
                     <h4>Effective Delegation</h4>
                   </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
                   <div className="service_summary">
                     <p>
                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nesciunt. Reiciendis nesciunt necessitatibus natus et expedita facilis accusamus non molestiae.
@@ -463,6 +525,10 @@ const Manager = () => {
                   <div className="service_title">
                     <h4>Clear Communication</h4>
                   </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
                   <div className="service_summary">
                     <p>
                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus doloremque dolore rerum quo voluptatem id. Temporibus ducimus praesentium rem veritatis!
@@ -479,6 +545,10 @@ const Manager = () => {
                   <div className="service_title">
                     <h4>Managing risks</h4>
                   </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
                   <div className="service_summary">
                     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere quis quaerat aut architecto placeat incidunt non vel velit minus harum!</p>
                   </div>
@@ -614,6 +684,10 @@ const Manager = () => {
                     alt="product"
                   />
                 </div>
+                <div className="product_price">
+                    <small>₹ &nbsp; 3000</small>
+                    <i className='bx bxs-purchase-tag' ></i>
+                  </div>
                 <div className="product_details">
                   <h4>Broad technical understanding</h4>
                   <small>
@@ -632,6 +706,10 @@ const Manager = () => {
                     alt="product"
                   />
                 </div>
+                <div className="product_price">
+                    <small>₹ &nbsp; 2000</small>
+                    <i className='bx bxs-purchase-tag' ></i>
+                  </div>
                 <div className="product_details">
                   <h4>Service Level Management</h4>
                   <small>
@@ -649,6 +727,10 @@ const Manager = () => {
                     alt="product"
                   />
                 </div>
+                <div className="product_price">
+                    <small>₹ &nbsp; 1000</small>
+                    <i className='bx bxs-purchase-tag' ></i>
+                  </div>
                 <div className="product_details">
                   <h4>Service Engineering</h4>
                   <small>
