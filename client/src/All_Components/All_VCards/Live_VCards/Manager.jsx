@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
-import "./Business_Consultant.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
-//service Slider
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import React, { useState } from "react";
+import "./Manager.scss";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import hand from "../../../assets/AllVCard_Image/VCard3/hand.gif";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -13,13 +10,10 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import vCardsJS from "vcards-js";
-const Business_Consultant_Demo = () => {
+import { Typewriter, Cursor } from "react-simple-typewriter";
+import axios from "axios";
+const Manager = () => {
 
-  let style={
-    $root_text_color: '#ffffff',
-    $root_text_second_color: '#F96921',
-  }
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -28,41 +22,7 @@ const Business_Consultant_Demo = () => {
   });
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
-  let [AllFeedBacks, setAllFeedBacks] = useState([]);
-
-  const HtmlRenderer = ({ htmlString }) => {
-    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
-  };
-  //create a new vCard
-  var vCard = vCardsJS();
-
-  function generateVCF() {
-    //set properties
-    vCard.firstName = "Jayakumar";
-    vCard.middleName = "";
-    vCard.lastName = "V";
-    vCard.organization = "Aristostech India Private Limited,CEO";
-    vCard.photo.attachFromUrl(
-      "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1714999372~exp=1715002972~hmac=148ead13ab2f0dc4db7268fb984501266e0547e55d0bd1a6918e3e51ca5a5af4&w=740",
-      "JPEG"
-    );
-    vCard.workPhone = "+91 9344482370";
-    vCard.birthday = new Date(1985, 0, 1);
-    vCard.title = "Bussiness Man";
-    vCard.url = "https://www.aristostechindia.com/";
-    vCard.note = "Notes on Eric";
-
-    //save to file
-    // vCard.saveToFile('./eric-nesser.vcf');
-    const linkElement = document.createElement("a");
-    linkElement.setAttribute("href", `data:,${vCard.getFormattedString()}`);
-    linkElement.setAttribute("download", "card.vcf");
-    linkElement.style.display = "none";
-    document.body.appendChild(linkElement);
-    linkElement.click();
-    document.body.removeChild(linkElement);
-  }
-  //gallery
+  //service
   const buttonStyle = {
     width: "20px",
     background: "none",
@@ -71,7 +31,7 @@ const Business_Consultant_Demo = () => {
     padding: "0px",
     borderRadius: "10px",
     fontSize: "10px",
-    color: "#F96921",
+    color: "orange",
   };
   const properties = {
     prevArrow: (
@@ -85,60 +45,28 @@ const Business_Consultant_Demo = () => {
       </button>
     ),
   };
-  const gallery_buttonStyle = {
-    width: "0px",
+  //Product
+  const product_buttonStyle = {
+    width: "20px",
     background: "none",
-    opacity: 0,
+    opacity: 1,
     border: "0px",
     padding: "0px",
+    borderRadius: "10px",
+    fontSize: "10px",
+    color: "white",
   };
-  const gallery_properties = {
+  const product_properties = {
     prevArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
+      <button style={{ ...product_buttonStyle }}>
+        <span className="material-symbols-outlined">swipe_left</span>
       </button>
     ),
     nextArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
+      <button style={{ ...product_buttonStyle }}>
+        <span className="material-symbols-outlined">swipe_right</span>
       </button>
     ),
-  };
-
-  //Service
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll:width < 700 ? 1 : 2,
-  };
-  //Product
-  const product_settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll:width < 700 ? 1 : 2,
-    rtl: true,            // Scroll from left to right
-    arrows: true           // Show navigation arrows
-
   };
   //Gallery Functionality
   //openFullImage preview:
@@ -282,43 +210,135 @@ const Business_Consultant_Demo = () => {
       StopConfetti();
     },
   });
+  const HtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
+  //Appoinment form
+
+  // let Appoinment_formik = useFormik({
+  //   initialValues: {
+  //     Url_Alies: window.location.pathname,
+  //     FullName: "",
+  //     MobileNumber: "",
+  //     Date: "",
+  //     Time:'',
+  //   },
+
+  //   //Validation :
+  //   validationSchema: AppoinmentValidateSchema,
+  //   //Form Submit :
+  //   onSubmit: async (values) => {
+  //     setappoinmentLoader(true)
+  //     await api
+  //       .post(`/appoinment${window.location.pathname}`, values)
+  //       .then((res) => {
+  //         console.log(res)
+  //         formik.values.FullName = "";
+  //         formik.values.Time = "";
+  //         formik.values.MobileNumber = "";
+  //         formik.values.Date = "";
+
+  //         setAppoinmentPopup(true);
+  //         setappoinmentLoader(false)
+  //         setSuccessMessage(res.data.message);
+  //         setTimeout(() => {
+  //           setAppoinmentPopup(false);
+  //         }, 3000);
+  //       })
+  //       .catch((error) => {
+
+  //         setappoinmentLoader(false)
+  //         setAppoinmentPopupError(true);
+  //         setTimeout(() => {
+  //           setAppoinmentPopupError(false);
+  //         }, 3000);
+  //         setErrorMessage(error.response.data.message);
+  //       });
+  //   },
+  // });
+  let [SiteLoader, setSiteLoader] = useState(false);
+
+  let [VCard_URL_Data, setVCard_URL_Data] = useState([]);
+  let [BasicData, setBasicData] = useState([]);
+  let [VCardData, setVCardData] = useState([]);
+  let [GalleryData, setGalleryData] = useState([]);
+  let [TestimonialData, setTestimonialData] = useState([]);
+  let [ProductData, setProductData] = useState([]);
+  let [BlogData, setBlogData] = useState([]);
+  let [ServiceData, setServiceData] = useState([]);
+  let [QRCodeData, setQRCodeData] = useState([]);
+  let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  let [SocialMediaData, setSocialMediaData] = useState([]);
+  let [BussinessHourData, setBussinessHourData] = useState([]);
+  let [GoogleMapData, setGoogleMapData] = useState([]);
+  let [PopUpBannerData, setPopUpBannerData] = useState([]);
+  let[ManageContentData,setManageContent]=useState([]);
+  const handleDownloadVCard = () => {
+    const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${BasicData.length > 0 ? BasicData[0].FirstName : ""}
+TEL;TYPE=cell:${BasicData.length > 0 ? BasicData[0].MobileNumber : ""}
+EMAIL:${BasicData.length > 0 ? BasicData[0].Email : ""}
+END:VCARD
+  `;
+
+    const blob = new Blob([vCardData], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    vCard.photo.attachFromUrl(
+      `${VCard_URL_Data.length > 0 ? VCard_URL_Data[0].Profile : ""}`,
+      "JPEG"
+    );
+    link.download = `${
+      BasicData.length > 0 ? BasicData[0].FirstName : "card.vcf"
+    }.vcf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  const currentUrl = window.location.pathname; // Full URL
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+  });
   return (
-    <div className="Business_Consultant_container">
-      <div className="Business_Consultant_box">
+    <div className="newcard_design11_container">
+      <div className="newcard_design11_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
-          <div className="slide_svg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path
-                fill="#ffffff"
-                fill-opacity="1"
-                d="M0,320L1440,32L1440,0L0,0Z"
-              ></path>
-            </svg>
-            <div className="overlay"></div>
-          </div>
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/free-photo/business-people-discussing-project-plans-meeting_9975-22767.jpg?t=st=1722633434~exp=1722637034~hmac=c9d023ae9b02b034d790b616dd87d15a3a3c09723510ce1802200545255e07b8&w=1060"
-              alt="banner"
+              src="https://img.freepik.com/premium-photo/abstract-night-cityscape-background-smart-city-ai-digital-transformation-concept-double-exposure_3535-9362.jpg?w=900"
+              className="banner"
             />
             <div className="overlay"></div>
           </div>
-          <div className="user_logo">
-            <img
-              src="https://img.freepik.com/free-vector/hand-drawn-data-logo-template_23-2149204607.jpg?t=st=1722704993~exp=1722708593~hmac=e92412a91b89733e40b5b8034405ea189ffb803525e55f2a4f6aaa1adbfb32f3&w=740"
-              alt="user_logo"
-            />
-          </div>
-        </div>
-        {/* Summary */}
-        <div className="row_2">
+
           <div className="user_details">
+            <div className="user_logo">
+              <img
+                src="https://img.freepik.com/free-vector/logo-unique-luxury-gradient-colorful-design_483537-1477.jpg?t=st=1722496836~exp=1722500436~hmac=86a8ecf1f3e0b64fb5e05a72459e4b749f91ce457b06acefb9bcee2120cd0ea5&w=740"
+                alt="user_logo"
+              />
+            </div>
             <div className="user_data">
-              <div className="user_information">
-                <h2>Waquor Younous</h2>
-                <p>Business Consultant </p>
-              </div>
+              <h2>Jayakumar</h2>
+              <p>
+                <span>
+                  <Typewriter
+                    words={["Corporate CEO", "Manager", "Organizer"]}
+                    loop={true}
+                    cursor
+                    cursorStyle="|"
+                    typeSpeed={200}
+                    deleteSpeed={100}
+                    delaySpeed={1000}
+                  />
+                </span>
+              </p>
+
               <div className="social_medias">
                 <a
                   href="https://www.facebook.com/aristostechindia"
@@ -367,460 +387,183 @@ const Business_Consultant_Demo = () => {
               </div>
             </div>
           </div>
-          <div className="summary">
-            <p>
-              We started from a traditional marketing background and emerged to
-              be a successful Digital Marketing Agency since Digitalisation has
-              begun to evolve.
-            </p>
-          </div>
+        </div>
+        {/* Summary */}
+        <div className="row_2">
+          <p>
+            We started from a traditional marketing background and emerged to be
+            a successful Digital Marketing Agency since Digitalisation has begun
+            to evolve.
+          </p>
         </div>
         {/* ContactDetails */}
         <div className="row_3">
-          <div className="contact_list_container">
-            <div className="contact_list">
-              <div className="icons">
-                <i class="bx bxl-gmail"></i>
-                {/* <small>Email</small> */}
-              </div>
+          <div className="manager_title">
+            <h3>
+              <i className="bx bxs-phone-call"></i> Contact Details
+            </h3>
+            {/* Contact */}
+          </div>
 
+          <div className="contact_list_container">
+            <a className="contact_list">
+              <div className="icon">
+              <i class="bx bxl-gmail"></i>
+              <small>Email</small>
+              </div>
+             
               <div className="list_detail">
+               
                 <p>jayakumarv@aristostech.in</p>
               </div>
-            </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-mobile-vibration"></i>
-                {/* <small>Mobile Number</small> */}
+            </a>
+            <a className="contact_list">
+              <div className="icon">
+              <i className="bx bx-mobile-vibration"></i>
+              <small>Mobile Number</small>
               </div>
-
+        
               <div className="list_detail">
+                
                 <p>(+91) 93444 82370</p>
               </div>
-            </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-envelope"></i>
-                {/* <small>Company Email</small> */}
-              </div>
-
+            </a>
+            <a className="contact_list">
+          <div className="icon">
+          <i className="bx bx-envelope"></i>
+          <small>Company Email</small>
+          </div>
               <div className="list_detail">
+             
                 <p>contact@aristostech.in</p>
               </div>
-            </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-map-alt"></i>
-                {/* <small>Address</small> */}
-              </div>
-
+            </a>
+            <a className="contact_list">
+     <div className="icon">
+     <i className="bx bx-map-alt"></i>
+     <small>Address</small>
+     </div>
               <div className="list_detail">
+               
                 <p>
                   Ankur Plasa No-113 (Old 52) G.N Chetty Road T. Nagar
                   Chennai-600017
                 </p>
               </div>
-            </div>
+            </a>
           </div>
-
-          {/* AddtoContact */}
-          <div className="add_to_contact">
-            <button onClick={generateVCF}>
-              Add to Contact<i className="bx bxs-contact"></i>
-            </button>
-          </div>
+                   {/* AddtoContact */}
+                   <div className="add_to_contact">
+                    <button onClick={handleDownloadVCard}>
+                      Add to Contact<i className="bx bxs-contact"></i>
+                    </button>
+                  </div>
         </div>
+
         {/* Services */}
         <div className="row_4">
-          <div className="title">
-            <h3>Our Services</h3>
+          <div className="manager_title">
+            <h3>
+              <i className="bx bx-dumbbell"></i> Our Services
+            </h3>
           </div>
 
           <div className="service_list_container">
-            <Slider {...settings}>
-            {/* //service_icon list */}
-            {/* <div className="service_list">
-              <span className="material-symbols-outlined">palette</span>
-
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Color direction</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quasi nisi laborum reprehenderit sint doloribus ab!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">view_quilt</span>
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Catalog layout</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </div> */}
-            {/* //service_image list */}
-            <div className="img_service_list">
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-                <div className="service_title">
-                  <h4>Knowledge of diverse business</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="img_service_list">
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/close-up-business-partner-sitting-front-manager-looking-document_23-2147838536.jpg?t=st=1724258439~exp=1724262039~hmac=6aeddc50ea9f6c6996bb3fafe83382ee2ddfed32f0c72a7efde9ca6df2ebbaf5&w=900"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-                <div className="service_title">
-                  <h4>Outstanding communication</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cumque alias similique, recusandae, at, iste aperiam maiores
-                    quis quia incidunt mollitia laudantium corrupti laboriosam
-                    harum molestias!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="img_service_list">
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/group-businesspeople-working-graph-office_23-2147838537.jpg?t=st=1724258500~exp=1724262100~hmac=66ad26cf021b5cfa52c872a98e80231c0553b641b256bf2bfa7f45aa339d8335&w=740"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-                <div className="service_title">
-                  <h4> creative problem-solving</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cumque alias similique, recusandae, at, iste aperiam maiores
-                    quis quia incidunt mollitia laudantium corrupti laboriosam
-                    harum molestias!
-                  </p>
-                </div>
-              </div>
-            </div>
-            </Slider>
-          </div>
-        </div>
-        {/* Gallery */}
-        <div className="row_8">
-          <div className="title">
-            <h3>Gallery</h3>
-          </div>
-          <div className="gallery_container">
-            <div className="full_image" id="fullImageBox">
-              <div className="close_Full_Image_gallery">
-                <span
-                  className="material-symbols-outlined"
-                  onClick={closeFullImage}
-                >
-                  cancel
+            <Slide
+              slidesToScroll={1}
+              slidesToShow={width < 0 ? 1 : 2}
+              indicators={true}
+              autoplay
+              {...properties}
+              autoplayInterval={1000}
+            >
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  developer_mode
                 </span>
-              </div>
-              <img src={banner} alt="gallery" id="fullImage" />
-            </div>
 
-            <div className="gallery_box">
-              <Slide
-                slidesToScroll={1}
-                slidesToShow={width < 600 ? 2 : 2}
-                indicators={true}
-                autoplay
-                {...properties}
-                autoplayInterval={1000}
-              >
-                <img
-                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
-                  alt="developer"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/working-online-project_1098-14828.jpg?t=st=1724258616~exp=1724262216~hmac=01da90dcb13e89f46c280ea2614c460b5414bf2e4ca2b3915c51c8808e6b0f5f&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/two-colleagues-working-together-office-white-studio_155003-13076.jpg?t=st=1724258635~exp=1724262235~hmac=b20acfb2149769f4cffb7ff8376b7da5db2c424ecc5268cfdf15f3ce1f9c43c8&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/pensive-concentrated-managers-standing-modern-cafe_1262-17088.jpg?t=st=1724258653~exp=1724262253~hmac=4f3bcd7c4576293a2d2ad54d310796f0a01a60f024e0c89a128035134f80182c&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-              </Slide>
-            </div>
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Business analysis</h4>
+                  </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
+                  <div className="service_summary">
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil maiores hic sint, natus eveniet voluptate perferendis. Eligendi repellat libero natus?
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  design_services
+                </span>
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Effective Delegation</h4>
+                  </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
+                  <div className="service_summary">
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nesciunt. Reiciendis nesciunt necessitatibus natus et expedita facilis accusamus non molestiae.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  local_convenience_store
+                </span>
+
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Clear Communication</h4>
+                  </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
+                  <div className="service_summary">
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus doloremque dolore rerum quo voluptatem id. Temporibus ducimus praesentium rem veritatis!
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  production_quantity_limits
+                </span>
+
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Managing risks</h4>
+                  </div>
+                  <a className="view_service">
+                    <small>View Service</small>
+                    <i className='bx bx-link'></i>
+                  </a>
+                  <div className="service_summary">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere quis quaerat aut architecto placeat incidunt non vel velit minus harum!</p>
+                  </div>
+                </div>
+              </div>
+            </Slide>
           </div>
         </div>
 
-        {/* Products */}
-        <div className="row_7">
-          <div className="title">
-            <h3>Our Products</h3>
-            {/* Contact */}
-          </div>
-          <div className="product_list_container">
-            <Slider {...product_settings}
-             
-            >
-              <div className="product_list">
-                <div className="product_title">
-                <h4>Product Design</h4>
-                </div>
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-vector/productivity-concept-background_23-2147991016.jpg?t=st=1724258763~exp=1724262363~hmac=a05c962ff921b749efe32fdab93c3b03143787e7a0e641f0d16df646029cdea4&w=740"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-             
-                  <small>
-                    {" "}
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut eveniet cupiditate magnam eos perspiciatis harum enim obcaecati dolor numquam iusto?
-               
-                  </small>
-                  <div className="link">
-                  <a href="#">More Detail</a>
-                  </div>
-                </div>
-              </div>
-              <div className="product_list">
-              <div className="product_title">
-                <h4>Business Process & Advisory</h4>
-                </div>
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/premium-vector/coworkers-dialog-discussion_82574-9401.jpg?w=740"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                
-                  <small>
-                    {" "}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo eveniet sint, nihil iusto in veniam corporis non pariatur ducimus harum.
-                  
-                  </small>
-                  <div className="link">
-                  <a href="#">More Detail</a>
-                  </div>
-                </div>
-              </div>
-              <div className="product_list">
-              <div className="product_title">
-                <h4>Training</h4>
-                </div>
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/front-view-teamwork-coworkers-office_23-2148339344.jpg?t=st=1724258757~exp=1724262357~hmac=97a24f1f818e59893720b0af245b866910a10e66c9fd29a8ab586ee34ebbf514&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-              
-                  <small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, saepe? Tempore cupiditate aliquid sint eius amet neque numquam fugiat eveniet!
-                    
-                  </small>
-                  <div className="link">
-                  <a href="#">More Detail</a>
-                  </div>
-             
-                </div>
-              </div>
-           
-            </Slider>
-          </div>
-        </div>
-        {/* //Appinment */}
-        <div className="row_6">
-          <div className="title">
-            <h3>Make An Appoinment</h3>
-          </div>
-
-          <div className="appinment_form_container">
-            <form className="appinment_form">
-              <div className="form_group">
-                <label htmlFor="date">Date</label>
-                <input
-                  type="date"
-                  name="data"
-                  id="date"
-                  className="date-input"
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="time">Time</label>
-                <select name="time" id="time">
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="01:00 PM">01:00 PM</option>
-                  <option value="03:00 PM">03:00 PM</option>
-                </select>
-              </div>
-              <div className="form_submit">
-                <button type="submit" className="submit-btn">
-                  Book Now
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        {/* Testimonial */}
-        <div className="row_9">
-          <div className="title">
-            <h3>Testimonial</h3>
-            {/* Contact */}
-          </div>
-          <div className="testimonial_container">
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-              infiniteLoop
-              autoPlay
-            >
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>John Doe</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Jayakumar </h4>
-                    <small>-CEO</small>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Dinesh Kumar</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Punitha</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
-              </div>
-            </Carousel>
-          </div>
-        </div>
-        {/* QRCode */}
-        <div className="row_12">
-          <div className="title">
-            <h3>QRCode</h3>
-            {/* Contact */}
-          </div>
-
-          <div className="qrcode_container">
-            <div className="qr_code_box">
-              <h4>
-                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Ducimus, enim?
-              </h4>
-
-              <img
-                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
         {/* Opentime */}
         <div className="row_5">
-          <div className="title">
-            <h3>Open&Close Time</h3>
+          <div className="manager_title">
+            <h3>
+              <i className="bx bx-timer"></i>Open&Close Time
+            </h3>
             {/* Contact */}
           </div>
           <div className="time_list_container">
@@ -916,10 +659,290 @@ const Business_Consultant_Demo = () => {
             </div>
           </div>
         </div>
-                {/* GoogleMap */}
+        {/* Products */}
+        <div className="row_7">
+          <div className="manager_title">
+            <h3>
+              <span className="material-symbols-outlined">fitness_center</span>
+              Our Products
+            </h3>
+            {/* Contact */}
+          </div>
+          <div className="product_list_container">
+            <Slide
+              slidesToScroll={1}
+              slidesToShow={width < 600 ? 1 : 1}
+              indicators={true}
+              autoplay
+              {...product_properties}
+              autoplayInterval={1000}
+            >
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/free-vector/hand-drawn-innovation-concept_23-2149171106.jpg?t=st=1724217740~exp=1724221340~hmac=f99ed80a22986882d6a8ec7e6f0dbdf799025cbb5ff345512c39f415a4ab2014&w=900"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_price">
+                    <small>₹ &nbsp; 3000</small>
+                    <i className='bx bxs-purchase-tag' ></i>
+                  </div>
+                <div className="product_details">
+                  <h4>Broad technical understanding</h4>
+                  <small>
+                    {" "}
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sequi, ipsa nostrum ipsam ab praesentium. Pariatur iste non enim nesciunt.
+                  </small>
+                  <a href="">
+                  <button>More details</button>
+                  </a>
+                </div>
+              </div>
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/free-vector/business-man-avatar-cartoon_24640-47590.jpg?t=st=1724217836~exp=1724221436~hmac=bb5bf8be717d76f8a1d1ebda93c1c981959e8491164a18e25fa734306aa62fcc&w=740"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_price">
+                    <small>₹ &nbsp; 2000</small>
+                    <i className='bx bxs-purchase-tag' ></i>
+                  </div>
+                <div className="product_details">
+                  <h4>Service Level Management</h4>
+                  <small>
+                   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad non quibusdam error eius! Beatae laborum, consequuntur tempora veniam exercitationem rem?
+                  </small>
+                  <a href="">
+                  <button>More details</button>
+                  </a>
+                </div>
+              </div>
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/premium-photo/employee-work-load-icon_1197797-239630.jpg?w=900"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_price">
+                    <small>₹ &nbsp; 1000</small>
+                    <i className='bx bxs-purchase-tag' ></i>
+                  </div>
+                <div className="product_details">
+                  <h4>Service Engineering</h4>
+                  <small>
+                    {" "}
+                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, libero. Aspernatur quia eligendi sit minima laborum sint ratione quidem. Velit.
+                  </small>
+                  <a href="">
+                  <button>More details</button>
+                  </a>
+                
+                </div>
+              </div>
+            </Slide>
+          </div>
+        </div>
+        {/* //Appinment */}
+        <div className="row_6">
+          <div className="manager_title">
+            <h3>
+              <span className="material-symbols-outlined">groups</span>
+              Make An Appoinment
+            </h3>
+          </div>
 
-                <div className="google_map_container">
-          <div className="title">
+          <div className="appinment_form_container">
+            <form className="appinment_form">
+              <div className="form_group">
+                <label htmlFor="date">Date</label>
+                <input
+                  type="date"
+                  name="data"
+                  id="date"
+                  className="date-input"
+                />
+              </div>
+              <div className="form_group">
+                <label htmlFor="time">Time</label>
+                <select name="time" id="time">
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="01:00 PM">01:00 PM</option>
+                  <option value="03:00 PM">03:00 PM</option>
+                </select>
+              </div>
+              <div className="form_submit">
+                <button type="submit" className="submit-btn">
+                  Book Now
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {/* Gallery */}
+        <div className="row_8">
+          <div className="manager_title">
+            <h3>
+              <span className="material-symbols-outlined">
+                gallery_thumbnail
+              </span>
+              Gallery
+            </h3>
+            {/* Contact */}
+          </div>
+          <div className="gallery_container">
+            <div className="full_image" id="fullImageBox">
+              <div className="close_Full_Image_gallery">
+                <span
+                  className="material-symbols-outlined"
+                  onClick={closeFullImage}
+                >
+                  cancel
+                </span>
+              </div>
+              <img src={banner} alt="gallery" id="fullImage" />
+            </div>
+            <div className="arrow">
+              <small>Scroll To</small>
+              <i className="bx bx-chevrons-right bx-fade-right"></i>
+            </div>
+            <div className="gallery_box">
+              <div className="click_image">
+                <img src={hand} alt="click" />
+              </div>
+              <img
+                src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
+                alt="developer"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+              <img
+                src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-4.png?fit=1030%2C687&ssl=1"
+                alt="dev"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+              <img
+                src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-6.png?fit=1030%2C681&ssl=1"
+                alt="dev"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+              <img
+                src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/10/sunglasses-in-hand-on-purple-background-close-up-NQBKRR9.png?fit=700%2C700&ssl=1"
+                alt="dev"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+            </div>
+          </div>
+        </div>
+        {/* Testimonial */}
+        <div className="row_9">
+          <div className="manager_title">
+            <h3>
+              <span className="material-symbols-outlined">
+                settings_accessibility
+              </span>
+              Testimonial
+            </h3>
+            {/* Contact */}
+          </div>
+          <div className="testimonial_container">
+            <Carousel
+              showThumbs={false}
+              showStatus={false}
+              infiniteLoop
+              autoPlay
+            >
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>John Doe</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Jayakumar </h4>
+                    <small>-CEO</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Dinesh Kumar</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Punitha</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+            </Carousel>
+          </div>
+        </div>
+        {/* GoogleMap */}
+
+        <div className="google_map_container">
+          <div className="manager_title">
             <h3>Live Location</h3>
           </div>
 
@@ -927,10 +950,14 @@ const Business_Consultant_Demo = () => {
             <HtmlRenderer htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`} />
           </div>
         </div>
+
         {/* Feedback */}
         <div className="row_10">
-          <div className="title">
-            <h3>Feedback</h3>
+          <div className="manager_title">
+            <h3>
+              <span className="material-symbols-outlined">reviews</span>
+              Feedback
+            </h3>
             {/* Contact */}
           </div>
           <div className="feedback_container">
@@ -1156,8 +1183,11 @@ const Business_Consultant_Demo = () => {
 
         {/* Inquries */}
         <div className="row_11">
-          <div className="title">
-            <h3>Inquries</h3>
+          <div className="manager_title">
+            <h3>
+              <span className="material-symbols-outlined">reviews</span>
+              Inquries
+            </h3>
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1214,15 +1244,15 @@ const Business_Consultant_Demo = () => {
         </div>
 
         {/* Footer */}
-        <div className="row_13">
+        <div className="row_12">
           <div className="footer_container">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0s 1440 320">
               <path
-                fill={style.$root_text_second_color}
+                fill='orange'
                 fill-opacity="1"
-                d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+                d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
               ></path>
-            </svg>
+            </svg> */}
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
@@ -1231,4 +1261,5 @@ const Business_Consultant_Demo = () => {
   );
 };
 
-export default Business_Consultant_Demo;
+
+export default Manager;

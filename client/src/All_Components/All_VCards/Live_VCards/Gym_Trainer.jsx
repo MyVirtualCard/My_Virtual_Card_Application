@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Gym_Trainer.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import hand from "../../assets/AllVCard_Image/VCard3/hand.gif";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import hand from "../../../assets/AllVCard_Image/VCard3/hand.gif";
 //Product Slider
 import { Fade, Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -14,11 +14,11 @@ import axios from "axios";
 import { Triangle } from "react-loader-spinner";
 import { Toaster, toast } from "react-hot-toast";
 import vCardsJS from "vcards-js";
-import loadingBack from "../../assets/LandingPage_image/aristostech_company_background.jpg";
-import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
-import { InquiryValidateSchema } from "../Helper/InquiryValidate";
-import Context from "../UseContext/Context";
-import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
+import loadingBack from "../../../assets/LandingPage_image/aristostech_company_background.jpg";
+import trianglelogo from "../../../assets/LandingPage_image/Triangle_logo.png";
+import { InquiryValidateSchema } from "../../Helper/InquiryValidate";
+import Context from "../../UseContext/Context";
+import { AppoinmentValidateSchema } from "../../Helper/AppoinmentValidate";
 
 const Gym_Trainer = () => {
     //create a new vCard

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Taxi_Service.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
 
-import taxi from "../../assets/AllVCard_Image/Taxi_Service/Taxi.png";
-import Route_Image from "../../assets/AllVCard_Image/Taxi_Service/route.png";
-import Route_Image2 from "../../assets/AllVCard_Image/Taxi_Service/route2.png";
-import TripBanner_Image from "../../assets/AllVCard_Image/Taxi_Service/trip_banner.png";
-import RattingCar_Image from "../../assets/AllVCard_Image/Taxi_Service/ratting.png";
+import taxi from "../../../assets/AllVCard_Image/Taxi_Service/Taxi.png";
+import Route_Image from "../../../assets/AllVCard_Image/Taxi_Service/route.png";
+import Route_Image2 from "../../../assets/AllVCard_Image/Taxi_Service/route2.png";
+import TripBanner_Image from "../../../assets/AllVCard_Image/Taxi_Service/trip_banner.png";
+import RattingCar_Image from "../../../assets/AllVCard_Image/Taxi_Service/ratting.png";
 
 //Product Slider
 import { Slide } from "react-slideshow-image";
@@ -18,11 +18,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import axios from "axios";
-import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
+import trianglelogo from "../../../assets/LandingPage_image/Triangle_logo.png";
 import { Toaster, toast } from "react-hot-toast";
-import { InquiryValidateSchema } from "../Helper/InquiryValidate";
-import Context from "../UseContext/Context";
-import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
+import { InquiryValidateSchema } from "../../Helper/InquiryValidate";
+import Context from "../../UseContext/Context";
+import { AppoinmentValidateSchema } from "../../Helper/AppoinmentValidate";
 const Taxi_Service = () => {
   const [width, setWidth] = useState(window.innerWidth);
   //Success and error popup state
@@ -725,7 +725,7 @@ END:VCARD
                 ManageContentData[0].ContactDetails == true ? (
                   <>
                     <div className="row_3">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Contact Details
                           <i className="bx bxs-phone-call"></i>
@@ -835,7 +835,7 @@ END:VCARD
                 ManageContentData[0].Gallery == true ? (
                   <>
                     <div className="row_8">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Gallery
                           <span className="material-symbols-outlined">
@@ -913,7 +913,7 @@ END:VCARD
                 ManageContentData[0].Service == true ? (
                   <>
                     <div className="row_4">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Our Services <i className="bx bx-support"></i>
                         </h3>
@@ -983,7 +983,7 @@ END:VCARD
                 ManageContentData[0].Product == true ? (
                   <>
                     <div className="row_7">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Our Products
                           <span className="material-symbols-outlined">
@@ -1101,7 +1101,7 @@ END:VCARD
                 ManageContentData[0].Appoinment == true ? (
                   <>
                     <div className="row_6">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Make An Appoinment
                           <span className="material-symbols-outlined">
@@ -1313,7 +1313,7 @@ END:VCARD
                 ManageContentData[0].Testimonial == true ? (
                   <>
                     <div className="row_9">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Testimonial
                           <span className="material-symbols-outlined">
@@ -1324,8 +1324,8 @@ END:VCARD
                       </div>
                       <div className="testimonial_container">
                         <Carousel
-                          showThumbs={false}
-                          showStatus={false}
+                          showThumbs={true}
+                          showStatus={true}
                           infiniteLoop
                           autoPlay
                         >
@@ -1370,7 +1370,7 @@ END:VCARD
                 ManageContentData[0].QRCode == true ? (
                   <>
                     <div className="row_12">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Scan To Pay <i className="bx bx-qr-scan"></i>
                         </h3>
@@ -1407,7 +1407,7 @@ END:VCARD
                 ManageContentData[0].BussinessHour == true ? (
                   <>
                     <div className="row_5">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Open&Close Time <i className="bx bx-timer"></i>
                         </h3>
@@ -1582,7 +1582,7 @@ END:VCARD
                 ManageContentData[0].GoogleMap == true ? (
                   <>
                     <div className="google_map_container">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Live Location
                           <span className="material-symbols-outlined">map</span>
@@ -1612,7 +1612,7 @@ END:VCARD
                       {/* <div className="rattingcar_image">
                     <img src={RattingCar_Image} alt="ratting" />
                   </div> */}
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Feedback
                           <span className="material-symbols-outlined">
@@ -1916,7 +1916,7 @@ END:VCARD
                 ManageContentData[0].InquiryForm == true ? (
                   <>
                     <div className="row_11">
-                      <div className="title">
+                      <div className="taxi_title">
                         <h3>
                           Inquries
                           <span className="material-symbols-outlined">

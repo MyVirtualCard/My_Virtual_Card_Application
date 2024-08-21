@@ -96,28 +96,31 @@ let ProductOrder = lazy(() =>
   )
 );
 
-import NewCardDesign1 from "./All_Components/All_VCards/NewCardDesign1";
-import NewCardDesign2 from "./All_Components/All_VCards/NewCardDesign2";
-import NewCardDesign3 from "./All_Components/All_VCards/NewCardDesign3";
-import NewCardDesign4 from "./All_Components/All_VCards/NewCardDesign4";
-import NewCardDesign5 from "./All_Components/All_VCards/NewCardDesign5";
-import NewCardDesign6 from "./All_Components/All_VCards/NewCardDesign6";
-import NewCardDesign7 from "./All_Components/All_VCards/NewCardDesign7";
-import NewCardDesign8 from "./All_Components/All_VCards/NewCardDesign8";
-import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
+// import NewCardDesign1 from "./All_Components/All_VCards/Live_VCards/NewCardDesign1.jsx";
+// import NewCardDesign2 from "./All_Components/All_VCards/Live_VCards/NewCardDesign2.jsx";
+// import NewCardDesign3 from "./All_Components/All_VCards/Live_VCards/NewCardDesign3.jsx";
+// import NewCardDesign4 from "./All_Components/All_VCards/Live_VCards/NewCardDesign4.jsx";
+// import NewCardDesign5 from "./All_Components/All_VCards/Live_VCards/NewCardDesign5.jsx";
+// import NewCardDesign6 from "./All_Components/All_VCards/Live_VCards/NewCardDesign6.jsx";
+// import NewCardDesign7 from "./All_Components/All_VCards/Live_VCards/NewCardDesign7.jsx";
+// import NewCardDesign8 from "./All_Components/All_VCards/Live_VCards/NewCardDesign8.jsx";
+// import NewCardDesign9 from "./All_Components/All_VCards/Live_VCards/NewCardDesign9.jsx";
 
 //NewVCard templates
-import Taxi_Service from "./All_Components/All_VCards/Taxi_Service.jsx";
-import Gym_Trainer from "./All_Components/All_VCards/Gym_Trainer.jsx";
+import Taxi_Service from "./All_Components/All_VCards/Live_VCards/Taxi_Service.jsx";
+import Gym_Trainer from "./All_Components/All_VCards/Live_VCards/Gym_Trainer.jsx";
 
-import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
+import Fashion_Designer from "./All_Components/All_VCards/Live_VCards/Fashion_Designer.jsx";
 
 import FallBack from "./Fallback/FallBack.jsx";
-import Gym_Trainer_Demo from "./All_Components/All_VCards/Static_VCards/Gym_Trainer.jsx";
-import Taxi_Service_Demo from "./All_Components/All_VCards/Static_VCards/Taxi_Service.jsx.jsx";
-import Fashion_Designer_Demo from "./All_Components/All_VCards/Static_VCards/Fashion_Designer.jsx";
-import Manager_Demo from "./All_Components/All_VCards/Manager.jsx";
-import Business_Consultant_Demo from "./All_Components/All_VCards/Business_Consultant.jsx";
+import Gym_Trainer_Demo from "./All_Components/All_VCards/Static_VCards/Gym_Trainer_Demo.jsx";
+import Taxi_Service_Demo from "./All_Components/All_VCards/Static_VCards/Taxi_Service_Demo.jsx";
+import Fashion_Designer_Demo from "./All_Components/All_VCards/Static_VCards/Fashion_Designer_Demo.jsx";
+import Manager_Demo from "./All_Components/All_VCards/Live_VCards/Manager.jsx";
+import Business_Consultant_Demo from "./All_Components/All_VCards/Live_VCards/Business_Consultant.jsx";
+import Manager from "./All_Components/All_VCards/Live_VCards/Manager.jsx";
+import Business_Consultant from "./All_Components/All_VCards/Live_VCards/Business_Consultant.jsx";
+
 const App = () => {
   //URL Name state:
   let [AuthToggle, setAuthToggle] = useState(false);
@@ -816,6 +819,8 @@ const App = () => {
               ) : (
                 ""
               )}
+                <Route path={`/manager_live`} element={<Manager />} />
+                <Route path={`/bussiness_consultant_live`} element={<Business_Consultant />} />
             </Routes>
           </Suspense>
         </Context.Provider>

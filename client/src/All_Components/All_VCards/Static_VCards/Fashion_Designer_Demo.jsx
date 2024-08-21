@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import "./Taxi_Service.scss";
+import React, { useEffect, useState } from "react";
+import "./Fashion_Designer_Demo.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
 
-import taxi from "../../../assets/AllVCard_Image/Taxi_Service/Taxi.png";
-import Route_Image from "../../../assets/AllVCard_Image/Taxi_Service/route.png";
-import Route_Image2 from "../../../assets/AllVCard_Image/Taxi_Service/route2.png";
-import TripBanner_Image from "../../../assets/AllVCard_Image/Taxi_Service/trip_banner.png";
-import RattingCar_Image from "../../../assets/AllVCard_Image/Taxi_Service/ratting.png";
+import fashion1 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion2.png";
+import fashion2 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion1.png";
+import fashion3 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion3.png";
+import fashion4 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion4.png";
+import fashion5 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion5.png";
+import fashion6 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion6.png";
+import fashion7 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion7.png";
+import fashion8 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion8.png";
+import fashion9 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion9.png";
+import fashion10 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion10.png";
+import fashion11 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion11.png";
+import fashion12 from "../../../assets/AllVCard_Image/Fashion_Designer/12.png";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -16,11 +23,63 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-
-const Taxi_Service_Demo = () => {
+const Fashion_Designer_Demo = () => {
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
+  let fashionIcons = [
+    fashion1,
+    fashion2,
+    fashion3,
+    fashion4,
+    fashion5,
+    fashion6,
+    fashion7,
+    fashion8,
+    fashion9,
+    fashion10,
+    fashion11,
+    fashion12,
+  ];
+  const [fashionIconIndex, setFashionIconIndex] = useState(0);
+    // /Fashion stress:
+    useEffect(() => {
+      if (fashionIconIndex >= 0) {
+        if (fashionIconIndex < fashionIcons.length) {
+          const timer = setTimeout(() => {
+            setFashionIconIndex(fashionIconIndex + 1);
+          }, 5000);
+  
+          // Cleanup the timer
+          return () => {
+            clearTimeout(timer);
+          };
+        }
+      }
+      if (fashionIconIndex === 12) {
+        setFashionIconIndex(0);
+      }
+    }, [fashionIconIndex]);
+  let bannerImages=['https://img.freepik.com/free-photo/female-fashion-designer-working-studio-sitting-desk_155003-17085.jpg?t=st=1722620141~exp=1722623741~hmac=2600260415736230b94f075a655befc0207fc4ddf7e9b441a4d218426cb75f81&w=900','https://img.freepik.com/free-photo/female-fashion-designer-working-studio-sitting-desk_155003-17084.jpg?t=st=1722629038~exp=1722632638~hmac=84f26cfbb8fa2162126520c8d085144c9d7a8eb2583d65b24a16f853d39f6682&w=900','https://img.freepik.com/free-photo/fashion-designer-woman-working-studio-sitting-desk_155003-2461.jpg?t=st=1722629056~exp=1722632656~hmac=d8f30ab33efe964a8a68faf2d322c1fcdc949f33aa574ccaf2c2befd985af241&w=900']
+  const [bannerIndex, setBannerIndex] = useState(0);
+  // /Fashion stress:
+  useEffect(() => {
+    if (bannerIndex >= 0) {
+      if (bannerIndex < bannerImages.length) {
+        const timer = setTimeout(() => {
+          setBannerIndex(bannerIndex + 1);
+        }, 5000);
+
+        // Cleanup the timer
+        return () => {
+          clearTimeout(timer);
+        };
+      }
+    }
+    if (bannerIndex === 3) {
+      setBannerIndex(0);
+    }
+  }, [fashionIconIndex])
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -264,32 +323,35 @@ const Taxi_Service_Demo = () => {
     },
   });
   return (
-    <div className="newcard_design12_container">
-      <div className="trip_banner">
-        <img src={TripBanner_Image} alt="trip" />
-      </div>
-      <div className="newcard_design12_box">
+    <div className="Fashion_Designer_container">
+      <div className="Fashion_Designer_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
-          <div className="route_image">
-            <img src={Route_Image} alt="route" />
-          </div>
           <div className="banner_image">
-            {/* <img
-              src="https://img.freepik.com/free-vector/online-application-call-taxi-service-by-smart-phone-set-location-destination_1150-48863.jpg?t=st=1722545066~exp=1722548666~hmac=83853f45de9bc8b77d3a66a5cd0d8b64c9eb60089f15fb39694af0c4a99191f8&w=900"
-              className="banner"
-            /> */}
-            <img src="https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996" alt="banner" />
+            <img
+              src={bannerImages[bannerIndex]}
+              alt="banner"
+            />
             <div className="overlay"></div>
           </div>
-
+          <div className="user_logo">
+            <img
+              src="https://img.freepik.com/free-vector/illustration-boutique-shop-logo-stamp-banner_53876-6837.jpg?t=st=1722621000~exp=1722624600~hmac=8fd421fab03a9aca1b30284602caf88db67da42fb9a12f5ee75fd202c87026f7&w=740"
+              alt="user_logo"
+            />
+          </div>
+        </div>
+        {/* Summary */}
+        <div className="row_2">
           <div className="user_details">
             <div className="user_data">
-              <h2>John Anto</h2>
-              <p>
-                Taxi Service <img src={taxi} alt="taxi" />
-              </p>
-
+              <div className="user_information">
+                <h2>Marry Johnson</h2>
+                <p>
+                  Fashion Designer{" "}
+                  <img src={fashionIcons[fashionIconIndex]} alt="fashion" />
+                </p>
+              </div>
               <div className="social_medias">
                 <a
                   href="https://www.facebook.com/aristostechindia"
@@ -337,28 +399,19 @@ const Taxi_Service_Demo = () => {
                 </a>
               </div>
             </div>
-            <div className="user_logo">
-              <img
-                src="https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
-                alt="user_logo"
-              />
-            </div>
           </div>
-        </div>
-        {/* Summary */}
-        <div className="row_2">
-          <p>
-            We started from a traditional marketing background and emerged to be
-            a successful Digital Marketing Agency since Digitalisation has begun
-            to evolve.
-          </p>
+          <div className="summary">
+            <p>
+              We started from a traditional marketing background and emerged to
+              be a successful Digital Marketing Agency since Digitalisation has
+              begun to evolve.
+            </p>
+          </div>
         </div>
         {/* ContactDetails */}
         <div className="row_3">
-          <div className="title">
-            <h3>
-              <i className="bx bxs-phone-call"></i> Contact Details
-            </h3>
+          <div className="fashion_title">
+            <h3>#&nbsp;Contact Details</h3>
             {/* Contact */}
           </div>
 
@@ -366,7 +419,7 @@ const Taxi_Service_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i class="bx bxl-gmail"></i>
-                <small>Email</small>
+                {/* <small>Email</small> */}
               </div>
 
               <div className="list_detail">
@@ -376,7 +429,7 @@ const Taxi_Service_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i className="bx bx-mobile-vibration"></i>
-                <small>Mobile Number</small>
+                {/* <small>Mobile Number</small> */}
               </div>
 
               <div className="list_detail">
@@ -386,7 +439,7 @@ const Taxi_Service_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i className="bx bx-envelope"></i>
-                <small>Company Email</small>
+                {/* <small>Company Email</small> */}
               </div>
 
               <div className="list_detail">
@@ -396,7 +449,7 @@ const Taxi_Service_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i className="bx bx-map-alt"></i>
-                <small>Address</small>
+                {/* <small>Address</small> */}
               </div>
 
               <div className="list_detail">
@@ -415,15 +468,48 @@ const Taxi_Service_Demo = () => {
             </button>
           </div>
         </div>
+        {/* Services */}
+        <div className="row_4">
+          <div className="fashion_title">
+            <h3>#&nbsp;Our Services</h3>
+          </div>
+
+          <div className="service_list_container">
+            <div className="service_list">
+              <span className="material-symbols-outlined">palette</span>
+
+              <div className="service_detail">
+                <div className="service_title">
+                  <h4>Color direction</h4>
+                </div>
+                <div className="service_summary">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quasi nisi laborum reprehenderit sint doloribus ab!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="service_list">
+              <span className="material-symbols-outlined">view_quilt</span>
+              <div className="service_detail">
+                <div className="service_title">
+                  <h4>Catalog layout</h4>
+                </div>
+                <div className="service_summary">
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Sint vero tenetur aliquid totam qui ipsam?
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Gallery */}
         <div className="row_8">
-          <div className="title">
-            <h3>
-              <span className="material-symbols-outlined">
-                gallery_thumbnail
-              </span>
-              Gallery
-            </h3>
+          <div className="fashion_title">
+            <h3>#&nbsp;Gallery</h3>
           </div>
           <div className="gallery_container">
             <div className="full_image" id="fullImageBox">
@@ -441,29 +527,29 @@ const Taxi_Service_Demo = () => {
             <div className="gallery_box">
               <Slide
                 slidesToScroll={1}
-                slidesToShow={width < 600 ? 2 : 3}
-                indicators={true}
+                slidesToShow={width < 600 ? 2 : 2}
+                indicators={false}
                 autoplay
                 {...gallery_properties}
                 autoplayInterval={1000}
               >
                 <img
-                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
+                  src="https://img.freepik.com/premium-vector/fashion-designer-violet-concept-with-people-scene-flat-cartoon-style-fashion-designer_198565-3738.jpg?w=900"
                   alt="developer"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-4.png?fit=1030%2C687&ssl=1"
+                  src="https://img.freepik.com/free-photo/fashion-designer-woman-working-studio-sitting-desk_155003-2462.jpg?t=st=1722621894~exp=1722625494~hmac=1a3a0dcf77f739b90a6a48cac1067710bf167740bb4e0125c3696d1f59f439ac&w=900"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-6.png?fit=1030%2C681&ssl=1"
+                  src="https://img.freepik.com/free-photo/beautiful-woman-showing-new-dress_23-2147688748.jpg?t=st=1722621912~exp=1722625512~hmac=5f085dae3ea305898277cad38fc6def45f4ac3a9707fcf7e21872301dd9ff56e&w=900"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/10/sunglasses-in-hand-on-purple-background-close-up-NQBKRR9.png?fit=700%2C700&ssl=1"
+                  src="https://img.freepik.com/free-photo/emotional-funny-attractive-woman-holding-colorful-dresses-hanger-clothing-store_285396-4615.jpg?t=st=1722621932~exp=1722625532~hmac=76da5fd66d6aefca0f7e92a77f015312a2cb6367a26fa80f2ca671de6a747e32&w=900"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
@@ -471,94 +557,90 @@ const Taxi_Service_Demo = () => {
             </div>
           </div>
         </div>
-        {/* Services */}
-        <div className="row_4">
-          <div className="title">
-            <h3>
-              <i className="bx bx-support"></i> Our Services
-            </h3>
-          </div>
-
-          <div className="service_list_container">
-            <div className="service_list">
-              <span className="material-symbols-outlined">travel</span>
-
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Airport Transport</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quasi nisi laborum reprehenderit sint doloribus ab!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">
-                hourglass_bottom
-              </span>
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Sheduled Rides</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Products */}
         <div className="row_7">
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <span className="material-symbols-outlined">no_crash</span>
-              Our Products
+              
+              #&nbsp;Our Products
             </h3>
             {/* Contact */}
-          </div>
-          <div className="route_image2">
-            <img src={Route_Image2} alt="route" />
           </div>
           <div className="product_list_container">
             <Slide
               slidesToScroll={1}
-              slidesToShow={width < 600 ? 1 : 1}
+              slidesToShow={width < 600 ? 1 : 2}
               indicators={true}
               autoplay
               {...properties}
-              autoplayInterval={1000}
+              autoplayInterval={500}
             >
               <div className="product_list">
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-vector/taxi-poster-with-realistic-yellow-public-service-car-with-reflection_1284-5444.jpg?t=st=1722540843~exp=1722544443~hmac=246e42b048cc2cd6debfbc2526ba1a7aaab7297900915186ff665942dffd3a3b&w=740"
+                    src="https://img.freepik.com/free-photo/measuring-tape-still-life_23-2150404681.jpg?t=st=1722625614~exp=1722629214~hmac=978928d5c0263e973785df89a0ed957db40663e7c192cd597c77c8e54dffa261&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>Cabsy Regular</h4>
-                  <small> 1-4 passenger!</small>
-                  <button>₹ &nbsp;1,500</button>
+                  <h4>A Measuring Tape</h4>
+                  <small> The first tool is the humble measuring tape. That is something that every single fashion design equipment list will mandatorily have.</small>
+                  <button>₹ &nbsp;100</button>
                 </div>
               </div>
               <div className="product_list">
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/premium-photo/side-view-yellow-taxi-car-isolated-white-background_641503-49720.jpg?w=900"
+                    src="https://img.freepik.com/free-photo/fashion-designer-s-studio-with-essential-elements_23-2150414725.jpg?t=st=1722625741~exp=1722629341~hmac=84bd284f5b3aa92e8c6bc2b2520b06860816e2be217af9f0fef4fd680c2aa40d&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>Cabsy XL</h4>
-                  <small> 1-4 passenger!</small>
-                  <button>₹ &nbsp;2000</button>
+                  <h4>A Sharp Pair of Scissors</h4>
+                  <small> These are one of the main fashion design tools, whether one is a student or a professional. </small>
+                  <button>₹ &nbsp;350</button>
+                </div>
+              </div>
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/free-photo/top-view-colorful-threads-dark-wall_179666-39993.jpg?t=st=1722625823~exp=1722629423~hmac=7b18347c8a4ff121a9d2030a9acf3888bdfed350102502d7db5dae725ce7dcea&w=900"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_details">
+                  <h4> Tailor’s Chalk</h4>
+                  <small>Another important fashion tool is tailor’s chalk. Designers keep an entire army of chalk with them!</small>
+                  <button>₹ &nbsp;150</button>
+                </div>
+              </div>
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/free-photo/needles-sewing-threads-used-by-hands-top-view_23-2148355047.jpg?t=st=1722625911~exp=1722629511~hmac=15241672681e221a6f947afa270937a85ee4edf8efc894d09ee89ad0716a1bfe&w=900"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_details">
+                  <h4> Needles and Threads
+                  </h4>
+                  <small>These are also essentials in a fashion designer’s tool kit. They’re not usually used during the creation of the dress</small>
+                  <button>₹ &nbsp;450</button>
+                </div>
+              </div>
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/free-photo/natural-white-cotton-crumpled-soft-fabric-texture-background-surface_640221-220.jpg?t=st=1722625986~exp=1722629586~hmac=3a95d4ed209a4c8ed5f077c3003e02eb0e534128aa9f4fdd78dc3363d74b07d1&w=900"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_details">
+                  <h4> Muslin Fabric
+                  </h4>
+                  <small>Muslin is a cotton fabric that can range in weight – from sheers to coarse material.</small>
+                  <button>₹ &nbsp;1000</button>
                 </div>
               </div>
             </Slide>
@@ -566,10 +648,10 @@ const Taxi_Service_Demo = () => {
         </div>
         {/* //Appinment */}
         <div className="row_6">
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <span className="material-symbols-outlined">groups</span>
-              Make An Appoinment
+              
+             #&nbsp;Make An Appoinment
             </h3>
           </div>
 
@@ -604,12 +686,10 @@ const Taxi_Service_Demo = () => {
 
         {/* Testimonial */}
         <div className="row_9">
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <span className="material-symbols-outlined">
-                settings_accessibility
-              </span>
-              Testimonial
+            
+              #&nbsp;Testimonial
             </h3>
             {/* Contact */}
           </div>
@@ -705,19 +785,22 @@ const Taxi_Service_Demo = () => {
         </div>
         {/* QRCode */}
         <div className="row_12">
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <i className="bx bx-qr-scan"></i>QRCode
+              #&nbsp;QRCode
             </h3>
             {/* Contact */}
           </div>
 
           <div className="qrcode_container">
             <div className="qr_code_box">
-              <h4><small>Note :</small>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, enim?</h4>
+              <h4>
+                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Ducimus, enim?
+              </h4>
 
               <img
-                src="https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?t=st=1722540928~exp=1722544528~hmac=37be49c02a6f26b2ee598eeec0fc1b4f8133a5107efef5c3360142d745b6b58e&w=740"
+                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
                 alt=""
               />
             </div>
@@ -725,9 +808,9 @@ const Taxi_Service_Demo = () => {
         </div>
         {/* Opentime */}
         <div className="row_5">
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <i className="bx bx-timer"></i>Open&Close Time
+              #&nbsp;Open&Close Time
             </h3>
             {/* Contact */}
           </div>
@@ -827,7 +910,7 @@ const Taxi_Service_Demo = () => {
                         {/* GoogleMap */}
 
                         <div className="google_map_container">
-          <div className="title">
+          <div className="fashion_title">
             <h3>Live Location</h3>
           </div>
 
@@ -837,13 +920,9 @@ const Taxi_Service_Demo = () => {
         </div>
         {/* Feedback */}
         <div className="row_10">
-          <div className="rattingcar_image">
-            <img src={RattingCar_Image} alt="ratting" />
-          </div>
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <span className="material-symbols-outlined">reviews</span>
-              Feedback
+            #&nbsp;Feedback
             </h3>
             {/* Contact */}
           </div>
@@ -973,11 +1052,7 @@ const Taxi_Service_Demo = () => {
                   <span className="material-symbols-outlined">
                     thumbs_up_down
                   </span>
-                  See All Feedbacks <i className='bx bxs-bell-ring bx-tada' ></i>
-
-                  <div className="count">
-                    {AllFeedBacks.length}
-                  </div>
+                  See All Feedbacks
                 </button>
               )}
 
@@ -1074,12 +1149,10 @@ const Taxi_Service_Demo = () => {
 
         {/* Inquries */}
         <div className="row_11">
-          <div className="title">
+          <div className="fashion_title">
             <h3>
-              <span className="material-symbols-outlined">
-                person_raised_hand
-              </span>
-              Inquries
+          
+              #&nbsp;Inquries
             </h3>
           </div>
           <div className="inquiries_container5">
@@ -1139,13 +1212,7 @@ const Taxi_Service_Demo = () => {
         {/* Footer */}
         <div className="row_13">
           <div className="footer_container">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path
-                fill="#1a8b8275"
-                fill-opacity="1"
-                d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
-              ></path>
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#be96d8b6" fill-opacity="1" d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
@@ -1154,4 +1221,4 @@ const Taxi_Service_Demo = () => {
   );
 };
 
-export default Taxi_Service_Demo;
+export default Fashion_Designer_Demo;

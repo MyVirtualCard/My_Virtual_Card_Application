@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import "./Gym_Trainer.scss";
+import "./Taxi_Service_Demo.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import hand from "../../../assets/AllVCard_Image/VCard3/hand.gif";
+
+import taxi from "../../../assets/AllVCard_Image/Taxi_Service/Taxi.png";
+import Route_Image from "../../../assets/AllVCard_Image/Taxi_Service/route.png";
+import Route_Image2 from "../../../assets/AllVCard_Image/Taxi_Service/route2.png";
+import TripBanner_Image from "../../../assets/AllVCard_Image/Taxi_Service/trip_banner.png";
+import RattingCar_Image from "../../../assets/AllVCard_Image/Taxi_Service/ratting.png";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -10,7 +15,9 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-const Gym_Trainer_Demo = () => {
+import vCardsJS from "vcards-js";
+
+const Taxi_Service_Demo = () => {
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
@@ -23,6 +30,35 @@ const Gym_Trainer_Demo = () => {
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  //create a new vCard
+  var vCard = vCardsJS();
+
+  function generateVCF() {
+    //set properties
+    vCard.firstName = "Jayakumar";
+    vCard.middleName = "";
+    vCard.lastName = "V";
+    vCard.organization = "Aristostech India Private Limited,CEO";
+    vCard.photo.attachFromUrl(
+      "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1714999372~exp=1715002972~hmac=148ead13ab2f0dc4db7268fb984501266e0547e55d0bd1a6918e3e51ca5a5af4&w=740",
+      "JPEG"
+    );
+    vCard.workPhone = "+91 9344482370";
+    vCard.birthday = new Date(1985, 0, 1);
+    vCard.title = "Bussiness Man";
+    vCard.url = "https://www.aristostechindia.com/";
+    vCard.note = "Notes on Eric";
+
+    //save to file
+    // vCard.saveToFile('./eric-nesser.vcf');
+    const linkElement = document.createElement("a");
+    linkElement.setAttribute("href", `data:,${vCard.getFormattedString()}`);
+    linkElement.setAttribute("download", "card.vcf");
+    linkElement.style.display = "none";
+    document.body.appendChild(linkElement);
+    linkElement.click();
+    document.body.removeChild(linkElement);
+  }
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -44,6 +80,37 @@ const Gym_Trainer_Demo = () => {
     ),
     nextArrow: (
       <button style={{ ...buttonStyle }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
+        </svg>
+      </button>
+    ),
+  };
+  const gallery_buttonStyle = {
+    width: "0px",
+    background: "none",
+    opacity: 0,
+    border: "0px",
+    padding: "0px",
+  };
+  const gallery_properties = {
+    prevArrow: (
+      <button style={{ ...gallery_buttonStyle }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
+        </svg>
+      </button>
+    ),
+    nextArrow: (
+      <button style={{ ...gallery_buttonStyle }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -197,70 +264,98 @@ const Gym_Trainer_Demo = () => {
     },
   });
   return (
-    <div className="newcard_design10_container">
-      <div className="newcard_design10_box">
+    <div className="newcard_design12_container">
+      <div className="trip_banner">
+        <img src={TripBanner_Image} alt="trip" />
+      </div>
+      <div className="newcard_design12_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
+          <div className="route_image">
+            <img src={Route_Image} alt="route" />
+          </div>
           <div className="banner_image">
-            <img
-              src="https://img.freepik.com/premium-photo/asian-young-male-fitness-trainer-gym_409674-11835.jpg?w=1060"
-              alt="banner_image"
+            {/* <img
+              src="https://img.freepik.com/free-vector/online-application-call-taxi-service-by-smart-phone-set-location-destination_1150-48863.jpg?t=st=1722545066~exp=1722548666~hmac=83853f45de9bc8b77d3a66a5cd0d8b64c9eb60089f15fb39694af0c4a99191f8&w=900"
               className="banner"
-            />
+            /> */}
+            <img src="https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996" alt="banner" />
             <div className="overlay"></div>
           </div>
 
           <div className="user_details">
-            <div className="user_logo">
-              <img
-                src="https://img.freepik.com/premium-vector/retro-vintage-gym-sport-bodybuilding-template-logo-designlogo-business-fitness-label-badge-gym-center_661039-4834.jpg?w=740"
-                alt="user_logo"
-              />
-            </div>
             <div className="user_data">
-              <h2>Rajesh Kumar</h2>
-              <p>Gym Trainer</p>
+              <h2>John Anto</h2>
+              <p>
+                Taxi Service <img src={taxi} alt="taxi" />
+              </p>
 
               <div className="social_medias">
-                <a href="#" className="social_media_icon">
+                <a
+                  href="https://www.facebook.com/aristostechindia"
+                  target="_blank"
+                  className="social_media_icon"
+                >
                   <i className="bx bxl-facebook"></i>
                   <small>Facebook</small>
                 </a>
-                <a href="#" className="social_media_icon">
+                <a
+                  href="https://www.instagram.com/aristostech_india/"
+                  target="_blank"
+                  className="social_media_icon"
+                >
                   <i className="bx bxl-instagram"></i>
                   <small>Instagram</small>
                 </a>
-                <a href="#" className="social_media_icon">
+                <a
+                  href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
+                  target="_blank"
+                  className="social_media_icon"
+                >
                   <i className="bx bxl-whatsapp"></i>
                   <small>Whatsup</small>
                 </a>
-                <a href="#" className="social_media_icon">
+                {/* <a href="#" className="social_media_icon">
                   <i className="bx bxl-twitter"></i>
                   <small>Twitter</small>
-                </a>
-                <a href="#" className="social_media_icon">
+                </a> */}
+                <a
+                  href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
+                  target="_blank"
+                  className="social_media_icon"
+                >
                   <i className="bx bx-map"></i>
                   <small>Location</small>
                 </a>
-                <a href="#" className="social_media_icon">
+                <a
+                  href="https://www.aristostechindia.com/"
+                  target="_blank"
+                  className="social_media_icon"
+                >
                   <i className="bx bx-globe"></i>
                   <small>Website</small>
                 </a>
               </div>
+            </div>
+            <div className="user_logo">
+              <img
+                src="https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
+                alt="user_logo"
+              />
             </div>
           </div>
         </div>
         {/* Summary */}
         <div className="row_2">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. At nihil
-            architecto quam quas error nisi sit, minima quos modi? Aut
-            recusandae distinctio odit vitae nostrum.
+            We started from a traditional marketing background and emerged to be
+            a successful Digital Marketing Agency since Digitalisation has begun
+            to evolve.
           </p>
         </div>
         {/* ContactDetails */}
         <div className="row_3">
-          <div className="title">
+          <div className="taxi_title">
             <h3>
               <i className="bx bxs-phone-call"></i> Contact Details
             </h3>
@@ -269,111 +364,368 @@ const Gym_Trainer_Demo = () => {
 
           <div className="contact_list_container">
             <div className="contact_list">
-              <i class="bx bxl-gmail"></i>
-              <div className="list_detail">
+              <div className="icons">
+                <i class="bx bxl-gmail"></i>
                 <small>Email</small>
-                <p>info@yourdomain.com</p>
+              </div>
+
+              <div className="list_detail">
+                <p>jayakumarv@aristostech.in</p>
               </div>
             </div>
             <div className="contact_list">
-              <i className="bx bx-mobile-vibration"></i>
-              <div className="list_detail">
+              <div className="icons">
+                <i className="bx bx-mobile-vibration"></i>
                 <small>Mobile Number</small>
-                <p>+91 8825457794</p>
+              </div>
+
+              <div className="list_detail">
+                <p>(+91) 93444 82370</p>
               </div>
             </div>
             <div className="contact_list">
-              <i className="bx bx-envelope"></i>
+              <div className="icons">
+                <i className="bx bx-envelope"></i>
+                <small>Company Email</small>
+              </div>
+
               <div className="list_detail">
-                <small>Alternate Email</small>
-                <p>inch@yourdomain.com</p>
+                <p>contact@aristostech.in</p>
               </div>
             </div>
             <div className="contact_list">
-              <i className="bx bx-map-alt"></i>
-              <div className="list_detail">
+              <div className="icons">
+                <i className="bx bx-map-alt"></i>
                 <small>Address</small>
-                <p>Sirukadambur,Ariyalur-621714</p>
+              </div>
+
+              <div className="list_detail">
+                <p>
+                  Ankur Plasa No-113 (Old 52) G.N Chetty Road T. Nagar
+                  Chennai-600017
+                </p>
               </div>
             </div>
           </div>
-        </div>
 
+          {/* AddtoContact */}
+          <div className="add_to_contact">
+            <button onClick={generateVCF}>
+              Add to Contact<i className="bx bxs-contact"></i>
+            </button>
+          </div>
+        </div>
+        {/* Gallery */}
+        <div className="row_8">
+          <div className="taxi_title">
+            <h3>
+              <span className="material-symbols-outlined">
+                gallery_thumbnail
+              </span>
+              Gallery
+            </h3>
+          </div>
+          <div className="gallery_container">
+            <div className="full_image" id="fullImageBox">
+              <div className="close_Full_Image_gallery">
+                <span
+                  className="material-symbols-outlined"
+                  onClick={closeFullImage}
+                >
+                  cancel
+                </span>
+              </div>
+              <img src={banner} alt="gallery" id="fullImage" />
+            </div>
+
+            <div className="gallery_box">
+              <Slide
+                slidesToScroll={1}
+                slidesToShow={width < 600 ? 2 : 3}
+                indicators={true}
+                autoplay
+                {...gallery_properties}
+                autoplayInterval={1000}
+              >
+                <img
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
+                  alt="developer"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+                <img
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-4.png?fit=1030%2C687&ssl=1"
+                  alt="dev"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+                <img
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-6.png?fit=1030%2C681&ssl=1"
+                  alt="dev"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+                <img
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/10/sunglasses-in-hand-on-purple-background-close-up-NQBKRR9.png?fit=700%2C700&ssl=1"
+                  alt="dev"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+              </Slide>
+            </div>
+          </div>
+        </div>
         {/* Services */}
         <div className="row_4">
-          <div className="title">
+          <div className="taxi_title">
             <h3>
-              <i className="bx bx-dumbbell"></i> Our Services
+              <i className="bx bx-support"></i> Our Services
             </h3>
-            {/* Contact */}
           </div>
 
           <div className="service_list_container">
             <div className="service_list">
-              <span className="material-symbols-outlined">sprint</span>
+              <span className="material-symbols-outlined">travel</span>
 
               <div className="service_detail">
                 <div className="service_title">
-                  <h4>Physical Fitness</h4>
+                  <h4>Airport Transport</h4>
                 </div>
                 <div className="service_summary">
                   <p>
-                    Physical fitness is a form of physical fitness culture that
-                    involves training all major muscle groups
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">exercise</span>
-
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Fat Loss</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Body building is a form of physical fitness culture that
-                    involves training all major muscle groups
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">body_system</span>
-
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Body Building</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Body building is a form of physical fitness culture that
-                    involves training all major muscle groups
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quasi nisi laborum reprehenderit sint doloribus ab!
                   </p>
                 </div>
               </div>
             </div>
             <div className="service_list">
               <span className="material-symbols-outlined">
-                self_improvement
+                hourglass_bottom
               </span>
-
               <div className="service_detail">
                 <div className="service_title">
-                  <h4>Self Improvement</h4>
+                  <h4>Sheduled Rides</h4>
                 </div>
                 <div className="service_summary">
-                  <p>If there is no struggle, there is no progress.</p>
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Sint vero tenetur aliquid totam qui ipsam?
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Products */}
+        <div className="row_7">
+          <div className="taxi_title">
+            <h3>
+              <span className="material-symbols-outlined">no_crash</span>
+              Our Products
+            </h3>
+            {/* Contact */}
+          </div>
+          <div className="route_image2">
+            <img src={Route_Image2} alt="route" />
+          </div>
+          <div className="product_list_container">
+            <Slide
+              slidesToScroll={1}
+              slidesToShow={width < 600 ? 1 : 1}
+              indicators={true}
+              autoplay
+              {...properties}
+              autoplayInterval={1000}
+            >
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/free-vector/taxi-poster-with-realistic-yellow-public-service-car-with-reflection_1284-5444.jpg?t=st=1722540843~exp=1722544443~hmac=246e42b048cc2cd6debfbc2526ba1a7aaab7297900915186ff665942dffd3a3b&w=740"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_details">
+                  <h4>Cabsy Regular</h4>
+                  <small> 1-4 passenger!</small>
+                  <button>₹ &nbsp;1,500</button>
+                </div>
+              </div>
+              <div className="product_list">
+                <div className="product_image">
+                  <img
+                    src="https://img.freepik.com/premium-photo/side-view-yellow-taxi-car-isolated-white-background_641503-49720.jpg?w=900"
+                    alt="product"
+                  />
+                </div>
+                <div className="product_details">
+                  <h4>Cabsy XL</h4>
+                  <small> 1-4 passenger!</small>
+                  <button>₹ &nbsp;2000</button>
+                </div>
+              </div>
+            </Slide>
+          </div>
+        </div>
+        {/* //Appinment */}
+        <div className="row_6">
+          <div className="taxi_title">
+            <h3>
+              <span className="material-symbols-outlined">groups</span>
+              Make An Appoinment
+            </h3>
+          </div>
+
+          <div className="appinment_form_container">
+            <form className="appinment_form">
+              <div className="form_group">
+                <label htmlFor="date">Date</label>
+                <input
+                  type="date"
+                  name="data"
+                  id="date"
+                  className="date-input"
+                />
+              </div>
+              <div className="form_group">
+                <label htmlFor="time">Time</label>
+                <select name="time" id="time">
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="01:00 PM">01:00 PM</option>
+                  <option value="03:00 PM">03:00 PM</option>
+                </select>
+              </div>
+              <div className="form_submit">
+                <button type="submit" className="submit-btn">
+                  Book Now
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {/* Testimonial */}
+        <div className="row_9">
+          <div className="taxi_title">
+            <h3>
+              <span className="material-symbols-outlined">
+                settings_accessibility
+              </span>
+              Testimonial
+            </h3>
+            {/* Contact */}
+          </div>
+          <div className="testimonial_container">
+            <Carousel
+              showThumbs={true}
+              showStatus={true}
+              infiniteLoop
+              autoPlay
+            >
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>John Doe</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Jayakumar </h4>
+                    <small>-CEO</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Dinesh Kumar</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Punitha</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+            </Carousel>
+          </div>
+        </div>
+        {/* QRCode */}
+        <div className="row_12">
+          <div className="taxi_title">
+            <h3>
+              <i className="bx bx-qr-scan"></i>QRCode
+            </h3>
+            {/* Contact */}
+          </div>
+
+          <div className="qrcode_container">
+            <div className="qr_code_box">
+              <h4><small>Note :</small>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, enim?</h4>
+
+              <img
+                src="https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?t=st=1722540928~exp=1722544528~hmac=37be49c02a6f26b2ee598eeec0fc1b4f8133a5107efef5c3360142d745b6b58e&w=740"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
         {/* Opentime */}
         <div className="row_5">
-          <div className="title">
+          <div className="taxi_title">
             <h3>
               <i className="bx bx-timer"></i>Open&Close Time
             </h3>
@@ -472,236 +824,23 @@ const Gym_Trainer_Demo = () => {
             </div>
           </div>
         </div>
-        {/* Products */}
-        <div className="row_7">
-          <div className="title">
-            <h3>
-              <span className="material-symbols-outlined">fitness_center</span>
-              Our Products
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="product_list_container">
-            <Slide
-              slidesToScroll={1}
-              slidesToShow={width < 600 ? 1 : 2}
-              indicators={true}
-              autoplay
-              {...properties}
-              autoplayInterval={1000}
-            >
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114181.jpg?t=st=1722480930~exp=1722484530~hmac=b3e99f19f2f2261ec0d7c5f1da8914dbfa376f325e37125598579ea7d7eced3b&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4>Dumbells</h4>
-                  <small> Hexa Brand Black dumbles set</small>
-                  <button>₹ &nbsp;1,500</button>
-                </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114193.jpg?t=st=1722481836~exp=1722485436~hmac=d51a359afcfe14e230d29c84d0e4a997136b837f764fd5d58ace30f2613f07fa&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4>Dumbells</h4>
-                  <small> Hexa Brand Black dumbles set</small>
-                  <button>₹ &nbsp;2,500</button>
-                </div>
-              </div>
-              <div className="product_list">
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114216.jpg?t=st=1722480919~exp=1722484519~hmac=d542dae62fe4b0fea241627476e4f6acb5e11f0a0305c9b516fcd84c20c12e59&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                  <h4>Weight Lifter</h4>
-                  <small> Hexa Brand Black Weight lifter Full set</small>
-                  <button>₹ &nbsp;12,000</button>
-                </div>
-              </div>
-            </Slide>
-          </div>
-        </div>
-        {/* //Appinment */}
-        <div className="row_6">
-          <div className="title">
-            <h3>
-              <span className="material-symbols-outlined">groups</span>
-              Make An Appoinment
-            </h3>
-            {/* Contact */}
-          </div>
+                        {/* GoogleMap */}
 
-          <div className="appinment_form_container">
-            <form className="appinment_form">
-              <div className="form_group">
-                <label htmlFor="date">Date</label>
-                <input
-                  type="date"
-                  name="data"
-                  id="date"
-                  className="date-input"
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="time">Time</label>
-                <select name="time" id="time">
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="01:00 PM">01:00 PM</option>
-                  <option value="03:00 PM">03:00 PM</option>
-                </select>
-              </div>
-              <div className="form_submit">
-                <button type="submit" className="submit-btn">
-                  Book Now
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        {/* Gallery */}
-        <div className="row_8">
-          <div className="title">
-            <h3>
-              <span className="material-symbols-outlined">
-                gallery_thumbnail
-              </span>
-              Gallery
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="gallery_container">
-            <div className="full_image" id="fullImageBox">
-              <div className="close_Full_Image_gallery">
-                <span
-                  className="material-symbols-outlined"
-                  onClick={closeFullImage}
-                >
-                  cancel
-                </span>
-              </div>
-              <img src={banner} alt="gallery" id="fullImage" />
-            </div>
-            <div className="arrow">
-              <small>Scroll To</small>
-              <i className="bx bx-chevrons-right bx-fade-right"></i>
-            </div>
-            <div className="gallery_box">
-              <div className="click_image">
-                <img src={hand} alt="click" />
-              </div>
-              <img
-                src="https://img.freepik.com/free-photo/young-adult-doing-indoor-sport-gym_23-2149205565.jpg?t=st=1722483193~exp=1722486793~hmac=582b97347ecbf83a7f71abf16c7dc7dc6287bdaa892fd409e0391f81788d2e1a&w=900"
-                alt="developer"
-                onClick={(e) => openFullImage(e.target.src)}
-              />
-              <img
-                src="https://img.freepik.com/free-photo/group-happy-people-with-fitness-mat_23-2147949665.jpg?t=st=1722483216~exp=1722486816~hmac=7bdc02aab0dcfc3acd5fc65492a3b8ca429968cbe272e944b7290c87a0e915d7&w=740"
-                alt="dev"
-                onClick={(e) => openFullImage(e.target.src)}
-              />
-              <img
-                src="https://img.freepik.com/free-photo/medium-shot-woman-with-personal-trainer_23-2148768876.jpg?t=st=1722483231~exp=1722486831~hmac=632b671e1aa83188e956e1079af566819bd22f8654c85892275f73f6a0e1c51a&w=900"
-                alt="dev"
-                onClick={(e) => openFullImage(e.target.src)}
-              />
-              <img
-                src="https://img.freepik.com/free-photo/group-happy-athletic-people-sitting-floor-after-workout-health-club_23-2147949626.jpg?t=st=1722483254~exp=1722486854~hmac=6dbfa18496283604500b632d24c5d12f0ea3e55560c0d2124e1127202c04c736&w=996"
-                alt="dev"
-                onClick={(e) => openFullImage(e.target.src)}
-              />
-            </div>
-          </div>
-        </div>
-        {/* Testimonial */}
-        <div className="row_9">
-          <div className="title">
-            <h3>
-              <span className="material-symbols-outlined">
-                settings_accessibility
-              </span>
-              Testimonial
-            </h3>
-            {/* Contact */}
-          </div>
-          <div className="testimonial_container">
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-              infiniteLoop
-              autoPlay
-            >
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>John Doe</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Jayakumar </h4>
-                    <small>-CEO</small>
-                  </div>
-                </div>
-              </div>
-            </Carousel>
-          </div>
-        </div>
-        {/* GoogleMap */}
-
-        <div className="google_map_container">
-          <div className="title">
+                        <div className="google_map_container">
+          <div className="taxi_title">
             <h3>Live Location</h3>
           </div>
 
           <div className="google_map">
-            <HtmlRenderer
-              htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`}
-            />
+            <HtmlRenderer htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`} />
           </div>
         </div>
         {/* Feedback */}
         <div className="row_10">
-          <div className="title">
+          <div className="rattingcar_image">
+            <img src={RattingCar_Image} alt="ratting" />
+          </div>
+          <div className="taxi_title">
             <h3>
               <span className="material-symbols-outlined">reviews</span>
               Feedback
@@ -834,8 +973,11 @@ const Gym_Trainer_Demo = () => {
                   <span className="material-symbols-outlined">
                     thumbs_up_down
                   </span>
-                  See All Feedbacks<i className="bx bxs-bell-ring bx-tada"></i>
-                  <div className="count">{AllFeedBacks.length}</div>
+                  See All Feedbacks <i className='bx bxs-bell-ring bx-tada' ></i>
+
+                  <div className="count">
+                    {AllFeedBacks.length}
+                  </div>
                 </button>
               )}
 
@@ -932,9 +1074,11 @@ const Gym_Trainer_Demo = () => {
 
         {/* Inquries */}
         <div className="row_11">
-          <div className="title">
+          <div className="taxi_title">
             <h3>
-              <span className="material-symbols-outlined">reviews</span>
+              <span className="material-symbols-outlined">
+                person_raised_hand
+              </span>
               Inquries
             </h3>
           </div>
@@ -993,11 +1137,11 @@ const Gym_Trainer_Demo = () => {
         </div>
 
         {/* Footer */}
-        <div className="row_12">
+        <div className="row_13">
           <div className="footer_container">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path
-                fill="#2d2d2ee1"
+                fill="#1a8b8275"
                 fill-opacity="1"
                 d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
               ></path>
@@ -1010,4 +1154,4 @@ const Gym_Trainer_Demo = () => {
   );
 };
 
-export default Gym_Trainer_Demo;
+export default Taxi_Service_Demo;

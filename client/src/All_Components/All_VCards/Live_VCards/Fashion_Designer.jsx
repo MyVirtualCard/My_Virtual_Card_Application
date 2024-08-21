@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./Fashion_Designer.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
 
-import fashion1 from "../../assets/AllVCard_Image/Fashion_Designer/fashion2.png";
-import fashion2 from "../../assets/AllVCard_Image/Fashion_Designer/fashion1.png";
-import fashion3 from "../../assets/AllVCard_Image/Fashion_Designer/fashion3.png";
-import fashion4 from "../../assets/AllVCard_Image/Fashion_Designer/fashion4.png";
-import fashion5 from "../../assets/AllVCard_Image/Fashion_Designer/fashion5.png";
-import fashion6 from "../../assets/AllVCard_Image/Fashion_Designer/fashion6.png";
-import fashion7 from "../../assets/AllVCard_Image/Fashion_Designer/fashion7.png";
-import fashion8 from "../../assets/AllVCard_Image/Fashion_Designer/fashion8.png";
-import fashion9 from "../../assets/AllVCard_Image/Fashion_Designer/fashion9.png";
-import fashion10 from "../../assets/AllVCard_Image/Fashion_Designer/fashion10.png";
-import fashion11 from "../../assets/AllVCard_Image/Fashion_Designer/fashion11.png";
-import fashion12 from "../../assets/AllVCard_Image/Fashion_Designer/12.png";
+import fashion1 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion2.png";
+import fashion2 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion1.png";
+import fashion3 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion3.png";
+import fashion4 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion4.png";
+import fashion5 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion5.png";
+import fashion6 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion6.png";
+import fashion7 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion7.png";
+import fashion8 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion8.png";
+import fashion9 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion9.png";
+import fashion10 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion10.png";
+import fashion11 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion11.png";
+import fashion12 from "../../../assets/AllVCard_Image/Fashion_Designer/12.png";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -24,11 +24,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import axios from "axios";
-import trianglelogo from "../../assets/LandingPage_image/Triangle_logo.png";
+import trianglelogo from "../../../assets/LandingPage_image/Triangle_logo.png";
 import { Toaster, toast } from "react-hot-toast";
-import { InquiryValidateSchema } from "../Helper/InquiryValidate";
-import Context from "../UseContext/Context";
-import { AppoinmentValidateSchema } from "../Helper/AppoinmentValidate";
+import { InquiryValidateSchema } from "../../Helper/InquiryValidate";
+import Context from "../../UseContext/Context";
+import { AppoinmentValidateSchema } from "../../Helper/AppoinmentValidate";
 const Fashion_Designer = () => {
   const [width, setWidth] = useState(window.innerWidth);
   //Success and error popup state
@@ -801,7 +801,7 @@ END:VCARD
                 {BasicData.length > 0 && ManageContentData[0].ContactDetails ==  true  ?
                 <>
                      <div className="row_3">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Contact Details</h3>
                    
                   </div>
@@ -901,7 +901,7 @@ END:VCARD
                 {ServiceData.length > 0 && ManageContentData[0].Service ==  true  ? 
                 <>
                   <div className="row_4">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Our Services</h3>
                   </div>
 
@@ -980,7 +980,7 @@ END:VCARD
                 {ProductData.length>0 && ManageContentData[0].Product ==  true ? 
                 <>
                     <div className="row_7">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Our Products</h3>
                     {/* Contact */}
                   </div>
@@ -1082,7 +1082,7 @@ END:VCARD
                 {VCard_URL_Data.length>0 && ManageContentData[0].Appoinment ==  true ? 
                 <>
                 <div className="row_6">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Make An Appoinment</h3>
                   </div>
                   <div className="appinment_form_container">
@@ -1249,7 +1249,7 @@ END:VCARD
                    {GalleryData.length > 0 &&  ManageContentData[0].Gallery ==  true? 
                 <>
                      <div className="row_8">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Gallery</h3>
                   </div>
                   <div className="gallery_container">
@@ -1322,7 +1322,7 @@ END:VCARD
                 {TestimonialData.length > 0 &&  ManageContentData[0].Testimonial ==  true? 
                 <>
                      <div className="row_9">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Testimonial</h3>
                     {/* Contact */}
                   </div>
@@ -1370,7 +1370,7 @@ END:VCARD
                 {QRCodeData.length>0 &&  ManageContentData[0].QRCode ==  true? 
                 <>
                         <div className="row_12">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Scan To Pay</h3>
                     {/* Contact */}
                   </div>
@@ -1399,7 +1399,7 @@ END:VCARD
                 {BussinessHourData.length>0 &&  ManageContentData[0].BussinessHour ==  true? 
                 <>
                     <div className="row_5">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Open&Close Time</h3>
                     {/* Contact */}
                   </div>
@@ -1569,7 +1569,7 @@ END:VCARD
               {GoogleMapData.length > 0 &&  ManageContentData[0].GoogleMap ==  true? (
                   <>
                     <div className="google_map_container">
-                    <div className="title">
+                    <div className="fashion_title">
                     <h3>
                     
                    #&nbsp;Live Location
@@ -1599,7 +1599,7 @@ END:VCARD
                   {/* <div className="rattingcar_image">
                     <img src={RattingCar_Image} alt="ratting" />
                   </div> */}
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>
                      
                       Feedback
@@ -1901,7 +1901,7 @@ END:VCARD
                 SocialMediaData.length > 0 &&  ManageContentData[0].InquiryForm ==  true?  
                 <>
                      <div className="row_11">
-                  <div className="title">
+                  <div className="fashion_title">
                     <h3>#&nbsp;Inquries</h3>
                   </div>
                   <div className="inquiries_container5">

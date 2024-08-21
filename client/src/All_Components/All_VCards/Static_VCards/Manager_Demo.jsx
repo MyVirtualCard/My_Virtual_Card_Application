@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Manager.scss";
+import "./Manager_Demo.scss";
 import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
 import hand from "../../assets/AllVCard_Image/VCard3/hand.gif";
 //Product Slider
@@ -304,7 +304,7 @@ END:VCARD
     baseURL: import.meta.env.VITE_APP_API_URL,
   });
   return (
-    <div className="newcard_design11_container">
+    <div className="manager_demo_container">
       <div className="newcard_design11_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
@@ -398,7 +398,7 @@ END:VCARD
         </div>
         {/* ContactDetails */}
         <div className="row_3">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <i className="bx bxs-phone-call"></i> Contact Details
             </h3>
@@ -462,7 +462,7 @@ END:VCARD
 
         {/* Services */}
         <div className="row_4">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <i className="bx bx-dumbbell"></i> Our Services
             </h3>
@@ -560,7 +560,7 @@ END:VCARD
 
         {/* Opentime */}
         <div className="row_5">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <i className="bx bx-timer"></i>Open&Close Time
             </h3>
@@ -661,7 +661,7 @@ END:VCARD
         </div>
         {/* Products */}
         <div className="row_7">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <span className="material-symbols-outlined">fitness_center</span>
               Our Products
@@ -748,7 +748,7 @@ END:VCARD
         </div>
         {/* //Appinment */}
         <div className="row_6">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <span className="material-symbols-outlined">groups</span>
               Make An Appoinment
@@ -786,7 +786,7 @@ END:VCARD
 
         {/* Gallery */}
         <div className="row_8">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <span className="material-symbols-outlined">
                 gallery_thumbnail
@@ -840,7 +840,7 @@ END:VCARD
         </div>
         {/* Testimonial */}
         <div className="row_9">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <span className="material-symbols-outlined">
                 settings_accessibility
@@ -942,7 +942,7 @@ END:VCARD
         {/* GoogleMap */}
 
         <div className="google_map_container">
-          <div className="title">
+          <div className="manager_title">
             <h3>Live Location</h3>
           </div>
 
@@ -953,7 +953,7 @@ END:VCARD
 
         {/* Feedback */}
         <div className="row_10">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <span className="material-symbols-outlined">reviews</span>
               Feedback
@@ -1183,7 +1183,7 @@ END:VCARD
 
         {/* Inquries */}
         <div className="row_11">
-          <div className="title">
+          <div className="manager_title">
             <h3>
               <span className="material-symbols-outlined">reviews</span>
               Inquries
