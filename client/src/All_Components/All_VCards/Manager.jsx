@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Typewriter, Cursor } from "react-simple-typewriter";
 import axios from "axios";
-const Manager = () => {
+const Manager_Demo = () => {
 
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
@@ -1262,4 +1262,4 @@ END:VCARD
 };
 
 
-export default Manager;
+export default Manager_Demo;

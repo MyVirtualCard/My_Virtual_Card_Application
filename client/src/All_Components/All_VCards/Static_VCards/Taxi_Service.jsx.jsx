@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./Business_Consultant.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
-//service Slider
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import React, { useState } from "react";
+import "./Taxi_Service.scss";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
+
+import taxi from "../../../assets/AllVCard_Image/Taxi_Service/Taxi.png";
+import Route_Image from "../../../assets/AllVCard_Image/Taxi_Service/route.png";
+import Route_Image2 from "../../../assets/AllVCard_Image/Taxi_Service/route2.png";
+import TripBanner_Image from "../../../assets/AllVCard_Image/Taxi_Service/trip_banner.png";
+import RattingCar_Image from "../../../assets/AllVCard_Image/Taxi_Service/ratting.png";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -14,12 +16,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-const Business_Consultant_Demo = () => {
 
-  let style={
-    $root_text_color: '#ffffff',
-    $root_text_second_color: '#F96921',
-  }
+const Taxi_Service_Demo = () => {
+  const HtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -29,10 +30,6 @@ const Business_Consultant_Demo = () => {
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
-
-  const HtmlRenderer = ({ htmlString }) => {
-    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
-  };
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -62,26 +59,34 @@ const Business_Consultant_Demo = () => {
     linkElement.click();
     document.body.removeChild(linkElement);
   }
-  //gallery
   const buttonStyle = {
-    width: "20px",
+    width: "0px",
     background: "none",
-    opacity: 1,
+    opacity: 0,
     border: "0px",
     padding: "0px",
-    borderRadius: "10px",
-    fontSize: "10px",
-    color: "#F96921",
   };
   const properties = {
     prevArrow: (
       <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">swipe_left</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
+        </svg>
       </button>
     ),
     nextArrow: (
       <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">swipe_right</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
+        </svg>
       </button>
     ),
   };
@@ -115,30 +120,6 @@ const Business_Consultant_Demo = () => {
         </svg>
       </button>
     ),
-  };
-
-  //Service
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll:width < 700 ? 1 : 2,
-  };
-  //Product
-  const product_settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll:width < 700 ? 1 : 2,
-    rtl: true,            // Scroll from left to right
-    arrows: true           // Show navigation arrows
-
   };
   //Gallery Functionality
   //openFullImage preview:
@@ -283,42 +264,32 @@ const Business_Consultant_Demo = () => {
     },
   });
   return (
-    <div className="Business_Consultant_container">
-      <div className="Business_Consultant_box">
+    <div className="newcard_design12_container">
+      <div className="trip_banner">
+        <img src={TripBanner_Image} alt="trip" />
+      </div>
+      <div className="newcard_design12_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">
-          <div className="slide_svg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path
-                fill="#ffffff"
-                fill-opacity="1"
-                d="M0,320L1440,32L1440,0L0,0Z"
-              ></path>
-            </svg>
-            <div className="overlay"></div>
+          <div className="route_image">
+            <img src={Route_Image} alt="route" />
           </div>
           <div className="banner_image">
-            <img
-              src="https://img.freepik.com/free-photo/business-people-discussing-project-plans-meeting_9975-22767.jpg?t=st=1722633434~exp=1722637034~hmac=c9d023ae9b02b034d790b616dd87d15a3a3c09723510ce1802200545255e07b8&w=1060"
-              alt="banner"
-            />
+            {/* <img
+              src="https://img.freepik.com/free-vector/online-application-call-taxi-service-by-smart-phone-set-location-destination_1150-48863.jpg?t=st=1722545066~exp=1722548666~hmac=83853f45de9bc8b77d3a66a5cd0d8b64c9eb60089f15fb39694af0c4a99191f8&w=900"
+              className="banner"
+            /> */}
+            <img src="https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996" alt="banner" />
             <div className="overlay"></div>
           </div>
-          <div className="user_logo">
-            <img
-              src="https://img.freepik.com/free-vector/hand-drawn-data-logo-template_23-2149204607.jpg?t=st=1722704993~exp=1722708593~hmac=e92412a91b89733e40b5b8034405ea189ffb803525e55f2a4f6aaa1adbfb32f3&w=740"
-              alt="user_logo"
-            />
-          </div>
-        </div>
-        {/* Summary */}
-        <div className="row_2">
+
           <div className="user_details">
             <div className="user_data">
-              <div className="user_information">
-                <h2>Waquor Younous</h2>
-                <p>Business Consultant </p>
-              </div>
+              <h2>John Anto</h2>
+              <p>
+                Taxi Service <img src={taxi} alt="taxi" />
+              </p>
+
               <div className="social_medias">
                 <a
                   href="https://www.facebook.com/aristostechindia"
@@ -366,22 +337,36 @@ const Business_Consultant_Demo = () => {
                 </a>
               </div>
             </div>
+            <div className="user_logo">
+              <img
+                src="https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
+                alt="user_logo"
+              />
+            </div>
           </div>
-          <div className="summary">
-            <p>
-              We started from a traditional marketing background and emerged to
-              be a successful Digital Marketing Agency since Digitalisation has
-              begun to evolve.
-            </p>
-          </div>
+        </div>
+        {/* Summary */}
+        <div className="row_2">
+          <p>
+            We started from a traditional marketing background and emerged to be
+            a successful Digital Marketing Agency since Digitalisation has begun
+            to evolve.
+          </p>
         </div>
         {/* ContactDetails */}
         <div className="row_3">
+          <div className="title">
+            <h3>
+              <i className="bx bxs-phone-call"></i> Contact Details
+            </h3>
+            {/* Contact */}
+          </div>
+
           <div className="contact_list_container">
             <div className="contact_list">
               <div className="icons">
                 <i class="bx bxl-gmail"></i>
-                {/* <small>Email</small> */}
+                <small>Email</small>
               </div>
 
               <div className="list_detail">
@@ -391,7 +376,7 @@ const Business_Consultant_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i className="bx bx-mobile-vibration"></i>
-                {/* <small>Mobile Number</small> */}
+                <small>Mobile Number</small>
               </div>
 
               <div className="list_detail">
@@ -401,7 +386,7 @@ const Business_Consultant_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i className="bx bx-envelope"></i>
-                {/* <small>Company Email</small> */}
+                <small>Company Email</small>
               </div>
 
               <div className="list_detail">
@@ -411,7 +396,7 @@ const Business_Consultant_Demo = () => {
             <div className="contact_list">
               <div className="icons">
                 <i className="bx bx-map-alt"></i>
-                {/* <small>Address</small> */}
+                <small>Address</small>
               </div>
 
               <div className="list_detail">
@@ -430,113 +415,15 @@ const Business_Consultant_Demo = () => {
             </button>
           </div>
         </div>
-        {/* Services */}
-        <div className="row_4">
-          <div className="title">
-            <h3>Our Services</h3>
-          </div>
-
-          <div className="service_list_container">
-            <Slider {...settings}>
-            {/* //service_icon list */}
-            {/* <div className="service_list">
-              <span className="material-symbols-outlined">palette</span>
-
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Color direction</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quasi nisi laborum reprehenderit sint doloribus ab!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">view_quilt</span>
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Catalog layout</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </div> */}
-            {/* //service_image list */}
-            <div className="img_service_list">
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-                <div className="service_title">
-                  <h4>Knowledge of diverse business</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="img_service_list">
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/close-up-business-partner-sitting-front-manager-looking-document_23-2147838536.jpg?t=st=1724258439~exp=1724262039~hmac=6aeddc50ea9f6c6996bb3fafe83382ee2ddfed32f0c72a7efde9ca6df2ebbaf5&w=900"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-                <div className="service_title">
-                  <h4>Outstanding communication</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cumque alias similique, recusandae, at, iste aperiam maiores
-                    quis quia incidunt mollitia laudantium corrupti laboriosam
-                    harum molestias!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="img_service_list">
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/group-businesspeople-working-graph-office_23-2147838537.jpg?t=st=1724258500~exp=1724262100~hmac=66ad26cf021b5cfa52c872a98e80231c0553b641b256bf2bfa7f45aa339d8335&w=740"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-                <div className="service_title">
-                  <h4> creative problem-solving</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cumque alias similique, recusandae, at, iste aperiam maiores
-                    quis quia incidunt mollitia laudantium corrupti laboriosam
-                    harum molestias!
-                  </p>
-                </div>
-              </div>
-            </div>
-            </Slider>
-          </div>
-        </div>
         {/* Gallery */}
         <div className="row_8">
           <div className="title">
-            <h3>Gallery</h3>
+            <h3>
+              <span className="material-symbols-outlined">
+                gallery_thumbnail
+              </span>
+              Gallery
+            </h3>
           </div>
           <div className="gallery_container">
             <div className="full_image" id="fullImageBox">
@@ -554,29 +441,29 @@ const Business_Consultant_Demo = () => {
             <div className="gallery_box">
               <Slide
                 slidesToScroll={1}
-                slidesToShow={width < 600 ? 2 : 2}
+                slidesToShow={width < 600 ? 2 : 3}
                 indicators={true}
                 autoplay
-                {...properties}
+                {...gallery_properties}
                 autoplayInterval={1000}
               >
                 <img
-                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
                   alt="developer"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://img.freepik.com/free-photo/working-online-project_1098-14828.jpg?t=st=1724258616~exp=1724262216~hmac=01da90dcb13e89f46c280ea2614c460b5414bf2e4ca2b3915c51c8808e6b0f5f&w=900"
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-4.png?fit=1030%2C687&ssl=1"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://img.freepik.com/free-photo/two-colleagues-working-together-office-white-studio_155003-13076.jpg?t=st=1724258635~exp=1724262235~hmac=b20acfb2149769f4cffb7ff8376b7da5db2c424ecc5268cfdf15f3ce1f9c43c8&w=900"
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-6.png?fit=1030%2C681&ssl=1"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
                 <img
-                  src="https://img.freepik.com/free-photo/pensive-concentrated-managers-standing-modern-cafe_1262-17088.jpg?t=st=1724258653~exp=1724262253~hmac=4f3bcd7c4576293a2d2ad54d310796f0a01a60f024e0c89a128035134f80182c&w=900"
+                  src="https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/10/sunglasses-in-hand-on-purple-background-close-up-NQBKRR9.png?fit=700%2C700&ssl=1"
                   alt="dev"
                   onClick={(e) => openFullImage(e.target.src)}
                 />
@@ -584,91 +471,106 @@ const Business_Consultant_Demo = () => {
             </div>
           </div>
         </div>
+        {/* Services */}
+        <div className="row_4">
+          <div className="title">
+            <h3>
+              <i className="bx bx-support"></i> Our Services
+            </h3>
+          </div>
+
+          <div className="service_list_container">
+            <div className="service_list">
+              <span className="material-symbols-outlined">travel</span>
+
+              <div className="service_detail">
+                <div className="service_title">
+                  <h4>Airport Transport</h4>
+                </div>
+                <div className="service_summary">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quasi nisi laborum reprehenderit sint doloribus ab!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="service_list">
+              <span className="material-symbols-outlined">
+                hourglass_bottom
+              </span>
+              <div className="service_detail">
+                <div className="service_title">
+                  <h4>Sheduled Rides</h4>
+                </div>
+                <div className="service_summary">
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Sint vero tenetur aliquid totam qui ipsam?
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Products */}
         <div className="row_7">
           <div className="title">
-            <h3>Our Products</h3>
+            <h3>
+              <span className="material-symbols-outlined">no_crash</span>
+              Our Products
+            </h3>
             {/* Contact */}
           </div>
+          <div className="route_image2">
+            <img src={Route_Image2} alt="route" />
+          </div>
           <div className="product_list_container">
-            <Slider {...product_settings}
-             
+            <Slide
+              slidesToScroll={1}
+              slidesToShow={width < 600 ? 1 : 1}
+              indicators={true}
+              autoplay
+              {...properties}
+              autoplayInterval={1000}
             >
               <div className="product_list">
-                <div className="product_title">
-                <h4>Product Design</h4>
-                </div>
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-vector/productivity-concept-background_23-2147991016.jpg?t=st=1724258763~exp=1724262363~hmac=a05c962ff921b749efe32fdab93c3b03143787e7a0e641f0d16df646029cdea4&w=740"
+                    src="https://img.freepik.com/free-vector/taxi-poster-with-realistic-yellow-public-service-car-with-reflection_1284-5444.jpg?t=st=1722540843~exp=1722544443~hmac=246e42b048cc2cd6debfbc2526ba1a7aaab7297900915186ff665942dffd3a3b&w=740"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-             
-                  <small>
-                    {" "}
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut eveniet cupiditate magnam eos perspiciatis harum enim obcaecati dolor numquam iusto?
-               
-                  </small>
-                  <div className="link">
-                  <a href="#">More Detail</a>
-                  </div>
+                  <h4>Cabsy Regular</h4>
+                  <small> 1-4 passenger!</small>
+                  <button>₹ &nbsp;1,500</button>
                 </div>
               </div>
               <div className="product_list">
-              <div className="product_title">
-                <h4>Business Process & Advisory</h4>
-                </div>
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/premium-vector/coworkers-dialog-discussion_82574-9401.jpg?w=740"
+                    src="https://img.freepik.com/premium-photo/side-view-yellow-taxi-car-isolated-white-background_641503-49720.jpg?w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                
-                  <small>
-                    {" "}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo eveniet sint, nihil iusto in veniam corporis non pariatur ducimus harum.
-                  
-                  </small>
-                  <div className="link">
-                  <a href="#">More Detail</a>
-                  </div>
+                  <h4>Cabsy XL</h4>
+                  <small> 1-4 passenger!</small>
+                  <button>₹ &nbsp;2000</button>
                 </div>
               </div>
-              <div className="product_list">
-              <div className="product_title">
-                <h4>Training</h4>
-                </div>
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/front-view-teamwork-coworkers-office_23-2148339344.jpg?t=st=1724258757~exp=1724262357~hmac=97a24f1f818e59893720b0af245b866910a10e66c9fd29a8ab586ee34ebbf514&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-              
-                  <small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, saepe? Tempore cupiditate aliquid sint eius amet neque numquam fugiat eveniet!
-                    
-                  </small>
-                  <div className="link">
-                  <a href="#">More Detail</a>
-                  </div>
-             
-                </div>
-              </div>
-           
-            </Slider>
+            </Slide>
           </div>
         </div>
         {/* //Appinment */}
         <div className="row_6">
           <div className="title">
-            <h3>Make An Appoinment</h3>
+            <h3>
+              <span className="material-symbols-outlined">groups</span>
+              Make An Appoinment
+            </h3>
           </div>
 
           <div className="appinment_form_container">
@@ -703,7 +605,12 @@ const Business_Consultant_Demo = () => {
         {/* Testimonial */}
         <div className="row_9">
           <div className="title">
-            <h3>Testimonial</h3>
+            <h3>
+              <span className="material-symbols-outlined">
+                settings_accessibility
+              </span>
+              Testimonial
+            </h3>
             {/* Contact */}
           </div>
           <div className="testimonial_container">
@@ -799,19 +706,18 @@ const Business_Consultant_Demo = () => {
         {/* QRCode */}
         <div className="row_12">
           <div className="title">
-            <h3>QRCode</h3>
+            <h3>
+              <i className="bx bx-qr-scan"></i>QRCode
+            </h3>
             {/* Contact */}
           </div>
 
           <div className="qrcode_container">
             <div className="qr_code_box">
-              <h4>
-                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Ducimus, enim?
-              </h4>
+              <h4><small>Note :</small>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, enim?</h4>
 
               <img
-                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
+                src="https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?t=st=1722540928~exp=1722544528~hmac=37be49c02a6f26b2ee598eeec0fc1b4f8133a5107efef5c3360142d745b6b58e&w=740"
                 alt=""
               />
             </div>
@@ -820,7 +726,9 @@ const Business_Consultant_Demo = () => {
         {/* Opentime */}
         <div className="row_5">
           <div className="title">
-            <h3>Open&Close Time</h3>
+            <h3>
+              <i className="bx bx-timer"></i>Open&Close Time
+            </h3>
             {/* Contact */}
           </div>
           <div className="time_list_container">
@@ -916,9 +824,9 @@ const Business_Consultant_Demo = () => {
             </div>
           </div>
         </div>
-                {/* GoogleMap */}
+                        {/* GoogleMap */}
 
-                <div className="google_map_container">
+                        <div className="google_map_container">
           <div className="title">
             <h3>Live Location</h3>
           </div>
@@ -929,8 +837,14 @@ const Business_Consultant_Demo = () => {
         </div>
         {/* Feedback */}
         <div className="row_10">
+          <div className="rattingcar_image">
+            <img src={RattingCar_Image} alt="ratting" />
+          </div>
           <div className="title">
-            <h3>Feedback</h3>
+            <h3>
+              <span className="material-symbols-outlined">reviews</span>
+              Feedback
+            </h3>
             {/* Contact */}
           </div>
           <div className="feedback_container">
@@ -1059,7 +973,11 @@ const Business_Consultant_Demo = () => {
                   <span className="material-symbols-outlined">
                     thumbs_up_down
                   </span>
-                  See All Feedbacks
+                  See All Feedbacks <i className='bx bxs-bell-ring bx-tada' ></i>
+
+                  <div className="count">
+                    {AllFeedBacks.length}
+                  </div>
                 </button>
               )}
 
@@ -1157,7 +1075,12 @@ const Business_Consultant_Demo = () => {
         {/* Inquries */}
         <div className="row_11">
           <div className="title">
-            <h3>Inquries</h3>
+            <h3>
+              <span className="material-symbols-outlined">
+                person_raised_hand
+              </span>
+              Inquries
+            </h3>
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1218,9 +1141,9 @@ const Business_Consultant_Demo = () => {
           <div className="footer_container">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path
-                fill={style.$root_text_second_color}
+                fill="#1a8b8275"
                 fill-opacity="1"
-                d="M0,32L40,42.7C80,53,160,75,240,96C320,117,400,139,480,149.3C560,160,640,160,720,160C800,160,880,160,960,154.7C1040,149,1120,139,1200,160C1280,181,1360,235,1400,261.3L1440,288L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+                d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
               ></path>
             </svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
@@ -1231,4 +1154,4 @@ const Business_Consultant_Demo = () => {
   );
 };
 
-export default Business_Consultant_Demo;
+export default Taxi_Service_Demo;

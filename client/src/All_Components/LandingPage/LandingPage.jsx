@@ -256,7 +256,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("August 20, 2024 00:00:00").getTime();
+    const countdownDate = new Date("August 28, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -548,7 +548,7 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
-              <m.div className="title" variants={left_slide_1Anime}>
+              <m.div className="landingpage_title" variants={left_slide_1Anime}>
                 <h3>Design Your Digital Identity</h3>
                 <h4>Introducing Custom vCards</h4>
               </m.div>

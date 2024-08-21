@@ -27,9 +27,7 @@ let ResetPassword = lazy(() =>
 let ForgotPassword = lazy(() =>
   import("./All_Components/Authentication/ForgotPassword/ForgotPassword")
 );
-let Login = lazy(() =>
-  import("./All_Components/Authentication/Login/Login")
-);
+let Login = lazy(() => import("./All_Components/Authentication/Login/Login"));
 let Register = lazy(() =>
   import("./All_Components/Authentication/Register/Register")
 );
@@ -37,25 +35,39 @@ let UserAdmin = lazy(() =>
   import("./All_Components/User_Admin_Dashboard/UserAdmin/UserAdmin")
 );
 let User_Dashboard = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_Dashboard")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_Dashboard"
+  )
 );
 let User_VCards = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_VCards")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/User_VCards"
+  )
 );
 let VCard_URL_Form = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/VCard_URL_Form")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/VCard_URL_Form"
+  )
 );
 let VCard_Form_Edit = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/VCard_Form_Edit")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/VCard_Form_Edit"
+  )
 );
 let Inquiries = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Inquiries")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Inquiries"
+  )
 );
 let BasicForm = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Vcard_Form/Edit_All_Form_Component/Edit_BasicForm"
+  )
 );
 let UserAccountSetting = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Profile_Setting/UserAccountSetting"
+  )
 );
 
 let VerifyOTP = lazy(() =>
@@ -74,13 +86,15 @@ let PaymentSuccess = lazy(() =>
   import("./All_Components/User_Admin_Dashboard/Payment/PaymentSuccess")
 );
 let Appoinment = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/Appoinment"
+  )
 );
 let ProductOrder = lazy(() =>
-  import("./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder")
+  import(
+    "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ProductOrder"
+  )
 );
-
-
 
 import NewCardDesign1 from "./All_Components/All_VCards/NewCardDesign1";
 import NewCardDesign2 from "./All_Components/All_VCards/NewCardDesign2";
@@ -95,17 +109,22 @@ import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
 //NewVCard templates
 import Taxi_Service from "./All_Components/All_VCards/Taxi_Service.jsx";
 import Gym_Trainer from "./All_Components/All_VCards/Gym_Trainer.jsx";
-import Manager from "./All_Components/All_VCards/Manager.jsx";
+
 import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
-import Business_Consultant from "./All_Components/All_VCards/Business_Consultant.jsx";
+
 import FallBack from "./Fallback/FallBack.jsx";
+import Gym_Trainer_Demo from "./All_Components/All_VCards/Static_VCards/Gym_Trainer.jsx";
+import Taxi_Service_Demo from "./All_Components/All_VCards/Static_VCards/Taxi_Service.jsx.jsx";
+import Fashion_Designer_Demo from "./All_Components/All_VCards/Static_VCards/Fashion_Designer.jsx";
+import Manager_Demo from "./All_Components/All_VCards/Manager.jsx";
+import Business_Consultant_Demo from "./All_Components/All_VCards/Business_Consultant.jsx";
 const App = () => {
   //URL Name state:
   let [AuthToggle, setAuthToggle] = useState(false);
   let [ForgotPassToggle, setForgotPassToggle] = useState(false);
   let [ResetPassToggle, setResetPassToggle] = useState(false);
-  let[VerifyOTPToggle,setVerifyOTPToggle]=useState(false);
-  let[ResendOTPToggle,setResendOTPToggle]=useState(false)
+  let [VerifyOTPToggle, setVerifyOTPToggle] = useState(false);
+  let [ResendOTPToggle, setResendOTPToggle] = useState(false);
   let [URL_Alies, setURL_Alies] = useState("");
   let [SideNavActions, setSideNavActions] = useState(false);
   let [profileOpen, setProfileOpen] = useState(false);
@@ -273,11 +292,11 @@ const App = () => {
   let [errorMessage, setErrorMessage] = useState();
   let [errorPopupOpen, setErrorPopupOpen] = useState(false);
 
-  let [AllFeedback,setAllFeedback]=useState([]);
-  let [AllAppoinment,setAllAppoinment]=useState([]);
+  let [AllFeedback, setAllFeedback] = useState([]);
+  let [AllAppoinment, setAllAppoinment] = useState([]);
   let [VCardCount, setVCardCount] = useState([]);
 
-  let[LiveLinkActivate,setLiveLinkActivate]=useState([])
+  let [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -303,7 +322,6 @@ const App = () => {
           setCurrentTemplate(res.data.data[0].currentTemplate);
         })
         .catch((error) => {
-
           toast.error(error.response.data.message);
         });
     } catch (error) {
@@ -344,26 +362,36 @@ const App = () => {
   return (
     <>
       <div className="App_container">
-      <Toaster  toastOptions={{
-          style: {
-            position:'relative',
-            top: '60px',
-            left: '50px',
-            right: 'auto',
-            bottom: 'auto',
-            zIndex:'1000'
-          },
-        }}/>
+        <Toaster
+          toastOptions={{
+            style: {
+              position: "relative",
+              top: "60px",
+              left: "50px",
+              right: "auto",
+              bottom: "auto",
+              zIndex: "1000",
+            },
+          }}
+        />
         <Context.Provider
           value={{
-            ForgotPassToggle, setForgotPassToggle,
-            ResetPassToggle, setResetPassToggle,
-            VerifyOTPToggle,setVerifyOTPToggle,
-            ResendOTPToggle,setResendOTPToggle,
-            LiveLinkActivate,setLiveLinkActivate,
-            VCardCount, setVCardCount,
-            AllFeedback,setAllFeedback,
-            AllAppoinment,setAllAppoinment,
+            ForgotPassToggle,
+            setForgotPassToggle,
+            ResetPassToggle,
+            setResetPassToggle,
+            VerifyOTPToggle,
+            setVerifyOTPToggle,
+            ResendOTPToggle,
+            setResendOTPToggle,
+            LiveLinkActivate,
+            setLiveLinkActivate,
+            VCardCount,
+            setVCardCount,
+            AllFeedback,
+            setAllFeedback,
+            AllAppoinment,
+            setAllAppoinment,
             successMessage,
             setSuccessMessage,
             successPopupOpen,
@@ -622,10 +650,14 @@ const App = () => {
             setQRCodeEdit,
           }}
         >
-          <Suspense fallback={<FallbackWithDelay loadingTime={1000} fallback={<FallBack/>}/>}>
+          <Suspense
+            fallback={
+              <FallbackWithDelay loadingTime={1000} fallback={<FallBack />} />
+            }
+          >
             <Routes>
               {/* Landing Homepage */}
-              <Route path="/fallback" element={<FallBack/>}/>
+              <Route path="/fallback" element={<FallBack />} />
               <Route path="/" element={<LandingPage />} />
               <Route
                 path="/register"
@@ -754,12 +786,19 @@ const App = () => {
             ) : (
               ""
             )} */}
-    <Route path="/Manager" element={<Manager />} />
+              {/* Static VCard */}
+              <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
+              <Route path="/Taxi_Service" element={<Taxi_Service_Demo />} />
+              <Route
+                path="/Fasion_Designer"
+                element={<Fashion_Designer_Demo />}
+              />
+              <Route path="/Manager" element={<Manager_Demo />} />
               <Route
                 path="/Business_Consultant"
-                element={<Business_Consultant />}
+                element={<Business_Consultant_Demo />}
               />
-              
+
               {/* //New Tempaltes */}
 
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (
@@ -777,7 +816,6 @@ const App = () => {
               ) : (
                 ""
               )}
-          
             </Routes>
           </Suspense>
         </Context.Provider>

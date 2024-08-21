@@ -14,7 +14,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-const Business_Consultant_Demo = () => {
+const Business_Consultant = () => {
 
   let style={
     $root_text_color: '#ffffff',
@@ -1231,4 +1231,4 @@ const Business_Consultant_Demo = () => {
   );
 };
 
-export default Business_Consultant_Demo;
+export default Business_Consultant;
