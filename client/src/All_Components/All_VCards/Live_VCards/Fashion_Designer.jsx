@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Fashion_Designer.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-
 import fashion1 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion2.png";
 import fashion2 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion1.png";
 import fashion3 from "../../../assets/AllVCard_Image/Fashion_Designer/fashion3.png";
@@ -27,8 +26,9 @@ import axios from "axios";
 import trianglelogo from "../../../assets/LandingPage_image/Triangle_logo.png";
 import { Toaster, toast } from "react-hot-toast";
 import { InquiryValidateSchema } from "../../Helper/InquiryValidate";
-import Context from "../../UseContext/Context";
 import { AppoinmentValidateSchema } from "../../Helper/AppoinmentValidate";
+import Context from "../../UseContext/Context";
+
 const Fashion_Designer = () => {
   const [width, setWidth] = useState(window.innerWidth);
   //Success and error popup state
@@ -819,7 +819,7 @@ END:VCARD
 
                               <div className="list_detail">
                                 <p>
-                                  {data.Email || "jayakumarv@aristostech.in"}
+                                  {data.Email || "demo@card.in"}
                                 </p>
                               </div>
                             </a>
@@ -910,6 +910,7 @@ END:VCARD
                       return(
                         <>
                            <a  href={data.ServiceURL ? data.ServiceURL : ''}   className="service_list" key={index}>
+                            
                                 {data.ServiceType == "Icon_Tag" ? (
                                   <>
                                     <HtmlRenderer

@@ -819,8 +819,18 @@ const App = () => {
               ) : (
                 ""
               )}
-                <Route path={`/manager_live`} element={<Manager />} />
-                <Route path={`/bussiness_consultant_live`} element={<Business_Consultant />} />
+                 {URL_Alies == URL_Alies && currentTemplate === 4 ? (
+                <Route path={`/:URL_Alies`} element={<Manager />} />
+              ) : (
+                ""
+              )}
+                  {URL_Alies == URL_Alies && currentTemplate === 5 ? (
+                <Route path={`/:URL_Alies`} element={<Business_Consultant />} />
+              ) : (
+                ""
+              )}
+                {/* <Route path={`/manager_live`} element={<Manager />} /> */}
+                {/* <Route path={`/bussiness_consultant_live`} element={<Business_Consultant />} /> */}
             </Routes>
           </Suspense>
         </Context.Provider>

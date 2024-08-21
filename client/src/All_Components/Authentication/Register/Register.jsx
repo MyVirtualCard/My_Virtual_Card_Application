@@ -132,6 +132,7 @@ const Register = () => {
   };
 
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+
   const handleSpeak = (userData) => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(
@@ -305,7 +306,7 @@ const Register = () => {
     validateOnBlur: false,
     onSubmit: async (values) => {
       setLoginLoader(true);
-
+    values.userName=localStorageDatas?.userName;
       await api
         .post("/auth/verifyOTP", values)
         .then((res) => {
@@ -453,7 +454,7 @@ const Register = () => {
                       placeholder="Enter Your UserName"
                       name="userName"
                       id="userName"
-                      value={verifyOTP_formik.values.userName}
+                      value={localStorageDatas?.userName}
                       onBlur={verifyOTP_formik.handleBlur}
                       onChange={verifyOTP_formik.handleChange}
                       className={

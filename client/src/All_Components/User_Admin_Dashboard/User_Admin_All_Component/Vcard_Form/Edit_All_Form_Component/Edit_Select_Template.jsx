@@ -15,6 +15,8 @@ import card8 from "../../../../../assets/Digicards/10.png";
 import Gym_Trainer from "../../../../../assets/Digicards/Gym_Trainer.png";
 import Taxi_Service from "../../../../../assets/Digicards/Taxi_Service.png";
 import Fashion_Desinger from "../../../../../assets/Digicards/Fashion_Designer.png";
+import Manager from "../../../../../assets/Digicards/Manager-1.png";
+import Bussiness from "../../../../../assets/Digicards/Bussiness_Consultant.png";
 import Footer from "../../../UserAdmin_Footer/Footer";
 import selected_gif from "../../../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../../../assets/animations/touch.gif";
@@ -26,35 +28,52 @@ let FreeTemplate = [
   {
     id: 2,
     image: Taxi_Service,
+    TemplateName: "Taxi Service",
   },
 ];
 let BasicTemplate = [
   {
     id: 1,
     image: Gym_Trainer,
+    TemplateName: "Gym Trainer",
   },
   {
     id: 2,
     image: Taxi_Service,
+    TemplateName: "Taxi Service",
   },
-
+  {
+    id: 3,
+    image: Manager,
+    TemplateName: "Manager",
+  },
 ];
 let StandardTemplate = [
   {
     id: 1,
     image: Gym_Trainer,
-    TemplateName:'Gym Trainer'
+    TemplateName: "Gym Trainer",
   },
   {
     id: 2,
-  
+
     image: Taxi_Service,
-        TemplateName:'Taxi Service'
+    TemplateName: "Taxi Service",
   },
   {
     id: 3,
     image: Fashion_Desinger,
-        TemplateName:'Fashion Designer'
+    TemplateName: "Fashion Designer",
+  },
+  {
+    id: 4,
+    image: Manager,
+    TemplateName: "Manager",
+  },
+  {
+    id: 5,
+    image: Bussiness,
+    TemplateName: "Bussiness Consultant",
   },
   // {
   //   id: 4,
@@ -81,14 +100,28 @@ let EnterpriceTemplate = [
   {
     id: 1,
     image: Gym_Trainer,
+    TemplateName: "Gym Trainer",
   },
   {
     id: 2,
+
     image: Taxi_Service,
+    TemplateName: "Taxi Service",
   },
   {
     id: 3,
     image: Fashion_Desinger,
+    TemplateName: "Fashion Designer",
+  },
+  {
+    id: 4,
+    image: Manager,
+    TemplateName: "Manager",
+  },
+  {
+    id: 5,
+    image: Bussiness,
+    TemplateName: "Bussiness Consultant",
   },
   // {
   //   id: 4,
@@ -129,10 +162,14 @@ const Select_Template = () => {
     currentTemplate,
     setCurrentTemplate,
     setShowForm,
-    successMessage,setSuccessMessage,
-    successPopupOpen,setSuccessPopupOpen,
-    errorMessage,setErrorMessage,
-    errorPopupOpen,setErrorPopupOpen,
+    successMessage,
+    setSuccessMessage,
+    successPopupOpen,
+    setSuccessPopupOpen,
+    errorMessage,
+    setErrorMessage,
+    errorPopupOpen,
+    setErrorPopupOpen,
   } = useContext(Context);
   // let [currentTemplate, setCurrentTemplate] = useState(null);
   let [VCardAdded, setVCardAdded] = useState(0);
@@ -171,11 +208,10 @@ const Select_Template = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message)
-       
+          toast.error(error.response.data.message);
         });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   useEffect(() => {
@@ -203,15 +239,14 @@ const Select_Template = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message)
+          toast.success(res.data.message);
           setFormSubmitLoader(false);
-          setTimeout(()=>{
-            setShowForm('Contact Details')
-          },1000)
+          setTimeout(() => {
+            setShowForm("Contact Details");
+          }, 1000);
         })
         .catch((error) => {
-
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setFormSubmitLoader(false);
         });
     },
@@ -221,7 +256,7 @@ const Select_Template = () => {
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
-      currentTemplate:currentTemplate,
+      currentTemplate: currentTemplate,
     };
     api
       .put(`/templateDetail/update_with_URL/${URL_Alies}`, data, {
@@ -232,13 +267,13 @@ const Select_Template = () => {
       })
       .then((res) => {
         setFormSubmitLoader(false);
-        toast.success(res.data.message)
-        setTimeout(()=>{
-          setShowForm('Contact Details')
-        },2000)
+        toast.success(res.data.message);
+        setTimeout(() => {
+          setShowForm("Contact Details");
+        }, 2000);
       })
       .catch((error) => {
-       toast.error(error.response.data.message)
+        toast.error(error.response.data.message);
 
         setFormSubmitLoader(false);
       });
@@ -250,11 +285,11 @@ const Select_Template = () => {
         <div className="row_one">
           {currentTemplate == null ? (
             <h6>
-              Select {currentPlan}  Template <sup>*</sup>
+              Select {currentPlan} Template <sup>*</sup>
             </h6>
           ) : (
             <h6>
-              Selected {currentPlan}  Template <sup>*</sup>
+              Selected {currentPlan} Template <sup>*</sup>
             </h6>
           )}
 
@@ -411,10 +446,9 @@ const Select_Template = () => {
                           ""
                         )}
                         <div className="vcard_name">
-                        <h4>{data.TemplateName}</h4>
+                          <h4>{data.TemplateName}</h4>
                         </div>
                         <div className="image_box">
-                          
                           <img src={data.image} alt="" />
                         </div>
                       </div>
