@@ -44,8 +44,8 @@ let BasicTemplate = [
   },
   {
     id: 3,
-    image: Manager,
-    TemplateName: "Manager",
+    image: Fashion_Desinger,
+    TemplateName: "Fashion Designer",
   },
 ];
 let StandardTemplate = [
