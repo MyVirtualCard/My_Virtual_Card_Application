@@ -20,7 +20,6 @@ import Confetti from 'react-confetti'
 import Appoinment from "../User_Admin_All_Component/Appoinment";
 import ProductOrder from "../User_Admin_All_Component/ProductOrder";
 const UserAdmin = () => {
-  let { Index } = useParams();
   let navigate = useNavigate();
 let [pieces,setPieces]=useState(150);
 

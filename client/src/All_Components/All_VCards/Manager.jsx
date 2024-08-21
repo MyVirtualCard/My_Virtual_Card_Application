@@ -12,8 +12,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Typewriter, Cursor } from "react-simple-typewriter";
 const Manager = () => {
-  const [width, setWidth] = useState(window.innerWidth);
 
+  const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
     userFeedback: "",
@@ -22,34 +22,49 @@ const Manager = () => {
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  //service
   const buttonStyle = {
-    width: "0px",
+    width: "20px",
     background: "none",
-    opacity: 0,
+    opacity: 1,
     border: "0px",
     padding: "0px",
+    borderRadius: "10px",
+    fontSize: "10px",
+    color: "orange",
   };
   const properties = {
     prevArrow: (
       <button style={{ ...buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
+        <span className="material-symbols-outlined">swipe_left</span>
       </button>
     ),
     nextArrow: (
       <button style={{ ...buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
+        <span className="material-symbols-outlined">swipe_right</span>
+      </button>
+    ),
+  };
+  //Product
+  const product_buttonStyle = {
+    width: "20px",
+    background: "none",
+    opacity: 1,
+    border: "0px",
+    padding: "0px",
+    borderRadius: "10px",
+    fontSize: "10px",
+    color: "white",
+  };
+  const product_properties = {
+    prevArrow: (
+      <button style={{ ...product_buttonStyle }}>
+        <span className="material-symbols-outlined">swipe_left</span>
+      </button>
+    ),
+    nextArrow: (
+      <button style={{ ...product_buttonStyle }}>
+        <span className="material-symbols-outlined">swipe_right</span>
       </button>
     ),
   };
@@ -195,6 +210,51 @@ const Manager = () => {
       StopConfetti();
     },
   });
+  const HtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
+  //Appoinment form
+  // let Appoinment_formik = useFormik({
+  //   initialValues: {
+  //     Url_Alies: window.location.pathname,
+  //     FullName: "",
+  //     MobileNumber: "",
+  //     Date: "",
+  //     Time:'',
+  //   },
+
+  //   //Validation :
+  //   validationSchema: AppoinmentValidateSchema,
+  //   //Form Submit :
+  //   onSubmit: async (values) => {
+  //     setappoinmentLoader(true)
+  //     await api
+  //       .post(`/appoinment${window.location.pathname}`, values)
+  //       .then((res) => {
+  //         console.log(res)
+  //         formik.values.FullName = "";
+  //         formik.values.Time = "";
+  //         formik.values.MobileNumber = "";
+  //         formik.values.Date = "";
+
+  //         setAppoinmentPopup(true);
+  //         setappoinmentLoader(false)
+  //         setSuccessMessage(res.data.message);
+  //         setTimeout(() => {
+  //           setAppoinmentPopup(false);
+  //         }, 3000);
+  //       })
+  //       .catch((error) => {
+
+  //         setappoinmentLoader(false)
+  //         setAppoinmentPopupError(true);
+  //         setTimeout(() => {
+  //           setAppoinmentPopupError(false);
+  //         }, 3000);
+  //         setErrorMessage(error.response.data.message);
+  //       });
+  //   },
+  // });
   return (
     <div className="newcard_design11_container">
       <div className="newcard_design11_box">
@@ -202,7 +262,7 @@ const Manager = () => {
         <div className="row_1">
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/premium-photo/this-work-web-banner-business-executive-shows-invitation-gesture-his-office-he-is-confident-ceo-wearing-formal-suit-cartoon-modern-illustration-landing-page_76964-403439.jpg?w=1060"
+              src="https://img.freepik.com/premium-photo/abstract-night-cityscape-background-smart-city-ai-digital-transformation-concept-double-exposure_3535-9362.jpg?w=900"
               className="banner"
             />
             <div className="overlay"></div>
@@ -299,30 +359,44 @@ const Manager = () => {
 
           <div className="contact_list_container">
             <div className="contact_list">
+              <div className="icon">
               <i class="bx bxl-gmail"></i>
+              <small>Email</small>
+              </div>
+             
               <div className="list_detail">
-                <small>Email</small>
+               
                 <p>jayakumarv@aristostech.in</p>
               </div>
             </div>
             <div className="contact_list">
+              <div className="icon">
               <i className="bx bx-mobile-vibration"></i>
+              <small>Mobile Number</small>
+              </div>
+        
               <div className="list_detail">
-                <small>Mobile Number</small>
+                
                 <p>(+91) 93444 82370</p>
               </div>
             </div>
             <div className="contact_list">
-              <i className="bx bx-envelope"></i>
+          <div className="icon">
+          <i className="bx bx-envelope"></i>
+          <small>Company Email</small>
+          </div>
               <div className="list_detail">
-                <small>Company Email</small>
+             
                 <p>contact@aristostech.in</p>
               </div>
             </div>
             <div className="contact_list">
-              <i className="bx bx-map-alt"></i>
+     <div className="icon">
+     <i className="bx bx-map-alt"></i>
+     <small>Address</small>
+     </div>
               <div className="list_detail">
-                <small>Address</small>
+               
                 <p>
                   Ankur Plasa No-113 (Old 52) G.N Chetty Road T. Nagar
                   Chennai-600017
@@ -338,70 +412,79 @@ const Manager = () => {
             <h3>
               <i className="bx bx-dumbbell"></i> Our Services
             </h3>
-         
           </div>
 
           <div className="service_list_container">
-            <div className="service_list">
-              <span className="material-symbols-outlined">developer_mode</span>
+            <Slide
+              slidesToScroll={1}
+              slidesToShow={width < 0 ? 1 : 2}
+              indicators={true}
+              autoplay
+              {...properties}
+              autoplayInterval={1000}
+            >
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  developer_mode
+                </span>
 
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Software Development</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Physical fitness is a form of physical fitness culture that
-                    involves training all major muscle groups
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">design_services</span>
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Modern Designing</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Body building is a form of physical fitness culture that
-                    involves training all major muscle groups
-                  </p>
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Business analysis</h4>
+                  </div>
+                  <div className="service_summary">
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil maiores hic sint, natus eveniet voluptate perferendis. Eligendi repellat libero natus?
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">
-                local_convenience_store
-              </span>
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  design_services
+                </span>
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Effective Delegation</h4>
+                  </div>
+                  <div className="service_summary">
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nesciunt. Reiciendis nesciunt necessitatibus natus et expedita facilis accusamus non molestiae.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  local_convenience_store
+                </span>
 
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Marketing Strategy</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Body building is a form of physical fitness culture that
-                    involves training all major muscle groups
-                  </p>
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Clear Communication</h4>
+                  </div>
+                  <div className="service_summary">
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus doloremque dolore rerum quo voluptatem id. Temporibus ducimus praesentium rem veritatis!
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="service_list">
-              <span className="material-symbols-outlined">
-                production_quantity_limits
-              </span>
+              <div className="service_list">
+                <span className="material-symbols-outlined">
+                  production_quantity_limits
+                </span>
 
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4> Digital Products</h4>
-                </div>
-                <div className="service_summary">
-                  <p>If there is no struggle, there is no progress.</p>
+                <div className="service_detail">
+                  <div className="service_title">
+                    <h4>Managing risks</h4>
+                  </div>
+                  <div className="service_summary">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere quis quaerat aut architecto placeat incidunt non vel velit minus harum!</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Slide>
           </div>
         </div>
 
@@ -521,50 +604,61 @@ const Manager = () => {
               slidesToShow={width < 600 ? 1 : 1}
               indicators={true}
               autoplay
-              {...properties}
+              {...product_properties}
               autoplayInterval={1000}
             >
               <div className="product_list">
                 <div className="product_image">
                   <img
-                    src="https://aristostechindia.com/jayakumarv/wp-content/uploads/2024/06/500px210px-3.png"
+                    src="https://img.freepik.com/free-vector/hand-drawn-innovation-concept_23-2149171106.jpg?t=st=1724217740~exp=1724221340~hmac=f99ed80a22986882d6a8ec7e6f0dbdf799025cbb5ff345512c39f415a4ab2014&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>E-commerce Builder</h4>
+                  <h4>Broad technical understanding</h4>
                   <small>
                     {" "}
-                    Design Your Ideal Online Shops In Only 30 Minutes Using Our
-                    Platform!
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sequi, ipsa nostrum ipsam ab praesentium. Pariatur iste non enim nesciunt.
                   </small>
-                  <button>₹ &nbsp;1,500</button>
+                  <a href="">
+                  <button>More details</button>
+                  </a>
                 </div>
               </div>
               <div className="product_list">
                 <div className="product_image">
                   <img
-                    src="https://aristostechindia.com/jayakumarv/wp-content/uploads/2024/06/500px210px-1-1.png"
+                    src="https://img.freepik.com/free-vector/business-man-avatar-cartoon_24640-47590.jpg?t=st=1724217836~exp=1724221436~hmac=bb5bf8be717d76f8a1d1ebda93c1c981959e8491164a18e25fa734306aa62fcc&w=740"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>Digital Visiting Card</h4>
-                  <small>Customize Your Digital Identity Effortlessly with My Virtual Card!</small>
-                  <button>₹ &nbsp;2,500</button>
+                  <h4>Service Level Management</h4>
+                  <small>
+                   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad non quibusdam error eius! Beatae laborum, consequuntur tempora veniam exercitationem rem?
+                  </small>
+                  <a href="">
+                  <button>More details</button>
+                  </a>
                 </div>
               </div>
               <div className="product_list">
                 <div className="product_image">
                   <img
-                    src="https://aristostechindia.com/jayakumarv/wp-content/uploads/2024/06/500px210px-3-1.png"
+                    src="https://img.freepik.com/premium-photo/employee-work-load-icon_1197797-239630.jpg?w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
-                  <h4>Taxi Booking</h4>
-                  <small> At Bookit, we are dedicated to revolutionizing the way taxi and transportation businesses operate.</small>
-                  <button>₹ &nbsp;12,000</button>
+                  <h4>Service Engineering</h4>
+                  <small>
+                    {" "}
+                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, libero. Aspernatur quia eligendi sit minima laborum sint ratione quidem. Velit.
+                  </small>
+                  <a href="">
+                  <button>More details</button>
+                  </a>
+                
                 </div>
               </div>
             </Slide>
@@ -577,7 +671,6 @@ const Manager = () => {
               <span className="material-symbols-outlined">groups</span>
               Make An Appoinment
             </h3>
-       
           </div>
 
           <div className="appinment_form_container">
@@ -764,6 +857,18 @@ const Manager = () => {
             </Carousel>
           </div>
         </div>
+        {/* GoogleMap */}
+
+        <div className="google_map_container">
+          <div className="title">
+            <h3>Live Location</h3>
+          </div>
+
+          <div className="google_map">
+            <HtmlRenderer htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`} />
+          </div>
+        </div>
+
         {/* Feedback */}
         <div className="row_10">
           <div className="title">
@@ -1059,13 +1164,13 @@ const Manager = () => {
         {/* Footer */}
         <div className="row_12">
           <div className="footer_container">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0s 1440 320">
               <path
-                fill="#8DC640"
+                fill='orange'
                 fill-opacity="1"
                 d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
               ></path>
-            </svg>
+            </svg> */}
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
@@ -1073,5 +1178,6 @@ const Manager = () => {
     </div>
   );
 };
+
 
 export default Manager;

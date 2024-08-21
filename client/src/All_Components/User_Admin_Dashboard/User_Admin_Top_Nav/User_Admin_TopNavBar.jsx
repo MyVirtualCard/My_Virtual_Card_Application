@@ -84,6 +84,7 @@ const User_Admin_TopNavBar = () => {
                         onClick={() => setProfileOpen(!profileOpen)}
                         key={index}
                       >
+                        <div key={index}>
                         {data.ProfileType == "Paste_ImageAddress" ? (
                           <img
                             src={
@@ -93,6 +94,7 @@ const User_Admin_TopNavBar = () => {
                                 : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
                             }
                             alt="profile"
+                            
                           />
                         ) : (
                           ""
@@ -110,6 +112,8 @@ const User_Admin_TopNavBar = () => {
                         ) : (
                           ""
                         )}
+                        </div>
+                   
                       </div>
                     </>
                   );

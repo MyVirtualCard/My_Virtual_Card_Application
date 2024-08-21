@@ -95,12 +95,10 @@ import NewCardDesign9 from "./All_Components/All_VCards/NewCardDesign9";
 //NewVCard templates
 import Taxi_Service from "./All_Components/All_VCards/Taxi_Service.jsx";
 import Gym_Trainer from "./All_Components/All_VCards/Gym_Trainer.jsx";
-import Manager from "./All_Components/All_VCards/Manager.jsx.jsx";
+import Manager from "./All_Components/All_VCards/Manager.jsx";
 import Fashion_Designer from "./All_Components/All_VCards/Fashion_Designer.jsx";
 import Business_Consultant from "./All_Components/All_VCards/Business_Consultant.jsx";
 import FallBack from "./Fallback/FallBack.jsx";
-import ImageCropAndUpload from "./All_Components/User_Admin_Dashboard/User_Admin_All_Component/ImageCropper.jsx";
-
 const App = () => {
   //URL Name state:
   let [AuthToggle, setAuthToggle] = useState(false);
@@ -708,7 +706,7 @@ const App = () => {
               <Route path="/paymentsuccess" element={<PaymentSuccess />} />
               <Route path="/terms_condition" element={<Terms_Condition />} />
               <Route path="/privacy_condition" element={<Privacy_Policy />} />
-<Route path='/image_upload' element={<ImageCropAndUpload/>}/>
+
               {/*AllVardsTemplate */}
 
               {/* {currentTemplate == 1 ? (
@@ -756,7 +754,12 @@ const App = () => {
             ) : (
               ""
             )} */}
-
+    <Route path="/Manager" element={<Manager />} />
+              <Route
+                path="/Business_Consultant"
+                element={<Business_Consultant />}
+              />
+              
               {/* //New Tempaltes */}
 
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (
@@ -774,11 +777,7 @@ const App = () => {
               ) : (
                 ""
               )}
-              {/* <Route path="/Jayakumar" element={<Manager />} /> */}
-              <Route
-                path="/Business_Consultant"
-                element={<Business_Consultant />}
-              />
+          
             </Routes>
           </Suspense>
         </Context.Provider>
