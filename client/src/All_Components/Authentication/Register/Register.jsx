@@ -334,7 +334,7 @@ const Register = () => {
     validateOnBlur: false,
     onSubmit: async (values) => {
       setLoginLoader(true);
-
+values.userName=localStorageDatas?.userName,
       await api
         .post("/auth/resend_OTP", values)
         .then((res) => {
@@ -442,7 +442,7 @@ const Register = () => {
                     <h4>Complete Your Two-Factor-Authentication</h4>
                     <small>Verify Your Account!</small>
                   </div>
-                  <div className="form_group">
+                  {/* <div className="form_group">
                     <label htmlFor="password">
                       UserName{" "}
                       <span>
@@ -472,7 +472,7 @@ const Register = () => {
                     <div className="icon">
                       <i className="bx bxs-user-check"></i>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="form_group">
                     <label htmlFor="password">
                       OTP{" "}

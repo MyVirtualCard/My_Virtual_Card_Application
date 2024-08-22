@@ -282,6 +282,7 @@ font-weight: 560 !important;
       tr {
         // width: 100%;
         td {
+         
           padding: 1rem 0rem;
           font-size: 0.8rem;
           vertical-align: middle;
@@ -289,6 +290,7 @@ font-weight: 560 !important;
           background-color: rgb(216, 251, 255);
           color: rgb(43, 43, 43);
           border-bottom: 1px solid rgb(230, 230, 230);
+       
 
 a{
 text-decoration: none;
@@ -304,51 +306,66 @@ font-weight: 500;
           border: 1px solid gray;
           box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
           }
-          i:nth-child(1) {
-            font-size: 1.5rem;
-            padding-left: 10px;
-            color: rgb(99, 99, 99);
-            cursor: pointer;
-
-            &:hover {
-              color: gray;
-            }
-          }
-          i:nth-child(2) {
-            font-size: 1.5rem;
-            padding-left: 10px;
-            color: rgb(95, 93, 255);
-            cursor: pointer;
-
-            &:hover {
-              color: rgb(66, 66, 66);
-            }
-          }
-          i:nth-child(3) {
-            font-size: 1.5rem;
-            padding-left: 10px;
-            color: royalblue;
-            cursor: pointer;
-
-            &:hover {
-              color: rgb(0, 0, 0);
-            }
-          }
-
-          &:nth-child(3) {
-            padding: 5px 10px;
-            vertical-align: middle;
-            color: rgb(70, 70, 70);
-            font-weight: 600;
+          button:nth-child(1) {
             font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            color: rgb(255, 255, 255);
+            background-color: rgb(80, 80, 80);
+          place-items: center;
+          text-align: center;
+          width: 40px;
+          margin-right: 10px;
+          border-radius: 0.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
 
-            small{
-              font-size: 0.7rem;
-              font-weight: 550;
-              color: tomato;
-              text-decoration: line-through;
+            &:hover {
+              background-color: rgb(255, 255, 255);
+              color: rgb(70, 70, 70) !important;
+              transition: all 0.3s ease;
             }
           }
+          button:nth-child(2) {
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            color: rgb(54, 54, 54);
+            background-color: red;
+            border-radius: 0.3rem;
+          
+            color: rgb(255, 255, 255) !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: rgb(255, 255, 255);
+              color: red !important;
+              transition: all 0.3s ease;
+            }
+          }
+          // i:nth-child(3) {
+          //   font-size: 1.5rem;
+          //   padding-left: 10px;
+          //   color: royalblue;
+          //   cursor: pointer;
+
+          //   &:hover {
+          //     color: rgb(0, 0, 0);
+          //   }
+          // }
+
+          // &:nth-child(3) {
+          //   padding: 5px 10px;
+          //   vertical-align: middle;
+          //   color: rgb(70, 70, 70);
+          //   font-weight: 600;
+          //   font-size: 0.9rem;
+
+          //   small{
+          //     font-size: 0.7rem;
+          //     font-weight: 550;
+          //     color: tomato;
+          //     text-decoration: line-through;
+          //   }
+          // }
           &:nth-child(2) {
             a {
               text-decoration: none;

@@ -432,8 +432,9 @@ const User_VCards = () => {
                             </small>
                           </td>
                           <td className="fw-light">
-                            <i
-                              className="bx bxs-edit"
+                            
+                            <button
+                             
                               onClick={async () => {
                                 localStorage.setItem(
                                   "URL_Alies",
@@ -444,16 +445,16 @@ const User_VCards = () => {
                                 );
                                 // setShowForm('Basic Details')
                               }}
-                            ></i>
-                            <i
-                              className="bx bx-trash"
+                            >Edit</button>
+                            <button
+                            
                               style={{ color: "red" }}
                               onClick={() => {
                                 // handleVCardDelete(data.URL_Alies);
                                 setURL_Alies(data.URL_Alies);
                                 setVcardDeleteToggle(true);
                               }}
-                            ></i>
+                            >Delete</button>
                             {/* <i className="bx bx-dots-vertical-rounded"></i> */}
                           </td>
                         </tr>
