@@ -18,7 +18,6 @@ let RegisterSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
@@ -36,6 +35,8 @@ let RegisterSchema = new mongoose.Schema(
     },
     mobileNumber: {
       type: Number,
+      unique: true,
+      required:true,
       default:'+91',
     },
     location: {

@@ -116,8 +116,8 @@ import FallBack from "./Fallback/FallBack.jsx";
 import Gym_Trainer_Demo from "./All_Components/All_VCards/Static_VCards/Gym_Trainer_Demo.jsx";
 import Taxi_Service_Demo from "./All_Components/All_VCards/Static_VCards/Taxi_Service_Demo.jsx";
 import Fashion_Designer_Demo from "./All_Components/All_VCards/Static_VCards/Fashion_Designer_Demo.jsx";
-import Manager_Demo from "./All_Components/All_VCards/Live_VCards/Manager.jsx";
-import Business_Consultant_Demo from "./All_Components/All_VCards/Live_VCards/Business_Consultant.jsx";
+import Manager_Demo from "./All_Components/All_VCards/Static_VCards/Manager_Demo.jsx";
+import Business_Consultant_Demo from "./All_Components/All_VCards/Static_VCards/Business_Consultant_Demo.jsx";
 import Manager from "./All_Components/All_VCards/Live_VCards/Manager.jsx";
 import Business_Consultant from "./All_Components/All_VCards/Live_VCards/Business_Consultant.jsx";
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Manager_Demo.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import hand from "../../assets/AllVCard_Image/VCard3/hand.gif";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import hand from "../../../assets/AllVCard_Image/VCard3/hand.gif";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";

@@ -11,7 +11,10 @@ import card4 from "../../../assets/Digicards/vmob-4.png";
 import card5 from "../../../assets/Digicards/vmob-5.png";
 import card6 from "../../../assets/Digicards/vmob-6.png";
 import card7 from "../../../assets/Digicards/vmob-7.png";
-
+//register right Slider
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 import arrow from "../../../assets/SVG/Register/arrow.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Context from "../../UseContext/Context";
@@ -111,7 +114,18 @@ const Register = () => {
 
   let [Seconds, setSeconds] = useState("60");
   let [OTP_Popup, setOTP_Popup] = useState(false);
-
+  //VCard Slider
+  const vcard_settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 1,
+    slidesToScroll: width < 700 ? 1 : 1,
+    rtl: true, // Scroll from left to right
+    arrows: true, // Show navigation arrows
+  };
   useEffect(() => {
 
     if (Seconds > 0) {
@@ -156,7 +170,7 @@ const Register = () => {
       profile: "",
       userName: "",
       firstName: "",
-      lastName: "",
+      mobileNumber:'',
       email: "",
       password: "",
       terms: false,
@@ -328,7 +342,7 @@ const Register = () => {
   let resendOTP_formik = useFormik({
     initialValues: {
       userName: localStorageDatas?.userName,
-      email: "",
+      mobileNumber: "",
     },
     validateOnChange: false,
     validateOnBlur: false,
@@ -588,29 +602,29 @@ values.userName=localStorageDatas?.userName,
                   </div>
                   <div className="form_group">
                     <label htmlFor="password">
-                      Email{" "}
+                      Mobile Number{" "}
                       <span>
                         <sup>*</sup>
                       </span>
                     </label>
                     <input
-                      type="email"
-                      placeholder="Enter Your Email"
-                      name="email"
-                      id="email"
-                      value={resendOTP_formik.values.email}
+                      type="mobileNumber"
+                      placeholder="Enter Your MobileNumber"
+                      name="mobileNumber"
+                      id="mobileNumber"
+                      value={resendOTP_formik.values.mobileNumber}
                       onBlur={resendOTP_formik.handleBlur}
                       onChange={resendOTP_formik.handleChange}
                       className={
-                        resendOTP_formik.errors.email &&
-                        resendOTP_formik.touched.email
+                        resendOTP_formik.errors.mobileNumber &&
+                        resendOTP_formik.touched.mobileNumber
                           ? "input_error"
                           : ""
                       }
                       // {...formik.getFieldProps("password")}
                     />
 
-                    <div className="error">{resendOTP_formik.errors.email}</div>
+                    <div className="error">{resendOTP_formik.errors.mobileNumber}</div>
                     <div className="icon">
                       <i className="bx bxs-envelope"></i>
                     </div>
@@ -1058,19 +1072,12 @@ values.userName=localStorageDatas?.userName,
         </div>
         <div className="box_container">
           <div className="right_image">
-            <Slide
-              slidesToScroll={1}
-              slidesToShow={width < 600 ? 1 : 1}
-              indicators={true}
-              autoplay
-              {...properties}
-              autoplayInterval={500}
-              className="slider"
-            >
+          <Slider {...vcard_settings}>
+              
               {images.map((data, index) => {
                 return <img src={data.image} alt="image" key={index} />;
               })}
-            </Slide>
+            </Slider>
           </div>
           <div className="left_form">
             <>
@@ -1132,14 +1139,14 @@ values.userName=localStorageDatas?.userName,
                   {/* //First Name */}
                   <div className="form_group">
                     <label htmlFor="firstName">
-                      FirstName{" "}
+                      FullName{" "}
                       <span>
                         <sup>*</sup>
                       </span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Eg: Joyal "
+                      placeholder="Enter Your FullName "
                       name="firstName"
                       id="firstName"
                       value={formik.values.firstName}
@@ -1161,7 +1168,7 @@ values.userName=localStorageDatas?.userName,
                         </div> */}
                   </div>
                   {/* //Last Name */}
-                  <div className="form_group">
+                  {/* <div className="form_group">
                     <label htmlFor="lastName">
                       LastName{" "}
                       <span>
@@ -1187,7 +1194,7 @@ values.userName=localStorageDatas?.userName,
                     <div className="icon">
                       <i className="fa-solid fa-user-tag"></i>
                     </div>
-                  </div>
+                  </div> */}
                   {/* Email`` */}
                   <div className="form_group">
                     <label htmlFor="email">
@@ -1217,19 +1224,29 @@ values.userName=localStorageDatas?.userName,
                     </div>
                   </div>
                   {/* MobileNumber`` */}
-                  {/* <div className="form_group">
-                      <label htmlFor="mobileNumber">Mobile Number</label>
+                 <div className="form_group">
+                      <label htmlFor="mobileNumber">Mobile Number  <span>
+                        <sup>*</sup>
+                      </span></label>
                       <input
                         type="tel"
-                        placeholder="Eg : +91 6576579679"
+                        placeholder="Enter your mobileNumber"
                         name="mobileNumber"
                         id="mobileNumber"
-                        {...formik.getFieldProps("mobileNumber")}
+                        value={formik.values.mobileNumber}
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      className={
+                        formik.errors.mobileNumber && formik.touched.mobileNumber
+                          ? "input_error"
+                          : ""
+                      }
                       />
+                        <div className="error">{formik.errors.mobileNumber}</div>
                       <div className="icon">
                         <i className="bx bx-mobile"></i>
                       </div>
-                    </div> */}
+                    </div>
                   {/* Password`` */}
                   <div className="form_group">
                     <label htmlFor="password">

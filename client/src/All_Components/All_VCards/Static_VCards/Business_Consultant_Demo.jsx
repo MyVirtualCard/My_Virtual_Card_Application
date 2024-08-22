@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Business_Consultant_Demo.scss";
-import banner from "../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
 //service Slider
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
