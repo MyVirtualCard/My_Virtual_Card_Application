@@ -152,9 +152,11 @@ export const ForgotPassword = async (req, res) => {
         });
 
         let NavigateLink = `${checkUser._id}/${token}`;
+         let Id=checkUser._id;
+         let Token=token
         res
           .status(201)
-          .json({ message: "Change Your New Password!", data: NavigateLink });
+          .json({ message: "Create Your New Password!",data:NavigateLink });
 
        
       }
@@ -194,7 +196,8 @@ export const ResetPassword = async (req, res) => {
       );
     }
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+  console.log(error)
+    res.status(500).json({ message: error.message });
   }
 };
 //Fetch data from mongodb -- > Get all Registered User Data  :
@@ -295,13 +298,14 @@ const SendOtpVerificationEmail = async (
       return res.status(400).json({ message: `UserName Doesn't Exist!` });
       // throw new Error ("User Doesn't Exist" );
     }
-    //Create token for specific user:
+    // //Create token for specific user:
     let token = jwt.sign(
       {
         id: checkUser.id,
         email: checkUser.email,
         name: checkUser.firstName,
         userName: checkUser.userName,
+        verified:checkUser.verified
       }, //Token payload stored our  data
       process.env.SECRET_KEY,
       { expiresIn: "30d" }

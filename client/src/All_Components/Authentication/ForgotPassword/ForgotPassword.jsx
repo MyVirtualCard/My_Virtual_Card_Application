@@ -94,7 +94,13 @@ const ForgotPassword = () => {
     <>
       <div className="forgot_container">
 
+     {/* Home page button */}
 
+     <div className="home_page">
+          <Link to="/">
+            <i className="bx bxs-home"></i>Home
+          </Link>
+        </div>
         <div className="right">
           <img src={image} alt="" />
         </div>

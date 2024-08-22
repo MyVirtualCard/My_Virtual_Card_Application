@@ -123,6 +123,9 @@ import Business_Consultant from "./All_Components/All_VCards/Live_VCards/Busines
 
 const App = () => {
   //URL Name state:
+  let [ResetPassToken_Id, setResetPassToken_Id] = useState("");
+  let[resetPassId,setResetPassId]=useState();
+  let[resetPassToken,setResetPassToken]=useState();
   let [AuthToggle, setAuthToggle] = useState(false);
   let [ForgotPassToggle, setForgotPassToggle] = useState(false);
   let [ResetPassToggle, setResetPassToggle] = useState(false);
@@ -301,7 +304,7 @@ const App = () => {
 
   let [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   useEffect(() => {
-    const Token = JSON.parse(localStorage.getItem("datas"));
+    const Token = JSON.parse(localStorage?.getItem("datas"));
     if (Token) {
       setUser(Token);
       setUserName(Token.userName);
@@ -311,7 +314,7 @@ const App = () => {
   }, [navigate]);
 
   let [vcardSelection, setVcardSelection] = useState([]);
-  const localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  const localStorageDatas = JSON.parse(localStorage?.getItem("datas"));
   const URL_Alies_LocalStorage = localStorage.getItem("URL_Alies");
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
@@ -379,6 +382,9 @@ const App = () => {
         />
         <Context.Provider
           value={{
+            ResetPassToken_Id, setResetPassToken_Id,
+            resetPassId,setResetPassId,
+            resetPassToken,setResetPassToken,
             ForgotPassToggle,
             setForgotPassToggle,
             ResetPassToggle,
@@ -687,11 +693,12 @@ const App = () => {
                 }
               />
               <Route path="/resend_OTP" element={<ResendOTP />} />
-              <Route path="/forgot_password" element={<ForgotPassword />}>
-                <Route
-                  path="/forgot_password/reset_password/:id/:token"
+              <Route
+                  path="/reset_password/:id/:token"
                   element={<ResetPassword />}
                 />
+              <Route path="/forgot_password" element={<ForgotPassword />}>
+           
               </Route>
 
               <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>

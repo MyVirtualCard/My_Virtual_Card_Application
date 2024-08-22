@@ -65,7 +65,13 @@ const ResendOTP = () => {
   return (
     <>
       <div className="resend_container">
-    
+         {/* Home page button */}
+
+         <div className="home_page">
+          <Link to="/">
+            <i className="bx bxs-home"></i>Home
+          </Link>
+        </div>
         <div className="right">
         <div className="moon_svg">
             <svg

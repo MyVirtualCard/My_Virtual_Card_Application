@@ -3,7 +3,10 @@ import "./Register.scss";
 import resend_otp_img from "../../../assets/Authentication_image/resend_otp_img.png";
 import backImage from "../../../assets/LandingPage_image/slide1_back.png";
 import message_icon from "../../../assets/icons/message_hand.png";
-import brand_logo from "../../../assets/LandingPage_image/BrandLogo4.png";
+import brand_logo from "../../../assets/LandingPage_image/BrandLogo3.png";
+
+import new_vcards_images from "../VCard_Tempalate_Image/New_Vcards.js";
+
 import card1 from "../../../assets/Digicards/vmob-1.png";
 import card2 from "../../../assets/Digicards/vmob-2.png";
 import card3 from "../../../assets/Digicards/vmob-3.png";
@@ -116,7 +119,7 @@ const Register = () => {
   let [OTP_Popup, setOTP_Popup] = useState(false);
   //VCard Slider
   const vcard_settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     autoplay: true, // Enable autoplay
@@ -145,18 +148,18 @@ const Register = () => {
     };
   };
 
-  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  // let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
 
-  const handleSpeak = (userData) => {
-    if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(
-        `Welcome ${userData.firstName} now u proceed to develop your brand..`
-      );
-      window.speechSynthesis.speak(utterance);
-    } else {
-      alert("Sorry, your browser does not support text to speech!");
-    }
-  };
+  // const handleSpeak = (userData) => {
+  //   if ("speechSynthesis" in window) {
+  //     const utterance = new SpeechSynthesisUtterance(
+  //       `Welcome ${userData.firstName} now u proceed to develop your brand..`
+  //     );
+  //     window.speechSynthesis.speak(utterance);
+  //   } else {
+  //     alert("Sorry, your browser does not support text to speech!");
+  //   }
+  // };
 
   function onChange(value) {
     setCapchaValue(value);
@@ -185,20 +188,23 @@ const Register = () => {
         .post("/auth/register", values)
         .then((response) => {
           setOTP_Value(response.data.OTP);
+          setUserName(response.data.userName)
           toast.success(response.data.message);
           setRegisterLoader(false);
           formik.values.password = "";
           setTimeout(() => {
-            setVerifyOTPToggle(true);
+            // setVerifyOTPToggle(true);
+            navigate('/verify_OTP')
           }, 2000);
     
-          const datas = JSON.stringify({
-            userName: response?.data?.userName,
-            token: response?.data?.token,
-            id: response?.data?.id,
-            firstName: response?.data?.name,
-          });
-          localStorage.setItem("datas", datas);
+          // const datas = JSON.stringify({
+          //   userName: response?.data?.userName,
+          //   token: response?.data?.token,
+          //   id: response?.data?.id,
+          //   firstName: response?.data?.name,
+          //   verified:response?.data?.verified
+          // });
+          localStorage.setItem("userName", response?.data?.userName);
 
           // setTimeout(() => {
           //   setAuthToggle(true);
@@ -237,9 +243,9 @@ const Register = () => {
             id: res?.data?.id,
             firstName: res?.data?.name,
           });
-          localStorage.setItem("datas", datas);
+          localStorage?.setItem("datas", datas);
 
-          let userData = JSON.parse(localStorage.getItem("datas"));
+          let userData = JSON.parse(localStorage?.getItem("datas"));
 
           setTimeout(() => {
             handleSpeak(userData);
@@ -313,7 +319,7 @@ const Register = () => {
   //Verify OTP Formik
   let verifyOTP_formik = useFormik({
     initialValues: {
-      userName: localStorageDatas?.userName,
+      userName: '',
       OTP: "",
     },
     validateOnChange: false,
@@ -326,7 +332,7 @@ const Register = () => {
         .then((res) => {
           toast.success(res.data.message);
           setLoginLoader(false);
-          let userData = JSON.parse(localStorage.getItem("datas"));
+          let userData = JSON.parse(localStorage?.getItem("datas"));
           setTimeout(() => {
             setVerifyOTPToggle(false);
             handleSpeak(userData);
@@ -341,7 +347,7 @@ const Register = () => {
   });
   let resendOTP_formik = useFormik({
     initialValues: {
-      userName: localStorageDatas?.userName,
+      userName: '',
       mobileNumber: "",
     },
     validateOnChange: false,
@@ -418,272 +424,6 @@ values.userName=localStorageDatas?.userName,
         className="register_container"
         id={AuthToggle ? "login_back" : "register_back"}
       >
-        {/* OTP Popup */}
-        {OTP_Popup ? (
-          <div className="otp_container">
-            <div className="otp_popup">
-              <div className="close" onClick={() => setOTP_Popup(false)}>
-                <i className="bx bxs-message-x"></i>
-              </div>
-              <div className="otp_title">
-                <h3>OTP</h3>
-              </div>
-              <div className="otp_value">{OTP_Value}</div>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-        {/* //OTP_Verification Popup Form */}
-
-        <div
-          className="otp_form_container"
-          id={VerifyOTPToggle ? "otp_form_open" : "otp_form_close"}
-        >
-          <div className="otp_form_box">
-            <div
-              className="close_otp_box"
-              onClick={() => setVerifyOTPToggle(false)}
-            >
-              <i className="bx bx-x"></i>
-            </div>
-            {/* Left */}
-
-            {!ResendOTPToggle ? (
-              <>
-                <form action="" onSubmit={verifyOTP_formik.handleSubmit}>
-                  <div className="form_title">
-                    <h4>Complete Your Two-Factor-Authentication</h4>
-                    <small>Verify Your Account!</small>
-                  </div>
-                  {/* <div className="form_group">
-                    <label htmlFor="password">
-                      UserName{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Your UserName"
-                      name="userName"
-                      id="userName"
-                      value={localStorageDatas?.userName}
-                      onBlur={verifyOTP_formik.handleBlur}
-                      onChange={verifyOTP_formik.handleChange}
-                      className={
-                        verifyOTP_formik.errors.userName &&
-                        verifyOTP_formik.touched.userName
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("password")}
-                    />
-
-                    <div className="error">
-                      {verifyOTP_formik.errors.userName}
-                    </div>
-                    <div className="icon">
-                      <i className="bx bxs-user-check"></i>
-                    </div>
-                  </div> */}
-                  <div className="form_group">
-                    <label htmlFor="password">
-                      OTP{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="Enter 4-Digit OTP"
-                      name="OTP"
-                      id="OTP"
-                      value={verifyOTP_formik.values.OTP}
-                      onBlur={verifyOTP_formik.handleBlur}
-                      onChange={verifyOTP_formik.handleChange}
-                      className={
-                        verifyOTP_formik.errors.OTP &&
-                        verifyOTP_formik.touched.OTP
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("password")}
-                    />
-                    <div className="time_box">
-                      <h4>
-                        {Seconds} <small>sec more!</small>
-                      </h4>
-                    </div>
-                    <div className="error">{verifyOTP_formik.errors.OTP}</div>
-                    <div className="icon">
-                      <span className="material-symbols-outlined">
-                        security
-                      </span>
-                    </div>
-
-                    <div className="show_pass" onClick={handleShow_OTP}>
-                      {!show ? (
-                        <i className="fa-solid fa-eye-slash"></i>
-                      ) : (
-                        <i className="fa-solid fa-eye"></i>
-                      )}
-                    </div>
-                  </div>
-                  <div className="form_submit">
-                    <button type="submit">
-                      {registerLoader ? (
-                        <div className="loader"></div>
-                      ) : (
-                        <>
-                          Verify
-                          <div className="rocket">
-                            <i className="bx bx-log-in bx-flashing"></i>
-                          </div>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  <div className="or">
-                    <p>
-                      Verify Account Expires ?{" "}
-                      <Link onClick={() => setResendOTPToggle(true)}>
-                        Resend OTP
-                      </Link>
-                    </p>
-                    <p>
-                      Not Allow Authentication ?{" "}
-                      <Link
-                        to={`/${localStorageDatas?.userName}/uadmin/user_vcard`}
-                      >
-                        ReDirect to Dashboad
-                      </Link>
-                    </p>
-                  </div>
-                </form>
-              </>
-            ) : (
-              <>
-                <form action="" onSubmit={resendOTP_formik.handleSubmit}>
-                  <div className="form_title">
-                    <h4>Activate Two-Factor-Authentication</h4>
-                    <small>Resend OTP On Your Account!</small>
-                  </div>
-                  <div className="form_group">
-                    <label htmlFor="password">
-                      UserName{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Your UserName"
-                      name="userName"
-                      id="userName"
-                      value={resendOTP_formik.values.userName}
-                      onBlur={resendOTP_formik.handleBlur}
-                      onChange={resendOTP_formik.handleChange}
-                      className={
-                        resendOTP_formik.errors.userName &&
-                        resendOTP_formik.touched.userName
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("password")}
-                    />
-
-                    <div className="error">
-                      {resendOTP_formik.errors.userName}
-                    </div>
-                    <div className="icon">
-                      <i className="bx bxs-user-check"></i>
-                    </div>
-                  </div>
-                  <div className="form_group">
-                    <label htmlFor="password">
-                      Mobile Number{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="mobileNumber"
-                      placeholder="Enter Your MobileNumber"
-                      name="mobileNumber"
-                      id="mobileNumber"
-                      value={resendOTP_formik.values.mobileNumber}
-                      onBlur={resendOTP_formik.handleBlur}
-                      onChange={resendOTP_formik.handleChange}
-                      className={
-                        resendOTP_formik.errors.mobileNumber &&
-                        resendOTP_formik.touched.mobileNumber
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("password")}
-                    />
-
-                    <div className="error">{resendOTP_formik.errors.mobileNumber}</div>
-                    <div className="icon">
-                      <i className="bx bxs-envelope"></i>
-                    </div>
-                  </div>
-                  <div className="form_submit">
-                    <button type="submit">
-                      {registerLoader ? (
-                        <div className="loader"></div>
-                      ) : (
-                        <>
-                          Verify
-                          <div className="rocket">
-                            <i className="bx bx-log-in bx-flashing"></i>
-                          </div>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  <div className="or">
-                    <p>
-                      Not Allow Authentication ?{" "}
-                      <Link
-                        onClick={() => {
-                          setResendOTPToggle(false),
-                            setAuthToggle(true),
-                            setVerifyOTPToggle(false);
-                        }}
-                      >
-                        Login{" "}
-                      </Link>
-                    </p>
-                  </div>
-                </form>
-              </>
-            )}
-
-            {/* Right */}
-            <div className="right_image">
-              {!ResendOTPToggle ? (
-                <>
-                  <div className="otp_message">
-                    <img src={message_icon} alt="message_icon" />
-                    <div className="otp">
-                      <h4>{OTP_Value || "Empty"}</h4>
-                    </div>
-                  </div>
-                  <img
-                    src="https://img.freepik.com/premium-photo/3d-flat-icon-person-managing-emergency-fund-savings-app-white-background-textgraphics_980716-343638.jpg?w=1060"
-                    alt=""
-                  />
-                </>
-              ) : (
-                <>
-                  <img src={resend_otp_img} alt="resend" />
-                </>
-              )}
-            </div>
-          </div>
-        </div>
         {/* Terms_Condition */}
         {OpenTermsCondition ? (
           <div
@@ -1074,15 +814,13 @@ values.userName=localStorageDatas?.userName,
           <div className="right_image">
           <Slider {...vcard_settings}>
               
-              {images.map((data, index) => {
-                return <img src={data.image} alt="image" key={index} />;
+              {new_vcards_images.map((data, index) => {
+                return <img src={data} alt="image" key={index} />;
               })}
             </Slider>
           </div>
           <div className="left_form">
-            <>
-              {!AuthToggle ? (
-                <form action="" onSubmit={formik.handleSubmit}>
+          <form action="" onSubmit={formik.handleSubmit}>
                   <div className="form_title">
                     <h4>Welcome to Digital VCard Application</h4>
                     <small>Create Your New Account!</small>
@@ -1328,285 +1066,18 @@ values.userName=localStorageDatas?.userName,
                     </button>
                   </div>
                   <div className="or">
-                    <p>
+                    <Link to='/login'>
                       Already u have an account ?{" "}
                       <span
-                        onClick={() => {
-                          setAuthToggle(true);
-                        }}
-                        className={AuthToggle ? "activelogin" : ""}
+                     
+                      
                       >
                         Login
                       </span>
-                    </p>
+                    </Link>
                   </div>
                 </form>
-              ) : (
-                <>
-                  {!ResetPassToggle ? (
-                    <form
-                      action=""
-                      onSubmit={
-                        !ForgotPassToggle
-                          ? Login_formik.handleSubmit
-                          : Forgot_formik.handleSubmit
-                      }
-                      className="login_form"
-                    >
-                      <div className="form_title">
-                        {!ForgotPassToggle ? (
-                          <>
-                            <h4>Welcome Back to Digital VCard Application</h4>
-                            <small>Login With Your Account!</small>
-                          </>
-                        ) : (
-                          <>
-                            <h4>Don't Worry about your password been lost..</h4>
-                            <small>Reset your old password!</small>
-                          </>
-                        )}
-                      </div>
-                      {/* Email`` */}
-                      <div className="form_group">
-                        <label htmlFor="email">
-                          Email{" "}
-                          <span>
-                            <sup>*</sup>
-                          </span>
-                        </label>
-                        <input
-                          type="email"
-                          placeholder="Eg : abc@gmail.com"
-                          name="email"
-                          id="email"
-                          value={
-                            !ForgotPassToggle
-                              ? Login_formik.values.email
-                              : Forgot_formik.values.email
-                          }
-                          onBlur={
-                            !ForgotPassToggle
-                              ? Login_formik.handleBlur
-                              : Forgot_formik.handleBlur
-                          }
-                          onChange={
-                            !ForgotPassToggle
-                              ? Login_formik.handleChange
-                              : Forgot_formik.handleChange
-                          }
-                          className={
-                            !ForgotPassToggle
-                              ? Login_formik.errors.email &&
-                                Login_formik.touched.email
-                                ? "input_error"
-                                : ""
-                              : Forgot_formik.errors.email &&
-                                Forgot_formik.touched.email
-                              ? "input_error"
-                              : ""
-                          }
-                        />
-                        <div className="error">
-                          {!ForgotPassToggle
-                            ? Login_formik.errors.email
-                            : Forgot_formik.errors.email}
-                        </div>
-                        <div className="icon">
-                          <i className="bx bxs-envelope"></i>
-                        </div>
-                      </div>
-
-                      {!ForgotPassToggle ? (
-                        <>
-                          <div className="form_group">
-                            <label htmlFor="email">
-                              Password{" "}
-                              <span>
-                                <sup>*</sup>
-                              </span>
-                            </label>
-                            <input
-                              type="password"
-                              placeholder="Password"
-                              name="password"
-                              id="password"
-                              value={Login_formik.values.password}
-                              onBlur={Login_formik.handleBlur}
-                              onChange={Login_formik.handleChange}
-                              className={
-                                Login_formik.errors.password &&
-                                Login_formik.touched.password
-                                  ? "input_error"
-                                  : ""
-                              }
-                            />
-                            <div className="error">
-                              {Login_formik.errors.password}
-                            </div>
-                            <div className="icon">
-                              <i className="bx bxs-lock"></i>
-                            </div>
-
-                            <div className="show_pass" onClick={handleShow}>
-                              {!show ? (
-                                <i className="bx bx-low-vision"></i>
-                              ) : (
-                                <i className="bx bxs-show"></i>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="forgot_password">
-                            <Link onClick={() => setForgotPassToggle(true)}>
-                              <small>Forgot Password ?</small>
-                            </Link>
-                          </div>
-                          <div className="form_submit">
-                            <button type="submit">
-                              {loginLoader ? (
-                                <div className="loader"></div>
-                              ) : (
-                                <>
-                                  Sign In
-                                  <div className="rocket">
-                                    <i className="bx bx-log-in bx-flashing"></i>
-                                  </div>
-                                </>
-                              )}
-                            </button>
-                          </div>
-                          <div className="or">
-                            <p>
-                              You not have an account ?{" "}
-                              <span
-                                onClick={() => {
-                                  setAuthToggle(false);
-                                }}
-                                className={AuthToggle ? "activelogin" : ""}
-                              >
-                                Register
-                              </span>
-                            </p>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="form_submit">
-                            <button type="submit">
-                              {loginLoader ? (
-                                <div className="loader"></div>
-                              ) : (
-                                <>
-                                  Reset
-                                  <div className="rocket">
-                                    <span className="material-symbols-outlined">
-                                      lock_open
-                                    </span>
-                                  </div>
-                                </>
-                              )}
-                            </button>
-                          </div>
-
-                          <div className="forgot_or">
-                            <p>or Continue</p>
-                          </div>
-                          <div className="signup_link">
-                            <p>
-                              Cancel reset Password ?{" "}
-                              <Link onClick={() => setForgotPassToggle(false)}>
-                                Exit
-                              </Link>
-                            </p>
-                          </div>
-                        </>
-                      )}
-                    </form>
-                  ) : (
-                    <form
-                      action=""
-                      onSubmit={resetformik.handleSubmit}
-                      className="login_form"
-                    >
-                      <div className="form_title">
-                        <h4>Get Ready for Visit Your Dashboard</h4>
-                        <small>Create Your New Password!</small>
-                      </div>
-                      <div className="form_group">
-                        <label htmlFor="email">
-                          New Password{" "}
-                          <span>
-                            <sup>*</sup>
-                          </span>
-                        </label>
-                        <input
-                          type="password"
-                          placeholder="Password"
-                          name="password"
-                          id="password"
-                          value={resetformik.values.password}
-                          onBlur={resetformik.handleBlur}
-                          onChange={resetformik.handleChange}
-                          className={
-                            resetformik.errors.password &&
-                            resetformik.touched.password
-                              ? "input_error"
-                              : ""
-                          }
-                        />
-                        <div className="error">
-                          {resetformik.errors.password}
-                        </div>
-                        <div className="icon">
-                          <i className="bx bxs-lock"></i>
-                        </div>
-
-                        <div className="show_pass" onClick={handleShow}>
-                          {!show ? (
-                            <i className="bx bx-low-vision"></i>
-                          ) : (
-                            <i className="bx bxs-show"></i>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form_submit">
-                        <button type="submit">
-                          {loginLoader ? (
-                            <div className="loader"></div>
-                          ) : (
-                            <>
-                              Update
-                              <div className="rocket">
-                                <span className="material-symbols-outlined">
-                                  lock_reset
-                                </span>
-                              </div>
-                            </>
-                          )}
-                        </button>
-                      </div>
-
-                      <div className="forgot_or">
-                        <p>or Continue</p>
-                      </div>
-                      <div className="signup_link">
-                        <p>
-                          Cancel reset Password ?{" "}
-                          <Link
-                            onClick={() => {
-                              setForgotPassToggle(false),
-                                setResetPassToggle(false);
-                            }}
-                          >
-                            Exit
-                          </Link>
-                        </p>
-                      </div>
-                    </form>
-                  )}
-                </>
-              )}
-            </>
+          
           </div>
         </div>
       </div>

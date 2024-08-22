@@ -384,6 +384,8 @@ font-size: 0.8rem;
         z-index: 600;
 
         .landingpage_title {
+ 
+    
           h3 {
             font-size: 2.5rem;
             color: #ffffff;
@@ -847,6 +849,8 @@ right: 10%;
           width: 100%;
           flex: 1;
           margin: auto;
+          display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
         }
@@ -854,7 +858,8 @@ right: 10%;
           flex: 100%;
           width: 100%;
           flex: 1;
-
+          display: flex;
+flex-direction: column;
           margin: auto;
         }
       }
@@ -870,7 +875,7 @@ right: 10%;
         height: 100%;
         z-index: 400;
         // background-color: #fff;
-        .title {
+        .right_title {
           width: 100%;
           padding: 0px 1rem;
           h3 {
@@ -2414,6 +2419,7 @@ right: 10%;
         gap: 10px;
         z-index: 800;
         .title {
+          
           margin: 1rem 0px;
           h4 {
             font-size: 1.8rem;

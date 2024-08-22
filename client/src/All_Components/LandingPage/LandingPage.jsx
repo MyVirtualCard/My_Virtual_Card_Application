@@ -515,12 +515,12 @@ const LandingPage = () => {
                 </m.div>
                 <m.div className="actions" variants={topNavAnime}>
                   {localStorageDatas === null ? (
-                    <Link to="/register">
-                      <button onClick={()=>{navigate('/register'),setAuthToggle(true)}}>Login</button>
+                    <Link to="/login">
+                      <button >Login</button>
                     </Link>
                   ) : (
                     <Link to={`/${userName}/uadmin/user_vcard`}>
-                      <button onClick={setAuthToggle(true)}><i className='bx bxs-dashboard'></i>{userName}</button>
+                      <button><i className='bx bxs-dashboard'></i>{userName}</button>
                     </Link>
                   )}
 
@@ -690,7 +690,7 @@ const LandingPage = () => {
               initial="hide"
               animate="show"
             >
-              <div className="title">
+              <div className="right_title">
                 <h3>Design Your Digital Identity</h3>
                 <h4>Introducing Custom vCards</h4>
               </div>
