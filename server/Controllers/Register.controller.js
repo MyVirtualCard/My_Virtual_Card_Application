@@ -10,18 +10,27 @@ import User_OTP_VerifyModel from "../Models/UserOTPVerify.model.js";
 import fast2sms from "fast-two-sms";
 import unirest from "unirest";
 import axios from "axios";
-
-
+const lastSent = {};
+let OTP = `${ Math.floor(100000 + Math.random() * 900000)}`;
 // Function to send OTP via Fast2SMS
 async function sendOTP(mobileNumber, message,senderId = 'AST') {
   try {
+    const currentTime = Date.now();
+    const lastSentTime = lastSent[mobileNumber] || 0;
+    const timeElapsed = currentTime - lastSentTime;
+  
+    if (timeElapsed < 60000) { // 60 seconds delay
+      console.log('Please wait before requesting a new OTP.');
+      return;
+    };
     const response = await axios.get("https://www.fast2sms.com/dev/bulkV2", {
       params: {
         authorization:
           "X7cPiHh5LqtWOIMxjzsGTrBRKZbVC2EuD9JaYlydmF3pvQ41AwcSyj3NYzOJ5sLVned0rZU2TW8tM6Xh", // Replace with your Fast2SMS API key
         message: message,
         language: "english",
-      route: "q",
+        variables_values: OTP, // OTP code, purely numeric
+      route: "otp",
         numbers: mobileNumber,
         sender_id: senderId // Custom banner title (max 6 characters)
       },
@@ -274,7 +283,7 @@ const SendOtpVerificationEmail = async (
   res
 ) => {
   try {
-    let OTP = `${ Math.floor(100000 + Math.random() * 900000)}`;
+
 
     const senderId = 'AST'; // Replace with your approved sender ID
     // Send OTP

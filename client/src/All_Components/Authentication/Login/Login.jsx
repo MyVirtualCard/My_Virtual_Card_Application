@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import './Login.scss'
 import resend_otp_img from "../../../assets/Authentication_image/resend_otp_img.png";
 import backImage from "../../../assets/LandingPage_image/slide1_back.png";
@@ -36,7 +36,13 @@ import {
 import { ForgotEmailValidateSchema } from "../../Helper/ForgetPassValidate.js";
 import { ResetPassValidateSchema } from "../../Helper/ResetPassValidation.js";
 import ReCAPTCHA from "react-google-recaptcha";
+
+
 const Login = () => {
+  let inputRefFocus=useRef(null)
+  useEffect(()=>{
+    inputRefFocus.current.focus()
+  },[])
   //All state data:
   let {
     resetPassId,setResetPassId,
@@ -355,6 +361,7 @@ console.log(resetPassId,resetPassToken)
                           </span>
                         </label>
                         <input
+                        ref={inputRefFocus}
                           type="email"
                           placeholder="Eg : abc@gmail.com"
                           name="email"
@@ -437,7 +444,7 @@ console.log(resetPassId,resetPassToken)
                                 <div className="loader"></div>
                               ) : (
                                 <>
-                                  Sign In
+                                  Login
                                   <div className="rocket">
                                     <i className="bx bx-log-in bx-flashing"></i>
                                   </div>

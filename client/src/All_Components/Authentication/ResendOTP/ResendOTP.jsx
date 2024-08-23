@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect ,useRef} from "react";
 import "./ResendOTP.scss";
 import login_svg from "../../../assets/SVG/ResendOTP/resend2.png";
 import site_logo from "../../../assets/Authentication_image/BrandLogo.png";
@@ -8,6 +8,10 @@ import { useFormik } from "formik";
 import { Toaster, toast } from "react-hot-toast";
 import Context from "../../UseContext/Context";
 const ResendOTP = () => {
+  let inputRefFocus=useRef(null)
+  useEffect(()=>{
+    inputRefFocus.current.focus()
+  },[])
   let [loginLoader, setLoginLoader] = useState(false);
   let navigate = useNavigate();
   let {
@@ -275,6 +279,7 @@ const ResendOTP = () => {
                     </span>
                   </label>
                   <input
+                  ref={inputRefFocus}
                     type="text"
                     placeholder="Enter Your UserName.."
                     name="userName"

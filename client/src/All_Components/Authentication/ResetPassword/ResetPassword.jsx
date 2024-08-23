@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect,useRef } from "react";
 import './ResetPassword.scss'
 import resend_otp_img from "../../../assets/Authentication_image/resend_otp_img.png";
 import backImage from "../../../assets/LandingPage_image/slide1_back.png";
@@ -37,7 +37,10 @@ import { ForgotEmailValidateSchema } from "../../Helper/ForgetPassValidate.js";
 import { ResetPassValidateSchema } from "../../Helper/ResetPassValidation.js";
 import ReCAPTCHA from "react-google-recaptcha";
 const ResetPassword = () => {
-
+  let inputRefFocus=useRef(null)
+  useEffect(()=>{
+    inputRefFocus.current.focus()
+  },[])
  
   //All state data:
   let {
@@ -297,6 +300,7 @@ const ResetPassword = () => {
                           </span>
                         </label>
                         <input
+                        ref={inputRefFocus}
                           type="password"
                           placeholder="Password"
                           name="password"
