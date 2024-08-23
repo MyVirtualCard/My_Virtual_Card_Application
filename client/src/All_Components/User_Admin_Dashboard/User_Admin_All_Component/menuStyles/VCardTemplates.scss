@@ -43,7 +43,7 @@
         background-color: #ffffff;
         box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.7);
         border-radius: 1rem;
-        overflow-y: scroll;
+        // overflow-y: scroll;
         padding-top: 0.5rem;
         transition: all 0.2s ease-in-out;
         scroll-behavior: smooth;
@@ -80,7 +80,7 @@
             border-radius: 1rem;
             object-fit: cover;
             object-position: center;
-            transform: translateY(0%);
+            // transform: translateY(0%);
             transition: all 10s ease;
             scroll-behavior: smooth;
             // margin-top: 2rem;
@@ -96,20 +96,20 @@
           background: #d37ffa;
           border-radius: 2px;
         }
-        &:hover{
-            // height: 1500px;
-            scroll-behavior: smooth;
+        // &:hover{
+        //     // height: 1500px;
+        //     scroll-behavior: smooth;
 
        
-                img{
-                    transform: translateY(-80%);
-                    // transition: height 2s;
-                    transition: all 10s ease;
-                    scroll-behavior: smooth;
-                }
+        //         img{
+        //             transform: translateY(-80%);
+        //             // transition: height 2s;
+        //             transition: all 10s ease;
+        //             scroll-behavior: smooth;
+        //         }
          
         
-        }
+        // }
         &:hover{
           border: 2px solid rgb(255, 255, 255);
     

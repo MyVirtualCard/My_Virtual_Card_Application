@@ -507,7 +507,7 @@ const Edit_ContactDetails = () => {
                 </button>
               ) : (
                 <button className="save" type="submit">
-                  Save
+                  Save<i className='bx bxs-save'></i>
                 </button>
               )}
             </div>

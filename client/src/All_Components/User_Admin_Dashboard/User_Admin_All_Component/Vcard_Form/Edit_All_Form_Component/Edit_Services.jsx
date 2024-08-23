@@ -352,7 +352,10 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="add_new_service">
+ 
+        {!serviceFormOpen ? 
+        <>
+               <div className="add_new_service">
           {currentPlan === "Trial Plan" && ServiceCount != 2 ? (
             <button
               onClick={() => {
@@ -415,8 +418,6 @@ const Services = () => {
             ""
           )}
         </div>
-        {!serviceFormOpen ? 
-        <>
                 <div className="plan_based_service_add_note">
           <div className="note">
             {currentPlan === "Trial Plan" ? (
@@ -1036,7 +1037,7 @@ const Services = () => {
                       (formik.values.ServiceIcon.length != 0) |
                         (formik.values.ServiceAddress.length != 0) ? (
                         <div className="save">
-                          <button type="submit">Save</button>
+                          <button type="submit">Save<i className='bx bxs-save'></i></button>
                         </div>
                       ) : (
                         ""

@@ -93,7 +93,7 @@ const Login = () => {
 
 
 
-console.log(resetPassId,resetPassToken)
+
 
   let images = [
     {
@@ -191,13 +191,13 @@ console.log(resetPassId,resetPassToken)
     // validateOnBlur: false,
     validationSchema: LoginValidateSchema,
     onSubmit: async (values) => {
-      setLoginLoader(true);
+      setRegisterLoader(true);
 
       await api
         .post("/auth/login", values)
         .then((res) => {
           toast.success(res.data.message);
-          setLoginLoader(false);
+          setRegisterLoader(false);
           const datas = JSON.stringify({
             userName: res?.data?.userName,
             token: res?.data?.token,
@@ -215,7 +215,7 @@ console.log(resetPassId,resetPassToken)
         })
         .catch((error) => {
           toast.error(error.response.data.message);
-          setLoginLoader(false);
+          setRegisterLoader(false);
         });
     },
   });
@@ -228,7 +228,7 @@ console.log(resetPassId,resetPassToken)
     validateOnBlur: false,
     validationSchema: ForgotEmailValidateSchema,
     onSubmit: async (values) => {
-      setLoginLoader(true);
+      setRegisterLoader(true);
       await api
         .post("/auth/forgot_password", values)
         .then((res) => {
@@ -241,12 +241,12 @@ console.log(resetPassId,resetPassToken)
           setTimeout(()=>{
            navigate(`/reset_password/${resetPassId}/${resetPassToken}`)
           },2500)
-          setLoginLoader(false);
+          setRegisterLoader(false);
         })
         .catch((error) => {
      
           toast.error(error.response.data.message);
-          setLoginLoader(false);
+          setRegisterLoader(false);
         });
     },
   });
@@ -438,23 +438,25 @@ console.log(resetPassId,resetPassToken)
                             </Link>
                           </div>
                           <div className="form_submit">
-                            
-                            <button type="submit">
-                              {loginLoader ? (
-                                <div className="loader"></div>
-                              ) : (
-                                <>
-                                  Login
-                                  <div className="rocket">
-                                    <i className="bx bx-log-in bx-flashing"></i>
-                                  </div>
-                                </>
-                              )}
-                            </button>
+                            {registerLoader ? 
+                              <div className="loader"></div>
+                            : 
+                            <>
+                              <button type="submit">
+
+                               Login
+                               <div className="rocket">
+                                 <i className="bx bx-log-in bx-flashing"></i>
+                               </div>
+                           
+                         </button>
+                            </>
+                            }
+                          
                           </div>
                           <div className="or">
                             <Link to='/register'>
-                              You not have an account ?{" "}
+                              Create New Account ?{" "}
                               <span
                              
                               
@@ -528,19 +530,19 @@ console.log(resetPassId,resetPassToken)
           
                    
                           <div className="form_submit">
-                            
+                            {registerLoader ? 
+                               <div className="loader"></div>
+                            : 
                             <button type="submit">
-                              {loginLoader ? (
-                                <div className="loader"></div>
-                              ) : (
-                                <>
-                                  Reset 
-                                  <div className="rocket">
-                                    <i className="bx bx-log-in bx-flashing"></i>
-                                  </div>
-                                </>
-                              )}
-                            </button>
+
+                            Reset 
+                            <div className="rocket">
+                              <i className="bx bx-log-in bx-flashing"></i>
+                            </div>
+                        
+                      </button>
+                            }
+                       
                           </div>
                           <div className="or">
                             <Link onClick={()=>setForgotPassToggle(false)}>

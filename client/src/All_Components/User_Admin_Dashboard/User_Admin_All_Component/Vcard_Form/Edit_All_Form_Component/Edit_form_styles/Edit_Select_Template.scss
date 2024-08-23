@@ -11,7 +11,7 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      width: 100%; 
+      width: 95%; 
    h6{
  font-size: 0.8rem;
  font-weight: bolder;
@@ -62,17 +62,17 @@
       overflow-y: scroll;
       .image_container {
         display: grid;
-        width: 100%;
-        // grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-        grid-template-columns: 1fr 1fr 1fr;
+        width: 90%;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        // grid-template-columns: 1fr 1fr 1fr;
         grid-row-gap: 1rem;
         grid-column-gap: 1rem;
-       margin: auto;
+       margin:1rem auto;
         // place-items: center;
         .image {
-          width: 230px !important;
-          max-width: 230px;
-          height: 500px;
+          width: 200px !important;
+          max-width: 200px;
+          height: 450px;
           background-color: #ffffff;
           box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           position: relative;
@@ -150,6 +150,8 @@
               // margin-top: 2rem;
               // padding: 5px;
             }
+
+        
           }
           .trial_template{
             text-decoration: none;
@@ -189,10 +191,12 @@
           &:hover{
               // height: 1500px;
               scroll-behavior: smooth;
-  
+              opacity: 0.8;
+              border: 1px solid rgb(8, 128, 133);
+                transition: all 1s ease-in-out;
          
                   img{
-                      transform: translateY(-50%);
+                      transform: translateY(0%);
                       // transition: height 2s;
                       transition: all 25s linear;
                       scroll-behavior: smooth;
@@ -200,11 +204,7 @@
            
           
           }
-          &:hover{
-            opacity: 0.8;
       
-            transition: all 1s ease-in-out;
-          }
           @media screen and (max-width:700px){
           height: 800px;
 width: 90% !important;
@@ -468,7 +468,7 @@ width: 90% !important;
   
          
                   img{
-                      transform: translateY(-80%);
+                      // transform: translateY(-80%);
                       // transition: height 2s;
                       transition: all 10s ease;
                       scroll-behavior: smooth;

@@ -681,6 +681,10 @@ color: rgb(94, 94, 94);
               border-radius: 5px;
               color: #fff;
               transition: all 0.3s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 5px;
               &:hover {
                 background-color: #8992fc;
                 transition: all 0.3s ease;

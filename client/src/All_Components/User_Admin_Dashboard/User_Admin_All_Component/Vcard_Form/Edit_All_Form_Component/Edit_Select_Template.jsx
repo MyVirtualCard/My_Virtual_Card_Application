@@ -295,11 +295,11 @@ const Select_Template = () => {
 
           {VCardAdded == 0 ? (
             <button onClick={formik.handleSubmit} type="submit">
-              Save
+              Save VCard Design<i className='bx bxs-save'></i>
             </button>
           ) : (
             <button onClick={handleTemplateUpdate} type="submit">
-              Update<span class="material-symbols-outlined">update</span>
+              Update VCard Design<span class="material-symbols-outlined">update</span>
             </button>
           )}
 

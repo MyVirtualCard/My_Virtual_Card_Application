@@ -26,7 +26,7 @@ router.post("/verifyOTP", async (req, res) => {
           // await UserAuth.deleteMany({_id:userId})
           res
             .status(400)
-            .json({ message: "OTP has been expired!.Please Request Again.. " });
+            .json({ message: "OTP has been expired!.Resend OTP Again.. " });
         } else {
               //Checking for already this email exist or not:
     let checkUser = await UserAuth.findOne({ userName });

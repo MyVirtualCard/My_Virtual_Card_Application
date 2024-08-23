@@ -25,8 +25,7 @@ async function sendOTP(mobileNumber, message,senderId = 'AST') {
     };
     const response = await axios.get("https://www.fast2sms.com/dev/bulkV2", {
       params: {
-        authorization:
-          "X7cPiHh5LqtWOIMxjzsGTrBRKZbVC2EuD9JaYlydmF3pvQ41AwcSyj3NYzOJ5sLVned0rZU2TW8tM6Xh", // Replace with your Fast2SMS API key
+        authorization:process.env.FAST2SMS_API_KEY, // Replace with your Fast2SMS API key
         message: message,
         language: "english",
         variables_values: OTP, // OTP code, purely numeric
@@ -284,7 +283,7 @@ const SendOtpVerificationEmail = async (
 ) => {
   try {
 
-
+    // let OTP = `${ Math.floor(100000 + Math.random() * 900000)}`;
     const senderId = 'AST'; // Replace with your approved sender ID
     // Send OTP
     await sendOTP(
@@ -333,6 +332,7 @@ const SendOtpVerificationEmail = async (
       id: checkUser.id,
       userName: checkUser.userName,
       name: checkUser.firstName,
+      mobileNumber:checkUser.mobileNumber
     });
 
   } catch (error) {

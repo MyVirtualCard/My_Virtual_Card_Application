@@ -527,7 +527,7 @@ const VCard_URL_Form = () => {
 
             <div className="form_submit_actions">
               <button className="save" type="submit">
-                Save
+                Save<i className='bx bxs-save'></i>
               </button>
 
               <button

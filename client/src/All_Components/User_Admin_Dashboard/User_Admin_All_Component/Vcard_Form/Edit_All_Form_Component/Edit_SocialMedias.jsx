@@ -322,7 +322,7 @@ const SocialMedias = () => {
                 {UpdateToggle ? (
                   <button type="submit">Update<span class="material-symbols-outlined">update</span></button>
                 ) : (
-                  <button type="submit">Save</button>
+                  <button type="submit">Save<i className='bx bxs-save'></i></button>
                 )}
                 
               </div>

@@ -1,0 +1,34 @@
+.otp_input_Container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    gap: 8px;
+    width: 100% !important;
+ 
+   
+
+    .otp_input{
+        width: 50px !important;
+        height: 50px;
+        border-radius: 0.3rem;
+        border: 1px solid #747474;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0.5rem 0px;
+
+        &:focus {
+            border: double 1px transparent;
+            border-radius: 0.3rem;
+            background-image: linear-gradient(#fff, #fff),
+              linear-gradient(to right, #68e2c4, #98abff);
+            background-origin: border-box;
+;
+            background-clip: padding-box, border-box;
+            transition: all 0.3s ease;
+          }
+    }
+}

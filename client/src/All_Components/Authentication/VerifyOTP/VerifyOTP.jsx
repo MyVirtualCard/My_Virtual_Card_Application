@@ -36,11 +36,12 @@ import {
 import { ForgotEmailValidateSchema } from "../../Helper/ForgetPassValidate.js";
 import { ResetPassValidateSchema } from "../../Helper/ResetPassValidation.js";
 import ReCAPTCHA from "react-google-recaptcha";
+import OTP_input from "../OTP_Input/OTP_input.jsx";
 const VerifyOTP = () => {
   let inputRefFocus=useRef(null)
-  useEffect(()=>{
-    inputRefFocus.current.focus()
-  },[])
+  // useEffect(()=>{
+  //   inputRefFocus.current.focus()
+  // },[])
   //All state data:
   let {
     userRegisterData,setUserRegisterData,
@@ -77,7 +78,7 @@ const VerifyOTP = () => {
     location,
     setLocation,
   } = useContext(Context);
-  console.log(OTP_Value)
+
   const [width, setWidth] = useState(window.innerWidth);
   let [registerLoader, setRegisterLoader] = useState(false);
   let [loginLoader, setLoginLoader] = useState(false);
@@ -121,7 +122,7 @@ const VerifyOTP = () => {
   ];
   let navigate = useNavigate();
 
-  let [Seconds, setSeconds] = useState("300");
+  let [Seconds, setSeconds] = useState('120');
   let [OTP_Popup, setOTP_Popup] = useState(false);
   //VCard Slider
   const vcard_settings = {
@@ -139,11 +140,16 @@ const VerifyOTP = () => {
 
     if (Seconds > 0) {
       const timerId = setTimeout(() => {
-        setSeconds(Seconds - 1);
+        setSeconds(prevTime => prevTime - 1);
       }, 1000);
       return () => clearTimeout(timerId);
     }
   }, [Seconds]);
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(Seconds / 60);
+    const secs = Seconds % 60;
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+  };
   const handleProfileImageChange = (event) => {
     const ProfileImage = event.currentTarget.files[0];
     const reader = new FileReader();
@@ -155,7 +161,7 @@ const VerifyOTP = () => {
   };
 
   let localStorageDatas_UserName = localStorage.getItem("userName");
-console.log(localStorageDatas_UserName)
+
   const handleSpeak = (userData) => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(
@@ -176,46 +182,79 @@ console.log(localStorageDatas_UserName)
 
 
   //Verify OTP Formik
-  let verifyOTP_formik = useFormik({
+//   let verifyOTP_formik = useFormik({
     
-    initialValues: {
+//     initialValues: {
+//       userName: localStorageDatas_UserName,
+//       OTP: "",
+//     },
+//     validateOnChange: false,
+//     validateOnBlur: false,
+//     onSubmit: async (values) => {
+//       setRegisterLoader(true);
+//       setLoginLoader(true);
+// values.userName=localStorageDatas_UserName;
+//       await api
+//         .post("/auth/verifyOTP", values)
+//         .then((res) => {
+//           toast.success(res.data.message);
+//           setLoginLoader(false);
+//           setRegisterLoader(false);
+//           // let userData = JSON.parse(localStorage.getItem("datas"));
+//           const datas = JSON.stringify({
+//             userName: res?.data?.userName,
+//             token: res?.data?.token,
+//             id: res?.data?.id,
+//             firstName: res?.data?.name,
+//             verified:res?.data?.verified
+//           });
+//           localStorage.setItem("datas", datas);
+//           setTimeout(() => {
+//             setVerifyOTPToggle(false);
+//             handleSpeak(localStorageDatas_UserName);
+//             navigate(`/${res?.data?.userName}/uadmin/user_vcard`);
+//           }, 2000);
+//         })
+//         .catch((error) => {
+//           toast.error(error.response.data.message);
+//           setLoginLoader(false);
+//           setRegisterLoader(false);
+//         });
+//     },
+//   });
+//Verify OTP Submit
+  let onOTPSubmit=async(OTP_Value)=>{
+    let data={
       userName: localStorageDatas_UserName,
-      OTP: "",
-    },
-    validateOnChange: false,
-    validateOnBlur: false,
-    onSubmit: async (values) => {
-      setRegisterLoader(true);
-      setLoginLoader(true);
-values.userName=localStorageDatas_UserName;
-      await api
-        .post("/auth/verifyOTP", values)
-        .then((res) => {
-          toast.success(res.data.message);
-          setLoginLoader(false);
-          setRegisterLoader(false);
-          // let userData = JSON.parse(localStorage.getItem("datas"));
-          const datas = JSON.stringify({
-            userName: res?.data?.userName,
-            token: res?.data?.token,
-            id: res?.data?.id,
-            firstName: res?.data?.name,
-            verified:res?.data?.verified
-          });
-          localStorage.setItem("datas", datas);
-          setTimeout(() => {
-            setVerifyOTPToggle(false);
-            handleSpeak(localStorageDatas_UserName);
-            navigate(`/${res?.data?.userName}/uadmin/user_vcard`);
-          }, 2000);
-        })
-        .catch((error) => {
-          toast.error(error.response.data.message);
-          setLoginLoader(false);
-          setRegisterLoader(false);
-        });
-    },
-  });
+      OTP:OTP_Value
+    };
+    await api
+    .post("/auth/verifyOTP", data)
+    .then((res) => {
+      toast.success(res.data.message);
+      setLoginLoader(false);
+      setRegisterLoader(false);
+      // let userData = JSON.parse(localStorage.getItem("datas"));
+      const datas = JSON.stringify({
+        userName: res?.data?.userName,
+        token: res?.data?.token,
+        id: res?.data?.id,
+        firstName: res?.data?.name,
+        verified:res?.data?.verified
+      });
+      localStorage.setItem("datas", datas);
+      setTimeout(() => {
+        setVerifyOTPToggle(false);
+        handleSpeak(localStorageDatas_UserName);
+        navigate(`/${res?.data?.userName}/uadmin/user_vcard`);
+      }, 2000);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+      setLoginLoader(false);
+      setRegisterLoader(false);
+    });
+  }
   let resendOTP_formik = useFormik({
     initialValues: {
       userName: localStorageDatas_UserName,
@@ -323,42 +362,12 @@ values.userName=localStorageDatas_UserName
          {!ResendOTPToggle ? 
          <>
                      {/* VerifyForm */}
-                     <form className="verify_form" action="" onSubmit={verifyOTP_formik.handleSubmit}>
+                     {/* <form className="verify_form" action="" onSubmit={verifyOTP_formik.handleSubmit}>
                   <div className="form_title">
-                    <h4>Complete Your Two-Factor-Authentication</h4>
-                    <small>Verify Your Account!</small>
+                    <Link to='/login' onClick={()=>{setAuthToggle(true)}}><i className='bx bx-left-arrow-alt'></i>Back</Link>
+                    <small>Enter OTP Sent to +91&nbsp;{mobileNumber}</small>
                   </div>
-                  {/* <div className="form_group">
-                    <label htmlFor="password">
-                      UserName{" "}
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Your UserName"
-                      name="userName"
-                      id="userName"
-                      value={localStorageDatas?.userName}
-                      onBlur={verifyOTP_formik.handleBlur}
-                      onChange={verifyOTP_formik.handleChange}
-                      className={
-                        verifyOTP_formik.errors.userName &&
-                        verifyOTP_formik.touched.userName
-                          ? "input_error"
-                          : ""
-                      }
-                      // {...formik.getFieldProps("password")}
-                    />
-
-                    <div className="error">
-                      {verifyOTP_formik.errors.userName}
-                    </div>
-                    <div className="icon">
-                      <i className="bx bxs-user-check"></i>
-                    </div>
-                  </div> */}
+                
                   <div className="form_group">
                     <label htmlFor="password">
                       6-Digit OTP{" "}
@@ -367,7 +376,7 @@ values.userName=localStorageDatas_UserName
                       </span>
                     </label>
                     <input
-                    ref={inputRefFocus}
+                   
                       type="password"
                       placeholder="Enter 6-Digit OTP"
                       name="OTP"
@@ -381,7 +390,7 @@ values.userName=localStorageDatas_UserName
                           ? "input_error"
                           : ""
                       }
-                      // {...formik.getFieldProps("password")}
+                     
                     />
                  
                     <div className="error">{verifyOTP_formik.errors.OTP}</div>
@@ -399,13 +408,22 @@ values.userName=localStorageDatas_UserName
                       )}
                     </div>
                   </div>
+                 <div className="otp_form_group">
+                  <OTP_input length={6} onOTPSubmit={onOTPSubmit}/>
+                 </div>
                   <div className="verify_otp_time_box">
                       <h4>
-                        {Seconds} <small>- sec more!</small>
+                      <small>Resend OTP in -</small>{formatTime(Seconds)} 
                       </h4>
+                      {Seconds <=0 ? 
+                      <>
+                         <Link onClick={() => setResendOTPToggle(true)}><i className='bx bx-mobile'></i>SMS</Link>
+                      </>
+                      : ''}
+                   
                     </div>
                   <div className="form_submit">
-                    <button type="submit">
+                    <button type="submit" >
                       {registerLoader ? (
                         <div className="loader"></div>
                       ) : (
@@ -418,22 +436,44 @@ values.userName=localStorageDatas_UserName
                       )}
                     </button>
                   </div>
-                  <div className="verify_nav_actions">
-                    <p>
-                      Verify Account Expires ?{" "}
-                      <Link onClick={() => setResendOTPToggle(true)}>
-                        Resend OTP
-                      </Link>
-                    </p>
-                    <p>
-                      Back to Register ?{" "}
-                      <Link
-                        to={`/register`}
-                      >
-                        Register
-                      </Link>
-                    </p>
+             
+                </form> */}
+  {/* VerifyForm Without Formik */}
+<form className="verify_form" onSubmit={onOTPSubmit}>
+                  <div className="form_title">
+                    <Link to='/login' onClick={()=>{setAuthToggle(true)}}><i className='bx bx-left-arrow-alt'></i>Back</Link>
+                    <small>Enter OTP Sent to +91&nbsp;{mobileNumber}</small>
                   </div>
+              
+                 <div className="otp_form_group">
+                  <OTP_input length={6} onOTPSubmit={onOTPSubmit}/>
+                 </div>
+                  <div className="verify_otp_time_box">
+                      <h4>
+                      <small>Resend OTP in -</small>{formatTime(Seconds)} 
+                      </h4>
+                      {Seconds <=0 ? 
+                      <>
+                         <Link onClick={() => setResendOTPToggle(true)}><i className='bx bx-mobile'></i>SMS</Link>
+                      </>
+                      : ''}
+                 
+                    </div>
+                  <div className="form_submit">
+ {registerLoader ?  
+  <div className="loader"></div>
+ : 
+''
+//  <button type="submit" onClick={onOTPSubmit} >                   
+//  Verify
+//  <div className="rocket">
+//    <i className="bx bx-log-in bx-flashing"></i>
+//  </div>
+// </button>
+ }
+                 
+                  </div>
+             
                 </form>
          </>
          : 
@@ -483,6 +523,7 @@ values.userName=localStorageDatas_UserName
                       </span>
                     </label>
                     <input
+                    ref={inputRefFocus}
                       type="mobileNumber"
                       placeholder="Enter Your MobileNumber"
                       name="mobileNumber"

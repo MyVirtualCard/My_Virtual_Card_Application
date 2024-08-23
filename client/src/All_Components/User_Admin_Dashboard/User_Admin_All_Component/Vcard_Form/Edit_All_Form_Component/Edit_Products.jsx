@@ -340,7 +340,10 @@ const Products = () => {
             <strong>{currentPlan} </strong>&nbsp; Subscribed!
           </p>
         </div>
-        <div className="add_new_product">
+  
+        {!productFormOpen ? 
+        <>
+              <div className="add_new_product">
           {currentPlan === "Trial Plan" && ProductCount != 2 ? (
             <button
               onClick={() => {
@@ -406,8 +409,6 @@ const Products = () => {
             ""
           )}
         </div>
-        {!productFormOpen ? 
-        <>
                 <div className="plan_based_service_add_note">
           <div className="note">
             {currentPlan === "Trial Plan" ? (
@@ -940,7 +941,7 @@ const Products = () => {
                       Update
                     </button>
                   ) : (
-                    <button type="submit">Save</button>
+                    <button type="submit">Save<i className='bx bxs-save'></i></button>
                   )}
                 </div>
                 {!updateFormOpen ?  

@@ -300,7 +300,10 @@ const Testimonial = () => {
             <strong>{currentPlan} </strong>&nbsp; Subscribed!
           </p>
         </div>
-        <div className="add_new_testimonial">
+      
+        {!testimonialFormOpen && !updateFormOpen ? 
+        <>
+          <div className="add_new_testimonial">
           {currentPlan === "Trial Plan" && ClientCount != 2 ? (
             <button onClick={() => setTestimonialFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Testimonial
@@ -330,8 +333,6 @@ const Testimonial = () => {
             ""
           )}
         </div>
-        {!testimonialFormOpen && !updateFormOpen ? 
-        <>
                 <div className="plan_based_service_add_note">
           <div className="note">
             {currentPlan === "Trial Plan" ? (
