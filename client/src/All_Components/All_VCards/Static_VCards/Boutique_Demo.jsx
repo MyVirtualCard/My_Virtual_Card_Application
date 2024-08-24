@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Boutique_Demo.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import logo_back_svg from '../../../assets/AllVCard_Image/Beauty_Parlor/logo_back_svg1.svg'
+import profile_back_svg from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg.svg'
+import profile_back_svg1 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg1.svg'
+import profile_back_svg2 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg2.svg'
+import profile_back_svg3 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg3.svg'
+import profile_back_svg4 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg4.svg'
 import social_media_back_svg from '../../../assets/AllVCard_Image/Beauty_Parlor/social_media_back_svg.svg';
 import title_back_svg from '../../../assets/AllVCard_Image/Beauty_Parlor/title_back_svg.svg'
 //service Slider
@@ -18,7 +22,33 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 const Boutique_Demo = () => {
+  let profileSVG = [
+  profile_back_svg,
+  profile_back_svg1,
+  profile_back_svg2,
+  profile_back_svg3,
+  profile_back_svg4
+  ];
 
+  const [sVGIndex, setSVGIndex] = useState(0);
+  // /Fashion stress:
+  // useEffect(() => {
+  //   if (sVGIndex >= 0) {
+  //     if (sVGIndex < profileSVG.length) {
+  //       const timer = setTimeout(() => {
+  //         setSVGIndex(sVGIndex + 1);
+  //       }, 5000);
+
+  //       // Cleanup the timer
+  //       return () => {
+  //         clearTimeout(timer);
+  //       };
+  //     }
+  //   }
+  //   if (sVGIndex === 4) {
+  //     setSVGIndex(0);
+  //   }
+  // }, [sVGIndex]);
   let style={
     $first_back__color: '#ffffff',
     $second_back__color: '#6b6b6b',
@@ -26,11 +56,11 @@ const Boutique_Demo = () => {
     //Root Background
 $root_backgound: '#fcfdc8,#ffffff',
 //Vcard background
-$vcard_back_color: '#88D4C8',
+$vcard_back_color: '#a1046d',
 
 //SVG Wave backgound
 
-$svg_wave_back_color:'#ffc0bc',
+$svg_wave_back_color:'#a1046d',
   }
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
@@ -309,12 +339,12 @@ east
           <div className="slide_svg">
 
           {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,42.7C384,21,480,11,576,37.3C672,64,768,128,864,176C960,224,1056,256,1152,229.3C1248,203,1344,117,1392,74.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg> */}
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,128L60,117.3C120,107,240,85,360,90.7C480,96,600,128,720,154.7C840,181,960,203,1080,181.3C1200,160,1320,96,1380,64L1440,32L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,64L360,192L720,224L1080,128L1440,160L1440,320L1080,320L720,320L360,320L0,320Z"></path></svg>
             <div className="overlay"></div>
           </div>
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/premium-photo/store-with-pink-white-awning-with-shopping-cart-front-it_999671-69963.jpg?w=1060"
+              src="https://img.freepik.com/premium-photo/women-man-fashion-accessories-bag-dress-shoes-shirt-high-heels-bag-shopping-colorful_576429-2885.jpg?w=900"
               alt="banner"
             />
             <div className="overlay"></div>
@@ -324,9 +354,9 @@ east
               src="https://img.freepik.com/free-photo/woman-with-black-jacket-black-jacket-with-light-bottom_1340-48120.jpg?t=st=1724522420~exp=1724526020~hmac=b0d5d77e5a16dffb7a7d196901cf0d5b376bc6a8d567a4aef690bdae5c0293e1&w=900"
               alt="user_logo"
             />
-            <div className="svg_image">
-              <img src={logo_back_svg} alt="svg_logo_back" />
-            </div>
+            {/* <div className="svg_image">
+              <img src={profileSVG[sVGIndex]} alt="svg_logo_back" />
+            </div> */}
           </div>
         </div>
         {/* Summary */}
@@ -334,8 +364,8 @@ east
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>John Mens Wear</h2>
-                <p>Clothing Shop </p>
+                <h2>Rosy Women's Wear</h2>
+                <p>Cloth Shop </p>
               </div>
               <div className="social_medias">
                 <a
@@ -346,7 +376,7 @@ east
                   <i className="bx bxl-facebook"></i>
                   <small>Facebook</small>
                   <div className="social_media_svg">
-                    <img src={social_media_back_svg} alt="social_svg" />
+                    <img src={profile_back_svg1} alt="social_svg" />
                   </div>
                 </a>
                 <a
@@ -355,8 +385,8 @@ east
                   className="social_media_icon"
                 >
                <i className='bx bxl-instagram-alt'></i>
-                  <div className="social_media_svg">
-                    <img src={social_media_back_svg} alt="social_svg" />
+               <div className="social_media_svg">
+                    <img src={profile_back_svg1} alt="social_svg" />
                   </div>
                   <small>Instagram</small>
                 </a>
@@ -367,7 +397,7 @@ east
                 >
                   <i className="bx bxl-whatsapp"></i>
                   <div className="social_media_svg">
-                    <img src={social_media_back_svg} alt="social_svg" />
+                    <img src={profile_back_svg1} alt="social_svg" />
                   </div>
                   <small>Whatsup</small>
                 </a>
@@ -382,7 +412,7 @@ east
                 >
                   <i className="bx bx-map"></i>
                   <div className="social_media_svg">
-                    <img src={social_media_back_svg} alt="social_svg" />
+                    <img src={profile_back_svg1} alt="social_svg" />
                   </div>
                   <small>Location</small>
                 </a>
@@ -394,7 +424,7 @@ east
                   
                   <i className="bx bx-globe"></i>
                   <div className="social_media_svg">
-                    <img src={social_media_back_svg} alt="social_svg" />
+                    <img src={profile_back_svg1} alt="social_svg" />
                   </div>
                   <small>Website</small>
                 </a>
@@ -411,6 +441,10 @@ east
         </div>
         {/* ContactDetails */}
         <div className="row_3">
+        <div className="bautique_title_demo">
+            <h3>Testimonial</h3>
+            {/* Contact */}
+          </div>
           <div className="contact_list_container">
             <div className="contact_list">
               <div className="icons">
@@ -476,7 +510,7 @@ east
           <div className="service_list_container">
             <Slide 
                  slidesToScroll={1}
-                 slidesToShow={width < 600 ? 2 : 2}
+                 slidesToShow={width < 600 ? 1 : 2}
                  indicators={true}
                  autoplay
                  {...gallery_properties}
@@ -491,7 +525,7 @@ east
 
               <div className="service_detail">
                 <div className="service_title">
-                  <h4>Color direction</h4>
+                  <h4>Striching</h4>
                 </div>
                 <div className="service_summary">
                   <p>
@@ -504,11 +538,13 @@ east
             <a className="service_list">
           
               <div className="icon">
-              <i className='bx bxs-save'></i>
+              <span className="material-symbols-outlined">
+directions_bike
+</span>
               </div>
               <div className="service_detail">
                 <div className="service_title">
-                  <h4>Catalog layout</h4>
+                  <h4>Free Delivery</h4>
                 </div>
                 <div className="service_summary">
                   <p>
@@ -600,13 +636,13 @@ east
             
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-vector/productivity-concept-background_23-2147991016.jpg?t=st=1724258763~exp=1724262363~hmac=a05c962ff921b749efe32fdab93c3b03143787e7a0e641f0d16df646029cdea4&w=740"
+                    src="https://img.freepik.com/free-photo/young-consultant-showing-clothes-customer-shopping-center_23-2148101648.jpg?t=st=1724544731~exp=1724548331~hmac=1c14efa91ec858eda43f332296515d2ecba2de38fdf9c0b2547d644c349dc4b3&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
                 <div className="product_title">
-                <h4>Product Design</h4>
+                <h4>Weighless Cloth</h4>
                 </div>
                   <small>
                     {" "}
@@ -622,13 +658,13 @@ east
              
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/premium-vector/coworkers-dialog-discussion_82574-9401.jpg?w=740"
+                    src="https://img.freepik.com/free-photo/boutique-owner-giving-yellow-paper-bag-smiling-young-woman_23-2148101564.jpg?t=st=1724544801~exp=1724548401~hmac=2897903fadb929baec9b05ad6a364acbde99c2404b670ccf176b7afdcde5d6cb&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
                 <div className="product_title">
-                <h4>Business Process & Advisory</h4>
+                <h4>Quality Product</h4>
                 </div>
                   <small>
                     {" "}
@@ -644,13 +680,13 @@ east
           
                 <div className="product_image">
                   <img
-                    src="https://img.freepik.com/free-photo/front-view-teamwork-coworkers-office_23-2148339344.jpg?t=st=1724258757~exp=1724262357~hmac=97a24f1f818e59893720b0af245b866910a10e66c9fd29a8ab586ee34ebbf514&w=900"
+                    src="https://img.freepik.com/free-photo/smiling-stylish-woman-showing-colorful-paper-bag_23-2148101563.jpg?t=st=1724544854~exp=1724548454~hmac=6f0e2ebe131bf68cac9708d52038c3b543bc07dd37712151b28fd86a1f8a619b&w=900"
                     alt="product"
                   />
                 </div>
                 <div className="product_details">
                 <div className="product_title">
-                <h4>Training</h4>
+                <h4>Lowest Price Cloths</h4>
                 </div>
                   <small>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, saepe? Tempore cupiditate aliquid sint eius amet neque numquam fugiat eveniet!
@@ -666,61 +702,8 @@ east
             </Slider>
           </div>
         </div>
-        {/* Gallery */}
-        <div className="row_8">
-          <div className="bautique_title_demo">
-            <h3>Gallery</h3>
-          </div>
-          <div className="gallery_container">
-            <div className="full_image" id="fullImageBox">
-              <div className="close_Full_Image_gallery">
-                <span
-                  className="material-symbols-outlined"
-                  onClick={closeFullImage}
-                >
-                  cancel
-                </span>
-              </div>
-              <img src={banner} alt="gallery" id="fullImage" />
-            </div>
-
-            <div className="gallery_box">
-              <Slide
-                slidesToScroll={1}
-                slidesToShow={width < 600 ? 2 : 2}
-                indicators={true}
-                autoplay
-                {...properties}
-                autoplayInterval={1000}
-              >
-                <img
-                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
-                  alt="developer"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/working-online-project_1098-14828.jpg?t=st=1724258616~exp=1724262216~hmac=01da90dcb13e89f46c280ea2614c460b5414bf2e4ca2b3915c51c8808e6b0f5f&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/two-colleagues-working-together-office-white-studio_155003-13076.jpg?t=st=1724258635~exp=1724262235~hmac=b20acfb2149769f4cffb7ff8376b7da5db2c424ecc5268cfdf15f3ce1f9c43c8&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/pensive-concentrated-managers-standing-modern-cafe_1262-17088.jpg?t=st=1724258653~exp=1724262253~hmac=4f3bcd7c4576293a2d2ad54d310796f0a01a60f024e0c89a128035134f80182c&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-              </Slide>
-            </div>
-          </div>
-        </div>
-
-   
-        {/* //Appinment */}
-        <div className="row_6">
+              {/* //Appinment */}
+              <div className="row_6">
           <div className="bautique_title_demo">
             <h3>Make An Appoinment</h3>
           </div>
@@ -753,138 +736,61 @@ east
             </form>
           </div>
         </div>
-
-        {/* Testimonial */}
-        <div className="row_9">
+        {/* Gallery */}
+        <div className="row_8">
           <div className="bautique_title_demo">
-            <h3>Testimonial</h3>
-            {/* Contact */}
+            <h3>Gallery</h3>
           </div>
-          <div className="testimonial_container">
-            <Carousel
-              showThumbs={true}
-              showStatus={true}
-              infiniteLoop
-              autoPlay
-            >
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>John Doe</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
+          <div className="gallery_container">
+            <div className="full_image" id="fullImageBox">
+              <div className="close_Full_Image_gallery">
+                <span
+                  className="material-symbols-outlined"
+                  onClick={closeFullImage}
+                >
+                  cancel
+                </span>
               </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
-                    alt=""
-                  />
+              <img src={banner} alt="gallery" id="fullImage" />
+            </div>
 
-                  <div className="client_name">
-                    <h4>Jayakumar </h4>
-                    <small>-CEO</small>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Dinesh Kumar</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
-                  <div className="client_name">
-                    <h4>Punitha</h4>
-                    <small>-Member</small>
-                  </div>
-                </div>
-              </div>
-            </Carousel>
-          </div>
-        </div>
-        {/* QRCode */}
-        <div className="row_12">
-          <div className="bautique_title_demo">
-            <h3>QRCode</h3>
-            {/* Contact */}
-          </div>
-
-          <div className="qrcode_container">
-            <div className="qr_code_box">
-              <h4>
-                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Ducimus, enim?
-              </h4>
-   <div className="qr_image">
-   <div className="user_logo">
-            <img
-              src="https://img.freepik.com/premium-photo/smiling-cartoon-barista-cafe_512668-1772.jpg?w=900"
-              alt="user_logo"
-            />
-          </div>
-
-          <div className="qr">
-          <img
-                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
-                alt=""
-              />
-          </div>
-
-   </div>
-          
+            <div className="gallery_box">
+              <Slide
+                slidesToScroll={1}
+                slidesToShow={width < 600 ? 2 : 2}
+                indicators={true}
+                autoplay
+                {...properties}
+                autoplayInterval={1000}
+              >
+                <img
+                  src="https://img.freepik.com/free-photo/focused-female-customer-shop-assistant-browsing-dresses-rack-together-choosing-clothes-fashion-store-full-length-shopping-retail-concept_74855-11722.jpg?t=st=1724544932~exp=1724548532~hmac=9095d9890738b8cc074bee39169fc168892ebec3f1b7f273e6f17c7e07d44bea&w=900"
+                  alt="developer"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+                <img
+                  src="https://img.freepik.com/free-photo/excited-female-friends-enjoying-shopping-fashion-store-together-holding-dress-taking-pictures-mobile-phone-consumerism-shopping-concept_74855-11671.jpg?t=st=1724544961~exp=1724548561~hmac=2e949540d3c4a733cfa45f5cc270e672c769fecf364c8c0091ac772e6ee7c62d&w=900"
+                  alt="dev"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+                <img
+                  src="https://img.freepik.com/free-photo/side-view-fashionable-beautiful-woman-shirt-holding-want-buying-elegant-red-dress-brunette-girl-with-long-hair-choosing-look-evening-spanding-time-shoppinh-mall_132075-12220.jpg?t=st=1724544975~exp=1724548575~hmac=55cbd4ad098d187de365574b8220037dbe6caa2a2843a8b4c173f5b0dbf7b861&w=900"
+                  alt="dev"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+                <img
+                  src="https://img.freepik.com/free-photo/two-fashionable-beautiful-girls-with-colorful-braids-makeup-after-beauty-salon-tacking-self-portrait-smart-phone-stylish-women-smiling-making-photo-store-with-clothes-shopping_132075-12245.jpg?t=st=1724544988~exp=1724548588~hmac=f26213c4e4c6df9101e3a9543b022d3b8872712686f6b7e9f57f13fb95c238c1&w=900"
+                  alt="dev"
+                  onClick={(e) => openFullImage(e.target.src)}
+                />
+              </Slide>
             </div>
           </div>
         </div>
-        {/* Opentime */}
-        <div className="row_5">
+
+   
+          {/* Opentime */}
+          <div className="row_5">
           <div className="bautique_title_demo">
             <h3>Open&Close Time</h3>
             {/* Contact */}
@@ -982,6 +888,137 @@ east
             </div>
           </div>
         </div>
+    {/* QRCode */}
+    <div className="row_12">
+          <div className="bautique_title_demo">
+            <h3>QRCode</h3>
+            {/* Contact */}
+          </div>
+
+          <div className="qrcode_container">
+            <div className="qr_code_box">
+              <h4>
+                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Ducimus, enim?
+              </h4>
+   <div className="qr_image">
+   <div className="user_logo">
+            <img
+              src="https://img.freepik.com/free-photo/woman-with-black-jacket-black-jacket-with-light-bottom_1340-48120.jpg?t=st=1724522420~exp=1724526020~hmac=b0d5d77e5a16dffb7a7d196901cf0d5b376bc6a8d567a4aef690bdae5c0293e1&w=900"
+              alt="user_logo"
+            />
+          </div>
+
+          <div className="qr">
+          <img
+                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
+                alt=""
+              />
+          </div>
+
+   </div>
+          
+            </div>
+          </div>
+        </div>
+        {/* Testimonial */}
+        <div className="row_9">
+          <div className="bautique_title_demo">
+            <h3>Testimonial</h3>
+            {/* Contact */}
+          </div>
+          <div className="testimonial_container">
+            <Carousel
+              showThumbs={true}
+              showStatus={true}
+              infiniteLoop
+              autoPlay
+            >
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>John Doe</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Jayakumar </h4>
+                    <small>-CEO</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Dinesh Kumar</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                  <div className="client_name">
+                    <h4>Punitha</h4>
+                    <small>-Member</small>
+                  </div>
+                </div>
+              </div>
+            </Carousel>
+          </div>
+        </div>
+    
+
                 {/* GoogleMap */}
 
                 <div className="google_map_container">

@@ -98,6 +98,7 @@ $error_text_color:tomato;
     width: 450px;
     max-width: 450px;
     height: auto;
+    overflow-x: hidden;
     background-color: $vcard_back_color;
     filter: drop-shadow(0px 4px 5px #383838a6);
     //BasicDetails and socialmedias and baner and logo
