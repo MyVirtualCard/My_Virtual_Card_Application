@@ -6,7 +6,7 @@ $second_text_color: #6b6b6b;
 $third_text_color: #2b2b2b;
 
 //SocialMedia Icon Color::after
-$social_media_icon_color:#3d3d3d;
+$social_media_icon_color:#db63ff;
 //Background
 $first_back__color: #ffffff;
 $second_back__color: #6b6b6b;
@@ -16,7 +16,7 @@ $root_backgound: #87b1ff,#98eefa;
 //Vcard background
 $vcard_back_color: #ffc0bc;
 //Button
-$first_button__color: #3d3d3d;
+$first_button__color: #db63ff;
 $second_button__color:rgb(85, 85, 85);
 $third_button__color:rgb(252, 170, 170);
 // Title
@@ -28,7 +28,7 @@ $title_color: #2e2e2e;
 $error_text_color:tomato;
 
 //Title for each list
-.beauty_parlor_title_demo {
+.bautique_title_demo {
   width: 100%;
   display: flex;
   align-items: center;
@@ -75,7 +75,7 @@ $error_text_color:tomato;
   }
 
 }
-.beauty_parlor_demo_container {
+.bautique_demo_container {
   width: 100vw;
   min-height: 100vh;
   
@@ -93,7 +93,7 @@ $error_text_color:tomato;
   background: linear-gradient(120deg, $root_backgound 50%, $root_backgound 50%);
   // background-image: url("https://img.freepik.com/free-photo/abstract-brown-gradient-well-used-as-background-product-display_1258-53887.jpg?t=st=1722545340~exp=1722548940~hmac=83a6311e30e57b459c8fcdc7794082a848f2235cbd110eb29226bf7c55fe844c&w=900");
 
-  .beauty_parlor_box {
+  .bautique_box{
     
     width: 450px;
     max-width: 450px;
@@ -245,7 +245,7 @@ animation: profileSVGAnime 5s infinite linear;
               font-size: 1.2rem;
               font-weight: 500;
               letter-spacing: 1px;
-              color: $third_text_color;
+              color: $first_text_color;
             }
 
             p {
@@ -553,7 +553,7 @@ transform: translate(-50%,-50%);
       justify-content: center;
       background-color: $first_back__color;
 
-      @extend .beauty_parlor_title_demo ;
+      @extend .bautique_title_demo ;
       .service_list_container {
         width: 100%;
         // display: grid;
@@ -844,7 +844,7 @@ justify-content: center;
         align-items: center;
         justify-content: center;
         background-color: $first_back__color;
-        @extend .beauty_parlor_title_demo;
+        @extend .bautique_title_demo;
         .realEstate_product_list_container {
           margin:  auto;
           width: 100%;
@@ -1039,7 +1039,7 @@ justify-content: center;
           align-items: center;
           justify-content: center;
       
-          @extend .beauty_parlor_title_demo;
+          @extend .bautique_title_demo;
        
           .gallery_container {
             margin: 0rem auto;
@@ -1178,7 +1178,7 @@ justify-content: center;
         align-items: center;
         justify-content: center;
         background-color: $first_back__color;
-          @extend .beauty_parlor_title_demo;
+          @extend .bautique_title_demo;
      
         .time_list_container {
           width: 100%;
@@ -1282,7 +1282,7 @@ justify-content: center;
       align-items: center;
       justify-content: center;
 
-      @extend .beauty_parlor_title_demo;
+      @extend .bautique_title_demo;
       .appinment_form_container {
         width: 100%;
 
@@ -1370,7 +1370,7 @@ justify-content: center;
       align-items: center;
       justify-content: center;
 
-      @extend .beauty_parlor_title_demo;
+      @extend .bautique_title_demo;
 
       .testimonial_container {
         margin: 1rem auto;
@@ -1479,7 +1479,7 @@ border-bottom-right-radius: 6rem;
           padding: 1rem;
           background-color: $first_back__color;
      
-          @extend .beauty_parlor_title_demo;
+          @extend .bautique_title_demo;
     
           .google_map {
             width: 100%;
@@ -1504,7 +1504,7 @@ border-bottom-right-radius: 6rem;
       align-items: center;
       justify-content: center;
 
-      @extend .beauty_parlor_title_demo;
+      @extend .bautique_title_demo;
       .feedback_container {
         width: 100%;
         position: relative;
@@ -2106,7 +2106,7 @@ color: $first_text_color;
       align-items: center;
       justify-content: center;
 
-      @extend .beauty_parlor_title_demo;
+      @extend .bautique_title_demo;
       .inquiries_container5 {
         width: 100%;
         display: flex;
@@ -2268,7 +2268,7 @@ color: $first_text_color;
       align-items: center;
       justify-content: center;
 
-      @extend .beauty_parlor_title_demo;
+      @extend .bautique_title_demo;
 
 
       .qrcode_container {
