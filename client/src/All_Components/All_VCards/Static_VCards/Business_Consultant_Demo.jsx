@@ -283,7 +283,7 @@ const Business_Consultant_Demo = () => {
     },
   });
   return (
-    <div className="Business_Consultant_container">
+    <div className="Business_Consultant_demo_container">
       <div className="Business_Consultant_box">
         {/* Banner and logo and details and socialMedias */}
         <div className="row_1">

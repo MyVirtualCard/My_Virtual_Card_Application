@@ -120,13 +120,15 @@ import Manager_Demo from "./All_Components/All_VCards/Static_VCards/Manager_Demo
 import Business_Consultant_Demo from "./All_Components/All_VCards/Static_VCards/Business_Consultant_Demo.jsx";
 import Manager from "./All_Components/All_VCards/Live_VCards/Manager.jsx";
 import Business_Consultant from "./All_Components/All_VCards/Live_VCards/Business_Consultant.jsx";
+import Real_Estate_Demo from "./All_Components/All_VCards/Static_VCards/Real_Estate_Demo.jsx";
+import Beauty_Parlor_Demo from "./All_Components/All_VCards/Static_VCards/Beauty_Parlor_Demo.jsx";
 
 const App = () => {
   //URL Name state:
- 
+
   let [ResetPassToken_Id, setResetPassToken_Id] = useState("");
-  let[resetPassId,setResetPassId]=useState();
-  let[resetPassToken,setResetPassToken]=useState();
+  let [resetPassId, setResetPassId] = useState();
+  let [resetPassToken, setResetPassToken] = useState();
   let [AuthToggle, setAuthToggle] = useState(false);
   let [ForgotPassToggle, setForgotPassToggle] = useState(false);
   let [ResetPassToggle, setResetPassToggle] = useState(false);
@@ -383,9 +385,12 @@ const App = () => {
         />
         <Context.Provider
           value={{
-            ResetPassToken_Id, setResetPassToken_Id,
-            resetPassId,setResetPassId,
-            resetPassToken,setResetPassToken,
+            ResetPassToken_Id,
+            setResetPassToken_Id,
+            resetPassId,
+            setResetPassId,
+            resetPassToken,
+            setResetPassToken,
             ForgotPassToggle,
             setForgotPassToggle,
             ResetPassToggle,
@@ -695,12 +700,13 @@ const App = () => {
               />
               <Route path="/resend_OTP" element={<ResendOTP />} />
               <Route
-                  path="/reset_password/:id/:token"
-                  element={<ResetPassword />}
-                />
-              <Route path="/forgot_password" element={<ForgotPassword />}>
-           
-              </Route>
+                path="/reset_password/:id/:token"
+                element={<ResetPassword />}
+              />
+              <Route
+                path="/forgot_password"
+                element={<ForgotPassword />}
+              ></Route>
 
               <Route path={`/${userName}/uadmin`} element={<UserAdmin />}>
                 <Route
@@ -809,8 +815,9 @@ const App = () => {
                 path="/Business_Consultant"
                 element={<Business_Consultant_Demo />}
               />
-
-              {/* //New Tempaltes */}
+              <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
+              <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
+              {/* //Live Tempaltes */}
 
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
@@ -827,18 +834,18 @@ const App = () => {
               ) : (
                 ""
               )}
-                 {URL_Alies == URL_Alies && currentTemplate === 4 ? (
+              {URL_Alies == URL_Alies && currentTemplate === 4 ? (
                 <Route path={`/:URL_Alies`} element={<Manager />} />
               ) : (
                 ""
               )}
-                  {URL_Alies == URL_Alies && currentTemplate === 5 ? (
+              {URL_Alies == URL_Alies && currentTemplate === 5 ? (
                 <Route path={`/:URL_Alies`} element={<Business_Consultant />} />
               ) : (
                 ""
               )}
-                {/* <Route path={`/manager_live`} element={<Manager />} /> */}
-                {/* <Route path={`/bussiness_consultant_live`} element={<Business_Consultant />} /> */}
+              {/* <Route path={`/manager_live`} element={<Manager />} /> */}
+              {/* <Route path={`/bussiness_consultant_live`} element={<Business_Consultant />} /> */}
             </Routes>
           </Suspense>
         </Context.Provider>
