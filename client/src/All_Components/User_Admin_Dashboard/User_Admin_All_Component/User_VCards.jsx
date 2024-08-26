@@ -60,14 +60,19 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
-        setFormSubmitLoader(false);
-        setVCardCount(res.data.data);
+        if(res.data.data.length > 0){
+          setFormSubmitLoader(false);
+          setVCardCount(res.data.data);
+        }else{
+          setFormSubmitLoader(false);
+        }
+     
       })
       .catch((error) => {
         setFormSubmitLoader(false);
-        console.log(error);
+
       });
-  }, [key]);
+  }, []);
 
   useEffect(() => {
     api
@@ -83,6 +88,27 @@ const User_VCards = () => {
         console.log(error);
       });
   }, []);
+    //Free Plan
+    useEffect(()=>{
+      api.get(`/currentplan/${URL_Alies}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorageDatas.token}`,
+        },
+      }).then((res)=>{
+    if(res.data.data.length > 0){
+ 
+      setCurrentPlan(res.data.data[0]?.currentPlan);
+
+    }
+    else{
+      setShowForm('Choose Your Plan')
+    }
+  
+      }).catch((error)=>{
+        console.log(error)
+      })
+      },[])
   async function handleVCardDelete() {
     setFormSubmitLoader(true);
     try {

@@ -273,7 +273,7 @@ const Edit_QR_Code = () => {
 
         <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Demo" ? (
+            {currentPlan === "Free Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>Trial Plan QRCode Image access denied!</small>

@@ -29,6 +29,12 @@ import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
+  const [key, setKey] = useState(0);
+
+
+  var reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
   let {
     ShowForm,
     setShowForm,
@@ -53,7 +59,9 @@ const VCard_Form_Edit = () => {
     setErrorPopupOpen,
     LiveLinkActivate,
     setLiveLinkActivate,
+    FreePlan,setFreePlan,
   } = useContext(Context);
+
   let navigate = useNavigate();
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
   let [formSliderToggle, setFormSliderToggle] = useState(false);
@@ -75,11 +83,12 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
-          if (res.data.data.length === 1) {
+          if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
-            setShowForm(res.data.data[0].status);
+            setStatus(res.data.data[0]?.status);
             setShowForm("VCard Templates");
           } else {
+            setShowForm('Choose Your Plan')
             // toast.error('Choose Your Plan First!')
           }
         })
@@ -95,6 +104,27 @@ const VCard_Form_Edit = () => {
       toast.error(error.message);
     }
   }, []);
+  useEffect(()=>{
+  api.get(`/currentplan/${URL_Alies}`,{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorageDatas.token}`,
+    },
+  }).then((res)=>{
+    if(res.data.data.length > 0){
+      setCurrentPlanActive(res.data.data.length);
+      setStatus(res.data.data[0].currentPlan)
+      setShowForm("VCard Templates");
+
+    }
+    else{
+      setShowForm('Choose Your Plan')
+    }
+
+  }).catch((error)=>{
+    console.log(error);
+  })
+  },[key])
   function handleFormShow(e) {
     setFormSliderToggle(false);
     if (CurrentPlanActive == 1) {
@@ -266,7 +296,28 @@ visibility
             className="form_sidenav"
             id={!formSliderToggle ? "slideClose" : "slideOpen"}
           >
-            {status != "successfull" ? (
+            {status != null? (
+                 <div
+                 className="menu_item"
+                 onClick={handleFormShow}
+                 id={ShowForm === "Basic Detail" ? "menu_active" : ""}
+               >
+                 {/* <i
+                   className="bx bxs-user"
+                   style={{ color: "darkgray" }}
+                   id="Basic Detail"
+                 ></i> */}
+                 <span
+                   className="material-symbols-outlined"
+                   style={{ color: "royalblue" }}
+                   id="Basic Detail"
+                 >
+                   info
+                 </span>
+                 <small id="Basic Detail">Basic Detail</small>
+               </div>
+           
+            ) : (
               <div
                 className="menu_item"
                 onClick={handleFormShow}
@@ -283,28 +334,7 @@ visibility
 
                 <small id="Choose Your Plan">Choose Your Plan</small>
               </div>
-            ) : (
-              <div
-                className="menu_item"
-                onClick={handleFormShow}
-                id={ShowForm === "Basic Detail" ? "menu_active" : ""}
-              >
-                {/* <i
-                  className="bx bxs-user"
-                  style={{ color: "darkgray" }}
-                  id="Basic Detail"
-                ></i> */}
-                <span
-                  className="material-symbols-outlined"
-                  style={{ color: "royalblue" }}
-                  id="Basic Detail"
-                >
-                  info
-                </span>
-                <small id="Basic Detail">Basic Detail</small>
-              </div>
             )}
-
             <div
               className="menu_item"
               onClick={handleFormShow}
@@ -557,11 +587,14 @@ visibility
             className="all_form_inputs"
             id={!formSliderToggle ? "formExpand" : "formMinimize"}
           >
-            {status == "successfull" ? (
-              <> {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}</>
+            {status!=null? (
+                <> {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}</>
             ) : (
+        
+           
               <>{ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}</>
             )}
+        
 
             {/* {status != "successfull" ? (
               <>{ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}</>

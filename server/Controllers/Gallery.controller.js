@@ -1,6 +1,7 @@
 import GalleryModel from "../Models/Gallery.model.js";
 import fs from "fs";
 import Payment from "../Models/Payment.model.js";
+import currentPlan from "../Models/Plan.model.js";
 import multer from "multer";
 // Import necessary functions from the url and path modules
 import { fileURLToPath } from "url";
@@ -33,19 +34,17 @@ export const PostGalleryData = async (req, res) => {
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
+      let checkFreePlan = await currentPlan.find({
+        URL_Alies: req.params.URL_Alies,
+      });
 
-      if (!checkCurrentPlan) {
+      if (!checkCurrentPlan || !checkFreePlan) {
         return res
           .status(400)
-          .json({ message: "Choose your Plan first!", error: err });
-      }
-      if(checkCurrentPlan.length <=0){
-        return res
-        .status(400)
-        .json({ message: "Choose your Plan first!", error: err });
-      }else{
-    //Plan 2 and 3
-    if (checkCurrentPlan[0].amount === 10 || checkCurrentPlan[0].amount === 599 || checkCurrentPlan[0].amount === 899 || checkCurrentPlan[0].amount === 1299) {
+          .json({ message: "Choose Your Plan First!"});
+      };
+          //Plan 2 and 3
+    if (checkFreePlan[0]?.PlanPrice === 0 || checkCurrentPlan[0]?.amount === 599 || checkCurrentPlan[0]?.amount === 899 || checkCurrentPlan[0]?.amount === 1299) {
       //check images
       let checkCurrentImages = await GalleryModel.find({
         URL_Alies:req.params.URL_Alies
@@ -57,7 +56,7 @@ export const PostGalleryData = async (req, res) => {
           .json({ message: "Image will not be there!", error: err });
       } else {
       
-        if(checkCurrentPlan[0].amount === 1299){
+        if(checkCurrentPlan[0]?.amount === 1299){
             //Basic Image File limit checked:
         if (checkCurrentImages.length < 10) {
           // Create a new image instance and save to MongoDB
@@ -91,7 +90,7 @@ export const PostGalleryData = async (req, res) => {
           });
         }
         };
-        if(checkCurrentPlan[0].amount === 899){
+        if(checkCurrentPlan[0]?.amount === 899){
           //Basic Image File limit checked:
       if (checkCurrentImages.length < 6) {
         // Create a new image instance and save to MongoDB
@@ -125,7 +124,7 @@ export const PostGalleryData = async (req, res) => {
         });
       }
       }
-      if(checkCurrentPlan[0].amount === 599){
+      if(checkCurrentPlan[0]?.amount === 599){
         //Basic Image File limit checked:
     if (checkCurrentImages.length < 4) {
       // Create a new image instance and save to MongoDB
@@ -159,7 +158,7 @@ export const PostGalleryData = async (req, res) => {
       });
     }
     }
-      if(checkCurrentPlan[0].amount === 10){
+      if(checkFreePlan[0]?.PlanPrice === 0 ){
         //Basic Image File limit checked:
     if (checkCurrentImages.length < 2) {
       // Create a new image instance and save to MongoDB
@@ -197,8 +196,14 @@ export const PostGalleryData = async (req, res) => {
     } else {
       res.status(400).json({ message: "Plan not match!", error: err });
     }
+      // if(checkCurrentPlan.length<=0 || checkFreePlan.length <=0 ){
+      //   return res
+      //   .status(400)
+      //   .json({ message: "Plan Data Empty!" });
+      // }else{
+
     
-      }
+      // }
 
   
 

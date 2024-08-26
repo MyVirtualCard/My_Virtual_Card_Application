@@ -1,6 +1,7 @@
 
 import GoogleMapModel from "../Models/GoogleMap.model.js";
 import Payment from "../Models/Payment.model.js";
+import currentPlan from "../Models/Plan.model.js";
 //Read or get all user product data  from database:
 export const GetGoogleMapData = async (req, res) => {
   try {
@@ -23,83 +24,87 @@ export const PostGoogleMapData = async (req, res) => {
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
-
-  if (!checkCurrentPlan) {
+  let checkFreePlan = await currentPlan.find({
+    URL_Alies: req.params.URL_Alies,
+  });
+  if (!checkCurrentPlan ||  !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!", error: err });
-  }
-  if (checkCurrentPlan.length <= 0) {
-    return res
-      .status(400)
-      .json({ message: "Choose your Plan first!", error: err });
-  } else {
-    //Plan 2 and 3
-    if (
-      checkCurrentPlan[0].amount === 10 ||
-      checkCurrentPlan[0].amount === 599 ||
-      checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
-    ) {
-      //check images
-      let checkMapLength = await GoogleMapModel.find({
-        URL_Alies: req.params.URL_Alies,
-      });
-
-      if (!checkMapLength) {
-        return res
-          .status(400)
-          .json({ message: "GoogleMap  not be there!", error: err });
-      } else {
-        if (checkCurrentPlan[0].amount === 1299 || checkCurrentPlan[0].amount === 899 || checkCurrentPlan[0].amount === 599) {
-          //Basic Image File limit checked:
-          if (checkMapLength.length < 1) {
-            // Create a new image instance and save to MongoDB
-            const newGoogleIframe = new GoogleMapModel({
-              user: req.user.userName,
-              URL_Alies: req.body.URL_Alies,
-              GoogleIframe: req.body.GoogleIframe,
-            
-            });
-
-            await newGoogleIframe
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "GoogleMap IFrame uploaded!",
-                  data: newGoogleIframe,
-                });
-              })
-              .catch((error) => {
-                res.status(400).json({
-                  message: "Failed to save GoogleMap to database!",
-                  error: error.message,
-                });
+  };
+      //Plan 2 and 3
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
+      ) {
+        //check images
+        let checkMapLength = await GoogleMapModel.find({
+          URL_Alies: req.params.URL_Alies,
+        });
+  
+        if (!checkMapLength) {
+          return res
+            .status(400)
+            .json({ message: "GoogleMap  not be there!" });
+        } else {
+          if (checkCurrentPlan[0]?.amount === 1299 || checkCurrentPlan[0]?.amount === 899 || checkCurrentPlan[0]?.amount === 599) {
+            //Basic Image File limit checked:
+            if (checkMapLength.length < 1) {
+              // Create a new image instance and save to MongoDB
+              const newGoogleIframe = new GoogleMapModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                GoogleIframe: req.body.GoogleIframe,
+              
               });
-          } else {
-            res.status(400).json({
-              message:
-                "Max GoogleMap Upload limit crossed..Only accept 1 GoogleMap Details! ",
-            });
+  
+              await newGoogleIframe
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "GoogleMap IFrame uploaded!",
+                    data: newGoogleIframe,
+                  });
+                })
+                .catch((error) => {
+                  res.status(400).json({
+                    message: "Failed to save GoogleMap to database!",
+                    error: error.message,
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max GoogleMap Upload limit crossed..Only accept 1 GoogleMap Details! ",
+              });
+            }
+          }
+  
+          if (checkFreePlan[0]?.PlanPrice === 0) {
+            //Basic Image File limit checked:
+            if (checkMapLength.length < 0) {
+              res.status(400).json({
+                message: "GoogleMap  Access denied for Trial Plan!",
+                data: newGoogleIframe,
+              });
+            } else {
+              res.status(400).json({
+                message: "GoogleMap Access denied for Trial Plan!",
+              });
+            }
           }
         }
-
-        if (checkCurrentPlan[0].amount === 10) {
-          //Basic Image File limit checked:
-          if (checkMapLength.length < 0) {
-            res.status(400).json({
-              message: "GoogleMap  Access denied for Trial Plan!",
-              data: newGoogleIframe,
-            });
-          } else {
-            res.status(400).json({
-              message: "GoogleMap Access denied for Trial Plan!",
-            });
-          }
-        }
+      } else {
+        res.status(400).json({ message: "Plan not match!", error: err });
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!", error: err });
-    }
-  }
+
+  // if (checkCurrentPlan?.length <= 0 || checkFreePlan?.length<=0) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Choose your Plan first!" });
+  // } else {
+
+  // }
 };
 
 //   // //Read or get Specific User all Data  :

@@ -302,7 +302,7 @@ width: 90% !important;
           
         }
         .trial_single_template{
-          width: 100% !important;
+          width: 30% !important;
           height: 500px;
           background-color: #ffffff;
           // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
@@ -371,20 +371,20 @@ width: 90% !important;
             background: #d37ffa;
             border-radius: 2px;
           }
-          &:hover{
-              // height: 1500px;
-              scroll-behavior: smooth;
+          // &:hover{
+          //     // height: 1500px;
+          //     scroll-behavior: smooth;
   
          
-                  img{
-                      transform: translateY(-80%);
-                      // transition: height 2s;
-                      transition: all 10s ease;
-                      scroll-behavior: smooth;
-                  }
+          //         img{
+          //             transform: translateY(-80%);
+          //             // transition: height 2s;
+          //             transition: all 10s ease;
+          //             scroll-behavior: smooth;
+          //         }
            
           
-          }
+          // }
           &:hover{
             opacity: 0.8;
       

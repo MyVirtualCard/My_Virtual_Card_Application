@@ -1,5 +1,6 @@
 import BussinessModel from "../Models/BussinessHour.model.js";
 import Payment from "../Models/Payment.model.js";
+import currentPlan from "../Models/Plan.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const GetSocialMediaData = async (req, res) => {
@@ -30,18 +31,19 @@ export const PostSocialMediaData = async (req, res) => {
     let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
-    if (!checkCurrentPlan) {
-      return res.status(400).json({ message: "Plan not be there!" });
-    }
-    if (checkCurrentPlan.length <= 0) {
-       res.status(400).json({ message: "Choose your Plan first!" });
-    } else {
+    let checkFreePlan = await currentPlan.find({
+      URL_Alies: req.params.URL_Alies,
+    });
+
+    if (!checkCurrentPlan || !checkFreePlan) {
+      return res.status(400).json({ message: "Choose your Plan first!" });
+    };
       //Plan 2 and 3
       if (
-        checkCurrentPlan[0].amount === 10 ||
-        checkCurrentPlan[0].amount === 599 ||
-        checkCurrentPlan[0].amount === 899 ||
-        checkCurrentPlan[0].amount === 1299
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
       ) {
         //check images
         let checkBussinessHour = await BussinessModel.find({
@@ -53,7 +55,7 @@ export const PostSocialMediaData = async (req, res) => {
             .status(400)
             .json({ message: "Bussiness Hour Data will not be Inserted!" });
         } else {
-          if (checkCurrentPlan[0].amount === 1299) {
+          if (checkCurrentPlan[0]?.amount === 1299) {
             //Basic Image File limit checked:
             if (checkBussinessHour.length < 1) {
               // Create a new image instance and save to MongoDB
@@ -111,8 +113,8 @@ export const PostSocialMediaData = async (req, res) => {
             }
           }
           if (
-            checkCurrentPlan[0].amount === 599 ||
-            checkCurrentPlan[0].amount === 899
+            checkCurrentPlan[0]?.amount === 599 ||
+            checkCurrentPlan[0]?.amount === 899
           ) {
             //Basic Image File limit checked:
             if (checkBussinessHour.length < 1) {
@@ -170,9 +172,9 @@ export const PostSocialMediaData = async (req, res) => {
               });
             }
           }
-          if (checkCurrentPlan[0].amount === 10) {
+          if (checkFreePlan[0]?.PlanPrice === 0) {
             //Basic Image File limit checked:
-            if (checkBussinessHour.length < 0) {
+            if (checkBussinessHour?.length < 0) {
               res.status(400).json({
                 message: "Bussiness Timing Access denied for Trial Plan!",
              
@@ -188,8 +190,12 @@ export const PostSocialMediaData = async (req, res) => {
       } else {
         res.status(400).json({ message: "Plan not match!" });
       };
+    // if (checkCurrentPlan.length <= 0) {
+    //    res.status(400).json({ message: "Choose your Plan first!" });
+    // } else {
 
-    }
+
+    // }
 
     // if (!checkSocialMediaLength) {
     //     // Create a new image instance and save to MongoDB

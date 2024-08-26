@@ -14,11 +14,11 @@ import Context from "../../../../UseContext/Context";
 let Free_Plans = [
   {
     id: 1,
-    PlanName: "Trial Plan",
+    PlanName: "Free Plan",
     batches:
       "https://img.icons8.com/external-bearicons-flat-bearicons/64/external-Free-Trial-miscellany-texts-and-badges-bearicons-flat-bearicons.png",
     Duration: "30-Days",
-    PlanPrice: 10,
+    PlanPrice: 0,
     VCardCount: "01",
     Access: [
       {
@@ -369,6 +369,7 @@ const Plan = () => {
   let navigate = useNavigate();
   let { URL_Alies } = useParams();
   let {
+    FreePlan,setFreePlan,
     PaymentSuccessPopup,
     setPaymentSuccessPopup,
     currentPlan,
@@ -426,6 +427,9 @@ const Plan = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
+
+          reloadComponent();
+          navigate(`/${userName}/uadmin/user_vcard`)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -534,18 +538,42 @@ const Plan = () => {
         },
       })
       .then((res) => {
-    
-        setPlanActive(res.data.data);
-        setShowForm('VCard Templates')
-        setStatus(res.data.data[0].status);
-        setCurrentPlan(res.data.data[0].currentPlan);
+    if(res.data.data.length > 0){
+      setPlanActive(res.data.data);
+      setShowForm('VCard Templates')
+      setStatus(res.data?.data[0]?.status);
+      setCurrentPlan(res.data?.data[0]?.currentPlan);
+    }else{
+      setShowForm('Choose Your Plan')
+    }
+
       })
       .catch((error) => {
         console.log(error);
       });
     FetchUserRegisterData();
   }, [FormSubmitLoader,Seconds]);
+  //Free Plan
+  useEffect(()=>{
+    api.get(`/currentplan/${URL_Alies}`,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorageDatas.token}`,
+      },
+    }).then((res)=>{
+  if(res.data.data.length > 0){
+    setShowForm("VCard Templates");
+    setCurrentPlan(res.data.data[0]?.currentPlan);
+    setStatus(res.data.data[0]?.currentPlan);
+  }
+  else{
+    setShowForm('Choose Your Plan')
+  }
 
+    }).catch((error)=>{
+      console.log(error)
+    })
+    },[key])
   useEffect(() => {
     if (Seconds > 0) {
       const timerId = setTimeout(() => {
@@ -738,19 +766,7 @@ const Plan = () => {
                 ? `${currentPlan} Plan Subscribed!`
                 : "Choose Your Subscription"}
             </h5>
-            {/* {currentPlan != null ? (
-              <div className="actions">
-                <button
-                  onClick={()=>handlePayment(amount,localStorageDatas.token)}
-                  type="submit"
-                  {...currentPlan === null ? disabled : ""}
-                >
-                  <i className="bx bxs-bank"></i> Pay Now
-                </button>
-              </div>
-            ) : (
-              ""
-            )} */}
+        
           </div>
           <div className="note">
             <small>
@@ -837,25 +853,39 @@ const Plan = () => {
                 </div>
 
                 <div className="plan_action">
-                  <div
-                    onClick={() => {
-                      setCurrentPlan(data.PlanName);
-                      handle_Plan_Selection(data.PlanName),
-                      setPlanPrice(data.PlanPrice);
-                    }}
-                    className="action_div"
-                    id={currentPlan === data.PlanName ? "activePlan" : ""}
-                  >
-                    <button    onClick={() => {
-                          setAmount(Number(data.PlanPrice)),
-                            setPaymentPopup(true);
-                        }}
-                        id={status == "created" ? "disable" : ""}>
-                      {currentPlan === data.PlanName
-                        ? "Plan Selected"
-                        : "Choose Plan"}
-                    </button>
-                  </div>
+                {currentPlan === 'Free Plan' ? (
+              <div className="actions">
+                <button
+                  onClick={handlePlanSubmit}
+                  type="submit"
+                  {...currentPlan === null ? disabled : ""}
+                  className="activate_plan_btn"
+                >
+                <i className='bx bxs-hand-right'></i> Activate Plan
+                </button>
+              </div>
+            ) : (
+              <div
+              onClick={() => {
+                setCurrentPlan(data.PlanName);
+                handle_Plan_Selection(data.PlanName),
+                setPlanPrice(data.PlanPrice);
+              }}
+              className="action_div"
+              id={currentPlan === data.PlanName ? "activePlan" : ""}
+            >
+              <button    onClick={() => {
+                    setAmount(Number(data.PlanPrice))
+                     
+                  }}
+                  id={status == "created" ? "disable" : ""}>
+                {currentPlan === data.PlanName
+                  ? "Plan Selected"
+                  : "Choose Plan"}
+              </button>
+            </div>
+            )}
+              
                 </div>
        
               </div>

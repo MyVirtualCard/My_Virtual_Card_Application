@@ -1,5 +1,6 @@
 import PrivacyPolicyModel from "../Models/PrivacyPolicy.model.js";
 import Payment from "../Models/Payment.model.js";
+import currentPlan from "../Models/Plan.model.js";
 //Post basic detail data to database:
 
 export const PostPrivacyPolicyData = async (req, res) => {
@@ -10,61 +11,64 @@ export const PostPrivacyPolicyData = async (req, res) => {
     let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
-
-    if (!checkCurrentPlan) {
+    let checkFreePlan = await currentPlan.find({
+      URL_Alies: req.params.URL_Alies,
+    });
+    if (!checkCurrentPlan ||  !checkFreePlan) {
       return res.status(400).json({ message: "Plan not be there!" });
-    }
-    if (checkCurrentPlan.length <= 0) {
-      return res.status(400).json({ message: "Choose your Plan first!" });
-    } else {
-      //Plan 2 and 3
-      if (
-        checkCurrentPlan[0].amount === 10 ||
-        checkCurrentPlan[0].amount === 599 ||
-        checkCurrentPlan[0].amount === 899 ||
-        checkCurrentPlan[0].amount === 1299
-      ) {
-        //check images
-        let checkPrivacyPolicyLength = await PrivacyPolicyModel.find({
-          URL_Alies: req.params.URL_Alies,
-        });
-
-        if (!checkPrivacyPolicyLength) {
-          return res.status(400).json({ message: "Privacy Policy  not be there!" });
-        } else {
-          //Basic Image File limit checked:
-          if (checkPrivacyPolicyLength.length < 1) {
-            // Create a new image instance and save to MongoDB
-            const newPolicy= new PrivacyPolicyModel({
-              user: req.user.userName,
+    };
+          //Plan 2 and 3
+          if (
+            checkFreePlan[0]?.PlanPrice === 0 ||
+            checkCurrentPlan[0]?.amount === 599 ||
+            checkCurrentPlan[0]?.amount === 899 ||
+            checkCurrentPlan[0]?.amount === 1299
+          ) {
+            //check images
+            let checkPrivacyPolicyLength = await PrivacyPolicyModel.find({
               URL_Alies: req.params.URL_Alies,
-              PrivacyPolicy: req.body.PrivacyPolicy
             });
-
-            await newPolicy
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Privacy Policy saved!",
-                  data: newPolicy,
+    
+            if (!checkPrivacyPolicyLength) {
+              return res.status(400).json({ message: "Privacy Policy  not be there!" });
+            } else {
+              //Basic Image File limit checked:
+              if (checkPrivacyPolicyLength.length < 1) {
+                // Create a new image instance and save to MongoDB
+                const newPolicy= new PrivacyPolicyModel({
+                  user: req.user.userName,
+                  URL_Alies: req.params.URL_Alies,
+                  PrivacyPolicy: req.body.PrivacyPolicy
                 });
-              })
-              .catch((err) => {
-         
+    
+                await newPolicy
+                  .save()
+                  .then(() => {
+                    res.status(200).json({
+                      message: "Privacy Policy saved!",
+                      data: newPolicy,
+                    });
+                  })
+                  .catch((err) => {
+             
+                    res.status(400).json({
+                      message: "Failed to save Privacy Policy!",
+                    });
+                  });
+              } else {
                 res.status(400).json({
-                  message: "Failed to save Privacy Policy!",
+                  message: "Already Privacy Policy saved ! ",
                 });
-              });
+              }
+            }
           } else {
-            res.status(400).json({
-              message: "Already Privacy Policy saved ! ",
-            });
+            res.status(400).json({ message: "Plan not match!", error: err });
           }
-        }
-      } else {
-        res.status(400).json({ message: "Plan not match!", error: err });
-      }
-    }
+    // if (checkCurrentPlan.length <= 0) {
+    //   return res.status(400).json({ message: "Choose your Plan first!" });
+    // } else {
+
+    // }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

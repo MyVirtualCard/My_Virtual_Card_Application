@@ -142,7 +142,7 @@ const Products = () => {
 
           setFormSubmitLoader(false);
 
-          if (currentPlan === "Trial Plan" && ProductCount == 2) {
+          if (currentPlan === "Free Plan" && ProductCount == 2) {
             setTimeout(() => {
               setShowForm("Galleries");
             }, 2000);
@@ -344,7 +344,7 @@ const Products = () => {
         {!productFormOpen ? 
         <>
               <div className="add_new_product">
-          {currentPlan === "Trial Plan" && ProductCount != 2 ? (
+          {currentPlan === "Free Plan" && ProductCount != 2 ? (
             <button
               onClick={() => {
                 setProductFormOpen(true),
@@ -411,7 +411,7 @@ const Products = () => {
         </div>
                 <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Trial Plan" ? (
+            {currentPlan === "Free Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>
@@ -536,7 +536,8 @@ const Products = () => {
                           className="h-100 align-middle"
                           style={{ width: "30%" }}
                         >
-                          {data.ProductDescription}
+                
+                          {data.ProductDescription.slice(0, 20)}
                         </td>
                         <td
                           className="h-100 align-middle"
@@ -689,7 +690,7 @@ const Products = () => {
                 <label htmlFor="ProductDescription">
                   Description <sup>*</sup>
                 </label>
-                {/* 
+                
                 <Editor
                   id="ProductDescription"
                   name="ProductDescription"
@@ -712,8 +713,8 @@ const Products = () => {
                   }
                   placeholder="Enter Short Description"
                   style={{ height: "130px" }}
-                /> */}
-                <ReactQuill
+                />
+                {/* <ReactQuill
                   modules={modules}
                   formats={formats}
                   id="ProductDescription"
@@ -734,7 +735,7 @@ const Products = () => {
                   }
                   placeholder="Enter Short Description"
                   // style={{ height: "180px" }}
-                />
+                /> */}
                 <div className="error">{formik.errors.ProductDescription}</div>
               </div>
 

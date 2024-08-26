@@ -118,7 +118,7 @@ const Gallery = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
-          if (currentPlan === "Trial Plan" && GalleryCount == 2) {
+          if (currentPlan === "Free Plan" && GalleryCount == 2) {
             setTimeout(() => {
               setShowForm("Testimonials");
             }, 500);
@@ -300,7 +300,7 @@ const Gallery = () => {
           </p>
         </div>
         <div className="add_new_gallery">
-          {currentPlan === "Trial Plan" && GalleryCount != 2 ? (
+          {currentPlan === "Free Plan" && GalleryCount != 2 ? (
             <button onClick={() => setGalleryFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Gallery
             </button>
@@ -331,7 +331,7 @@ const Gallery = () => {
         </div>
         <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Trial Plan" ? (
+            {currentPlan === "Free Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>

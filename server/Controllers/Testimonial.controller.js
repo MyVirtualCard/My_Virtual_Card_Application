@@ -1,5 +1,5 @@
 import TestimonialModel from "../Models/Testimonial.model.js";
-
+import currentPlan from "../Models/Plan.model.js";
 import Payment from "../Models/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
@@ -30,180 +30,183 @@ export const postTestimonialData = async (req, res) => {
     let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
-
-    if (!checkCurrentPlan) {
+    let checkFreePlan = await currentPlan.find({
+      URL_Alies: req.params.URL_Alies,
+    });
+    if (!checkCurrentPlan ||  !checkFreePlan) {
       return res
         .status(400)
         .json({ message: "Plan not be there!"});
-    }
-    if (checkCurrentPlan.length <= 0) {
-      return res
-        .status(400)
-        .json({ message: "Choose your Plan first!"});
-    } else {
-      //Plan 2 and 3
-      if (
-        checkCurrentPlan[0].amount === 10 ||
-        checkCurrentPlan[0].amount === 599 ||
-        checkCurrentPlan[0].amount === 899 ||
-        checkCurrentPlan[0].amount === 1299
-      ) {
-        //check images
-        let checkTestimonialLength = await TestimonialModel.find({
-          URL_Alies:req.params.URL_Alies
-        });
-
-        if (!checkTestimonialLength) {
-          return res
-            .status(400)
-            .json({ message: "Client Data not be there!" });
+    };
+         //Plan 2 and 3
+         if (
+          checkFreePlan[0]?.PlanPrice === 0 ||
+          checkCurrentPlan[0]?.amount === 599 ||
+          checkCurrentPlan[0]?.amount === 899 ||
+          checkCurrentPlan[0]?.amount === 1299
+        ) {
+          //check images
+          let checkTestimonialLength = await TestimonialModel.find({
+            URL_Alies:req.params.URL_Alies
+          });
+  
+          if (!checkTestimonialLength) {
+            return res
+              .status(400)
+              .json({ message: "Client Data not be there!" });
+          } else {
+            if (checkCurrentPlan[0]?.amount === 1299) {
+              //Basic Image File limit checked:
+              if (checkTestimonialLength.length < 8) {
+                // Create a new image instance and save to MongoDB
+                const newTestimonial = new TestimonialModel({
+                  user: req.user.userName,
+                  URL_Alies:req.body.URL_Alies,
+                  ClientImage: req.body.ClientImage,
+                  ClientName: req.body.ClientName,
+                  ClientReviewDate:req.body.ClientReviewDate,
+                  ClientFeedback: req.body.ClientFeedback,
+                });
+  
+                await newTestimonial
+                  .save()
+                  .then(() => {
+                    res.status(200).json({
+                      message: "Testimonial slide uploaded!",
+                      data: newTestimonial,
+                    });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    res.status(400).json({
+                      message: "Failed to save image to database!",
+                      
+                    });
+                  });
+              } else {
+                res.status(400).json({
+                  message:"Max Slide Upload limit crossed..Only accept 8 Client Reviews! ",
+            
+                });
+              }
+            }
+            if (checkCurrentPlan[0]?.amount === 899) {
+              //Basic Image File limit checked:
+              if (checkTestimonialLength.length < 6) {
+                // Create a new image instance and save to MongoDB
+                const newTestimonial = new TestimonialModel({
+                  user: req.user.userName,
+                  URL_Alies:req.body.URL_Alies,
+                  ClientImage: req.body.ClientImage,
+                  ClientName: req.body.ClientName,
+                  ClientReviewDate:req.body.ClientReviewDate,
+                  ClientFeedback: req.body.ClientFeedback,
+                });
+  
+                await newTestimonial
+                  .save()
+                  .then(() => {
+                    res.status(200).json({
+                      message: "Testimonial slide uploaded!",
+                      data: newTestimonial,
+                    });
+                  })
+                  .catch((err) => {
+                  
+                    res.status(400).json({
+                      message: "Failed to save slide to database!",
+                     
+                    });
+                  });
+              }
+               else {
+                res.status(400).json({
+                  message:"Max Slide Upload limit crossed..Only accept 6 Client Reviews! ",
+               
+                });
+              }
+            }
+            if (checkCurrentPlan[0]?.amount === 599) {
+              //Basic Image File limit checked:
+              if (checkTestimonialLength.length < 4) {
+                // Create a new image instance and save to MongoDB
+                const newTestimonial = new TestimonialModel({
+                  user: req.user.userName,
+                  URL_Alies:req.body.URL_Alies,
+                  ClientImage: req.body.ClientImage,
+                  ClientName: req.body.ClientName,
+                  ClientReviewDate:req.body.ClientReviewDate,
+                  ClientFeedback: req.body.ClientFeedback,
+                });
+  
+                await newTestimonial
+                  .save()
+                  .then(() => {
+                    res.status(200).json({
+                      message: "Testimonial slide uploaded!",
+                      data: newTestimonial,
+                    });
+                  })
+                  .catch((err) => {
+                    console.log(err.message);
+                    res.status(400).json({
+                      message: "Failed to save slide to database!",
+                     
+                    });
+                  });
+              } else {
+                res.status(400).json({
+                  message:"Max Slide Upload limit crossed..Only accept 4 Client Reviews! ",
+              
+                });
+              }
+            }
+            if (checkFreePlan[0]?.PlanPrice === 0) {
+              //Basic Image File limit checked:
+              if (checkTestimonialLength.length < 2) {
+                // Create a new image instance and save to MongoDB
+                const newTestimonial = new TestimonialModel({
+                  user: req.user.userName,
+                  URL_Alies:req.body.URL_Alies,
+                  ClientImage: req.body.ClientImage,
+                  ClientName: req.body.ClientName,
+                  ClientReviewDate:req.body.ClientReviewDate,
+                  ClientFeedback: req.body.ClientFeedback,
+                });
+  
+                await newTestimonial
+                  .save()
+                  .then(() => {
+                    res.status(200).json({
+                      message: "Testimonial slide uploaded!",
+                      data: newTestimonial,
+                    });
+                  })
+                  .catch((err) => {
+                    console.log(err.message);
+                    res.status(400).json({
+                      message: "Failed to save slide to database!",
+                     
+                    });
+                  });
+              } else {
+                res.status(400).json({
+                  message:"Max Slide Upload limit crossed..Only accept 2 Client Reviews! ",
+              
+                });
+              }
+            }
+          }
         } else {
-          if (checkCurrentPlan[0].amount === 1299) {
-            //Basic Image File limit checked:
-            if (checkTestimonialLength.length < 8) {
-              // Create a new image instance and save to MongoDB
-              const newTestimonial = new TestimonialModel({
-                user: req.user.userName,
-                URL_Alies:req.body.URL_Alies,
-                ClientImage: req.body.ClientImage,
-                ClientName: req.body.ClientName,
-                ClientReviewDate:req.body.ClientReviewDate,
-                ClientFeedback: req.body.ClientFeedback,
-              });
-
-              await newTestimonial
-                .save()
-                .then(() => {
-                  res.status(200).json({
-                    message: "Testimonial slide uploaded!",
-                    data: newTestimonial,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err);
-                  res.status(400).json({
-                    message: "Failed to save image to database!",
-                    
-                  });
-                });
-            } else {
-              res.status(400).json({
-                message:"Max Slide Upload limit crossed..Only accept 8 Client Reviews! ",
-          
-              });
-            }
-          }
-          if (checkCurrentPlan[0].amount === 899) {
-            //Basic Image File limit checked:
-            if (checkTestimonialLength.length < 6) {
-              // Create a new image instance and save to MongoDB
-              const newTestimonial = new TestimonialModel({
-                user: req.user.userName,
-                URL_Alies:req.body.URL_Alies,
-                ClientImage: req.body.ClientImage,
-                ClientName: req.body.ClientName,
-                ClientReviewDate:req.body.ClientReviewDate,
-                ClientFeedback: req.body.ClientFeedback,
-              });
-
-              await newTestimonial
-                .save()
-                .then(() => {
-                  res.status(200).json({
-                    message: "Testimonial slide uploaded!",
-                    data: newTestimonial,
-                  });
-                })
-                .catch((err) => {
-                
-                  res.status(400).json({
-                    message: "Failed to save slide to database!",
-                   
-                  });
-                });
-            }
-             else {
-              res.status(400).json({
-                message:"Max Slide Upload limit crossed..Only accept 6 Client Reviews! ",
-             
-              });
-            }
-          }
-          if (checkCurrentPlan[0].amount === 599) {
-            //Basic Image File limit checked:
-            if (checkTestimonialLength.length < 4) {
-              // Create a new image instance and save to MongoDB
-              const newTestimonial = new TestimonialModel({
-                user: req.user.userName,
-                URL_Alies:req.body.URL_Alies,
-                ClientImage: req.body.ClientImage,
-                ClientName: req.body.ClientName,
-                ClientReviewDate:req.body.ClientReviewDate,
-                ClientFeedback: req.body.ClientFeedback,
-              });
-
-              await newTestimonial
-                .save()
-                .then(() => {
-                  res.status(200).json({
-                    message: "Testimonial slide uploaded!",
-                    data: newTestimonial,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err.message);
-                  res.status(400).json({
-                    message: "Failed to save slide to database!",
-                   
-                  });
-                });
-            } else {
-              res.status(400).json({
-                message:"Max Slide Upload limit crossed..Only accept 4 Client Reviews! ",
-            
-              });
-            }
-          }
-          if (checkCurrentPlan[0].amount === 10) {
-            //Basic Image File limit checked:
-            if (checkTestimonialLength.length < 2) {
-              // Create a new image instance and save to MongoDB
-              const newTestimonial = new TestimonialModel({
-                user: req.user.userName,
-                URL_Alies:req.body.URL_Alies,
-                ClientImage: req.body.ClientImage,
-                ClientName: req.body.ClientName,
-                ClientReviewDate:req.body.ClientReviewDate,
-                ClientFeedback: req.body.ClientFeedback,
-              });
-
-              await newTestimonial
-                .save()
-                .then(() => {
-                  res.status(200).json({
-                    message: "Testimonial slide uploaded!",
-                    data: newTestimonial,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err.message);
-                  res.status(400).json({
-                    message: "Failed to save slide to database!",
-                   
-                  });
-                });
-            } else {
-              res.status(400).json({
-                message:"Max Slide Upload limit crossed..Only accept 2 Client Reviews! ",
-            
-              });
-            }
-          }
+          res.status(400).json({ message: "Plan not match!", error: err });
         }
-      } else {
-        res.status(400).json({ message: "Plan not match!", error: err });
-      }
-    }
+    // if (checkCurrentPlan.length <= 0) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Choose your Plan first!"});
+    // } else {
+ 
+    // }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

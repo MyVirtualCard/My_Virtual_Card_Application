@@ -141,7 +141,7 @@ const Services = () => {
           setFormSubmitLoader(false);
 
           setServiceCount(++ServiceCount);
-          if (currentPlan === "Trial Plan" && ServiceCount == 2) {
+          if (currentPlan === "Free Plan" && ServiceCount == 2) {
             setTimeout(() => {
               setShowForm("Products");
             }, 2000);
@@ -356,7 +356,7 @@ const Services = () => {
         {!serviceFormOpen ? 
         <>
                <div className="add_new_service">
-          {currentPlan === "Trial Plan" && ServiceCount != 2 ? (
+          {currentPlan === "Free Plan" && ServiceCount != 2 ? (
             <button
               onClick={() => {
                 setServiceFormOpen(true), setUpdateFormOpen(false),
@@ -420,7 +420,7 @@ const Services = () => {
         </div>
                 <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Trial Plan" ? (
+            {currentPlan === "Free Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>
@@ -670,7 +670,7 @@ const Services = () => {
                 <label htmlFor="ServiceDescription">
                   Description <sup>*</sup>
                 </label>
-                {/* <Editor
+                <Editor
                   {...formik.getFieldProps("ServiceDescription")}
                   value={
                     updateFormOpen
@@ -699,8 +699,8 @@ const Services = () => {
                       ? "input_error"
                       : "input_success"
                   }
-                /> */}
-                <ReactQuill
+                />
+                {/* <ReactQuill
                 modules={modules}
                 formats={formats}
                        id="ServiceDescription"
@@ -731,7 +731,7 @@ const Services = () => {
                     ? "input_error"
                     : "input_success"
                 }
-                />
+                /> */}
 
                 <div className="desc_error">
                   {formik.errors.ServiceDescription}

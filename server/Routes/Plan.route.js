@@ -7,6 +7,7 @@ let router=express.Router();
 
 
 router.get('/:URL_Alies',verifyToken,GetPlanData);
+
 router.post('/',verifyToken,PostPlanData);
  //Read Specific user all Data:
  router.get("/specificAll/:userName", verifyToken, readSpecificUserAllData);

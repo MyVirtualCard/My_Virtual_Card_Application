@@ -124,10 +124,11 @@ import Real_Estate_Demo from "./All_Components/All_VCards/Static_VCards/Real_Est
 import Beauty_Parlor_Demo from "./All_Components/All_VCards/Static_VCards/Beauty_Parlor_Demo.jsx";
 
 import Boutique_Demo from "./All_Components/All_VCards/Static_VCards/Boutique_Demo.jsx";
+import Doctor_Demo from "./All_Components/All_VCards/Static_VCards/Doctor_Demo.jsx";
 
 const App = () => {
   //URL Name state:
-
+  let[FreePlan,setFreePlan]=useState(null);
   let [ResetPassToken_Id, setResetPassToken_Id] = useState("");
   let [resetPassId, setResetPassId] = useState();
   let [resetPassToken, setResetPassToken] = useState();
@@ -387,6 +388,7 @@ const App = () => {
         />
         <Context.Provider
           value={{
+            FreePlan,setFreePlan,
             ResetPassToken_Id,
             setResetPassToken_Id,
             resetPassId,
@@ -820,6 +822,7 @@ const App = () => {
               <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
               <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
               <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
+              <Route path="/Doctor" element={<Doctor_Demo />} />
               {/* //Live Tempaltes */}
 
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (

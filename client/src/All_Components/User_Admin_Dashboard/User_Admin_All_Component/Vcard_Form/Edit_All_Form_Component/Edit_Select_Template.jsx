@@ -278,6 +278,8 @@ const Select_Template = () => {
         setFormSubmitLoader(false);
       });
   }
+
+
   return (
     <>
       <div className="select_vcard_template_container">
@@ -314,7 +316,7 @@ const Select_Template = () => {
         <div className="row_two">
           {currentPlan != null ? (
             <div className="image_container">
-              {currentPlan === "Trial Plan" ? (
+              {currentPlan === "Free Plan" ? (
                 <>
                   {FreeTemplate.map((data, index) => {
                     return (

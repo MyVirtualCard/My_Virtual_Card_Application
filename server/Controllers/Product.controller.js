@@ -1,6 +1,7 @@
 import ProductModel from "../Models/Products.model.js";
 import productUpload from "../Multer/product.js";
 import Payment from "../Models/Payment.model.js";
+import currentPlan from "../Models/Plan.model.js";
 import fs from "fs";
 import multer from "multer";
 
@@ -26,202 +27,205 @@ export const PostProductData = async (req, res) => {
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
-
-  if (!checkCurrentPlan) {
+  let checkFreePlan = await currentPlan.find({
+    URL_Alies: req.params.URL_Alies,
+  });
+  if (!checkCurrentPlan ||  !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!", error: err });
-  }
-  if (checkCurrentPlan.length <= 0) {
-    return res
-      .status(400)
-      .json({ message: "Choose your Plan first!", error: err });
-  } else {
-    //Plan 2 and 3
-    if (
-      checkCurrentPlan[0].amount === 10 ||
-      checkCurrentPlan[0].amount === 599 ||
-      checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
-    ) {
-      //check images
-      let checkProductLength = await ProductModel.find({
-        URL_Alies: req.params.URL_Alies,
-      });
-
-      if (!checkProductLength) {
-        return res
-          .status(400)
-          .json({ message: "Product will not be there!", error: err });
+  };
+      //Plan 2 and 3
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
+      ) {
+        //check images
+        let checkProductLength = await ProductModel.find({
+          URL_Alies: req.params.URL_Alies,
+        });
+  
+        if (!checkProductLength) {
+          return res
+            .status(400)
+            .json({ message: "Product will not be there!", error: err });
+        } else {
+          if (checkCurrentPlan[0]?.amount === 1299) {
+            //Basic Image File limit checked:
+            if (checkProductLength.length < 10) {
+              // Create a new image instance and save to MongoDB
+              const newProduct = new ProductModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                ProductName: req.body.ProductName,
+                ProductDescription: req.body.ProductDescription,
+                ProductImage: req.body.ProductImage,
+                ProductURL: req.body.ProductURL,
+                ProductType: req.body.ProductType,
+                ProductImageLink: req.body.ProductImageLink,
+                ProductPrice: req.body.ProductPrice,
+                // ProductImage: {
+                //   data: fs.readFileSync("uploads/" + req.file.filename),
+                //   contentType: req.file.mimetype,
+                // },
+              });
+  
+              await newProduct
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Product uploaded!",
+                    data: newProduct,
+                  });
+                })
+                .catch((error) => {
+                  res.status(400).json({
+                    message: "Failed to save Product to database!",
+                    error: error.message,
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Product Upload limit crossed..Only accept 10 Product Details! ",
+              });
+            }
+          }
+          if (checkCurrentPlan[0]?.amount === 899) {
+            //Basic Image File limit checked:
+            if (checkProductLength.length < 6) {
+              // Create a new image instance and save to MongoDB
+              const newProduct = new ProductModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                ProductName: req.body.ProductName,
+                ProductDescription: req.body.ProductDescription,
+                ProductType: req.body.ProductType,
+                ProductImageLink: req.body.ProductImageLink,
+                ProductURL: req.body.ProductURL,
+                ProductPrice: req.body.ProductPrice,
+                ProductImage: req.body.ProductImage,
+                // ProductImage: {
+                //   data: fs.readFileSync("uploads/" + req.file.filename),
+                //   contentType: req.file.mimetype,
+                // },
+              });
+  
+              await newProduct
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Product uploaded!",
+                    data: newProduct,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                  res.status(400).json({
+                    message: "Failed to save product to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Product Upload limit crossed..Only accept 6 Product Details! ",
+              });
+            }
+          }
+        
+          if (checkCurrentPlan[0]?.amount === 599) {
+            //Basic Image File limit checked:
+            if (checkProductLength.length < 4) {
+              // Create a new image instance and save to MongoDB
+              const newProduct = new ProductModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                ProductName: req.body.ProductName,
+                ProductDescription: req.body.ProductDescription,
+                ProductType: req.body.ProductType,
+                ProductImageLink: req.body.ProductImageLink,
+                ProductURL: req.body.ProductURL,
+                ProductPrice: req.body.ProductPrice,
+                ProductImage: req.body.ProductImage,
+                // ProductImage: {
+                //   data: fs.readFileSync("uploads/" + req.file.filename),
+                //   contentType: req.file.mimetype,
+                // },
+              });
+  
+              await newProduct
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Product uploaded!",
+                    data: newProduct,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                  res.status(400).json({
+                    message: "Failed to save product to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Product Upload limit crossed..Only accept 4 Product Details! ",
+              });
+            }
+          }
+          if (checkFreePlan[0]?.PlanPrice === 0) {
+            //Basic Image File limit checked:
+            if (checkProductLength.length < 2) {
+              // Create a new image instance and save to MongoDB
+              const newProduct = new ProductModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                ProductName: req.body.ProductName,
+                ProductDescription: req.body.ProductDescription,
+                ProductType: req.body.ProductType,
+                ProductImageLink: req.body.ProductImageLink,
+                ProductURL: req.body.ProductURL,
+                ProductPrice: req.body.ProductPrice,
+                ProductImage: req.body.ProductImage,
+                // ProductImage: {
+                //   data: fs.readFileSync("uploads/" + req.file.filename),
+                //   contentType: req.file.mimetype,
+                // },
+              });
+  
+              await newProduct
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Product uploaded!",
+                    data: newProduct,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                  res.status(400).json({
+                    message: "Failed to save product to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Product Upload limit crossed..Only accept 2 Product Details! ",
+              });
+            }
+          }
+        }
       } else {
-        if (checkCurrentPlan[0].amount === 1299) {
-          //Basic Image File limit checked:
-          if (checkProductLength.length < 10) {
-            // Create a new image instance and save to MongoDB
-            const newProduct = new ProductModel({
-              user: req.user.userName,
-              URL_Alies: req.body.URL_Alies,
-              ProductName: req.body.ProductName,
-              ProductDescription: req.body.ProductDescription,
-              ProductImage: req.body.ProductImage,
-              ProductURL: req.body.ProductURL,
-              ProductType: req.body.ProductType,
-              ProductImageLink: req.body.ProductImageLink,
-              ProductPrice: req.body.ProductPrice,
-              // ProductImage: {
-              //   data: fs.readFileSync("uploads/" + req.file.filename),
-              //   contentType: req.file.mimetype,
-              // },
-            });
-
-            await newProduct
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Product uploaded!",
-                  data: newProduct,
-                });
-              })
-              .catch((error) => {
-                res.status(400).json({
-                  message: "Failed to save Product to database!",
-                  error: error.message,
-                });
-              });
-          } else {
-            res.status(400).json({
-              message:
-                "Max Product Upload limit crossed..Only accept 10 Product Details! ",
-            });
-          }
-        }
-        if (checkCurrentPlan[0].amount === 899) {
-          //Basic Image File limit checked:
-          if (checkProductLength.length < 6) {
-            // Create a new image instance and save to MongoDB
-            const newProduct = new ProductModel({
-              user: req.user.userName,
-              URL_Alies: req.body.URL_Alies,
-              ProductName: req.body.ProductName,
-              ProductDescription: req.body.ProductDescription,
-              ProductType: req.body.ProductType,
-              ProductImageLink: req.body.ProductImageLink,
-              ProductURL: req.body.ProductURL,
-              ProductPrice: req.body.ProductPrice,
-              ProductImage: req.body.ProductImage,
-              // ProductImage: {
-              //   data: fs.readFileSync("uploads/" + req.file.filename),
-              //   contentType: req.file.mimetype,
-              // },
-            });
-
-            await newProduct
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Product uploaded!",
-                  data: newProduct,
-                });
-              })
-              .catch((err) => {
-                console.log(err.message);
-                res.status(400).json({
-                  message: "Failed to save product to database!",
-                });
-              });
-          } else {
-            res.status(400).json({
-              message:
-                "Max Product Upload limit crossed..Only accept 6 Product Details! ",
-            });
-          }
-        }
-      
-        if (checkCurrentPlan[0].amount === 599) {
-          //Basic Image File limit checked:
-          if (checkProductLength.length < 4) {
-            // Create a new image instance and save to MongoDB
-            const newProduct = new ProductModel({
-              user: req.user.userName,
-              URL_Alies: req.body.URL_Alies,
-              ProductName: req.body.ProductName,
-              ProductDescription: req.body.ProductDescription,
-              ProductType: req.body.ProductType,
-              ProductImageLink: req.body.ProductImageLink,
-              ProductURL: req.body.ProductURL,
-              ProductPrice: req.body.ProductPrice,
-              ProductImage: req.body.ProductImage,
-              // ProductImage: {
-              //   data: fs.readFileSync("uploads/" + req.file.filename),
-              //   contentType: req.file.mimetype,
-              // },
-            });
-
-            await newProduct
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Product uploaded!",
-                  data: newProduct,
-                });
-              })
-              .catch((err) => {
-                console.log(err.message);
-                res.status(400).json({
-                  message: "Failed to save product to database!",
-                });
-              });
-          } else {
-            res.status(400).json({
-              message:
-                "Max Product Upload limit crossed..Only accept 4 Product Details! ",
-            });
-          }
-        }
-        if (checkCurrentPlan[0].amount === 10) {
-          //Basic Image File limit checked:
-          if (checkProductLength.length < 2) {
-            // Create a new image instance and save to MongoDB
-            const newProduct = new ProductModel({
-              user: req.user.userName,
-              URL_Alies: req.body.URL_Alies,
-              ProductName: req.body.ProductName,
-              ProductDescription: req.body.ProductDescription,
-              ProductType: req.body.ProductType,
-              ProductImageLink: req.body.ProductImageLink,
-              ProductURL: req.body.ProductURL,
-              ProductPrice: req.body.ProductPrice,
-              ProductImage: req.body.ProductImage,
-              // ProductImage: {
-              //   data: fs.readFileSync("uploads/" + req.file.filename),
-              //   contentType: req.file.mimetype,
-              // },
-            });
-
-            await newProduct
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Product uploaded!",
-                  data: newProduct,
-                });
-              })
-              .catch((err) => {
-                console.log(err.message);
-                res.status(400).json({
-                  message: "Failed to save product to database!",
-                });
-              });
-          } else {
-            res.status(400).json({
-              message:
-                "Max Product Upload limit crossed..Only accept 2 Product Details! ",
-            });
-          }
-        }
+        res.status(400).json({ message: "Plan not match!", });
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!", });
-    }
-  }
+  // if (checkCurrentPlan.length <= 0) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Choose your Plan first!", error: err });
+  // } else {
+
+  // }
 };
 
 //   // //Read or get Specific User all Data  :

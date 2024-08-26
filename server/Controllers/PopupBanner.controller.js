@@ -1,5 +1,6 @@
 import PopupBannerModel from "../Models/PopupBanner.model.js";
 import Payment from "../Models/Payment.model.js";
+import currentPlan from "../Models/Plan.model.js";
 //Read or get all user basicDetail data  from database:
 
 // export const GetPopupBannerData = async (req, res) => {
@@ -109,8 +110,10 @@ export const PostPopupBannerData = async (req, res) => {
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
-
-  if (!checkCurrentPlan) {
+  let checkFreePlan = await currentPlan.find({
+    URL_Alies: req.params.URL_Alies,
+  });
+  if (!checkCurrentPlan || !checkFreePlan) {
     return res
       .status(400)
       .json({ message: "Choose your Plan first!", error: err });
@@ -122,10 +125,10 @@ export const PostPopupBannerData = async (req, res) => {
   } else {
     //Plan 2 and 3
     if (
-      checkCurrentPlan[0].amount === 10 ||
-      checkCurrentPlan[0].amount === 599 ||
-      checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
+      checkFreePlan[0]?.PlanPrice === 0 ||
+      checkCurrentPlan[0]?.amount === 599 ||
+      checkCurrentPlan[0]?.amount === 899 ||
+      checkCurrentPlan[0]?.amount === 1299
     ) {
       //check images
       let checkCurrentBanner = await PopupBannerModel.find({
@@ -137,7 +140,7 @@ export const PostPopupBannerData = async (req, res) => {
           .status(400)
           .json({ message: "Banner Data  not be Inserted!" });
       } else {
-        if (checkCurrentPlan[0].amount === 1299) {
+        if (checkCurrentPlan[0]?.amount === 1299) {
           //Basic Image File limit checked:
           if (checkCurrentBanner.length < 1) {
             // Create a new image instance and save to MongoDB
@@ -172,8 +175,8 @@ export const PostPopupBannerData = async (req, res) => {
           }
         }
         if (
-          checkCurrentPlan[0].amount === 599 ||
-          checkCurrentPlan[0].amount === 899
+          checkCurrentPlan[0]?.amount === 599 ||
+          checkCurrentPlan[0]?.amount === 899
         ) {
           //Basic Image File limit checked:
           if (checkCurrentBanner.length < 1) {
@@ -208,7 +211,7 @@ export const PostPopupBannerData = async (req, res) => {
             });
           }
         }
-        if (checkCurrentPlan[0].amount === 10) {
+        if (checkFreePlan[0]?.amount === 10) {
           //Basic Image File limit checked:
           if (checkCurrentBanner.length < 0) {
             res.status(400).json({

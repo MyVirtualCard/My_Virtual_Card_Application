@@ -118,7 +118,7 @@ const Testimonial = () => {
           toast.success(res.data.message);
           reloadComponent();
           setClientCount(++ClientCount);
-          if (currentPlan === "Trial Plan" && ClientCount == 2) {
+          if (currentPlan === "Free Plan" && ClientCount == 2) {
             setTimeout(() => {
               setShowForm("GoogleMap");
             }, 2000);
@@ -304,7 +304,7 @@ const Testimonial = () => {
         {!testimonialFormOpen && !updateFormOpen ? 
         <>
           <div className="add_new_testimonial">
-          {currentPlan === "Trial Plan" && ClientCount != 2 ? (
+          {currentPlan === "Free Plan" && ClientCount != 2 ? (
             <button onClick={() => setTestimonialFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Testimonial
             </button>
@@ -335,7 +335,7 @@ const Testimonial = () => {
         </div>
                 <div className="plan_based_service_add_note">
           <div className="note">
-            {currentPlan === "Trial Plan" ? (
+            {currentPlan === "Free Plan" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>
