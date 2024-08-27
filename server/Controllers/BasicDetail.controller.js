@@ -42,67 +42,68 @@ export const postBasicAllData = async (req, res) => {
     user: req.user.userName,
   });
   let checkFreePlan = await currentPlan.find({
-    user: req.user.userName,
+    URL_Alies: req.params.URL_Alies,
   });
-  if (!checkCurrentPlan) {
+  if (!checkCurrentPlan || !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!" });
-  }
-
-  if (checkCurrentPlan.length <= 0) {
-    return res.status(400).json({ message: "Choose your Plan first!" });
-  } else {
-    //All plan
-    if (
-      checkFreePlan[0].PlanPrice === 10 ||
-      checkCurrentPlan[0].amount === 599 ||
-      checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
-    ) {
-      let checkBasicDetailLength = await Vcard_URL.findOne({
-        URL_Alies: req.params.URL_Alies
-      });
-
-      if (!checkBasicDetailLength) {
-        return res
-          .status(400)
-          .json({ message: "This VCard URL doesn't exist!" });
-      } else {
-        let checkBasicData = await BasicDetails.findOne({
-          URL_Alies: req.params.URL_Alies,
+  };
+      //All plan
+      if (
+        checkFreePlan[0].PlanPrice === 0 ||
+        checkCurrentPlan[0].amount === 599 ||
+        checkCurrentPlan[0].amount === 899 ||
+        checkCurrentPlan[0].amount === 1299
+      ) {
+        let checkBasicDetailLength = await Vcard_URL.findOne({
+          URL_Alies: req.params.URL_Alies
         });
-
-        if (checkBasicData) {
-          return res.status(400).json({ message: "Basic Data Already Saved!" });
+  
+        if (!checkBasicDetailLength) {
+          return res
+            .status(400)
+            .json({ message: "This VCard URL doesn't exist!" });
         } else {
-          let data = {
-            user: req.user.userName,
+          let checkBasicData = await BasicDetails.findOne({
             URL_Alies: req.params.URL_Alies,
-            FirstName: req.body.FirstName,
-            LastName: req.body.LastName,
-            Email: req.body.Email,
-            MobileNumber: req.body.MobileNumber,
-            AlternateEmail: req.body.AlternateEmail,
-            AlternateMobileNumber: req.body.AlternateMobileNumber,
-            Location: req.body.Location,
-            Profession: req.body.Profession,
-          };
-          let createDatas = new BasicDetails(data);
-          try {
-            await createDatas.save();
-            return res.status(201).json({
-              message: "BasicDetail's saved!",
-              length: createDatas.length,
-              data: createDatas,
-            });
-          } catch (error) {
-            return res.status(401).json({ message: error.message });
+          });
+  
+          if (checkBasicData) {
+            return res.status(400).json({ message: "Basic Data Already Saved!" });
+          } else {
+            let data = {
+              user: req.user.userName,
+              URL_Alies: req.params.URL_Alies,
+              FirstName: req.body.FirstName,
+              LastName: req.body.LastName,
+              Email: req.body.Email,
+              MobileNumber: req.body.MobileNumber,
+              AlternateEmail: req.body.AlternateEmail,
+              AlternateMobileNumber: req.body.AlternateMobileNumber,
+              Location: req.body.Location,
+              Profession: req.body.Profession,
+            };
+            let createDatas = new BasicDetails(data);
+            try {
+              await createDatas.save();
+              return res.status(201).json({
+                message: "BasicDetail's saved!",
+                length: createDatas.length,
+                data: createDatas,
+              });
+            } catch (error) {
+              return res.status(401).json({ message: error.message });
+            }
           }
         }
+      } else {
+        res.status(400).json({ message: "Plan not match!", error: err });
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!", error: err });
-    }
-  }
+
+  // if (checkCurrentPlan.length <= 0) {
+  //   return res.status(400).json({ message: "Choose your Plan first!" });
+  // } else {
+
+  // }
 };
 //Read or get Specific User basic Data  :
 export const readSpecificUserAllData = async (req, res) => {

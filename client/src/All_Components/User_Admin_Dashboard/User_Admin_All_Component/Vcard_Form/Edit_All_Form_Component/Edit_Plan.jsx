@@ -86,7 +86,7 @@ let Basic_Plans = [
     batches: basic,
     Duration: "Yearly",
     PlanPrice: 599,
-    VCardCount: "05",
+    VCardCount: "03",
     Access: [
       {
         id: 1,
@@ -168,7 +168,7 @@ let Standard_Plans = [
     batches: standard,
     Duration: "Yearly",
     PlanPrice: 899,
-    VCardCount: "08",
+    VCardCount: "06",
     Access: [
       {
         id: 1,
@@ -265,7 +265,7 @@ let EnterPrice_Plans = [
     batches: enterprice,
     Duration: "Yearly",
     PlanPrice: 1299,
-    VCardCount: "10",
+    VCardCount: "08",
     Access: [
       {
         id: 1,
@@ -489,7 +489,7 @@ const Plan = () => {
       key: import.meta.env.VITE_RAZORPAY_API_KEY,
       amount: order.amount,
       currency: order.currency,
-      name: `${userData.firstName} ${userData.lastName}`,
+      name: `${userData.firstName}`,
       description: "Test Transaction",
       image: userData.profile,
       order_id: order.id,

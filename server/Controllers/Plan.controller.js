@@ -16,6 +16,8 @@ export const PostPlanData = async (req, res) => {
         URL_Alies: req.body.URL_Alies,
         currentPlan: req.body.currentPlan,
         PlanPrice: req.body.PlanPrice,
+      
+        expireAt: new Date(Date.now() + 30*24*60*60*1000) // 30 days from now
       };
 
       const result = await currentPlan.create(data);

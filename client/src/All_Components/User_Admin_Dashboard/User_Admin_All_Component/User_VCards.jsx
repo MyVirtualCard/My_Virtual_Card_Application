@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import "./menuStyles/User_VCards.scss";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Context from "../../UseContext/Context";
@@ -60,17 +60,15 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
-        if(res.data.data.length > 0){
+        if (res.data.data.length > 0) {
           setFormSubmitLoader(false);
           setVCardCount(res.data.data);
-        }else{
+        } else {
           setFormSubmitLoader(false);
         }
-     
       })
       .catch((error) => {
         setFormSubmitLoader(false);
-
       });
   }, []);
 
@@ -88,27 +86,26 @@ const User_VCards = () => {
         console.log(error);
       });
   }, []);
-    //Free Plan
-    useEffect(()=>{
-      api.get(`/currentplan/${URL_Alies}`,{
+  //Free Plan
+  useEffect(() => {
+    api
+      .get(`/currentplan/${URL_Alies}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorageDatas.token}`,
         },
-      }).then((res)=>{
-    if(res.data.data.length > 0){
- 
-      setCurrentPlan(res.data.data[0]?.currentPlan);
-
-    }
-    else{
-      setShowForm('Choose Your Plan')
-    }
-  
-      }).catch((error)=>{
-        console.log(error)
       })
-      },[])
+      .then((res) => {
+        if (res.data.data.length > 0) {
+          setCurrentPlan(res.data.data[0]?.currentPlan);
+        } else {
+          setShowForm("Choose Your Plan");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   async function handleVCardDelete() {
     setFormSubmitLoader(true);
     try {
@@ -198,6 +195,7 @@ const User_VCards = () => {
         console.log(error);
       });
   }, []);
+
   async function fetchCurrentManageContent() {
     setFormSubmitLoader(true);
     try {
@@ -224,6 +222,81 @@ const User_VCards = () => {
 
   useEffect(() => {
     fetchCurrentManageContent();
+  }, []);
+
+  //Expire Date Timer:
+  // Expire timer
+
+  let [Days, setDays] = useState("00");
+  let [Hours, setHours] = useState("00");
+  let [Minutes, setMinutes] = useState("00");
+  let [Seconds, setSeconds] = useState("00");
+  let[ExpireDuration,setExpireDuration]=useState();
+  let interval = useRef();
+  //Date for expire:
+
+  useEffect(()=>{
+    if(CurrentPlan != null ? CurrentPlan : "No Plan"){
+       setExpireDuration(30)
+    };
+    if(CurrentPlan != null ? CurrentPlan : "No Plan"){
+      setExpireDuration(180)
+    }
+  },[])
+
+  console.log(ExpireDuration,currentPlan)
+  const currentDate = new Date();
+  const expirationDate = new Date(currentDate);
+  expirationDate.setDate(currentDate.getDate() + Number(30));
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedExpirationDate = expirationDate.toLocaleDateString('en-US', options);
+  const startTimer = () => {
+    const countdownDate = new Date(`${formattedExpirationDate}, 2024 00:00:00`).getTime();
+    interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (distance < 0) {
+        //Stop our timer
+        clearInterval(interval.current);
+      } else {
+        //update our timer
+        if (days < 10) {
+          setDays("0" + days);
+        } else {
+          setDays(days);
+        }
+
+        if (hours < 10) {
+          setHours("0" + hours);
+        } else {
+          setHours(hours);
+        }
+        if (minutes < 10) {
+          setMinutes("0" + minutes);
+        } else {
+          setMinutes(minutes);
+        }
+
+        if (seconds < 10) {
+          setSeconds("0" + seconds);
+        } else {
+          setSeconds(seconds);
+        }
+      }
+    }, 1000);
+  };
+  useEffect(() => {
+    startTimer();
+    return () => {
+      clearInterval(interval.current);
+    };
   }, []);
   return (
     <>
@@ -275,10 +348,36 @@ const User_VCards = () => {
             ""
           )}
         </div>
-        <div className="row_1">
-          <div className="title">
+        <div className="user_vcard_title">
+        <div className="title">
             <h5 className="fw-medium">All Your VCards</h5>
           </div>
+        </div>
+        <div className="row_1">
+        <div className="expire_time_row">
+          {/* //Timer_Box */}
+          {/* <div className="box">
+            <div className="time_box">
+              <h4>{Days}</h4>
+              <small>Day</small>
+            </div>
+        
+            <div className="time_box">
+              <h4>{Hours}</h4>
+              <small>Hours</small>
+            </div>
+       
+            <div className="time_box">
+              <h4>{Minutes}</h4>
+              <small>Minutes</small>
+            </div>
+     
+            <div className="time_box">
+              <h4>{Seconds}</h4>
+              <small>Seconds</small>
+            </div>
+          </div> */}
+        </div>
           <div className="actions">
             <Link>
               <button
@@ -317,6 +416,7 @@ const User_VCards = () => {
             </Link>
           </div>
         </div>
+    
         <div className="row_2">
           <div className="appoinment_container  ">
             <div className="container  table-responsive  rounded-10">
@@ -434,7 +534,16 @@ const User_VCards = () => {
                                   </CopyToClipboard>
                                 </td>
                               ) : (
-                                <td className="fw-light text-center align-items-center" style={{fontSize:'0.8rem',color:'orange'}}>Live link not available!..Less VCard Details Added</td>
+                                <td
+                                  className="fw-light text-center align-items-center"
+                                  style={{
+                                    fontSize: "0.8rem",
+                                    color: "orange",
+                                  }}
+                                >
+                                  Live link not available!..Less VCard Details
+                                  Added
+                                </td>
                               )}
                             </>
                           )}
@@ -448,7 +557,7 @@ const User_VCards = () => {
                           {/* <td className="fw-light plan">
                             <i className="bx bxs-group"></i>
                           </td> */}
-                          <td className="fw-bolder" >
+                          <td className="fw-bolder">
                             <small>
                               {data.createdAt
                                 .slice(0, 10)
@@ -458,9 +567,7 @@ const User_VCards = () => {
                             </small>
                           </td>
                           <td className="fw-light">
-                            
                             <button
-                             
                               onClick={async () => {
                                 localStorage.setItem(
                                   "URL_Alies",
@@ -471,16 +578,19 @@ const User_VCards = () => {
                                 );
                                 // setShowForm('Basic Details')
                               }}
-                            >Edit</button>
+                            >
+                              Edit
+                            </button>
                             <button
-                            
                               style={{ color: "red" }}
                               onClick={() => {
                                 // handleVCardDelete(data.URL_Alies);
                                 setURL_Alies(data.URL_Alies);
                                 setVcardDeleteToggle(true);
                               }}
-                            >Delete</button>
+                            >
+                              Delete
+                            </button>
                             {/* <i className="bx bx-dots-vertical-rounded"></i> */}
                           </td>
                         </tr>

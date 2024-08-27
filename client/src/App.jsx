@@ -125,6 +125,9 @@ import Beauty_Parlor_Demo from "./All_Components/All_VCards/Static_VCards/Beauty
 
 import Boutique_Demo from "./All_Components/All_VCards/Static_VCards/Boutique_Demo.jsx";
 import Doctor_Demo from "./All_Components/All_VCards/Static_VCards/Doctor_Demo.jsx";
+import Real_Estate from "./All_Components/All_VCards/Live_VCards/Real_Estate.jsx";
+import Beauty_Parlor from "./All_Components/All_VCards/Live_VCards/Beauty_Parlor.jsx";
+import Boutique from "./All_Components/All_VCards/Live_VCards/Boutique.jsx";
 
 const App = () => {
   //URL Name state:
@@ -847,6 +850,21 @@ const App = () => {
               )}
               {URL_Alies == URL_Alies && currentTemplate === 5 ? (
                 <Route path={`/:URL_Alies`} element={<Business_Consultant />} />
+              ) : (
+                ""
+              )}
+                {URL_Alies == URL_Alies && currentTemplate === 6 ? (
+                <Route path={`/:URL_Alies`} element={<Real_Estate />} />
+              ) : (
+                ""
+              )}
+                  {URL_Alies == URL_Alies && currentTemplate === 7 ? (
+                <Route path={`/:URL_Alies`} element={<Beauty_Parlor />} />
+              ) : (
+                ""
+              )}
+                      {URL_Alies == URL_Alies && currentTemplate === 8 ? (
+                <Route path={`/:URL_Alies`} element={<Boutique />} />
               ) : (
                 ""
               )}

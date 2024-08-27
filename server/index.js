@@ -9,7 +9,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import Razorpay from "razorpay";
 import multer from "multer";
-//All api route importing
+//Import Routes:
 import RegisterRoute from "./Routes/Register.route.js";
 import VerifyOTP from "./Routes/VerifyOTP.route.js";
 import LoginRoute from "./Routes/Login.route.js";
@@ -87,7 +87,7 @@ const upload = multer({ storage });
 app.post('/upload-endpoint', upload.single('file'), (req, res) => {
   res.json({ fileName: req.file.filename, filePath: `/uploads/${req.file.filename}` });
 });
-// Api All Routes:
+// All Routes Middleware:
 app.use("/auth", RegisterRoute);
 app.use("/auth", VerifyOTP);
 app.use("/razorpay", RazorPaymentRoute);

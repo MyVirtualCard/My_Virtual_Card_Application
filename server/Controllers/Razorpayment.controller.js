@@ -60,6 +60,8 @@ export const VerifyPayment = async (req, res) => {
       payment.signature = razorpay_signature;
       payment.currentPlan = currentPlan;
       payment.status = "successfull";
+      // payment.expireAt= new Date(Date.now() + 365*24*60*60*1000) // 365 days from now
+
       await payment.save();
 
       res.json({ status: "success" });

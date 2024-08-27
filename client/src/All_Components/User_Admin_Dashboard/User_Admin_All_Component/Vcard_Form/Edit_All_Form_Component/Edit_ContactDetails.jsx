@@ -162,12 +162,12 @@ const Edit_ContactDetails = () => {
         })
         .then((res) => {
           setFormSubmitLoader(false);
-          // toast.success(res.data.message);
+          toast.success('Contact Data Saved!');
           reloadComponent();
         })
         .catch((error) => {
           setFormSubmitLoader(false);
-          toast.error(error.response.data.message);
+          // toast.error(error.response.data.message);
         });
     } catch (error) {
       console.log(error);

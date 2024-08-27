@@ -17,6 +17,9 @@ import Taxi_Service from "../../../../../assets/Digicards/Taxi_Service.png";
 import Fashion_Desinger from "../../../../../assets/Digicards/Fashion_Designer.png";
 import Manager from "../../../../../assets/Digicards/Manager-1.png";
 import Bussiness from "../../../../../assets/Digicards/Bussiness_Consultant.png";
+import RealEstate from "../../../../../assets/Digicards/Real_Estate.png";
+import BeautyParlor from "../../../../../assets/Digicards/Beauty_Parlor1.png";
+import BoutiqueShop from "../../../../../assets/Digicards/Boutique_Shop.png";
 import Footer from "../../../UserAdmin_Footer/Footer";
 import selected_gif from "../../../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../../../assets/animations/touch.gif";
@@ -75,26 +78,12 @@ let StandardTemplate = [
     image: Bussiness,
     TemplateName: "Bussiness Consultant",
   },
-  // {
-  //   id: 4,
-  //   image: card4,
-  // },
-  // {
-  //   id: 5,
-  //   image: card3,
-  // },
-  // {
-  //   id: 6,
-  //   image: card7,
-  // },
-  // {
-  //   id: 7,
-  //   image: card1,
-  // },
-  // {
-  //   id: 8,
-  //   image: card8,
-  // },
+  {
+    id: 6,
+    image: RealEstate,
+    TemplateName: "Real Estate",
+  },
+
 ];
 let EnterpriceTemplate = [
   {
@@ -122,6 +111,21 @@ let EnterpriceTemplate = [
     id: 5,
     image: Bussiness,
     TemplateName: "Bussiness Consultant",
+  },
+  {
+    id: 6,
+    image: RealEstate,
+    TemplateName: "Real Estate",
+  },
+  {
+    id: 7,
+    image: BeautyParlor,
+    TemplateName: "Beauty Parlor",
+  },
+  {
+    id: 8,
+    image: BoutiqueShop,
+    TemplateName: "Boutique Shop's",
   },
   // {
   //   id: 4,
@@ -279,7 +283,6 @@ const Select_Template = () => {
       });
   }
 
-
   return (
     <>
       <div className="select_vcard_template_container">
@@ -297,21 +300,37 @@ const Select_Template = () => {
 
           {VCardAdded == 0 ? (
             <button onClick={formik.handleSubmit} type="submit">
-              Save VCard Design<i className='bx bxs-save'></i>
+              Save VCard Design<i className="bx bxs-save"></i>
             </button>
           ) : (
             <button onClick={handleTemplateUpdate} type="submit">
-              Update VCard Design<span class="material-symbols-outlined">update</span>
+              Update VCard Design
+              <span class="material-symbols-outlined">update</span>
             </button>
           )}
-
-          {/* {savedTemplate==null   ? (
-            <button onClick={formik.handleSubmit} type="submit">
-              Save
-            </button>
+        </div>
+        <div className="total_template">
+          {currentPlan === "Free Plan" ? (
+            <p>Total VCard Design's - {FreeTemplate.length}</p>
           ) : (
             ""
-          )} */}
+          )}
+          {currentPlan === "Basic" ? (
+            <p>Total VCard Design's - {BasicTemplate.length}</p>
+          ) : (
+            ""
+          )}
+
+          {currentPlan === "Standard" ? (
+            <p>Total VCard Design's - {StandardTemplate.length}</p>
+          ) : (
+            ""
+          )}
+          {currentPlan === "Enterprises" ? (
+            <p>Total VCard Design's - {EnterpriceTemplate.length}</p>
+          ) : (
+            ""
+          )}
         </div>
         <div className="row_two">
           {currentPlan != null ? (
@@ -352,7 +371,9 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-
+    <div className="vcard_name">
+                          <h4>{data.TemplateName}</h4>
+                        </div>
                         <div
                           className="image_box trial_template"
                           id={
@@ -403,7 +424,9 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-
+    <div className="vcard_name">
+                          <h4>{data.TemplateName}</h4>
+                        </div>
                         <div className="image_box">
                           <img src={data.image} alt="" />
                         </div>
@@ -493,7 +516,9 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-
+    <div className="vcard_name">
+                          <h4>{data.TemplateName}</h4>
+                        </div>
                         <div className="image_box">
                           <img src={data.image} alt="" />
                         </div>
@@ -511,6 +536,7 @@ const Select_Template = () => {
             </div>
           )}
         </div>
+
         <div className="row_3">
           <Footer />
         </div>
