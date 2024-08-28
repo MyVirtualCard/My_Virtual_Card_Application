@@ -29,9 +29,9 @@ import axios from "axios";
 import { useFormik } from "formik";
 let FreeTemplate = [
   {
-    id: 2,
-    image: Taxi_Service,
-    TemplateName: "Taxi Service",
+    id: 5,
+    image: Bussiness,
+    TemplateName: "Bussiness Consultant",
   },
 ];
 let BasicTemplate = [
