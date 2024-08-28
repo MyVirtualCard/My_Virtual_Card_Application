@@ -133,47 +133,47 @@ const Edit_ContactDetails = () => {
   let [InquiryFormToggle, setInquiryFormToggle] = useState(true);
   let [SocialMediaToggle, setSocialMediaToggle] = useState(true);
   let [ContactDetailsToggle, setContactDetailsToggle] = useState(true);
-  async function handleManageContentSubmit(e) {
-    // e.preventDefault();
-    setFormSubmitLoader(true);
-    let data = {
-      URL_Alies: URL_Alies,
-      BannerActive: BannerToggle,
-      BussinessHour: BussinessHourToggle,
-      GoogleMap: GoogleMapToggle,
-      Appoinment: AppoinmentToggle,
-      Service: ServiceToggle,
-      Product: ProductToggle,
-      Gallery: GalleryToggle,
-      Testimonial: TestimonialToggle,
-      QRCode: QRCodeToggle,
-      FeedbackForm: FeedbackFormToggle,
-      InquiryForm: InquiryFormToggle,
-      ContactDetails: ContactDetailsToggle,
-      SocialMedia: SocialMediaToggle,
-    };
-    try {
-      await api
-        .post(`/manageContent/${URL_Alies}`, data, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorageDatas.token}`,
-          },
-        })
-        .then((res) => {
-          setFormSubmitLoader(false);
-          toast.success('Contact Data Saved!');
-          reloadComponent();
-        })
-        .catch((error) => {
-          setFormSubmitLoader(false);
-          // toast.error(error.response.data.message);
-        });
-    } catch (error) {
-      console.log(error);
-      setFormSubmitLoader(false);
-    }
-  }
+  // async function handleManageContentSubmit(e) {
+  //   // e.preventDefault();
+  //   setFormSubmitLoader(true);
+  //   let data = {
+  //     URL_Alies: URL_Alies,
+  //     BannerActive: BannerToggle,
+  //     BussinessHour: BussinessHourToggle,
+  //     GoogleMap: GoogleMapToggle,
+  //     Appoinment: AppoinmentToggle,
+  //     Service: ServiceToggle,
+  //     Product: ProductToggle,
+  //     Gallery: GalleryToggle,
+  //     Testimonial: TestimonialToggle,
+  //     QRCode: QRCodeToggle,
+  //     FeedbackForm: FeedbackFormToggle,
+  //     InquiryForm: InquiryFormToggle,
+  //     ContactDetails: ContactDetailsToggle,
+  //     SocialMedia: SocialMediaToggle,
+  //   };
+  //   try {
+  //     await api
+  //       .post(`/manageContent/${URL_Alies}`, data, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorageDatas.token}`,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         setFormSubmitLoader(false);
+  //         // toast.success('Contact Data Saved!');
+  //         reloadComponent();
+  //       })
+  //       .catch((error) => {
+  //         setFormSubmitLoader(false);
+  //         // toast.error(error.response.data.message);
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //     setFormSubmitLoader(false);
+  //   }
+  // }
 
 
   async function handleBasicFormUpdate(e) {
@@ -243,7 +243,7 @@ const Edit_ContactDetails = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
-          handleManageContentSubmit();
+          // handleManageContentSubmit();
           reloadComponent();
           setTimeout(()=>{
             setShowForm('Social Link - Website')

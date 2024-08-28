@@ -175,6 +175,19 @@ const Select_Template = () => {
     errorPopupOpen,
     setErrorPopupOpen,
   } = useContext(Context);
+  let [BannerToggle, setBannerToggle] = useState(true);
+  let [BussinessHourToggle, setBussinessHourToggle] = useState(true);
+  let [GoogleMapToggle, setGoogleMapToggle] = useState(true);
+  let [AppoinmentToggle, setAppoinmentToggle] = useState(true);
+  let [ServiceToggle, setServiceToggle] = useState(true);
+  let [ProductToggle, setProductToggle] = useState(true);
+  let [GalleryToggle, setGalleryToggle] = useState(true);
+  let [TestimonialToggle, setTestimonialToggle] = useState(true);
+  let [QRCodeToggle, setQRCodeToggle] = useState(true);
+  let [FeedbackFormToggle, setFeedbackFormToggle] = useState(true);
+  let [InquiryFormToggle, setInquiryFormToggle] = useState(true);
+  let [SocialMediaToggle, setSocialMediaToggle] = useState(true);
+  let [ContactDetailsToggle, setContactDetailsToggle] = useState(true);
   // let [currentTemplate, setCurrentTemplate] = useState(null);
   let [VCardAdded, setVCardAdded] = useState(0);
   let [savedTemplate, setSavedTemplate] = useState(null);
@@ -221,7 +234,47 @@ const Select_Template = () => {
   useEffect(() => {
     fetchCurrentTemplate();
   }, []);
-
+  async function handleManageContentSubmit(e) {
+    // e.preventDefault();
+    setFormSubmitLoader(true);
+    let data = {
+      URL_Alies: URL_Alies,
+      BannerActive: BannerToggle,
+      BussinessHour: BussinessHourToggle,
+      GoogleMap: GoogleMapToggle,
+      Appoinment: AppoinmentToggle,
+      Service: ServiceToggle,
+      Product: ProductToggle,
+      Gallery: GalleryToggle,
+      Testimonial: TestimonialToggle,
+      QRCode: QRCodeToggle,
+      FeedbackForm: FeedbackFormToggle,
+      InquiryForm: InquiryFormToggle,
+      ContactDetails: ContactDetailsToggle,
+      SocialMedia: SocialMediaToggle,
+    };
+    try {
+      await api
+        .post(`/manageContent/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setFormSubmitLoader(false);
+          // toast.success('Contact Data Saved!');
+          reloadComponent();
+        })
+        .catch((error) => {
+          setFormSubmitLoader(false);
+          // toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+      setFormSubmitLoader(false);
+    }
+  }
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
@@ -245,6 +298,7 @@ const Select_Template = () => {
         .then((res) => {
           toast.success(res.data.message);
           setFormSubmitLoader(false);
+          handleManageContentSubmit();
           setTimeout(() => {
             setShowForm("Contact Details");
           }, 1000);

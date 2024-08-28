@@ -5,7 +5,7 @@ import axios from "axios";
 import Context from "./All_Components/UseContext/Context";
 import { Navigate, useNavigate } from "react-router-dom";
 // import { Toaster, toast } from "react-hot-toast";
-import { ToastContainer, toast,Bounce, Slide } from 'react-toastify';
+import { ToastContainer, toast,Bounce, Slide, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const FallbackWithDelay = ({ delay, fallback }) => {
   const [showFallback, setShowFallback] = useState(false);
@@ -381,7 +381,7 @@ const App = () => {
       <div className="App_container">
         <ToastContainer
           position="top-center"
-          autoClose={3000}
+          autoClose={1000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -390,7 +390,7 @@ const App = () => {
           draggable
           pauseOnHover
           theme="light"
-          transition= {Slide}
+          transition= {Zoom}
 
         
         />

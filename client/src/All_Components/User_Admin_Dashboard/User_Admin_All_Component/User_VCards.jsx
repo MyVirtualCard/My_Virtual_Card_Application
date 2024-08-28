@@ -244,7 +244,7 @@ const User_VCards = () => {
     }
   },[])
 
-  console.log(ExpireDuration,currentPlan)
+  console.log(LiveLinkActivate)
   const currentDate = new Date();
   const expirationDate = new Date(currentDate);
   expirationDate.setDate(currentDate.getDate() + Number(30));
