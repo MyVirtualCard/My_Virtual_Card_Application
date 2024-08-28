@@ -762,9 +762,11 @@ END:VCARD
                               </div>
 
                               <div className="list_detail">
-                                <p>
-                                  {data.MobileNumber || "(+91) -----------"}
-                                </p>
+                              <p>
+                                {data.MobileNumber
+                                  ? `(+91) ${data.MobileNumber}`
+                                  : "(+91) -----------"}
+                              </p>
                               </div>
                             </a>
                             {data.AlternateEmail.length > 0 ? (
