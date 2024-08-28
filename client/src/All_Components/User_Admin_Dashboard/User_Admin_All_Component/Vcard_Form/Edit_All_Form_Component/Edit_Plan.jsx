@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import standard from "../../../../../assets/animations/standard.gif";
 import basic from "../../../../../assets/animations/basic.gif";
 import enterprice from "../../../../../assets/animations/enterprice.gif";
-import { toast, Toaster } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";

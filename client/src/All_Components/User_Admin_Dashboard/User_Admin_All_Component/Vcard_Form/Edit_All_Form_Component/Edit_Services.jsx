@@ -10,7 +10,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { convertToBase64ServiceImage } from "../../../../Helper/convert";
 import Context from "../../../../UseContext/Context";
 import { ServiceValidateShema } from "../../../../Helper/ServiceValidate";

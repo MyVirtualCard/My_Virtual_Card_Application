@@ -4,7 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Context from "./All_Components/UseContext/Context";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+// import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const FallbackWithDelay = ({ delay, fallback }) => {
   const [showFallback, setShowFallback] = useState(false);
 
@@ -377,17 +379,20 @@ const App = () => {
   return (
     <>
       <div className="App_container">
-        <Toaster
-          toastOptions={{
-            style: {
-              position: "relative",
-              top: "60px",
-              left: "50px",
-              right: "auto",
-              bottom: "auto",
-              zIndex: "1000",
-            },
-          }}
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition= {Slide}
+
+        
         />
         <Context.Provider
           value={{

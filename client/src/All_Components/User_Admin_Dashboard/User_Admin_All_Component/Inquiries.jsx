@@ -2,7 +2,7 @@ import React,{useState,useContext,useEffect} from "react";
 import "./menuStyles/Inquiries.scss";
 import Context from "../../UseContext/Context";
 import axios from "axios";
-import {toast,Toaster,useToaster} from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Footer from "../UserAdmin_Footer/Footer";
 const Inquiries = () => {
   let {

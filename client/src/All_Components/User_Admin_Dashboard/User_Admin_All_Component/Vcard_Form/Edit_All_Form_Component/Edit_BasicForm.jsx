@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import { BasicDetailValidateShema } from "../../../../Helper/BasicDetailValiate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 const BasicForm = () => {
   let { URL_Alies } = useParams();
   let {

@@ -24,7 +24,7 @@ import Context from "../../UseContext/Context";
 import axios, { all } from "axios";
 import { convertToBase64Profile } from "../../Helper/convert";
 import { useFormik } from "formik";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Slide } from "react-slideshow-image";

@@ -5,7 +5,7 @@ import site_logo from "../../../assets/Authentication_image/BrandLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Context from "../../UseContext/Context";
 const ResendOTP = () => {
   let inputRefFocus=useRef(null)

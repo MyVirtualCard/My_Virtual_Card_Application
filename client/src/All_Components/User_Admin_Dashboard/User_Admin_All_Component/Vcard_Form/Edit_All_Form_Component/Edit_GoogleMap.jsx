@@ -3,7 +3,7 @@ import "./Edit_form_styles/Edit_GoogleMap.scss";
 import Context from "../../../../UseContext/Context";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { GoogleMapValidateSchema } from "../../../../Helper/GoogleMapValidate";
 import axios from "axios";
 import step1 from "../../../../../assets/GoogleMap_Demo/step1.png";

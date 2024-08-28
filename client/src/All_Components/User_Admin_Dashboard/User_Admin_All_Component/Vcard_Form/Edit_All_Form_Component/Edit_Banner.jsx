@@ -7,7 +7,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Context from "../../../../UseContext/Context";
 const Banner = () => {
   let { URL_Alies } = useParams();

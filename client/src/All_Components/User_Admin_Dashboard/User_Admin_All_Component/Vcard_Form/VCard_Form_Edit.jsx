@@ -21,7 +21,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Context from "../../../UseContext/Context";
 import Edit_Plan from "./Edit_All_Form_Component/Edit_Plan";
-import toast from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Edit_PrivacyPolicy from "./Edit_All_Form_Component/Edit_PrivacyPolicy";
 import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 import Edit_GoogleMap from "./Edit_All_Form_Component/Edit_GoogleMap";

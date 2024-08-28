@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import "./Edit_form_styles/Edit_Manage_Session.scss";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import toast from 'react-hot-toast'
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Context from "../../../../UseContext/Context";
 const Manage_Session = () => {
   let [ManageSessionToggle, setManageSessionToggle] = useState(false);

@@ -10,7 +10,7 @@ import 'react-quill/dist/quill.snow.css';
 import { modules,formats } from "../../Quill";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { convertToBase64ClientImage } from "../../../../Helper/convert";
 import Context from "../../../../UseContext/Context";
 const Testimonial = () => {

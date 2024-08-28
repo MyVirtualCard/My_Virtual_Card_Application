@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import "./Edit_form_styles/Edit_Select_Template.scss";
-import { toast, Toaster } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import card1 from "../../../../../assets/Digicards/1.png";
 
 import card2 from "../../../../../assets/Digicards/2.png";

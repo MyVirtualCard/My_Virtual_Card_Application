@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./Edit_form_styles/Edit_Business_Hour.scss";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Context from "../../../../UseContext/Context";
 const Business_Hour = () => {
   let { URL_Alies } = useParams();

@@ -7,7 +7,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { convertToBase64GalleryImage } from "../../../../Helper/convert";
 import { GalleryValidateShema } from "../../../../Helper/GalleryValidate";
 import Context from "../../../../UseContext/Context";

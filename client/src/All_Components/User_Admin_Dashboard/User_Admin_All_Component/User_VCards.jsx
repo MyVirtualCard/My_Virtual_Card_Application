@@ -5,7 +5,7 @@ import Context from "../../UseContext/Context";
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Footer from "../UserAdmin_Footer/Footer";
 const User_VCards = () => {
   // let { userName } = useParams();

@@ -4,7 +4,7 @@ import { Editor } from "primereact/editor";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Toaster,toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Context from "../../../../UseContext/Context";
 
 const Terms_Conditions = () => {
