@@ -1,7 +1,7 @@
 
 import ManageContentModel from "../Models/ManageContent.model.js";
 import Payment from "../Models/Payment.model.js";
-
+import currentPlan from "../Models/Plan.model.js";
 //Post basic detail data to database:
 export const PostManageContentData = async (req, res) => {
   try {
@@ -9,71 +9,75 @@ export const PostManageContentData = async (req, res) => {
     let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
     });
-    if (!checkCurrentPlan) {
+    let checkFreePlan = await currentPlan.find({
+      URL_Alies: req.params.URL_Alies,
+    });
+    if (!checkCurrentPlan || !checkFreePlan) {
       return res.status(400).json({ message: "Plan not be there!" });
-    }
-    if (checkCurrentPlan.length <= 0) {
-      return res.status(400).json({ message: "Choose your Plan first!" });
-    } else {
-      //Plan 2 and 3
-      if (
-        checkCurrentPlan[0].amount === 10 ||
-        checkCurrentPlan[0].amount === 599 ||
-        checkCurrentPlan[0].amount === 899 ||
-        checkCurrentPlan[0].amount === 1299
-      ) {
-        //check images
-        let checkPopupBannerLength = await ManageContentModel.find({
-          URL_Alies: req.params.URL_Alies,
-        });
-
-        if (!checkPopupBannerLength) {
-          return res.status(400).json({ message: "ManageContent details not be there!" });
-        } else {
-          //Basic Image File limit checked:
-          if (checkPopupBannerLength.length < 1) {
-            // Create a new image instance and save to MongoDB
-            const newManageContent = new ManageContentModel({
-              user: req.user.userName,
+    };
+          //Plan 2 and 3
+          if (
+            checkFreePlan[0].PlanPrice === 0 ||
+            checkCurrentPlan[0].amount === 599 ||
+            checkCurrentPlan[0].amount === 899 ||
+            checkCurrentPlan[0].amount === 1299
+          ) {
+            //check images
+            let checkPopupBannerLength = await ManageContentModel.find({
               URL_Alies: req.params.URL_Alies,
-              BannerActive: req.body.BannerActive,
-              BussinessHour: req.body.BussinessHour,
-              GoogleMap:req.body.GoogleMap,
-              Appoinment: req.body.Appoinment,
-              Service: req.body.Service,
-              Product: req.body.Product,
-              Gallery: req.body.Gallery,
-              Testimonial: req.body.Testimonial,
-              QRCode: req.body.QRCode,
-              FeedbackForm: req.body.FeedbackForm,
-              InquiryForm: req.body.InquiryForm,
-              ContactDetails: req.body.ContactDetails,
-              SocialMedia:req.body.SocialMedia
             });
-
-            await newManageContent.save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Manage Content saved!",
-                  data: newManageContent,
+    
+            if (!checkPopupBannerLength) {
+              return res.status(400).json({ message: "ManageContent details not be there!" });
+            } else {
+              //Basic Image File limit checked:
+              if (checkPopupBannerLength.length < 1) {
+                // Create a new image instance and save to MongoDB
+                const newManageContent = new ManageContentModel({
+                  user: req.user.userName,
+                  URL_Alies: req.params.URL_Alies,
+                  BannerActive: req.body.BannerActive,
+                  BussinessHour: req.body.BussinessHour,
+                  GoogleMap:req.body.GoogleMap,
+                  Appoinment: req.body.Appoinment,
+                  Service: req.body.Service,
+                  Product: req.body.Product,
+                  Gallery: req.body.Gallery,
+                  Testimonial: req.body.Testimonial,
+                  QRCode: req.body.QRCode,
+                  FeedbackForm: req.body.FeedbackForm,
+                  InquiryForm: req.body.InquiryForm,
+                  ContactDetails: req.body.ContactDetails,
+                  SocialMedia:req.body.SocialMedia
                 });
-              })
-              .catch((err) => {
-                console.log(err);
+    
+                await newManageContent.save()
+                  .then(() => {
+                    res.status(200).json({
+                      message: "Manage Content saved!",
+                      data: newManageContent,
+                    });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    res.status(400).json({
+                      message: "Failed to save Manage Content Details!",
+                    });
+                  });
+              } else {
                 res.status(400).json({
-                  message: "Failed to save Manage Content Details!",
+                  message: "Already Manage Content detail saved ! ",
                 });
-              });
+              }
+            }
           } else {
-            res.status(400).json({
-              message: "Already Manage Content detail saved ! ",
-            });
+            res.status(400).json({ message: "Plan not match!", error: err });
           }
-        }
-      } else {
-        res.status(400).json({ message: "Plan not match!", error: err });
-      }
-    }
+    // if (checkCurrentPlan.length <= 0) {
+    //   return res.status(400).json({ message: "Choose your Plan first!" });
+    // } else {
+
+    // }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

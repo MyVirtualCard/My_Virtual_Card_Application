@@ -446,30 +446,34 @@ font-size: 0.8rem;
             }
           }
         }
-        .actions {
+        .register_actions {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          gap: 2rem;
+          // gap: 2rem;
           z-index: 500;
           margin: 0.5rem 0px;
           width: 100%;
+        
 
           .start {
             display: flex;
             align-items: center;
             justify-content: flex-start;
+   
+       
             a {
               text-decoration: none;
               color: #312727;
               width: 50%;
               font-weight: 550;
               font-size: 0.8rem;
+              margin-right: 2rem;
               button {
                 width: 100px;
                 padding: 10px 1rem;
                 background-color: #65ebff;
-                border-radius: 7px;
+                border-radius: 5px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -510,6 +514,7 @@ font-size: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
+        
             a {
               text-decoration: none;
               color: #333333;
@@ -520,7 +525,7 @@ font-size: 0.8rem;
                 width: 100px;
                 padding: 10px 1rem;
                 background-color: rgb(255, 255, 255);
-                border-radius: 10px;
+                border-radius: 5px;
                 display: flex;
                 align-items: center;
                 justify-content: center;

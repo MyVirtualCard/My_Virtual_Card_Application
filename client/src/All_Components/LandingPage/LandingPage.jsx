@@ -256,7 +256,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("August 28, 2024 00:00:00").getTime();
+    const countdownDate = new Date("August 30, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -386,7 +386,6 @@ const LandingPage = () => {
   return (
     <>
       <m.div className="home_container">
-
         {/* whatsup_icons */}
         <m.div className="whatsup">
           <a href="https://wa.me/9344482370" target="_blank">
@@ -516,11 +515,14 @@ const LandingPage = () => {
                 <m.div className="actions" variants={topNavAnime}>
                   {localStorageDatas === null ? (
                     <Link to="/login">
-                      <button >Login</button>
+                      <button>Login</button>
                     </Link>
                   ) : (
                     <Link to={`/${userName}/uadmin/user_vcard`}>
-                      <button><i className='bx bxs-dashboard'></i>{userName}</button>
+                      <button>
+                        <i className="bx bxs-dashboard"></i>
+                        {userName}
+                      </button>
                     </Link>
                   )}
 
@@ -570,13 +572,17 @@ const LandingPage = () => {
                 </m.p> */}
               </m.div>
 
-              <m.div className="actions">
+              <m.div className="register_actions">
                 <m.div className="start" variants={left_slide_1Anime}>
-                  <Link to="/register">
-                    <button onClick={setAuthToggle(false)}>
-                      Get Started<i className="bx bxs-user-plus bx-tada"></i>
-                    </button>
-                  </Link>
+                  {localStorageDatas === null ? (
+                    <Link to="/register">
+                      <button onClick={setAuthToggle(false)}>
+                        Get Started<i className="bx bxs-user-plus bx-tada"></i>
+                      </button>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </m.div>
                 <m.div className="enquiry" variants={left_slide_1Anime}>
                   <a href="https://wa.me/9344482370" target="_blank">
@@ -595,15 +601,15 @@ const LandingPage = () => {
                 </div>
                 <m.div className="offer_box">
                   <div className="spark">
-                  <Lottie
-                    options={defaultOptions}
-                    style={{
-                      height: 150,
-                      width: 150,
-                      position: "absolute",
-                      top: -50,
-                    }}
-                  />
+                    <Lottie
+                      options={defaultOptions}
+                      style={{
+                        height: 150,
+                        width: 150,
+                        position: "absolute",
+                        top: -50,
+                      }}
+                    />
                   </div>
                   <m.div className="box">
                     <m.div className="time_box">
@@ -1118,11 +1124,11 @@ const LandingPage = () => {
                 <i className="bx bxs-chevron-down bx-tada"></i>
               </m.div>
               <m.div className="plan_title">
-                <h3>TRIAL PLAN</h3>
+                <h3>FREE PLAN</h3>
               </m.div>
               <m.div className="plan_price">
                 <h2>
-                  ₹ 10 <small>30/day</small>
+                  ₹ 0 <small>30/day</small>
                 </h2>
               </m.div>
 
@@ -1186,7 +1192,7 @@ const LandingPage = () => {
               </m.div>
               <m.div className="card_count">
                 <p>
-                  No of VCard Design's Provided : <span>05</span>
+                  No of VCard Design's Provided : <span>03</span>
                 </p>
               </m.div>
               <m.div
@@ -1239,7 +1245,7 @@ const LandingPage = () => {
               </div>
               <div className="card_count">
                 <p>
-                  No of VCard Design's Provided : <span>08</span>
+                  No of VCard Design's Provided : <span>06</span>
                 </p>
               </div>
               <m.div
@@ -1292,7 +1298,7 @@ const LandingPage = () => {
               </div>
               <div className="card_count">
                 <p>
-                  No of VCard Design's Provided : <span>10</span>
+                  No of VCard Design's Provided : <span>08</span>
                 </p>
               </div>
               <m.div
