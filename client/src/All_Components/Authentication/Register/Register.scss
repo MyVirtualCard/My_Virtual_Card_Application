@@ -7,6 +7,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
+
   // gap: 1rem;
 
   z-index: 100;
@@ -1512,8 +1513,8 @@ justify-content: flex-start;
       // background-size: cover;
       // background-repeat: no-repeat;
       box-shadow: 0 8px 32px 0 rgba(44, 44, 44, 0.479);
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(1px);
+      // backdrop-filter: blur(1px);
+      // -webkit-backdrop-filter: blur(1px);
       // border-radius: 10px;
       outline: none;
       // border: 1px solid rgba( 255, 255, 255, 0.18 );
@@ -1523,7 +1524,7 @@ justify-content: flex-start;
       flex-direction: row;
       // border-bottom: 3px solid #fff;
       justify-content: center;
-
+z-index: 50;
       .left_form {
         display: none;
         display: flex;

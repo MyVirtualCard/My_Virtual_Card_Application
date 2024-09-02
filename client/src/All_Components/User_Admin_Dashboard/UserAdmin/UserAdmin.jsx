@@ -129,7 +129,8 @@ let [pieces,setPieces]=useState(150);
   if (Seconds <= 0) {
     window.location.pathname =`${userName}/uadmin/user_vcard`;
     setPaymentSuccessPopup(false);
-  }
+  };
+  console.log(userData)
   return (
     <>
       <div className="userAdmin_container">

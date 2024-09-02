@@ -3,7 +3,7 @@ import "./styles/UserAccountSetting.scss";
 import Context from "../../UseContext/Context";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { convertToBase64 } from "../../Helper/convert";
 import { useFormik } from "formik";
 const UserAccountSetting = () => {
@@ -24,6 +24,7 @@ const UserAccountSetting = () => {
     setEmail,
     setLoader,
     userName,
+    setUserName,
     currentPlan,
     setCurrentPlan,
     PlanPrice,
@@ -47,7 +48,8 @@ const UserAccountSetting = () => {
       .get(`/auth/register/${userName}`)
       .then((responce) => {
 
-        setFormSubmitLoader(false)
+        setFormSubmitLoader(false);
+        setUserName(responce.data.data.userName)
         setProfile(responce.data.data.profile);
         setFirstName(responce.data.data.firstName);
         setLastName(responce.data.data.lastName);
@@ -83,6 +85,7 @@ const UserAccountSetting = () => {
    
       let data = {
         profile,
+        userName,
         firstName,
         lastName,
         email,
@@ -118,7 +121,7 @@ const UserAccountSetting = () => {
   return (
     <>
       <div className="account_setting_container">
-        <Toaster position="top-right" />
+      
         <div className="setting_title">
           <h4>Update Your Profile</h4>
         </div>
@@ -147,6 +150,25 @@ const UserAccountSetting = () => {
 
               <input type="file" id="avatar" onChange={onUpload} />
             </div>
+            {/* <div className="form_group">
+              <label htmlFor="userName">
+                <h5>
+                  UserName
+                  <span>
+                    <sup>*</sup>
+                  </span>
+                </h5>
+              </label>
+              <div className="fullwidth_input">
+                <input
+                  type="text"
+                  placeholder="Enter Your userName"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <i className="bx bxs-envelope"></i>
+              </div>
+            </div> */}
             <div className="form_group">
               <label htmlFor="fullName">
                 <h5>

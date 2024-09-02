@@ -38,7 +38,8 @@ import number3 from "../../assets/Digicards/number3.png";
 import nfc from "../../assets/LandingPage_image/view/4.png";
 import Lottie from "react-lottie";
 import anime1 from "../../assets/animations/Animation - 1717142280104.json";
-import { toast, Toaster } from "react-hot-toast";
+// import { toast, Toaster } from "";
+import {toast} from 'react-toastify'
 import { motion as m } from "framer-motion";
 import offerImage from "../../assets/LandingPage_image/Offer/6.png";
 import {
@@ -256,7 +257,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("August 30, 2024 00:00:00").getTime();
+    const countdownDate = new Date("September 10, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -387,7 +388,7 @@ const LandingPage = () => {
     <>
       <m.div className="home_container">
         {/* whatsup_icons */}
-        <m.div className="whatsup">
+        {/* <m.div className="whatsup">
           <a href="https://wa.me/9344482370" target="_blank">
             <img
               width="48"
@@ -396,7 +397,7 @@ const LandingPage = () => {
               alt="whatsapp--v1"
             />
           </a>
-        </m.div>
+        </m.div> */}
         {/* Up Arrow icon */}
         <div className="up" onClick={() => scrollToSection(HomeRef)}>
           {/* <small>Bring me Top</small> */}
@@ -587,7 +588,7 @@ const LandingPage = () => {
                 <m.div className="enquiry" variants={left_slide_1Anime}>
                   <a href="https://wa.me/9344482370" target="_blank">
                     <button>
-                      Pricing<i className="bx bxs-bell-ring bx-tada"></i>
+                       Inquiries<i className='bx bx-message-rounded-dots bx-flashing' ></i>
                     </button>
                   </a>
                 </m.div>
