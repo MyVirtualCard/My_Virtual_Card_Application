@@ -1,4 +1,4 @@
-import InquiryModel from "../Models/Inquiry.model.js";
+import InquiryModel from "../Model/Inquiry.model.js";
 
 //Post basic detail data to database:
 export const PostInquiryData = async (req, res) => {

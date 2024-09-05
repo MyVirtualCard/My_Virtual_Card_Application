@@ -1,4 +1,4 @@
-import SocialMediaModel from "../Models/SocialMedia.model.js";
+import SocialMediaModel from "../Model/SocialMedia.model.js";
 
 //Read or get all user basicDetail data  from database:
 

@@ -1,6 +1,6 @@
-import PopupBannerModel from "../Models/PopupBanner.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import PopupBannerModel from "../Model/PopupBanner.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //Read or get all user basicDetail data  from database:
 
 // export const GetPopupBannerData = async (req, res) => {
@@ -116,118 +116,113 @@ export const PostPopupBannerData = async (req, res) => {
   if (!checkCurrentPlan || !checkFreePlan) {
     return res
       .status(400)
-      .json({ message: "Choose your Plan first!", error: err });
-  }
-  if (checkCurrentPlan.length <= 0) {
-    return res
-      .status(400)
-      .json({ message: "Choose your Plan first!", error: err });
-  } else {
-    //Plan 2 and 3
-    if (
-      checkFreePlan[0]?.PlanPrice === 0 ||
-      checkCurrentPlan[0]?.amount === 599 ||
-      checkCurrentPlan[0]?.amount === 899 ||
-      checkCurrentPlan[0]?.amount === 1299
-    ) {
-      //check images
-      let checkCurrentBanner = await PopupBannerModel.find({
-        URL_Alies: req.params.URL_Alies,
-      });
-
-      if (!checkCurrentBanner) {
-        return res
-          .status(400)
-          .json({ message: "Banner Data  not be Inserted!" });
+      .json({ message: "Choose your Plan first!" });
+  };
+      //Plan 2 and 3
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
+      ) {
+        //check images
+        let checkCurrentBanner = await PopupBannerModel.find({
+          URL_Alies: req.params.URL_Alies,
+        });
+  
+        if (!checkCurrentBanner) {
+          return res
+            .status(400)
+            .json({ message: "Banner Data  not be Inserted!" });
+        } else {
+          if (checkCurrentPlan[0]?.amount === 1299) {
+            //Basic Image File limit checked:
+            if (checkCurrentBanner.length < 1) {
+              // Create a new image instance and save to MongoDB
+              const newBanner = new PopupBannerModel({
+                user: req.user.userName,
+                URL_Alies: req.params.URL_Alies,
+                BannerTitle: req.body.BannerTitle,
+                BannerURL: req.body.BannerURL,
+                BannerActive: req.body.BannerActive,
+                BannerDescription: req.body.BannerDescription,
+                BannerButtonName: req.body.BannerButtonName,
+              });
+  
+              newBanner
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Banner Data  uploaded!",
+                    data: newBanner,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save Banner Data to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Banner Data Upload limit crossed!..Only accept 1 Data ",
+              });
+            }
+          }
+          if (
+            checkCurrentPlan[0]?.amount === 599 ||
+            checkCurrentPlan[0]?.amount === 899
+          ) {
+            //Basic Image File limit checked:
+            if (checkCurrentBanner.length < 1) {
+              // Create a new image instance and save to MongoDB
+              const newBanner = new PopupBannerModel({
+                user: req.user.userName,
+                URL_Alies: req.params.URL_Alies,
+                BannerTitle: req.body.BannerTitle,
+                BannerURL: req.body.BannerURL,
+                BannerActive: req.body.BannerActive,
+                BannerDescription: req.body.BannerDescription,
+                BannerButtonName: req.body.BannerButtonName,
+              });
+  
+              newBanner
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Banner Data uploaded!",
+                    data: newBanner,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save Banner Data to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message:
+                  "Max Banner Data Upload limit crossed!..Only accept 1 Data ",
+              });
+            }
+          }
+          if (checkFreePlan[0]?.PlanPrice === 0) {
+            //Basic Image File limit checked:
+            if (checkCurrentBanner.length < 0) {
+              res.status(400).json({
+                message: "Banner Data Access denied for Trial Plan!",
+              });
+            } else {
+              res.status(400).json({
+                message: "Banner Data Access denied for Trial Plan!",
+              });
+            }
+          }
+        }
       } else {
-        if (checkCurrentPlan[0]?.amount === 1299) {
-          //Basic Image File limit checked:
-          if (checkCurrentBanner.length < 1) {
-            // Create a new image instance and save to MongoDB
-            const newBanner = new PopupBannerModel({
-              user: req.user.userName,
-              URL_Alies: req.params.URL_Alies,
-              BannerTitle: req.body.BannerTitle,
-              BannerURL: req.body.BannerURL,
-              BannerActive: req.body.BannerActive,
-              BannerDescription: req.body.BannerDescription,
-              BannerButtonName: req.body.BannerButtonName,
-            });
-
-            newBanner
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Banner Data  uploaded!",
-                  data: newBanner,
-                });
-              })
-              .catch((err) => {
-                res.status(400).json({
-                  message: "Failed to save Banner Data to database!",
-                });
-              });
-          } else {
-            res.status(400).json({
-              message:
-                "Max Banner Data Upload limit crossed!..Only accept 1 Data ",
-            });
-          }
-        }
-        if (
-          checkCurrentPlan[0]?.amount === 599 ||
-          checkCurrentPlan[0]?.amount === 899
-        ) {
-          //Basic Image File limit checked:
-          if (checkCurrentBanner.length < 1) {
-            // Create a new image instance and save to MongoDB
-            const newBanner = new PopupBannerModel({
-              user: req.user.userName,
-              URL_Alies: req.params.URL_Alies,
-              BannerTitle: req.body.BannerTitle,
-              BannerURL: req.body.BannerURL,
-              BannerActive: req.body.BannerActive,
-              BannerDescription: req.body.BannerDescription,
-              BannerButtonName: req.body.BannerButtonName,
-            });
-
-            newBanner
-              .save()
-              .then(() => {
-                res.status(200).json({
-                  message: "Banner Data uploaded!",
-                  data: newBanner,
-                });
-              })
-              .catch((err) => {
-                res.status(400).json({
-                  message: "Failed to save Banner Data to database!",
-                });
-              });
-          } else {
-            res.status(400).json({
-              message:
-                "Max Banner Data Upload limit crossed!..Only accept 1 Data ",
-            });
-          }
-        }
-        if (checkFreePlan[0]?.amount === 10) {
-          //Basic Image File limit checked:
-          if (checkCurrentBanner.length < 0) {
-            res.status(400).json({
-              message: "Banner Data Access denied for Trial Plan!",
-            });
-          } else {
-            res.status(400).json({
-              message: "Banner Data Access denied for Trial Plan!",
-            });
-          }
-        }
+        res.status(400).json({ message: "Plan not match!", error: err });
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!", error: err });
-    }
-  }
+
 };
 
 // //Read or get Specific User all Data  :

@@ -1,7 +1,7 @@
 
-import ManageContentModel from "../Models/ManageContent.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import ManageContentModel from "../Model/ManageContent.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //Post basic detail data to database:
 export const PostManageContentData = async (req, res) => {
   try {

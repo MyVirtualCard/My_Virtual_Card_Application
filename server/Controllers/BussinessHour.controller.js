@@ -1,6 +1,6 @@
-import BussinessModel from "../Models/BussinessHour.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import BussinessModel from "../Model/BussinessHour.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const GetSocialMediaData = async (req, res) => {

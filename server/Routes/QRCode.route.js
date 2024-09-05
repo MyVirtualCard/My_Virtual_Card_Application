@@ -2,7 +2,7 @@ import express from 'express';
 import { GetGalleryData, PostGalleryData,readSpecificUserAllData,getSpecificIdData,updateSpecificUserData,deleteSpecificUserAllData,deleteSpecificUserData } from '../Controllers/QRCode.controller.js';
 import { verifyToken } from '../Middleware/verifyToken.js';
 let router=express.Router();
-import upload from '../Multer/config.js';
+
 
 router.get('/:URL_Alies',verifyToken,GetGalleryData);
 router.post('/:URL_Alies',verifyToken,PostGalleryData);

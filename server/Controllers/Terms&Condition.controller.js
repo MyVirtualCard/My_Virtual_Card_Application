@@ -1,6 +1,6 @@
-import TermConditionModel from "../Models/Terms&Condition.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import TermConditionModel from "../Model/Terms&Condition.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //Post basic detail data to database:
 
 export const PostTermConditionsData = async (req, res) => {

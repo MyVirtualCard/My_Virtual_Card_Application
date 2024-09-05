@@ -1,19 +1,15 @@
 import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
-import path from 'path';
-// Import necessary functions from the url and path modules
-import { fileURLToPath } from "url";
-import dotenv from "dotenv";
+import morgan from "morgan";
 import helmet from "helmet";
-import mongoose from "mongoose";
 import Razorpay from "razorpay";
-import multer from "multer";
-//Import Routes:
-import RegisterRoute from "./Routes/Register.route.js";
-import VerifyOTP from "./Routes/VerifyOTP.route.js";
-import LoginRoute from "./Routes/Login.route.js";
-import VCardURL_Route from "./Routes/VCard_URL.route.js";
+// Import All Routes
+import AuthRoute from "./Routes/Auth.route.js";
+import VerifyOTP from "./Routes/Verify_OTP.route.js";
+import VCardURL_Route from './Routes/VCard_URL.route.js';
 import BasicDetailRoute from "./Routes/BasicDetail.route.js";
 import TemplateRoute from "./Routes/VCardTemplate.route.js";
 import ServiceDetailRoute from "./Routes/Services.route.js";
@@ -35,19 +31,12 @@ import GoogleMapRoute from './Routes/GoogleMap.route.js';
 import ManageContentRoute from './Routes/ManageContent.route.js';
 import InquiryRoute from './Routes/Inquiry.route.js';
 import AppoinmentRoute from './Routes/Appoinment.route.js'
-let host_ip = "http://localhost:3001";
-
-//App initialized
-let app = express();
-// Configurations:
-// Convert the URL of the current module to a filename
-const __filename = fileURLToPath(import.meta.url);
-// // Extract the directory name from the filename
-const __dirname = path.dirname(__filename);
+//Initialize backend App With name app
+const app = express();
+//Creating port number for server running
+const port = process.env.PORT || 3000;
+//Configuration:
 dotenv.config();
-//Port initializing:
-let PORT = process.env.PORT || 3000;
-
 //This will help you to send data to server in json formate:
 app.use(express.json({ limit: "60mb" }));
 app.use(helmet());
@@ -55,48 +44,25 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 //This will help you to allow file upload size limit
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// app.use(express.static(path.join(__dirname, "client", "dist")));
-// Allow requests from your frontend domain
-
-app.use(cors({
-  origin: 'https://myvirtualcard.in',
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-}));
-// app.use(cors('*'));
+app.use('/uploads', express.static('uploads'));
+//Cors Policy work in any domain:
+app.use(cors("*"));
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
   key_secret: process.env.RAZORPAY_API_SECRET,
 });
 
-app.get("/", (req, res) => {
-  // res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-  res.send("Welcome to Myvirtual VCard Application");
-});
-const storage = multer.diskStorage({
-  destination: './uploads/',
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  },
-});
 
-const upload = multer({ storage });
-
-app.post('/upload-endpoint', upload.single('file'), (req, res) => {
-  res.json({ fileName: req.file.filename, filePath: `/uploads/${req.file.filename}` });
-});
-// All Routes Middleware:
-app.use("/auth", RegisterRoute);
-app.use("/auth", VerifyOTP);
+// Route Middleware
+app.use("/api/user", AuthRoute);
+app.use("/api/user", VerifyOTP);
+app.use("/vcard_URL", VCardURL_Route);
 app.use("/razorpay", RazorPaymentRoute);
 app.get("/razorpay/getkey", (req, res) => {
   res.status(200).json({ key: process.env.RAZORPAY_API_KEY });
 });
 app.use("/currentplan", PlanDetailRoute);
-app.use("/auth", LoginRoute);
-app.use("/vcard_URL", VCardURL_Route);
 app.use("/basicDetail", BasicDetailRoute);
 app.use("/templateDetail", TemplateRoute);
 app.use("/serviceDetail", ServiceDetailRoute);
@@ -116,14 +82,19 @@ app.use('/feedback',FeedbackRoute);
 app.use('/manageContent',ManageContentRoute);
 app.use('/inquiry',InquiryRoute);
 app.use('/appoinment',AppoinmentRoute);
-//Setup Mongoose conncetion ;
+//Get Request
+app.get("/", (req, res) => {
+  res.send("Welcome to Backend API");
+});
+
+//Mongodb Connection:
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING)
   .then(() => {
     console.log("MongoDB connected sucessfully");
     try {
-      app.listen(PORT, () => {
-        console.log(`Server is listening ${host_ip}`);
+      app.listen(port, () => {
+        console.log(`Server is listening http://localhost:${port}`);
       });
     } catch {
       console.log("Mongodb connection failure");

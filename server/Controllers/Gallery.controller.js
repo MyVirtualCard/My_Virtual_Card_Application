@@ -1,7 +1,7 @@
-import GalleryModel from "../Models/Gallery.model.js";
+import GalleryModel from "../Model/Gallery.model.js";
 import fs from "fs";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 import multer from "multer";
 // Import necessary functions from the url and path modules
 import { fileURLToPath } from "url";
@@ -10,13 +10,12 @@ const __filename = fileURLToPath(import.meta.url);
 // Extract the directory name from the filename
 const __dirname = path.dirname(__filename);
 import path from "path";
-import upload from "../Multer/config.js";
 
 //Read or get all user basicDetail data  from database:
 
 export const GetGalleryData = async (req, res) => {
   try {
-    let datas = await GalleryModel.find({URL_Alies: req.params.URL_Alies});
+    let datas = await GalleryModel.find({ URL_Alies: req.params.URL_Alies });
     if (!datas) {
       res.status(400).json({ message: "Data not found" });
     } else {
@@ -31,42 +30,48 @@ export const GetGalleryData = async (req, res) => {
 };
 
 export const PostGalleryData = async (req, res) => {
-      let checkCurrentPlan = await Payment.find({
-        user: req.user.userName,
-      });
-      let checkFreePlan = await currentPlan.find({
-        URL_Alies: req.params.URL_Alies,
-      });
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
+  });
+  let checkFreePlan = await currentPlan.find({
+    URL_Alies: req.params.URL_Alies,
+  });
 
-      if (!checkCurrentPlan || !checkFreePlan) {
-        return res
-          .status(400)
-          .json({ message: "Choose Your Plan First!"});
-      };
-          //Plan 2 and 3
-    if (checkFreePlan[0]?.PlanPrice === 0 || checkCurrentPlan[0]?.amount === 599 || checkCurrentPlan[0]?.amount === 899 || checkCurrentPlan[0]?.amount === 1299) {
-      //check images
-      let checkCurrentImages = await GalleryModel.find({
-        URL_Alies:req.params.URL_Alies
-      });
+  if (!checkCurrentPlan || !checkFreePlan) {
+    return res.status(400).json({ message: "Choose Your Plan First!" });
+  }
+  //Plan 2 and 3
+  if (
+    checkFreePlan[0]?.PlanPrice === 0 ||
+    checkCurrentPlan[0]?.amount === 599 ||
+    checkCurrentPlan[0]?.amount === 899 ||
+    checkCurrentPlan[0]?.amount === 1299
+  ) {
+    //check images
+    let checkCurrentImages = await GalleryModel.find({
+      URL_Alies: req.params.URL_Alies,
+    });
 
-      if (!checkCurrentImages) {
-        return res
-          .status(400)
-          .json({ message: "Image will not be there!", error: err });
-      } else {
-      
-        if(checkCurrentPlan[0]?.amount === 1299){
-            //Basic Image File limit checked:
+    if (!checkCurrentImages) {
+      return res
+        .status(400)
+        .json({ message: "Image will not be there!", error: err });
+    } else {
+      if (checkCurrentPlan[0]?.amount === 1299) {
+        //Basic Image File limit checked:
         if (checkCurrentImages.length < 10) {
           // Create a new image instance and save to MongoDB
           const newImage = new GalleryModel({
             user: req.user.userName,
-            URL_Alies:req.body.URL_Alies,
-            GalleryImageURL:req.body.GalleryImageURL,
-            GalleryType:req.body.GalleryType,
-            GalleryImage:req.body.GalleryImage
+            URL_Alies: req.body.URL_Alies,
+            GalleryImageURL: req.body.GalleryImageURL,
+            GalleryType: req.body.GalleryType,
 
+            GalleryImage: {
+              filename: req.file?.filename,
+              contentType: req.file?.mimetype,
+              imageBase64: req.file?.path,
+            },
           });
 
           newImage
@@ -80,141 +85,138 @@ export const PostGalleryData = async (req, res) => {
             .catch((err) => {
               res.status(400).json({
                 message: "Failed to save image to database!",
-             
               });
             });
         } else {
           res.status(400).json({
             message: "Max Image Upload limit crossed!..Only accept 10 Images ",
-         
           });
         }
-        };
-        if(checkCurrentPlan[0]?.amount === 899){
-          //Basic Image File limit checked:
-      if (checkCurrentImages.length < 6) {
-        // Create a new image instance and save to MongoDB
-        const newImage = new GalleryModel({
-          user: req.user.userName,
-          URL_Alies:req.body.URL_Alies,
-          GalleryImageURL:req.body.GalleryImageURL,
-          GalleryType:req.body.GalleryType,
-          GalleryImage:req.body.GalleryImage
-    
-        });
- 
-        newImage
-          .save()
-          .then(() => {
-            res.status(200).json({
-              message: "Image uploaded!",
-              data: newImage,
-            });
-          })
-          .catch((err) => {
-            res.status(400).json({
-              message: "Failed to save image to database!",
-          
-            });
-          });
-      } else {
-        res.status(400).json({
-          message: "Max Image Upload limit crossed!..Only accept 6 Images ",
-    
-        });
       }
-      }
-      if(checkCurrentPlan[0]?.amount === 599){
+      if (checkCurrentPlan[0]?.amount === 899) {
         //Basic Image File limit checked:
-    if (checkCurrentImages.length < 4) {
-      // Create a new image instance and save to MongoDB
-      const newImage = new GalleryModel({
-        user: req.user.userName,
-        URL_Alies:req.body.URL_Alies,
-        GalleryImageURL:req.body.GalleryImageURL,
-        GalleryType:req.body.GalleryType,
-        GalleryImage:req.body.GalleryImage
-  
-      });
-
-      newImage
-        .save()
-        .then(() => {
-          res.status(200).json({
-            message: "Image uploaded!",
-            data: newImage,
+        if (checkCurrentImages.length < 6) {
+          // Create a new image instance and save to MongoDB
+          const newImage = new GalleryModel({
+            user: req.user.userName,
+            URL_Alies: req.body.URL_Alies,
+            GalleryImageURL: req.body.GalleryImageURL,
+            GalleryType: req.body.GalleryType,
+            GalleryImage: {
+              filename: req.file?.filename,
+              contentType: req.file?.mimetype,
+              imageBase64: req.file?.path,
+            },
           });
-        })
-        .catch((err) => {
+
+          newImage
+            .save()
+            .then(() => {
+              res.status(200).json({
+                message: "Image uploaded!",
+                data: newImage,
+              });
+            })
+            .catch((err) => {
+              res.status(400).json({
+                message: "Failed to save image to database!",
+              });
+            });
+        } else {
           res.status(400).json({
-            message: "Failed to save image to database!",
-        
+            message: "Max Image Upload limit crossed!..Only accept 6 Images ",
           });
-        });
-    } else {
-      res.status(400).json({
-        message: "Max Image Upload limit crossed!..Only accept 4 Images ",
-  
-      });
-    }
-    }
-      if(checkFreePlan[0]?.PlanPrice === 0 ){
-        //Basic Image File limit checked:
-    if (checkCurrentImages.length < 2) {
-      // Create a new image instance and save to MongoDB
-      const newImage = new GalleryModel({
-        user: req.user.userName,
-        URL_Alies:req.body.URL_Alies,
-        GalleryImageURL:req.body.GalleryImageURL,
-        GalleryType:req.body.GalleryType,
-        GalleryImage:req.body.GalleryImage,
-
-      });
-
-      newImage
-        .save()
-        .then(() => {
-          res.status(200).json({
-            message: "Image uploaded!",
-            data: newImage,
-          });
-        })
-        .catch((err) => {
-          res.status(400).json({
-            message: "Failed to save image to database!",
-        
-          });
-        });
-    } else {
-      res.status(400).json({
-        message: "Trial Plan Only accept 2 Images ",
-
-      });
-    }
-    };
+        }
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!", error: err });
+      if (checkCurrentPlan[0]?.amount === 599) {
+        //Basic Image File limit checked:
+        if (checkCurrentImages.length < 4) {
+          // Create a new image instance and save to MongoDB
+          const newImage = new GalleryModel({
+            user: req.user.userName,
+            URL_Alies: req.body.URL_Alies,
+            GalleryImageURL: req.body.GalleryImageURL,
+            GalleryType: req.body.GalleryType,
+            GalleryImage: {
+              filename: req.file?.filename,
+              contentType: req.file?.mimetype,
+              imageBase64: req.file?.path,
+            },
+          });
+
+          newImage
+            .save()
+            .then(() => {
+              res.status(200).json({
+                message: "Image uploaded!",
+                data: newImage,
+              });
+            })
+            .catch((err) => {
+              res.status(400).json({
+                message: "Failed to save image to database!",
+              });
+            });
+        } else {
+          res.status(400).json({
+            message: "Max Image Upload limit crossed!..Only accept 4 Images ",
+          });
+        }
+      }
+      if (checkFreePlan[0]?.PlanPrice === 0) {
+        //Basic Image File limit checked:
+        if (checkCurrentImages.length < 2) {
+          // Create a new image instance and save to MongoDB
+          const newImage = new GalleryModel({
+            user: req.user.userName,
+            URL_Alies: req.body.URL_Alies,
+            GalleryImageURL: req.body.GalleryImageURL,
+            GalleryType: req.body.GalleryType,
+            GalleryImage: {
+              filename: req.file?.filename,
+              contentType: req.file?.mimetype,
+              imageBase64: req.file?.path,
+            },
+          });
+
+          newImage
+            .save()
+            .then(() => {
+              res.status(200).json({
+                message: "Image uploaded!",
+                data: newImage,
+              });
+            })
+            .catch((err) => {
+              res.status(400).json({
+                message: "Failed to save image to database!",
+              });
+            });
+        } else {
+          res.status(400).json({
+            message: "Trial Plan Only accept 2 Images ",
+          });
+        }
+      }
     }
-      // if(checkCurrentPlan.length<=0 || checkFreePlan.length <=0 ){
-      //   return res
-      //   .status(400)
-      //   .json({ message: "Plan Data Empty!" });
-      // }else{
+  } else {
+    res.status(400).json({ message: "Plan not match!", error: err });
+  }
+  // if(checkCurrentPlan.length<=0 || checkFreePlan.length <=0 ){
+  //   return res
+  //   .status(400)
+  //   .json({ message: "Plan Data Empty!" });
+  // }else{
 
-    
-      // }
-
-  
-
-
-
+  // }
 };
 
 // //Read or get Specific User all Data  :
 export const readSpecificUserAllData = async (req, res) => {
   try {
-    let getSpecificData = await GalleryModel.find({  URL_Alies:req.params.URL_Alies });
+    let getSpecificData = await GalleryModel.find({
+      URL_Alies: req.params.URL_Alies,
+    });
 
     if (!getSpecificData) {
       res.status(400).json({ message: " Data Not Found!" });
@@ -248,20 +250,48 @@ export const getSpecificIdData = async (req, res) => {
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
-  try {
-    let { id } = req.params;
-    let data = req.body;
-    let updateSpecificData = await GalleryModel.findByIdAndUpdate(id, data);
+  let checkCurrentPlan = await Payment.find({
+    user: req.user.userName,
+  });
+  let checkFreePlan = await currentPlan.find({
+    user: req.user.userName,
+  });
+  if (!checkCurrentPlan || !checkFreePlan) {
+    return res.status(400).json({ message: "Plan not be there!" });
+  }
 
-    if (!updateSpecificData) {
-      res.status(400).json({ message: " Data Not Found!" });
-    } else {
-      res
-        .status(201)
-        .json({ message: "Image Updated!", data: updateSpecificData });
+  if (
+    checkFreePlan[0]?.PlanPrice === 0 ||
+    checkCurrentPlan[0]?.amount === 599 ||
+    checkCurrentPlan[0]?.amount === 899 ||
+    checkCurrentPlan[0]?.amount === 1299
+  ) {
+    try {
+      let { id } = req.params;
+      let data = {
+        user: req.user.userName,
+        URL_Alies: req.body.URL_Alies,
+        GalleryImageURL: req.body.GalleryImageURL,
+        GalleryType: req.body.GalleryType,
+        GalleryImage: {
+          filename: req.file?.filename,
+          contentType: req.file?.mimetype,
+          imageBase64: req.file?.path,
+        },
+      };
+      let updateSpecificData = await GalleryModel.findByIdAndUpdate(id, data);
+      if (!updateSpecificData) {
+        res.status(400).json({ message: " Data Not Found!" });
+      } else {
+        res
+          .status(201)
+          .json({ message: "Image Updated!", data: updateSpecificData });
+      }
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  } else {
+    res.status(400).json({ message: "Plan not match!" });
   }
 };
 
@@ -269,7 +299,7 @@ export const updateSpecificUserData = async (req, res) => {
 export const deleteSpecificUserAllData = async (req, res) => {
   try {
     let deleteSpecificData = await GalleryModel.deleteMany({
-      URL_Alies:req.params.URL_Alies
+      URL_Alies: req.params.URL_Alies,
     });
 
     if (!deleteSpecificData) {
@@ -277,13 +307,35 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "All Gallery Images Deleted!", data: deleteSpecificData });
+        .json({
+          message: "All Gallery Images Deleted!",
+          data: deleteSpecificData,
+        });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+// DELETE method to delete a file
+export const deleteSpecificFileData=async (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', 'Gallery_Image', filename);
+console.log(filePath);
+  // Check if the file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).json({ message: 'File not found!' });
+    }
 
+    // Delete the file
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error deleting file!' });
+      }
+      res.json({ message: 'File deleted successfully!' });
+    });
+  });
+}
 //Delete Spcific user  Document in Basic Detail:
 
 export const deleteSpecificUserData = async (req, res) => {
@@ -295,6 +347,7 @@ export const deleteSpecificUserData = async (req, res) => {
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
+      
       res
         .status(201)
         .json({ message: " Image Deleted!", data: deleteSpecificData });

@@ -2,22 +2,22 @@ import express from 'express';
 
 let router=express.Router();
 
-import BasicDetails from '../Models/BasicDetail.model.js';
-import GalleryModel from '../Models/Gallery.model.js';
-import TotalLikes from '../Models/Likes.model.js';
-import currentPlan from '../Models/Plan.model.js';
-import PopupBannerModel from '../Models/PopupBanner.model.js';
-import ProductModel from '../Models/Products.model.js';
-import ServiceData from '../Models/Services.model.js';
-import SocialMediaModel from '../Models/SocialMedia.model.js';
-import TestimonialModel from '../Models/Testimonial.model.js';
-import Current_VCardTemplate from '../Models/VCardTemplate.model.js';
-import Vcard_URL from '../Models/Vcard_URL.model.js';
-import QRCodeModel from '../Models/QRCode.model.js';
-import FeedbackModel from '../Models/Feedback.model.js';
-import BussinessModel from '../Models/BussinessHour.model.js';
-import GoogleMapModel from '../Models/GoogleMap.model.js';
-import ManageContentModel from '../Models/ManageContent.model.js';
+import BasicDetails from '../Model/BasicDetail.model.js';
+import GalleryModel from '../Model/Gallery.model.js';
+import TotalLikes from '../Model/Likes.model.js';
+import currentPlan from '../Model/Plan.model.js';
+import PopupBannerModel from '../Model/PopupBanner.model.js';
+import ProductModel from '../Model/Products.model.js';
+import ServiceData from '../Model/Services.model.js';
+import SocialMediaModel from '../Model/SocialMedia.model.js';
+import TestimonialModel from '../Model/Testimonial.model.js';
+import Current_VCardTemplate from '../Model/VCardTemplate.model.js';
+import Vcard_URL from '../Model/Vcard_URL.model.js';
+import QRCodeModel from '../Model/QRCode.model.js';
+import FeedbackModel from '../Model/Feedback.model.js';
+import BussinessModel from '../Model/BussinessHour.model.js';
+import GoogleMapModel from '../Model/GoogleMap.model.js';
+import ManageContentModel from '../Model/ManageContent.model.js';
 router.get('/allDataAPI/:URL_Alies',async(req,res)=>{
     try {
    

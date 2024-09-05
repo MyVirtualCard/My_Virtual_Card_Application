@@ -1,6 +1,6 @@
-import PrivacyPolicyModel from "../Models/PrivacyPolicy.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import PrivacyPolicyModel from "../Model/PrivacyPolicy.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //Post basic detail data to database:
 
 export const PostPrivacyPolicyData = async (req, res) => {

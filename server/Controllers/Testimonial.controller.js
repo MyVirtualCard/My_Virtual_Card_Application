@@ -1,6 +1,6 @@
-import TestimonialModel from "../Models/Testimonial.model.js";
-import currentPlan from "../Models/Plan.model.js";
-import Payment from "../Models/Payment.model.js";
+import TestimonialModel from "../Model/Testimonial.model.js";
+import currentPlan from "../Model/Plan.model.js";
+import Payment from "../Model/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const getTestimonialData = async (req, res) => {

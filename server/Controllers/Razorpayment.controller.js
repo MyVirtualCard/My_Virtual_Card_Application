@@ -1,7 +1,7 @@
 import { instance } from "../index.js";
 import crypto from "crypto";
-import shortid from "shortid";
-import Payment from "../Models/Payment.model.js";
+
+import Payment from "../Model/Payment.model.js";
 import dotenv from "dotenv";
 dotenv.config();
 import cron from "node-cron";

@@ -1,9 +1,7 @@
-import ProductModel from "../Models/Products.model.js";
-import productUpload from "../Multer/product.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
-import fs from "fs";
-import multer from "multer";
+import ProductModel from "../Model/Products.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
+
 
 //Read or get all user product data  from database:
 export const GetProductData = async (req, res) => {
@@ -59,15 +57,16 @@ export const PostProductData = async (req, res) => {
                 URL_Alies: req.body.URL_Alies,
                 ProductName: req.body.ProductName,
                 ProductDescription: req.body.ProductDescription,
-                ProductImage: req.body.ProductImage,
+              
                 ProductURL: req.body.ProductURL,
                 ProductType: req.body.ProductType,
                 ProductImageLink: req.body.ProductImageLink,
                 ProductPrice: req.body.ProductPrice,
-                // ProductImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                ProductImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
               });
   
               await newProduct
@@ -104,11 +103,12 @@ export const PostProductData = async (req, res) => {
                 ProductImageLink: req.body.ProductImageLink,
                 ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: req.body.ProductImage,
-                // ProductImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                ProductImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
+             
               });
   
               await newProduct
@@ -146,11 +146,11 @@ export const PostProductData = async (req, res) => {
                 ProductImageLink: req.body.ProductImageLink,
                 ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: req.body.ProductImage,
-                // ProductImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                ProductImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
               });
   
               await newProduct
@@ -187,11 +187,11 @@ export const PostProductData = async (req, res) => {
                 ProductImageLink: req.body.ProductImageLink,
                 ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: req.body.ProductImage,
-                // ProductImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                ProductImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
               });
   
               await newProduct
@@ -270,57 +270,60 @@ export const updateSpecificUserData = async (req, res) => {
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
-
-  if (!checkCurrentPlan) {
+  let checkFreePlan = await currentPlan.find({
+    user: req.user.userName,
+  });
+  if (!checkCurrentPlan || !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!" });
-  }
-  if (checkCurrentPlan.length <= 0) {
-    return res.status(400).json({ message: "Choose your Plan first!" });
-  } else {
-    //Plan 2 and 3
-    if (
-      checkCurrentPlan[0].amount === 10 ||
-      checkCurrentPlan[0].amount === 599 ||
-      checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
-    ) {
-      try {
-        let { id } = req.params;
-        let data = {
-          ProductImage: req.body.ProductImage,
-          URL_Alies: req.body.URL_Alies,
-          ProductName: req.body.ProductName,
-          ProductURL: req.body.ProductURL,
-          ProductType: req.body.ProductType,
-          ProductImageLink: req.body.ProductImageLink,
-          ProductPrice: req.body.ProductPrice,
-          ProductDescription: req.body.ProductDescription,
-        };
-        let updateSpecificData = await ProductModel.findByIdAndUpdate(
-          id,
-          data,
-          { new: true, runValidators: true }
-        );
-
-        if (!updateSpecificData) {
-          res.status(400).json({ message: "Data Not Found!" });
-        } else {
+  };
+      //Plan 2 and 3
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+      checkCurrentPlan[0]?.amount === 599 ||
+      checkCurrentPlan[0]?.amount === 899 ||
+      checkCurrentPlan[0]?.amount === 1299
+      ) {
+        try {
+          let { id } = req.params;
+          let data = {
+            ProductImage: {
+              filename: req.file?.filename,
+              contentType: req.file?.mimetype,
+              imageBase64: req.file?.path,
+            },
+            URL_Alies: req.body.URL_Alies,
+            ProductName: req.body.ProductName,
+            ProductURL: req.body.ProductURL,
+            ProductType: req.body.ProductType,
+            ProductImageLink: req.body.ProductImageLink,
+            ProductPrice: req.body.ProductPrice,
+            ProductDescription: req.body.ProductDescription,
+          };
+          let updateSpecificData = await ProductModel.findByIdAndUpdate(
+            id,
+            data,
+            { new: true, runValidators: true }
+          );
+  
+          if (!updateSpecificData) {
+            res.status(400).json({ message: "Data Not Found!" });
+          } else {
+            res
+              .status(201)
+              .json({ message: "Product Updated!", data: updateSpecificData });
+          }
+        } catch (error) {
           res
-            .status(201)
-            .json({ message: "Product Updated!", data: updateSpecificData });
+            .status(400)
+            .json({
+              error: error.message,
+              message: error.message,
+            });
         }
-      } catch (error) {
-        res
-          .status(400)
-          .json({
-            error: error.message,
-            message: error.message,
-          });
+      } else {
+        res.status(400).json({ message: "Plan not match!" });
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!" });
-    }
-  }
+
 };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:

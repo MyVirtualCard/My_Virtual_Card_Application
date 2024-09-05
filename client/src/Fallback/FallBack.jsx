@@ -1,6 +1,6 @@
 import React from "react";
 import "./FallBack.scss";
-import trianglelogo from "../assets/LandingPage_image/Triangle_logo.png";
+import trianglelogo from "../assets/Fallback/Triangle_logo.png";
 const FallBack = () => {
   return (
     <div className="fallback_container">

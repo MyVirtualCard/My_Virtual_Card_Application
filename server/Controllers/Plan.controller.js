@@ -1,4 +1,4 @@
-import currentPlan from "../Models/Plan.model.js";
+import currentPlan from "../Model/Plan.model.js";
 
 //Post plan detail data to database:
 export const PostPlanData = async (req, res) => {

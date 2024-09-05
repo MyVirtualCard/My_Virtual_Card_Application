@@ -1,4 +1,4 @@
-import Current_VCardTemplate from "../Models/VCardTemplate.model.js";
+import Current_VCardTemplate from "../Model/VCardTemplate.model.js";
 
 //Post basic detail data to database:
 

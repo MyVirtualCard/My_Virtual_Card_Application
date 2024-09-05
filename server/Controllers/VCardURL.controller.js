@@ -1,19 +1,15 @@
-import Vcard_URL from "../Models/Vcard_URL.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import Vcard_URL from "../Model/Vcard_URL.model.js";
 
 //DiskStorage:
 //All user URL Data :
 export const getAllVCardURLData = async (req, res) => {
   try {
     let getDatas = await Vcard_URL.find({});
-    return res
-      .status(201)
-      .json({
-        message: "Data Fetched sucessfully!",
-        length: getDatas.length,
-        data: getDatas,
-      });
-
+    return res.status(201).json({
+      message: "Data Fetched sucessfully!",
+      length: getDatas.length,
+      data: getDatas,
+    });
   } catch (error) {
     return res.status(401).json({ message: error.message });
   }
@@ -22,24 +18,18 @@ export const getAllVCardURLData = async (req, res) => {
 export const getVCardURLData = async (req, res) => {
   try {
     let getDatas = await Vcard_URL.find({ user: req.user.userName });
-    return res
-      .status(201)
-      .json({
-        message: "Data Fetched sucessfully!",
-        length: getDatas.length,
-        data: getDatas,
-      });
+    return res.status(201).json({
+      message: "Data Fetched sucessfully!",
+      length: getDatas.length,
+      data: getDatas,
+    });
   } catch (error) {
     return res.status(401).json({ message: error.message });
   }
 };
 //Post Async allback function :
 export const postVCardURLData = async (req, res) => {
-  if (
-    !req.body.URL_Alies ||
-    !req.body.VCardName ||
-    !req.body.Description
-  ) {
+  if (!req.body.URL_Alies || !req.body.VCardName || !req.body.Description) {
     return res.status(401).json({ message: "All * fields Required" });
   }
 
@@ -47,36 +37,45 @@ export const postVCardURLData = async (req, res) => {
     URL_Alies: req.body.URL_Alies,
   });
 
-  if(req.body.URL_Alies.length < 5){
-    return res.status(400).json({ message: "URL_Alies Minimum 5 character Required!" });
+  if (req.body.URL_Alies.length < 5) {
+    return res
+      .status(400)
+      .json({ message: "URL_Alies Minimum 5 character Required!" });
   }
   if (checkVCardURLDetail) {
     return res.status(400).json({ message: "This VCard URL already alies!" });
   } else {
     //Basic Image File limit checked:
-
+    const profileFile = req.files["Profile"][0];
+    const bannerFile = req.files["Banner"][0];
     let data = {
       user: req.user.userName,
       URL_Alies: req.body.URL_Alies,
       VCardName: req.body.VCardName,
       Description: req.body.Description,
-      Profile: req.body.Profile,
-      Banner: req.body.Banner,
-      ProfileType:req.body.ProfileType,
-      BannerType:req.body.BannerType,
-      ProfileAddress:req.body.ProfileAddress,
-      BannerAddress:req.body.BannerAddress
+      Profile: {
+        filename: profileFile.filename,
+        contentType: profileFile.mimetype,
+        imageBase64: req.file?.path,
+      },
+      Banner: {
+        filename: bannerFile.filename,
+        contentType: bannerFile.mimetype,
+        imageBase64: req.file?.path,
+      },
+      ProfileType: req.body.ProfileType,
+      BannerType: req.body.BannerType,
+      ProfileAddress: req.body.ProfileAddress,
+      BannerAddress: req.body.BannerAddress,
     };
     let createDatas = new Vcard_URL(data);
     try {
       await createDatas.save();
-      return res
-        .status(201)
-        .json({
-          message: "New VCard Created!",
-          length: createDatas.length,
-          data: createDatas,
-        });
+      return res.status(201).json({
+        message: "New VCard Created!",
+        length: createDatas.length,
+        data: createDatas,
+      });
     } catch (error) {
       return res.status(401).json({ message: error.message });
     }
@@ -94,13 +93,11 @@ export const readSpecificUserAllData = async (req, res) => {
     if (!getSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      res
-        .status(201)
-        .json({
-          message: "Data Fetched!",
-          length: getSpecificData.length,
-          data: getSpecificData,
-        });
+      res.status(201).json({
+        message: "Data Fetched!",
+        length: getSpecificData.length,
+        data: getSpecificData,
+      });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -115,13 +112,11 @@ export const readSpecificIdUserData = async (req, res) => {
     if (!getSpecificIdData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      res
-        .status(201)
-        .json({
-          message: "Data Fetched!",
-          length: getSpecificIdData.length,
-          data: getSpecificIdData,
-        });
+      res.status(201).json({
+        message: "Data Fetched!",
+        length: getSpecificIdData.length,
+        data: getSpecificIdData,
+      });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -132,7 +127,28 @@ export const readSpecificIdUserData = async (req, res) => {
 export const updateSpecificUserData = async (req, res) => {
   try {
     let { id } = req.params;
-    let data = req.body;
+        //Basic Image File limit checked:
+        const profileFile = req.files["Profile"][0];
+        const bannerFile = req.files["Banner"][0];
+        let data = {
+          URL_Alies: req.body.URL_Alies,
+          VCardName: req.body.VCardName,
+          Description: req.body.Description,
+          Profile: {
+            filename: profileFile.filename,
+            contentType: profileFile.mimetype,
+            imageBase64: req.file?.path,
+          },
+          Banner: {
+            filename: bannerFile.filename,
+            contentType: bannerFile.mimetype,
+            imageBase64: req.file?.path,
+          },
+          ProfileType: req.body.ProfileType,
+          BannerType: req.body.BannerType,
+          ProfileAddress: req.body.ProfileAddress,
+          BannerAddress: req.body.BannerAddress,
+        };
     let updateSpecificData = await Vcard_URL.findOneAndUpdate(
       { URL_Alies: req.params.URL_Alies },
       data

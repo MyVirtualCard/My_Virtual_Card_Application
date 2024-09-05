@@ -1,8 +1,8 @@
-import BasicDetails from "../Models/BasicDetail.model.js";
+import BasicDetails from "../Model/BasicDetail.model.js";
 
-import Vcard_URL from "../Models/Vcard_URL.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import Vcard_URL from "../Model/Vcard_URL.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //DiskStorage:
 
 //Get Async allback function..All user basicdata fetching :

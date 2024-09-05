@@ -1,8 +1,7 @@
-import QRCodeModel from "../Models/QRCode.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
-import fs from "fs";
-import multer from "multer";
+import QRCodeModel from "../Model/QRCode.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
+
 // Import necessary functions from the url and path modules
 import { fileURLToPath } from "url";
 // Convert the URL of the current module to a filename
@@ -10,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 // Extract the directory name from the filename
 const __dirname = path.dirname(__filename);
 import path from "path";
-import upload from "../Multer/config.js";
+
 
 //Read or get all user basicDetail data  from database:
 

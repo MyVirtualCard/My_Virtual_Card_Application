@@ -1,5 +1,5 @@
 
-import AppoinmentModel from "../Models/Appoinment.model.js";
+import AppoinmentModel from "../Model/Appoinment.model.js";
 
 //Post basic detail data to database:
 export const PostAppoinmentData = async (req, res) => {

@@ -11,18 +11,29 @@ import {
   deleteSpecificUserData,
 } from "../Controllers/VCardURL.controller.js";
 import { verifyToken } from "../Middleware/verifyToken.js";
-
+import { upload } from "../Multer/Profile_Multer.js";
+import { BasicUpload } from "../Multer/Basic_Multer.js";
 let router = express.Router();
 
 //Get all basicDetails:
 
 router.get("/", verifyToken, getAllVCardURLData);
 router.get("/:userName", verifyToken, getVCardURLData);
-router.post("/",verifyToken, postVCardURLData);
+router.post(
+  "/",
+  verifyToken,
+  BasicUpload.fields([{ name: "Profile" }, { name: "Banner" }]),
+  postVCardURLData
+);
 //Read Specific user all Data:
 router.get("/specific_vcard/:URL_Alies", verifyToken, readSpecificUserAllData);
 //Update Specific user Single Data:
-router.put("/update_by_vcardUrl/:URL_Alies", verifyToken, updateSpecificUserData);
+router.put(
+  "/update_by_vcardUrl/:URL_Alies",
+  verifyToken,
+  BasicUpload.fields([{ name: "Profile" }, { name: "Banner" }]),
+  updateSpecificUserData
+);
 //Delete Specific user all Data in Basic Detail:
 router.delete("/deleteAll/:URL_Alies", verifyToken, deleteSpecificUserAllData);
 

@@ -1,7 +1,7 @@
 
-import GoogleMapModel from "../Models/GoogleMap.model.js";
-import Payment from "../Models/Payment.model.js";
-import currentPlan from "../Models/Plan.model.js";
+import GoogleMapModel from "../Model/GoogleMap.model.js";
+import Payment from "../Model/Payment.model.js";
+import currentPlan from "../Model/Plan.model.js";
 //Read or get all user product data  from database:
 export const GetGoogleMapData = async (req, res) => {
   try {

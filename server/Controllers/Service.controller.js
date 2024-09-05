@@ -1,9 +1,8 @@
-import ServiceModel from "../Models/Services.model.js";
-import serviceUpload from "../Multer/service.js";
-import currentPlan from "../Models/Plan.model.js";
-import fs from "fs";
-import multer from "multer";
-import Payment from "../Models/Payment.model.js";
+import ServiceModel from "../Model/Services.model.js";
+
+import currentPlan from "../Model/Plan.model.js";
+
+import Payment from "../Model/Payment.model.js";
 //Read or get all user basicDetail data  from database:
 
 export const GetServiceData = async (req, res) => {
@@ -67,7 +66,12 @@ export const PostServiceData = async (req, res) => {
                 ServiceType: req.body.ServiceType,
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
-                ServiceImage: req.body.ServiceImage,
+                // ServiceImage: req.body.ServiceImage,
+                ServiceImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
               });
   
               await newService
@@ -104,11 +108,13 @@ export const PostServiceData = async (req, res) => {
                 ServiceURL: req.body.ServiceURL,
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
-                ServiceImage: req.body.ServiceImage,
-                // ServiceImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                // ServiceImage: req.body.ServiceImage,
+
+                 ServiceImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
               });
   
               await newService
@@ -145,11 +151,13 @@ export const PostServiceData = async (req, res) => {
                 ServiceURL: req.body.ServiceURL,
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
-                ServiceImage: req.body.ServiceImage,
-                // ServiceImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                // ServiceImage: req.body.ServiceImage,
+                ServiceImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
+               
               });
   
               await newService
@@ -185,11 +193,12 @@ export const PostServiceData = async (req, res) => {
                 ServiceURL: req.body.ServiceURL,
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
-                ServiceImage: req.body.ServiceImage,
-                // ServiceImage: {
-                //   data: fs.readFileSync("uploads/" + req.file.filename),
-                //   contentType: req.file.mimetype,
-                // },
+                // ServiceImage: req.body.ServiceImage,
+                ServiceImage: {
+                  filename: req.file?.filename,
+                  contentType: req.file?.mimetype,
+                  imageBase64: req.file?.path,
+                },
               });
   
               await newService
@@ -280,24 +289,27 @@ export const updateSpecificUserData = async (req, res) => {
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
-
-  if (!checkCurrentPlan) {
+  let checkFreePlan = await currentPlan.find({
+    user: req.user.userName,
+  });
+  if (!checkCurrentPlan || !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!" });
-  }
-  if (checkCurrentPlan.length != 1) {
-    return res.status(400).json({ message: "Choose your Plan first!" });
-  } else {
-    //Plan 2 and 3
-    if (
-      checkCurrentPlan[0].amount === 10 ||
-      checkCurrentPlan[0].amount === 599 ||
-      checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
+  };
+     //Plan 2 and 3
+     if (
+      checkFreePlan[0]?.PlanPrice === 0 ||
+      checkCurrentPlan[0]?.amount === 599 ||
+      checkCurrentPlan[0]?.amount === 899 ||
+      checkCurrentPlan[0]?.amount === 1299
     ) {
       try {
         let { id } = req.params;
         let data = {
-          ServiceImage: req.body.ServiceImage,
+          ServiceImage: {
+            filename: req.file?.filename,
+            contentType: req.file?.mimetype,
+            imageBase64: req.file?.path,
+          },
           URL_Alies: req.body.URL_Alies,
           ServiceName: req.body.ServiceName,
           ServiceURL: req.body.ServiceURL,
@@ -330,7 +342,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res.status(400).json({ message: "Plan not match!" });
     }
-  }
+ 
 };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:

@@ -11,7 +11,6 @@ import {
   deleteSpecificUserData,
 } from "../Controllers/BasicDetail.controller.js";
 import { verifyToken } from "../Middleware/verifyToken.js";
-import upload from "../Multer/config.js";
 
 let router = express.Router();
 

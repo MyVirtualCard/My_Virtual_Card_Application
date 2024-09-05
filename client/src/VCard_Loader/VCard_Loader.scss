@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+.VCard_Loader_container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    position: relative;
+    justify-content: center;
+  
+    // background-image: url('../../assets/LandingPage_image/aristostech_company_background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+    // background-color: #D8EFEF;
+    // background-color: #017281;
+    background: linear-gradient(#013C56,#017281);
+  
+    .loadingbackground {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      right: 0%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(280deg, #D8EFEF, #D8EFEF);
+      z-index: -1;
+  
+      .aris_back {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+    }
+    .logo{
+        .aris_logo {
+            width: 70px;
+            // height: 60px;
+            z-index: 1;
+            transform-origin: center;
+            // animation: aris_logo_rotate 3s infinite linear;
+        filter: brightness(150%);
+            @keyframes aris_logo_rotate {
+              0% {
+                transform: rotate(0deg);
+              }
+              50% {
+                transform: rotate(180deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+          }
+    }
+    .slogan{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0px;
+      position: relative;
+        small{
+            font-size: 0.7rem;
+            font-weight: 550;
+            color: rgb(255, 255, 255);
+            font-family: "Exo 2", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 550;
+            font-style: normal;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            
+        }
+
+        .bubble_loader {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #fff;
+          box-shadow: 12px 0 #fff, -32px 0 #fff;
+          position: absolute;
+          left: 60%;
+          animation: flash 0.5s ease-out infinite alternate;
+        }
+        
+        @keyframes flash {
+          0% {
+            background-color: #FFF2;
+            box-shadow: 32px 0 #FFF2, -32px 0 #FFF;
+          }
+          50% {
+            background-color: #FFF;
+            box-shadow: 32px 0 #FFF2, -32px 0 #FFF2;
+          }
+          100% {
+            background-color: #FFF2;
+            box-shadow: 32px 0 #FFF, -32px 0 #FFF2;
+          }
+        }
+              
+    }
+
+  .site_loader{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    .site_box {
+      width: 40px;
+      height: 40px;
+      margin: auto;
+      position: relative;
+    }
+    .site_box:before {
+        content: '';
+        width: 48px;
+        height: 5px;
+        background: #000;
+        opacity: 0.25;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        border-radius: 50%;
+        animation: shadow 0.5s linear infinite;
+      }
+      .site_box:after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        animation: bxSpin 0.5s linear infinite;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 4px;
+      }
+    @keyframes bxSpin {
+      17% {
+        border-bottom-right-radius: 3px;
+      }
+      25% {
+        transform: translateY(9px) rotate(22.5deg);
+      }
+      50% {
+        transform: translateY(18px) scale(1, .9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+      }
+      75% {
+        transform: translateY(9px) rotate(67.5deg);
+      }
+      100% {
+        transform: translateY(0) rotate(90deg);
+      }
+    }
+
+    @keyframes shadow {
+      0%, 100% {
+        transform: scale(1, 1);
+      }
+      50% {
+        transform: scale(1.2, 1);
+      }
+    }
+  
+  }
+  
+    .logoLoader {
+      z-index: 1;
+    }
+  }

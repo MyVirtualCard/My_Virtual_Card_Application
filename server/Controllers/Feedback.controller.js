@@ -1,6 +1,6 @@
-import FeedbackModel from "../Models/Feedback.model.js";
+import FeedbackModel from "../Model/Feedback.model.js";
 import fs from "fs";
-import Payment from "../Models/Payment.model.js";
+import Payment from "../Model/Payment.model.js";
 import multer from "multer";
 // Import necessary functions from the url and path modules
 import { fileURLToPath } from "url";
@@ -9,7 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 // Extract the directory name from the filename
 const __dirname = path.dirname(__filename);
 import path from "path";
-import upload from "../Multer/config.js";
 
 //Read or get all user basicDetail data  from database:
 
