@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Gym_Trainer.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import hand from "../../../assets/AllVCard_Image/VCard3/hand.gif";
+
 //Product Slider
 import { Fade, Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -11,19 +11,16 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Triangle } from "react-loader-spinner";
-import { Toaster, toast } from "react-hot-toast";
 import vCardsJS from "vcards-js";
-import loadingBack from "../../../assets/LandingPage_image/aristostech_company_background.jpg";
-import trianglelogo from "../../../assets/LandingPage_image/Triangle_logo.png";
-import { InquiryValidateSchema } from "../../Helper/InquiryValidate";
-import Context from "../../UseContext/Context";
-import { AppoinmentValidateSchema } from "../../Helper/AppoinmentValidate";
-
+import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
+import Context from '../../../Context/GlobalContext'
+import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
+import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
 const Gym_Trainer = () => {
     //create a new vCard
     var vCard = vCardsJS();
   let {
+    user,
     successMessage,
     setSuccessMessage,
     successPopupOpen,
@@ -262,7 +259,7 @@ const Gym_Trainer = () => {
     },
   });
 
-  let [SiteLoader, setSiteLoader] = useState(false);
+  let [SiteLoader, setSiteLoader] = useState(true);
   let [VCard_URL_Data, setVCard_URL_Data] = useState([]);
   let [BasicData, setBasicData] = useState([]);
   let [VCardData, setVCardData] = useState([]);
@@ -305,16 +302,16 @@ END:VCARD
     document.body.removeChild(link);
   };
   const currentUrl = window.location.pathname; // Full URL
+  // Server API
   const api = axios.create({
-    baseURL: import.meta.env.VITE_APP_API_URL,
+    baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
   async function fetchAllData() {
-    setSiteLoader(true);
     try {
       await api
         .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
-          console.log(res.data.data);
+        
           setGoogleMapData(res.data.data.GoogleMapData);
           setVCard_URL_Data(res.data.data.Vcard_URL);
           setBasicData(res.data.data.BasicDetails);
@@ -327,17 +324,17 @@ END:VCARD
           setBussinessHourData(res.data.data.BussinessModel);
           setPopUpBannerData(res.data.data.PopupBannerModel);
           setManageContent(res.data.data.ManageContentData);
-          setSiteLoader(false);
           setTimeout(() => {
             setPopUpBannerToggle(true);
           }, 2000);
         })
         .catch((error) => {
           console.log(error);
-          setSiteLoader(false);
         });
     } catch (error) {
       console.log(error);
+      setSiteLoader(false);
+    } finally {
       setSiteLoader(false);
     }
   }
@@ -357,6 +354,10 @@ END:VCARD
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
+   // Show loading spinner or message while loading
+   if (SiteLoader) {
+    return <VCard_Loader />;
+  }
   return (
     <>
       {SiteLoader ? (

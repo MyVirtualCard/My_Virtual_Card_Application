@@ -216,7 +216,7 @@ let questions = [
   },
 ];
 const LandingPage = () => {
-  let{userName}=useContext(Context)
+  let{user,userName}=useContext(Context)
   let navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   let [TrialExpand, setTrialExpand] = useState(false);
@@ -367,7 +367,7 @@ const LandingPage = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+
 
   return (
     <>
@@ -499,7 +499,7 @@ const LandingPage = () => {
                   </m.ul>
                 </m.div>
                 <m.div className="actions" variants={topNavAnime}>
-                  {localStorageDatas === null ? (
+                  {user === null ? (
                     <Link to="/login">
                       <button>Login</button>
                     </Link>
@@ -561,7 +561,7 @@ const LandingPage = () => {
 
               <m.div className="register_actions">
                 <m.div className="start" variants={left_slide_1Anime}>
-                  {localStorageDatas === null ? (
+                  {user === null ? (
                     <Link to="/register">
                       <button>
                         Get Started<i className="bx bxs-user-plus bx-tada"></i>

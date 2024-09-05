@@ -106,8 +106,8 @@ height: 100%;
 font-size: 0.9rem;
 display: flex;
 align-items: center;
-gap: .5rem;
-justify-content: flex-start;
+gap: 0rem;
+justify-content: center;
 width: 100%;
 // background-color: #b4c4ff;
 color: rgb(61, 61, 61);
@@ -121,8 +121,8 @@ padding: 0.5rem 0.5rem 0.5rem 0.5rem;
 .icon{
   font-size: 1.3rem;
   padding: 5px 10px;
- background-color: #ffffff;
- color: black;
+
+ color: rgb(21, 157, 161);
  border-radius: 0.3rem;
 }
 

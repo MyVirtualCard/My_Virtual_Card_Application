@@ -3,7 +3,7 @@ import multer from 'multer';
 let router=express.Router();
 
 
-import { PostUserData,GetUserData ,ResendOTP,LoginUser, ReadRegisteredUserSpecificData,UpdateRegisteredUserSpecificData} from '../Controllers/Auth.Controller.js';
+import { PostUserData,GetUserData ,ResendOTP,LoginUser,ForgotPassword,ResetPassword, ReadRegisteredUserSpecificData,UpdateRegisteredUserSpecificData} from '../Controllers/Auth.Controller.js';
 
 // Configure Multer storage
 const storage = multer.diskStorage({
@@ -27,6 +27,10 @@ router.get('/register_specific_data/:userName',ReadRegisteredUserSpecificData);
 router.put('/register_specific_data/:id',upload.single('profile'),UpdateRegisteredUserSpecificData);
 //Resend OTP
 router.post('/resend_OTP',ResendOTP);
+//forgot Password:
+router.post('/forgot_password',ForgotPassword);
+//Reset Passoword:
+router.post('/reset_password/:id/:token',ResetPassword);
 // Login
 router.post('/login',LoginUser)
 

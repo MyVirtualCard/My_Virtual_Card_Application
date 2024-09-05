@@ -112,18 +112,25 @@ const User_Setting = () => {
                             key={index}
                           />
                         ) : (
-                          ""
-                        )}
-                        {data.ProfileType == "ImageUpload" ? (
-                          <img
-                            src={`${
-                              import.meta.env.VITE_APP_BACKEND_API_URL
-                            }/uploads/Basic_Image/${data?.Profile?.filename}`}
-                            alt="profile"
-                            key={index}
-                          />
-                        ) : (
-                          ""
+                          <>
+                            {data.ProfileType == "ImageUpload" ? (
+                              <img
+                                src={`${
+                                  import.meta.env.VITE_APP_BACKEND_API_URL
+                                }/uploads/Basic_Image/${
+                                  data?.Profile?.filename
+                                }`}
+                                alt="profile"
+                                key={index}
+                              />
+                            ) : (
+                              <img
+                                src={data.Profile}
+                                alt="profile"
+                                key={index}
+                              />
+                            )}
+                          </>
                         )}
                       </>
                     );

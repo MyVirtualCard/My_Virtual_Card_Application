@@ -7,6 +7,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { ToastContainer, toast,Bounce } from 'react-toastify';
 import Context from "../../UseContext/Context";
+import { FaHome } from "react-icons/fa";
 
 const ForgotPassword = () => {
   let navigate = useNavigate();
@@ -98,7 +99,7 @@ const ForgotPassword = () => {
 
      <div className="home_page">
           <Link to="/">
-            <i className="bx bxs-home"></i>Home
+           <FaHome/>
           </Link>
         </div>
         <div className="right">

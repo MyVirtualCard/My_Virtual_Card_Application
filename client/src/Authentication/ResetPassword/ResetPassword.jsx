@@ -1,41 +1,35 @@
 import React, { useContext, useState, useEffect,useRef } from "react";
 import './ResetPassword.scss'
-import resend_otp_img from "../../../assets/Authentication_image/resend_otp_img.png";
-import backImage from "../../../assets/LandingPage_image/slide1_back.png";
-import message_icon from "../../../assets/icons/message_hand.png";
-import brand_logo from "../../../assets/LandingPage_image/BrandLogo3.png";
+import brand_logo from "../../assets/Logo/brand_logo.png";
+import { BiLogInCircle, BiRightArrow } from "react-icons/bi";
+import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
+import { BsFillTelephoneInboundFill } from "react-icons/bs";
 
+import { HiOutlineMail } from "react-icons/hi";
+import { CiMobile3 } from "react-icons/ci";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEye } from "react-icons/fa6";
+import { WiStars } from "react-icons/wi";
 import new_vcards_images from "../VCard_Tempalate_Image/New_Vcards.js";
 
-import card1 from "../../../assets/Digicards/vmob-1.png";
-import card2 from "../../../assets/Digicards/vmob-2.png";
-import card3 from "../../../assets/Digicards/vmob-3.png";
-import card4 from "../../../assets/Digicards/vmob-4.png";
-import card5 from "../../../assets/Digicards/vmob-5.png";
-import card6 from "../../../assets/Digicards/vmob-6.png";
-import card7 from "../../../assets/Digicards/vmob-7.png";
 //register right Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import arrow from "../../../assets/SVG/Register/arrow.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Context from "../../UseContext/Context";
-import axios, { all } from "axios";
-import { convertToBase64Profile } from "../../Helper/convert";
+import Context from "../../Context/GlobalContext.js";
+import axios from "axios";
 import { useFormik } from "formik";
 import { ToastContainer, toast,Bounce } from 'react-toastify';
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import {
-  LoginValidateSchema,
-  RegisterValidateSchema,
-} from "../../Helper/RegisterValidate.js";
-import { ForgotEmailValidateSchema } from "../../Helper/ForgetPassValidate.js";
+
 import { ResetPassValidateSchema } from "../../Helper/ResetPassValidation.js";
-import ReCAPTCHA from "react-google-recaptcha";
+import { FaHome } from "react-icons/fa";
 const ResetPassword = () => {
   let inputRefFocus=useRef(null)
   useEffect(()=>{
@@ -81,47 +75,14 @@ const ResetPassword = () => {
     location,
     setLocation,
   } = useContext(Context);
-  console.log(OTP_Value)
-  const [width, setWidth] = useState(window.innerWidth);
-  let [registerLoader, setRegisterLoader] = useState(false);
-  let [loginLoader, setLoginLoader] = useState(false);
 
-  let [OpenTermsCondition, setOpenTermsCondition] = useState(false);
-  let [OpenPrivacyCondition, setOpenPrivacyCondition] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+  let [loginLoader, setLoginLoader] = useState(false);
   let [capchaValue, setCapchaValue] = useState(null);
 
 
 
-  let images = [
-    {
-      id: 1,
-      image: card1,
-    },
-    {
-      id: 2,
-      image: card2,
-    },
-    {
-      id: 3,
-      image: card3,
-    },
-    {
-      id: 4,
-      image: card4,
-    },
-    {
-      id: 5,
-      image: card5,
-    },
-    {
-      id: 6,
-      image: card6,
-    },
-    {
-      id: 7,
-      image: card7,
-    },
-  ];
+
   let navigate = useNavigate();
 
 
@@ -190,19 +151,18 @@ const ResetPassword = () => {
       setLoginLoader(true);
 
       await api
-        .post(`/auth/reset_password/${resetPassId}/${resetPassToken}`, values)
+        .post(`/api/user/reset_password/${resetPassId}/${resetPassToken}`, values)
         .then((res) => {
           toast.success(res.data.message);
           setLoginLoader(false);
           setTimeout(() => {
-            setAuthToggle(true);
             navigate(`/login`);
             setForgotPassToggle(false)
             setResetPassToggle(false);
           }, 2000);
         })
         .catch((error) => {
-     console.log(error)
+
           toast.error(error.response.data.message);
           setLoginLoader(false);
         });
@@ -259,37 +219,44 @@ const ResetPassword = () => {
   return (
     <>
       <div
-        className="resetpass_container"
+        className="resetPass_container"
         id={AuthToggle ? "login_back" : "register_back"}
       >
-      {/* Home page button */}
-
-      <div className="home_page">
+        <div className="auth_back"></div>
+        {/* Home page button */}
+        <div className="home_page">
           <Link to="/">
-            <i className="bx bxs-home"></i>Home
+            <FaHome />
           </Link>
         </div>
-
         <div className="brand_logo">
-          <img src={brand_logo} alt="logo" />
+          <img src={brand_logo} alt="brand_logo" />
         </div>
         <div className="verify_box_container">
-          <div className="right_image">
-          <Slider {...vcard_settings}>
-              
-              {new_vcards_images.map((data, index) => {
-                return <img src={data} alt="image" key={index} />;
-              })}
-            </Slider>
+        
+          <div className="left_side">
+            <div className="title">
+              <h4>Don't worry  about your password been Lost..</h4>
+              <small>Get Ready to Visit Your Dashboard!</small>
+            </div>
+            <div className="right_image">
+              <Slider {...vcard_settings}>
+                {new_vcards_images.map((data, index) => {
+                  return <img src={data} alt="image" key={index} />;
+                })}
+              </Slider>
+            </div>
           </div>
-          <div className="verify_left_form">
+          <div className="right_form">
           <form
                       action=""
                       onSubmit={resetformik.handleSubmit}
                       className="login_form"
                     >
                       <div className="form_title">
-                        <h4>Get Ready for Visit Your Dashboard</h4>
+                      <h4>
+                            Update Password  <WiStars />
+                          </h4>
                         <small>Create Your New Password!</small>
                       </div>
                       <div className="form_group">

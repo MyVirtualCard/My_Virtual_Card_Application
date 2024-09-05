@@ -16,7 +16,7 @@ import User_Appoinments from "./Client_Dashboard/Components/User_Appoinments";
 import User_Setting from "./Client_Dashboard/Components/User_Setting";
 import User_Notification from "./Client_Dashboard/Components/User_Notification";
 import { ToastContainer, toast, Bounce, Slide, Zoom } from "react-toastify";
-import axios from 'axios'
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import LandingPage from "./LandingPage/LandingPage";
 
@@ -27,6 +27,8 @@ import Context from "./Context/GlobalContext.js";
 import VCard_URL_Form from "./Client_Dashboard/Components/VCard_URL_Form.jsx";
 import VCard_Form_Edit from "./Client_Dashboard/VCardForms_Components/VCard_Form_Edit.jsx";
 import Business_Consultant from "./Client_Dashboard/All_VCards/Live_VCards/Business_Consultant.jsx";
+import ResetPassword from "./Authentication/ResetPassword/ResetPassword.jsx";
+import Gym_Trainer from "./Client_Dashboard/All_VCards/Live_VCards/Gym_Trainer.jsx";
 //Import All component:
 const Client_Dashboard = lazy(() =>
   import("./Client_Dashboard/Client_Dashboard")
@@ -38,7 +40,7 @@ const Client_Dashboard = lazy(() =>
 const App = () => {
   let navigate = useNavigate();
   // All Global States;
-  let [user, setUser] = useState();
+  let [user, setUser] = useState(null);
   let [userName, setUserName] = useState(null);
   let [mobileNumber, setMobileNumber] = useState();
   let [registeredData, setRegisteredData] = useState([]);
@@ -58,6 +60,11 @@ const App = () => {
   let [VCardCount, setVCardCount] = useState([]);
   //URL_Alies
   let [URL_Alies, setURL_Alies] = useState();
+
+  //Forget Pass
+  let [ResetPassToken_Id, setResetPassToken_Id] = useState("");
+  let [resetPassToken, setResetPassToken] = useState();
+  let [resetPassId, setResetPassId] = useState();
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -148,7 +155,14 @@ const App = () => {
             setSavedPlan,
             LiveLinkActivate,
             setLiveLinkActivate,
-            VCardCount, setVCardCount,
+            VCardCount,
+            setVCardCount,
+            ResetPassToken_Id,
+            setResetPassToken_Id,
+            resetPassToken,
+            setResetPassToken,
+            resetPassId,
+            setResetPassId,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -160,7 +174,7 @@ const App = () => {
               <Route
                 path="/register"
                 element={
-                  user ? (
+                  user?.token ? (
                     <Navigate to={`/${userName}/uadmin/dashboard`} />
                   ) : (
                     <Register />
@@ -170,6 +184,11 @@ const App = () => {
               {/* <Route path="/register" element={<Register />} /> */}
               <Route path="/login" element={<Login />} />
               <Route path="/verify_OTP" element={<VerifyOTP />} />
+              <Route
+                path="/reset_password/:id/:token"
+                element={<ResetPassword />}
+              />
+
               {/* Client Dashboard Routes */}
               <Route
                 path={`/${userName}/uadmin`}
@@ -209,7 +228,11 @@ const App = () => {
                 />
               </Route>
               {/* Live VCards */}
-
+              {URL_Alies == URL_Alies && currentTemplate === 1 ? (
+                <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
+              ) : (
+                ""
+              )}
               {URL_Alies == URL_Alies && currentTemplate === 5 ? (
                 <Route path={`/:URL_Alies`} element={<Business_Consultant />} />
               ) : (

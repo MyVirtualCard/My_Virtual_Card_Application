@@ -8,6 +8,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoMdNotifications } from "react-icons/io";
 import { CiMenuBurger } from "react-icons/ci";
 import { CiMenuFries } from "react-icons/ci";
+import { SiCodesignal } from "react-icons/si";
 import { MdSpaceDashboard } from "react-icons/md";
 import { CgWebsite } from "react-icons/cg";
 import { MdOutlineSupportAgent } from "react-icons/md";
@@ -37,6 +38,7 @@ const Client_Dashboard = () => {
     setURL_Alies,
     userName,
     user,
+    setUser,
     registeredData,
     setRegisteredData,
     FormSubmitLoader,
@@ -83,6 +85,8 @@ const Client_Dashboard = () => {
     e.preventDefault();
     try {
       localStorage.removeItem("datas");
+      localStorage.removeItem("URL_Alies");
+      localStorage.removeItem("userName");
       toast.success("LogOut successfully");
       setTimeout(() => {
         navigate("/");
@@ -121,10 +125,10 @@ const Client_Dashboard = () => {
           </div>
           <div className="sidemenu_title">
             <div className="icon">
-              <GiCometSpark />
+              <SiCodesignal />
             </div>
             <h5 id={sideaNavToggle ? "menu_hide" : ""}>Design Your VCard</h5>
-            <div className="hand_icon">
+            <div className="hand_icon"  id={sideaNavToggle ? "menu_hide" : ""}>
               <FaHandPointDown/>
             </div>
           </div>

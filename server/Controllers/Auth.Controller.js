@@ -186,7 +186,72 @@ export const ResendOTP = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+export const ForgotPassword = async (req, res) => {
+  let { email } = req.body;
+  try {
+    if (!req.body.email) {
+      res.status(401).json({ message: "Enter Your Email!" });
+    } else {
+      let checkUser = await User.findOne({ email: email });
 
+      if (!checkUser) {
+        res
+          .status(401)
+          .json({ message: "User Doesn't Exist with this Email!" });
+      } else {
+        const token = jwt.sign({ id: checkUser._id }, process.env.SECRET_KEY, {
+          expiresIn: "30d",
+        });
+
+        let NavigateLink = `${checkUser._id}/${token}`;
+         let Id=checkUser._id;
+         let Token=token
+        res
+          .status(201)
+          .json({ message: "Create Your New Password!",data:NavigateLink });
+
+       
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+//Reset Password post new password:
+export const ResetPassword = async (req, res) => {
+  let { id, token } = req.params;
+
+  let { password } = req.body;
+  try {
+    if (!req.body.password) {
+      res.status(401).json({ message: "Enter Your Password!" });
+    } else {
+      token = jwt.verify(
+        token,
+        process.env.SECRET_KEY,
+        async (error, decode) => {
+          if (error) {
+            res.status(401).json({ message: "Token Error" });
+          } else {
+            let HashPassword = bcryptjs.hashSync(password, 10);
+            let checkUser = await User.findByIdAndUpdate(
+              { _id: id },
+              { password: HashPassword }
+            );
+            res
+              .status(201)
+              .json({ message: "New Password Created!", data: checkUser });
+          
+          }
+        }
+      );
+    }
+  } catch (error) {
+  console.log(error)
+    res.status(500).json({ message: error.message });
+  }
+};
 //Send otp verification MobileNumber:
 const SendOtpVerificationMobileNumber = async (
   { _id, email, userName, firstName, mobileNumber },

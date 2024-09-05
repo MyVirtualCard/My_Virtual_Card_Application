@@ -5,7 +5,7 @@ import { BiLogInCircle, BiRightArrow } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
 import { BsFillTelephoneInboundFill } from "react-icons/bs";
-
+import { FaHome } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { CiMobile3 } from "react-icons/ci";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -27,9 +27,12 @@ import {
   RegisterValidateSchema,
 } from "../../Helper/RegisterValidate.js";
 import { ForgotEmailValidateSchema } from "../../Helper/ForgetPassValidate.js";
-
+import Context from '../../Context/GlobalContext.js'
 const Login = () => {
   let inputRefFocus = useRef(null);
+
+  let {    resetPassToken,setResetPassToken,
+    ResetPassToken_Id, setResetPassToken_Id, resetPassId,setResetPassId}=useContext(Context)
   useEffect(() => {
     inputRefFocus.current.focus();
   }, []);
@@ -39,6 +42,7 @@ const Login = () => {
   let [ForgotPassToggle, setForgotPassToggle] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   let [registerLoader, setRegisterLoader] = useState(false);
+  let[email,setEmail]=useState();
   let navigate = useNavigate();
   let [Seconds, setSeconds] = useState("300");
   //VCard Slider
@@ -129,7 +133,7 @@ const Login = () => {
     onSubmit: async (values) => {
       setRegisterLoader(true);
       await api
-        .post("/auth/forgot_password", values)
+        .post("/api/user/forgot_password", values)
         .then((res) => {
           setResetPassToken_Id(res.data.data);
           setResetPassId(res.data.data.split("/")[0]);
@@ -142,6 +146,7 @@ const Login = () => {
           setRegisterLoader(false);
         })
         .catch((error) => {
+          console.log(error)
           toast.error(error.response.data.message);
           setRegisterLoader(false);
         });
@@ -168,7 +173,7 @@ const Login = () => {
         {/* Home page button */}
         <div className="home_page">
           <Link to="/">
-            <FaArrowLeft />
+            <FaHome />
           </Link>
         </div>
         <div className="brand_logo">

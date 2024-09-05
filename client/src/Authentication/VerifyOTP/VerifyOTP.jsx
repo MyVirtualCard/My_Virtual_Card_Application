@@ -3,7 +3,7 @@ import "./VerifyOTP.scss";
 import brand_logo from "../../assets/Logo/brand_logo.png";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaHome, FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { CiMobile3 } from "react-icons/ci";
@@ -187,7 +187,7 @@ let[  OTP_Value,
 
         <div className="home_page">
           <Link to="/">
-            <FaArrowLeft />
+            <FaHome />
           </Link>
         </div>
 

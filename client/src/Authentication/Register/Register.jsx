@@ -6,6 +6,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import { FaHome } from "react-icons/fa";
 import { CiMobile3 } from "react-icons/ci";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRegEyeSlash } from "react-icons/fa6";
@@ -514,7 +515,7 @@ const Register = () => {
 
         <div className="home_page">
           <Link to="/">
-            <FaArrowLeft />
+            <FaHome />
           </Link>
         </div>
 

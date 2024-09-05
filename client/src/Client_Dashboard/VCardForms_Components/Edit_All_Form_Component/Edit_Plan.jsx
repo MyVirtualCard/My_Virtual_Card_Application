@@ -385,7 +385,6 @@ const Plan = () => {
   let [currentAccessDetails, setCurrentAccessDetails] = useState();
   let [currentAccessActive, setCurrentAccessActive] = useState(false);
   let [paymentPopup, setPaymentPopup] = useState(false);
-  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
  
 
   const [amount, setAmount] = useState("");
@@ -421,7 +420,7 @@ const Plan = () => {
         .post("/currentplan", data, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorageDatas.token}`,
+            Authorization: `Bearer ${user.token}`,
           },
         })
         .then((res) => {
@@ -438,7 +437,15 @@ const Plan = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => {
+      console.log("Razorpay script loaded");
+    };
+    document.body.appendChild(script);
+  }, []);
 
   const createOrder = async (amount, token) => {
     const config = {
@@ -463,7 +470,7 @@ const Plan = () => {
 
   //Razor Payment
   const handlePayment = async (amount, token) => {
-    const order = await createOrder(amount, localStorageDatas.token);
+    const order = await createOrder(amount, user.token);
 
     const options = {
       key: import.meta.env.VITE_RAZORPAY_API_KEY,
@@ -514,7 +521,7 @@ const Plan = () => {
       .get(`/razorpay/specificUser/${userName}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorageDatas.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       })
       .then((res) => {
@@ -537,7 +544,7 @@ const Plan = () => {
     api.get(`/currentplan/${URL_Alies}`,{
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorageDatas.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
     }).then((res)=>{
   if(res.data.data.length > 0){
@@ -782,7 +789,7 @@ const Plan = () => {
                 <div className="actions">
                   <button
                     onClick={() =>
-                      handlePayment(amount, localStorageDatas.token)
+                      handlePayment(amount, user.token)
                     }
                   >
                     <i className="bx bxs-bank"></i> Pay Now
