@@ -138,12 +138,19 @@ const User_Setting = () => {
                 </>
               ) : (
                 <>
-                  <img
-                    src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/uploads/${
-                      registeredData?.profile?.filename
-                    }`}
-                    alt="logo"
-                  />
+                     {registeredData?.profile ? (
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/uploads/${registeredData?.profile?.filename}`}
+                              alt="logo"
+                            />
+                          ) : (
+                            <img
+                              src="https://img.freepik.com/premium-photo/cartoon-character-with-phone-that-says-he-is-holding-phone_706452-5625.jpg?w=826"
+                              alt="logo"
+                            />
+                          )}
                 </>
               )}
 
@@ -170,16 +177,28 @@ const User_Setting = () => {
               <form onSubmit={formik.handleSubmit}>
                 <div className="form_group">
                   <label htmlFor="profile">
-                    {preview == null ? (
-                      <img
-                        src={`${
-                          import.meta.env.VITE_APP_BACKEND_API_URL
-                        }/uploads/${registeredData?.profile?.filename}`}
-                        alt="profile"
-                      />
-                    ) : (
-                      <img src={preview} alt="profile" />
-                    )}
+                  
+                        {registeredData?.profile  ? (
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/uploads/${registeredData?.profile?.filename}`}
+                              alt="logo"
+                            />
+                          ) : (
+                            <>
+                                 {preview == null && !registeredData?.profile ? (
+                             <img
+                              src="https://img.freepik.com/premium-photo/cartoon-character-with-phone-that-says-he-is-holding-phone_706452-5625.jpg?w=826"
+                              alt="logo"
+                            />
+                            ) : (
+                              <img src={preview} alt="profile" />
+                            )}
+                            </>
+                       
+                           
+                          )}
                   </label>
 
                   <input

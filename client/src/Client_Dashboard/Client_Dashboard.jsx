@@ -44,7 +44,8 @@ const Client_Dashboard = () => {
     FormSubmitLoader,
     status,
     setFormSubmitLoader,
-    VCardCount, setVCardCount
+    VCardCount,
+    setVCardCount,
   } = useContext(Context);
 
   const location = useLocation();
@@ -128,8 +129,8 @@ const Client_Dashboard = () => {
               <SiCodesignal />
             </div>
             <h5 id={sideaNavToggle ? "menu_hide" : ""}>Design Your VCard</h5>
-            <div className="hand_icon"  id={sideaNavToggle ? "menu_hide" : ""}>
-              <FaHandPointDown/>
+            <div className="hand_icon" id={sideaNavToggle ? "menu_hide" : ""}>
+              <FaHandPointDown />
             </div>
           </div>
           <div className="sidenav_menu">
@@ -229,62 +230,61 @@ const Client_Dashboard = () => {
             className="profile_box"
             id={ProfileCardToggle ? "ProfileCardOpen" : "ProfileCardClose"}
           >
-            {VCardCount.length > 0 ? 
-            <>
-               {VCardCount.map((data, index) => {
+            {VCardCount.length > 0 ? (
+              <>
+                {VCardCount.map((data, index) => {
                   return (
                     <>
-                      <div
-                        className="profile_img"
-                        key={index}
-                      >
+                      <div className="profile_img" key={index}>
                         <div key={index}>
-                        {data.ProfileType == "Paste_ImageAddress" ? (
-                          <img
-                            src={
-                              data.ProfileAddress.length > 0 &&
-                              data.ProfileAddress != undefined
-                                ? data.ProfileAddress
-                                : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                            }
-                            alt="profile"
-                            
-                          />
-                        ) : (
-                          ""
-                        )}
-                        {data.ProfileType == "ImageUpload" ? (
-                          <img
-                          src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/uploads/Basic_Image/${
-                            data?.Profile?.filename
-                          }`}
-                            alt="profile"
-                          />
-                        ) : (
-                          ""
-                        )}
+                          {data.ProfileType == "Paste_ImageAddress" ? (
+                            <img
+                              src={
+                                data.ProfileAddress.length > 0 &&
+                                data.ProfileAddress != undefined
+                                  ? data.ProfileAddress
+                                  : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                              }
+                              alt="profile"
+                            />
+                          ) : (
+                            ""
+                          )}
+                          {data.ProfileType == "ImageUpload" ? (
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/uploads/Basic_Image/${data?.Profile?.filename}`}
+                              alt="profile"
+                            />
+                          ) : (
+                            ""
+                          )}
                         </div>
-                   
                       </div>
                     </>
                   );
                 })}
-            </>
-            
-            :
-            
-            <>
+              </>
+            ) : (
+              <>
                 <div className="profile_img">
-              <img
-                src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/uploads/${
-                  registeredData?.profile?.filename
-                }`}
-                alt="logo"
-              />
-            </div>
-            </>
-            }
-        
+                  {registeredData?.profile ? (
+                    <img
+                      src={`${
+                        import.meta.env.VITE_APP_BACKEND_API_URL
+                      }/uploads/${registeredData?.profile?.filename}`}
+                      alt="logo"
+                    />
+                  ) : (
+                    <img
+                      src="https://img.freepik.com/premium-photo/cartoon-character-with-phone-that-says-he-is-holding-phone_706452-5625.jpg?w=826"
+                      alt="logo"
+                    />
+                  )}
+                </div>
+              </>
+            )}
 
             <div className="profile_content">
               <div className="name">
@@ -328,69 +328,70 @@ const Client_Dashboard = () => {
               <div className="user_name">
                 <h3>{registeredData.firstName || "John Wick"}</h3>
               </div>
-              {VCardCount.length > 0 ? 
-              
-              <>
-                 {VCardCount.map((data, index) => {
-                  return (
-                    <>
-                      <div
-                        className="profile_logo"
-                        onClick={() => setProfileCardToggle(!ProfileCardToggle)}
-                        key={index}
-                      >
-                        <div key={index}>
-                        {data.ProfileType == "Paste_ImageAddress" ? (
-                          <img
-                            src={
-                              data.ProfileAddress.length > 0 &&
-                              data.ProfileAddress != undefined
-                                ? data.ProfileAddress
-                                : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                            }
-                            alt="profile"
-                            
-                          />
-                        ) : (
-                          ""
-                        )}
-                        {data.ProfileType == "ImageUpload" ? (
-                          <img
-                          src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/uploads/Basic_Image/${
-                            data?.Profile?.filename
-                          }`}
-                            alt="profile"
-                          />
-                        ) : (
-                          ""
-                        )}
+              {VCardCount.length > 0 ? (
+                <>
+                  {VCardCount.map((data, index) => {
+                    return (
+                      <>
+                        <div
+                          className="profile_logo"
+                          onClick={() =>
+                            setProfileCardToggle(!ProfileCardToggle)
+                          }
+                          key={index}
+                        >
+                          <div key={index}>
+                            {data.ProfileType == "Paste_ImageAddress" ? (
+                              <img
+                                src={
+                                  data.ProfileAddress.length > 0 &&
+                                  data.ProfileAddress != undefined
+                                    ? data.ProfileAddress
+                                    : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                                }
+                                alt="profile"
+                              />
+                            ) : (
+                              ""
+                            )}
+                            {data.ProfileType == "ImageUpload" ? (
+                              <img
+                                src={`${
+                                  import.meta.env.VITE_APP_BACKEND_API_URL
+                                }/uploads/Basic_Image/${
+                                  data?.Profile?.filename
+                                }`}
+                                alt="profile"
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </div>
                         </div>
-                   
-                      </div>
-                    </>
-                  );
-                })}
-              </>
-              
-              : 
-              
-              <div
-              className="profile_logo"
-              onClick={() => setProfileCardToggle(!ProfileCardToggle)}
-            >
-              {/* <img
-                src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/uploads/${registeredData?.profile?.filename || 'https://img.freepik.com/premium-photo/man-with-his-arms-crossed-shirt-that-says-hes-it_985633-17519.jpg?w=740'}}`}
-                alt="logo"
-              /> */}
-              <img
-                src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/uploads/${
-                  registeredData?.profile?.filename
-                }`}
-                alt="logo"
-              />
-            </div>
-              }
-         
+                      </>
+                    );
+                  })}
+                </>
+              ) : (
+                <div
+                  className="profile_logo"
+                  onClick={() => setProfileCardToggle(!ProfileCardToggle)}
+                >
+                  {registeredData?.profile ? (
+                    <img
+                      src={`${
+                        import.meta.env.VITE_APP_BACKEND_API_URL
+                      }/uploads/${registeredData?.profile?.filename}`}
+                      alt="logo"
+                    />
+                  ) : (
+                    <img
+                      src="https://img.freepik.com/premium-photo/cartoon-character-with-phone-that-says-he-is-holding-phone_706452-5625.jpg?w=826"
+                      alt="logo"
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
           {/* //Content Box */}
@@ -443,13 +444,12 @@ const Client_Dashboard = () => {
             ) : (
               ""
             )}
-     
           </div>
         </div>
-               {/* Footer */}
-               <div className="footer">
-              <Footer />
-            </div>
+        {/* Footer */}
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
     </>
   );
