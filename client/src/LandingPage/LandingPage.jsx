@@ -21,7 +21,7 @@ import number1 from "../assets/Landing_Page/view/number1.png";
 import number2 from "../assets/Landing_Page/view/number2.png";
 import number3 from "../assets/Landing_Page/view/number3.png";
 import nfc from "../assets/Landing_Page/view/4.png";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import anime1 from "../assets/Landing_Page/view/Animation - 1717142280104.json";
 import { toast } from "react-toastify";
 import { motion as m } from "framer-motion";
@@ -588,7 +588,7 @@ const LandingPage = () => {
                 </div>
                 <m.div className="offer_box">
                   <div className="spark">
-                    <Lottie
+                    {/* <Lottie
                       options={defaultOptions}
                       style={{
                         height: 150,
@@ -596,7 +596,7 @@ const LandingPage = () => {
                         position: "absolute",
                         top: -50,
                       }}
-                    />
+                    /> */}
                   </div>
                   <m.div className="box">
                     <m.div className="time_box">
@@ -703,7 +703,7 @@ const LandingPage = () => {
                   variants={right_slide_1Anime}
                 ></m.div>
                 <m.div className="design3" variants={right_slide_1Anime}>
-                  <Lottie
+                  {/* <Lottie
                     options={defaultOptions}
                     style={{
                       height: 150,
@@ -711,7 +711,7 @@ const LandingPage = () => {
                       position: "absolute",
                       top: -50,
                     }}
-                  />
+                  /> */}
                   <div className="count">10</div>
                   <div className="content">VCard Templates</div>
                 </m.div>

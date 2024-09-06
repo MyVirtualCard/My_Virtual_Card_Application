@@ -29,6 +29,8 @@ import VCard_Form_Edit from "./Client_Dashboard/VCardForms_Components/VCard_Form
 import Business_Consultant from "./Client_Dashboard/All_VCards/Live_VCards/Business_Consultant.jsx";
 import ResetPassword from "./Authentication/ResetPassword/ResetPassword.jsx";
 import Gym_Trainer from "./Client_Dashboard/All_VCards/Live_VCards/Gym_Trainer.jsx";
+import Terms_Condition from "./LandingPage/Terms&Condition/Terms_Condition.jsx";
+import Privacy_Policy from "./LandingPage/PrivacyPolicy/Privacy_Policy.jsx";
 //Import All component:
 const Client_Dashboard = lazy(() =>
   import("./Client_Dashboard/Client_Dashboard")
@@ -189,6 +191,9 @@ const App = () => {
                 element={<ResetPassword />}
               />
 
+<Route path="/paymentsuccess" element={<f />} />
+              <Route path="/terms_condition" element={<Terms_Condition />} />
+              <Route path="/privacy_condition" element={<Privacy_Policy />} />
               {/* Client Dashboard Routes */}
               <Route
                 path={`/${userName}/uadmin`}
