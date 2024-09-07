@@ -459,7 +459,7 @@
           z-index: 5;
           opacity: 1;
           filter: brightness(104%);
-          animation: hideImage 5s infinite linear;
+          animation: hideImage 10s infinite linear;
           @keyframes hideImage {
             0% {
               transform: translateY(0px);
