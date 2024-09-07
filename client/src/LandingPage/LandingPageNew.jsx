@@ -44,6 +44,13 @@ const LandingPageNew = () => {
   let [PremiumPlanExpand, setPremiumPlanExpand] = useState(false);
   let [showAnswer, setShowAnswer] = useState(false);
   let [ImageToggle, setImageToggle] = useState(true);
+  let PricingRef = useRef(null);
+  let scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
   let FAQRef = useRef(null);
   useEffect(() => {
     setTimeout(() => {
@@ -583,7 +590,9 @@ const LandingPageNew = () => {
                     </div>
                     <div className="template_image">
                       <img src={data.VCard_Image} alt="card1" />
-                      <Link className="preview_btn">Activate Plan</Link>
+                      <Link className="preview_btn" onClick={() => {
+                          scrollToSection(PricingRef)
+                        }}>View Plan</Link>
                     </div>
                     <div className="template_actions">
                       <Link to={data.VCard_Link} className="activate_btn">
@@ -913,7 +922,7 @@ const LandingPageNew = () => {
             </div>
           </div>
           {/* Slide6 */}
-          <div className="slide_6_page">
+          <div className="slide_6_page" ref={PricingRef}>
           <div className="plan_heading" initial="hide" animate="show">
             <h2 >
               Select the <span>Perfect Plan</span> for You
