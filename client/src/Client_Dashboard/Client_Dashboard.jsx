@@ -86,7 +86,6 @@ const Client_Dashboard = () => {
     e.preventDefault();
     try {
       localStorage.removeItem("datas");
-      localStorage.removeItem("URL_Alies");
       localStorage.removeItem("userName");
       toast.success("LogOut successfully");
       setTimeout(() => {

@@ -31,13 +31,17 @@ import ResetPassword from "./Authentication/ResetPassword/ResetPassword.jsx";
 import Gym_Trainer from "./Client_Dashboard/All_VCards/Live_VCards/Gym_Trainer.jsx";
 import Terms_Condition from "./LandingPage/Terms&Condition/Terms_Condition.jsx";
 import Privacy_Policy from "./LandingPage/PrivacyPolicy/Privacy_Policy.jsx";
+import Client_Dashboard from "./Client_Dashboard/Client_Dashboard.jsx";
+import LandingPageNew from "./LandingPage/LandingPageNew.jsx";
+import Gym_Trainer_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Gym_Trainer_Demo.jsx";
+import Taxi_Service_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Taxi_Service_Demo.jsx";
+import Fashion_Designer_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Fashion_Designer_Demo.jsx";
+import Manager_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Manager_Demo.jsx";
+import Business_Consultant_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Business_Consultant_Demo.jsx";
+import Real_Estate_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Real_Estate_Demo.jsx";
+import Beauty_Parlor_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Beauty_Parlor_Demo.jsx";
+import Boutique_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Boutique_Demo.jsx";
 //Import All component:
-const Client_Dashboard = lazy(() =>
-  import("./Client_Dashboard/Client_Dashboard")
-);
-// const LandingPage = lazy(() => {
-//   import("./LandingPage/LandingPage");
-// });
 
 const App = () => {
   let navigate = useNavigate();
@@ -170,8 +174,8 @@ const App = () => {
           <Suspense fallback={<FallBack />}>
             <Routes>
               {/* Landing Page */}
-              <Route path="/" element={<LandingPage />} />
-
+              {/* <Route path="/" element={<LandingPage />} /> */}
+              <Route path="/" element={<LandingPageNew />} />
               {/* Authentication */}
               <Route
                 path="/register"
@@ -232,6 +236,23 @@ const App = () => {
                   element={<VCard_Form_Edit />}
                 />
               </Route>
+
+                 {/* Static VCard */}
+                 <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
+              <Route path="/Taxi_Service" element={<Taxi_Service_Demo/>} />
+              <Route
+                path="/Fashion_Designer"
+                element={<Fashion_Designer_Demo />}
+              />
+              <Route path="/Manager" element={<Manager_Demo />} />
+              <Route
+                path="/Business_Consultant"
+                element={<Business_Consultant_Demo />}
+              />
+              <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
+              <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
+              <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
+
               {/* Live VCards */}
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />

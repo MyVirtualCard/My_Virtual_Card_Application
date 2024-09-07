@@ -22,7 +22,7 @@ import number2 from "../assets/Landing_Page/view/number2.png";
 import number3 from "../assets/Landing_Page/view/number3.png";
 import nfc from "../assets/Landing_Page/view/4.png";
 // import Lottie from "react-lottie";
-import anime1 from "../assets/Landing_Page/view/Animation - 1717142280104.json";
+// import anime1 from "../assets/Landing_Page/view/Animation - 1717142280104.json";
 import { toast } from "react-toastify";
 import { motion as m } from "framer-motion";
 import offerImage from "../assets/Landing_Page/Offer/6.png";
