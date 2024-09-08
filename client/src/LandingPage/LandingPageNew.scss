@@ -1,9 +1,37 @@
 .landingpage_container {
   width: 100vw;
   height: 100vh;
-
   z-index: 2;
-  // position: relative;
+
+  position: relative;
+
+  .up {
+    position: fixed;
+    bottom: 2%;
+    right: 1%;
+    z-index: 1;
+    cursor: pointer;
+    // background-color: #ffffff;
+    border-radius: 0.3rem;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    font-size: 1.5rem;
+    i {
+      padding: 5px;
+
+      font-size: 1.9rem;
+      color: #6d6d6d;
+      border-radius: 0.3rem;
+    }
+    small {
+      font-size: 0.6rem;
+      font-weight: 550;
+      color: rgb(0, 0, 0);
+    }
+  }
   .Navbar1 {
     width: 100%;
     min-height: 5%;

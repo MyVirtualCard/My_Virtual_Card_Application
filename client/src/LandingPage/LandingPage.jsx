@@ -3,6 +3,7 @@ import "./LandingPage.scss";
 import brand_logo from "../assets/Landing_Page/view/BrandLogo2.png";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { FaRocketchat } from "react-icons/fa";
+import { CiSaveUp1 } from "react-icons/ci";
 import slide1_banner from "../assets/Landing_Page/view/slide1_banner.png";
 import vcard1 from "../assets/Landing_Page/VCard_Designs/gym_mobile.png";
 import vcard2 from "../assets/Landing_Page/VCard_Designs/fashion_mobile.png";

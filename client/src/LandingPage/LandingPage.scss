@@ -42,10 +42,11 @@ body {
     // background-color: #ffffff;
     border-radius: 0.3rem;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 1px;
+    font-size: 1.5rem;
     i {
       padding: 5px;
 

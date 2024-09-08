@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef,useContext} from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "./LandingPageNew.scss";
 import Brand_Logo from "../assets/Landing_Page/view/BrandLogo2.png";
 import Brand_Logo1 from "../assets/Landing_Page/view/BrandLogo.png";
@@ -31,16 +31,23 @@ import { BsFillRocketTakeoffFill } from "react-icons/bs";
 import { IoIosCreate } from "react-icons/io";
 import { HiLightBulb } from "react-icons/hi";
 import { MdHomeRepairService } from "react-icons/md";
-import { FaInstagram, FaLinkedin, FaRocketchat, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { CiSaveUp1 } from "react-icons/ci";
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaRocketchat,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { FaHandPointRight } from "react-icons/fa";
-import { Link,NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa";
 import { CiLogin } from "react-icons/ci";
 import { GrUserNew } from "react-icons/gr";
 import { TbBrand4Chan } from "react-icons/tb";
 import Context from "../Context/GlobalContext";
 const LandingPageNew = () => {
-  let{user,userName}=useContext(Context)
+  let { user, userName } = useContext(Context);
   const scrollContainerRef = useRef(null);
   let [TrialExpand, setTrialExpand] = useState(false);
   let [planExpand, setPlanExpand] = useState(false);
@@ -56,7 +63,7 @@ const LandingPageNew = () => {
   let PricingRef = useRef(null);
   let FAQRef = useRef(null);
   let ContactRef = useRef(null);
-  let OurServiceRef =useRef(null);
+  let OurServiceRef = useRef(null);
   let scrollToSection = (elementRef) => {
     window.scrollTo({
       top: elementRef.current.offsetTop,
@@ -80,7 +87,7 @@ const LandingPageNew = () => {
       setCurrentIndex(0);
     }
   }, [currentIndex]);
-// Template List
+  // Template List
   let TemplateList = [
     {
       Id: 1,
@@ -217,7 +224,7 @@ const LandingPageNew = () => {
       text: "Custom QRCode",
     },
   ];
-  
+
   let questions = [
     {
       id: 1,
@@ -332,118 +339,134 @@ const LandingPageNew = () => {
     } else {
       toast.success("Single Selection Activated!");
     }
-  };
+  }
   const sendMessageOnWhatsApp = () => {
-    const phoneNumber = '9344482370'; // Replace with actual phone number (international format without +)
-    const message = 'Hello! I have a query.'; // Replace with your message
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Redirecting to WhatsApp
-    window.open(whatsappUrl, '_blank');
-  };
-    // Offer timer
+    const phoneNumber = "9344482370"; // Replace with actual phone number (international format without +)
+    const message = "Hello! I have a query."; // Replace with your message
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
 
-    let [Days, setDays] = useState("00");
-    let [Hours, setHours] = useState("00");
-    let [Minutes, setMinutes] = useState("00");
-    let [Seconds, setSeconds] = useState("00");
-  
-    let interval = useRef();
-  
-    const startTimer = () => {
-      const countdownDate = new Date("September 15, 2024 00:00:00").getTime();
-      interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        if (distance < 0) {
-          //Stop our timer
-          clearInterval(interval.current);
-        } else {
-          //update our timer
-          if (days < 10) {
-            setDays("0" + days);
-          } else {
-            setDays(days);
-          }
-  
-          if (hours < 10) {
-            setHours("0" + hours);
-          } else {
-            setHours(hours);
-          }
-          if (minutes < 10) {
-            setMinutes("0" + minutes);
-          } else {
-            setMinutes(minutes);
-          }
-  
-          if (seconds < 10) {
-            setSeconds("0" + seconds);
-          } else {
-            setSeconds(seconds);
-          }
-        }
-      }, 1000);
-    };
-    useEffect(() => {
-      startTimer();
-      return () => {
+    // Redirecting to WhatsApp
+    window.open(whatsappUrl, "_blank");
+  };
+  // Offer timer
+
+  let [Days, setDays] = useState("00");
+  let [Hours, setHours] = useState("00");
+  let [Minutes, setMinutes] = useState("00");
+  let [Seconds, setSeconds] = useState("00");
+
+  let interval = useRef();
+
+  const startTimer = () => {
+    const countdownDate = new Date("September 15, 2024 00:00:00").getTime();
+    interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (distance < 0) {
+        //Stop our timer
         clearInterval(interval.current);
-      };
-    }, []);
+      } else {
+        //update our timer
+        if (days < 10) {
+          setDays("0" + days);
+        } else {
+          setDays(days);
+        }
+
+        if (hours < 10) {
+          setHours("0" + hours);
+        } else {
+          setHours(hours);
+        }
+        if (minutes < 10) {
+          setMinutes("0" + minutes);
+        } else {
+          setMinutes(minutes);
+        }
+
+        if (seconds < 10) {
+          setSeconds("0" + seconds);
+        } else {
+          setSeconds(seconds);
+        }
+      }
+    }, 1000);
+  };
+  useEffect(() => {
+    startTimer();
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, []);
   return (
     <>
       <div className="landingpage_container">
+        {/* Up Arrow icon */}
+        <div className="up" onClick={() => scrollToSection(HomeRef)}>
+          <small>Bring me Top</small>
+          <CiSaveUp1 className="up_icon"/>
+        </div>
         {/* Navbars */}
         <div className="Navbar1">
-<div className="left">
-  <div className="offer">
-    <small><strong>50% </strong>- Offer Still Active <FaHandPointRight/></small>
-  </div>
-<div className="box">
-                    <div className="time_box">
-                      <h4>{Days}</h4>
-                      <small>Day</small>
-                    </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                    <div className="time_box">
-                      <h4>{Hours}</h4>
-                      <small>Hours</small>
-                    </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                    <div className="time_box">
-                      <h4>{Minutes}</h4>
-                      <small>Minutes</small>
-                    </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                    <div className="time_box">
-                      <h4>{Seconds}</h4>
-                      <small>Seconds</small>
-                    </div>
-                  </div>
-</div>
-<div className="right">
-  <div className="link">
-    <a href="#" className="btn btn-primary"><FaFacebookF/></a>
-  </div>
-  <div className="link">
-    <a href="#" className="btn btn-primary"><FaInstagram/></a>
-  </div>
-  <div className="link">
-    <a href="#" className="btn btn-primary"><FaTwitter/></a>
-  </div>
-  <div className="link">
-    <a href="#" className="btn btn-primary"><FaLinkedin/></a>
-  </div>
-</div>
-
+          <div className="left">
+            <div className="offer">
+              <small>
+                <strong>50% </strong>- Offer Still Active <FaHandPointRight />
+              </small>
+            </div>
+            <div className="box">
+              <div className="time_box">
+                <h4>{Days}</h4>
+                <small>Day</small>
+              </div>
+              {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              <div className="time_box">
+                <h4>{Hours}</h4>
+                <small>Hours</small>
+              </div>
+              {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              <div className="time_box">
+                <h4>{Minutes}</h4>
+                <small>Minutes</small>
+              </div>
+              {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              <div className="time_box">
+                <h4>{Seconds}</h4>
+                <small>Seconds</small>
+              </div>
+            </div>
+          </div>
+          <div className="right">
+            <div className="link">
+              <a href="#" className="btn btn-primary">
+                <FaFacebookF />
+              </a>
+            </div>
+            <div className="link">
+              <a href="#" className="btn btn-primary">
+                <FaInstagram />
+              </a>
+            </div>
+            <div className="link">
+              <a href="#" className="btn btn-primary">
+                <FaTwitter />
+              </a>
+            </div>
+            <div className="link">
+              <a href="#" className="btn btn-primary">
+                <FaLinkedin />
+              </a>
+            </div>
+          </div>
         </div>
         <div className="Navbar2">
           <div className="top_navbar">
@@ -451,91 +474,91 @@ const LandingPageNew = () => {
               <img src={Brand_Logo} alt="logo" />
             </div>
             <div className="middle">
-            <div
-                  className="nav_list"
-                  id={sideNavToggle ? "sideNavOpen" : "sideNavClose"}
-                >
-                  <ul>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(HomeRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Home{" "}
-                      </NavLink>
-                    </li>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(TemplateRef), setSideNavToggle(false);
-                        }}
-                      >
-                        {" "}
-                        Templates
-                      </NavLink>
-                    </li>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(FeatureRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Feature{" "}
-                      </NavLink>
-                    </li>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(NFCRef), setSideNavToggle(false);
-                        }}
-                      >
-                        NFC
-                      </NavLink>
-                    </li>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(PricingRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Pricing{" "}
-                      </NavLink>
-                    </li>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(FAQRef), setSideNavToggle(false);
-                        }}
-                      >
-                        FAQs{" "}
-                      </NavLink>
-                    </li>
-                    <li >
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(OurServiceRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Service
-                      </NavLink>
-                    </li>
-                  </ul>
-                </div>
+              <div
+                className="nav_list"
+                id={sideNavToggle ? "sideNavOpen" : "sideNavClose"}
+              >
+                <ul>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(HomeRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Home{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(TemplateRef), setSideNavToggle(false);
+                      }}
+                    >
+                      {" "}
+                      Templates
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(FeatureRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Feature{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(NFCRef), setSideNavToggle(false);
+                      }}
+                    >
+                      NFC
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(PricingRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Pricing{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(FAQRef), setSideNavToggle(false);
+                      }}
+                    >
+                      FAQs{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(OurServiceRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Service
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className="right">
               <div className="actions">
                 <Link to="/register" className="register">
-                  Register <GrUserNew/>
+                  Register <GrUserNew />
                 </Link>
                 <Link to="/login" className="login">
-                  Login <CiLogin/>
+                  Login <CiLogin />
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        {/* Content */}
+        {/* All Slide Content */}
 
         <div className="content">
           {/* Slide1 */}
@@ -548,15 +571,15 @@ const LandingPageNew = () => {
 
             <div className="left">
               <div className="landingpage_title">
-                <h3>Design Your <span>Digital Identity</span></h3>
+                <h3>
+                  Design Your <span>Digital Identity</span>
+                </h3>
                 <h4>Introducing Custom vCards</h4>
                 <p>
                   Customize Your Digital Identity Effortlessly with My Virtual
-                  Card!.
-                
-                  People are online Now, So convert your Business Card Digitally
-                  to share on their mobiles and Wishing your customers encourage
-                  them to connect with you.
+                  Card!. People are online Now, So convert your Business Card
+                  Digitally to share on their mobiles and Wishing your customers
+                  encourage them to connect with you.
                 </p>
               </div>
               <div className="price">
@@ -565,15 +588,19 @@ const LandingPageNew = () => {
                 </p>
               </div>
               <div className="actions">
-                <Link to='/register'>Create Your VCard Now <TbBrand4Chan className="icon"/></Link>
+                <Link to="/register">
+                  Create Your VCard Now <TbBrand4Chan className="icon" />
+                </Link>
               </div>
             </div>
 
             <div className="right">
-            <div className="landingpage_title">
-                <h3>Design Your <span>Digital Identity</span></h3>
+              <div className="landingpage_title">
+                <h3>
+                  Design Your <span>Digital Identity</span>
+                </h3>
                 <h4>Introducing Custom vCards</h4>
-                </div>
+              </div>
               <img src={slide5banner} alt="banner" />
             </div>
           </div>
@@ -623,8 +650,8 @@ const LandingPageNew = () => {
                 <div className="content">
                   <h5>Add Your Product/Services</h5>
                   <p>
-                  Open Your Dasboard And List The
-                  Your Featured Product/Services
+                    Open Your Dasboard And List The Your Featured
+                    Product/Services
                   </p>
                 </div>
               </div>
@@ -638,11 +665,8 @@ const LandingPageNew = () => {
                   />
                 </div>
                 <div className="content">
-                  <h5>Share With Your
-                  Customer With One Click</h5>
-                  <p>
-                  Engage With Your Customers Through Miki Vcard
-                  </p>
+                  <h5>Share With Your Customer With One Click</h5>
+                  <p>Engage With Your Customers Through Miki Vcard</p>
                 </div>
               </div>
             </div>
@@ -674,12 +698,21 @@ const LandingPageNew = () => {
                     </div>
                     <div className="template_image">
                       <img src={data.VCard_Image} alt="card1" />
-                      <Link className="preview_btn" onClick={() => {
-                          scrollToSection(PricingRef)
-                        }}>View Plan</Link>
+                      <Link
+                        className="preview_btn"
+                        onClick={() => {
+                          scrollToSection(PricingRef);
+                        }}
+                      >
+                        View Plan
+                      </Link>
                     </div>
                     <div className="template_actions">
-                      <Link to={data.VCard_Link} target="_blank" className="activate_btn">
+                      <Link
+                        to={data.VCard_Link}
+                        target="_blank"
+                        className="activate_btn"
+                      >
                         Preview Demo
                         <div className="icon">
                           <VscOpenPreview />
@@ -1007,332 +1040,300 @@ const LandingPageNew = () => {
           </div>
           {/* Slide6 */}
           <div className="slide_6_page" ref={PricingRef}>
-          <div className="plan_heading" initial="hide" animate="show">
-            <h2 >
-              Select the <span>Perfect Plan</span> for You
-            </h2>
-            <p >
-              <strong>Your Plan, Your Way:</strong> Choose What Works Best
-            </p>
-          </div>
+            <div className="plan_heading" initial="hide" animate="show">
+              <h2>
+                Select the <span>Perfect Plan</span> for You
+              </h2>
+              <p>
+                <strong>Your Plan, Your Way:</strong> Choose What Works Best
+              </p>
+            </div>
 
+            <div className="plan_container_box" initial="hide" animate="show">
+              {/* plan demo*/}
+              <div className="plan" id={TrialExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setTrialExpand(!TrialExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>FREE PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 0 <small>30/day</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    Total VCard Provides : <span>01</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* plan1 */}
+              <div className="plan" id={planExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setPlanExpand(!planExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>BASIC PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 599 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>03</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* plan2 */}
+              <div
+                className="plan"
+                id={standardPlanExpand ? "expand" : "default"}
+              >
+                <div
+                  className="down_arrow"
+                  onClick={() => setStandardPlanExpand(!standardPlanExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>STANDARD PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 899 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>06</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* plan3 */}
+              <div
+                className="plan"
+                id={PremiumPlanExpand ? "expand" : "default"}
+              >
+                <div
+                  className="down_arrow"
+                  onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>PREMIUM PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 1299 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>08</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Questions */}
           <div
-            className="plan_container_box"
-        
+            className="slide_7_page"
             initial="hide"
             animate="show"
+            ref={FAQRef}
           >
-            {/* plan demo*/}
-            <div
-              className="plan"
-          
-              id={TrialExpand ? "expand" : "default"}
-            >
-              <div
-                className="down_arrow"
-                onClick={() => setTrialExpand(!TrialExpand)}
-              >
-                <FaHandPointRight/>Show more
-              </div>
-              <div className="plan_title">
-                <h3>FREE PLAN</h3>
-              </div>
-              <div className="plan_price">
-                <h2>
-                  ₹ 0 <small>30/day</small>
-                </h2>
-              </div>
-
-              <div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
-              </div>
-              <div className="card_count">
-                <p>
-                  Total VCard Provides : <span>01</span>
-                </p>
-              </div>
-              <div
-                className="plan_addon_service"
-              
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <div
-                      className="list"
-                    
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="slide_7_title">
+              <h2>
+                Frequently Asked <span>Questions</span>
+              </h2>
             </div>
-            {/* plan1 */}
-            <div
-              className="plan"
-          
-              id={planExpand ? "expand" : "default"}
-            >
-              <div
-                className="down_arrow"
-                onClick={() => setPlanExpand(!planExpand)}
-              >
-             <FaHandPointRight/>Show more
-              </div>
-              <div className="plan_title">
-                <h3>BASIC PLAN</h3>
-              </div>
-              <div className="plan_price">
-                <h2>
-                  ₹ 599 <small>/Yearly</small>
-                </h2>
-              </div>
-
-              <div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
-              </div>
-              <div className="card_count">
-                <p>
-                  No of VCard Design's Provided : <span>03</span>
-                </p>
-              </div>
-              <div
-                className="plan_addon_service"
-              
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <div
-                      className="list"
-                    
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="sub_heading">
+              <p>Got Questions? We’ve Got Answers!</p>
             </div>
-            {/* plan2 */}
-            <div
-              className="plan"
-          
-              id={standardPlanExpand ? "expand" : "default"}
-            >
-              <div
-                className="down_arrow"
-                onClick={() => setStandardPlanExpand(!standardPlanExpand)}
-              >
-                <FaHandPointRight/>Show more
-              </div>
-              <div className="plan_title">
-                <h3>STANDARD PLAN</h3>
-              </div>
-              <div className="plan_price">
-                <h2>
-                  ₹ 899 <small>/Yearly</small>
-                </h2>
-              </div>
-
-              <div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
-              </div>
-              <div className="card_count">
-                <p>
-                  No of VCard Design's Provided : <span>06</span>
-                </p>
-              </div>
-              <div
-                className="plan_addon_service"
-              
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <div
-                      className="list"
-                    
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="selection_actions">
+              <button className="multi" onClick={handleMultipleToggle}>
+                {multiQnToggle
+                  ? "Enable Single Selection"
+                  : "Enable Multi Selection"}
+              </button>
             </div>
-            {/* plan3 */}
-            <div
-              className="plan"
-          
-              id={PremiumPlanExpand ? "expand" : "default"}
-            >
-              <div
-                className="down_arrow"
-                onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
-              >
-                <FaHandPointRight/>Show more
-              </div>
-              <div className="plan_title">
-                <h3>PREMIUM PLAN</h3>
-              </div>
-              <div className="plan_price">
-                <h2>
-                  ₹ 1299 <small>/Yearly</small>
-                </h2>
-              </div>
-
-              <div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
-              </div>
-              <div className="card_count">
-                <p>
-                  No of VCard Design's Provided : <span>08</span>
-                </p>
-              </div>
-              <div
-                className="plan_addon_service"
-              
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <div
-                      className="list"
-                    
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
+            <div className="qn_container_box" initial="hide" whileTap="show">
+              {/* qn */}
+              {questions.map((data, index) => {
+                return (
+                  <div
+                    className="question_box"
+                    id={
+                      selectedQn === data.id
+                        ? "showAnswer"
+                        : "hideAnswer" && multiSelected !== data.id
+                        ? "showMultipleAnswer"
+                        : "hideMultipleAnswer"
+                    }
+                    key={index}
+                  >
+                    <div className="question">
+                      <h5>{data.question}</h5>
+                      {selectedQn != data.id ? (
+                        <div
+                          className="plus"
+                          onClick={
+                            multiQnToggle
+                              ? () => {
+                                  handleMultipleSelection(data.id);
+                                }
+                              : () => handleSingleSelection(data.id)
+                          }
+                        >
+                          {data.plus}
+                        </div>
+                      ) : (
+                        <div
+                          className="minus"
+                          onClick={
+                            multiQnToggle
+                              ? () => {
+                                  handleMultipleSelection(data.id);
+                                }
+                              : () => handleSingleSelection(data.id)
+                          }
+                        >
+                          {data.minus}
+                        </div>
+                      )}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-     {/* Questions */}
-     <div
-          className="slide_7_page"
-          initial="hide"
-          animate="show"
-          ref={FAQRef}
-        >
-          <div className="slide_7_title">
-            <h2 >
-              Frequently Asked <span>Questions</span>
-            </h2>
-          </div>
-          <div className="sub_heading" >
-            <p>Got Questions? We’ve Got Answers!</p>
-          </div>
-          <div className="selection_actions">
-            <button className="multi" onClick={handleMultipleToggle}>
-              {multiQnToggle
-                ? "Enable Single Selection"
-                : "Enable Multi Selection"}
-            </button>
-          </div>
-          <div
-            className="qn_container_box"
-           
-            initial="hide"
-            whileTap="show"
-          >
-            {/* qn */}
-            {questions.map((data, index) => {
-              return (
-                <div
-                  className="question_box"
-                 
-                  id={
-                    selectedQn === data.id
-                      ? "showAnswer"
-                      : "hideAnswer" && multiSelected !== data.id
-                      ? "showMultipleAnswer"
-                      : "hideMultipleAnswer"
-                  }
-                  key={index}
-                >
-                  <div className="question">
-                    <h5>{data.question}</h5>
-                    {selectedQn != data.id ? (
-                      <div
-                        className="plus"
-                        onClick={
-                          multiQnToggle
-                            ? () => {
-                                handleMultipleSelection(data.id);
-                              }
-                            : () => handleSingleSelection(data.id)
-                        }
-                      >
-                        {data.plus}
-                      </div>
-                    ) : (
-                      <div
-                        className="minus"
-                        onClick={
-                          multiQnToggle
-                            ? () => {
-                                handleMultipleSelection(data.id);
-                              }
-                            : () => handleSingleSelection(data.id)
-                        }
-                      >
-                        {data.minus}
-                      </div>
-                    )}
+                    <div className="answer">
+                      {multiQnToggle
+                        ? multiSelected.indexOf(data.id) !== -1 && (
+                            <small>{data.answer}</small>
+                          )
+                        : selectedQn === data.id && (
+                            <small>{data.answer}</small>
+                          )}
+                      {/* {selectedQn === data.id || multiSelected.indexOf(data.id) !== -1 ? <small>{data.answer}</small> : ""} */}
+                    </div>
                   </div>
-                  <div className="answer">
-                    {multiQnToggle
-                      ? multiSelected.indexOf(data.id) !== -1 && (
-                          <small>{data.answer}</small>
-                        )
-                      : selectedQn === data.id && <small>{data.answer}</small>}
-                    {/* {selectedQn === data.id || multiSelected.indexOf(data.id) !== -1 ? <small>{data.answer}</small> : ""} */}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* OurService */}
-        <div className="Our_Service_Slide" ref={OurServiceRef}>
-        <div className="slide1_1_title">
+          {/* OurService */}
+          <div className="Our_Service_Slide" ref={OurServiceRef}>
+            <div className="slide1_1_title">
               <div className="sample_title">
                 <div className="icon">
                   <MdHomeRepairService />
                 </div>
                 <p>Our Services</p>
               </div>
-              <h2>We Offers Web Designing , Full Stack Application , ECommerse Site & Digital Vcard At Affordable Price</h2>
+              <h2>
+                We Offers Web Designing , Full Stack Application , ECommerse
+                Site & Digital Vcard At Affordable Price
+              </h2>
             </div>
             <div
               className="slide_1_1_container_box"
@@ -1340,80 +1341,97 @@ const LandingPageNew = () => {
               animate="show"
             >
               <div className="box">
-              
                 <div className="content">
                   <h5>Web Design & Development</h5>
                   <p>
-                  We help you build an intercative & mobile responsive webiste for your business. it helps to get more visitors and promotes your business 24/7
+                    We help you build an intercative & mobile responsive webiste
+                    for your business. it helps to get more visitors and
+                    promotes your business 24/7
                   </p>
                 </div>
                 <div className="actions">
-                      <Link onClick={sendMessageOnWhatsApp} className="activate_btn">
-                        Book Your Website Now
-                        <div className="icon">
-                          <FaRocketchat />
-                        </div>
-                      </Link>
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
                     </div>
+                  </Link>
+                </div>
               </div>
               <div className="box">
-              
-              <div className="content">
-                <h5>Backend Application With Authenitications </h5>
-                <p>
-                We help you build an secure data Collection & mobile responsive webiste for your business. it helps to get more visitors and promotes your business 24/7
-                </p>
+                <div className="content">
+                  <h5>Backend Application With Authenitications </h5>
+                  <p>
+                    We help you build an secure data Collection & mobile
+                    responsive webiste for your business. it helps to get more
+                    visitors and promotes your business 24/7
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
               </div>
-              <div className="actions">
-                    <Link onClick={sendMessageOnWhatsApp} className="activate_btn">
-                      Book Your Website Now
-                      <div className="icon">
-                        <FaRocketchat />
-                      </div>
-                    </Link>
-                  </div>
-            </div>
-            <div className="box">
-              
-              <div className="content">
-                <h5>Digital VCard Site</h5>
-                <p>
-                Our digital visiting card helpes to share your business products and details with your customers and business friends. Pricing starts from ₹599
-                </p>
+              <div className="box">
+                <div className="content">
+                  <h5>Digital VCard Site</h5>
+                  <p>
+                    Our digital visiting card helpes to share your business
+                    products and details with your customers and business
+                    friends. Pricing starts from ₹599
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
               </div>
-              <div className="actions">
-                    <Link onClick={sendMessageOnWhatsApp} className="activate_btn">
-                      Book Your Website Now
-                      <div className="icon">
-                        <FaRocketchat />
-                      </div>
-                    </Link>
-                  </div>
             </div>
-            </div>
-        </div>
-        {/* Footer */}
-
-        <div className="footer">
-        <div className="company">
-            <div className="logo">
-              <img src={Brand_Logo} alt="" />
-            </div>
-            <p>&copy;Copyright 2020 - All Rights Reserved.</p>
-            <p>First Floor No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017</p>
-
-            <small><strong>Call</strong> :
-            +91 9344482370 &nbsp; <strong>Mail</strong> :contact@aristostechindia.com</small> 
           </div>
-          <div className="aggrement">
-            <Link to="/terms_condition">
-              <p>Terms & Condition</p>
-            </Link>
-            <Link to="/privacy_condition">
-              <p>Privacy Policy</p>
-            </Link>
+          {/* Footer */}
+
+          <div className="footer">
+            <div className="company">
+              <div className="logo">
+                <img src={Brand_Logo} alt="" />
+              </div>
+              <p>&copy;Copyright 2020 - All Rights Reserved.</p>
+              <p>
+                First Floor No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar,
+                Chennai, India, Tamil Nadu 600017
+              </p>
+
+              <small>
+                <strong>Call</strong> : +91 9344482370 &nbsp;{" "}
+                <strong>Mail</strong> :contact@aristostechindia.com
+              </small>
+            </div>
+            <div className="aggrement">
+              <Link to="/terms_condition">
+                <p>Terms & Condition</p>
+              </Link>
+              <Link to="/privacy_condition">
+                <p>Privacy Policy</p>
+              </Link>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </>
