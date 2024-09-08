@@ -7,6 +7,7 @@ import slide1banner from "../assets/Landing_Page/view/slide1_banner2.png";
 import slide2banner from "../assets/Landing_Page/view/slide1_banner1.png";
 import slide3banner from "../assets/Landing_Page/view/slide1_banner3.png";
 import slide4banner from "../assets/Landing_Page/view/slide1_banner4.png";
+import slide5banner from "../assets/Landing_Page/view/slide1_banner5.png";
 import vcard1 from "../assets/Landing_Page/VCard_Designs/gym_mobile.png";
 import vcard2 from "../assets/Landing_Page/VCard_Designs/fashion_mobile.png";
 import vcard3 from "../assets/Landing_Page/VCard_Designs/manager_mobile.png";
@@ -32,8 +33,11 @@ import { HiLightBulb } from "react-icons/hi";
 import { MdHomeRepairService } from "react-icons/md";
 import { FaInstagram, FaLinkedin, FaRocketchat, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { FaHandPointRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,NavLink } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa";
+import { CiLogin } from "react-icons/ci";
+import { GrUserNew } from "react-icons/gr";
+import { TbBrand4Chan } from "react-icons/tb";
 import Context from "../Context/GlobalContext";
 const LandingPageNew = () => {
   let{user,userName}=useContext(Context)
@@ -44,14 +48,21 @@ const LandingPageNew = () => {
   let [PremiumPlanExpand, setPremiumPlanExpand] = useState(false);
   let [showAnswer, setShowAnswer] = useState(false);
   let [ImageToggle, setImageToggle] = useState(true);
+  let [sideNavToggle, setSideNavToggle] = useState(false);
+  let HomeRef = useRef(null);
+  let TemplateRef = useRef(null);
+  let FeatureRef = useRef(null);
+  let NFCRef = useRef(null);
   let PricingRef = useRef(null);
+  let FAQRef = useRef(null);
+  let ContactRef = useRef(null);
+  let OurServiceRef =useRef(null);
   let scrollToSection = (elementRef) => {
     window.scrollTo({
       top: elementRef.current.offsetTop,
       behavior: "smooth",
     });
   };
-  let FAQRef = useRef(null);
   useEffect(() => {
     setTimeout(() => {
       setImageToggle(!ImageToggle);
@@ -439,13 +450,86 @@ const LandingPageNew = () => {
             <div className="left">
               <img src={Brand_Logo} alt="logo" />
             </div>
+            <div className="middle">
+            <div
+                  className="nav_list"
+                  id={sideNavToggle ? "sideNavOpen" : "sideNavClose"}
+                >
+                  <ul>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(HomeRef), setSideNavToggle(false);
+                        }}
+                      >
+                        Home{" "}
+                      </NavLink>
+                    </li>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(TemplateRef), setSideNavToggle(false);
+                        }}
+                      >
+                        {" "}
+                        Templates
+                      </NavLink>
+                    </li>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(FeatureRef), setSideNavToggle(false);
+                        }}
+                      >
+                        Feature{" "}
+                      </NavLink>
+                    </li>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(NFCRef), setSideNavToggle(false);
+                        }}
+                      >
+                        NFC
+                      </NavLink>
+                    </li>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(PricingRef), setSideNavToggle(false);
+                        }}
+                      >
+                        Pricing{" "}
+                      </NavLink>
+                    </li>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(FAQRef), setSideNavToggle(false);
+                        }}
+                      >
+                        FAQs{" "}
+                      </NavLink>
+                    </li>
+                    <li >
+                      <NavLink
+                        onClick={() => {
+                          scrollToSection(OurServiceRef), setSideNavToggle(false);
+                        }}
+                      >
+                        Service
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+            </div>
             <div className="right">
               <div className="actions">
                 <Link to="/register" className="register">
-                  Register
+                  Register <GrUserNew/>
                 </Link>
                 <Link to="/login" className="login">
-                  Login
+                  Login <CiLogin/>
                 </Link>
               </div>
             </div>
@@ -455,7 +539,7 @@ const LandingPageNew = () => {
 
         <div className="content">
           {/* Slide1 */}
-          <div className="slide1">
+          <div className="slide1" ref={HomeRef}>
             {/* /backImage */}
 
             <div className="back_image">
@@ -464,12 +548,12 @@ const LandingPageNew = () => {
 
             <div className="left">
               <div className="landingpage_title">
-                <h3>Design Your Digital Identity</h3>
+                <h3>Design Your <span>Digital Identity</span></h3>
                 <h4>Introducing Custom vCards</h4>
                 <p>
                   Customize Your Digital Identity Effortlessly with My Virtual
-                  Card!
-                  <br />
+                  Card!.
+                
                   People are online Now, So convert your Business Card Digitally
                   to share on their mobiles and Wishing your customers encourage
                   them to connect with you.
@@ -481,16 +565,16 @@ const LandingPageNew = () => {
                 </p>
               </div>
               <div className="actions">
-                <Link to='/register'>Create Your VCard Now</Link>
+                <Link to='/register'>Create Your VCard Now <TbBrand4Chan className="icon"/></Link>
               </div>
             </div>
 
             <div className="right">
             <div className="landingpage_title">
-                <h3>Design Your Digital Identity</h3>
+                <h3>Design Your <span>Digital Identity</span></h3>
                 <h4>Introducing Custom vCards</h4>
                 </div>
-              <img src={vcardImages[currentIndex]} alt="banner" />
+              <img src={slide5banner} alt="banner" />
             </div>
           </div>
 
@@ -565,7 +649,7 @@ const LandingPageNew = () => {
           </div>
           {/* Slide2 */}
 
-          <div className="slide2">
+          <div className="slide2" ref={TemplateRef}>
             <div className="slide2_title">
               <h2>Explore Our Range of vCard Templates!</h2>
               <p>
@@ -577,7 +661,7 @@ const LandingPageNew = () => {
                 <div className="icon">
                   <IoIosColorPalette />
                 </div>
-                <p>Sample VCards</p>
+                <p>Sample VCard Designs</p>
               </div>
             </div>
             <div className="template_container">
@@ -595,7 +679,7 @@ const LandingPageNew = () => {
                         }}>View Plan</Link>
                     </div>
                     <div className="template_actions">
-                      <Link to={data.VCard_Link} className="activate_btn">
+                      <Link to={data.VCard_Link} target="_blank" className="activate_btn">
                         Preview Demo
                         <div className="icon">
                           <VscOpenPreview />
@@ -608,7 +692,7 @@ const LandingPageNew = () => {
             </div>
           </div>
           {/* Slide3 */}
-          <div className="slide3">
+          <div className="slide3" ref={FeatureRef}>
             <div className="slide3_title">
               <h2>
                 {" "}
@@ -781,7 +865,7 @@ const LandingPageNew = () => {
             </div>
           </div>
           {/* Slide4`` */}
-          <div className="slide4">
+          <div className="slide4" ref={NFCRef}>
             <div className="slide4_title">
               <h2>
                 {" "}
@@ -1240,7 +1324,7 @@ const LandingPageNew = () => {
         </div>
 
         {/* OurService */}
-        <div className="Our_Service_Slide">
+        <div className="Our_Service_Slide" ref={OurServiceRef}>
         <div className="slide1_1_title">
               <div className="sample_title">
                 <div className="icon">

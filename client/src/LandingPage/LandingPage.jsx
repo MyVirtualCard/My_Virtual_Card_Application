@@ -359,14 +359,14 @@ const LandingPage = () => {
       toast.success("Single Selection Activated!");
     }
   }
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: anime1,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  // const defaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: anime1,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
 
   return (

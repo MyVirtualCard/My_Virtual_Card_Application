@@ -174,7 +174,7 @@ const App = () => {
           <Suspense fallback={<FallBack />}>
             <Routes>
               {/* Landing Page */}
-              {/* <Route path="/" element={<LandingPage />} /> */}
+              <Route path="/old" element={<LandingPage />} />
               <Route path="/" element={<LandingPageNew />} />
               {/* Authentication */}
               <Route
