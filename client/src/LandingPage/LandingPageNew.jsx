@@ -563,6 +563,27 @@ const LandingPageNew = () => {
         <div className="content">
           {/* Slide1 */}
           <div className="slide1" ref={HomeRef}>
+          <ul className="slide_1_background">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            {/* <li></li>
+            <li></li> */}
+            {/* <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li> */}
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
             {/* /backImage */}
 
             <div className="back_image">
