@@ -1,6 +1,5 @@
 import User from "../Model/User.js";
 import bcryptjs from "bcrypt";
-import cloudinary from "../Cloudinary.js";
 import fs from "fs";
 import axios from "axios";
 import jwt from "jsonwebtoken";
