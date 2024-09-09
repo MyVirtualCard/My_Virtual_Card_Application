@@ -115,11 +115,7 @@ const User_Setting = () => {
                           <>
                             {data.ProfileType == "ImageUpload" ? (
                               <img
-                                src={`${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/uploads/Basic_Image/${
-                                  data?.Profile?.filename
-                                }`}
+                                src={data.Profile}
                                 alt="profile"
                                 key={index}
                               />
@@ -142,7 +138,7 @@ const User_Setting = () => {
                             <img
                               src={`${
                                 import.meta.env.VITE_APP_BACKEND_API_URL
-                              }/uploads/${registeredData?.profile?.filename}`}
+                              }/${registeredData?.profile}`}
                               alt="logo"
                             />
                           ) : (
@@ -182,7 +178,7 @@ const User_Setting = () => {
                             <img
                               src={`${
                                 import.meta.env.VITE_APP_BACKEND_API_URL
-                              }/uploads/${registeredData?.profile?.filename}`}
+                              }/${registeredData?.profile}`}
                               alt="logo"
                             />
                           ) : (

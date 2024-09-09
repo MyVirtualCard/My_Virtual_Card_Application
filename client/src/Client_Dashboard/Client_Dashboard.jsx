@@ -73,6 +73,7 @@ const Client_Dashboard = () => {
       );
       const data = response.data.data;
       setRegisteredData(data);
+      
     } catch (error) {
       console.log(error);
     }
@@ -232,6 +233,7 @@ const Client_Dashboard = () => {
             {VCardCount.length > 0 ? (
               <>
                 {VCardCount.map((data, index) => {
+               
                   return (
                     <>
                       <div className="profile_img" key={index}>
@@ -251,9 +253,7 @@ const Client_Dashboard = () => {
                           )}
                           {data.ProfileType == "ImageUpload" ? (
                             <img
-                              src={`${
-                                import.meta.env.VITE_APP_BACKEND_API_URL
-                              }/uploads/Basic_Image/${data?.Profile?.filename}`}
+                              src={data?.Profile || 'https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740'}
                               alt="profile"
                             />
                           ) : (
@@ -272,7 +272,7 @@ const Client_Dashboard = () => {
                     <img
                       src={`${
                         import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/uploads/${registeredData?.profile?.filename}`}
+                      }/${registeredData?.profile}`}
                       alt="logo"
                     />
                   ) : (
@@ -330,6 +330,8 @@ const Client_Dashboard = () => {
               {VCardCount.length > 0 ? (
                 <>
                   {VCardCount.map((data, index) => {
+
+               
                     return (
                       <>
                         <div
@@ -355,11 +357,7 @@ const Client_Dashboard = () => {
                             )}
                             {data.ProfileType == "ImageUpload" ? (
                               <img
-                                src={`${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/uploads/Basic_Image/${
-                                  data?.Profile?.filename
-                                }`}
+                                src={data.Profile || 'https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740'}
                                 alt="profile"
                               />
                             ) : (
@@ -380,7 +378,7 @@ const Client_Dashboard = () => {
                     <img
                       src={`${
                         import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/uploads/${registeredData?.profile?.filename}`}
+                      }/${registeredData?.profile}`}
                       alt="logo"
                     />
                   ) : (

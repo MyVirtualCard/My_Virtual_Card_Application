@@ -1,5 +1,7 @@
 import User from "../Model/User.js";
 import bcryptjs from "bcrypt";
+import cloudinary from "../Cloudinary.js";
+import fs from "fs";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import User_OTP_VerifyModel from "../Model/Verify_OTP.model.js";
@@ -81,12 +83,17 @@ export const PostUserData = async (req, res) => {
     } else {
       //Hashing password encrypt to secure clients passwords :
       let hashedPassword = await bcryptjs.hash(password, 10);
+      const profile = req.files["profile"]
+        ? req.files["profile"][0].path
+        : null;
+
       let data = {
-        profile: {
-          filename: req.file?.filename,
-          contentType: req.file?.mimetype,
-          imageBase64: req.file?.path,
-        },
+        // profile: {
+        //   filename: req.file?.filename,
+        //   contentType: req.file?.mimetype,
+        //   imageBase64: req.file?.path,
+        // },
+        profile: profile,
         email,
         userName,
         password: hashedPassword, //Password stored secure with hashing type
@@ -142,31 +149,102 @@ export const GetUserData = async (req, res) => {
 export const UpdateRegisteredUserSpecificData = async (req, res) => {
   try {
     let { id } = req.params;
-    let data = {
-      profile: {
-        filename: req.file?.filename,
-        contentType: req.file?.mimetype,
-        imageBase64: req.file?.path,
-      },
-      email: req.body.email,
-      userName: req.body.userName,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      mobileNumber: req.body.mobileNumber,
-      location: req.body.location,
+    let RegisterData = await User.findByIdAndUpdate(id);
+    const profile = req.files["profile"] ? req.files["profile"][0].path : null;
+
+    if (req.files) {
+      fs.unlink(RegisterData.profile, (err) => {
+        if (err) {
+          console.error("Failed to delete the old image:", err);
+        }
+      });
+      RegisterData.profile = profile; // Set new image path
     };
+    RegisterData.email = req.body.email;
+    RegisterData.userName = req.body.userName;
+    RegisterData.firstName = req.body.firstName;
+    RegisterData.lastName = req.body.lastName;
+    RegisterData.mobileNumber = req.body.mobileNumber;
+    RegisterData.location = req.body.location;
+    // let data = {
+    //   // profile: {
+    //   //   filename: req.file?.filename,
+    //   //   contentType: req.file?.mimetype,
+    //   //   imageBase64: req.file?.path,
+    //   // },
+    //   profile:profile,
+    //   email: req.body.email,
+    //   userName: req.body.userName,
+    //   firstName: req.body.firstName,
+    //   lastName: req.body.lastName,
+    //   mobileNumber: req.body.mobileNumber,
+    //   location: req.body.location,
+    // };
     //If doesn't exist created new user data to database:
-    let RegisterData = await User.findByIdAndUpdate(id, data, {
-      new: true,
-    });
+    const updatedRegisterData = await RegisterData.save();
+    // let RegisterData = await User.findByIdAndUpdate(id, data, {
+    //   new: true,
+    // });
+
     res.status(201).json({
       message: "Profile Updated Sucessfully",
-      data: RegisterData,
+      data: updatedRegisterData,
     });
   } catch (error) {
     res
       .status(400)
       .json({ message: "Profile Updating Failed", error: error.message });
+  }
+};
+//Update data to mongodb -- > Upate Specific Registered User Data  :
+export const DeleteRegisteredUserSpecificData = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let RegisterData = await User.findByIdAndDelete(id);
+    const profile = req.files["profile"] ? req.files["profile"][0].path : null;
+
+    if (req.files) {
+      fs.unlink(RegisterData.profile, (err) => {
+        if (err) {
+          console.error("Failed to delete the old image:", err);
+        }
+      });
+      RegisterData.profile = profile; // Set new image path
+    }
+    RegisterData.email = req.body.email;
+    RegisterData.userName = req.body.userName;
+    RegisterData.firstName = req.body.firstName;
+    RegisterData.lastName = req.body.lastName;
+    RegisterData.mobileNumber = req.body.mobileNumber;
+    RegisterData.location = req.body.location;
+    // let data = {
+    //   // profile: {
+    //   //   filename: req.file?.filename,
+    //   //   contentType: req.file?.mimetype,
+    //   //   imageBase64: req.file?.path,
+    //   // },
+    //   profile:profile,
+    //   email: req.body.email,
+    //   userName: req.body.userName,
+    //   firstName: req.body.firstName,
+    //   lastName: req.body.lastName,
+    //   mobileNumber: req.body.mobileNumber,
+    //   location: req.body.location,
+    // };
+    //If doesn't exist created new user data to database:
+    const deleteRegisterData = await RegisterData.remove();
+    // let RegisterData = await User.findByIdAndUpdate(id, data, {
+    //   new: true,
+    // });
+
+    res.status(201).json({
+      message: "Profile Deleted Sucessfully",
+      data: deleteRegisterData,
+    });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ message: "Profile deleting Failed", error: error.message });
   }
 };
 export const ResendOTP = async (req, res) => {
@@ -204,13 +282,11 @@ export const ForgotPassword = async (req, res) => {
         });
 
         let NavigateLink = `${checkUser._id}/${token}`;
-         let Id=checkUser._id;
-         let Token=token
+        let Id = checkUser._id;
+        let Token = token;
         res
           .status(201)
-          .json({ message: "Create Your New Password!",data:NavigateLink });
-
-       
+          .json({ message: "Create Your New Password!", data: NavigateLink });
       }
     }
   } catch (error) {
@@ -242,13 +318,12 @@ export const ResetPassword = async (req, res) => {
             res
               .status(201)
               .json({ message: "New Password Created!", data: checkUser });
-          
           }
         }
       );
     }
   } catch (error) {
-  console.log(error)
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

@@ -27,11 +27,13 @@ const User_VCards = () => {
   let {
     currentTemplate,
     setCurrentTemplate,
+    setShowForm,
     currentPlan,
     userName,
     user,
     FormSubmitLoader,
     setFormSubmitLoader,
+    setSavedVCardTemplate,
     status,
     setStatus,
     URL_Alies,
@@ -42,6 +44,10 @@ const User_VCards = () => {
   } = useContext(Context);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
   let [CurrentPlan, setCurrentPlan] = useState();
+  const [key, setKey] = useState(0);
+  var reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
 
   const [copied, setCopied] = useState(false);
   // Server API
@@ -88,7 +94,7 @@ const User_VCards = () => {
   //Free Plan
   useEffect(() => {
     api
-      .get(`/currentplan/${URL_Alies}`, {
+      .get(`/currentplan/specificAll/${userName}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -105,21 +111,7 @@ const User_VCards = () => {
         console.log(error);
       });
   }, []);
-  useEffect(() => {
-    api
-      .get(`/templateDetail/specific/${userName}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      .then((res) => {
-        setSavedVCardTemplate(res.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+
   useEffect(() => {
     try {
       api
@@ -169,7 +161,8 @@ const User_VCards = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  }
+  };
+
   async function fetchCurrentManageContent() {
     setFormSubmitLoader(true);
     try {
@@ -181,6 +174,7 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
+          console.log(res)
           setLiveLinkActivate(res.data.data);
           setFormSubmitLoader(false);
         })
@@ -197,6 +191,7 @@ const User_VCards = () => {
   useEffect(() => {
     fetchCurrentManageContent();
   }, []);
+  console.log(URL_Alies)
   return (
     <>
       <div className="VCards_container">
@@ -337,11 +332,7 @@ const User_VCards = () => {
                             <>
                               {data.Profile ? (
                                 <img
-                                  src={`${
-                                    import.meta.env.VITE_APP_BACKEND_API_URL
-                                  }/uploads/Basic_Image/${
-                                    data?.Profile?.filename
-                                  }`}
+                                  src={data.Profile}
                                   alt="profile"
                                 />
                               ) : (

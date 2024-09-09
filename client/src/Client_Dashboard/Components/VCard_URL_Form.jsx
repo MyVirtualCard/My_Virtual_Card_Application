@@ -115,10 +115,10 @@ const VCard_URL_Form = () => {
     onSubmit: async (values) => {
       setFormSubmitLoader(true);
       // values.Description = stripHtmlTags(Description);
-      // values = Object.assign(values, { Profile: Profile || "" });
+      values = Object.assign(values, { Profile: Profile || "" });
       // values = Object.assign(values, { Banner: Banner || "" });
       const formData = new FormData();
-      formData.append("Profile", Profile);
+      formData.append("Profile", values.Profile);
       formData.append("Banner", Banner);
       formData.append("URL_Alies", values.URL_Alies);
       formData.append("VCardName", values.VCardName);
@@ -163,23 +163,23 @@ const VCard_URL_Form = () => {
         });
     },
   });
-  // const handleLogoChange = (event) => {
-  //   const Profile = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Profile);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Profile", reader.result);
-  //     setProfile(reader.result);
-  //   };
-  // };
-  // Handle file selection
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    setProfile(file);
-
-    setPreview(URL.createObjectURL(file)); // Show a preview of the image
-    formik.setFieldValue("Profile", preview);
+  const handleLogoChange = (event) => {
+    const Profile = event.currentTarget.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(Profile);
+    reader.onload = () => {
+      formik.setFieldValue("Profile", reader.result);
+      setProfile(reader.result);
+    };
   };
+  // Handle file selection
+  // const handleLogoChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setProfile(file);
+
+  //   setPreview(URL.createObjectURL(file)); // Show a preview of the image
+  //   formik.setFieldValue("Profile", preview);
+  // };
   const handleBannerChange = (e) => {
     const file = e.target.files[0];
     setBanner(file);
@@ -408,27 +408,15 @@ const VCard_URL_Form = () => {
                 {formik.values.ProfileType == "ImageUpload" ? (
                   <div className="first">
                     <label htmlFor="Logo">
-                      {preview == null ? (
-                        <img
-                          src={
-                            Profile != undefined
-                              ? Profile
-                              : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                          }
-                          className="Profile"
-                          alt="Logo"
-                        />
-                      ) : (
-                        <img
-                          src={
-                            preview != null
-                              ? preview
-                              : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                          }
-                          className="Profile"
-                          alt="Logo"
-                        />
-                      )}
+                      <img
+                        src={
+                          Profile != undefined
+                            ? Profile
+                            : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                        }
+                        className="Profile"
+                        alt="Logo"
+                      />
 
                       <span
                         className="material-symbols-outlined"

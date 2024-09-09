@@ -12,8 +12,9 @@ import { ServiceUpload } from '../Multer/Service_Multer.js';
 let router=express.Router();
 
 
+
 router.get('/:URL_Alies',verifyToken,GetServiceData);
-router.post('/:URL_Alies',verifyToken,ServiceUpload.single('ServiceImage'),PostServiceData);
+router.post('/:URL_Alies',verifyToken,PostServiceData);
  //Read Specific user all Data:
 //  router.get("/specificAll/:userName", verifyToken, getSpecificUserAllData);
  //Read Specific ID Data:

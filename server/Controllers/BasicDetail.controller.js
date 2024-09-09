@@ -42,8 +42,9 @@ export const postBasicAllData = async (req, res) => {
     user: req.user.userName,
   });
   let checkFreePlan = await currentPlan.find({
-    URL_Alies: req.params.URL_Alies,
+    user: req.user.userName,
   });
+  console.log(checkFreePlan)
   if (!checkCurrentPlan || !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!" });
   };

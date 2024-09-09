@@ -3,12 +3,12 @@ import multer from 'multer';
 let router=express.Router();
 
 
-import { PostUserData,GetUserData ,ResendOTP,LoginUser,ForgotPassword,ResetPassword, ReadRegisteredUserSpecificData,UpdateRegisteredUserSpecificData} from '../Controllers/Auth.Controller.js';
+import { PostUserData,GetUserData ,ResendOTP,LoginUser,ForgotPassword,ResetPassword, ReadRegisteredUserSpecificData,UpdateRegisteredUserSpecificData,DeleteRegisteredUserSpecificData} from '../Controllers/Auth.Controller.js';
 
 // Configure Multer storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/');
+      cb(null, 'uploads/Register_Image/');
     },
     filename: (req, file, cb) => {
       cb(null, `${Date.now()}-${file.originalname}`);
@@ -16,15 +16,20 @@ const storage = multer.diskStorage({
   });
   
   const upload = multer({ storage });
-
+// Handle multiple file fields
+const uploadFields = upload.fields([
+  { name: 'profile', maxCount: 1 }, // One profile image
+]);
 //Routes
 // Register
-router.post('/register', upload.single('profile'),PostUserData)
+router.post('/register', uploadFields,PostUserData)
 router.get('/register',GetUserData);
 //SpecificUser Data
 router.get('/register_specific_data/:userName',ReadRegisteredUserSpecificData);
 //Update SpecificUser Data:
-router.put('/register_specific_data/:id',upload.single('profile'),UpdateRegisteredUserSpecificData);
+router.put('/register_specific_data/:id',uploadFields,UpdateRegisteredUserSpecificData);
+//Delete SpecificUser Data:
+router.delete('/register_specific_data/:id',DeleteRegisteredUserSpecificData);
 //Resend OTP
 router.post('/resend_OTP',ResendOTP);
 //forgot Password:

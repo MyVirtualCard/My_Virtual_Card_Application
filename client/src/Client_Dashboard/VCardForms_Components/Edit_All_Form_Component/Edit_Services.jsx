@@ -176,7 +176,7 @@ const Services = () => {
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
-          setServiceFormOpen(false);
+          // setServiceFormOpen(false);
         });
     },
   });
@@ -528,7 +528,7 @@ const Services = () => {
                               {/* ServiceIpload image */}
                               {data.ServiceType == "ImageUpload" ? (
                                 <>
-                                  {data.ServiceImage?.filename ? (
+                                  {data.ServiceImage ? (
                                     // <img
                                     //   src={
                                     //     data.ServiceImage != undefined
@@ -541,8 +541,8 @@ const Services = () => {
                                     <img
                                       src={`${
                                         import.meta.env.VITE_APP_BACKEND_API_URL
-                                      }/uploads/Service_Image/${
-                                        data.ServiceImage.filename
+                                      }/${
+                                        data?.ServiceImage
                                       }`}
                                       className="ServiceImage"
                                       alt="ServiceImage"
@@ -985,7 +985,7 @@ const Services = () => {
                                 <img
                                   src={`${
                                     import.meta.env.VITE_APP_BACKEND_API_URL
-                                  }/uploads/Service_Image/${ServiceImage}`}
+                                  }/${ServiceImage}`}
                                   className="ServiceImage"
                                   alt="ServiceImage"
                                 />
@@ -1201,7 +1201,7 @@ const Services = () => {
                     <img
                       src={`${
                         import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/uploads/Service_Image/${ServicePreview}`}
+                      }/${ServicePreview}`}
                       className="ServiceImage"
                       alt="ServiceImage"
                     />

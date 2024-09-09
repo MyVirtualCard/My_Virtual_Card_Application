@@ -117,6 +117,8 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
+
+  console.log(userName)
   return (
     <>
       <div className="App_container">

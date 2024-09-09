@@ -14,7 +14,10 @@ import { verifyToken } from "../Middleware/verifyToken.js";
 import { upload } from "../Multer/Profile_Multer.js";
 import { BasicUpload } from "../Multer/Basic_Multer.js";
 let router = express.Router();
-
+// Handle multiple file fields
+const uploadFields = BasicUpload.fields([// One profile image
+  { name: 'Banner', maxCount: 1 } // Up to 5 gallery images
+]);
 //Get all basicDetails:
 
 router.get("/", verifyToken, getAllVCardURLData);
@@ -22,7 +25,7 @@ router.get("/:userName", verifyToken, getVCardURLData);
 router.post(
   "/",
   verifyToken,
-  BasicUpload.fields([{ name: "Profile" }, { name: "Banner" }]),
+  uploadFields,
   postVCardURLData
 );
 //Read Specific user all Data:
@@ -31,7 +34,7 @@ router.get("/specific_vcard/:URL_Alies", verifyToken, readSpecificUserAllData);
 router.put(
   "/update_by_vcardUrl/:URL_Alies",
   verifyToken,
-  BasicUpload.fields([{ name: "Profile" }, { name: "Banner" }]),
+  uploadFields,
   updateSpecificUserData
 );
 //Delete Specific user all Data in Basic Detail:

@@ -31,8 +31,9 @@ import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 const VCard_Form_Edit = () => {
   
   let { URL_Alies } = useParams();
-  const [key, setKey] = useState(0);
+
   const [LiveLinkActivate, setLiveLinkActivate] = useState([]);
+  const [key, setKey] = useState(0);
   var reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
@@ -40,10 +41,12 @@ const VCard_Form_Edit = () => {
   let {
     user,
     userName,
+    FormSubmitLoader,
     setFormSubmitLoader,
     currentTemplate,
     setCurrentTemplate,
-
+    currentPlan,
+    setCurrentPlan,
     ShowForm,
     setShowForm,
 
@@ -71,9 +74,11 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
+  
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
+            
             setShowForm("VCard Templates");
           } else {
             setShowForm("Choose Your Plan");
@@ -82,6 +87,7 @@ const VCard_Form_Edit = () => {
         })
         .catch((error) => {
           console.log(error);
+
           //    setErrorPopupOpen(true);
           //    setErrorMessage(error.response.data.message);
           //  setTimeout(()=>{
@@ -91,20 +97,21 @@ const VCard_Form_Edit = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  }, []);
+  }, [key]);
   useEffect(() => {
     api
-      .get(`/currentplan/${URL_Alies}`, {
+      .get(`/currentplan/specificAll/${userName}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       })
       .then((res) => {
-        console.log(res.data.data)
+         console.log(res.data.data[0])
         if (res.data.data.length > 0) {
           setCurrentPlanActive(res.data.data.length);
           setStatus(res.data.data[0].currentPlan);
+          setCurrentPlan(res.data.data[0].currentPlan)
           setShowForm("VCard Templates");
         } else {
          

@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 let UserShema = mongoose.Schema(
   {
     profile:{
-      filename: String,
-      contentType: String,
-      imageBase64: String,
-    //   type: String,
-    //  default:'https://img.freepik.com/premium-photo/round-circle-with-mans-head-circle-with-circle-middle_807814-680.jpg?w=740'
+      // filename: String,
+      // contentType: String,
+      // imageBase64: String,
+      type: String,
+     default:'https://img.freepik.com/premium-photo/round-circle-with-mans-head-circle-with-circle-middle_807814-680.jpg?w=740'
     },
 
     userName: {

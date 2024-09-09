@@ -250,8 +250,6 @@ const Select_Template = () => {
         })
         .then((res) => {
           setFormSubmitLoader(false);
-          // toast.success('Contact Data Saved!');
-          reloadComponent();
         })
         .catch((error) => {
           setFormSubmitLoader(false);
@@ -285,7 +283,7 @@ const Select_Template = () => {
         .then((res) => {
           toast.success(res.data.message);
           setFormSubmitLoader(false);
-          handleManageContentSubmit();
+           handleManageContentSubmit();
           setTimeout(() => {
             setShowForm("Contact Details");
           }, 1000);

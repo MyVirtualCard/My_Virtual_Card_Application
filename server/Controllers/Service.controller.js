@@ -1,9 +1,14 @@
 import ServiceModel from "../Model/Services.model.js";
-
+import multer from "multer";
 import currentPlan from "../Model/Plan.model.js";
 
 import Payment from "../Model/Payment.model.js";
+import { ServiceUpload } from "../Multer/Service_Multer.js";
 //Read or get all user basicDetail data  from database:
+// Handle multiple file fields
+const uploadFields = ServiceUpload.fields([
+  { name: 'ServiceImage', maxCount: 1 }, // One profile image
+]);
 
 export const GetServiceData = async (req, res) => {
   try {
@@ -27,11 +32,29 @@ export const GetServiceData = async (req, res) => {
 };
 //Post basic detail data to database:
 export const PostServiceData = async (req, res) => {
+  {uploadFields(req,res,async(err)=>{
+    if (err instanceof multer.MulterError) {
+      // Handle Multer-specific errors like file size limit
+      if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).json({ message: 'File too large. Maximum size allowed is 3MB.' });
+      }
+      return res.status(500).json({ message: `Multer error: ${err.message}` });
+  } else if (err) {
+      // Handle other errors
+      return res.status(500).json({ message: `Error: ${err.message}` });
+  }
+  const ServiceImage = req.files["ServiceImage"]
+              ? req.files["ServiceImage"][0].path
+              : null;
+  // If no error, proceed with saving the product
+  if (!ServiceImage) {
+      return res.status(400).json({ message: 'No file uploaded' });
+  };
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });
   let checkFreePlan = await currentPlan.find({
-    URL_Alies: req.params.URL_Alies,
+    user: req.user.userName,
   });
   if (!checkCurrentPlan || !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!" });
@@ -56,6 +79,9 @@ export const PostServiceData = async (req, res) => {
           if (checkCurrentPlan[0]?.amount === 1299) {
             //Basic Image File limit checked:
             if (checkServiceLength.length < 8) {
+              const ServiceImage = req.files["ServiceImage"]
+              ? req.files["ServiceImage"][0].path
+              : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -67,11 +93,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                ServiceImage: ServiceImage
               });
   
               await newService
@@ -98,6 +120,9 @@ export const PostServiceData = async (req, res) => {
           if (checkCurrentPlan[0]?.amount === 899) {
             //Basic Image File limit checked:
             if (checkServiceLength.length < 6) {
+              const ServiceImage = req.files["ServiceImage"]
+              ? req.files["ServiceImage"][0].path
+              : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -110,11 +135,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceAddress:req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
 
-                 ServiceImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                 ServiceImage: ServiceImage
               });
   
               await newService
@@ -141,6 +162,9 @@ export const PostServiceData = async (req, res) => {
   
           if (checkCurrentPlan[0]?.amount === 599) {
             if (checkServiceLength.length < 4) {
+              const ServiceImage = req.files["ServiceImage"]
+              ? req.files["ServiceImage"][0].path
+              : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -152,11 +176,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                ServiceImage:ServiceImage
                
               });
   
@@ -183,6 +203,9 @@ export const PostServiceData = async (req, res) => {
           }
           if (checkFreePlan[0]?.PlanPrice === 0) {
             if (checkServiceLength.length < 2) {
+              const ServiceImage = req.files["ServiceImage"]
+              ? req.files["ServiceImage"][0].path
+              : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -194,11 +217,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceIcon:req.body.ServiceIcon,
                 ServiceAddress:req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                ServiceImage:ServiceImage
               });
   
               await newService
@@ -239,13 +258,8 @@ export const PostServiceData = async (req, res) => {
       } else {
         res.status(400).json({ message: "Plan not match!" });
       }
-  // if (checkCurrentPlan.length <= 0) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Choose your Plan first!" });
-  // } else {
+  })};
 
-  // }
 };
 
 //   // //Read or get Specific User all Data  :

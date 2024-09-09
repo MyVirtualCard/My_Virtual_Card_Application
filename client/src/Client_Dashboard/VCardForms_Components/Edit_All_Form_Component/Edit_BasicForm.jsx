@@ -69,7 +69,7 @@ const BasicForm = () => {
     "link",
     "image",
   ];
-  const [Profile, setProfile] = useState();
+  const [Profile, setProfile] = useState(null);
   const [ProfilePreview, setProfilePreview] = useState(null);
   let [Banner, setBanner] = useState();
   const [BannerPreview, setBannerPreview] = useState(null);
@@ -121,8 +121,8 @@ const BasicForm = () => {
           setVCardName(res.data.data.VCardName);
           setOccupation(res.data.data.Occupation);
           setDescription(res.data.data.Description);
-          setProfile(res.data.data.Profile?.filename);
-          setBanner(res.data.data.Banner?.filename);
+          setProfile(res.data.data.Profile);
+          setBanner(res.data.data.Banner);
           setProfileType(res.data.data.ProfileType);
           setBannerType(res.data.data.BannerType);
           setProfileAddress(res.data.data.ProfileAddress);
@@ -280,15 +280,15 @@ const BasicForm = () => {
         });
     },
   });
-  // const handleLogoChange = (event) => {
-  //   const Profile = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Profile);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Profile", reader.result);
-  //     setProfile(reader.result);
-  //   };
-  // };
+  const handleLogoChange = (event) => {
+    const Profile = event.currentTarget.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(Profile);
+    reader.onload = () => {
+      formik.setFieldValue("Profile", reader.result);
+      setProfile(reader.result);
+    };
+  };
   // const handleBannerChange = (event) => {
   //   const Banner = event.currentTarget.files[0];
   //   const reader = new FileReader();
@@ -299,13 +299,13 @@ const BasicForm = () => {
   //   };
   // };
   // Handle file selection
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    setProfile(file);
+  // const handleLogoChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setProfile(file);
 
-    setProfilePreview(URL.createObjectURL(file)); // Show a preview of the image
-    formik.setFieldValue("Profile", ProfilePreview);
-  };
+  //   setProfilePreview(URL.createObjectURL(file)); // Show a preview of the image
+  //   formik.setFieldValue("Profile", ProfilePreview);
+  // };
   const handleBannerChange = (e) => {
     const file = e.target.files[0];
     setBanner(file);
@@ -415,25 +415,17 @@ const BasicForm = () => {
                 {ProfileType == "ImageUpload" ? (
                   <div className="first">
                     <label htmlFor="Logo">
-                      {ProfilePreview == null ? (
-                        <img
-                          src={`${
-                            import.meta.env.VITE_APP_BACKEND_API_URL
-                          }/uploads/Basic_Image/${Profile}`}
-                          className="Profile"
-                          alt="Profile"
-                        />
-                      ) : (
+                     
                         <img
                           src={
-                            ProfilePreview != null
-                              ? ProfilePreview
+                            Profile != null || Profile != ''
+                              ? Profile
                               : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
                           }
                           className="Profile"
                           alt="Logo"
                         />
-                      )}
+                   
 
                       <span
                         className="material-symbols-outlined"
@@ -499,7 +491,7 @@ const BasicForm = () => {
                         <img
                           src={`${
                             import.meta.env.VITE_APP_BACKEND_API_URL
-                          }/uploads/Basic_Image/${Banner}`}
+                          }/${Banner}`}
                           className="Banner"
                           alt="Banner"
                         />

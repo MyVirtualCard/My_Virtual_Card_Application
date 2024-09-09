@@ -32,8 +32,9 @@ export const PostPlanData = async (req, res) => {
 //Read or get all user plan data  from database:
 
 export const GetPlanData = async (req, res) => {
+  let {URL_Alies}=req.params;
   try {
-    let datas = await currentPlan.find({ URL_Alies: req.params.URL_Alies});
+    let datas = await currentPlan.find(URL_Alies);
     if (!datas) {
       res.status(400).json({ message: "Data not found" });
     } else {
