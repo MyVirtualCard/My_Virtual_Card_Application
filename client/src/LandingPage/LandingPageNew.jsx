@@ -590,14 +590,7 @@ const LandingPageNew = () => {
               <li></li>
               <li></li>
               <li></li>
-              {/* <li></li>
-            <li></li> */}
-              {/* <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li> */}
+         
               <li></li>
               <li></li>
               <li></li>
@@ -605,7 +598,7 @@ const LandingPageNew = () => {
               <li></li>
               <li></li>
             </ul>
-            {/* /backImage */}
+       
 
             <div className="back_image">
               <img src={backImage} alt="image" />

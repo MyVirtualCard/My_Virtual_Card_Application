@@ -308,7 +308,7 @@ const Products = () => {
   }
   async function handleProductDelete(id) {
     let filename=id.split('/')[0].slice(22,150);
-    console.log(filename)
+
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {

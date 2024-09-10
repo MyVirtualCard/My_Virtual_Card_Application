@@ -52,9 +52,10 @@ export const PostGalleryData = async (req, res) => {
         ? req.files["GalleryImage"][0].path
         : null;
       // If no error, proceed with saving the product
-      if (!GalleryImage) {
-        return res.status(400).json({ message: "No file uploaded" });
-      };
+  
+      // if (!GalleryImage ) {
+      //   return res.status(400).json({ message: "No file uploaded" });
+      // };
 
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
@@ -258,49 +259,100 @@ export const getSpecificIdData = async (req, res) => {
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
-  let checkCurrentPlan = await Payment.find({
-    user: req.user.userName,
-  });
-  let checkFreePlan = await currentPlan.find({
-    user: req.user.userName,
-  });
-  if (!checkCurrentPlan || !checkFreePlan) {
-    return res.status(400).json({ message: "Plan not be there!" });
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
+        }
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
+      }
+      const GalleryImage = req.files["GalleryImage"]
+        ? req.files["GalleryImage"][0].path
+        : null;
+      // If no error, proceed with saving the product
+      if (!GalleryImage) {
+        return res.status(400).json({ message: "No file uploaded" });
+      };
+
+      let checkCurrentPlan = await Payment.find({
+        user: req.user.userName,
+      });
+      let checkFreePlan = await currentPlan.find({
+        user: req.user.userName,
+      });
+      if (!checkCurrentPlan || !checkFreePlan) {
+        return res.status(400).json({ message: "Plan not be there!" });
+      }
+    
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
+      ) {
+        try {
+          let { id } = req.params;
+          let GallerySpecificData = await GalleryModel.findByIdAndUpdate(id);
+          // let data = {
+          //   user: req.user.userName,
+          //   URL_Alies: req.body.URL_Alies,
+          //   GalleryImageURL: req.body.GalleryImageURL,
+          //   GalleryType: req.body.GalleryType,
+          //   GalleryImage: {
+          //     filename: req.file?.filename,
+          //     contentType: req.file?.mimetype,
+          //     imageBase64: req.file?.path,
+          //   },
+          // };
+
+          if (!GallerySpecificData) {
+            res.status(400).json({ message: "Data Not Found!" });
+          } else {
+            const GalleryImage = req.files["GalleryImage"]
+              ? req.files["GalleryImage"][0].path
+              : null;
+            if (req.files) {
+              fs.unlink(GallerySpecificData.GalleryImage, (err) => {
+                if (err) {
+                  console.error("Failed to delete the old image:", err);
+                }
+              });
+              GallerySpecificData.GalleryImage = GalleryImage; // Set new image path
+            }
+            GallerySpecificData.URL_Alies = req.body.URL_Alies;
+            GallerySpecificData.GalleryImageURL = req.body.GalleryImageURL;
+            GallerySpecificData.GalleryType = req.body.GalleryType;
+
+            const updatedGalleryData = await GallerySpecificData.save();
+
+            res
+              .status(201)
+              .json({ message: "Gallery Updated!", data: updatedGalleryData });
+          }
+        } catch (error) {
+          res.status(400).json({ error: error.message });
+        }
+      } else {
+        res.status(400).json({ message: "Plan not match!" });
+      }
+
+    });
+
   }
 
-  if (
-    checkFreePlan[0]?.PlanPrice === 0 ||
-    checkCurrentPlan[0]?.amount === 599 ||
-    checkCurrentPlan[0]?.amount === 899 ||
-    checkCurrentPlan[0]?.amount === 1299
-  ) {
-    try {
-      let { id } = req.params;
-      let data = {
-        user: req.user.userName,
-        URL_Alies: req.body.URL_Alies,
-        GalleryImageURL: req.body.GalleryImageURL,
-        GalleryType: req.body.GalleryType,
-        GalleryImage: {
-          filename: req.file?.filename,
-          contentType: req.file?.mimetype,
-          imageBase64: req.file?.path,
-        },
-      };
-      let updateSpecificData = await GalleryModel.findByIdAndUpdate(id, data);
-      if (!updateSpecificData) {
-        res.status(400).json({ message: " Data Not Found!" });
-      } else {
-        res
-          .status(201)
-          .json({ message: "Image Updated!", data: updateSpecificData });
-      }
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  } else {
-    res.status(400).json({ message: "Plan not match!" });
-  }
+
+
+
+
 };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:
@@ -348,19 +400,31 @@ console.log(filePath);
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { id } = req.params;
+    let { filename } = req.params;
 
-    let deleteSpecificData = await GalleryModel.findByIdAndDelete(id);
+    let deleteSpecificData = await GalleryModel.findOneAndDelete(filename);
 
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
       
+      const filePath = path.join(
+        __dirname,
+        "uploads",
+        "Gallery_Image",
+        filename
+      );
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error("Failed to delete the old image:", err);
+        }
+      });
       res
         .status(201)
-        .json({ message: " Image Deleted!", data: deleteSpecificData });
+        .json({ message: "Image Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

@@ -272,11 +272,12 @@ const Gallery = () => {
     }
   }
   async function handleGalleryDelete(id) {
+    let filename=id.split('/')[0].slice(22,150);
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
       api
-        .delete(`/galleryDetail/deleteID/${id}`, {
+        .delete(`/galleryDetail/deleteID/${filename}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -500,7 +501,7 @@ const Gallery = () => {
                             <i
                               className="bx bx-trash-alt"
                               style={{ color: "red" }}
-                              onClick={() => handleGalleryDelete(data._id)}
+                              onClick={() => handleGalleryDelete(data.GalleryImage)}
                             ></i>
                           </td>
                         </tr>
@@ -709,13 +710,23 @@ const Gallery = () => {
                       Choose Your Image<sup>*</sup>
                     </label>
                     <label htmlFor="Image">
+                      {GalleryPreview == null ? 
+                      
                       <img
-                        src={`${
-                          import.meta.env.VITE_APP_BACKEND_API_URL
-                        }/${GalleryImage}`}
-                        className="GalleryImage"
-                        alt="GalleryImage"
-                      />
+                      src={`${
+                        import.meta.env.VITE_APP_BACKEND_API_URL
+                      }/${GalleryImage}`}
+                      className="GalleryImage"
+                      alt="GalleryImage"
+                    />
+                      : 
+                      <img
+                      src={GalleryPreview}
+                      className="GalleryImage"
+                      alt="GalleryImage"
+                    />
+                      }
+                   
                       {/* <i className="bx bxs-edit-location"></i> */}
                     </label>
                     <p>
