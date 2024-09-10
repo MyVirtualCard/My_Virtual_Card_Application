@@ -1,8 +1,19 @@
 import ProductModel from "../Model/Products.model.js";
 import Payment from "../Model/Payment.model.js";
 import currentPlan from "../Model/Plan.model.js";
+import fs from "fs";
+import path from "path";
+import multer from "multer";
+import axios from "axios";
+import { fileURLToPath } from "url";
+// Create __dirname manually in ES module
+const __filename = fileURLToPath(import.meta.url);
 
-
+const __dirname = path.dirname("server");
+import { ProductUpload } from "../Multer/Product_Multer.js";
+const uploadFields = ProductUpload.fields([
+  { name: "ProductImage", maxCount: 1 }, // One profile image
+]);
 //Read or get all user product data  from database:
 export const GetProductData = async (req, res) => {
   try {
@@ -22,15 +33,40 @@ export const GetProductData = async (req, res) => {
 };
 //Post basic detail data to database:
 export const PostProductData = async (req, res) => {
-  let checkCurrentPlan = await Payment.find({
-    user: req.user.userName,
-  });
-  let checkFreePlan = await currentPlan.find({
-    URL_Alies: req.params.URL_Alies,
-  });
-  if (!checkCurrentPlan ||  !checkFreePlan) {
-    return res.status(400).json({ message: "Plan not be there!", error: err });
-  };
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
+        }
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
+      }
+      const ProductImage = req.files["ProductImage"]
+        ? req.files["ProductImage"][0].path
+        : null;
+      // If no error, proceed with saving the product
+      if (!ProductImage) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+      let checkCurrentPlan = await Payment.find({
+        user: req.user.userName,
+      });
+      let checkFreePlan = await currentPlan.find({
+        user: req.user.userName,
+      });
+      if (!checkCurrentPlan || !checkFreePlan) {
+        return res
+          .status(400)
+          .json({ message: "Plan not be there!", error: err });
+      }
       //Plan 2 and 3
       if (
         checkFreePlan[0]?.PlanPrice === 0 ||
@@ -42,7 +78,7 @@ export const PostProductData = async (req, res) => {
         let checkProductLength = await ProductModel.find({
           URL_Alies: req.params.URL_Alies,
         });
-  
+
         if (!checkProductLength) {
           return res
             .status(400)
@@ -57,18 +93,14 @@ export const PostProductData = async (req, res) => {
                 URL_Alies: req.body.URL_Alies,
                 ProductName: req.body.ProductName,
                 ProductDescription: req.body.ProductDescription,
-              
+
                 ProductURL: req.body.ProductURL,
                 ProductType: req.body.ProductType,
                 ProductImageLink: req.body.ProductImageLink,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                ProductImage: ProductImage,
               });
-  
+
               await newProduct
                 .save()
                 .then(() => {
@@ -103,14 +135,9 @@ export const PostProductData = async (req, res) => {
                 ProductImageLink: req.body.ProductImageLink,
                 ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
-             
+                ProductImage: ProductImage,
               });
-  
+
               await newProduct
                 .save()
                 .then(() => {
@@ -132,7 +159,7 @@ export const PostProductData = async (req, res) => {
               });
             }
           }
-        
+
           if (checkCurrentPlan[0]?.amount === 599) {
             //Basic Image File limit checked:
             if (checkProductLength.length < 4) {
@@ -146,13 +173,9 @@ export const PostProductData = async (req, res) => {
                 ProductImageLink: req.body.ProductImageLink,
                 ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                ProductImage: ProductImage,
               });
-  
+
               await newProduct
                 .save()
                 .then(() => {
@@ -187,13 +210,9 @@ export const PostProductData = async (req, res) => {
                 ProductImageLink: req.body.ProductImageLink,
                 ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
-                ProductImage: {
-                  filename: req.file?.filename,
-                  contentType: req.file?.mimetype,
-                  imageBase64: req.file?.path,
-                },
+                ProductImage: ProductImage,
               });
-  
+
               await newProduct
                 .save()
                 .then(() => {
@@ -217,15 +236,10 @@ export const PostProductData = async (req, res) => {
           }
         }
       } else {
-        res.status(400).json({ message: "Plan not match!", });
+        res.status(400).json({ message: "Plan not match!" });
       }
-  // if (checkCurrentPlan.length <= 0) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Choose your Plan first!", error: err });
-  // } else {
-
-  // }
+    });
+  }
 };
 
 //   // //Read or get Specific User all Data  :
@@ -267,63 +281,100 @@ export const getSpecificIdData = async (req, res) => {
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
-  let checkCurrentPlan = await Payment.find({
-    user: req.user.userName,
-  });
-  let checkFreePlan = await currentPlan.find({
-    user: req.user.userName,
-  });
-  if (!checkCurrentPlan || !checkFreePlan) {
-    return res.status(400).json({ message: "Plan not be there!" });
-  };
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
+        }
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
+      }
+      const ProductImage = req.files["ProductImage"]
+        ? req.files["ProductImage"][0].path
+        : null;
+
+      let checkCurrentPlan = await Payment.find({
+        user: req.user.userName,
+      });
+      let checkFreePlan = await currentPlan.find({
+        user: req.user.userName,
+      });
+      if (!checkCurrentPlan || !checkFreePlan) {
+        return res.status(400).json({ message: "Plan not be there!" });
+      }
       //Plan 2 and 3
       if (
         checkFreePlan[0]?.PlanPrice === 0 ||
-      checkCurrentPlan[0]?.amount === 599 ||
-      checkCurrentPlan[0]?.amount === 899 ||
-      checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
       ) {
         try {
           let { id } = req.params;
-          let data = {
-            ProductImage: {
-              filename: req.file?.filename,
-              contentType: req.file?.mimetype,
-              imageBase64: req.file?.path,
-            },
-            URL_Alies: req.body.URL_Alies,
-            ProductName: req.body.ProductName,
-            ProductURL: req.body.ProductURL,
-            ProductType: req.body.ProductType,
-            ProductImageLink: req.body.ProductImageLink,
-            ProductPrice: req.body.ProductPrice,
-            ProductDescription: req.body.ProductDescription,
-          };
-          let updateSpecificData = await ProductModel.findByIdAndUpdate(
-            id,
-            data,
-            { new: true, runValidators: true }
-          );
-  
-          if (!updateSpecificData) {
+          let ProductSpecificData = await ProductModel.findByIdAndUpdate(id);
+          // let data = {
+          //   ProductImage: {
+          //     filename: req.file?.filename,
+          //     contentType: req.file?.mimetype,
+          //     imageBase64: req.file?.path,
+          //   },
+          //   URL_Alies: req.body.URL_Alies,
+          //   ProductName: req.body.ProductName,
+          //   ProductURL: req.body.ProductURL,
+          //   ProductType: req.body.ProductType,
+          //   ProductImageLink: req.body.ProductImageLink,
+          //   ProductPrice: req.body.ProductPrice,
+          //   ProductDescription: req.body.ProductDescription,
+          // };
+
+          if (!ProductSpecificData) {
             res.status(400).json({ message: "Data Not Found!" });
           } else {
+            const ProductImage = req.files["ProductImage"]
+              ? req.files["ProductImage"][0].path
+              : null;
+            if (req.files) {
+              fs.unlink(ProductSpecificData.ProductImage, (err) => {
+                if (err) {
+                  console.error("Failed to delete the old image:", err);
+                }
+              });
+              ProductSpecificData.ProductImage = ProductImage; // Set new image path
+            }
+            ProductSpecificData.URL_Alies = req.body.URL_Alies;
+            ProductSpecificData.ProductName = req.body.ProductName;
+            ProductSpecificData.ProductURL = req.body.ProductURL;
+            ProductSpecificData.ProductType = req.body.ProductType;
+            ProductSpecificData.ProductImageLink = req.body.ProductImageLink;
+            ProductSpecificData.ProductPrice = req.body.ProductPrice;
+            ProductSpecificData.ProductDescription =
+              req.body.ProductDescription;
+
+            const updatedProductData = await ProductSpecificData.save();
+
             res
               .status(201)
-              .json({ message: "Product Updated!", data: updateSpecificData });
+              .json({ message: "Product Updated!", data: updatedProductData });
           }
         } catch (error) {
-          res
-            .status(400)
-            .json({
-              error: error.message,
-              message: error.message,
-            });
+          res.status(400).json({
+            error: error.message,
+            message: error.message,
+          });
         }
       } else {
         res.status(400).json({ message: "Plan not match!" });
       }
-
+    });
+  }
 };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:
@@ -351,13 +402,24 @@ export const deleteSpecificUserAllData = async (req, res) => {
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { id } = req.params;
+    let { filename } = req.params;
 
-    let deleteSpecificData = await ProductModel.findByIdAndDelete(id);
+    let deleteSpecificData = await ProductModel.findOneAndDelete(filename);
 
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
+      const filePath = path.join(
+        __dirname,
+        "uploads",
+        "Product_Image",
+        filename
+      );
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error("Failed to delete the old image:", err);
+        }
+      });
       res
         .status(201)
         .json({ message: "Product Deleted!", data: deleteSpecificData });

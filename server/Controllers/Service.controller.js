@@ -1,13 +1,22 @@
 import ServiceModel from "../Model/Services.model.js";
 import multer from "multer";
 import currentPlan from "../Model/Plan.model.js";
-
+import fs from 'fs'
+import path from "path";
+import axios from "axios";
 import Payment from "../Model/Payment.model.js";
+import { fileURLToPath } from "url";
+
+// Create __dirname manually in ES module
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname('server');
+
 import { ServiceUpload } from "../Multer/Service_Multer.js";
 //Read or get all user basicDetail data  from database:
 // Handle multiple file fields
 const uploadFields = ServiceUpload.fields([
-  { name: 'ServiceImage', maxCount: 1 }, // One profile image
+  { name: "ServiceImage", maxCount: 1 }, // One profile image
 ]);
 
 export const GetServiceData = async (req, res) => {
@@ -32,33 +41,38 @@ export const GetServiceData = async (req, res) => {
 };
 //Post basic detail data to database:
 export const PostServiceData = async (req, res) => {
-  {uploadFields(req,res,async(err)=>{
-    if (err instanceof multer.MulterError) {
-      // Handle Multer-specific errors like file size limit
-      if (err.code === 'LIMIT_FILE_SIZE') {
-          return res.status(400).json({ message: 'File too large. Maximum size allowed is 3MB.' });
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
+        }
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
       }
-      return res.status(500).json({ message: `Multer error: ${err.message}` });
-  } else if (err) {
-      // Handle other errors
-      return res.status(500).json({ message: `Error: ${err.message}` });
-  }
-  const ServiceImage = req.files["ServiceImage"]
-              ? req.files["ServiceImage"][0].path
-              : null;
-  // If no error, proceed with saving the product
-  if (!ServiceImage) {
-      return res.status(400).json({ message: 'No file uploaded' });
-  };
-  let checkCurrentPlan = await Payment.find({
-    user: req.user.userName,
-  });
-  let checkFreePlan = await currentPlan.find({
-    user: req.user.userName,
-  });
-  if (!checkCurrentPlan || !checkFreePlan) {
-    return res.status(400).json({ message: "Plan not be there!" });
-  };
+      const ServiceImage = req.files["ServiceImage"]
+        ? req.files["ServiceImage"][0].path
+        : null;
+      // If no error, proceed with saving the product
+      if (!ServiceImage) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+      let checkCurrentPlan = await Payment.find({
+        user: req.user.userName,
+      });
+      let checkFreePlan = await currentPlan.find({
+        user: req.user.userName,
+      });
+      if (!checkCurrentPlan || !checkFreePlan) {
+        return res.status(400).json({ message: "Plan not be there!" });
+      }
       //Plan 2 and 3
       if (
         checkFreePlan[0]?.PlanPrice === 0 ||
@@ -70,18 +84,16 @@ export const PostServiceData = async (req, res) => {
         let checkServiceLength = await ServiceModel.find({
           URL_Alies: req.params.URL_Alies,
         });
-  
+
         if (!checkServiceLength || !checkFreePlan) {
-          return res
-            .status(400)
-            .json({ message: "Service  not be there!" });
+          return res.status(400).json({ message: "Service  not be there!" });
         } else {
           if (checkCurrentPlan[0]?.amount === 1299) {
             //Basic Image File limit checked:
             if (checkServiceLength.length < 8) {
               const ServiceImage = req.files["ServiceImage"]
-              ? req.files["ServiceImage"][0].path
-              : null;
+                ? req.files["ServiceImage"][0].path
+                : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -90,12 +102,12 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceURL: req.body.ServiceURL,
                 ServiceType: req.body.ServiceType,
-                ServiceIcon:req.body.ServiceIcon,
-                ServiceAddress:req.body.ServiceAddress,
+                ServiceIcon: req.body.ServiceIcon,
+                ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage: ServiceImage
+                ServiceImage: ServiceImage,
               });
-  
+
               await newService
                 .save()
                 .then(() => {
@@ -121,8 +133,8 @@ export const PostServiceData = async (req, res) => {
             //Basic Image File limit checked:
             if (checkServiceLength.length < 6) {
               const ServiceImage = req.files["ServiceImage"]
-              ? req.files["ServiceImage"][0].path
-              : null;
+                ? req.files["ServiceImage"][0].path
+                : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -131,13 +143,13 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
-                ServiceIcon:req.body.ServiceIcon,
-                ServiceAddress:req.body.ServiceAddress,
+                ServiceIcon: req.body.ServiceIcon,
+                ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
 
-                 ServiceImage: ServiceImage
+                ServiceImage: ServiceImage,
               });
-  
+
               await newService
                 .save()
                 .then(() => {
@@ -159,12 +171,12 @@ export const PostServiceData = async (req, res) => {
               });
             }
           }
-  
+
           if (checkCurrentPlan[0]?.amount === 599) {
             if (checkServiceLength.length < 4) {
               const ServiceImage = req.files["ServiceImage"]
-              ? req.files["ServiceImage"][0].path
-              : null;
+                ? req.files["ServiceImage"][0].path
+                : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -173,13 +185,12 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
-                ServiceIcon:req.body.ServiceIcon,
-                ServiceAddress:req.body.ServiceAddress,
+                ServiceIcon: req.body.ServiceIcon,
+                ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage:ServiceImage
-               
+                ServiceImage: ServiceImage,
               });
-  
+
               await newService
                 .save()
                 .then(() => {
@@ -204,8 +215,8 @@ export const PostServiceData = async (req, res) => {
           if (checkFreePlan[0]?.PlanPrice === 0) {
             if (checkServiceLength.length < 2) {
               const ServiceImage = req.files["ServiceImage"]
-              ? req.files["ServiceImage"][0].path
-              : null;
+                ? req.files["ServiceImage"][0].path
+                : null;
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -214,12 +225,12 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
-                ServiceIcon:req.body.ServiceIcon,
-                ServiceAddress:req.body.ServiceAddress,
+                ServiceIcon: req.body.ServiceIcon,
+                ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage:ServiceImage
+                ServiceImage: ServiceImage,
               });
-  
+
               await newService
                 .save()
                 .then(() => {
@@ -258,8 +269,8 @@ export const PostServiceData = async (req, res) => {
       } else {
         res.status(400).json({ message: "Plan not match!" });
       }
-  })};
-
+    });
+  }
 };
 
 //   // //Read or get Specific User all Data  :
@@ -300,63 +311,98 @@ export const getSpecificIdData = async (req, res) => {
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
-  let checkCurrentPlan = await Payment.find({
-    user: req.user.userName,
-  });
-  let checkFreePlan = await currentPlan.find({
-    user: req.user.userName,
-  });
-  if (!checkCurrentPlan || !checkFreePlan) {
-    return res.status(400).json({ message: "Plan not be there!" });
-  };
-     //Plan 2 and 3
-     if (
-      checkFreePlan[0]?.PlanPrice === 0 ||
-      checkCurrentPlan[0]?.amount === 599 ||
-      checkCurrentPlan[0]?.amount === 899 ||
-      checkCurrentPlan[0]?.amount === 1299
-    ) {
-      try {
-        let { id } = req.params;
-        let data = {
-          ServiceImage: {
-            filename: req.file?.filename,
-            contentType: req.file?.mimetype,
-            imageBase64: req.file?.path,
-          },
-          URL_Alies: req.body.URL_Alies,
-          ServiceName: req.body.ServiceName,
-          ServiceURL: req.body.ServiceURL,
-          ServiceType: req.body.ServiceType,
-          ServiceIcon:req.body.ServiceIcon,
-          ServiceAddress:req.body.ServiceAddress,
-          ServiceDescription: req.body.ServiceDescription,
-        };
-        let updateSpecificData = await ServiceModel.findByIdAndUpdate(
-          id,
-          data,
-          { new: true, runValidators: true }
-        );
-
-        if (!updateSpecificData) {
-          res.status(400).json({ message: "Data Not Found!" });
-        } else {
-          res
-            .status(201)
-            .json({ message: "Service Updated!", data: updateSpecificData });
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
         }
-      } catch (error) {
-        console.log(error.message)
-        res.status(400).json({
-       
-          error: error.message,
-          message: error.message,
-        });
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
       }
-    } else {
-      res.status(400).json({ message: "Plan not match!" });
-    }
- 
+
+      let checkCurrentPlan = await Payment.find({
+        user: req.user.userName,
+      });
+      let checkFreePlan = await currentPlan.find({
+        user: req.user.userName,
+      });
+      if (!checkCurrentPlan || !checkFreePlan) {
+        return res.status(400).json({ message: "Plan not be there!" });
+      }
+      //Plan 2 and 3
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
+      ) {
+        try {
+          let { id } = req.params;
+          let ServiceSpecificData = await ServiceModel.findByIdAndUpdate(id);
+          // let data = {
+          //   ServiceImage: {
+          //     filename: req.file?.filename,
+          //     contentType: req.file?.mimetype,
+          //     imageBase64: req.file?.path,
+          //   },
+          //   URL_Alies: req.body.URL_Alies,
+          //   ServiceName: req.body.ServiceName,
+          //   ServiceURL: req.body.ServiceURL,
+          //   ServiceType: req.body.ServiceType,
+          //   ServiceIcon:req.body.ServiceIcon,
+          //   ServiceAddress:req.body.ServiceAddress,
+          //   ServiceDescription: req.body.ServiceDescription,
+          // };
+
+          if (!ServiceSpecificData) {
+            res.status(400).json({ message: "Data Not Found!" });
+          } else {
+            const ServiceImage = req.files["ServiceImage"]
+              ? req.files["ServiceImage"][0].path
+              : null;
+            if (req.files) {
+              fs.unlink(ServiceSpecificData.ServiceImage, (err) => {
+                if (err) {
+                  console.error("Failed to delete the old image:", err);
+                }
+              });
+              ServiceSpecificData.ServiceImage = ServiceImage; // Set new image path
+            }
+            ServiceSpecificData.URL_Alies = req.body.URL_Alies;
+            ServiceSpecificData.ServiceName = req.body.ServiceName;
+            ServiceSpecificData.ServiceURL = req.body.ServiceURL;
+            ServiceSpecificData.ServiceType = req.body.ServiceType;
+            ServiceSpecificData.ServiceIcon = req.body.ServiceIcon;
+            ServiceSpecificData.ServiceAddress = req.body.ServiceAddress;
+            ServiceSpecificData.ServiceDescription =
+              req.body.ServiceDescription;
+
+            const updatedServiceData = await ServiceSpecificData.save();
+
+            res
+              .status(201)
+              .json({ message: "Service Updated!", data: updatedServiceData });
+          }
+        } catch (error) {
+          console.log(error.message);
+          res.status(400).json({
+            error: error.message,
+            message: error.message,
+          });
+        }
+      } else {
+        res.status(400).json({ message: "Plan not match!" });
+      }
+    });
+  }
 };
 
 //Delete Specific User Bssic detail All data deleted By using user Id:
@@ -384,18 +430,26 @@ export const deleteSpecificUserAllData = async (req, res) => {
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { id } = req.params;
+    let { filename } = req.params;
 
-    let deleteSpecificData = await ServiceModel.findByIdAndDelete(id);
+    let deleteSpecificData = await ServiceModel.findOneAndDelete(filename);
 
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
+      const filePath = path.join(__dirname, 'uploads', 'Service_Image', filename);
+      console.log(filePath)
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
       res
         .status(201)
         .json({ message: "Service Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

@@ -75,16 +75,16 @@ const LandingPageNew = () => {
       setImageToggle(!ImageToggle);
     }, 5000);
   });
-  let vcardImages = [slide1banner, slide2banner, slide3banner, slide4banner];
+  let vcardImages = [slide1banner, slide2banner, slide3banner, slide4banner,slide5banner];
   let [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     if (currentIndex < vcardImages.length) {
       setTimeout(() => {
-        setCurrentIndex((pre) => pre + 1);
+        return setCurrentIndex((pre) => pre + 1);
       }, 10000);
     }
     if (currentIndex >= vcardImages.length) {
-      setCurrentIndex(0);
+      return setCurrentIndex(0);
     }
   }, [currentIndex]);
   // Template List
@@ -446,6 +446,11 @@ const LandingPageNew = () => {
             </div>
           </div>
           <div className="right">
+  <div className="address">
+  <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+  <small><strong>Mobile Number : </strong>&nbsp;+91 9344482370</small>
+  </div>
+            <div className="socialmedias">
             <div className="link">
               <a href="#" className="btn btn-primary">
                 <FaFacebookF />
@@ -466,6 +471,8 @@ const LandingPageNew = () => {
                 <FaLinkedin />
               </a>
             </div>
+            </div>
+         
           </div>
         </div>
         <div className="Navbar2">
@@ -622,16 +629,15 @@ const LandingPageNew = () => {
                 </p>
               </div>
               <div className="actions">
-                {user === null ? 
-                   <Link to="/register">
-                   Create Your VCard Now <TbBrand4Chan className="icon" />
-                 </Link>
-                :
-                <Link to={`/${user.userName}/uadmin/VCards`}>
-                Build Your VCard Now <TbBrand4Chan className="icon" />
-              </Link>
-                }
-             
+                {user === null ? (
+                  <Link to="/register">
+                    Create Your VCard Now <TbBrand4Chan className="icon" />
+                  </Link>
+                ) : (
+                  <Link to={`/${user.userName}/uadmin/VCards`}>
+                    Build Your VCard Now <TbBrand4Chan className="icon" />
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -642,12 +648,64 @@ const LandingPageNew = () => {
                 </h3>
                 <h4>Introducing Custom vCards</h4>
               </div>
-              <img src={slide5banner} alt="banner" />
+              <img src={vcardImages[currentIndex]} alt="banner" />
             </div>
           </div>
+          {/* Slide2 */}
 
+          <div className="slide2" ref={TemplateRef}>
+            <div className="slide2_title">
+              <h2>Explore Our Range of vCard Templates!</h2>
+              <p>
+                <strong>Simplify Your Digital Networking:</strong> Get Started
+                with Our vCard Templates
+              </p>
+
+              <div className="sample_title">
+                <div className="icon">
+                  <IoIosColorPalette />
+                </div>
+                <p>Sample VCard Designs</p>
+              </div>
+            </div>
+            <div className="template_container">
+              {TemplateList.map((data, index) => {
+                return (
+                  <div className="template" key={index}>
+                    <div className="template_title">
+                      <h4>TEMPLATE-{data.TemplateCount}</h4>
+                      <p>{data.VCard_Name}</p>
+                    </div>
+                    <div className="template_image">
+                      <img src={data.VCard_Image} alt="card1" />
+                      <Link
+                        className="preview_btn"
+                        onClick={() => {
+                          scrollToSection(PricingRef);
+                        }}
+                      >
+                        View Plan
+                      </Link>
+                    </div>
+                    <div className="template_actions">
+                      <Link
+                        to={data.VCard_Link}
+                        target="_blank"
+                        className="activate_btn"
+                      >
+                        Preview Demo
+                        <div className="icon">
+                          <VscOpenPreview />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           {/* Slide1.1 */}
-          <div className="slide1_1">
+          {/* <div className="slide1_1">
             <div className="slide1_1_title">
               <div className="sample_title">
                 <div className="icon">
@@ -711,60 +769,8 @@ const LandingPageNew = () => {
                 </div>
               </div>
             </div>
-          </div>
-          {/* Slide2 */}
+          </div> */}
 
-          <div className="slide2" ref={TemplateRef}>
-            <div className="slide2_title">
-              <h2>Explore Our Range of vCard Templates!</h2>
-              <p>
-                <strong>Simplify Your Digital Networking:</strong> Get Started
-                with Our vCard Templates
-              </p>
-
-              <div className="sample_title">
-                <div className="icon">
-                  <IoIosColorPalette />
-                </div>
-                <p>Sample VCard Designs</p>
-              </div>
-            </div>
-            <div className="template_container">
-              {TemplateList.map((data, index) => {
-                return (
-                  <div className="template" key={index}>
-                    <div className="template_title">
-                      <h4>TEMPLATE-{data.TemplateCount}</h4>
-                      <p>{data.VCard_Name}</p>
-                    </div>
-                    <div className="template_image">
-                      <img src={data.VCard_Image} alt="card1" />
-                      <Link
-                        className="preview_btn"
-                        onClick={() => {
-                          scrollToSection(PricingRef);
-                        }}
-                      >
-                        View Plan
-                      </Link>
-                    </div>
-                    <div className="template_actions">
-                      <Link
-                        to={data.VCard_Link}
-                        target="_blank"
-                        className="activate_btn"
-                      >
-                        Preview Demo
-                        <div className="icon">
-                          <VscOpenPreview />
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
           {/* Slide3 */}
           <div className="slide3" ref={FeatureRef}>
             <div className="slide3_title">
@@ -1017,11 +1023,10 @@ const LandingPageNew = () => {
                   <img src={number1} alt="view" />
                 </div>
                 <div className="content">
-                  <h3>Select Your Virtual Card Template</h3>
+                  <h3>Create your Card</h3>
                   <p>
-                    Start with My Virtual Card's user-friendly maker. Enter your
-                    details for tailored designs or use keywords for a perfect
-                    fit.
+                    Create your digital visiting card via MyVirtualCard, which
+                    takes just a 2 minutes
                   </p>
                 </div>
               </div>
@@ -1030,11 +1035,10 @@ const LandingPageNew = () => {
                   <img src={number2} alt="view" />
                 </div>
                 <div className="content">
-                  <h3>Select Your Virtual Card Template</h3>
+                  <h3>Add Your Product/Services</h3>
                   <p>
-                    Start with My Virtual Card's user-friendly maker. Enter your
-                    details for tailored designs or use keywords for a perfect
-                    fit.
+                    Open Your Dasboard And List The Your Featured
+                    Product/Services
                   </p>
                 </div>
               </div>
@@ -1043,11 +1047,10 @@ const LandingPageNew = () => {
                   <img src={number3} alt="view" />
                 </div>
                 <div className="content">
-                  <h3>Select Your Virtual Card Template</h3>
+                  <h3>Share With Your Customer With One Click</h3>
                   <p>
-                    Start with My Virtual Card's user-friendly maker. Enter your
-                    details for tailored designs or use keywords for a perfect
-                    fit.
+                    Engage With Your Customers Through <br />
+                    MyVirtualCard.
                   </p>
                 </div>
               </div>
@@ -1279,88 +1282,7 @@ const LandingPageNew = () => {
               </div>
             </div>
           </div>
-          {/* Questions */}
-          <div
-            className="slide_7_page"
-            initial="hide"
-            animate="show"
-            ref={FAQRef}
-          >
-            <div className="slide_7_title">
-              <h2>
-                Frequently Asked <span>Questions</span>
-              </h2>
-            </div>
-            <div className="sub_heading">
-              <p>Got Questions? We’ve Got Answers!</p>
-            </div>
-            <div className="selection_actions">
-              <button className="multi" onClick={handleMultipleToggle}>
-                {multiQnToggle
-                  ? "Enable Single Selection"
-                  : "Enable Multi Selection"}
-              </button>
-            </div>
-            <div className="qn_container_box" initial="hide" whileTap="show">
-              {/* qn */}
-              {questions.map((data, index) => {
-                return (
-                  <div
-                    className="question_box"
-                    id={
-                      selectedQn === data.id
-                        ? "showAnswer"
-                        : "hideAnswer" && multiSelected !== data.id
-                        ? "showMultipleAnswer"
-                        : "hideMultipleAnswer"
-                    }
-                    key={index}
-                  >
-                    <div className="question">
-                      <h5>{data.question}</h5>
-                      {selectedQn != data.id ? (
-                        <div
-                          className="plus"
-                          onClick={
-                            multiQnToggle
-                              ? () => {
-                                  handleMultipleSelection(data.id);
-                                }
-                              : () => handleSingleSelection(data.id)
-                          }
-                        >
-                          {data.plus}
-                        </div>
-                      ) : (
-                        <div
-                          className="minus"
-                          onClick={
-                            multiQnToggle
-                              ? () => {
-                                  handleMultipleSelection(data.id);
-                                }
-                              : () => handleSingleSelection(data.id)
-                          }
-                        >
-                          {data.minus}
-                        </div>
-                      )}
-                    </div>
-                    <div className="answer">
-                      {multiQnToggle
-                        ? multiSelected.indexOf(data.id) !== -1 && (
-                            <small>{data.answer}</small>
-                          )
-                        : selectedQn === data.id && (
-                            <small>{data.answer}</small>
-                          )}
-                      {/* {selectedQn === data.id || multiSelected.indexOf(data.id) !== -1 ? <small>{data.answer}</small> : ""} */}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+
 
           {/* OurService */}
           <div className="Our_Service_Slide" ref={OurServiceRef}>
@@ -1446,23 +1368,100 @@ const LandingPageNew = () => {
               </div>
             </div>
           </div>
+                    {/* Questions */}
+                    <div
+            className="slide_7_page"
+            initial="hide"
+            animate="show"
+            ref={FAQRef}
+          >
+            <div className="slide_7_title">
+              <h2>
+                Frequently Asked <span>Questions</span>
+              </h2>
+            </div>
+            <div className="sub_heading">
+              <p>Got Questions? We’ve Got Answers!</p>
+            </div>
+            <div className="selection_actions">
+              <button className="multi" onClick={handleMultipleToggle}>
+                {multiQnToggle
+                  ? "Enable Single Selection"
+                  : "Enable Multi Selection"}
+              </button>
+            </div>
+            <div className="qn_container_box" initial="hide" whileTap="show">
+              {/* qn */}
+              {questions.map((data, index) => {
+                return (
+                  <div
+                    className="question_box"
+                    id={
+                      selectedQn === data.id
+                        ? "showAnswer"
+                        : "hideAnswer" && multiSelected !== data.id
+                        ? "showMultipleAnswer"
+                        : "hideMultipleAnswer"
+                    }
+                    key={index}
+                  >
+                    <div className="question">
+                      <h5>{data.question}</h5>
+                      {selectedQn != data.id ? (
+                        <div
+                          className="plus"
+                          onClick={
+                            multiQnToggle
+                              ? () => {
+                                  handleMultipleSelection(data.id);
+                                }
+                              : () => handleSingleSelection(data.id)
+                          }
+                        >
+                          {data.plus}
+                        </div>
+                      ) : (
+                        <div
+                          className="minus"
+                          onClick={
+                            multiQnToggle
+                              ? () => {
+                                  handleMultipleSelection(data.id);
+                                }
+                              : () => handleSingleSelection(data.id)
+                          }
+                        >
+                          {data.minus}
+                        </div>
+                      )}
+                    </div>
+                    <div className="answer">
+                      {multiQnToggle
+                        ? multiSelected.indexOf(data.id) !== -1 && (
+                            <small>{data.answer}</small>
+                          )
+                        : selectedQn === data.id && (
+                            <small>{data.answer}</small>
+                          )}
+                      {/* {selectedQn === data.id || multiSelected.indexOf(data.id) !== -1 ? <small>{data.answer}</small> : ""} */}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           {/* Footer */}
 
           <div className="footer">
             <div className="company">
-              <div className="logo">
-                <img src={Brand_Logo} alt="" />
-              </div>
-              <p>&copy;Copyright 2020 - All Rights Reserved.</p>
-              <p>
-                First Floor No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar,
-                Chennai, India, Tamil Nadu 600017
-              </p>
+        
+              <p>Group Of Aristostech India Pvt Limited &copy;Copyright 2024 - All Rights Reserved.</p>
+              {/* <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
 
               <small>
                 <strong>Call</strong> : +91 9344482370 &nbsp;{" "}
                 <strong>Mail</strong> :contact@aristostechindia.com
-              </small>
+              </small> */}
             </div>
             <div className="aggrement">
               <Link to="/terms_condition">

@@ -5,13 +5,13 @@ let router=express.Router();
 import { GalleryUpload } from '../Multer/Gallery_Multer.js';
 
 router.get('/:URL_Alies',verifyToken,GetGalleryData);
-router.post('/:URL_Alies',verifyToken,GalleryUpload.single('GalleryImage'),PostGalleryData);
+router.post('/:URL_Alies',verifyToken,PostGalleryData);
  //Read Specific user all Data:
 //  router.get("/specificAll/:userName", verifyToken, readSpecificUserAllData);
  //Read Specific user all Data:
  router.get("/specificID/:id", verifyToken, getSpecificIdData);
 //Update Specific user Single Data:
-router.put("/updateID/:id", verifyToken,GalleryUpload.single('GalleryImage'), updateSpecificUserData);
+router.put("/updateID/:id", verifyToken, updateSpecificUserData);
 //Delete Specific user all Data in Basic Detail:
 router.delete("/:URL_Alies", verifyToken, deleteSpecificUserAllData);
 //Delete Specific user document Data in Basic Detail:

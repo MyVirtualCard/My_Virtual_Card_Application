@@ -241,8 +241,8 @@ const Gallery = () => {
     };
     const formData = new FormData();
     formData.append("URL_Alies", URL_Alies);
-    formData.append("GalleryImageURL",GalleryImageURL);
-    formData.append("GalleryType",GalleryType);
+    formData.append("GalleryImageURL", GalleryImageURL);
+    formData.append("GalleryType", GalleryType);
     formData.append("GalleryImage", GalleryImage);
     try {
       api
@@ -257,7 +257,7 @@ const Gallery = () => {
           setFormSubmitLoader(false);
           reloadComponent();
           setTimeout(() => {
-            setGalleryPreview(null)
+            setGalleryPreview(null);
             setGalleryImage(null);
             setUpdateFormOpen(false);
           }, 1000);
@@ -275,8 +275,6 @@ const Gallery = () => {
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
-
- 
       api
         .delete(`/galleryDetail/deleteID/${id}`, {
           headers: {
@@ -429,7 +427,7 @@ const Gallery = () => {
                           <td className="h-100 align-middle">
                             {data.GalleryType == "ImageUpload" ? (
                               <>
-                                {data.GalleryImage?.filename ? (
+                                {data.GalleryImage ? (
                                   // <img
                                   //   src={
                                   //     data.ServiceImage != undefined
@@ -442,8 +440,8 @@ const Gallery = () => {
                                   <img
                                     src={`${
                                       import.meta.env.VITE_APP_BACKEND_API_URL
-                                    }/uploads/Gallery_Image/${
-                                      data.GalleryImage.filename
+                                    }/${
+                                      data.GalleryImage
                                     }`}
                                     className="GalleryImage"
                                     alt="GalleryImage"
@@ -714,7 +712,7 @@ const Gallery = () => {
                       <img
                         src={`${
                           import.meta.env.VITE_APP_BACKEND_API_URL
-                        }/uploads/Gallery_Image/${GalleryImage?.filename}`}
+                        }/${GalleryImage}`}
                         className="GalleryImage"
                         alt="GalleryImage"
                       />

@@ -1,16 +1,18 @@
 import GalleryModel from "../Model/Gallery.model.js";
-import fs from "fs";
 import Payment from "../Model/Payment.model.js";
 import currentPlan from "../Model/Plan.model.js";
-import multer from "multer";
-// Import necessary functions from the url and path modules
-import { fileURLToPath } from "url";
-// Convert the URL of the current module to a filename
-const __filename = fileURLToPath(import.meta.url);
-// Extract the directory name from the filename
-const __dirname = path.dirname(__filename);
+import fs from "fs";
 import path from "path";
-
+import multer from "multer";
+import axios from "axios";
+import { fileURLToPath } from "url";
+// Create __dirname manually in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname("server");
+import { GalleryUpload } from "../Multer/Gallery_Multer.js";
+const uploadFields = GalleryUpload.fields([
+  { name: "GalleryImage", maxCount: 1 }, // One profile image
+]);
 //Read or get all user basicDetail data  from database:
 
 export const GetGalleryData = async (req, res) => {
@@ -30,185 +32,191 @@ export const GetGalleryData = async (req, res) => {
 };
 
 export const PostGalleryData = async (req, res) => {
-  let checkCurrentPlan = await Payment.find({
-    user: req.user.userName,
-  });
-  let checkFreePlan = await currentPlan.find({
-    URL_Alies: req.params.URL_Alies,
-  });
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
+        }
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
+      }
+      const GalleryImage = req.files["GalleryImage"]
+        ? req.files["GalleryImage"][0].path
+        : null;
+      // If no error, proceed with saving the product
+      if (!GalleryImage) {
+        return res.status(400).json({ message: "No file uploaded" });
+      };
 
-  if (!checkCurrentPlan || !checkFreePlan) {
-    return res.status(400).json({ message: "Choose Your Plan First!" });
-  }
-  //Plan 2 and 3
-  if (
-    checkFreePlan[0]?.PlanPrice === 0 ||
-    checkCurrentPlan[0]?.amount === 599 ||
-    checkCurrentPlan[0]?.amount === 899 ||
-    checkCurrentPlan[0]?.amount === 1299
-  ) {
-    //check images
-    let checkCurrentImages = await GalleryModel.find({
-      URL_Alies: req.params.URL_Alies,
+      let checkCurrentPlan = await Payment.find({
+        user: req.user.userName,
+      });
+      let checkFreePlan = await currentPlan.find({
+        user: req.user.userName,
+      });
+    
+      if (!checkCurrentPlan || !checkFreePlan) {
+        return res.status(400).json({ message: "Choose Your Plan First!" });
+      }
+      //Plan 2 and 3
+      if (
+        checkFreePlan[0]?.PlanPrice === 0 ||
+        checkCurrentPlan[0]?.amount === 599 ||
+        checkCurrentPlan[0]?.amount === 899 ||
+        checkCurrentPlan[0]?.amount === 1299
+      ) {
+        //check images
+        let checkCurrentImages = await GalleryModel.find({
+          URL_Alies: req.params.URL_Alies,
+        });
+    
+        if (!checkCurrentImages) {
+          return res
+            .status(400)
+            .json({ message: "Image will not be there!", error: err });
+        } else {
+          if (checkCurrentPlan[0]?.amount === 1299) {
+            //Basic Image File limit checked:
+            if (checkCurrentImages.length < 10) {
+              // Create a new image instance and save to MongoDB
+              const newImage = new GalleryModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                GalleryImageURL: req.body.GalleryImageURL,
+                GalleryType: req.body.GalleryType,
+                GalleryImage:GalleryImage,
+              });
+    
+              newImage
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Image uploaded!",
+                    data: newImage,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save image to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message: "Max Image Upload limit crossed!..Only accept 10 Images ",
+              });
+            }
+          }
+          if (checkCurrentPlan[0]?.amount === 899) {
+            //Basic Image File limit checked:
+            if (checkCurrentImages.length < 6) {
+              // Create a new image instance and save to MongoDB
+              const newImage = new GalleryModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                GalleryImageURL: req.body.GalleryImageURL,
+                GalleryType: req.body.GalleryType,
+                GalleryImage:GalleryImage,
+              });
+    
+              newImage
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Image uploaded!",
+                    data: newImage,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save image to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message: "Max Image Upload limit crossed!..Only accept 6 Images ",
+              });
+            }
+          }
+          if (checkCurrentPlan[0]?.amount === 599) {
+            //Basic Image File limit checked:
+            if (checkCurrentImages.length < 4) {
+              // Create a new image instance and save to MongoDB
+              const newImage = new GalleryModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                GalleryImageURL: req.body.GalleryImageURL,
+                GalleryType: req.body.GalleryType,
+                GalleryImage:GalleryImage,
+              });
+    
+              newImage
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Image uploaded!",
+                    data: newImage,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save image to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message: "Max Image Upload limit crossed!..Only accept 4 Images ",
+              });
+            }
+          }
+          if (checkFreePlan[0]?.PlanPrice === 0) {
+            //Basic Image File limit checked:
+            if (checkCurrentImages.length < 2) {
+              // Create a new image instance and save to MongoDB
+              const newImage = new GalleryModel({
+                user: req.user.userName,
+                URL_Alies: req.body.URL_Alies,
+                GalleryImageURL: req.body.GalleryImageURL,
+                GalleryType: req.body.GalleryType,
+                GalleryImage:GalleryImage,
+              });
+    
+              newImage
+                .save()
+                .then(() => {
+                  res.status(200).json({
+                    message: "Image uploaded!",
+                    data: newImage,
+                  });
+                })
+                .catch((err) => {
+                  res.status(400).json({
+                    message: "Failed to save image to database!",
+                  });
+                });
+            } else {
+              res.status(400).json({
+                message: "Trial Plan Only accept 2 Images ",
+              });
+            }
+          }
+        }
+      } else {
+        res.status(400).json({ message: "Plan not match!", error: err });
+      }
+
     });
 
-    if (!checkCurrentImages) {
-      return res
-        .status(400)
-        .json({ message: "Image will not be there!", error: err });
-    } else {
-      if (checkCurrentPlan[0]?.amount === 1299) {
-        //Basic Image File limit checked:
-        if (checkCurrentImages.length < 10) {
-          // Create a new image instance and save to MongoDB
-          const newImage = new GalleryModel({
-            user: req.user.userName,
-            URL_Alies: req.body.URL_Alies,
-            GalleryImageURL: req.body.GalleryImageURL,
-            GalleryType: req.body.GalleryType,
-
-            GalleryImage: {
-              filename: req.file?.filename,
-              contentType: req.file?.mimetype,
-              imageBase64: req.file?.path,
-            },
-          });
-
-          newImage
-            .save()
-            .then(() => {
-              res.status(200).json({
-                message: "Image uploaded!",
-                data: newImage,
-              });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: "Failed to save image to database!",
-              });
-            });
-        } else {
-          res.status(400).json({
-            message: "Max Image Upload limit crossed!..Only accept 10 Images ",
-          });
-        }
-      }
-      if (checkCurrentPlan[0]?.amount === 899) {
-        //Basic Image File limit checked:
-        if (checkCurrentImages.length < 6) {
-          // Create a new image instance and save to MongoDB
-          const newImage = new GalleryModel({
-            user: req.user.userName,
-            URL_Alies: req.body.URL_Alies,
-            GalleryImageURL: req.body.GalleryImageURL,
-            GalleryType: req.body.GalleryType,
-            GalleryImage: {
-              filename: req.file?.filename,
-              contentType: req.file?.mimetype,
-              imageBase64: req.file?.path,
-            },
-          });
-
-          newImage
-            .save()
-            .then(() => {
-              res.status(200).json({
-                message: "Image uploaded!",
-                data: newImage,
-              });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: "Failed to save image to database!",
-              });
-            });
-        } else {
-          res.status(400).json({
-            message: "Max Image Upload limit crossed!..Only accept 6 Images ",
-          });
-        }
-      }
-      if (checkCurrentPlan[0]?.amount === 599) {
-        //Basic Image File limit checked:
-        if (checkCurrentImages.length < 4) {
-          // Create a new image instance and save to MongoDB
-          const newImage = new GalleryModel({
-            user: req.user.userName,
-            URL_Alies: req.body.URL_Alies,
-            GalleryImageURL: req.body.GalleryImageURL,
-            GalleryType: req.body.GalleryType,
-            GalleryImage: {
-              filename: req.file?.filename,
-              contentType: req.file?.mimetype,
-              imageBase64: req.file?.path,
-            },
-          });
-
-          newImage
-            .save()
-            .then(() => {
-              res.status(200).json({
-                message: "Image uploaded!",
-                data: newImage,
-              });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: "Failed to save image to database!",
-              });
-            });
-        } else {
-          res.status(400).json({
-            message: "Max Image Upload limit crossed!..Only accept 4 Images ",
-          });
-        }
-      }
-      if (checkFreePlan[0]?.PlanPrice === 0) {
-        //Basic Image File limit checked:
-        if (checkCurrentImages.length < 2) {
-          // Create a new image instance and save to MongoDB
-          const newImage = new GalleryModel({
-            user: req.user.userName,
-            URL_Alies: req.body.URL_Alies,
-            GalleryImageURL: req.body.GalleryImageURL,
-            GalleryType: req.body.GalleryType,
-            GalleryImage: {
-              filename: req.file?.filename,
-              contentType: req.file?.mimetype,
-              imageBase64: req.file?.path,
-            },
-          });
-
-          newImage
-            .save()
-            .then(() => {
-              res.status(200).json({
-                message: "Image uploaded!",
-                data: newImage,
-              });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: "Failed to save image to database!",
-              });
-            });
-        } else {
-          res.status(400).json({
-            message: "Trial Plan Only accept 2 Images ",
-          });
-        }
-      }
-    }
-  } else {
-    res.status(400).json({ message: "Plan not match!", error: err });
   }
-  // if(checkCurrentPlan.length<=0 || checkFreePlan.length <=0 ){
-  //   return res
-  //   .status(400)
-  //   .json({ message: "Plan Data Empty!" });
-  // }else{
 
-  // }
+
 };
 
 // //Read or get Specific User all Data  :

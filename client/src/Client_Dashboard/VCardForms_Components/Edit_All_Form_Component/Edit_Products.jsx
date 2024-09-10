@@ -307,11 +307,13 @@ const Products = () => {
     }
   }
   async function handleProductDelete(id) {
+    let filename=id.split('/')[0].slice(22,150);
+    console.log(filename)
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
       api
-        .delete(`/productDetail/deleteID/${id}`, {
+        .delete(`/productDetail/deleteID/${filename}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
@@ -522,7 +524,7 @@ const Products = () => {
                             >
                               {data.ProductType == "ImageUpload" ? (
                                 <>
-                                  {data.ProductImage?.filename ? (
+                                  {data.ProductImage ? (
                                     // <img
                                     //   src={
                                     //     data.ServiceImage != undefined
@@ -535,8 +537,8 @@ const Products = () => {
                                     <img
                                       src={`${
                                         import.meta.env.VITE_APP_BACKEND_API_URL
-                                      }/uploads/Product_Image/${
-                                        data.ProductImage.filename
+                                      }/${
+                                        data.ProductImage
                                       }`}
                                       className="ProductImage"
                                       alt="ProductImage"
@@ -602,7 +604,7 @@ const Products = () => {
                               <i
                                 className="bx bx-trash-alt"
                                 style={{ color: "red" }}
-                                onClick={() => handleProductDelete(data._id)}
+                                onClick={() => handleProductDelete(data.ProductImage)}
                               ></i>
                             </td>
                           </tr>
@@ -934,7 +936,7 @@ const Products = () => {
                                 <img
                                   src={`${
                                     import.meta.env.VITE_APP_BACKEND_API_URL
-                                  }/uploads/Product_Image/${ProductImage.filename}`}
+                                  }/${ProductImage}`}
                                   className="ProductImage"
                                   alt="ProductImage"
                                 />
@@ -1048,119 +1050,6 @@ const Products = () => {
           </>
         )}
 
-        {/* //uPDATE  Product Form */}
-
-        {/* <div
-          className="update_new_product_container"
-          id={updateFormOpen ? "shadow_background" : ""}
-        >
-          <div
-            className="create_new_product_box"
-            id={updateFormOpen ? "productOpen" : "productClose"}
-          >
-            <div className="title">
-              <p>Update Product</p>
-              <i
-                className="bx bx-x"
-                onClick={() => setUpdateFormOpen(false)}
-              ></i>
-            </div>
-            <form action="" onSubmit={handleProductUpdate}>
-              <div className="form_group">
-                <label htmlFor="ProductName">
-                  Product Name <sup>*</sup>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Product Title"
-                  value={ProductName}
-                  onChange={(e) => setProductName(e.target.value)}
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="ProductURL">Product URL</label>
-                <input
-                  type="text"
-                  placeholder="Paste Product URL"
-                  value={ProductURL}
-                  onChange={(e) => setProductURL(e.target.value)}
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="product_currency">
-                  Currency<sup>(Default)</sup>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Product Currency"
-                  value="₹"
-                  readOnly
-                />
-              </div>
-              <div className="form_group">
-                <label htmlFor="ProductPrice">
-                  Price<sup>*</sup>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Product Price"
-                  value={ProductPrice}
-                  onChange={(e) => setProductPrice(e.target.value)}
-                />
-              </div>
-              <div className="form_group productDescription">
-                <label htmlFor="ProductDescription">
-                  Description <sup>*</sup>
-                </label>
-
-                <Editor
-                  {...formik.getFieldProps(
-                    "ProductDescription",
-                    ProductDescription
-                  )}
-                  value={formik.values.ProductDescription}
-                  onTextChange={(e) => setProductDescription(e.htmlValue)}
-                  id="ProductDescription"
-                  name="ProductDescription"
-                  placeholder="Enter Short Description"
-                  style={{ height: "130px" }}
-                />
-              </div>
-
-              <div className="form_group productImage">
-                <label htmlFor="ProductImage">
-                  Product Image<sup>*</sup>
-                </label>
-                <label htmlFor="ProductImage">
-                  <img
-                    src={
-                      ProductImage != "null"
-                        ? ProductImage
-                        : "https://img.freepik.com/free-vector/autumn-background_23-2149054409.jpg?t=st=1715971926~exp=1715975526~hmac=064e47d99740a4e25fb7345c45d5bc744da1c1ad7f5f1e14668eaae2cc601381&w=900"
-                    }
-                    alt="ProductImage"
-                  />
-                  <i className="bx bxs-edit-location"></i>
-                </label>
-                <p>
-                  <strong>Note :</strong> Max file size limit 2MB
-                </p>
-                <small>Allowed file types: png, jpg, jpeg,.gif.</small>
-                <input
-                  type="file"
-                  id="ProductImage"
-                  name="ProductImage"
-                  onChange={onUploadProductImage}
-                />
-              </div>
-              <div className="form_submit_actions">
-                <div className="save">
-                  <button type="submit">Update</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div> */}
 
         {/* //Product  Detail Box */}
 

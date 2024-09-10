@@ -246,7 +246,7 @@ const Services = () => {
           setServiceName(res.data.data.ServiceName);
           setServiceURL(res.data.data.ServiceURL);
           setServiceDescription(res.data.data.ServiceDescription);
-          setServiceImage(res.data.data.ServiceImage?.filename);
+          setServiceImage(res.data.data.ServiceImage);
       
           setServiceId(res.data.data._id);
           setServiceIcon(res.data.data.ServiceIcon);
@@ -313,11 +313,14 @@ const Services = () => {
     }
   }
   async function handleServiceDelete(id) {
+
+   let filename=id.split('/')[0].slice(22,150);
+   console.log(filename)
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
-      api
-        .delete(`/serviceDetail/deleteID/${id}`, {
+      await api
+        .delete(`/serviceDetail/deleteID/${filename}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
@@ -617,7 +620,7 @@ const Services = () => {
                               <i
                                 className="bx bx-trash-alt"
                                 style={{ color: "red" }}
-                                onClick={() => handleServiceDelete(data._id)}
+                                onClick={() => handleServiceDelete(data.ServiceImage)}
                               ></i>
                             </td>
                           </tr>

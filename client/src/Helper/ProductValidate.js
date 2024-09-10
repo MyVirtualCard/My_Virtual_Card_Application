@@ -28,30 +28,30 @@ export let ProductValidateShema = Yup.object({
     .max(500, "Max 500 letter to be allowed!")
     .required("ProductDescription is required!"),
     ProductPrice:Yup.number().required('Product price required!'),
-    ProductImage: Yup.mixed()
-    .notRequired()
-    .test("fileSize", "File size is too large..Max 3mb Allowed", (value) => {
-      if (value) {
-        return value && getProductFileSize(value) <= FILE_SIZE;
-      }
-      return true;
-    })
-    .test(
-      "fileSize",
-      "File size is too small..Min 20kb required!",
-      (value) => {
-        if (value) {
-          return value && getProductFileSize(value) >= MIN_FILE_SIZE;
-        }
-        return true;
-      }
-    )
-    .test("fileFormat", "Unsupported file format", (value) => {
-      if (value) {
-        return value && SUPPORTED_FORMATS.includes(getProductFileType(value));
-      }
-      return true;
-    }),
+    // ProductImage: Yup.mixed()
+    // .notRequired()
+    // .test("fileSize", "File size is too large..Max 3mb Allowed", (value) => {
+    //   if (value) {
+    //     return value && getProductFileSize(value) <= FILE_SIZE;
+    //   }
+    //   return true;
+    // })
+    // .test(
+    //   "fileSize",
+    //   "File size is too small..Min 20kb required!",
+    //   (value) => {
+    //     if (value) {
+    //       return value && getProductFileSize(value) >= MIN_FILE_SIZE;
+    //     }
+    //     return true;
+    //   }
+    // )
+    // .test("fileFormat", "Unsupported file format", (value) => {
+    //   if (value) {
+    //     return value && SUPPORTED_FORMATS.includes(getProductFileType(value));
+    //   }
+    //   return true;
+    // }),
 
 
 });
