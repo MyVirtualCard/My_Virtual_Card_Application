@@ -25,7 +25,6 @@ router.get("/:userName", verifyToken, getVCardURLData);
 router.post(
   "/",
   verifyToken,
-  uploadFields,
   postVCardURLData
 );
 //Read Specific user all Data:
@@ -34,7 +33,6 @@ router.get("/specific_vcard/:URL_Alies", verifyToken, readSpecificUserAllData);
 router.put(
   "/update_by_vcardUrl/:URL_Alies",
   verifyToken,
-  uploadFields,
   updateSpecificUserData
 );
 //Delete Specific user all Data in Basic Detail:

@@ -31,7 +31,7 @@ import Context from '../../Context/GlobalContext.js'
 const Login = () => {
   let inputRefFocus = useRef(null);
 
-  let {    resetPassToken,setResetPassToken,
+  let { setUser,   resetPassToken,setResetPassToken,
     ResetPassToken_Id, setResetPassToken_Id, resetPassId,setResetPassId}=useContext(Context)
   useEffect(() => {
     inputRefFocus.current.focus();
@@ -112,6 +112,7 @@ const Login = () => {
           let userData = JSON.parse(localStorage.getItem("datas"));
 
           setTimeout(() => {
+            setUser(userData)
             handleSpeak(userData.userName);
             navigate(`/${userData.userName}/uadmin/VCards`);
           }, 2000);

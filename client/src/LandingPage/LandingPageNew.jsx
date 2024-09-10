@@ -30,6 +30,7 @@ import { BsFillRocketTakeoffFill } from "react-icons/bs";
 import { IoIosCreate } from "react-icons/io";
 import { HiLightBulb } from "react-icons/hi";
 import { MdHomeRepairService } from "react-icons/md";
+import { RiDashboardFill } from "react-icons/ri";
 import { CiSaveUp1 } from "react-icons/ci";
 import {
   FaInstagram,
@@ -547,12 +548,25 @@ const LandingPageNew = () => {
             </div>
             <div className="right">
               <div className="actions">
-                <Link to="/register" className="register">
-                  Register <GrUserNew />
-                </Link>
-                <Link to="/login" className="login">
-                  Login <CiLogin />
-                </Link>
+                {user === null ? (
+                  <Link to="/register" className="register">
+                    Register <GrUserNew />
+                  </Link>
+                ) : (
+                  ""
+                )}
+                {user === null ? (
+                  <Link to="/login" className="login">
+                    Login <CiLogin />
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/${user.userName}/uadmin/VCards`}
+                    className="login"
+                  >
+                    {user.userName} <RiDashboardFill />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -587,7 +601,6 @@ const LandingPageNew = () => {
 
             <div className="back_image">
               <img src={backImage} alt="image" />
-      
             </div>
 
             <div className="left">
@@ -609,9 +622,16 @@ const LandingPageNew = () => {
                 </p>
               </div>
               <div className="actions">
-                <Link to="/register">
-                  Create Your VCard Now <TbBrand4Chan className="icon" />
-                </Link>
+                {user === null ? 
+                   <Link to="/register">
+                   Create Your VCard Now <TbBrand4Chan className="icon" />
+                 </Link>
+                :
+                <Link to={`/${user.userName}/uadmin/VCards`}>
+                Build Your VCard Now <TbBrand4Chan className="icon" />
+              </Link>
+                }
+             
               </div>
             </div>
 

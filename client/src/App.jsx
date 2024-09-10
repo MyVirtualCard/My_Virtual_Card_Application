@@ -45,6 +45,10 @@ import Boutique_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Boutique_
 
 const App = () => {
   let navigate = useNavigate();
+  const [key, setKey] = useState(0);
+  var reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
   // All Global States;
   let [user, setUser] = useState(null);
   let [userName, setUserName] = useState(null);
@@ -95,9 +99,10 @@ const App = () => {
   }, [navigate]);
   useEffect(() => {
     const Localstorage_UserData = JSON.parse(localStorage?.getItem("datas"));
-    if (Localstorage_UserData) {
+
+    if (Localstorage_UserData != null) {
       setUser(Localstorage_UserData);
-      if (userName == null) {
+      if (userName == null || userName == "") {
         return setUserName(Localstorage_UserData.userName);
       }
     }
@@ -118,7 +123,7 @@ const App = () => {
     }
   }, [navigate]);
 
-  console.log(userName)
+  console.log(user);
   return (
     <>
       <div className="App_container">
@@ -143,6 +148,7 @@ const App = () => {
             userName,
             mobileNumber,
             user,
+            setUser,
             registeredData,
             setRegisteredData,
             FormSubmitLoader,
@@ -179,16 +185,7 @@ const App = () => {
               <Route path="/old" element={<LandingPage />} />
               <Route path="/" element={<LandingPageNew />} />
               {/* Authentication */}
-              <Route
-                path="/register"
-                element={
-                  user?.token ? (
-                    <Navigate to={`/${userName}/uadmin/dashboard`} />
-                  ) : (
-                    <Register />
-                  )
-                }
-              />
+              <Route path="/register" element={<Register />} />
               {/* <Route path="/register" element={<Register />} /> */}
               <Route path="/login" element={<Login />} />
               <Route path="/verify_OTP" element={<VerifyOTP />} />
@@ -197,7 +194,7 @@ const App = () => {
                 element={<ResetPassword />}
               />
 
-<Route path="/paymentsuccess" element={<f />} />
+              <Route path="/paymentsuccess" element={<f />} />
               <Route path="/terms_condition" element={<Terms_Condition />} />
               <Route path="/privacy_condition" element={<Privacy_Policy />} />
               {/* Client Dashboard Routes */}
@@ -239,9 +236,9 @@ const App = () => {
                 />
               </Route>
 
-                 {/* Static VCard */}
-                 <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
-              <Route path="/Taxi_Service" element={<Taxi_Service_Demo/>} />
+              {/* Static VCard */}
+              <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
+              <Route path="/Taxi_Service" element={<Taxi_Service_Demo />} />
               <Route
                 path="/Fashion_Designer"
                 element={<Fashion_Designer_Demo />}

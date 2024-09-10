@@ -25,7 +25,7 @@ import OTP_input from "../OTP_Input/OTP_input.jsx";
 import Context from "../../Context/GlobalContext.js";
 const VerifyOTP = () => {
 let inputRefFocus = useRef(null);
-let {userName,mobileNumber}=useContext(Context);
+let {setUser,userName,mobileNumber}=useContext(Context);
 let[  OTP_Value,
  setOTP_Value]=useState();
   const [width, setWidth] = useState(window.innerWidth);
@@ -105,7 +105,9 @@ let[  OTP_Value,
           verified: res?.data?.verified,
         });
         localStorage.setItem("datas", datas);
+        let userData = JSON.parse(localStorage.getItem("datas"));
         setTimeout(() => {
+          setUser(userData)
           // setVerifyOTPToggle(false);
           handleSpeak(userName);
           navigate(`/${userName}/uadmin/VCards`);

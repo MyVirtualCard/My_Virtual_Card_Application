@@ -114,27 +114,27 @@ const VCard_URL_Form = () => {
 
     onSubmit: async (values) => {
       setFormSubmitLoader(true);
-      // values.Description = stripHtmlTags(Description);
+      values.Description = stripHtmlTags(Description);
       values = Object.assign(values, { Profile: Profile || "" });
-      // values = Object.assign(values, { Banner: Banner || "" });
-      const formData = new FormData();
-      formData.append("Profile", values.Profile);
-      formData.append("Banner", Banner);
-      formData.append("URL_Alies", values.URL_Alies);
-      formData.append("VCardName", values.VCardName);
-      formData.append("BannerType", values.BannerType);
-      formData.append("ProfileType", values.ProfileType);
-      formData.append("ProfileAddress", values.ProfileAddress);
-      formData.append("BannerAddress", values.BannerAddress);
-      formData.append(
-        "Description",
-        (values.Description = stripHtmlTags(Description))
-      );
+      values = Object.assign(values, { Banner: Banner || "" });
+      // const formData = new FormData();
+      // formData.append("Profile", values.Profile);
+      // formData.append("Banner", values.Banner);
+      // formData.append("URL_Alies", values.URL_Alies);
+      // formData.append("VCardName", values.VCardName);
+      // formData.append("BannerType", values.BannerType);
+      // formData.append("ProfileType", values.ProfileType);
+      // formData.append("ProfileAddress", values.ProfileAddress);
+      // formData.append("BannerAddress", values.BannerAddress);
+      // formData.append(
+      //   "Description",
+      //   (values.Description = stripHtmlTags(Description))
+      // );
 
       await api
-        .post("/vcard_URL", formData, {
+        .post("/vcard_URL", values, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         })
@@ -180,22 +180,22 @@ const VCard_URL_Form = () => {
   //   setPreview(URL.createObjectURL(file)); // Show a preview of the image
   //   formik.setFieldValue("Profile", preview);
   // };
-  const handleBannerChange = (e) => {
-    const file = e.target.files[0];
-    setBanner(file);
+  // const handleBannerChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setBanner(file);
 
-    setBannerPreview(URL.createObjectURL(file)); // Show a preview of the image
-    formik.setFieldValue("Banner", BannerPreview);
-  };
-  // const handleBannerChange = (event) => {
-  //   const Banner = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Banner);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Banner", reader.result);
-  //     setBanner(reader.result);
-  //   };
+  //   setBannerPreview(URL.createObjectURL(file)); // Show a preview of the image
+  //   formik.setFieldValue("Banner", BannerPreview);
   // };
+  const handleBannerChange = (event) => {
+    const Banner = event.currentTarget.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(Banner);
+    reader.onload = () => {
+      formik.setFieldValue("Banner", reader.result);
+      setBanner(reader.result);
+    };
+  };
   async function handleURLErrorHandling() {
     {
       All_URL_Alies.length == 0 || All_URL_Alies.length > 0
@@ -482,7 +482,7 @@ const VCard_URL_Form = () => {
                 {formik.values.BannerType == "ImageUpload" ? (
                   <div className="second">
                     <label htmlFor="Company_Banner">
-                      {BannerPreview == null ? (
+                    
                         <img
                           src={
                             Banner != null && Banner.length > 0
@@ -492,17 +492,7 @@ const VCard_URL_Form = () => {
                           className="Banner"
                           alt="Banner"
                         />
-                      ) : (
-                        <img
-                          src={
-                            BannerPreview != null
-                              ? BannerPreview
-                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                          }
-                          className="Banner"
-                          alt="Banner"
-                        />
-                      )}
+                    
                       <span
                         className="material-symbols-outlined"
                         onClick={() => {

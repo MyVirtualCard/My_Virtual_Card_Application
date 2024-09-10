@@ -52,8 +52,8 @@ export const postVCardURLData = async (req, res) => {
     return res.status(400).json({ message: "This VCard URL already alies!" });
   } else {
     //Basic Image File limit checked:
-    const Profile = req.files["Profile"] ? req.files["Profile"][0].path : null;
-    const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
+    // const Profile = req.files["Profile"] ? req.files["Profile"][0].path : null;
+    // const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
 
     let data = {
       user: req.user.userName,
@@ -61,7 +61,7 @@ export const postVCardURLData = async (req, res) => {
       VCardName: req.body.VCardName,
       Description: req.body.Description,
       Profile: req.body.Profile,
-      Banner: Banner,
+      Banner: req.body.Banner,
       ProfileType: req.body.ProfileType,
       BannerType: req.body.BannerType,
       ProfileAddress: req.body.ProfileAddress,
@@ -135,7 +135,7 @@ export const updateSpecificUserData = async (req, res) => {
       // const Profile = req.files["Profile"]
       //   ? req.files["Profile"][0].path
       //   : null;
-      const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
+      // const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
 
       // if (updateSpecificData.Profile !=null) {
       //   fs.unlink(updateSpecificData.Profile, (err) => {
@@ -179,14 +179,14 @@ export const updateSpecificUserData = async (req, res) => {
       //   // Update with the new image path
       //   updateSpecificData.Profile = Profile;
       // }
-      if (Banner) {
-        fs.unlink(updateSpecificData.Banner, (err) => {
-          if (err) {
-            console.error("Failed to delete the old image:", err);
-          }
-        });
-        updateSpecificData.Banner = Banner; // Set new image path
-      };
+      // if (Banner) {
+      //   fs.unlink(updateSpecificData.Banner, (err) => {
+      //     if (err) {
+      //       console.error("Failed to delete the old image:", err);
+      //     }
+      //   });
+      //   updateSpecificData.Banner = Banner; // Set new image path
+      // };
       // if (Banner) {
       //   // Delete the old image from the file system
       //   const oldImagePath = path.join(
@@ -202,6 +202,7 @@ export const updateSpecificUserData = async (req, res) => {
       //   // Update the image path in the product
       //   updateSpecificData.Banner = Banner;
       // }
+      updateSpecificData.Banner = req.body.Banner;
       updateSpecificData.Profile = req.body.Profile;
       updateSpecificData.URL_Alies = req.body.URL_Alies;
       updateSpecificData.VCardName = req.body.VCardName;

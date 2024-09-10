@@ -82,6 +82,10 @@ const Client_Dashboard = () => {
   useEffect(() => {
     getSpecificUserData();
   }, [navigate]);
+  const [key, setKey] = useState(0);
+  var reloadComponent = () => {
+    setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
+  };
   //LogOut user
   let handleSignOut = async (e) => {
     e.preventDefault();
@@ -89,8 +93,10 @@ const Client_Dashboard = () => {
       localStorage.removeItem("datas");
       localStorage.removeItem("userName");
       toast.success("LogOut successfully");
+      setUser(null);
       setTimeout(() => {
         navigate("/");
+        reloadComponent();
         // window.location.pathname = "/";
       }, 2000);
     } catch (err) {
