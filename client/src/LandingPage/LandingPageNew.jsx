@@ -16,7 +16,6 @@ import vcard5 from "../assets/Landing_Page/VCard_Designs/consultant_mobile.png";
 import vcard6 from "../assets/Landing_Page/VCard_Designs/Real_Estate_Mobile.png";
 import vcard7 from "../assets/Landing_Page/VCard_Designs/Beauty_Parlor_Mobile.png";
 import vcard8 from "../assets/Landing_Page/VCard_Designs/Boutique_Shop_Mobile.png";
-
 import view1 from "../assets/Landing_Page/view/1.svg";
 import view2 from "../assets/Landing_Page/view/2.svg";
 import view3 from "../assets/Landing_Page/view/3.svg";
@@ -413,7 +412,7 @@ const LandingPageNew = () => {
         {/* Up Arrow icon */}
         <div className="up" onClick={() => scrollToSection(HomeRef)}>
           <small>Bring me Top</small>
-          <CiSaveUp1 className="up_icon"/>
+          <CiSaveUp1 className="up_icon" />
         </div>
         {/* Navbars */}
         <div className="Navbar1">
@@ -563,31 +562,32 @@ const LandingPageNew = () => {
         <div className="content">
           {/* Slide1 */}
           <div className="slide1" ref={HomeRef}>
-          <ul className="slide_1_background">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            {/* <li></li>
+            <ul className="slide_1_background">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              {/* <li></li>
             <li></li> */}
-            {/* <li></li>
+              {/* <li></li>
             <li></li>
             <li></li>
             <li></li>
             <li></li>
             <li></li> */}
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
             {/* /backImage */}
 
             <div className="back_image">
               <img src={backImage} alt="image" />
+      
             </div>
 
             <div className="left">
