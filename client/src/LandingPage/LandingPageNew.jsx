@@ -29,6 +29,7 @@ import { VscOpenPreview } from "react-icons/vsc";
 import { BsFillRocketTakeoffFill } from "react-icons/bs";
 import { IoIosCreate } from "react-icons/io";
 import { HiLightBulb } from "react-icons/hi";
+import { FaRupeeSign } from "react-icons/fa";
 import { MdHomeRepairService } from "react-icons/md";
 import { RiDashboardFill } from "react-icons/ri";
 import { CiSaveUp1 } from "react-icons/ci";
@@ -667,6 +668,7 @@ const LandingPageNew = () => {
                 </div>
                 <p>Sample VCard Designs</p>
               </div>
+            
             </div>
             <div className="template_container">
               {TemplateList.map((data, index) => {
@@ -1085,6 +1087,7 @@ const LandingPageNew = () => {
           {/* Slide6 */}
           <div className="slide_6_page" ref={PricingRef}>
             <div className="plan_heading" initial="hide" animate="show">
+              <h1><FaRupeeSign className="icon"/>MyVirtualCard Pricing</h1>
               <h2>
                 Select the <span>Perfect Plan</span> for You
               </h2>
@@ -1095,7 +1098,7 @@ const LandingPageNew = () => {
 
             <div className="plan_container_box" initial="hide" animate="show">
               {/* plan demo*/}
-              <div className="plan" id={TrialExpand ? "expand" : "default"}>
+              {/* <div className="plan" id={TrialExpand ? "expand" : "default"}>
                 <div
                   className="down_arrow"
                   onClick={() => setTrialExpand(!TrialExpand)}
@@ -1138,7 +1141,7 @@ const LandingPageNew = () => {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
               {/* plan1 */}
               <div className="plan" id={planExpand ? "expand" : "default"}>
                 <div
@@ -1164,7 +1167,7 @@ const LandingPageNew = () => {
                 </div>
                 <div className="card_count">
                   <p>
-                    No of VCard Design's Provided : <span>03</span>
+                    No of VCard Design's Provided : <span>08</span>
                   </p>
                 </div>
                 <div
@@ -1185,7 +1188,7 @@ const LandingPageNew = () => {
                 </div>
               </div>
               {/* plan2 */}
-              <div
+              {/* <div
                 className="plan"
                 id={standardPlanExpand ? "expand" : "default"}
               >
@@ -1231,9 +1234,9 @@ const LandingPageNew = () => {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
               {/* plan3 */}
-              <div
+              {/* <div
                 className="plan"
                 id={PremiumPlanExpand ? "expand" : "default"}
               >
@@ -1279,7 +1282,7 @@ const LandingPageNew = () => {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
