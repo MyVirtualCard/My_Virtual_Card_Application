@@ -9,9 +9,9 @@
 
   .up {
     position: fixed;
-    bottom: 2%;
+    bottom: 10%;
     right: 1%;
-    z-index: 1;
+    z-index: 10;
     cursor: pointer;
     // background-color: #ffffff;
     border-radius: 0.3rem;
@@ -21,7 +21,7 @@
     justify-content: center;
     gap: 1px;
     font-size: 1.5rem;
-    color: #fff;
+    color: #1b1b1b;
     i {
       padding: 5px;
 
@@ -32,7 +32,7 @@
     small {
       font-size: 0.6rem;
       font-weight: 550;
-      color: rgb(255, 255, 255);
+      color: rgb(32, 32, 32);
     }
   }
   .Navbar1 {
@@ -489,7 +489,7 @@
       background: linear-gradient(150deg, #011f30 40%, #01757e);
       opacity: 1;
       overflow: hidden;
-      z-index: 1;
+      z-index: 11;
       display: flex;
       align-items: center;
       justify-content: center;

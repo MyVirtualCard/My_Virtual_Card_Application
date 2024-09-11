@@ -153,7 +153,11 @@ place-items: center;
     margin: 2rem 0.5rem;
     position: relative;
 
-  .title{
+  .today_appoinment_title{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     h3{
         font-size: 1.2rem;
         font-weight: 550;

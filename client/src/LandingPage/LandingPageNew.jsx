@@ -1084,9 +1084,9 @@ const LandingPageNew = () => {
               <h2>
                 Select the <span>Perfect Plan</span> for You
               </h2>
-              <p>
+              {/* <p>
                 <strong>Your Plan, Your Way:</strong> Choose What Works Best
-              </p>
+              </p> */}
             </div>
 
             <div className="plan_container_box" initial="hide" animate="show">

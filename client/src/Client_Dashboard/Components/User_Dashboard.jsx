@@ -18,7 +18,7 @@ const User_Dashboard = () => {
               </div>
 
               <div className="details">
-                <h4>10</h4>
+                <h4>08</h4>
                 <small>Active VCards</small>
               </div>
               <ul className="dashboard_background">
@@ -132,8 +132,8 @@ const User_Dashboard = () => {
             </div>
           </div>
           <div className="row_2">
-            <div className="title">
-              <h3 className="fw-medium">Today Appoinment</h3>
+            <div className="today_appoinment_title">
+              <h3>Today Appoinment</h3>
             </div>
 
             <div className="table_container">
