@@ -49,7 +49,7 @@ const VCard_Form_Edit = () => {
     setCurrentPlan,
     ShowForm,
     setShowForm,
-
+    activePlan, setPlanActive,
     setURL_Alies,
 
     status,
@@ -78,7 +78,7 @@ const VCard_Form_Edit = () => {
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
-            
+            setCurrentPlan(res.data.data[0]?.currentPlan)
             setShowForm("VCard Templates");
           } else {
             setShowForm("Choose Your Plan");
@@ -107,11 +107,11 @@ const VCard_Form_Edit = () => {
         },
       })
       .then((res) => {
-         console.log(res.data.data[0])
-        if (res.data.data.length > 0) {
-          setCurrentPlanActive(res.data.data.length);
-          setStatus(res.data.data[0].currentPlan);
-          setCurrentPlan(res.data.data[0].currentPlan)
+    
+        if (res.data?.data?.length > 0) {
+          setCurrentPlanActive(res.data?.data?.length);
+          setStatus(res.data?.data[0]?.currentPlan);
+          setCurrentPlan(res.data?.data[0]?.currentPlan)
           setShowForm("VCard Templates");
         } else {
          
@@ -194,7 +194,7 @@ const VCard_Form_Edit = () => {
           </div>
 
           <div className="back_action">
-            {LiveLinkActivate.length > 0 ? (
+            {LiveLinkActivate?.length > 0 ? (
               <>
                 {currentTemplate != null ? (
                   <a

@@ -10,16 +10,8 @@ let GallerySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // GalleryImage: {
-    //   filename: String,
-    //   contentType: String,
-    //   imageBase64: String,
-      
-    // },
-
     GalleryImage:{
       type:String,
-      required:true,
     },
     GalleryType: {
       type: String,

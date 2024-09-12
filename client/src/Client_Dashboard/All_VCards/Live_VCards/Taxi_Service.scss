@@ -396,7 +396,7 @@
                 font-size: 1.4rem;
                 transition: all 0.4s ease-in-out;
                 position: relative;
-                animation: iconsAnime 3s infinite linear;
+                animation: social_iconsAnimes 3s infinite linear;
                 &:hover {
                   filter: drop-shadow(0px 4px 5px rgba(255, 255, 255, 0.685));
                   scale: 1.1;
@@ -404,7 +404,7 @@
                   transition: all 0.4s ease-in-out;
                 }
 
-                @keyframes iconsAnime {
+                @keyframes social_iconsAnimes {
                   0% {
                     transform: translateY(0px);
                   }
@@ -412,7 +412,7 @@
                     transform: translateY(-5px);
                   }
                   100% {
-                    transform: translateY(-10px);
+                    transform: translateY(0px);
                   }
                 }
               }

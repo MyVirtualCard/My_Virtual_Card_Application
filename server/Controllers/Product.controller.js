@@ -53,9 +53,9 @@ export const PostProductData = async (req, res) => {
         ? req.files["ProductImage"][0].path
         : null;
       // If no error, proceed with saving the product
-      if (!ProductImage) {
-        return res.status(400).json({ message: "No file uploaded" });
-      }
+      // if (!ProductImage) {
+      //   return res.status(400).json({ message: "No file uploaded" });
+      // }
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
@@ -161,6 +161,9 @@ export const PostProductData = async (req, res) => {
           }
 
           if (checkCurrentPlan[0]?.amount === 599) {
+            const ProductImage = req.files["ProductImage"]
+            ? req.files["ProductImage"][0]?.path
+            : "";
             //Basic Image File limit checked:
             if (checkProductLength.length < 4) {
               // Create a new image instance and save to MongoDB
@@ -320,20 +323,7 @@ export const updateSpecificUserData = async (req, res) => {
         try {
           let { id } = req.params;
           let ProductSpecificData = await ProductModel.findByIdAndUpdate(id);
-          // let data = {
-          //   ProductImage: {
-          //     filename: req.file?.filename,
-          //     contentType: req.file?.mimetype,
-          //     imageBase64: req.file?.path,
-          //   },
-          //   URL_Alies: req.body.URL_Alies,
-          //   ProductName: req.body.ProductName,
-          //   ProductURL: req.body.ProductURL,
-          //   ProductType: req.body.ProductType,
-          //   ProductImageLink: req.body.ProductImageLink,
-          //   ProductPrice: req.body.ProductPrice,
-          //   ProductDescription: req.body.ProductDescription,
-          // };
+         
 
           if (!ProductSpecificData) {
             res.status(400).json({ message: "Data Not Found!" });
@@ -341,14 +331,16 @@ export const updateSpecificUserData = async (req, res) => {
             const ProductImage = req.files["ProductImage"]
               ? req.files["ProductImage"][0].path
               : null;
-            if (req.files) {
-              fs.unlink(ProductSpecificData.ProductImage, (err) => {
-                if (err) {
-                  console.error("Failed to delete the old image:", err);
+              if (ProductSpecificData.ProductType === "ImageUpload") {
+                if (req.files) {
+                  fs.unlink(ProductSpecificData.ProductImage, (err) => {
+                    if (err) {
+                      console.error("Failed to delete the old image:", err);
+                    }
+                  });
+                  ProductSpecificData.ProductImage = ProductImage; // Set new image path
                 }
-              });
-              ProductSpecificData.ProductImage = ProductImage; // Set new image path
-            }
+              };
             ProductSpecificData.URL_Alies = req.body.URL_Alies;
             ProductSpecificData.ProductName = req.body.ProductName;
             ProductSpecificData.ProductURL = req.body.ProductURL;
@@ -403,7 +395,6 @@ export const deleteSpecificUserAllData = async (req, res) => {
 export const deleteSpecificUserData = async (req, res) => {
   try {
     let { filename } = req.params;
-
     let deleteSpecificData = await ProductModel.findOneAndDelete(filename);
 
     if (!deleteSpecificData) {
@@ -415,16 +406,38 @@ export const deleteSpecificUserData = async (req, res) => {
         "Product_Image",
         filename
       );
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error("Failed to delete the old image:", err);
-        }
-      });
+    
+      if(deleteSpecificData.ProductType === 'ImageUpload'){
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
+      }
+
       res
         .status(201)
         .json({ message: "Product Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+export const deleteSpecificUserIdData = async (req, res) => {
+  try {
+    let { id } = req.params;
+
+    let deleteSpecificData = await ProductModel.findByIdAndDelete(id);
+
+    if (!deleteSpecificData) {
+      res.status(400).json({ message: "Data Not Found!" });
+    } else {
+      res
+        .status(201)
+        .json({ message: "Prouduct Deleted!", data: deleteSpecificData });
+    }
+  } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };

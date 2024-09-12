@@ -43,7 +43,7 @@ const Gallery = () => {
   let [GalleryPreview, setGalleryPreview] = useState(null);
   let [GalleryName, setGalleryName] = useState("");
   let [fullImageToggle, setFullImageToggle] = useState(false);
-
+  let [deleteParams, setDeleteParams] = useState();
   const [key, setKey] = useState(0);
 
   const reloadComponent = () => {
@@ -271,13 +271,17 @@ const Gallery = () => {
       setFormSubmitLoader(false);
     }
   }
-  async function handleGalleryDelete(id) {
-    let filename=id.split('/')[0].slice(22,150);
+  async function handleGalleryDelete(url,id) {
+    if (url != null) {
+     await  setDeleteParams(url.split("/")[0].slice(22, 250));
+    } else {
+      await setDeleteParams(id);
+    }
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
-      api
-        .delete(`/galleryDetail/deleteID/${filename}`, {
+     await api
+        .delete(`/galleryDetail/deleteID/${deleteParams}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -288,10 +292,12 @@ const Gallery = () => {
           setGalleryCount(--GalleryCount);
           setFormSubmitLoader(false);
           reloadComponent();
+          setDeleteParams(null)
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
+          setDeleteParams(null)
         });
     } catch (error) {
       console.log(error);
@@ -422,6 +428,7 @@ const Gallery = () => {
                 {AllGallery != undefined && AllGallery.length != 0 ? (
                   <>
                     {AllGallery.map((data, index) => {
+                      console.log(data.GalleryImage)
                       return (
                         <tr key={index}>
                           <td className="h-100 align-middle">{index + 1}</td>
@@ -441,9 +448,7 @@ const Gallery = () => {
                                   <img
                                     src={`${
                                       import.meta.env.VITE_APP_BACKEND_API_URL
-                                    }/${
-                                      data.GalleryImage
-                                    }`}
+                                    }/${data.GalleryImage}`}
                                     className="GalleryImage"
                                     alt="GalleryImage"
                                   />
@@ -501,7 +506,9 @@ const Gallery = () => {
                             <i
                               className="bx bx-trash-alt"
                               style={{ color: "red" }}
-                              onClick={() => handleGalleryDelete(data.GalleryImage)}
+                              onClick={() =>
+                                handleGalleryDelete(data.GalleryImage, data.id)
+                              }
                             ></i>
                           </td>
                         </tr>
@@ -710,23 +717,22 @@ const Gallery = () => {
                       Choose Your Image<sup>*</sup>
                     </label>
                     <label htmlFor="Image">
-                      {GalleryPreview == null ? 
-                      
-                      <img
-                      src={`${
-                        import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/${GalleryImage}`}
-                      className="GalleryImage"
-                      alt="GalleryImage"
-                    />
-                      : 
-                      <img
-                      src={GalleryPreview}
-                      className="GalleryImage"
-                      alt="GalleryImage"
-                    />
-                      }
-                   
+                      {GalleryPreview == null ? (
+                        <img
+                          src={`${
+                            import.meta.env.VITE_APP_BACKEND_API_URL
+                          }/${GalleryImage}`}
+                          className="GalleryImage"
+                          alt="GalleryImage"
+                        />
+                      ) : (
+                        <img
+                          src={GalleryPreview}
+                          className="GalleryImage"
+                          alt="GalleryImage"
+                        />
+                      )}
+
                       {/* <i className="bx bxs-edit-location"></i> */}
                     </label>
                     <p>

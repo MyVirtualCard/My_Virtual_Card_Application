@@ -17,10 +17,10 @@ export const PostManageContentData = async (req, res) => {
     };
           //Plan 2 and 3
           if (
-            checkFreePlan[0].PlanPrice === 0 ||
-            checkCurrentPlan[0].amount === 599 ||
-            checkCurrentPlan[0].amount === 899 ||
-            checkCurrentPlan[0].amount === 1299
+            checkFreePlan[0]?.PlanPrice === 0 ||
+            checkCurrentPlan[0]?.amount === 599 ||
+            checkCurrentPlan[0]?.amount === 899 ||
+            checkCurrentPlan[0]?.amount === 1299
           ) {
             //check images
             let checkPopupBannerLength = await ManageContentModel.find({

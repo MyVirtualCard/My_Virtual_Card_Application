@@ -20,7 +20,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 const VCard_URL_Form = () => {
   let navigate = useNavigate();
-  let { FormSubmitLoader, setFormSubmitLoader, userName, user } =
+  let { status,FormSubmitLoader, setFormSubmitLoader, userName, user } =
     useContext(Context);
 
   let [All_URL_Alies, setAll_URL_Alies] = useState([]);

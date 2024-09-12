@@ -147,6 +147,9 @@ export const PostGalleryData = async (req, res) => {
             }
           }
           if (checkCurrentPlan[0]?.amount === 599) {
+            const GalleryImage = req.files["GalleryImage"]
+            ? req.files["GalleryImage"][0]?.path
+            : "";
             //Basic Image File limit checked:
             if (checkCurrentImages.length < 4) {
               // Create a new image instance and save to MongoDB
@@ -279,9 +282,9 @@ export const updateSpecificUserData = async (req, res) => {
         ? req.files["GalleryImage"][0].path
         : null;
       // If no error, proceed with saving the product
-      if (!GalleryImage) {
-        return res.status(400).json({ message: "No file uploaded" });
-      };
+      // if (!GalleryImage) {
+      //   return res.status(400).json({ message: "No file uploaded" });
+      // };
 
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
@@ -302,17 +305,7 @@ export const updateSpecificUserData = async (req, res) => {
         try {
           let { id } = req.params;
           let GallerySpecificData = await GalleryModel.findByIdAndUpdate(id);
-          // let data = {
-          //   user: req.user.userName,
-          //   URL_Alies: req.body.URL_Alies,
-          //   GalleryImageURL: req.body.GalleryImageURL,
-          //   GalleryType: req.body.GalleryType,
-          //   GalleryImage: {
-          //     filename: req.file?.filename,
-          //     contentType: req.file?.mimetype,
-          //     imageBase64: req.file?.path,
-          //   },
-          // };
+       
 
           if (!GallerySpecificData) {
             res.status(400).json({ message: "Data Not Found!" });
@@ -320,14 +313,16 @@ export const updateSpecificUserData = async (req, res) => {
             const GalleryImage = req.files["GalleryImage"]
               ? req.files["GalleryImage"][0].path
               : null;
-            if (req.files) {
-              fs.unlink(GallerySpecificData.GalleryImage, (err) => {
-                if (err) {
-                  console.error("Failed to delete the old image:", err);
+              if (GallerySpecificData.GalleryType === "ImageUpload") {
+                if (req.files) {
+                  fs.unlink(GallerySpecificData.GalleryImage, (err) => {
+                    if (err) {
+                      console.error("Failed to delete the old image:", err);
+                    }
+                  });
+                  GallerySpecificData.GalleryImage = GalleryImage; // Set new image path
                 }
-              });
-              GallerySpecificData.GalleryImage = GalleryImage; // Set new image path
-            }
+              };
             GallerySpecificData.URL_Alies = req.body.URL_Alies;
             GallerySpecificData.GalleryImageURL = req.body.GalleryImageURL;
             GallerySpecificData.GalleryType = req.body.GalleryType;
@@ -378,9 +373,9 @@ export const deleteSpecificUserAllData = async (req, res) => {
 };
 // DELETE method to delete a file
 export const deleteSpecificFileData=async (req, res) => {
-  const filename = req.params.filename;
+  const filename = req.params;
   const filePath = path.join(__dirname, 'uploads', 'Gallery_Image', filename);
-console.log(filePath);
+
   // Check if the file exists
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {
@@ -414,17 +409,38 @@ export const deleteSpecificUserData = async (req, res) => {
         "Gallery_Image",
         filename
       );
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error("Failed to delete the old image:", err);
-        }
-      });
+      if(deleteSpecificData.GalleryType === 'ImageUpload'){
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
+      }
       res
         .status(201)
         .json({ message: "Image Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     console.log(error)
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const deleteSpecificUserIdData = async (req, res) => {
+  try {
+    let { id } = req.params;
+
+    let deleteSpecificData = await GalleryModel.findByIdAndDelete(id);
+
+    if (!deleteSpecificData) {
+      res.status(400).json({ message: "Data Not Found!" });
+    } else {
+      res
+        .status(201)
+        .json({ message: "Image Deleted!", data: deleteSpecificData });
+    }
+  } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };

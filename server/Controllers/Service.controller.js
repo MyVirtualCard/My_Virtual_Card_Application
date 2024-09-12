@@ -1,7 +1,7 @@
 import ServiceModel from "../Model/Services.model.js";
 import multer from "multer";
 import currentPlan from "../Model/Plan.model.js";
-import fs from 'fs'
+import fs from "fs";
 import path from "path";
 import axios from "axios";
 import Payment from "../Model/Payment.model.js";
@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 // Create __dirname manually in ES module
 const __filename = fileURLToPath(import.meta.url);
 
-const __dirname = path.dirname('server');
+const __dirname = path.dirname("server");
 
 import { ServiceUpload } from "../Multer/Service_Multer.js";
 //Read or get all user basicDetail data  from database:
@@ -61,9 +61,9 @@ export const PostServiceData = async (req, res) => {
         ? req.files["ServiceImage"][0].path
         : null;
       // If no error, proceed with saving the product
-      if (!ServiceImage) {
-        return res.status(400).json({ message: "No file uploaded" });
-      }
+      // if (!ServiceImage || !req.body.ServiceAddress) {
+      //   return res.status(400).json({ message: "No file uploaded" });
+      // };
       let checkCurrentPlan = await Payment.find({
         user: req.user.userName,
       });
@@ -175,8 +175,8 @@ export const PostServiceData = async (req, res) => {
           if (checkCurrentPlan[0]?.amount === 599) {
             if (checkServiceLength.length < 4) {
               const ServiceImage = req.files["ServiceImage"]
-                ? req.files["ServiceImage"][0].path
-                : null;
+                ? req.files["ServiceImage"][0]?.path
+                : "";
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -366,16 +366,20 @@ export const updateSpecificUserData = async (req, res) => {
             res.status(400).json({ message: "Data Not Found!" });
           } else {
             const ServiceImage = req.files["ServiceImage"]
-              ? req.files["ServiceImage"][0].path
-              : null;
-            if (req.files) {
-              fs.unlink(ServiceSpecificData.ServiceImage, (err) => {
-                if (err) {
-                  console.error("Failed to delete the old image:", err);
-                }
-              });
-              ServiceSpecificData.ServiceImage = ServiceImage; // Set new image path
-            }
+              ? req.files["ServiceImage"][0]?.path
+              : '';
+          
+            if (ServiceSpecificData.ServiceType === "ImageUpload") {
+              if (req.files) {
+                fs.unlink(ServiceSpecificData.ServiceImage, (err) => {
+                  if (err) {
+                    console.error("Failed to delete the old image:", err);
+                  }
+                });
+                ServiceSpecificData.ServiceImage = ServiceImage; // Set new image path
+              }
+            };
+
             ServiceSpecificData.URL_Alies = req.body.URL_Alies;
             ServiceSpecificData.ServiceName = req.body.ServiceName;
             ServiceSpecificData.ServiceURL = req.body.ServiceURL;
@@ -437,19 +441,49 @@ export const deleteSpecificUserData = async (req, res) => {
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      const filePath = path.join(__dirname, 'uploads', 'Service_Image', filename);
-      console.log(filePath)
+      const filePath = path.join(
+        __dirname,
+        "uploads",
+        "Service_Image",
+        filename
+      );
+
+      if(deleteSpecificData.ServiceType === 'ImageUpload'){
         fs.unlink(filePath, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
           }
         });
+      }
+
+
       res
         .status(201)
         .json({ message: "Service Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
+//Delete Spcific user  Document in Basic Detail:
+
+export const deleteSpecificUserIdData = async (req, res) => {
+  try {
+    let { id } = req.params;
+
+    let deleteSpecificData = await ServiceModel.findByIdAndDelete(id);
+
+    if (!deleteSpecificData) {
+      res.status(400).json({ message: "Data Not Found!" });
+    } else {
+      res
+        .status(201)
+        .json({ message: "Service Deleted!", data: deleteSpecificData });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+

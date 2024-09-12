@@ -4,7 +4,7 @@ import { GetServiceData, PostServiceData,
     getSpecificIdData,
     updateSpecificUserData,
     deleteSpecificUserAllData,
-    deleteSpecificUserData } from '../Controllers/Service.controller.js';
+    deleteSpecificUserData,deleteSpecificUserIdData } from '../Controllers/Service.controller.js';
 import { verifyToken } from '../Middleware/verifyToken.js';
 import { ServiceUpload } from '../Multer/Service_Multer.js';
 
@@ -25,6 +25,7 @@ router.put("/updateID/:id", verifyToken,updateSpecificUserData);
 router.delete("/:URL_Alies", verifyToken, deleteSpecificUserAllData);
 //Delete Specific user document Data in Basic Detail:
 router.delete("/deleteID/:filename", verifyToken, deleteSpecificUserData);
-
+//Delete Specific user document Data in Basic Detail:
+router.delete("/deleteID/:id", verifyToken, deleteSpecificUserIdData);
 
 export default router;

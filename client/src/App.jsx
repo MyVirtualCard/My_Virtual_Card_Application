@@ -41,6 +41,7 @@ import Business_Consultant_Demo from "./Client_Dashboard/All_VCards/Static_VCard
 import Real_Estate_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Real_Estate_Demo.jsx";
 import Beauty_Parlor_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Beauty_Parlor_Demo.jsx";
 import Boutique_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Boutique_Demo.jsx";
+import Taxi_Service from "./Client_Dashboard/All_VCards/Live_VCards/Taxi_Service.jsx";
 //Import All component:
 
 const App = () => {
@@ -123,7 +124,7 @@ const App = () => {
     }
   }, [navigate]);
 
-  console.log(user);
+
   return (
     <>
       <div className="App_container">
@@ -255,6 +256,21 @@ const App = () => {
               {/* Live VCards */}
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
+              ) : (
+                ""
+              )}
+                 {URL_Alies == URL_Alies && currentTemplate === 2 ? (
+                <Route path={`/:URL_Alies`} element={<Taxi_Service />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 3 ? (
+                <Route path={`/:URL_Alies`} element={<Fashion_Designer />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 4 ? (
+                <Route path={`/:URL_Alies`} element={<Manager />} />
               ) : (
                 ""
               )}

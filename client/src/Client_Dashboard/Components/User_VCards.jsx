@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Context from "../../Context/GlobalContext";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -17,7 +17,6 @@ import { useNavigate } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 const User_VCards = () => {
   let navigate = useNavigate();
-
   const handleCopyURL = () => {
     setCopied(true);
     toast.success("Link Copied!");
@@ -29,6 +28,7 @@ const User_VCards = () => {
     setCurrentTemplate,
     setShowForm,
     currentPlan,
+    activePlan, setPlanActive,
     userName,
     user,
     setUser,
@@ -192,7 +192,6 @@ const User_VCards = () => {
   useEffect(() => {
     fetchCurrentManageContent();
   }, []);
-  console.log(URL_Alies)
   return (
     <>
       <div className="VCards_container">

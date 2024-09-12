@@ -85,7 +85,7 @@ let Basic_Plans = [
     batches: basic,
     Duration: "Yearly",
     PlanPrice: 599,
-    VCardCount: "03",
+    VCardCount: "08",
     Access: [
       {
         id: 1,
@@ -400,7 +400,7 @@ const Plan = () => {
     if (getCurrentPlan == currentPlan) {
       // toast.error("Select Your Plan!");
     } else {
-      toast.success(`${getCurrentPlan} Plan Selected!`);
+      // toast.success(`${getCurrentPlan} Plan Selected!`);
     }
   }
   const api = axios.create({
@@ -806,7 +806,7 @@ const Plan = () => {
             </div>
 
             {/* plan1 */}
-            {Free_Plans.map((data, index) => {
+            {/* {Free_Plans.map((data, index) => {
             return (
               <div
                 key={index}
@@ -876,7 +876,7 @@ const Plan = () => {
        
               </div>
             );
-          })}
+          })} */}
             {Basic_Plans.map((data, index) => {
               return (
                 <div
@@ -938,7 +938,7 @@ const Plan = () => {
                 </div>
               );
             })}
-            {Standard_Plans.map((data, index) => {
+            {/* {Standard_Plans.map((data, index) => {
               return (
                 <div
                   key={index}
@@ -998,16 +998,13 @@ const Plan = () => {
                   </div>
                 </div>
               );
-            })}
-            {EnterPrice_Plans.map((data, index) => {
+            })} */}
+            {/* {EnterPrice_Plans.map((data, index) => {
               return (
                 <div
                   key={index}
                   className="plan"
-                  // onClick={() => {
-                  //   handle_Plan_Selection(data.PlanName),
-                  //     setPlanPrice(data.PlanPrice);
-                  // }}
+               
                   id={currentPlan === data.PlanName ? "active" : ""}
                 >
                   <div
@@ -1018,7 +1015,7 @@ const Plan = () => {
                     <i className="bx bx-list-ul"></i>
                   </div>
                   <div className="batches">
-                    {/* <img src={data.batches} alt="batch" /> */}
+                
                     <i className="bx bxs-purchase-tag bx-tada"></i>
                   </div>
                   <div className="plan_title">
@@ -1060,7 +1057,7 @@ const Plan = () => {
                   </div>
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
       </div>

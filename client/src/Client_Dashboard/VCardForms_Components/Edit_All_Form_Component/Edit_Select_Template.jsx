@@ -30,6 +30,7 @@ let BasicTemplate = [
   },
   {
     id: 2,
+
     image: Taxi_Service,
     TemplateName: "Taxi Service",
   },
@@ -37,6 +38,31 @@ let BasicTemplate = [
     id: 3,
     image: Fashion_Desinger,
     TemplateName: "Fashion Designer",
+  },
+  {
+    id: 4,
+    image: Manager,
+    TemplateName: "Manager",
+  },
+  {
+    id: 5,
+    image: Bussiness,
+    TemplateName: "Bussiness Consultant",
+  },
+  {
+    id: 6,
+    image: RealEstate,
+    TemplateName: "Real Estate",
+  },
+  {
+    id: 7,
+    image: BeautyParlor,
+    TemplateName: "Beauty Parlor",
+  },
+  {
+    id: 8,
+    image: BoutiqueShop,
+    TemplateName: "Boutique Shop's",
   },
 ];
 let StandardTemplate = [
@@ -221,45 +247,7 @@ const Select_Template = () => {
   useEffect(() => {
     fetchCurrentTemplate();
   }, []);
-  async function handleManageContentSubmit(e) {
-    // e.preventDefault();
-    setFormSubmitLoader(true);
-    let data = {
-      URL_Alies: URL_Alies,
-      BannerActive: BannerToggle,
-      BussinessHour: BussinessHourToggle,
-      GoogleMap: GoogleMapToggle,
-      Appoinment: AppoinmentToggle,
-      Service: ServiceToggle,
-      Product: ProductToggle,
-      Gallery: GalleryToggle,
-      Testimonial: TestimonialToggle,
-      QRCode: QRCodeToggle,
-      FeedbackForm: FeedbackFormToggle,
-      InquiryForm: InquiryFormToggle,
-      ContactDetails: ContactDetailsToggle,
-      SocialMedia: SocialMediaToggle,
-    };
-    try {
-      await api
-        .post(`/manageContent/${URL_Alies}`, data, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .then((res) => {
-          setFormSubmitLoader(false);
-        })
-        .catch((error) => {
-          setFormSubmitLoader(false);
-          // toast.error(error.response.data.message);
-        });
-    } catch (error) {
-      console.log(error);
-      setFormSubmitLoader(false);
-    }
-  }
+
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
@@ -283,7 +271,6 @@ const Select_Template = () => {
         .then((res) => {
           toast.success(res.data.message);
           setFormSubmitLoader(false);
-           handleManageContentSubmit();
           setTimeout(() => {
             setShowForm("Contact Details");
           }, 1000);

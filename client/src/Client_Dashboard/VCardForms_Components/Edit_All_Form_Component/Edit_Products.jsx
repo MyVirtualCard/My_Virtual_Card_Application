@@ -47,6 +47,7 @@ const Products = () => {
   let [ProductType, setProductType] = useState();
   let [ProductImageLink, setProductImageLink] = useState();
   let [ProductPrice, setProductPrice] = useState();
+  let[deleteParams,setDeleteParams]=useState();
   const [key, setKey] = useState(0);
 
   const reloadComponent = () => {
@@ -306,14 +307,22 @@ const Products = () => {
       console.log(error);
     }
   }
-  async function handleProductDelete(id) {
-    let filename=id.split('/')[0].slice(22,150);
+
+  async function handleProductDelete(url,id) {
+
+    if(url !=null){
+      setDeleteParams(url.split('/')[0].slice(22,150));
+    }
+    else{
+      setDeleteParams(id)
+    }
+    
 
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
-      api
-        .delete(`/productDetail/deleteID/${filename}`, {
+      await api
+        .delete(`/productDetail/deleteID/${deleteParams}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
@@ -325,10 +334,12 @@ const Products = () => {
           toast.success(res.data.message);
           reloadComponent();
           setFormSubmitLoader(false);
+          setDeleteParams(null)
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
+          setDeleteParams(null)
         });
     } catch (error) {
       console.log(error);
@@ -604,7 +615,7 @@ const Products = () => {
                               <i
                                 className="bx bx-trash-alt"
                                 style={{ color: "red" }}
-                                onClick={() => handleProductDelete(data.ProductImage)}
+                                onClick={() => handleProductDelete(data.ProductImage,data._id)}
                               ></i>
                             </td>
                           </tr>

@@ -46,8 +46,8 @@ const Services = () => {
   let [ServiceType, setServiceType] = useState();
   let [ServiceIcon, setServiceIcon] = useState();
   let [ServiceAddress, setServiceAddress] = useState();
+  let[deleteParams,setDeleteParams]=useState();
 
-  const [filename, setFilename] = useState("Choose File");
   const [key, setKey] = useState(0);
 
   var reloadComponent = () => {
@@ -312,15 +312,20 @@ const Services = () => {
       setFormSubmitLoader(false);
     }
   }
-  async function handleServiceDelete(id) {
+  async function handleServiceDelete(url,id) {
+if(url !=null){
+  setDeleteParams(url.split('/')[0].slice(22,150));
+}
+else{
+  setDeleteParams(id)
+}
 
-   let filename=id.split('/')[0].slice(22,150);
-   console.log(filename)
+
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
       await api
-        .delete(`/serviceDetail/deleteID/${filename}`, {
+        .delete(`/serviceDetail/deleteID/${deleteParams}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
@@ -332,10 +337,12 @@ const Services = () => {
           setServiceCount(--ServiceCount);
           reloadComponent();
           setFormSubmitLoader(false);
+          setDeleteParams(null)
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
+          setDeleteParams(null)
         });
     } catch (error) {
       console.log(error);
@@ -620,7 +627,7 @@ const Services = () => {
                               <i
                                 className="bx bx-trash-alt"
                                 style={{ color: "red" }}
-                                onClick={() => handleServiceDelete(data.ServiceImage)}
+                                onClick={() => handleServiceDelete(data.ServiceImage ,data.id)}
                               ></i>
                             </td>
                           </tr>
