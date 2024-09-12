@@ -1,11 +1,18 @@
 import Vcard_URL from "../Model/Vcard_URL.model.js";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import multer from "multer";
+import axios from "axios";
 import { fileURLToPath } from "url";
-
 // Create __dirname manually in ES module
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
+const __dirname = path.dirname("server");
+import { BasicUpload } from "../Multer/Basic_Multer.js";
+const uploadFields = BasicUpload.fields([
+  { name: "Profile", maxCount: 1 }, // One profile image
+  { name: "Banner", maxCount: 1 },
+]);
 //DiskStorage:
 //All user URL Data :
 export const getAllVCardURLData = async (req, res) => {
@@ -35,49 +42,71 @@ export const getVCardURLData = async (req, res) => {
 };
 //Post Async allback function :
 export const postVCardURLData = async (req, res) => {
-  if (!req.body.URL_Alies || !req.body.VCardName || !req.body.Description) {
-    return res.status(401).json({ message: "All * fields Required" });
-  }
+  {
+    uploadFields(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors like file size limit
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ message: "File too large. Maximum size allowed is 3MB." });
+        }
+        return res
+          .status(500)
+          .json({ message: `Multer error: ${err.message}` });
+      } else if (err) {
+        // Handle other errors
+        return res.status(500).json({ message: `Error: ${err.message}` });
+      }
+      if (!req.body.URL_Alies || !req.body.VCardName || !req.body.Description) {
+        return res.status(401).json({ message: "All * fields Required" });
+      }
 
-  let checkVCardURLDetail = await Vcard_URL.findOne({
-    URL_Alies: req.body.URL_Alies,
-  });
-
-  if (req.body.URL_Alies.length < 5) {
-    return res
-      .status(400)
-      .json({ message: "URL_Alies Minimum 5 character Required!" });
-  }
-  if (checkVCardURLDetail) {
-    return res.status(400).json({ message: "This VCard URL already alies!" });
-  } else {
-    //Basic Image File limit checked:
-    // const Profile = req.files["Profile"] ? req.files["Profile"][0].path : null;
-    // const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
-
-    let data = {
-      user: req.user.userName,
-      URL_Alies: req.body.URL_Alies,
-      VCardName: req.body.VCardName,
-      Description: req.body.Description,
-      Profile: req.body.Profile,
-      Banner: req.body.Banner,
-      ProfileType: req.body.ProfileType,
-      BannerType: req.body.BannerType,
-      ProfileAddress: req.body.ProfileAddress,
-      BannerAddress: req.body.BannerAddress,
-    };
-    let createDatas = new Vcard_URL(data);
-    try {
-      await createDatas.save();
-      return res.status(201).json({
-        message: "New VCard Created!",
-        length: createDatas.length,
-        data: createDatas,
+      let checkVCardURLDetail = await Vcard_URL.findOne({
+        URL_Alies: req.body.URL_Alies,
       });
-    } catch (error) {
-      return res.status(401).json({ message: error.message });
-    }
+
+      if (req.body.URL_Alies.length < 5) {
+        return res
+          .status(400)
+          .json({ message: "URL_Alies Minimum 5 character Required!" });
+      }
+      if (checkVCardURLDetail) {
+        return res
+          .status(400)
+          .json({ message: "This VCard URL already alies!" });
+      } else {
+        //Basic Image File limit checked:
+        const Profile = req.files["Profile"]
+          ? req.files["Profile"][0].path
+          : '';
+        const Banner = req.files["Banner"] ? req.files["Banner"][0].path : '';
+
+        let data = {
+          user: req.user.userName,
+          URL_Alies: req.body.URL_Alies,
+          VCardName: req.body.VCardName,
+          Description: req.body.Description,
+          Profile: Profile,
+          Banner: Banner,
+          ProfileType: req.body.ProfileType,
+          BannerType: req.body.BannerType,
+          ProfileAddress: req.body.ProfileAddress,
+          BannerAddress: req.body.BannerAddress,
+        };
+        let createDatas = new Vcard_URL(data);
+        try {
+          await createDatas.save();
+          return res.status(201).json({
+            message: "New VCard Created!",
+            length: createDatas.length,
+            data: createDatas,
+          });
+        } catch (error) {
+          return res.status(401).json({ message: error.message });
+        }
+      }
+    });
   }
 };
 
@@ -125,96 +154,134 @@ export const readSpecificIdUserData = async (req, res) => {
 
 export const updateSpecificUserData = async (req, res) => {
   try {
-    let { URL_Alies } = req.params;
-    let updateSpecificData = await Vcard_URL.findOneAndUpdate(URL_Alies);
+    {
+      uploadFields(req, res, async (err) => {
+        if (err instanceof multer.MulterError) {
+          // Handle Multer-specific errors like file size limit
+          if (err.code === "LIMIT_FILE_SIZE") {
+            return res
+              .status(400)
+              .json({
+                message: "File too large. Maximum size allowed is 3MB.",
+              });
+          }
+          return res
+            .status(500)
+            .json({ message: `Multer error: ${err.message}` });
+        } else if (err) {
+          // Handle other errors
+          return res.status(500).json({ message: `Error: ${err.message}` });
+        }
+      });
+      let { URL_Alies } = req.params;
+      let updateSpecificData = await Vcard_URL.findOneAndUpdate(URL_Alies);
 
-    if (!updateSpecificData) {
-      res.status(400).json({ message: "Data Not Found!" });
-    } else {
-      //Basic Image File limit checked:
-      // const Profile = req.files["Profile"]
-      //   ? req.files["Profile"][0].path
-      //   : null;
-      // const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
+      if (!updateSpecificData) {
+        res.status(400).json({ message: "Data Not Found!" });
+      } else {
+        //Basic Image File limit checked:
+        const Profile = req.files["Profile"]
+          ? req.files["Profile"][0].path
+          : null;
+        const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
 
-      // if (updateSpecificData.Profile !=null) {
-      //   fs.unlink(updateSpecificData.Profile, (err) => {
-      //     if (err) {
-      //       console.error("Failed to delete the old image:", err);
-      //     }
-      //   });
-      //   updateSpecificData.Profile = Profile; // Set new image path
-      // }
-      // Check if a new image is uploaded
-      // if (Profile) {
-      //   // Delete the old image from the file system
-      //   const oldImagePath = path.join(
-      //     __dirname,
-      //     "uploads",
-      //     "Basic_Image",
-      //     updateSpecificData.Profile
-      //   );
-      //   if (fs.existsSync(oldImagePath)) {
-      //     fs.unlink(oldImagePath); // Delete the old image
-      //   }
+        // if (updateSpecificData.Profile !=null) {
+        //   fs.unlink(updateSpecificData.Profile, (err) => {
+        //     if (err) {
+        //       console.error("Failed to delete the old image:", err);
+        //     }
+        //   });
+        //   updateSpecificData.Profile = Profile; // Set new image path
+        // }
+        // Check if a new image is uploaded
+        // if (Profile) {
+        //   // Delete the old image from the file system
+        //   const oldImagePath = path.join(
+        //     __dirname,
+        //     "uploads",
+        //     "Basic_Image",
+        //     updateSpecificData.Profile
+        //   );
+        //   if (fs.existsSync(oldImagePath)) {
+        //     fs.unlink(oldImagePath); // Delete the old image
+        //   }
 
-      //   // Update the image path in the product
-      //   updateSpecificData.Profile = Profile;
-      // };
-      // Check if a new image is uploaded
-      // if (Profile) {
-      //   // If product already has an image, delete the old one
-      //   if (updateSpecificData.Profile) {
-      //     const oldImagePath = path.join(
-      //       __dirname,
-      //       "uploads",
-      //       "Basic_Image",
-      //       updateSpecificData.Profile
-      //     );
-      //     if (fs.existsSync(oldImagePath)) {
-      //       fs.unlinkSync(oldImagePath); // Delete the old image
-      //     }
-      //   }
+        //   // Update the image path in the product
+        //   updateSpecificData.Profile = Profile;
+        // };
+        // Check if a new image is uploaded
+        // if (Profile) {
+        //   // If product already has an image, delete the old one
+        //   if (updateSpecificData.Profile) {
+        //     const oldImagePath = path.join(
+        //       __dirname,
+        //       "uploads",
+        //       "Basic_Image",
+        //       updateSpecificData.Profile
+        //     );
+        //     if (fs.existsSync(oldImagePath)) {
+        //       fs.unlinkSync(oldImagePath); // Delete the old image
+        //     }
+        //   }
 
-      //   // Update with the new image path
-      //   updateSpecificData.Profile = Profile;
-      // }
-      // if (Banner) {
-      //   fs.unlink(updateSpecificData.Banner, (err) => {
-      //     if (err) {
-      //       console.error("Failed to delete the old image:", err);
-      //     }
-      //   });
-      //   updateSpecificData.Banner = Banner; // Set new image path
-      // };
-      // if (Banner) {
-      //   // Delete the old image from the file system
-      //   const oldImagePath = path.join(
-      //     __dirname,
-      //     "uploads",
-      //     "Basic_Image",
-      //     updateSpecificData.Banner
-      //   );
-      //   if (fs.existsSync(oldImagePath)) {
-      //     fs.unlink(oldImagePath); // Delete the old image
-      //   }
+        // //   // Update with the new image path
+        //   updateSpecificData.Profile = Profile;
+        // }
+        // if (Banner) {
+        //   fs.unlink(updateSpecificData.Banner, (err) => {
+        //     if (err) {
+        //       console.error("Failed to delete the old image:", err);
+        //     }
+        //   });
+        //   updateSpecificData.Banner = Banner; // Set new image path
+        // };
+        // if (Banner) {
+        //   // Delete the old image from the file system
+        //   const oldImagePath = path.join(
+        //     __dirname,
+        //     "uploads",
+        //     "Basic_Image",
+        //     updateSpecificData.Banner
+        //   );
+        //   if (fs.existsSync(oldImagePath)) {
+        //     fs.unlink(oldImagePath); // Delete the old image
+        //   }
 
-      //   // Update the image path in the product
-      //   updateSpecificData.Banner = Banner;
-      // }
-      updateSpecificData.Banner = req.body.Banner;
-      updateSpecificData.Profile = req.body.Profile;
-      updateSpecificData.URL_Alies = req.body.URL_Alies;
-      updateSpecificData.VCardName = req.body.VCardName;
-      updateSpecificData.Description = req.body.Description;
-      updateSpecificData.ProfileType = req.body.ProfileType;
-      updateSpecificData.BannerType = req.body.BannerType;
-      updateSpecificData.ProfileAddress = req.body.ProfileAddress;
-      updateSpecificData.BannerAddress = req.body.BannerAddress;
-      let updateURLFormData = await updateSpecificData.save();
-      res
-        .status(201)
-        .json({ message: "Data Updated!", data: updateURLFormData });
+        //   // Update the image path in the product
+        //   updateSpecificData.Banner = Banner;
+        // }
+        if (updateSpecificData.ProfileType === "ImageUpload") {
+          if (req.files) {
+            fs.unlink(updateSpecificData.Profile, (err) => {
+              if (err) {
+                console.error("Failed to delete the old image:", err);
+              }
+            });
+            updateSpecificData.Profile = Profile; // Set new image path
+          }
+        }
+        if (updateSpecificData.BannerType === "ImageUpload") {
+          if (req.files) {
+            fs.unlink(updateSpecificData.Banner, (err) => {
+              if (err) {
+                console.error("Failed to delete the old image:", err);
+              }
+            });
+            updateSpecificData.Banner = Banner; // Set new image path
+          }
+        }
+        updateSpecificData.URL_Alies = req.body.URL_Alies;
+        updateSpecificData.VCardName = req.body.VCardName;
+        updateSpecificData.Description = req.body.Description;
+        updateSpecificData.ProfileType = req.body.ProfileType;
+        updateSpecificData.BannerType = req.body.BannerType;
+        updateSpecificData.ProfileAddress = req.body.ProfileAddress;
+        updateSpecificData.BannerAddress = req.body.BannerAddress;
+        let updateURLFormData = await updateSpecificData.save();
+        res
+          .status(201)
+          .json({ message: "Data Updated!", data: updateURLFormData });
+      }
     }
   } catch (error) {
     console.log(error);
@@ -238,7 +305,7 @@ export const updateSpecificUserData_Id = async (req, res) => {
         : null;
       const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
       // If a new image is uploaded, delete the old image
-      if (req.file) {
+      if (req.files) {
         fs.unlink(updateSpecificData.Profile, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
@@ -246,7 +313,7 @@ export const updateSpecificUserData_Id = async (req, res) => {
         });
         updateSpecificData.Profile = Profile; // Set new image path
       }
-      if (req.file) {
+      if (req.files) {
         fs.unlink(updateSpecificData.Banner, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
@@ -298,6 +365,48 @@ export const deleteSpecificUserAllData = async (req, res) => {
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
+    let { filename } = req.params;
+
+    let deleteSpecificData = await Vcard_URL.findOneAndDelete(filename);
+
+    if (!deleteSpecificData) {
+      res.status(400).json({ message: "Data Not Found!" });
+    } else {
+      const filePath = path.join(
+        __dirname,
+        "uploads",
+        "Basic_Image",
+        filename
+      );
+
+      if(deleteSpecificData.BannerType === 'ImageUpload'){
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
+      };
+      if(deleteSpecificData.ProfileType === 'ImageUpload'){
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
+      };
+
+
+      res
+        .status(201)
+        .json({ message: "Service Deleted!", data: deleteSpecificData });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const deleteSpecificUserIdData = async (req, res) => {
+  try {
     let { id } = req.params;
 
     let deleteSpecificData = await Vcard_URL.findByIdAndDelete(id);
@@ -310,6 +419,7 @@ export const deleteSpecificUserData = async (req, res) => {
         .json({ message: "Data Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };

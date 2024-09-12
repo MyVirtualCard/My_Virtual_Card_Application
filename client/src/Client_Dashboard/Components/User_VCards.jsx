@@ -332,7 +332,11 @@ const User_VCards = () => {
                             <>
                               {data.Profile ? (
                                 <img
-                                  src={data.Profile}
+                                src={`${
+                                  import.meta.env.VITE_APP_BACKEND_API_URL
+                                }/${
+                                  data.Profile
+                                }`}
                                   alt="profile"
                                 />
                               ) : (

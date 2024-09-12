@@ -640,7 +640,7 @@ color: #ffffff;
           box-sizing: border-box; /* Ensure proper sizing */
           border-spacing: 20px; /* Increase gap between dashes */
           width: 100%;
-          height: 180px;
+          height: 250px;
           border-radius: 1rem;
           position: relative;
           span {
@@ -678,14 +678,14 @@ color: #ffffff;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
           }
-          .service_detail {
+          .fashion_service_detail {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             height: 100%;
-           
+           padding: 5px;
             overflow: scroll;
 
             .service_title {
@@ -695,7 +695,7 @@ color: #ffffff;
               justify-content: center;
 
               h4 {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 font-weight: 500;
                 color: #f0fc86;
               }
@@ -707,7 +707,7 @@ color: #ffffff;
                 width: 100%;
                 font-size: 0.8rem;
                 font-weight: 400;
-                text-align: center;
+                text-align: start;
                 padding: 5px;
                 color: #fff;
               }
@@ -1134,7 +1134,7 @@ color: #ffffff;
           color: #ffde82;
         }
       }
-      .product_list_container {
+      .fashion_product_list_container {
         margin: 1rem auto;
         width: 100%;
         // display: grid;
@@ -1149,13 +1149,13 @@ color: #ffffff;
           display: flex;
           flex-direction: column-reverse;
           align-items: center;
-          justify-content: space-between;
+          justify-content: flex-start;
 
           background-color: #d6aff0b6;
           border-radius: 0.5rem;
           overflow: scroll;
      
-          // animation: productAnimeExpand 1s linear;
+          animation:none !important;
           transition: all 1s linear;
           .product_image {
             width: 100%;
@@ -1192,17 +1192,17 @@ color: #ffffff;
 
             h4 {
               width: 100%;
-              font-size: 1rem;
+              font-size: 0.9rem;
               font-weight: 550;
               letter-spacing: 1px;
               color: #ebf592;
-              text-align: center;
+              text-align: start;
             }
             small {
               width: 100%;
               font-size: 0.8rem;
               display: flex;
-text-align: center;
+text-align: start;
             }
             .actions{
               width: 100%;
@@ -1246,23 +1246,16 @@ text-align: center;
           &::-webkit-scrollbar {
             display: none;
           }
-          @keyframes productAnimeExpand {
-            0% {
-              height: 150px;
-            }
-            50% {
-              height: 250px;
-            }
-            100% {
-              height: 250px;
-            }
+        
+         &:hover{
+          flex-direction: column;
+          .product_image{
+            display: none;
           }
-          // &:hover {
-          //   height: 320px;
-          //   max-height: 320px;
-          //   transition: height 1s linear;
-          //   // animation: productAnimeExpand 1s linear;
-          // }
+          .product_details{
+            height: 100%;
+          }
+         }
         }
       }
     }
@@ -2671,14 +2664,14 @@ color: #ffff;
       bottom: 0%;
       width: 100%;
       // margin-top: 3rem;
-      .footer_container {
+      .fashion_footer_container {
         width: 100%;
 
         min-height: 70px;
         height: 70px;
         position: relative;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
 
         justify-content: center;
         padding: 0px 0px;
@@ -2687,7 +2680,7 @@ color: #ffff;
         p {
           padding-top: 20px;
           font-size: 0.8rem;
-          color: #1f1f1f;
+          color: #ffffff;
           font-weight: 550;
 
           @media (max-width: 600px) {

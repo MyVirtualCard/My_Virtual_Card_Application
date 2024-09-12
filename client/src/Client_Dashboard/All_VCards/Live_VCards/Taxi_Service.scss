@@ -256,11 +256,12 @@
       z-index: 1;
       .route_image {
         position: absolute;
-        bottom: 0%;
-        right: -50%;
+        bottom: -30%;
+        right: -80%;
+        display: none;
 
         img {
-          width: 450px;
+          width: 550px;
           z-index: -1;
           opacity: 1;
         }
@@ -320,10 +321,10 @@
         }
 
         .user_data {
-          padding: 0px 0px 0px 10px;
+          padding: 5px;
           color: #fff;
           position: relative;
-          bottom: -15px;
+          bottom: -25px;
 
           h2 {
             font-size: 1.2rem;
@@ -337,6 +338,7 @@
             align-items: center;
             justify-content: flex-start;
             gap: 0rem;
+            padding: 5px 0px;
             // animation: professionAnime 15s infinite linear;
 
             img {
@@ -377,6 +379,7 @@
             justify-content: flex-start;
             gap: 1rem;
             width: 100%;
+            margin: 10px 0px;
             //  flex-wrap: wrap;
             // padding: 5px 0px;
 
@@ -732,15 +735,20 @@ color: #fff;
             height: 100px;
             overflow-y: scroll;
             padding: 5px;
-
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 6px;
+       
             .service_title {
               width: 100%;
               display: flex;
               align-items: center;
-              justify-content: center;
+              justify-content: flex-start;
 
               h4 {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 font-weight: 550;
                 color: #ffff;
               }
@@ -750,9 +758,9 @@ color: #fff;
 
               p {
                 width: 100%;
-                font-size: 0.7rem;
+                font-size: 0.8rem;
                 font-weight: 500;
-                text-align: center;
+                text-align: start;
                 padding: 0px 5px 0px 5px;
                 display: flex;
                 align-items: center;
@@ -1275,7 +1283,6 @@ color: #fff;
           background-color: #05746aef;
           border: 2px solid #0b9185;
           border-radius: 0.5rem;
-          overflow: scroll;
           margin: auto;
 
           .product_image {
@@ -1306,6 +1313,7 @@ color: #fff;
             align-items: flex-start;
             justify-content: flex-start;
             gap: 10px;
+            overflow-y: scroll;
 
             h4 {
               width: 100%;
@@ -1351,6 +1359,9 @@ color: #fff;
                 filter: drop-shadow(0px 4px 5px rgba(153, 153, 153, 0.3));
                 background-color: #10ad98;
               }
+            }
+            &::-webkit-scrollbar{
+              display: none;
             }
           }
           &::-webkit-scrollbar {
@@ -1430,7 +1441,7 @@ color: #fff;
           margin: auto;
           width: 100%;
           height: 100%;
-          background: linear-gradient(#046d64, #046d64);
+          background: linear-gradient(#034B45, #034B45);
 
           // display: none;
 
@@ -2903,9 +2914,11 @@ color: #ffff;
 
         min-height: 70px;
         height: 70px;
+        background-color: #fff;
+        
         position: relative;
         display: flex;
-        align-items: flex-end;
+        align-items:center;
 
         justify-content: center;
         padding: 0px 0px;
@@ -2914,7 +2927,7 @@ color: #ffff;
         p {
           padding-top: 20px;
           font-size: 0.8rem;
-          color: #ffffff;
+          color: #202020;
           font-weight: 550;
 
           @media (max-width: 600px) {

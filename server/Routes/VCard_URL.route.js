@@ -9,6 +9,7 @@ import {
   updateSpecificUserData,
   deleteSpecificUserAllData,
   deleteSpecificUserData,
+  deleteSpecificUserIdData
 } from "../Controllers/VCardURL.controller.js";
 import { verifyToken } from "../Middleware/verifyToken.js";
 import { upload } from "../Multer/Profile_Multer.js";
@@ -44,6 +45,7 @@ router.get("/specific/:id", verifyToken, readSpecificIdUserData);
 router.put("/update/:id", verifyToken, updateSpecificUserData_Id);
 
 //Delete Specific user document Data in Basic Detail:
-router.delete("/delete/:id", verifyToken, deleteSpecificUserData);
-
+router.delete("/delete/:filename", verifyToken, deleteSpecificUserData);
+//Delete Specific user document Data in Basic Detail:
+router.delete("/delete/:id", verifyToken, deleteSpecificUserIdData);
 export default router;

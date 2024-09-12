@@ -42,6 +42,11 @@ import Real_Estate_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Real_E
 import Beauty_Parlor_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Beauty_Parlor_Demo.jsx";
 import Boutique_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Boutique_Demo.jsx";
 import Taxi_Service from "./Client_Dashboard/All_VCards/Live_VCards/Taxi_Service.jsx";
+import Fashion_Designer from "./Client_Dashboard/All_VCards/Live_VCards/Fashion_Designer.jsx";
+import Manager from "./Client_Dashboard/All_VCards/Live_VCards/Manager.jsx";
+import Real_Estate from "./Client_Dashboard/All_VCards/Live_VCards/Real_Estate.jsx";
+import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parlor.jsx";
+import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
 //Import All component:
 
 const App = () => {
@@ -276,6 +281,21 @@ const App = () => {
               )}
               {URL_Alies == URL_Alies && currentTemplate === 5 ? (
                 <Route path={`/:URL_Alies`} element={<Business_Consultant />} />
+              ) : (
+                ""
+              )}
+               {URL_Alies == URL_Alies && currentTemplate === 6 ? (
+                <Route path={`/:URL_Alies`} element={<Real_Estate />} />
+              ) : (
+                ""
+              )}
+                    {URL_Alies == URL_Alies && currentTemplate === 7 ? (
+                <Route path={`/:URL_Alies`} element={<Beauty_Parlor />} />
+              ) : (
+                ""
+              )}
+                 {URL_Alies == URL_Alies && currentTemplate === 8 ? (
+                <Route path={`/:URL_Alies`} element={<Boutique />} />
               ) : (
                 ""
               )}

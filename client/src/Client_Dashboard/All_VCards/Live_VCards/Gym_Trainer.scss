@@ -569,6 +569,8 @@
           max-height: 200px;
           overflow-y: scroll;
           border-radius: 0.5rem;
+          color: #fff;
+          padding: 0px !important;
           span {
             font-size: 1.9rem;
             padding: 5px;
@@ -593,22 +595,23 @@
           }
 
           .service_detail {
-            padding: 10px 1rem 0px 1rem;
+            // padding: 10px 1rem 0px 1rem;
             width: 100%;
             overflow: scroll;
-
-            .service_title {
+            .gym_service_title {
               width: 100%;
 
               h4 {
                 font-size: 0.9rem;
                 font-weight: 550;
-                text-align: center;
+                text-align: start;
                 color: #AEAEAE;
               }
             }
             .service_summary {
+       
               width: 100%;
+              padding: 5px;
 
               p {
                 font-size: 0.8rem;
@@ -1105,7 +1108,7 @@
 
             h4 {
               width: 100%;
-              font-size: 0.8rem;
+              font-size: 0.7rem;
               font-weight: 550;
               letter-spacing: 1px;
           
@@ -1318,9 +1321,10 @@
             }
           }
 
-          img {
+          img { 
             width: 200px;
-            height: 150px;
+            height: 150px !important;
+            max-height: 150px !important;
             min-width: 200px;
             object-fit: cover;
             cursor: pointer;
@@ -2601,15 +2605,20 @@
 
         min-height: 70px;
         height: 70px;
+        background-color: #4c4c4c;
         position: relative;
         display: flex;
-        align-items: flex-end;
+        align-items:center;
 
         justify-content: center;
         padding: 0px 0px;
         z-index: 600;
 
         p {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           padding-top: 20px;
           font-size: 0.8rem;
           color: #ffffff;

@@ -69,7 +69,7 @@ const BasicForm = () => {
     "link",
     "image",
   ];
-  const [Profile, setProfile] = useState(null);
+  const [Profile, setProfile] = useState();
   const [ProfilePreview, setProfilePreview] = useState(null);
   let [Banner, setBanner] = useState();
   const [BannerPreview, setBannerPreview] = useState(null);
@@ -210,24 +210,22 @@ const BasicForm = () => {
       ProfileAddress,
       BannerAddress,
     };
-
-    // Description = stripHtmlTags(Description);
-    // const formData = new FormData();
-    // formData.append("Profile", Profile);
-    // formData.append("Banner", Banner);
-    // formData.append("URL_Alies", URL_Alies);
-    // formData.append("VCardName", VCardName);
-    // formData.append("BannerType", BannerType);
-    // formData.append("ProfileType", ProfileType);
-    // formData.append("ProfileAddress", ProfileAddress);
-    // formData.append("BannerAddress", BannerAddress);
-    // formData.append("Description", stripHtmlTags(Description));
+    const formData = new FormData();
+    formData.append("Profile", Profile);
+    formData.append("Banner", Banner);
+    formData.append("URL_Alies", URL_Alies);
+    formData.append("VCardName", VCardName);
+    formData.append("BannerType", BannerType);
+    formData.append("ProfileType", ProfileType);
+    formData.append("ProfileAddress", ProfileAddress);
+    formData.append("BannerAddress", BannerAddress);
+    formData.append("Description", stripHtmlTags(Description));
     setFormSubmitLoader(true);
     try {
       api
-        .put(`/vcard_URL/update_by_vcardUrl/${URL_Alies}`, data, {
+        .put(`/vcard_URL/update_by_vcardUrl/${URL_Alies}`, formData, {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
           },
         })
@@ -282,39 +280,39 @@ const BasicForm = () => {
         });
     },
   });
-  const handleLogoChange = (event) => {
-    const Profile = event.currentTarget.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(Profile);
-    reader.onload = () => {
-      formik.setFieldValue("Profile", reader.result);
-      setProfile(reader.result);
-    };
-  };
-  const handleBannerChange = (event) => {
-    const Banner = event.currentTarget.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(Banner);
-    reader.onload = () => {
-      formik.setFieldValue("Banner", reader.result);
-      setBanner(reader.result);
-    };
-  };
+  // const handleLogoChange = (event) => {
+  //   const Profile = event.currentTarget.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(Profile);
+  //   reader.onload = () => {
+  //     formik.setFieldValue("Profile", reader.result);
+  //     setProfile(reader.result);
+  //   };
+  // };
+  // const handleBannerChange = (event) => {
+  //   const Banner = event.currentTarget.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(Banner);
+  //   reader.onload = () => {
+  //     formik.setFieldValue("Banner", reader.result);
+  //     setBanner(reader.result);
+  //   };
+  // };
   // Handle file selection
-  // const handleLogoChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setProfile(file);
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    setProfile(file);
 
-  //   setProfilePreview(URL.createObjectURL(file)); // Show a preview of the image
-  //   formik.setFieldValue("Profile", ProfilePreview);
-  // };
-  // const handleBannerChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setBanner(file);
+    setProfilePreview(URL.createObjectURL(file)); // Show a preview of the image
+    formik.setFieldValue("Profile", ProfilePreview);
+  };
+  const handleBannerChange = (e) => {
+    const file = e.target.files[0];
+    setBanner(file);
 
-  //   setBannerPreview(URL.createObjectURL(file)); // Show a preview of the image
-  //   formik.setFieldValue("Banner", BannerPreview);
-  // };
+    setBannerPreview(URL.createObjectURL(file)); // Show a preview of the image
+    formik.setFieldValue("Banner", BannerPreview);
+  };
   // Handler function for the change event
   const handleProfileTypeChange = (event) => {
     setProfileType(event.target.value);
@@ -417,17 +415,25 @@ const BasicForm = () => {
                 {ProfileType == "ImageUpload" ? (
                   <div className="first">
                     <label htmlFor="Logo">
-                     
+                      {ProfilePreview == null ? (
+                        <img
+                          src={`${
+                            import.meta.env.VITE_APP_BACKEND_API_URL
+                          }/${Profile}`}
+                          className="Profile"
+                          alt="Profile"
+                        />
+                      ) : (
                         <img
                           src={
-                            Profile != null || Profile != ''
-                              ? Profile
+                            ProfilePreview != null
+                              ? ProfilePreview
                               : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
                           }
                           className="Profile"
                           alt="Logo"
                         />
-                   
+                      )}
 
                       <span
                         className="material-symbols-outlined"
@@ -489,13 +495,26 @@ const BasicForm = () => {
                 {BannerType == "ImageUpload" ? (
                   <div className="second">
                     <label htmlFor="Company_Banner">
-                  
+                      {BannerPreview == null ? (
                         <img
-                          src={Banner}
+                          src={`${
+                            import.meta.env.VITE_APP_BACKEND_API_URL
+                          }/${Banner}`}
                           className="Banner"
                           alt="Banner"
                         />
-                    
+                      ) : (
+                        <img
+                          src={
+                            BannerPreview != null
+                              ? BannerPreview
+                              : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                          }
+                          className="Banner"
+                          alt="Banner"
+                        />
+                      )}
+
                       <span
                         className="material-symbols-outlined"
                         onClick={() => {

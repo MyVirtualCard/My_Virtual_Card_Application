@@ -208,7 +208,7 @@ $error_text_color: tomato;
       .slide_svg {
         position: absolute;
         width: 100%;
-        bottom: 0%;
+        bottom: -10%;
 
         svg {
           transform: rotate(0deg);
@@ -360,7 +360,7 @@ $error_text_color: tomato;
           align-items: flex-start;
           justify-content: center;
           flex: 1;
-          gap: 0rem;
+          gap: 1rem;
           width: 100%;
           height: 100%;
 
@@ -369,6 +369,7 @@ $error_text_color: tomato;
             flex: 0.5;
             width: 100%;
             flex-direction: column;
+            gap: 6px;
             align-items: flex-start;
             justify-content: center;
 
@@ -539,6 +540,7 @@ $error_text_color: tomato;
         margin: 1rem auto;
 
         .contact_list {
+          text-decoration: none;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -2761,7 +2763,7 @@ $error_text_color: tomato;
             justify-content: space-between;
             background-color: $first_back__color;
             padding: 0.5rem;
-            border-radius: 3rem;
+            border-radius: 1rem;
             position: relative;
             // border-top-left-radius: 6rem;
             // border-bottom-left-radius: 6rem;
@@ -2787,6 +2789,7 @@ $error_text_color: tomato;
                 border-radius: 1rem;
                 border: 2px solid $first_back__color;
                 animation: profileBorder 5s infinite linear;
+                box-shadow: 0px 4px 5px rgba(0,0,0,0.5);
                 @keyframes profileBorder {
                   0% {
                     border: 3px solid $first_back__color;
@@ -2854,14 +2857,14 @@ $error_text_color: tomato;
       bottom: 0%;
       width: 100%;
       margin-top: 3rem;
-      .footer_container {
+      .Boutique_footer_container {
         width: 100%;
 
-        min-height: 70px;
-        height: 70px;
+        min-height: 50px;
+        height: 50px;
         position: relative;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
 
         justify-content: center;
         padding: 0px 0px;
@@ -2869,10 +2872,10 @@ $error_text_color: tomato;
 
         p {
           font-size: 0.8rem;
-          min-height: 70px;
-          height: 70px;
+          min-height: 50px;
+          height: 50px;
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           justify-content: center;
           color: $third_text_color;
           font-weight: 500;

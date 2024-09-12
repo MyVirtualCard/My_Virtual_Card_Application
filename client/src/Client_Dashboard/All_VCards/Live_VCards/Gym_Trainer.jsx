@@ -13,12 +13,12 @@ import * as Yup from "yup";
 import axios from "axios";
 import vCardsJS from "vcards-js";
 import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
-import Context from '../../../Context/GlobalContext'
+import Context from "../../../Context/GlobalContext";
 import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
 const Gym_Trainer = () => {
-    //create a new vCard
-    var vCard = vCardsJS();
+  //create a new vCard
+  var vCard = vCardsJS();
   let {
     user,
     successMessage,
@@ -311,7 +311,6 @@ END:VCARD
       await api
         .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
-        
           setGoogleMapData(res.data.data.GoogleMapData);
           setVCard_URL_Data(res.data.data.Vcard_URL);
           setBasicData(res.data.data.BasicDetails);
@@ -354,8 +353,8 @@ END:VCARD
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
-   // Show loading spinner or message while loading
-   if (SiteLoader) {
+  // Show loading spinner or message while loading
+  if (SiteLoader) {
     return <VCard_Loader />;
   }
   return (
@@ -445,11 +444,18 @@ END:VCARD
                         )}
                         {data.BannerType == "ImageUpload" ? (
                           <>
-                            <img
+                            {/* <img
                               src={
                                 data.Banner ||
                                 "https://img.freepik.com/premium-photo/asian-young-male-fitness-trainer-gym_409674-11835.jpg?w=1060"
                               }
+                              alt="banner_image"
+                              className="banner"
+                            /> */}
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/${data.Banner}`}
                               alt="banner_image"
                               className="banner"
                             />
@@ -466,10 +472,9 @@ END:VCARD
                           {data.ProfileType == "ImageUpload" ? (
                             <>
                               <img
-                                src={
-                                  data.Profile ||
-                                  "https://img.freepik.com/premium-vector/retro-vintage-gym-sport-bodybuilding-template-logo-designlogo-business-fitness-label-badge-gym-center_661039-4834.jpg?w=740"
-                                }
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.Profile}`}
                                 alt="user_logo"
                               />
                             </>
@@ -682,10 +687,10 @@ END:VCARD
                               <div className="list_detail">
                                 <small>Mobile Number</small>
                                 <p>
-                                {data.MobileNumber
-                                  ? `(+91) ${data.MobileNumber}`
-                                  : "(+91) -----------"}
-                              </p>
+                                  {data.MobileNumber
+                                    ? `(+91) ${data.MobileNumber}`
+                                    : "(+91) -----------"}
+                                </p>
                               </div>
                             </a>
                             {data.AlternateEmail.length > 0 ? (
@@ -773,7 +778,9 @@ END:VCARD
                               )}
 
                               {data.ServiceType == "ImageUpload" ? (
-                                <img src={data.ServiceImage} alt="" />
+                               <img src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/${data.ServiceImage}`} alt="service"/>
                               ) : (
                                 ""
                               )}
@@ -790,7 +797,7 @@ END:VCARD
                               {/* <span className="material-symbols-outlined">sprint</span> */}
 
                               <div className="service_detail">
-                                <div className="service_title">
+                                <div className="gym_service_title">
                                   <h4>
                                     {data.ServiceName || "Physical Fitness"}
                                   </h4>
@@ -1022,12 +1029,9 @@ END:VCARD
                                     <div className="product_list" key={index}>
                                       <div className="product_image">
                                         <img
-                                          src={
-                                            data.ProductImage != undefined ||
-                                            data.ProductImage != null
-                                              ? data.ProductImage
-                                              : `https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114181.jpg?t=st=1722480930~exp=1722484530~hmac=b3e99f19f2f2261ec0d7c5f1da8914dbfa376f325e37125598579ea7d7eced3b&w=900`
-                                          }
+                                          src={`${
+                                            import.meta.env.VITE_APP_BACKEND_API_URL
+                                          }/${data.ProductImage}`} 
                                           alt="product"
                                         />
                                       </div>
@@ -1038,19 +1042,19 @@ END:VCARD
                                           {data.ProductDescription || ""}
                                         </small>
                                         <div className="actions">
-                                        <a
-                                          href={`${
-                                            data.ProductURL
-                                              ? data.ProductURL
-                                              : "#"
-                                          }`}
-                                        >
-                                          View Product
-                                        </a>
-                                        <span className="material-symbols-outlined">
-                                          link
-                                        </span>
-                                      </div>
+                                          <a
+                                            href={`${
+                                              data.ProductURL
+                                                ? data.ProductURL
+                                                : "#"
+                                            }`}
+                                          >
+                                            View Product
+                                          </a>
+                                          <span className="material-symbols-outlined">
+                                            link
+                                          </span>
+                                        </div>
                                         <button>
                                           ₹ &nbsp;{data.ProductPrice}
                                         </button>
@@ -1080,7 +1084,6 @@ END:VCARD
                                       <small>
                                         {" "}
                                         {data.ProductDescription || ""}
-
                                       </small>
                                       <div className="actions">
                                         <a
@@ -1365,15 +1368,13 @@ END:VCARD
                         <img src={hand} alt="click" className="clickImg" />
                       </div> */}
                           {GalleryData.map((data, index) => {
-                            
                             return (
                               <div key={index}>
                                 {data.GalleryType == "ImageUpload" ? (
                                   <img
-                                    src={
-                                      data.GalleryImage ||
-                                      "https://img.freepik.com/free-photo/young-adult-doing-indoor-sport-gym_23-2149205565.jpg?t=st=1722483193~exp=1722486793~hmac=582b97347ecbf83a7f71abf16c7dc7dc6287bdaa892fd409e0391f81788d2e1a&w=900"
-                                    }
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.GalleryImage}`} 
                                     alt="developer"
                                     onClick={(e) => openFullImage(e.target.src)}
                                   />
@@ -1433,10 +1434,9 @@ END:VCARD
                                 <>
                                   <div className="userProfile" key={index}>
                                     <img
-                                      src={
-                                        data.Profile ||
-                                        "https://img.freepik.com/free-vector/creative-nerd-logo-template_23-2149218769.jpg?t=st=1723167960~exp=1723171560~hmac=ba06d878628bba2f95c10f1952d53d78fd9466c8481f491daecca840a61c5782&w=740"
-                                      }
+                                         src={`${
+                                          import.meta.env.VITE_APP_BACKEND_API_URL
+                                        }/${data.Profile}`} 
                                       alt=""
                                     />
                                   </div>
@@ -2035,7 +2035,7 @@ END:VCARD
                   <>
                     <div className="row_12">
                       <div className="footer_container">
-                        <svg
+                        {/* <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 1440 320"
                         >
@@ -2044,7 +2044,7 @@ END:VCARD
                             fillOpacity="1"
                             d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
                           ></path>
-                        </svg>
+                        </svg> */}
                         <p>
                           All Copyright Reserved &copy; 2024 myvirtualcard.in
                         </p>

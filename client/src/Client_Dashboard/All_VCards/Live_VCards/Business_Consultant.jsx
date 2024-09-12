@@ -523,7 +523,7 @@ const Business_Consultant = () => {
                           src={`
                                 ${
                                   import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/uploads/Basic_Image/${data.Banner.filename}
+                                }/${data.Banner}
                                
 
                                 `}
@@ -540,7 +540,7 @@ const Business_Consultant = () => {
                           src={`
                                  ${
                                    import.meta.env.VITE_APP_BACKEND_API_URL
-                                 }/uploads/Basic_Image/${data.Profile.filename}
+                                 }/${data.Profile}
                                 
  
                                  `}
@@ -860,8 +860,8 @@ const Business_Consultant = () => {
                                       src={`
                                 ${
                                   import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/uploads/Service_Image/${
-                                        data.ServiceImage.filename
+                                }/${
+                                        data.ServiceImage
                                       }
                                
 
@@ -967,8 +967,8 @@ const Business_Consultant = () => {
                                     src={`
                             ${
                               import.meta.env.VITE_APP_BACKEND_API_URL
-                            }/uploads/Gallery_Image/${
-                                      data.GalleryImage.filename
+                            }/${
+                                      data.GalleryImage
                                     }
                                 `}
                                     alt="GalleryImage"
@@ -1025,8 +1025,8 @@ const Business_Consultant = () => {
                                     src={`
                                  ${
                                    import.meta.env.VITE_APP_BACKEND_API_URL
-                                 }/uploads/Product_Image/${
-                                      data.ProductImage.filename
+                                 }/${
+                                      data.ProductImage
                                     }
                                 
  
@@ -2044,7 +2044,7 @@ const Business_Consultant = () => {
             {VCard_URL_Data.length > 0 && BasicData.length > 0 ? (
               <>
                 <div className="row_13">
-                  <div className="footer_container">
+                  <div className="bussiness_footer_container">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 1440 320"

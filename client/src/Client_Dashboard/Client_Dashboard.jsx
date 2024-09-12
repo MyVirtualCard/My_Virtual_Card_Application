@@ -259,7 +259,11 @@ const Client_Dashboard = () => {
                           )}
                           {data.ProfileType == "ImageUpload" ? (
                             <img
-                              src={data?.Profile || 'https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740'}
+                            src={`${
+                              import.meta.env.VITE_APP_BACKEND_API_URL
+                            }/${
+                              data.Profile
+                            }`}
                               alt="profile"
                             />
                           ) : (
@@ -362,10 +366,14 @@ const Client_Dashboard = () => {
                               ""
                             )}
                             {data.ProfileType == "ImageUpload" ? (
-                              <img
-                                src={data.Profile || 'https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740'}
-                                alt="profile"
-                              />
+                             <img
+                             src={`${
+                               import.meta.env.VITE_APP_BACKEND_API_URL
+                             }/${
+                               data.Profile
+                             }`}
+                               alt="profile"
+                             />
                             ) : (
                               ""
                             )}

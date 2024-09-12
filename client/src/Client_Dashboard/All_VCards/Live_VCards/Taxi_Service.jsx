@@ -494,10 +494,9 @@ END:VCARD
                     )}
                     {data.BannerType == "ImageUpload" ? (
                       <img
-                        src={
-                          data.Banner ||
-                          "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
-                        }
+                        src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                          data.Banner
+                        }`}
                         alt="banner"
                       />
                     ) : (
@@ -642,10 +641,9 @@ END:VCARD
                         <div className="user_logo">
                           {data.ProfileType == "ImageUpload" ? (
                             <img
-                              src={
-                                data.Profile ||
-                                "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
-                              }
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/${data.Profile}`}
                               alt="user_logo"
                             />
                           ) : (
@@ -833,10 +831,9 @@ END:VCARD
                             <div key={index}>
                               {data.GalleryType == "ImageUpload" ? (
                                 <img
-                                  src={
-                                    data.GalleryImage ||
-                                    "https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
-                                  }
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.GalleryImage}`}
                                   alt="developer"
                                   onClick={(e) => openFullImage(e.target.src)}
                                 />
@@ -895,7 +892,12 @@ END:VCARD
                             )}
                             {data.ServiceType == "ImageUpload" ? (
                               <>
-                                <img src={data.ServiceImage} alt="" />
+                                <img
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.ServiceImage}`}
+                                  alt=""
+                                />
                               </>
                             ) : (
                               ""
@@ -966,10 +968,9 @@ END:VCARD
                               <div className="product_list">
                                 <div className="product_image">
                                   <img
-                                    src={
-                                      data.ProductImage ||
-                                      "https://img.freepik.com/free-vector/taxi-poster-with-realistic-yellow-public-service-car-with-reflection_1284-5444.jpg?t=st=1722540843~exp=1722544443~hmac=246e42b048cc2cd6debfbc2526ba1a7aaab7297900915186ff665942dffd3a3b&w=740"
-                                    }
+                                     src={`${
+                                      import.meta.env.VITE_APP_BACKEND_API_URL
+                                    }/${data.ProductImage}`}
                                     alt="product"
                                   />
                                 </div>
@@ -1977,16 +1978,17 @@ END:VCARD
               <>
                 <div className="row_13">
                   <div className="footer_container">
-                    <svg
+                    {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 1440 320"
+
                     >
                       <path
                         fill="#1a8b8275"
                         fillOpacity="1"
                         d="M0,64L120,96C240,128,480,192,720,186.7C960,181,1200,107,1320,69.3L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
                       ></path>
-                    </svg>
+                    </svg> */}
                     <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
                   </div>
                 </div>
