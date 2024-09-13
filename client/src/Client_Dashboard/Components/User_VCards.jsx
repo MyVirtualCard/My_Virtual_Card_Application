@@ -28,7 +28,8 @@ const User_VCards = () => {
     setCurrentTemplate,
     setShowForm,
     currentPlan,
-    activePlan, setPlanActive,
+    activePlan,
+    setPlanActive,
     userName,
     user,
     setUser,
@@ -41,7 +42,8 @@ const User_VCards = () => {
     setURL_Alies,
     LiveLinkActivate,
     setLiveLinkActivate,
-    VCardCount, setVCardCount,
+    VCardCount,
+    setVCardCount,
   } = useContext(Context);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
   let [CurrentPlan, setCurrentPlan] = useState();
@@ -123,7 +125,6 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-   
           if (res.data.data.length > 0) {
             setURL_Alies(res.data.data[0].URL_Alies);
             setCurrentTemplate(res.data.data[0].currentTemplate);
@@ -136,6 +137,30 @@ const User_VCards = () => {
       console.log(error);
     }
   }, []);
+  async function handleUrlDataDelete(id) {
+    // e.preventDefault();
+    setFormSubmitLoader(true);
+    try {
+      await api
+        .delete(`/vcard_URL/deleteID/${id}`, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          toast.success(res.data.message);
+          reloadComponent();
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   //VCard Delete
   async function handleVCardDelete() {
     setFormSubmitLoader(true);
@@ -162,7 +187,7 @@ const User_VCards = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }
 
   async function fetchCurrentManageContent() {
     setFormSubmitLoader(true);
@@ -175,7 +200,7 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-          console.log(res)
+          console.log(res);
           setLiveLinkActivate(res.data.data);
           setFormSubmitLoader(false);
         })
@@ -204,7 +229,13 @@ const User_VCards = () => {
 
             <div className="popup_actions">
               <div className="delete">
-                <button onClick={handleVCardDelete}>Yes</button>
+                <button
+                  onClick={() => {
+                    handleUrlDataDelete(VCardCount[0]._id), handleVCardDelete();
+                  }}
+                >
+                  Yes
+                </button>
               </div>
               <div className="cancel">
                 <button onClick={() => setVcardDeleteToggle(false)}>No</button>
@@ -311,7 +342,6 @@ const User_VCards = () => {
               <tbody className="bg-light text-center">
                 {VCardCount != undefined && VCardCount.length > 0 ? (
                   VCardCount.map((data, index) => {
-                 
                     return (
                       <tr key={index}>
                         <td className="fw-light">
@@ -332,11 +362,9 @@ const User_VCards = () => {
                             <>
                               {data.Profile ? (
                                 <img
-                                src={`${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/${
-                                  data.Profile
-                                }`}
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.Profile}`}
                                   alt="profile"
                                 />
                               ) : (

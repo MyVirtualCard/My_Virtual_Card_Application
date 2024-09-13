@@ -395,33 +395,42 @@ export const deleteSpecificFileData=async (req, res) => {
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { filename } = req.params;
+    let { id } = req.params;
 
-    let deleteSpecificData = await GalleryModel.findOneAndDelete(filename);
+    let checkSpecificData=await GalleryModel.findById(id);
 
-    if (!deleteSpecificData) {
+    if (!checkSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      
-      const filePath = path.join(
-        __dirname,
-        "uploads",
-        "Gallery_Image",
-        filename
-      );
-      if(deleteSpecificData.GalleryType === 'ImageUpload'){
-        fs.unlink(filePath, (err) => {
+      if(checkSpecificData.GalleryType === 'ImageUpload'){
+        fs.unlink(checkSpecificData.GalleryImage, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
           }
         });
-      }
-      res
+        let deleteSpecificData = await GalleryModel.findByIdAndDelete(id);
+        res
         .status(201)
         .json({ message: "Image Deleted!", data: deleteSpecificData });
+
+      }else{
+        let deleteSpecificData = await GalleryModel.findByIdAndDelete(id);
+        res
+        .status(201)
+        .json({ message: "Image Deleted!", data: deleteSpecificData });
+      }
+  
+   
+
+
+    
     }
+
+
+
+
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };

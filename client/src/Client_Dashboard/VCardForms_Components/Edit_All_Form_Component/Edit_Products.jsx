@@ -42,19 +42,17 @@ const Products = () => {
   let [ProductURL, setProductURL] = useState();
   let [ProductDescription, setProductDescription] = useState();
   let [ProductImage, setProductImage] = useState(null);
-  let[ProductPreview,setProductPreview]=useState(null)
-;  let [ProductId, setProductId] = useState();
+  let [ProductPreview, setProductPreview] = useState(null);
+  let [ProductId, setProductId] = useState();
   let [ProductType, setProductType] = useState();
   let [ProductImageLink, setProductImageLink] = useState();
   let [ProductPrice, setProductPrice] = useState();
-  let[deleteParams,setDeleteParams]=useState();
+  let [deleteParams, setDeleteParams] = useState();
   const [key, setKey] = useState(0);
 
   const reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
-
-
 
   const stripHtmlTags = (html) => {
     const div = document.createElement("div");
@@ -283,7 +281,7 @@ const Products = () => {
       api
         .put(`/productDetail/updateID/${ProductId}`, formData, {
           headers: {
-           "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
           },
         })
@@ -291,7 +289,7 @@ const Products = () => {
           setFormSubmitLoader(false);
           setUpdateFormOpen(false);
           reloadComponent();
-          setProductPreview(null)
+          setProductPreview(null);
           setTimeout(() => {
             setProductImage(undefined);
             setProductFormOpen(false);
@@ -308,21 +306,12 @@ const Products = () => {
     }
   }
 
-  async function handleProductDelete(url,id) {
-
-    if(url !=null){
-      setDeleteParams(url.split('/')[0].slice(22,150));
-    }
-    else{
-      setDeleteParams(id)
-    }
-    
-
+  async function handleProductDelete(id) {
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
       await api
-        .delete(`/productDetail/deleteID/${deleteParams}`, {
+        .delete(`/productDetail/deleteID/${id}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
@@ -334,12 +323,10 @@ const Products = () => {
           toast.success(res.data.message);
           reloadComponent();
           setFormSubmitLoader(false);
-          setDeleteParams(null)
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
-          setDeleteParams(null)
         });
     } catch (error) {
       console.log(error);
@@ -548,9 +535,7 @@ const Products = () => {
                                     <img
                                       src={`${
                                         import.meta.env.VITE_APP_BACKEND_API_URL
-                                      }/${
-                                        data.ProductImage
-                                      }`}
+                                      }/${data.ProductImage}`}
                                       className="ProductImage"
                                       alt="ProductImage"
                                     />
@@ -615,7 +600,12 @@ const Products = () => {
                               <i
                                 className="bx bx-trash-alt"
                                 style={{ color: "red" }}
-                                onClick={() => handleProductDelete(data.ProductImage,data._id)}
+                                onClick={() =>
+                                  handleProductDelete(
+                                  
+                                    data._id
+                                  )
+                                }
                               ></i>
                             </td>
                           </tr>
@@ -829,28 +819,27 @@ const Products = () => {
                         {formik.values.ProductType == "ImageUpload" ? (
                           <>
                             <label htmlFor="Image">
-                              {ProductPreview == null ? 
-                              
-                              <img
-                              src={
-                                ProductImage != null ||
-                                ProductImage != undefined
-                                  ? ProductImage
-                                  : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                              }
-                              alt="Image"
-                            />
-                              :
-                              <img
-                              src={
-                                ProductPreview != null
-                                  ? ProductPreview
-                                  : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                              }
-                              alt="Image"
-                            />
-                              }
-                            
+                              {ProductPreview == null ? (
+                                <img
+                                  src={
+                                    ProductImage != null ||
+                                    ProductImage != undefined
+                                      ? ProductImage
+                                      : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                                  }
+                                  alt="Image"
+                                />
+                              ) : (
+                                <img
+                                  src={
+                                    ProductPreview != null
+                                      ? ProductPreview
+                                      : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
+                                  }
+                                  alt="Image"
+                                />
+                              )}
+
                               {/* <i className="bx bxs-edit-location"></i> */}
                             </label>
                             <p>
@@ -943,7 +932,7 @@ const Products = () => {
                                 }
                                 alt="Image"
                               /> */}
-                                {ProductPreview == null ? (
+                              {ProductPreview == null ? (
                                 <img
                                   src={`${
                                     import.meta.env.VITE_APP_BACKEND_API_URL
@@ -1060,7 +1049,6 @@ const Products = () => {
             </div>
           </>
         )}
-
 
         {/* //Product  Detail Box */}
 

@@ -18,7 +18,6 @@ import { ServiceUpload } from "../Multer/Service_Multer.js";
 const uploadFields = ServiceUpload.fields([
   { name: "ServiceImage", maxCount: 1 }, // One profile image
 ]);
-
 export const GetServiceData = async (req, res) => {
   try {
     let datas = await ServiceModel.find({ URL_Alies: req.params.URL_Alies });
@@ -319,6 +318,7 @@ export const updateSpecificUserData = async (req, res) => {
           return res
             .status(400)
             .json({ message: "File too large. Maximum size allowed is 3MB." });
+
         }
         return res
           .status(500)
@@ -347,30 +347,15 @@ export const updateSpecificUserData = async (req, res) => {
         try {
           let { id } = req.params;
           let ServiceSpecificData = await ServiceModel.findByIdAndUpdate(id);
-          // let data = {
-          //   ServiceImage: {
-          //     filename: req.file?.filename,
-          //     contentType: req.file?.mimetype,
-          //     imageBase64: req.file?.path,
-          //   },
-          //   URL_Alies: req.body.URL_Alies,
-          //   ServiceName: req.body.ServiceName,
-          //   ServiceURL: req.body.ServiceURL,
-          //   ServiceType: req.body.ServiceType,
-          //   ServiceIcon:req.body.ServiceIcon,
-          //   ServiceAddress:req.body.ServiceAddress,
-          //   ServiceDescription: req.body.ServiceDescription,
-          // };
-
           if (!ServiceSpecificData) {
             res.status(400).json({ message: "Data Not Found!" });
           } else {
             const ServiceImage = req.files["ServiceImage"]
               ? req.files["ServiceImage"][0]?.path
               : '';
-          
+     
             if (ServiceSpecificData.ServiceType === "ImageUpload") {
-              if (req.files) {
+              if (req.files['ServiceImage']) {
                 fs.unlink(ServiceSpecificData.ServiceImage, (err) => {
                   if (err) {
                     console.error("Failed to delete the old image:", err);
@@ -378,6 +363,7 @@ export const updateSpecificUserData = async (req, res) => {
                 });
                 ServiceSpecificData.ServiceImage = ServiceImage; // Set new image path
               }
+        
             };
 
             ServiceSpecificData.URL_Alies = req.body.URL_Alies;
@@ -434,33 +420,40 @@ export const deleteSpecificUserAllData = async (req, res) => {
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { filename } = req.params;
+    let { id } = req.params;
 
-    let deleteSpecificData = await ServiceModel.findOneAndDelete(filename);
+    let checkSpecificData=await ServiceModel.findById(id);
 
-    if (!deleteSpecificData) {
+    if (!checkSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      const filePath = path.join(
-        __dirname,
-        "uploads",
-        "Service_Image",
-        filename
-      );
-
-      if(deleteSpecificData.ServiceType === 'ImageUpload'){
-        fs.unlink(filePath, (err) => {
+      if(checkSpecificData.ServiceType === 'ImageUpload'){
+        fs.unlink(checkSpecificData.ServiceImage, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
           }
         });
-      }
-
-
-      res
+        let deleteSpecificData = await ServiceModel.findByIdAndDelete(id);
+        res
         .status(201)
         .json({ message: "Service Deleted!", data: deleteSpecificData });
+
+      }else{
+        let deleteSpecificData = await ServiceModel.findByIdAndDelete(id);
+        res
+        .status(201)
+        .json({ message: "Service Deleted!", data: deleteSpecificData });
+      }
+  
+   
+
+
+    
     }
+
+
+
+
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });

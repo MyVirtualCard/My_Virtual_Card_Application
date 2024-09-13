@@ -271,17 +271,12 @@ const Gallery = () => {
       setFormSubmitLoader(false);
     }
   }
-  async function handleGalleryDelete(url,id) {
-    if (url != null) {
-     await  setDeleteParams(url.split("/")[0].slice(22, 250));
-    } else {
-      await setDeleteParams(id);
-    }
+  async function handleGalleryDelete(id) {
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
-     await api
-        .delete(`/galleryDetail/deleteID/${deleteParams}`, {
+      await api
+        .delete(`/galleryDetail/deleteID/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -292,12 +287,10 @@ const Gallery = () => {
           setGalleryCount(--GalleryCount);
           setFormSubmitLoader(false);
           reloadComponent();
-          setDeleteParams(null)
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
-          setDeleteParams(null)
         });
     } catch (error) {
       console.log(error);
@@ -428,7 +421,7 @@ const Gallery = () => {
                 {AllGallery != undefined && AllGallery.length != 0 ? (
                   <>
                     {AllGallery.map((data, index) => {
-                      console.log(data.GalleryImage)
+                      console.log(data.GalleryImage);
                       return (
                         <tr key={index}>
                           <td className="h-100 align-middle">{index + 1}</td>
@@ -507,7 +500,7 @@ const Gallery = () => {
                               className="bx bx-trash-alt"
                               style={{ color: "red" }}
                               onClick={() =>
-                                handleGalleryDelete(data.GalleryImage, data.id)
+                                handleGalleryDelete(data._id)
                               }
                             ></i>
                           </td>

@@ -26,6 +26,6 @@ router.put("/updateID/:id", verifyToken, updateSpecificUserData);
 //Delete Specific user all Data in Basic Detail:
 // router.delete("/deleteAll/:userName", verifyToken, deleteSpecificUserAllData);
 //Delete Specific user document Data in Basic Detail:
-router.delete("/deleteID/:filename", verifyToken, deleteSpecificUserData);
+router.delete("/deleteID/:id", verifyToken, deleteSpecificUserData);
 router.delete("/deleteID/:id", verifyToken, deleteSpecificUserIdData);
 export default router;

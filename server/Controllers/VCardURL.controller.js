@@ -9,10 +9,12 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname("server");
 import { BasicUpload } from "../Multer/Basic_Multer.js";
+
 const uploadFields = BasicUpload.fields([
   { name: "Profile", maxCount: 1 }, // One profile image
   { name: "Banner", maxCount: 1 },
 ]);
+
 //DiskStorage:
 //All user URL Data :
 export const getAllVCardURLData = async (req, res) => {
@@ -79,8 +81,8 @@ export const postVCardURLData = async (req, res) => {
         //Basic Image File limit checked:
         const Profile = req.files["Profile"]
           ? req.files["Profile"][0].path
-          : '';
-        const Banner = req.files["Banner"] ? req.files["Banner"][0].path : '';
+          : "";
+        const Banner = req.files["Banner"] ? req.files["Banner"][0].path : "";
 
         let data = {
           user: req.user.userName,
@@ -159,11 +161,9 @@ export const updateSpecificUserData = async (req, res) => {
         if (err instanceof multer.MulterError) {
           // Handle Multer-specific errors like file size limit
           if (err.code === "LIMIT_FILE_SIZE") {
-            return res
-              .status(400)
-              .json({
-                message: "File too large. Maximum size allowed is 3MB.",
-              });
+            return res.status(400).json({
+              message: "File too large. Maximum size allowed is 3MB.",
+            });
           }
           return res
             .status(500)
@@ -174,9 +174,12 @@ export const updateSpecificUserData = async (req, res) => {
         }
       });
       let { URL_Alies } = req.params;
-      let updateSpecificData = await Vcard_URL.findOneAndUpdate(URL_Alies);
 
-      if (!updateSpecificData) {
+      let checkSpecificUserIdData = await Vcard_URL.findOne({ URL_Alies });
+      const updateSpecificData = await Vcard_URL.findByIdAndUpdate(
+        checkSpecificUserIdData._id
+      );
+      if (!checkSpecificUserIdData) {
         res.status(400).json({ message: "Data Not Found!" });
       } else {
         //Basic Image File limit checked:
@@ -185,74 +188,9 @@ export const updateSpecificUserData = async (req, res) => {
           : null;
         const Banner = req.files["Banner"] ? req.files["Banner"][0].path : null;
 
-        // if (updateSpecificData.Profile !=null) {
-        //   fs.unlink(updateSpecificData.Profile, (err) => {
-        //     if (err) {
-        //       console.error("Failed to delete the old image:", err);
-        //     }
-        //   });
-        //   updateSpecificData.Profile = Profile; // Set new image path
-        // }
-        // Check if a new image is uploaded
-        // if (Profile) {
-        //   // Delete the old image from the file system
-        //   const oldImagePath = path.join(
-        //     __dirname,
-        //     "uploads",
-        //     "Basic_Image",
-        //     updateSpecificData.Profile
-        //   );
-        //   if (fs.existsSync(oldImagePath)) {
-        //     fs.unlink(oldImagePath); // Delete the old image
-        //   }
-
-        //   // Update the image path in the product
-        //   updateSpecificData.Profile = Profile;
-        // };
-        // Check if a new image is uploaded
-        // if (Profile) {
-        //   // If product already has an image, delete the old one
-        //   if (updateSpecificData.Profile) {
-        //     const oldImagePath = path.join(
-        //       __dirname,
-        //       "uploads",
-        //       "Basic_Image",
-        //       updateSpecificData.Profile
-        //     );
-        //     if (fs.existsSync(oldImagePath)) {
-        //       fs.unlinkSync(oldImagePath); // Delete the old image
-        //     }
-        //   }
-
-        // //   // Update with the new image path
-        //   updateSpecificData.Profile = Profile;
-        // }
-        // if (Banner) {
-        //   fs.unlink(updateSpecificData.Banner, (err) => {
-        //     if (err) {
-        //       console.error("Failed to delete the old image:", err);
-        //     }
-        //   });
-        //   updateSpecificData.Banner = Banner; // Set new image path
-        // };
-        // if (Banner) {
-        //   // Delete the old image from the file system
-        //   const oldImagePath = path.join(
-        //     __dirname,
-        //     "uploads",
-        //     "Basic_Image",
-        //     updateSpecificData.Banner
-        //   );
-        //   if (fs.existsSync(oldImagePath)) {
-        //     fs.unlink(oldImagePath); // Delete the old image
-        //   }
-
-        //   // Update the image path in the product
-        //   updateSpecificData.Banner = Banner;
-        // }
-        if (updateSpecificData.ProfileType === "ImageUpload") {
-          if (req.files) {
-            fs.unlink(updateSpecificData.Profile, (err) => {
+        if (checkSpecificUserIdData.ProfileType === "ImageUpload") {
+          if (req.files.Profile) {
+            fs.unlink(checkSpecificUserIdData.Profile, (err) => {
               if (err) {
                 console.error("Failed to delete the old image:", err);
               }
@@ -260,9 +198,9 @@ export const updateSpecificUserData = async (req, res) => {
             updateSpecificData.Profile = Profile; // Set new image path
           }
         }
-        if (updateSpecificData.BannerType === "ImageUpload") {
-          if (req.files) {
-            fs.unlink(updateSpecificData.Banner, (err) => {
+        if (checkSpecificUserIdData.BannerType === "ImageUpload") {
+          if (req.files.Banner) {
+            fs.unlink(checkSpecificUserIdData.Banner, (err) => {
               if (err) {
                 console.error("Failed to delete the old image:", err);
               }
@@ -270,13 +208,13 @@ export const updateSpecificUserData = async (req, res) => {
             updateSpecificData.Banner = Banner; // Set new image path
           }
         }
-        updateSpecificData.URL_Alies = req.body.URL_Alies;
         updateSpecificData.VCardName = req.body.VCardName;
         updateSpecificData.Description = req.body.Description;
         updateSpecificData.ProfileType = req.body.ProfileType;
         updateSpecificData.BannerType = req.body.BannerType;
         updateSpecificData.ProfileAddress = req.body.ProfileAddress;
         updateSpecificData.BannerAddress = req.body.BannerAddress;
+
         let updateURLFormData = await updateSpecificData.save();
         res
           .status(201)
@@ -363,41 +301,39 @@ export const deleteSpecificUserAllData = async (req, res) => {
 
 //Delete Spcific user  Document in Basic Detail:
 
+//Delete Spcific user  Document in Basic Detail:
+
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { filename } = req.params;
+    let { id } = req.params;
 
-    let deleteSpecificData = await Vcard_URL.findOneAndDelete(filename);
+    let checkSpecificData = await Vcard_URL.findById(id);
 
-    if (!deleteSpecificData) {
+    if (!checkSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      const filePath = path.join(
-        __dirname,
-        "uploads",
-        "Basic_Image",
-        filename
-      );
+      if (checkSpecificData.ProfileType === "ImageUpload" || checkSpecificData.BannerType === "ImageUpload") {
+          fs.unlink(checkSpecificData.Profile, (err) => {
+            if (err) {
+              console.error("Failed to delete the old image:", err);
+            }
+          });
+          fs.unlink(checkSpecificData.Banner, (err) => {
+            if (err) {
+              console.error("Failed to delete the old image:", err);
+            }
+          });
+          let deleteSpecificData = await Vcard_URL.findByIdAndDelete(id);
+          res
+            .status(201)
+            .json({ message: "VCard Data Deleted!", data: deleteSpecificData });
 
-      if(deleteSpecificData.BannerType === 'ImageUpload'){
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            console.error("Failed to delete the old image:", err);
-          }
-        });
-      };
-      if(deleteSpecificData.ProfileType === 'ImageUpload'){
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            console.error("Failed to delete the old image:", err);
-          }
-        });
-      };
-
-
-      res
-        .status(201)
-        .json({ message: "Service Deleted!", data: deleteSpecificData });
+      } else {
+        let deleteSpecificData = await Vcard_URL.findByIdAndDelete(id);
+        res
+          .status(201)
+          .json({ message: "VCard Data Deleted!", data: deleteSpecificData });
+      }
     }
   } catch (error) {
     console.log(error);

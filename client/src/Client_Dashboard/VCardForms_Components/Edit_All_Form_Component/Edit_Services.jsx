@@ -312,20 +312,15 @@ const Services = () => {
       setFormSubmitLoader(false);
     }
   }
-  async function handleServiceDelete(url,id) {
-if(url !=null){
-  setDeleteParams(url.split('/')[0].slice(22,150));
-}
-else{
-  setDeleteParams(id)
-}
+  async function handleServiceDelete(id) {
+
 
 
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
       await api
-        .delete(`/serviceDetail/deleteID/${deleteParams}`, {
+        .delete(`/serviceDetail/deleteID/${id}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${user.token}`,
@@ -337,12 +332,12 @@ else{
           setServiceCount(--ServiceCount);
           reloadComponent();
           setFormSubmitLoader(false);
-          setDeleteParams(null)
+        
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
-          setDeleteParams(null)
+       
         });
     } catch (error) {
       console.log(error);
@@ -627,7 +622,7 @@ else{
                               <i
                                 className="bx bx-trash-alt"
                                 style={{ color: "red" }}
-                                onClick={() => handleServiceDelete(data.ServiceImage ,data.id)}
+                                onClick={() => handleServiceDelete(data._id)}
                               ></i>
                             </td>
                           </tr>

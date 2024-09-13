@@ -332,7 +332,7 @@ export const updateSpecificUserData = async (req, res) => {
               ? req.files["ProductImage"][0].path
               : null;
               if (ProductSpecificData.ProductType === "ImageUpload") {
-                if (req.files) {
+                if (req.files['ProductImage']) {
                   fs.unlink(ProductSpecificData.ProductImage, (err) => {
                     if (err) {
                       console.error("Failed to delete the old image:", err);
@@ -394,35 +394,44 @@ export const deleteSpecificUserAllData = async (req, res) => {
 
 export const deleteSpecificUserData = async (req, res) => {
   try {
-    let { filename } = req.params;
-    let deleteSpecificData = await ProductModel.findOneAndDelete(filename);
+    let { id } = req.params;
 
-    if (!deleteSpecificData) {
+    let checkSpecificData=await ProductModel.findById(id);
+
+    if (!checkSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      const filePath = path.join(
-        __dirname,
-        "uploads",
-        "Product_Image",
-        filename
-      );
-    
-      if(deleteSpecificData.ProductType === 'ImageUpload'){
-        fs.unlink(filePath, (err) => {
+      if(checkSpecificData.ProductType === 'ImageUpload'){
+        fs.unlink(checkSpecificData.ProductImage, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
           }
         });
-      }
-
-      res
+        let deleteSpecificData = await ProductModel.findByIdAndDelete(id);
+        res
         .status(201)
         .json({ message: "Product Deleted!", data: deleteSpecificData });
+
+      }else{
+        let deleteSpecificData = await ProductModel.findByIdAndDelete(id);
+        res
+        .status(201)
+        .json({ message: "Product Deleted!", data: deleteSpecificData });
+      }
+  
     }
+
+
+
+
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
+
+
+
 export const deleteSpecificUserIdData = async (req, res) => {
   try {
     let { id } = req.params;
