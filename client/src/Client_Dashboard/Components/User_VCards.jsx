@@ -76,7 +76,7 @@ const User_VCards = () => {
       .catch((error) => {
         setFormSubmitLoader(false);
       });
-  }, []);
+  }, [key]);
   useEffect(() => {
     api
       .get(`/razorpay/specificUser/${userName}`, {
@@ -107,7 +107,7 @@ const User_VCards = () => {
         if (res.data.data.length > 0) {
           setCurrentPlan(res.data.data[0]?.currentPlan);
         } else {
-          setShowForm("Choose Your Plan");
+          // setShowForm("Choose Your Plan");
         }
       })
       .catch((error) => {
@@ -178,6 +178,10 @@ const User_VCards = () => {
           setFormSubmitLoader(false);
           setVcardDeleteToggle(false);
           localStorage.removeItem("URL_Alies");
+          setTimeout(()=>{
+            setVCardCount([]);
+          },3000)
+    
         })
         .catch((error) => {
           console.log(error);

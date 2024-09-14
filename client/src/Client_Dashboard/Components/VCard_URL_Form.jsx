@@ -439,6 +439,9 @@ const VCard_URL_Form = () => {
                         clear_all
                       </span>
                     </label>
+                    <p>
+                      <strong>Note :</strong> Max file size limit 3MB
+                    </p>
                     <small>Allowed file types: png, jpg, jpeg.</small>
                     <input
                       // onChange={onUploadProfile}
@@ -525,6 +528,9 @@ const VCard_URL_Form = () => {
                       </span>
                       {/* <i className="bx bxs-edit"></i> */}
                     </label>
+                    <p>
+                      <strong>Note :</strong> Max file size limit 3MB
+                    </p>
                     <small>Allowed file types: png, jpg, jpeg.</small>
                     <input
                       type="file"

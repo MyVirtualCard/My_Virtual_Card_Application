@@ -370,7 +370,7 @@
                   height: 90px;
                   object-fit: cover;
                   object-position: center;
-                  border-radius: 1rem;
+                  border-radius: 50%;
                   border: 1px solid rgb(161, 161, 161);
                   position: relative;
                   // cursor: pointer;
@@ -393,6 +393,14 @@
                   color: #6571fe;
                   left: 40%;
                   top: -10%;
+                }
+              }
+              p {
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: rgb(31, 31, 31);
+                strong {
+                  color: rgb(255, 71, 71);
                 }
               }
               small {
@@ -453,6 +461,14 @@
                   color: #6571fe;
                   right: 20%;
                   top: -13%;
+                }
+              }
+              p {
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: rgb(31, 31, 31);
+                strong {
+                  color: rgb(255, 71, 71);
                 }
               }
               small {

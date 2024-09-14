@@ -27,6 +27,7 @@ import Edit_PrivacyPolicy from "./Edit_All_Form_Component/Edit_PrivacyPolicy";
 import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 import Edit_GoogleMap from "./Edit_All_Form_Component/Edit_GoogleMap";
 import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
+import { SHORTKEY } from "quill/modules/keyboard";
 
 const VCard_Form_Edit = () => {
   
@@ -74,7 +75,7 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
-  
+          console.log(res.data?.data )
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
@@ -97,7 +98,7 @@ const VCard_Form_Edit = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  }, [key]);
+  }, []);
   useEffect(() => {
     api
       .get(`/currentplan/specificAll/${userName}`, {
@@ -107,7 +108,7 @@ const VCard_Form_Edit = () => {
         },
       })
       .then((res) => {
-    
+
         if (res.data?.data?.length > 0) {
           setCurrentPlanActive(res.data?.data?.length);
           setStatus(res.data?.data[0]?.currentPlan);
@@ -115,13 +116,13 @@ const VCard_Form_Edit = () => {
           setShowForm("VCard Templates");
         } else {
          
-          setShowForm('Choose Your Plan')
+          // setShowForm('Choose Your Plan')
         }
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [key]);
+  }, []);
   function handleFormShow(e) {
     setFormSliderToggle(false);
     if (CurrentPlanActive == 1) {
