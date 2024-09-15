@@ -82,7 +82,7 @@ const LandingPageNew = () => {
     if (currentIndex < vcardImages.length) {
       setTimeout(() => {
         return setCurrentIndex((pre) => pre + 1);
-      }, 10000);
+      }, 5000);
     }
     if (currentIndex >= vcardImages.length) {
       return setCurrentIndex(0);
@@ -361,7 +361,7 @@ const LandingPageNew = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("September 15, 2024 00:00:00").getTime();
+    const countdownDate = new Date("September 25, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;

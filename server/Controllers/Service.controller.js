@@ -6,7 +6,8 @@ import path from "path";
 import axios from "axios";
 import Payment from "../Model/Payment.model.js";
 import { fileURLToPath } from "url";
-
+import sharp from "sharp";
+import { rimraf } from "rimraf"; // Use named import for the new rimraf version
 // Create __dirname manually in ES module
 const __filename = fileURLToPath(import.meta.url);
 
@@ -176,6 +177,29 @@ export const PostServiceData = async (req, res) => {
               const ServiceImage = req.files["ServiceImage"]
                 ? req.files["ServiceImage"][0]?.path
                 : "";
+              // Define the folder and the output path for the compressed image
+              const uploadsFolder = path.join(
+                __dirname,
+                "uploads",
+                "Service_Image"
+              );
+              const compressedImagePath = path.join(
+                uploadsFolder,
+                `compressed-${Date.now()}.jpeg`
+              );
+
+              // Ensure that the uploads folder exists
+              if (!fs.existsSync(uploadsFolder)) {
+                fs.mkdirSync(uploadsFolder, { recursive: true });
+              }
+
+              // Use Sharp to compress the image
+              await sharp(ServiceImage)
+                .resize(800) // Resize to a width of 800px, maintaining aspect ratio
+                .jpeg({ quality: 80 }) // Compress image to 80% quality (adjust as needed)
+                .toFile(compressedImagePath); // Save the compressed image
+        
+
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
@@ -187,7 +211,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceIcon: req.body.ServiceIcon,
                 ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage: ServiceImage,
+                ServiceImage: compressedImagePath,
               });
 
               await newService
@@ -318,7 +342,6 @@ export const updateSpecificUserData = async (req, res) => {
           return res
             .status(400)
             .json({ message: "File too large. Maximum size allowed is 3MB." });
-
         }
         return res
           .status(500)
@@ -352,10 +375,10 @@ export const updateSpecificUserData = async (req, res) => {
           } else {
             const ServiceImage = req.files["ServiceImage"]
               ? req.files["ServiceImage"][0]?.path
-              : '';
-     
+              : "";
+
             if (ServiceSpecificData.ServiceType === "ImageUpload") {
-              if (req.files['ServiceImage']) {
+              if (req.files["ServiceImage"]) {
                 fs.unlink(ServiceSpecificData.ServiceImage, (err) => {
                   if (err) {
                     console.error("Failed to delete the old image:", err);
@@ -363,8 +386,7 @@ export const updateSpecificUserData = async (req, res) => {
                 });
                 ServiceSpecificData.ServiceImage = ServiceImage; // Set new image path
               }
-        
-            };
+            }
 
             ServiceSpecificData.URL_Alies = req.body.URL_Alies;
             ServiceSpecificData.ServiceName = req.body.ServiceName;
@@ -422,12 +444,12 @@ export const deleteSpecificUserData = async (req, res) => {
   try {
     let { id } = req.params;
 
-    let checkSpecificData=await ServiceModel.findById(id);
+    let checkSpecificData = await ServiceModel.findById(id);
 
     if (!checkSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      if(checkSpecificData.ServiceType === 'ImageUpload'){
+      if (checkSpecificData.ServiceType === "ImageUpload") {
         fs.unlink(checkSpecificData.ServiceImage, (err) => {
           if (err) {
             console.error("Failed to delete the old image:", err);
@@ -435,25 +457,15 @@ export const deleteSpecificUserData = async (req, res) => {
         });
         let deleteSpecificData = await ServiceModel.findByIdAndDelete(id);
         res
-        .status(201)
-        .json({ message: "Service Deleted!", data: deleteSpecificData });
-
-      }else{
+          .status(201)
+          .json({ message: "Service Deleted!", data: deleteSpecificData });
+      } else {
         let deleteSpecificData = await ServiceModel.findByIdAndDelete(id);
         res
-        .status(201)
-        .json({ message: "Service Deleted!", data: deleteSpecificData });
+          .status(201)
+          .json({ message: "Service Deleted!", data: deleteSpecificData });
       }
-  
-   
-
-
-    
     }
-
-
-
-
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });
@@ -479,4 +491,3 @@ export const deleteSpecificUserIdData = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-

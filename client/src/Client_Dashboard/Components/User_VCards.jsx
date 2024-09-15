@@ -178,9 +178,10 @@ const User_VCards = () => {
           setFormSubmitLoader(false);
           setVcardDeleteToggle(false);
           localStorage.removeItem("URL_Alies");
-          setTimeout(()=>{
+          let timer=setTimeout(()=>{
             setVCardCount([]);
           },3000)
+          return ()=>clearTimeout(timer);
     
         })
         .catch((error) => {

@@ -758,16 +758,24 @@ z-index: 1;
           z-index: 5;
           opacity: 1;
           filter: brightness(110%);
-          animation: hideImage 10s infinite linear;
+          animation: hideImage 5s infinite linear;
           @keyframes hideImage {
             0% {
               transform: translateY(0px);
+              opacity: 1;
+            
             }
             50% {
               transform: translateY(20px);
+              opacity: 1;
+            }
+            75%{
+              opacity: 1;
             }
             100% {
               transform: translateY(0px);
+              opacity: 0;
+            
             }
           }
           @media screen and (max-width:800px){
@@ -2006,6 +2014,7 @@ z-index: 1;
           transition: height 0.5s ease;
 
           .down_arrow {
+            
             position: absolute;
             bottom: -0%;
             right: 0%;
@@ -2019,6 +2028,7 @@ z-index: 1;
             align-items: center;
             justify-content: center;
             gap: 5px;
+            display: none;
           }
           .plan_title {
             h3 {
@@ -2085,16 +2095,18 @@ z-index: 1;
           }
           .plan_addon_service {
             width: 90%;
+            height: 100%;
             margin: 0rem 0px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
+            gap: 15px;
 
             .list {
               width: 100%;
 
-              height: 50px;
+             
               display: flex;
               vertical-align: middle;
               align-items: center;
@@ -2106,7 +2118,7 @@ z-index: 1;
                   font-size: 1.5rem;
                   height: 100%;
                   display: flex;
-                  height: 50px;
+                 
                   align-items: center;
                   justify-content: flex-start;
                   color: #64caa0;
@@ -2116,13 +2128,13 @@ z-index: 1;
                 }
               }
               .text {
-                height: 50px;
+               
                 p {
-                  font-size: 0.9rem;
-                  font-weight: 500;
-                  color: #4b4a4a;
+                  font-size: 0.8rem;
+                  font-weight: 550;
+                  color: #202020;
                   display: flex;
-                  height: 50px;
+              
                   align-items: center;
                   justify-content: flex-start;
                 }
@@ -2637,12 +2649,12 @@ z-index: 1;
 //plan expand actions::after
 
 #expand {
-  height: 1050px;
+  height: auto;
 
   transition: height 0.5s ease;
 }
 #default {
-  height: 620px;
+  height: auto;
   transition: height 0.5s ease;
 }
 //Slide 1 background anime
