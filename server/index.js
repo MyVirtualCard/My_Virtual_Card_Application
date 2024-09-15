@@ -54,6 +54,8 @@ app.use(cors({
 }));
 //Cors Policy work in any domain:
 // app.use(cors("*"));
+
+
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
