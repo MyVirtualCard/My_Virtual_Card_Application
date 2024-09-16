@@ -7,6 +7,7 @@ import React, {
   createContext,
 } from "react";
 import "./App.css";
+
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import FallBack from "./Fallback/FallBack";
 import User_Dashboard from "./Client_Dashboard/Components/User_Dashboard";
@@ -19,7 +20,6 @@ import { ToastContainer, toast, Bounce, Slide, Zoom } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import LandingPage from "./LandingPage/LandingPage";
-
 import Register from "./Authentication/Register/Register";
 import Login from "./Authentication/Login/Login";
 import VerifyOTP from "./Authentication/VerifyOTP/VerifyOTP";
@@ -47,8 +47,8 @@ import Manager from "./Client_Dashboard/All_VCards/Live_VCards/Manager.jsx";
 import Real_Estate from "./Client_Dashboard/All_VCards/Live_VCards/Real_Estate.jsx";
 import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parlor.jsx";
 import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
-//Import All component:
 
+//Import All component:
 const App = () => {
   let navigate = useNavigate();
   const [key, setKey] = useState(0);
@@ -74,6 +74,7 @@ const App = () => {
   let [ShowForm, setShowForm] = useState("Choose Your Plan");
   let [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   let [VCardCount, setVCardCount] = useState([]);
+  let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
   //URL_Alies
   let [URL_Alies, setURL_Alies] = useState();
 
@@ -89,18 +90,15 @@ const App = () => {
     let local_userName = JSON.parse(localStorage.getItem("userName"));
     let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
     let local_URL_Alies = localStorage.getItem("URL_Alies");
+    console.log(local_URL_Alies)
     if (local_userName) {
       return setUserName(local_userName);
     }
     if (local_mobileNumber) {
-      setMobileNumber(local_mobileNumber);
-    } else {
-      setMobileNumber();
+     return setMobileNumber(local_mobileNumber);
     }
-    if (local_URL_Alies) {
+    if (local_URL_Alies !=null) {
       setURL_Alies(local_URL_Alies);
-    } else {
-      setURL_Alies("demo");
     }
   }, [navigate]);
   useEffect(() => {
@@ -118,18 +116,23 @@ const App = () => {
       api
         .get(`/templateDetail/${URL_Alies}`)
         .then((res) => {
-          setURL_Alies(res.data.data[0].URL_Alies);
-          setCurrentTemplate(res.data.data[0].currentTemplate);
+        
+          if(res.data.data.length >0){
+            setURL_Alies(res.data?.data[0]?.URL_Alies);
+            setCurrentTemplate(res.data?.data[0]?.currentTemplate);
+          }
+        
+ 
         })
         .catch((error) => {
+          console.log(error);
           toast.error(error.response.data.message);
         });
     } catch (error) {
       console.log(error);
     }
   }, [navigate]);
-
-
+  console.log(URL_Alies,userName)
   return (
     <>
       <div className="App_container">
@@ -183,6 +186,7 @@ const App = () => {
             setResetPassToken,
             resetPassId,
             setResetPassId,
+            CurrentPlanActive, setCurrentPlanActive
           }}
         >
           <Suspense fallback={<FallBack />}>

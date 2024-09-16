@@ -22,13 +22,14 @@ const User_VCards = () => {
     toast.success("Link Copied!");
     setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
   };
-
   let {
     currentTemplate,
     setCurrentTemplate,
     setShowForm,
     currentPlan,
+    setCurrentPlan,
     activePlan,
+    setCurrentPlanActive ,
     setPlanActive,
     userName,
     user,
@@ -46,7 +47,6 @@ const User_VCards = () => {
     setVCardCount,
   } = useContext(Context);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
-  let [CurrentPlan, setCurrentPlan] = useState();
   const [key, setKey] = useState(0);
   var reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
@@ -77,26 +77,44 @@ const User_VCards = () => {
         setFormSubmitLoader(false);
       });
   }, [key]);
-  useEffect(() => {
-    api
-      .get(`/razorpay/specificUser/${userName}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      .then((res) => {
-        setCurrentPlan(res.data.data[0].currentPlan);
-        setPlanActive(res.data.data);
-        setShowForm("Basic Detail");
-        setStatus(res.data.data[0].status);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  //Free Plan
-  useEffect(() => {
-    api
+  async function razorpayFetchData() {
+    try {
+      await api
+        .get(`/razorpay/specificUser/${userName}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+   
+          if (res.data.data.length > 0) {
+            setCurrentPlanActive(res.data.data.length);
+            setStatus(res.data?.data[0]?.status);
+            setCurrentPlan(res.data.data[0]?.currentPlan);
+            setShowForm("VCard Templates");
+          } else {
+            setShowForm("Choose Your Plan");
+            setStatus(null);
+            // toast.error('Choose Your Plan First!')
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+
+          //    setErrorPopupOpen(true);
+          //    setErrorMessage(error.response.data.message);
+          //  setTimeout(()=>{
+          //   setErrorPopupOpen(false);
+          //  },5000)
+        });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
+  async function freePlanFetchData() {
+    await api
       .get(`/currentplan/specificAll/${userName}`, {
         headers: {
           "Content-Type": "application/json",
@@ -104,16 +122,20 @@ const User_VCards = () => {
         },
       })
       .then((res) => {
-        if (res.data.data.length > 0) {
-          setCurrentPlan(res.data.data[0]?.currentPlan);
+        if (res.data?.data?.length > 0) {
+          setCurrentPlanActive(res.data?.data?.length);
+          setStatus(res.data?.data[0]?.currentPlan);
+          setCurrentPlan(res.data?.data[0]?.currentPlan);
+          setShowForm("VCard Templates");
         } else {
-          // setShowForm("Choose Your Plan");
+          setStatus(null);
+          setShowForm("Choose Your Plan");
         }
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }
 
   useEffect(() => {
     try {
@@ -178,11 +200,10 @@ const User_VCards = () => {
           setFormSubmitLoader(false);
           setVcardDeleteToggle(false);
           localStorage.removeItem("URL_Alies");
-          let timer=setTimeout(()=>{
+          let timer = setTimeout(() => {
             setVCardCount([]);
-          },3000)
-          return ()=>clearTimeout(timer);
-    
+          }, 3000);
+          return () => clearTimeout(timer);
         })
         .catch((error) => {
           console.log(error);
@@ -205,8 +226,7 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-          console.log(res);
-          setLiveLinkActivate(res.data.data);
+          setLiveLinkActivate(res.data?.data);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -221,10 +241,13 @@ const User_VCards = () => {
 
   useEffect(() => {
     fetchCurrentManageContent();
+    razorpayFetchData();
+    // freePlanFetchData();
   }, []);
+
   return (
     <>
-      <div className="VCards_container">
+ <div className="VCards_container">
         {/* DeletePopup */}
         {VcardDeleteToggle ? (
           <div className="Vcard_delete_popupBox">
@@ -428,7 +451,7 @@ const User_VCards = () => {
 
                         <td className="fw-light plan">
                           <small>
-                            {CurrentPlan != null ? CurrentPlan : "No Plan"}
+                            {currentPlan != null ? currentPlan : "No Plan"}
                           </small>
                         </td>
 

@@ -30,7 +30,6 @@ import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 import { SHORTKEY } from "quill/modules/keyboard";
 
 const VCard_Form_Edit = () => {
-  
   let { URL_Alies } = useParams();
 
   const [LiveLinkActivate, setLiveLinkActivate] = useState([]);
@@ -50,24 +49,26 @@ const VCard_Form_Edit = () => {
     setCurrentPlan,
     ShowForm,
     setShowForm,
-    activePlan, setPlanActive,
+    activePlan,
+    setPlanActive,
     setURL_Alies,
 
     status,
     setStatus,
+    CurrentPlanActive, setCurrentPlanActive
   } = useContext(Context);
 
   let navigate = useNavigate();
-  let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
+
   let [formSliderToggle, setFormSliderToggle] = useState(false);
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
 
-  useEffect(() => {
+  async function razorpayFetchData() {
     try {
-      api
+      await api
         .get(`/razorpay/specificUser/${userName}`, {
           headers: {
             "Content-Type": "application/json",
@@ -75,14 +76,15 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
-          console.log(res.data?.data )
+          console.log(res.data?.data[0]);
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
-            setCurrentPlan(res.data.data[0]?.currentPlan)
+            setCurrentPlan(res.data.data[0]?.currentPlan);
             setShowForm("VCard Templates");
           } else {
             setShowForm("Choose Your Plan");
+            setStatus(null);
             // toast.error('Choose Your Plan First!')
           }
         })
@@ -98,9 +100,10 @@ const VCard_Form_Edit = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  }, []);
-  useEffect(() => {
-    api
+  }
+
+  async function freePlanFetchData() {
+    await api
       .get(`/currentplan/specificAll/${userName}`, {
         headers: {
           "Content-Type": "application/json",
@@ -108,21 +111,21 @@ const VCard_Form_Edit = () => {
         },
       })
       .then((res) => {
-
         if (res.data?.data?.length > 0) {
           setCurrentPlanActive(res.data?.data?.length);
           setStatus(res.data?.data[0]?.currentPlan);
-          setCurrentPlan(res.data?.data[0]?.currentPlan)
+          setCurrentPlan(res.data?.data[0]?.currentPlan);
           setShowForm("VCard Templates");
         } else {
-         
-          // setShowForm('Choose Your Plan')
+          setStatus(null);
+          setShowForm("Choose Your Plan");
         }
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }
+
   function handleFormShow(e) {
     setFormSliderToggle(false);
     if (CurrentPlanActive == 1) {
@@ -132,32 +135,6 @@ const VCard_Form_Edit = () => {
     }
   }
 
-  // useEffect(() => {
-  //   try {
-  //     api
-  //       .get(`/templateDetail/specific/${userName}`, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${user.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         // setURL_Alies(res.data.data[0].URL_Alies);
-
-  //         setCurrentTemplate(res.data.data[0].currentTemplate);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         // setErrorPopupOpen(true);
-  //         // setErrorMessage(error.response.data.message);
-  //         // setTimeout(()=>{
-  //         // setErrorPopupOpen(false)
-  //         // },5000)
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
   async function fetchCurrentManageContent() {
     setFormSubmitLoader(true);
     try {
@@ -183,6 +160,8 @@ const VCard_Form_Edit = () => {
   }
 
   useEffect(() => {
+    razorpayFetchData();
+    // freePlanFetchData();
     fetchCurrentManageContent();
   }, []);
 
@@ -256,11 +235,11 @@ const VCard_Form_Edit = () => {
                 id={ShowForm === "Basic Detail" ? "menu_active" : ""}
               >
                 <i
-                   className="bx bxs-user"
-                   style={{ color: "orange" }}
-                   id="Basic Detail"
-                 ></i>
-    
+                  className="bx bxs-user"
+                  style={{ color: "orange" }}
+                  id="Basic Detail"
+                ></i>
+
                 <small id="Basic Detail">Basic Detail</small>
               </div>
             ) : (
@@ -291,8 +270,11 @@ const VCard_Form_Edit = () => {
                 style={{ color: "green" }}
                 id="VCard Templates"
               ></i> */}
-             <i className='bx bxs-palette' style={{ color: "royalBlue" }}
-                id="VCard Templates"></i>
+              <i
+                className="bx bxs-palette"
+                style={{ color: "royalBlue" }}
+                id="VCard Templates"
+              ></i>
 
               <small id="VCard Templates">VCard Templates</small>
             </div>
@@ -306,8 +288,11 @@ const VCard_Form_Edit = () => {
                 style={{ color: "green" }}
                 id="Contact Details"
               ></i> */}
-             <i className='bx bxs-contact'  style={{ color: "green" }}
-                id="Contact Details" ></i>
+              <i
+                className="bx bxs-contact"
+                style={{ color: "green" }}
+                id="Contact Details"
+              ></i>
               <small id="Contact Details">Contact Details</small>
             </div>
             <div
@@ -534,7 +519,8 @@ const VCard_Form_Edit = () => {
             ) : (
               ""
             )} */}
-
+            {/* {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}
+            {ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""} */}
             {ShowForm === "VCard Templates" ? <Edit_Select_Template /> : ""}
             {ShowForm === "Contact Details" ? <Edit_ContactDetails /> : ""}
             {ShowForm === "Services" ? <Edit_Services /> : ""}
