@@ -90,7 +90,7 @@ const App = () => {
     let local_userName = JSON.parse(localStorage.getItem("userName"));
     let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
     let local_URL_Alies = localStorage.getItem("URL_Alies");
-    console.log(local_URL_Alies)
+   
     if (local_userName) {
       return setUserName(local_userName);
     }
@@ -132,7 +132,7 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
-  console.log(URL_Alies,userName)
+
   return (
     <>
       <div className="App_container">

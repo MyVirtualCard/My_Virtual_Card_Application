@@ -498,9 +498,12 @@ const Plan = () => {
           },
           config
         );
+    
         setTimeout(() => {
           reloadComponent();
-        }, 5000);
+          setPaymentPopup(false);
+          navigate(`/${userName}/uadmin/VCards`)
+        }, 500);
         setPaymentSuccessPopup(true);
         setPaymentPopup(false);
         setCurrentPlan(null);
