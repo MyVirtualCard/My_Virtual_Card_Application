@@ -142,12 +142,12 @@ const VCard_URL_Form = () => {
           toast.success(res.data.message);
           setURL_Alies(res.data.data.URL_Alies);
           localStorage.setItem("URL_Alies", res.data.data.URL_Alies);
-
           if (status == "successfull") {
             setShowForm("Basic Detail");
           }
 
           setTimeout(() => {
+           
             navigate(
               `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
             );

@@ -90,16 +90,21 @@ const App = () => {
     let local_userName = JSON.parse(localStorage.getItem("userName"));
     let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
     let local_URL_Alies = localStorage.getItem("URL_Alies");
-   
+
+    console.log()
     if (local_userName) {
       return setUserName(local_userName);
     }
     if (local_mobileNumber) {
      return setMobileNumber(local_mobileNumber);
     }
-    if (local_URL_Alies !=null) {
+    if (localStorage?.URL_Alies) {
       setURL_Alies(local_URL_Alies);
+    } else {
+      setURL_Alies("demo");
     }
+
+  
   }, [navigate]);
   useEffect(() => {
     const Localstorage_UserData = JSON.parse(localStorage?.getItem("datas"));
@@ -120,6 +125,7 @@ const App = () => {
           if(res.data.data.length >0){
             setURL_Alies(res.data?.data[0]?.URL_Alies);
             setCurrentTemplate(res.data?.data[0]?.currentTemplate);
+            return;
           }
         
  
@@ -132,7 +138,7 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
-
+console.log(URL_Alies)
   return (
     <>
       <div className="App_container">

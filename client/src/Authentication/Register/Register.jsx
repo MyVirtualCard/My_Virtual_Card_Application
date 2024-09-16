@@ -111,7 +111,7 @@ const Register = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
+    
           setRegisterLoader(false);
           toast.success(res.data.message);
           formik.values.password = "";

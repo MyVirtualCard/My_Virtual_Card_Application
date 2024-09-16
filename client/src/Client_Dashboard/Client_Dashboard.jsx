@@ -103,7 +103,7 @@ const Client_Dashboard = () => {
       console.log(err);
     }
   };
-
+console.log(URL_Alies)
   return (
     <>
       <div className="client_Dashboard_container">
@@ -361,6 +361,7 @@ const Client_Dashboard = () => {
                                     : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
                                 }
                                 alt="profile"
+                                key={index}
                               />
                             ) : (
                               ""
@@ -373,6 +374,7 @@ const Client_Dashboard = () => {
                                data.Profile
                              }`}
                                alt="profile"
+                               key={index}
                              />
                             ) : (
                               ""

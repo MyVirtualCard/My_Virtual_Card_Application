@@ -51,13 +51,14 @@ const VCard_Form_Edit = () => {
     setShowForm,
     activePlan,
     setPlanActive,
+    
     setURL_Alies,
 
     status,
     setStatus,
     CurrentPlanActive, setCurrentPlanActive
   } = useContext(Context);
-
+console.log(URL_Alies)
   let navigate = useNavigate();
 
   let [formSliderToggle, setFormSliderToggle] = useState(false);
@@ -164,7 +165,7 @@ const VCard_Form_Edit = () => {
     // freePlanFetchData();
     fetchCurrentManageContent();
   }, []);
-
+  console.log(URL_Alies)
   return (
     <>
       <div className="vcard_form_container">

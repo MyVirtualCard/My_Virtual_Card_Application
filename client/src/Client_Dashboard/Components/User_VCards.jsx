@@ -67,6 +67,8 @@ const User_VCards = () => {
       })
       .then((res) => {
         if (res.data.data.length > 0) {
+         
+          setURL_Alies(res.data.data[0].URL_Alies)
           setFormSubmitLoader(false);
           setVCardCount(res.data.data);
         } else {
@@ -87,6 +89,7 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
+          console.log(res)
    
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
@@ -147,9 +150,13 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
+          
           if (res.data.data.length > 0) {
-            setURL_Alies(res.data.data[0].URL_Alies);
-            setCurrentTemplate(res.data.data[0].currentTemplate);
+          
+              setURL_Alies(res.data?.data[0]?.URL_Alies);
+              setCurrentTemplate(res.data?.data[0]?.currentTemplate);
+            
+   
           }
         })
         .catch((error) => {
@@ -244,7 +251,7 @@ const User_VCards = () => {
     razorpayFetchData();
     // freePlanFetchData();
   }, []);
-
+ 
   return (
     <>
  <div className="VCards_container">

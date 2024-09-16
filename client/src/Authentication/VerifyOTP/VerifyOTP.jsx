@@ -39,7 +39,7 @@ let[  OTP_Value,
 
   let navigate = useNavigate();
 
-  let [Seconds, setSeconds] = useState("120");
+  let [Seconds, setSeconds] = useState("300");
 
   //VCard Slider
   const vcard_settings = {
@@ -60,7 +60,8 @@ let[  OTP_Value,
       }, 1000);
       return () => clearTimeout(timerId);
     }
-  }, [Seconds]);
+  }, [Seconds,ResendOTPToggle]);
+  
   const formatTime = (seconds) => {
     const minutes = Math.floor(Seconds / 60);
     const secs = Seconds % 60;
@@ -326,7 +327,7 @@ let[  OTP_Value,
                         <small>Resend OTP in -</small>
                         {formatTime(Seconds)}
                       </h4>
-                      {Seconds != 0 ? (
+                      {Seconds === 0 ? (
                         <>
                           <Link onClick={() => setResendOTPToggle(true)}>
                             <i className="bx bx-mobile"></i>SMS

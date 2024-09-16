@@ -346,7 +346,7 @@ const SendOtpVerificationMobileNumber = async (
       userName: userName,
       OTP: hashedOTP,
       createdAt: Date.now(),
-      expiredAt: Date.now() + 300000, // 3 minutes expire from now
+      expiredAt: Date.now() + 500000, // 5 minutes expire from now
     });
     let SavedOTP = await saveOTP.save();
     //Checking for already this email exist or not:
