@@ -787,18 +787,15 @@ END:VCARD
                             )}
                             <div className="service_detail">
                               <div className="service_title">
-                                <h4>Business analysis</h4>
+                                <h4>{data.ServiceName || 'No Service Title'}</h4>
                               </div>
-                              <a className="view_service">
+                              <a href={data.ServiceURL} className="view_service">
                                 <small>View Service</small>
                                 <i className="bx bx-link"></i>
                               </a>
                               <div className="service_summary">
                                 <p>
-                                  Lorem ipsum dolor sit amet consectetur
-                                  adipisicing elit. Nihil maiores hic sint,
-                                  natus eveniet voluptate perferendis. Eligendi
-                                  repellat libero natus?
+                                  {data.ServiceDescription || 'No Description'}
                                 </p>
                               </div>
                             </div>
@@ -806,74 +803,7 @@ END:VCARD
                         );
                       })}
 
-                      {/* <div className="service_list">
-                        <span className="material-symbols-outlined">
-                          design_services
-                        </span>
-                        <div className="service_detail">
-                          <div className="service_title">
-                            <h4>Effective Delegation</h4>
-                          </div>
-                          <a className="view_service">
-                            <small>View Service</small>
-                            <i className="bx bx-link"></i>
-                          </a>
-                          <div className="service_summary">
-                            <p>
-                              Lorem ipsum dolor sit amet consectetur adipisicing
-                              elit. Ducimus, nesciunt. Reiciendis nesciunt
-                              necessitatibus natus et expedita facilis accusamus
-                              non molestiae.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="service_list">
-                        <span className="material-symbols-outlined">
-                          local_convenience_store
-                        </span>
-
-                        <div className="service_detail">
-                          <div className="service_title">
-                            <h4>Clear Communication</h4>
-                          </div>
-                          <a className="view_service">
-                            <small>View Service</small>
-                            <i className="bx bx-link"></i>
-                          </a>
-                          <div className="service_summary">
-                            <p>
-                              Lorem ipsum dolor sit amet consectetur adipisicing
-                              elit. Delectus doloremque dolore rerum quo
-                              voluptatem id. Temporibus ducimus praesentium rem
-                              veritatis!
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="service_list">
-                        <span className="material-symbols-outlined">
-                          production_quantity_limits
-                        </span>
-
-                        <div className="service_detail">
-                          <div className="service_title">
-                            <h4>Managing risks</h4>
-                          </div>
-                          <a className="view_service">
-                            <small>View Service</small>
-                            <i className="bx bx-link"></i>
-                          </a>
-                          <div className="service_summary">
-                            <p>
-                              Lorem ipsum dolor, sit amet consectetur
-                              adipisicing elit. Facere quis quaerat aut
-                              architecto placeat incidunt non vel velit minus
-                              harum!
-                            </p>
-                          </div>
-                        </div>
-                      </div> */}
+                     
                     </Slide>
                   </div>
                 </div>
