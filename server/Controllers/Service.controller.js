@@ -194,10 +194,13 @@ export const PostServiceData = async (req, res) => {
               }
 
               // Use Sharp to compress the image
-              await sharp(ServiceImage)
+              if(req.files["ServiceImage"]){
+                await sharp(ServiceImage)
                 .resize(800) // Resize to a width of 800px, maintaining aspect ratio
                 .jpeg({ quality: 80 }) // Compress image to 80% quality (adjust as needed)
                 .toFile(compressedImagePath); // Save the compressed image
+              };
+      
         
 
               // Create a new image instance and save to MongoDB
