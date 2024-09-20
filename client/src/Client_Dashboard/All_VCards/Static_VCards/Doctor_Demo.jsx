@@ -455,7 +455,7 @@ const Doctor_Demo = () => {
       {/* Menu Navbar */}
       <div className="menu_navbar_box">
         <div className={`up_btn ${activeMenu === 'Home' ? 'hideUpArrow' :''}`}>
-          <CiSquareChevUp onClick={HandleMenuUp} />
+          <CiSquareChevUp onClick={HandleMenuUp} className="icon" />
         </div>
         <div className="all_menus">
           <div
@@ -570,7 +570,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         <div className={`down_btn ${activeMenu === 'Inquiry' ? 'hideDownArrow' :''}`}>
-          <CiSquareChevDown onClick={HandleMenuDown} />
+          <CiSquareChevDown onClick={HandleMenuDown} className="down" />
         </div>
       </div>
       <div className="doctor_box">
