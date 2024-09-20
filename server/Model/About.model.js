@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-let BasicDetailSchema=new mongoose.Schema({
+let AboutDetailSchema=new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.String,
         required: true,
@@ -11,29 +11,27 @@ let BasicDetailSchema=new mongoose.Schema({
         required:true,
         unique:true
       },
-    Email:{
+      CompanyName:{
+        type:String,
+        required:true
+      },
+    Category:{
         type:String,
         required:true 
     },
-    MobileNumber:{
+    Year:{
         type: String,
         required:true 
     },
-    AlternateEmail:{
-        type:String,
-   
-    },
-    AlternateMobileNumber:{
-        type:Number,
-   
-    },
-    Location:{
+    Bussiness:{
         type:String,
         required:true 
+   
     },
-    Website_URL:{
+    Specialities:{
         type:String,
-        required:false
+        required:true 
+   
     }
 },
 {timestamps:true}
@@ -41,6 +39,6 @@ let BasicDetailSchema=new mongoose.Schema({
 
 
 
-let BasicDetails=mongoose.model('BasicDetails',BasicDetailSchema);
+let AboutDetails=mongoose.model('AboutDetails',AboutDetailSchema);
 
-export default BasicDetails;
+export default AboutDetails;

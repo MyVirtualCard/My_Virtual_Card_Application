@@ -1,20 +1,20 @@
-import BasicDetails from "../Model/BasicDetail.model.js";
 
+import AboutDetails from "../Model/About.model.js";
 import Vcard_URL from "../Model/Vcard_URL.model.js";
 import Payment from "../Model/Payment.model.js";
 import currentPlan from "../Model/Plan.model.js";
 //DiskStorage:
 
 //Get Async allback function..All user basicdata fetching :
-export const getBasicAllData = async (req, res) => {
+export const getAboutAllData = async (req, res) => {
   try {
     let checkBasicDetail = await Vcard_URL.findOne({
       URL_Alies: req.params.URL_Alies,
     });
     if (!checkBasicDetail) {
-      return res.status(400).json({ message: "Basic Data Not Found!" });
+      return res.status(400).json({ message: "About Data Not Found!" });
     } else {
-      let getDatas = await BasicDetails.find();
+      let getDatas = await AboutDetails.find();
       return res.status(201).json({
         message: "Data Fetched sucessfully!",
         length: getDatas.length,
@@ -26,12 +26,14 @@ export const getBasicAllData = async (req, res) => {
   }
 };
 //Post Async allback function :
-export const postBasicAllData = async (req, res) => {
+export const postAboutAllData = async (req, res) => {
   if (
     !req.body.URL_Alies ||
-    !req.body.Email ||
-    !req.body.MobileNumber ||
-    !req.body.Location
+    !req.body.CompanyName ||
+    !req.body.Category ||
+    !req.body.Year ||
+    !req.body.Bussiness ||
+    !req.body.Specialities 
   ) {
     return res.status(401).json({ message: "All * fields Required" });
   }
@@ -41,7 +43,7 @@ export const postBasicAllData = async (req, res) => {
   let checkFreePlan = await currentPlan.find({
     user: req.user.userName,
   });
-  console.log(checkFreePlan)
+  
   if (!checkCurrentPlan || !checkFreePlan) {
     return res.status(400).json({ message: "Plan not be there!" });
   };
@@ -61,7 +63,7 @@ export const postBasicAllData = async (req, res) => {
             .status(400)
             .json({ message: "This VCard URL doesn't exist!" });
         } else {
-          let checkBasicData = await BasicDetails.findOne({
+          let checkBasicData = await AboutDetails.findOne({
             URL_Alies: req.params.URL_Alies,
           });
   
@@ -71,18 +73,17 @@ export const postBasicAllData = async (req, res) => {
             let data = {
               user: req.user.userName,
               URL_Alies: req.params.URL_Alies,
-              Email: req.body.Email,
-              MobileNumber: req.body.MobileNumber,
-              AlternateEmail: req.body.AlternateEmail,
-              AlternateMobileNumber: req.body.AlternateMobileNumber,
-              Location: req.body.Location,
-              Website_URL: req.body.Website_URL,
+              CompanyName:req.body.CompanyName,
+              Category:req.body.Category ,
+              Year:req.body.Year ,
+              Bussiness:req.body.Bussiness ,
+              Specialities: req.body.Specialities
             };
-            let createDatas = new BasicDetails(data);
+            let createDatas = new AboutDetails(data);
             try {
               await createDatas.save();
               return res.status(201).json({
-                message: "BasicDetail's saved!",
+                message: "About Detail's saved!",
                 length: createDatas.length,
                 data: createDatas,
               });
@@ -104,7 +105,7 @@ export const postBasicAllData = async (req, res) => {
 //Read or get Specific User basic Data  :
 export const readSpecificUserAllData = async (req, res) => {
   try {
-    let getSpecificData = await BasicDetails.find({
+    let getSpecificData = await AboutDetails.find({
       URL_Alies: req.params.URL_Alies,
     });
 
@@ -127,7 +128,7 @@ export const updateSpecificUserData = async (req, res) => {
     let { id } = req.params;
     let data = req.body;
 
-    let updateSpecificData = await BasicDetails.findOneAndUpdate(
+    let updateSpecificData = await AboutDetails.findOneAndUpdate(
       { URL_Alies: req.params.URL_Alies },
       data
     );
@@ -137,7 +138,7 @@ export const updateSpecificUserData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "BasicDetail's Updated!", data: updateSpecificData });
+        .json({ message: "About Detail's Updated!", data: updateSpecificData });
     }
   } catch (error) {
     console.log(error)
@@ -148,7 +149,7 @@ export const updateSpecificUserData = async (req, res) => {
 export const readSpecificIdUserData = async (req, res) => {
   try {
     let { id } = req.params;
-    let getSpecificIdData = await BasicDetails.findById(id);
+    let getSpecificIdData = await AboutDetails.findById(id);
 
     if (!getSpecificIdData) {
       res.status(400).json({ message: "Data Not Found!" });
@@ -166,7 +167,7 @@ export const readSpecificIdUserData = async (req, res) => {
 //Delete Specific User Bssic detail All data deleted By using user Id:
 export const deleteSpecificUserAllData = async (req, res) => {
   try {
-    let deleteSpecificData = await BasicDetails.deleteMany({
+    let deleteSpecificData = await AboutDetails.deleteMany({
       URL_Alies: req.params.URL_Alies,
     });
     if (!deleteSpecificData) {
@@ -174,7 +175,7 @@ export const deleteSpecificUserAllData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "BasicDetail's Deleted!", data: deleteSpecificData });
+        .json({ message: "About Detail's Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -188,14 +189,14 @@ export const updateSpecificUserData_Id = async (req, res) => {
   try {
     let { id } = req.params;
     let data = req.body;
-    let updateSpecificData = await BasicDetails.findByIdAndUpdate(id, data);
+    let updateSpecificData = await AboutDetails.findByIdAndUpdate(id, data);
 
     if (!updateSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
       res
         .status(201)
-        .json({ message: "BasicDetail Updated!", data: updateSpecificData });
+        .json({ message: "About Data Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -208,14 +209,14 @@ export const deleteSpecificUserData = async (req, res) => {
   try {
     let { id } = req.params;
 
-    let deleteSpecificData = await BasicDetails.findByIdAndDelete(id);
+    let deleteSpecificData = await AboutDetails.findByIdAndDelete(id);
 
     if (!deleteSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
       res
         .status(201)
-        .json({ message: "BasicDetail's Deleted!", data: deleteSpecificData });
+        .json({ message: "About Detail's Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

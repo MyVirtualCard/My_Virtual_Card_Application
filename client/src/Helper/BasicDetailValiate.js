@@ -5,17 +5,6 @@ import * as Yup from 'yup';
 const isEmptyOrWhitespace = str => !str || /^\s*$/.test(str);  
 
 export let BasicDetailValidateShema=Yup.object({
-  
-  FirstName:Yup.string().test(
-    'isEmptyOrWhitespace',
-    'Content cannot be empty or just whitespace',
-    value => !isEmptyOrWhitespace(value)
-  ).min(3,'Min 3-char required!').required('FirstName is required!'),
-  LastName:Yup.string().test(
-    'isEmptyOrWhitespace',
-    'Content cannot be empty or just whitespace',
-    value => !isEmptyOrWhitespace(value)
-  ).min(1,'Min 1-char required!').required('LastName is required!'),
   Email:Yup.string().trim().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
@@ -31,12 +20,12 @@ export let BasicDetailValidateShema=Yup.object({
   return true
     } 
   ),
-  MobileNumber:Yup.number().test(
+  MobileNumber:Yup.string().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
-  ).min(10,'Min 10-digit required!').required('MobileNumber is required!'),
-  AlternateMobileNumber:Yup.number().test(
+  ).min(10,'MobileNumber must be 10 digits !').required('MobileNumber is required!').max(10,'Invalid MobileNumber!'),
+  AlternateMobileNumber:Yup.string().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
     value => {
@@ -45,17 +34,23 @@ export let BasicDetailValidateShema=Yup.object({
       }
   return true;
     }
-  ).min(10,'Min 10-digit required!'),
+  ).min(10,'Alternate MobileNumber must be 10 digits !').max(10,'Invalid Alternate MobileNumber!'),
+
   Location:Yup.string().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
     value => !isEmptyOrWhitespace(value)
-  ).required('Location is required!'),
-  Profession:Yup.string().test(
+  ).required('Address is required!'),
+  Website_URL:Yup.string().test(
     'isEmptyOrWhitespace',
     'Content cannot be empty or just whitespace',
-    value => !isEmptyOrWhitespace(value)
-  ).required('Profession is required!'),
+    value => {
+      if(value){
+        return !isEmptyOrWhitespace(value)
+      }
+  return true;
+    }
+  ).min(5,'Min 5-letters required!'),
 
 }
 );

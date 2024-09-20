@@ -46,7 +46,7 @@ const SocialMedias = () => {
             setWhatsUp(res.data.data[0].WhatsUp);
             setInstagram(res.data.data[0].Instagram);
             setTwiter(res.data.data[0].Twiter);
-            setWebsite(res.data.data[0].Website);
+        
             setYouTube(res.data.data[0].YouTube);
             setGithub(res.data.data[0].Github);
             setFormSubmitLoader(false);
@@ -81,7 +81,7 @@ const SocialMedias = () => {
       WhatsUp,
       Instagram,
       Twiter,
-      Website,
+     
       YouTube,
       Github,
     };
@@ -125,7 +125,7 @@ const SocialMedias = () => {
       WhatsUp,
       Instagram,
       Twiter,
-      Website,
+   
       YouTube,
       Github,
     },
@@ -201,7 +201,7 @@ const SocialMedias = () => {
           <form action="" onSubmit={UpdateToggle ? handleFormUpdate : formik.handleSubmit}>
             <div className="form_group ">
               <label htmlFor="Facebook">
-                <i className="bx bxl-facebook-square"></i>
+                 Facebook
               </label>
               <input
                 type="text"
@@ -211,10 +211,13 @@ const SocialMedias = () => {
                 value={UpdateToggle ? Facebook : formik.values.Facebook}
                 onChange={UpdateToggle ?(e) => setFacebook(e.target.value) : formik.handleChange  }
               />
+              <div className="icon">
+              <i className="bx bxl-facebook-square"></i>
+              </div>
             </div>
             <div className="form_group">
               <label htmlFor="WhatsUp">
-                <i className="bx bxl-whatsapp-square"></i>
+              WhatsApp
                 <sup>(*mandatory)</sup>
               </label>
               <input
@@ -231,11 +234,14 @@ const SocialMedias = () => {
                     : "input_success"
                 }
               />
+              <div className="icon">
+              <i className="bx bxl-whatsapp-square"></i>
+              </div>
                     <div className="error">{formik.errors.WhatsUp}</div>
             </div>
             <div className="form_group">
               <label htmlFor="Instagram">
-                <i className="bx bxl-instagram-alt"></i>
+            Instagram
               </label>
               <input
                 type="text"
@@ -247,10 +253,13 @@ const SocialMedias = () => {
                 onChange={UpdateToggle ?(e) => setInstagram(e.target.value) : formik.handleChange  }
                
               />
+              <div className="icon">
+              <i className="bx bxl-instagram-alt"></i>
+              </div>
             </div>
             <div className="form_group">
               <label htmlFor="LinkedIn">
-                <i className="bx bxl-linkedin-square"></i>
+              LinkedIn
               </label>
               <input
                 type="text"
@@ -261,10 +270,13 @@ const SocialMedias = () => {
          
                 onChange={UpdateToggle ?(e) => setLinkedIn(e.target.value) : formik.handleChange  }
               />
+              <div className="icon">
+              <i className="bx bxl-linkedin-square"></i>
+              </div>
             </div>
             <div className="form_group">
               <label htmlFor="Twiter">
-                <i className="bx bxl-twitter"></i>
+            Twiter
               </label>
               <input
                 type="text"
@@ -275,10 +287,13 @@ const SocialMedias = () => {
           
                 onChange={UpdateToggle ?(e) => setTwiter(e.target.value) : formik.handleChange  }
               />
+              <div className="icon">
+              <i className="bx bxl-twitter"></i>
+              </div>
             </div>
             <div className="form_group">
               <label htmlFor="Github">
-                <i className="bx bxl-github"></i>
+               Github
               </label>
               <input
                 type="text"
@@ -289,10 +304,13 @@ const SocialMedias = () => {
                
                 onChange={UpdateToggle ?(e) => setGithub(e.target.value) : formik.handleChange  }
               />
+              <div className="icon">
+              <i className="bx bxl-github"></i>
+              </div>
             </div>
             <div className="form_group">
               <label htmlFor="YouTube">
-                <i className="bx bxl-youtube"></i>
+            YoutTube
               </label>
               <input
                 type="text"
@@ -303,19 +321,11 @@ const SocialMedias = () => {
            
                 onChange={UpdateToggle ?(e) => setYouTube(e.target.value) : formik.handleChange  }
               />
+              <div className="icon">
+              <i className="bx bxl-youtube"></i>
+              </div>
             </div>
-            <div className="form_group">
-              <label htmlFor="Website">
-                <i className="bx bx-world" style={{ color: "grey" }}></i>
-              </label>
-              <input
-                type="text"
-                placeholder="Your website link"
-                value={UpdateToggle ? Website : formik.values.Website}
-           
-                onChange={UpdateToggle ?(e) => setWebsite(e.target.value) : formik.handleChange  }
-              />
-            </div>
+       
             <div className="form_submit_actions">
               <div className="save">
                 {UpdateToggle ? (

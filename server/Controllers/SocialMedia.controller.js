@@ -43,7 +43,7 @@ export const PostSocialMediaData = async (req, res) => {
         const newSocialMedia = new SocialMediaModel({
           user: req.user.userName,
           URL_Alies: req.params.URL_Alies,
-          Website: req.body.Website,
+      
           Facebook: req.body.Facebook,
           LinkedIn: req.body.LinkedIn,
           WhatsUp: req.body.WhatsUp,
@@ -74,7 +74,7 @@ export const PostSocialMediaData = async (req, res) => {
         const newSocialMedia = new SocialMediaModel({
           user: req.user.userName,
           URL_Alies: req.params.URL_Alies,
-          Website: req.body.Website,
+ 
           Facebook: req.body.Facebook,
           LinkedIn: req.body.LinkedIn,
           WhatsUp: req.body.WhatsUp,

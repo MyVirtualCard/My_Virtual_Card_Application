@@ -331,7 +331,7 @@ const BasicForm = () => {
       <div className="basicform_container">
         <div className="form1_container_box">
           <form onSubmit={handleURLFormUpdate}>
-            <div className="form_group">
+            <div className="form_group url_group">
               <label htmlFor="URL_Alies">
                 VCard URL <sup>*</sup>
               </label>
@@ -339,7 +339,7 @@ const BasicForm = () => {
                 type="text"
                 placeholder="Enter VCard URL"
                 value={URL_Alies}
-                onChange={(e) => setURL_Alies(e.target.value)}
+                // onChange={(e) => setURL_Alies(e.target.value)}
                 // {...formik.getFieldProps("URL_Alies", URL_Alies)}
               />
             </div>

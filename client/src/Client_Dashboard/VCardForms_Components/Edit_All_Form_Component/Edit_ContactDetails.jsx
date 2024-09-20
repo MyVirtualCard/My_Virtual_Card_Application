@@ -39,8 +39,7 @@ const Edit_ContactDetails = () => {
 
   const [Profile, setProfile] = useState();
 
-  let [Banner, setBanner] = useState();
-  let [BannerName, setBannerName] = useState("");
+let [Website_URL,setWebsite_URL]=useState();
   let [FirstName, setFirstName] = useState();
   let [LastName, setLastName] = useState();
   let [Email, setEmail] = useState();
@@ -84,14 +83,12 @@ const Edit_ContactDetails = () => {
         .then((res) => {
           if (res.data.data.length == 1) {
             setUpdateButtonToggle(true);
-            setFirstName(res.data.data[0].FirstName);
-            setLastName(res.data.data[0].LastName);
             setEmail(res.data.data[0].Email);
             setMobileNumber(res.data.data[0].MobileNumber);
             setAlternateEmail(res.data.data[0].AlternateEmail);
             setAlternateMobileNumber(res.data.data[0].AlternateMobileNumber);
             setLocation(res.data.data[0].Location);
-            setProfession(res.data.data[0].Profession);
+            setWebsite_URL(res.data.data[0].Website_URL);
             setInquiryToggleSwitch(res.data.data[0].InquiryToggleSwitch);
             setQRToggleSwitch(res.data.data[0].QRToggleSwitch);
             setAppoinmentToggleSwitch(res.data.data[0].AppoinmentToggleSwitch);
@@ -175,14 +172,12 @@ const Edit_ContactDetails = () => {
   async function handleBasicFormUpdate(e) {
     e.preventDefault();
     let data = {
-      FirstName,
-      LastName,
       Email,
       MobileNumber,
       AlternateEmail,
       AlternateMobileNumber,
       Location,
-      Profession,
+      Website_URL,
       InquiryToggleSwitch,
       QRToggleSwitch,
       AppoinmentToggleSwitch,
@@ -201,7 +196,7 @@ const Edit_ContactDetails = () => {
           reloadComponent();
           toast.success(res.data.message);
           setTimeout(()=>{
-            setShowForm('Social Link - Website')
+            setShowForm('About Details')
           },2000)
           setFormSubmitLoader(false);
         })
@@ -216,14 +211,12 @@ const Edit_ContactDetails = () => {
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
-      FirstName: "",
-      LastName: "",
       Email: "",
       MobileNumber: "",
       AlternateEmail: "",
       AlternateMobileNumber: "",
       Location: "",
-      Profession: "",
+      Website_URL: "",
     },
 
     validationSchema: BasicDetailValidateShema,
@@ -263,7 +256,7 @@ const Edit_ContactDetails = () => {
       <div className="contactForm_container">
         <div className="ContactForm_container_box">
         <div className="form2_title">
-              <h4>VCard Details</h4>
+              <h4>Contact Details</h4>
             </div>
           <form
             onSubmit={
@@ -271,66 +264,9 @@ const Edit_ContactDetails = () => {
             }
             className="Form2"
           >
-      
-            <div className="form_group">
-              <label htmlFor="FirstName">
-                First Name<sup>*</sup>
-              </label>
-              <input
-                type="text"
-                id="FirstName"
-                name="FirstName"
-                placeholder="Enter Your FirstName"
-                onBlur={formik.handleBlur}
-                onChange={
-                  UpdateButtonToggle
-                    ? (e) => setFirstName(e.target.value)
-                    : formik.handleChange
-                }
-                value={UpdateButtonToggle ? FirstName : formik.values.FirstName}
-                // className={
-                //   formik.errors.FirstName && formik.touched.FirstName
-                //     ? "input_error"
-                //     : "input_success"
-                // }
-              />
-              {UpdateButtonToggle ? (
-                ""
-              ) : (
-                <div className="error">{formik.errors.FirstName}</div>
-              )}
-            </div>
-            <div className="form_group">
-              <label htmlFor="lastName">
-                Last Name<sup>*</sup>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Your LastName"
-                name="LastName"
-                id="LastName"
-                onBlur={formik.handleBlur}
-                onChange={
-                  UpdateButtonToggle
-                    ? (e) => setLastName(e.target.value)
-                    : formik.handleChange
-                }
-                value={UpdateButtonToggle ? LastName : formik.values.LastName}
-                // className={
-                //   formik.errors.LastName && formik.touched.LastName
-                //     ? "input_error"
-                //     : "input_success"
-                // }
-              />
-              {UpdateButtonToggle ? (
-                ""
-              ) : (
-                <div className="error">{formik.errors.LastName}</div>
-              )}
-            </div>
-            <div className="form_group">
+         <div className="form_group">
               <label htmlFor="email">
-                Email<sup>*</sup>
+                Primary Email<sup>*</sup>
               </label>
               <input
                 type="email"
@@ -353,35 +289,6 @@ const Edit_ContactDetails = () => {
                 ""
               ) : (
                 <div className="error">{formik.errors.Email}</div>
-              )}
-            </div>
-            <div className="form_group">
-              <label htmlFor="email">
-                Phone Number<sup>*</sup>
-              </label>
-              <input
-                type="tel"
-                placeholder="Enter Your Phone Number"
-                name="MobileNumber"
-                onBlur={formik.handleBlur}
-                onChange={
-                  UpdateButtonToggle
-                    ? (e) => setMobileNumber(e.target.value)
-                    : formik.handleChange
-                }
-                value={
-                  UpdateButtonToggle ? MobileNumber : formik.values.MobileNumber
-                }
-                // className={
-                //   formik.errors.MobileNumber && formik.touched.MobileNumber
-                //     ? "input_error"
-                //     : "input_success"
-                // }
-              />
-              {UpdateButtonToggle ? (
-                ""
-              ) : (
-                <div className="error">{formik.errors.MobileNumber}</div>
               )}
             </div>
             <div className="form_group">
@@ -413,13 +320,45 @@ const Edit_ContactDetails = () => {
                 <div className="error">{formik.errors.AlternateEmail}</div>
               )}
             </div>
-            {/* <div className="form_group">
-              <label htmlFor="alternateEmail">Alternate Phone</label>
+           
+         
+            <div className="form_group">
+              <label htmlFor="email">
+                MobileNumber<sup>*</sup>
+              </label>
+              <input
+                type="tel"
+                placeholder="Enter Your MobileNumber"
+                name="MobileNumber"
+                onBlur={formik.handleBlur}
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setMobileNumber(e.target.value)
+                    : formik.handleChange
+                }
+                value={
+                  UpdateButtonToggle ? MobileNumber : formik.values.MobileNumber
+                }
+                // className={
+                //   formik.errors.MobileNumber && formik.touched.MobileNumber
+                //     ? "input_error"
+                //     : "input_success"
+                // }
+              />
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">{formik.errors.MobileNumber}</div>
+              )}
+            </div>
+      
+            <div className="form_group">
+              <label htmlFor="alternateEmail">Alternate MobileNumber</label>
               <input
                 id="AlternateMobileNumber"
                 name="AlternateMobileNumber"
                 type="tel"
-                placeholder="Alternate Phone"
+                placeholder="Alternate MobileNumber"
                 onChange={
                   UpdateButtonToggle
                     ? (e) => setAlternateMobileNumber(e.target.value)
@@ -438,22 +377,48 @@ const Edit_ContactDetails = () => {
                   {formik.errors.AlternateMobileNumber}
                 </div>
               )}
-            </div> */}
+            </div>
             <div className="form_group">
-              <label htmlFor="location">
-                Location<sup>*</sup>
-              </label>
+              <label htmlFor="Location">Permanent Address<sup>*</sup></label>
               <input
-                type="text"
-                placeholder="Location"
+                id="Location"
                 name="Location"
-                onBlur={formik.handleBlur}
+                type="text"
+                placeholder="Enter Your Address"
                 onChange={
                   UpdateButtonToggle
                     ? (e) => setLocation(e.target.value)
                     : formik.handleChange
                 }
-                value={UpdateButtonToggle ? Location : formik.values.Location}
+                value={
+                  UpdateButtonToggle
+                    ? Location
+                    : formik.values.Location
+                }
+              />
+              {UpdateButtonToggle ? (
+                ""
+              ) : (
+                <div className="error">
+                  {formik.errors.Location}
+                </div>
+              )}
+            </div>
+            <div className="form_group">
+              <label htmlFor="Website_URL">
+                Website URL
+              </label>
+              <input
+                type="text"
+                placeholder="Eg : https://mysite.com"
+                name="Website_URL"
+                onBlur={formik.handleBlur}
+                onChange={
+                  UpdateButtonToggle
+                    ? (e) => setWebsite_URL(e.target.value)
+                    : formik.handleChange
+                }
+                value={UpdateButtonToggle ? Website_URL : formik.values.Website_URL}
 
                 // className={
                 //   formik.errors.Location && formik.touched.Location
@@ -464,40 +429,10 @@ const Edit_ContactDetails = () => {
               {UpdateButtonToggle ? (
                 ""
               ) : (
-                <div className="error">{formik.errors.Location}</div>
+                <div className="error">{formik.errors.Website_URL}</div>
               )}
             </div>
-            <div className="form_group">
-              <label htmlFor="job">
-                Your Profession<sup>*</sup>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Job Title"
-                name="Profession"
-                onBlur={formik.handleBlur}
-                onChange={
-                  UpdateButtonToggle
-                    ? (e) => setProfession(e.target.value)
-                    : formik.handleChange
-                }
-                value={
-                  UpdateButtonToggle ? Profession : formik.values.Profession
-                }
-
-                // className={
-                //   formik.errors.Profession && formik.touched.Profession
-                //     ? "input_error"
-                //     : "input_success"
-                // }
-              />
-              {UpdateButtonToggle ? (
-                ""
-              ) : (
-                <div className="error">{formik.errors.Profession}</div>
-              )}
-            </div>
-
+    
             <div className="form_submit_actions">
               {UpdateButtonToggle ? (
                 <button className="save" type="submit">

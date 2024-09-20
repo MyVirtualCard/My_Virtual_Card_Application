@@ -11,9 +11,6 @@ let SocialMediaDetailSchema = new mongoose.Schema(
       required:true,
       unique:true
     },
-    Website: {
-      type: String,
-    },
     Facebook: {
       type: String,
       // unique:true

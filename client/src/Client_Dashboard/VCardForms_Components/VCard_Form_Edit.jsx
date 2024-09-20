@@ -28,6 +28,7 @@ import Edit_QR_Code from "./Edit_All_Form_Component/Edit_QR_Code";
 import Edit_GoogleMap from "./Edit_All_Form_Component/Edit_GoogleMap";
 import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 import { SHORTKEY } from "quill/modules/keyboard";
+import Edit_About from "./Edit_All_Form_Component/Edit_About";
 
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
@@ -51,14 +52,15 @@ const VCard_Form_Edit = () => {
     setShowForm,
     activePlan,
     setPlanActive,
-    
+
     setURL_Alies,
 
     status,
     setStatus,
-    CurrentPlanActive, setCurrentPlanActive
+    CurrentPlanActive,
+    setCurrentPlanActive,
   } = useContext(Context);
-console.log(URL_Alies)
+  console.log(URL_Alies);
   let navigate = useNavigate();
 
   let [formSliderToggle, setFormSliderToggle] = useState(false);
@@ -165,7 +167,7 @@ console.log(URL_Alies)
     // freePlanFetchData();
     fetchCurrentManageContent();
   }, []);
-  console.log(URL_Alies)
+  console.log(URL_Alies);
   return (
     <>
       <div className="vcard_form_container">
@@ -295,6 +297,18 @@ console.log(URL_Alies)
                 id="Contact Details"
               ></i>
               <small id="Contact Details">Contact Details</small>
+            </div>
+            <div
+              className="menu_item"
+              onClick={handleFormShow}
+              id={ShowForm === "About Details" ? "menu_active" : ""}
+            >
+              <i
+                className="bx bxs-wink-smile"
+                style={{ color: "gray" }}
+                id="About Details"
+              ></i>
+              <small id="About Details">About Details</small>
             </div>
             <div
               className="menu_item"
@@ -520,10 +534,10 @@ console.log(URL_Alies)
             ) : (
               ""
             )} */}
-            {/* {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}
-            {ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""} */}
+
             {ShowForm === "VCard Templates" ? <Edit_Select_Template /> : ""}
             {ShowForm === "Contact Details" ? <Edit_ContactDetails /> : ""}
+            {ShowForm === "About Details" ? <Edit_About /> : ""}
             {ShowForm === "Services" ? <Edit_Services /> : ""}
             {ShowForm === "Products" ? <Edit_Products /> : ""}
             {ShowForm === "Galleries" ? <Edit_Gallery /> : ""}

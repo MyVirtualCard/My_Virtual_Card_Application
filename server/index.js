@@ -9,8 +9,9 @@ import Razorpay from "razorpay";
 // Import All Routes
 import AuthRoute from "./Routes/Auth.route.js";
 import VerifyOTP from "./Routes/Verify_OTP.route.js";
-import VCardURL_Route from './Routes/VCard_URL.route.js';
+import VCardURL_Route from "./Routes/VCard_URL.route.js";
 import BasicDetailRoute from "./Routes/BasicDetail.route.js";
+import AboutDetailRoute from "./Routes/About.route.js";
 import TemplateRoute from "./Routes/VCardTemplate.route.js";
 import ServiceDetailRoute from "./Routes/Services.route.js";
 import ProductDetailRoute from "./Routes/Product.route.js";
@@ -26,11 +27,11 @@ import PrivacyPolicyRoute from "./Routes/PrivacyPolicy.route.js";
 import AllDataRoute from "./Routes/AllData_Fetch_At_Single_API.route.js";
 import AllDataDeleteRoute from "./Routes/AllData_Delete_At_Single_ApI.route.js";
 import RazorPaymentRoute from "./Routes/Razorpayment.router.js";
-import FeedbackRoute from './Routes/Feedback.route.js';
-import GoogleMapRoute from './Routes/GoogleMap.route.js';
-import ManageContentRoute from './Routes/ManageContent.route.js';
-import InquiryRoute from './Routes/Inquiry.route.js';
-import AppoinmentRoute from './Routes/Appoinment.route.js'
+import FeedbackRoute from "./Routes/Feedback.route.js";
+import GoogleMapRoute from "./Routes/GoogleMap.route.js";
+import ManageContentRoute from "./Routes/ManageContent.route.js";
+import InquiryRoute from "./Routes/Inquiry.route.js";
+import AppoinmentRoute from "./Routes/Appoinment.route.js";
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -44,7 +45,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 //This will help you to allow file upload size limit
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 // Allow requests from your frontend domain
 
 // app.use(cors({
@@ -60,7 +61,6 @@ export const instance = new Razorpay({
   key_secret: process.env.RAZORPAY_API_SECRET,
 });
 
-
 // Route Middleware
 app.use("/api/user", AuthRoute);
 app.use("/api/user", VerifyOTP);
@@ -71,6 +71,7 @@ app.get("/razorpay/getkey", (req, res) => {
 });
 app.use("/currentplan", PlanDetailRoute);
 app.use("/basicDetail", BasicDetailRoute);
+app.use("/aboutDetail", AboutDetailRoute);
 app.use("/templateDetail", TemplateRoute);
 app.use("/serviceDetail", ServiceDetailRoute);
 app.use("/productDetail", ProductDetailRoute);
@@ -85,10 +86,10 @@ app.use("/privacyPolicyDetail", PrivacyPolicyRoute);
 app.use("/googlemapDetail", GoogleMapRoute);
 app.use("/vcard", AllDataRoute);
 app.use("/vcard", AllDataDeleteRoute);
-app.use('/feedback',FeedbackRoute);
-app.use('/manageContent',ManageContentRoute);
-app.use('/inquiry',InquiryRoute);
-app.use('/appoinment',AppoinmentRoute);
+app.use("/feedback", FeedbackRoute);
+app.use("/manageContent", ManageContentRoute);
+app.use("/inquiry", InquiryRoute);
+app.use("/appoinment", AppoinmentRoute);
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");
