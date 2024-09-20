@@ -2652,6 +2652,10 @@ $error_text_color: tomato;
 
     background-color: $root_backgound;
     // z-index: 100;
+
+    @media screen and (max-width:650px){
+      display: none !important;
+    }
   }
   &::-webkit-scrollbar-thumb {
     width: 6px !important;
