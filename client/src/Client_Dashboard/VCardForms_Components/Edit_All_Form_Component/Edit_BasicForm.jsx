@@ -92,7 +92,7 @@ const BasicForm = () => {
   let [BannerType, setBannerType] = useState();
   let [imagePath, setImagePath] = useState(null);
   const [key, setKey] = useState(0);
-console.log(Description)
+  console.log(Description);
   const reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
@@ -101,7 +101,7 @@ console.log(Description)
     div.innerHTML = html;
     return div.textContent || div.innerText || "";
   };
-//Server API
+  //Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
@@ -119,15 +119,15 @@ console.log(Description)
           setProfilePreview(null);
           setBannerPreview(null);
           setVCardName(res.data.data.VCardName);
-          setOccupation(res.data.data.Occupation);
-          setDescription(res.data.data.Description);
+          setFirstName(res.data.data.FirstName);
+          setLastName(res.data.data.LastName);
+          setProfession(res.data.data.Profession);
           setProfile(res.data.data.Profile);
           setBanner(res.data.data.Banner);
           setProfileType(res.data.data.ProfileType);
           setBannerType(res.data.data.BannerType);
           setProfileAddress(res.data.data.ProfileAddress);
           setBannerAddress(res.data.data.BannerAddress);
-
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -202,7 +202,9 @@ console.log(Description)
     let data = {
       URL_Alies,
       VCardName,
-      Description: Description,
+      FirstName,
+      LastName,
+      Profession,
       Profile,
       Banner,
       ProfileType,
@@ -215,11 +217,13 @@ console.log(Description)
     formData.append("Banner", Banner);
     formData.append("URL_Alies", URL_Alies);
     formData.append("VCardName", VCardName);
+    formData.append("FirstName", FirstName);
+    formData.append("LastName", LastName);
+    formData.append("Profession", Profession);
     formData.append("BannerType", BannerType);
     formData.append("ProfileType", ProfileType);
     formData.append("ProfileAddress", ProfileAddress);
     formData.append("BannerAddress", BannerAddress);
-    formData.append("Description", Description);
     setFormSubmitLoader(true);
     try {
       api
@@ -341,47 +345,84 @@ console.log(Description)
             </div>
             <div className="form_group">
               <label htmlFor="VCardName">
-                VCard Name <sup>*</sup>
+                VCard Type <sup>*</sup>
+              </label>
+              <select
+                className='VCardName'
+                name="VCardName"
+                id="VCardName"
+             
+                value={VCardName}
+                onChange={(e) => setVCardName(e.target.value)}
+              >
+                <option value="" label="Select Your Vcard Type" />
+                <option value="Software_Developer">Software_Developer</option>
+                <option value="Real_Estate">Real_Estate_Bussiness</option>
+                <option value="Software_Company">Software_Company</option>
+                <option value="Small_Scale_Shop">Small_Scale_Shop</option>
+                <option value="Medical_Field">Medical_Field</option>
+                <option value="Hardware_Shop">Hardware_Shop</option>
+                <option value="Electrical_Shop">Electrical_Shop</option>
+                <option value="Plumber_or_Fitter">Plumber_or_Fitter</option>
+                <option value="Grocery_Store">Grocery_Store</option>
+                <option value="Mobile_Store">Mobile_Store</option>
+                <option value="Cloth_Shop">Cloth_Shop</option>
+              </select>
+
+           
+            </div>
+            <div className="form_group">
+              <label htmlFor="FirstName">
+                FirstName<sup>*</sup>
               </label>
               <input
                 type="text"
-                placeholder="Enter VCard Name"
-                value={VCardName}
-                onChange={(e) => setVCardName(e.target.value)}
+                placeholder="Enter Your FirstName"
+                name="FirstName"
+                id="FirstName"
+          
+                onChange={()=>setFirstName(e.target.value)}
+                value={FirstName}
+              
               />
+         
             </div>
-
-            <div className="form_group description">
-              <label htmlFor="Description">
-                Description<sup>*</sup>
+            <div className="form_group">
+              <label htmlFor="LastName">
+                LastName<sup>*</sup>
               </label>
-              {/* <Editor
-                value={Description}
-                onTextChange={(e) => setDescription(e.htmlValue)}
-                id="Description"
-                name="Description"
-                style={{ height: "180px" }}
-                placeholder="Enter Short Description..!"
-              /> */}
-              <ReactQuill
-                modules={modules}
-                formats={formats}
-                theme="snow"
-                id="Description"
-                name="Description"
-                value={Description}
-                // onTextChange={(e) => {
-                //   formik.setFieldValue("Description", e.htmlValue),
-                //     setDescription(e.htmlValue);
-                // }}
-                onChange={(e) => {
-                  setDescription(e);
-                }}
-                // style={{ height: "180px" }}
-                placeholder="Enter Short Description..!"
+              <input
+                type="text"
+                placeholder="Enter Your LastName"
+                name="LastName"
+                id="LastName"
+          
+                onChange={()=>setLastName(e.target.value)}
+                value={LastName}
+             
               />
+         
+            </div>
+            <div className="form_group profession">
+              <label htmlFor="LastName">
+                Company Name (or) Your Profession<sup>*</sup>
+              </label>
+              <input
+         
+                type="text"
+                placeholder="Enter Your Profession"
+                name="Profession"
+                id="Profession"
+            
+                onChange={()=>setProfession(e.target.value)}
+                value={Profession}
+             
+              />
+          
             </div>
 
+           
+{/* //Logo */}
             <div className="form_group double_col_inputs">
               <div className="image_upload_type">
                 <div className="logo_type">
@@ -396,18 +437,7 @@ console.log(Description)
                     <option>Paste_ImageAddress</option>
                   </select>
                 </div>
-                <div className="banner_type">
-                  <label htmlFor="Banner">Company Banner</label>
-                  <select
-                    name="BannerType"
-                    id="BannerType"
-                    onChange={handleBannerTypeChange}
-                    value={BannerType}
-                  >
-                    <option>ImageUpload</option>
-                    <option>Paste_ImageAddress</option>
-                  </select>
-                </div>
+               
               </div>
 
               <div className="images">
@@ -494,6 +524,28 @@ console.log(Description)
                     </div>
                   </div>
                 )}
+             
+              </div>
+            </div>
+            {/* Banner */}
+            <div className="form_group double_col_inputs">
+              <div className="image_upload_type">
+             
+                <div className="banner_type">
+                  <label htmlFor="Banner">Company Banner</label>
+                  <select
+                    name="BannerType"
+                    id="BannerType"
+                    onChange={handleBannerTypeChange}
+                    value={BannerType}
+                  >
+                    <option>ImageUpload</option>
+                    <option>Paste_ImageAddress</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="images">
                 {/* //Banner Type */}
                 {BannerType == "ImageUpload" ? (
                   <div className="second">
