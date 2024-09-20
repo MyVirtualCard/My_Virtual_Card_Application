@@ -381,6 +381,7 @@ const Boutique = () => {
   let [GoogleMapData, setGoogleMapData] = useState([]);
   let [PopUpBannerData, setPopUpBannerData] = useState([]);
   let [ManageContentData, setManageContent] = useState([]);
+
   const handleDownloadVCard = () => {
     const vCardData = `
       BEGIN:VCARD
@@ -408,7 +409,7 @@ const Boutique = () => {
     document.body.removeChild(link);
   };
   const currentUrl = window.location.pathname; // Full URL
-  
+
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -549,9 +550,9 @@ const Boutique = () => {
                     )}
                     {data.BannerType == "ImageUpload" ? (
                       <img
-                      src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                        data.Banner
-                      }`}
+                        src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                          data.Banner
+                        }`}
                         alt="banner"
                       />
                     ) : (
@@ -562,9 +563,9 @@ const Boutique = () => {
                   <div className="user_logo">
                     {data.ProfileType == "ImageUpload" ? (
                       <img
-                      src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                        data.Profile
-                      }`}
+                        src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                          data.Profile
+                        }`}
                         alt="user_logo"
                       />
                     ) : (
@@ -764,7 +765,12 @@ const Boutique = () => {
                   </div>
                 </div>
                 <div className="summary">
-                  <p>{VCard_URL_Data[0].Description || "No Description"}</p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: VCard_URL_Data[0].Description,
+                    }}
+                  ></p>
+                  {/* <p>{VCard_URL_Data[0].Description || "No Description"}</p> */}
                 </div>
               </div>
             ) : (
@@ -924,9 +930,10 @@ const Boutique = () => {
                                   {data.ServiceType == "ImageUpload" ? (
                                     <>
                                       <img
-                                            src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                                              data.ServiceImage
-                                            }`}
+                                        src={`${
+                                          import.meta.env
+                                            .VITE_APP_BACKEND_API_URL
+                                        }/${data.ServiceImage}`}
                                         alt="Service Upload Image"
                                       />
                                     </>
@@ -987,9 +994,9 @@ const Boutique = () => {
                             <div className="product_image">
                               {data.ProductType == "ImageUpload" ? (
                                 <img
-                                src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                                  data.ProductImage
-                                }`}
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.ProductImage}`}
                                   alt="product"
                                 />
                               ) : (
@@ -1265,9 +1272,9 @@ const Boutique = () => {
                               <div key={index}>
                                 {data.GalleryType == "ImageUpload" ? (
                                   <img
-                                  src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                                    data.GalleryImage
-                                  }`}
+                                    src={`${
+                                      import.meta.env.VITE_APP_BACKEND_API_URL
+                                    }/${data.GalleryImage}`}
                                     alt="developer"
                                     onClick={(e) => openFullImage(e.target.src)}
                                   />
@@ -1474,9 +1481,9 @@ const Boutique = () => {
                           <div className="qr_image" key={index}>
                             <div className="user_logo">
                               <img
-                                   src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                                    VCard_URL_Data[0].Profile
-                                  }`}
+                                src={`${
+                                  import.meta.env.VITE_APP_BACKEND_API_URL
+                                }/${VCard_URL_Data[0].Profile}`}
                                 alt="user_logo"
                               />
                             </div>

@@ -47,6 +47,7 @@ import Manager from "./Client_Dashboard/All_VCards/Live_VCards/Manager.jsx";
 import Real_Estate from "./Client_Dashboard/All_VCards/Live_VCards/Real_Estate.jsx";
 import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parlor.jsx";
 import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
+import Doctor_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Doctor_Demo.jsx";
 
 //Import All component:
 const App = () => {
@@ -267,7 +268,7 @@ console.log(URL_Alies)
               <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
               <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
               <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
-
+              <Route path="/Doctor_Demo" element={<Doctor_Demo />} />
               {/* Live VCards */}
               {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />

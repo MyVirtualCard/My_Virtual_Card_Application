@@ -93,10 +93,11 @@ const LandingPageNew = () => {
     {
       Id: 1,
       TemplateCount: 1,
-      VCard_Name: "GYM_TRAINER",
-      VCard_Image: vcard1,
-      VCard_Link: "https://myvirtualcard.in/Gym_Trainer",
+      VCard_Name: "CORPORATE_MANAGER",
+      VCard_Image: vcard3,
+      VCard_Link: "https://myvirtualcard.in/Manager",
     },
+  
     {
       Id: 2,
       TemplateCount: 2,
@@ -107,9 +108,9 @@ const LandingPageNew = () => {
     {
       Id: 3,
       TemplateCount: 3,
-      VCard_Name: "CORPORATE_MANAGER",
-      VCard_Image: vcard3,
-      VCard_Link: "https://myvirtualcard.in/Manager",
+      VCard_Name: "GYM_TRAINER",
+      VCard_Image: vcard1,
+      VCard_Link: "https://myvirtualcard.in/Gym_Trainer",
     },
     {
       Id: 4,
@@ -1159,9 +1160,9 @@ const LandingPageNew = () => {
                   </Link>
                 </div>
                 <div className="card_count">
-                  <p>
+                  {/* <p>
                     No of VCard Design's Provided : <span>08</span>
-                  </p>
+                  </p> */}
                 </div>
                 <div
                   className="plan_addon_service"

@@ -92,7 +92,7 @@ const BasicForm = () => {
   let [BannerType, setBannerType] = useState();
   let [imagePath, setImagePath] = useState(null);
   const [key, setKey] = useState(0);
-
+console.log(Description)
   const reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
@@ -202,7 +202,7 @@ const BasicForm = () => {
     let data = {
       URL_Alies,
       VCardName,
-      Description: stripHtmlTags(Description),
+      Description: Description,
       Profile,
       Banner,
       ProfileType,
@@ -219,7 +219,7 @@ const BasicForm = () => {
     formData.append("ProfileType", ProfileType);
     formData.append("ProfileAddress", ProfileAddress);
     formData.append("BannerAddress", BannerAddress);
-    formData.append("Description", stripHtmlTags(Description));
+    formData.append("Description", Description);
     setFormSubmitLoader(true);
     try {
       api

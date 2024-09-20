@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./Doctor_Demo.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import profile_back_svg from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg.svg'
-import profile_back_svg1 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg1.svg'
-import profile_back_svg2 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg2.svg'
-import profile_back_svg3 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg3.svg'
-import profile_back_svg4 from '../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg4.svg'
-import social_media_back_svg from '../../../assets/AllVCard_Image/Beauty_Parlor/social_media_back_svg.svg';
-import title_back_svg from '../../../assets/AllVCard_Image/Beauty_Parlor/title_back_svg.svg'
+import profile_back_svg from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg.svg";
+import profile_back_svg1 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg1.svg";
+import profile_back_svg2 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg2.svg";
+import profile_back_svg3 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg3.svg";
+import profile_back_svg4 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg4.svg";
+import product1 from "../../../assets/AllVCard_Image/Doctor/product_1.png";
+import social_media_back_svg from "../../../assets/AllVCard_Image/Doctor/socialmedia_svg_back.svg";
+import title_back_svg from "../../../assets/AllVCard_Image/Beauty_Parlor/title_back_svg.svg";
 //service Slider
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 //Product Slider
@@ -18,16 +19,28 @@ import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { BiSolidPhoneCall } from "react-icons/bi";
+import { RiWhatsappFill } from "react-icons/ri";
+import { FaDirections } from "react-icons/fa";
+import { MdOutgoingMail } from "react-icons/md";
+import { MdLocationPin } from "react-icons/md";
+import { IoMail } from "react-icons/io5";
+import { FaGlobe } from "react-icons/fa";
+import { GrChat } from "react-icons/gr";
+import { TbUnlink } from "react-icons/tb";
 import { useFormik } from "formik";
+import { RiFileCopyLine } from "react-icons/ri";
+import { LiaHandPointDownSolid } from "react-icons/lia";
+import { RiCloseLargeLine } from "react-icons/ri";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 const Doctor_Demo = () => {
   let profileSVG = [
-  profile_back_svg,
-  profile_back_svg1,
-  profile_back_svg2,
-  profile_back_svg3,
-  profile_back_svg4
+    profile_back_svg,
+    profile_back_svg1,
+    profile_back_svg2,
+    profile_back_svg3,
+    profile_back_svg4,
   ];
 
   const [sVGIndex, setSVGIndex] = useState(0);
@@ -49,19 +62,19 @@ const Doctor_Demo = () => {
   //     setSVGIndex(0);
   //   }
   // }, [sVGIndex]);
-  let style={
-    $first_back__color: '#ffffff',
-    $second_back__color: '#6b6b6b',
-    $third_back__color: '#303030',
+  let style = {
+    $first_back__color: "#ffffff",
+    $second_back__color: "#6b6b6b",
+    $third_back__color: "#303030",
     //Root Background
-$root_backgound: '#fcfdc8,#ffffff',
-//Vcard background
-$vcard_back_color: '#a1046d',
+    $root_backgound: "#fcfdc8,#ffffff",
+    //Vcard background
+    $vcard_back_color: "#a1046d",
 
-//SVG Wave backgound
+    //SVG Wave backgound
 
-$svg_wave_back_color:'#ffffff',
-  }
+    $svg_wave_back_color: "#ffffff",
+  };
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -111,23 +124,19 @@ $svg_wave_back_color:'#ffffff',
     opacity: 1,
     border: "0px",
     padding: "0px",
-    fontSize:'2rem',
+    fontSize: "2rem",
     borderRadius: "10px",
     color: "#ffffff",
   };
   const properties = {
     prevArrow: (
       <button style={{ ...buttonStyle }}>
-     <span className="material-symbols-outlined">
-keyboard_backspace
-</span>
+        <span className="material-symbols-outlined">keyboard_backspace</span>
       </button>
     ),
     nextArrow: (
       <button style={{ ...buttonStyle }}>
-  <span className="material-symbols-outlined">
-east
-</span>
+        <span className="material-symbols-outlined">east</span>
       </button>
     ),
   };
@@ -137,7 +146,7 @@ east
     opacity: 1,
     border: "0px",
     padding: "0px",
-    fontSize:'2rem',
+    fontSize: "2rem",
     borderRadius: "10px",
     color: "#ffffff",
   };
@@ -174,7 +183,7 @@ east
     autoplay: true, // Enable autoplay
     autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
     slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll:width < 700 ? 1 : 2,
+    slidesToScroll: width < 700 ? 1 : 2,
   };
   //Product
   const product_settings = {
@@ -184,10 +193,9 @@ east
     autoplay: true, // Enable autoplay
     autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
     slidesToShow: width < 700 ? 2 : 2,
-    slidesToScroll:width < 700 ? 2 : 2,
-    rtl: true,            // Scroll from left to right
-    arrows: true           // Show navigation arrows
-
+    slidesToScroll: width < 700 ? 2 : 2,
+    rtl: true, // Scroll from left to right
+    arrows: true, // Show navigation arrows
   };
   //Gallery Functionality
   //openFullImage preview:
@@ -331,27 +339,41 @@ east
       StopConfetti();
     },
   });
+  let totalHeight;
+  let [scrollY, setScrollY] = useState(0);
+  let innerHeight;
+  window.addEventListener("scroll", () => {
+    innerHeight = window.innerHeight; // Height of the viewport
+    setScrollY(window.scrollY); // Number of pixels scrolled vertically
+    totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
+  });
+  console.log(scrollY);
   return (
     <div className="doctor_demo_container">
+      {/* Gallery Full IMAGE */}
+      <div
+        className="full_image"
+        id="fullImageBox"
+        style={{ position: "absolute", top: scrollY }}
+      >
+        <div className="close_Full_Image_gallery">
+          <RiCloseLargeLine className="icon" onClick={closeFullImage} />
+        </div>
+        <img src={banner} alt="gallery" id="fullImage" />
+      </div>
       <div className="doctor_box">
-        {/* Banner and logo and details and socialMedias */}
-        <div className="row_1">
-          <div className="slide_svg">
-
-          {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,42.7C384,21,480,11,576,37.3C672,64,768,128,864,176C960,224,1056,256,1152,229.3C1248,203,1344,117,1392,74.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg> */}
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,32L360,128L720,128L1080,128L1440,32L1440,320L1080,320L720,320L360,320L0,320Z"></path></svg>
-            <div className="overlay"></div>
-          </div>
+        {/* Banner and logo */}
+        <div className="Image_row_1">
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/free-photo/portrait-smiling-medical-worker-girl-doctor-white-coat-with-stethoscope-pointing-fingers-left_1258-124585.jpg?t=st=1724575399~exp=1724578999~hmac=7bdbb5460994b4274c2b8f0d12f5c4ee59fde3f1b955a6157ad5a19bc048469f&w=900"
+              src="https://img.freepik.com/premium-photo/group-people-sitting-around-table-front-cityscape_250469-22109.jpg?w=1060"
               alt="banner"
             />
             <div className="overlay"></div>
           </div>
           <div className="user_logo">
             <img
-              src="https://img.freepik.com/premium-photo/female-doctor-image-template_1261215-666.jpg?w=740"
+              src="https://img.freepik.com/premium-photo/man-suit-smiles-camera_1315312-85909.jpg?w=1060"
               alt="user_logo"
             />
             {/* <div className="svg_image">
@@ -359,438 +381,849 @@ east
             </div> */}
           </div>
         </div>
-        {/* Summary */}
-        <div className="row_2">
+        {/* basic Details */}
+        <div className="basic_row_2">
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Lavanya</h2>
-                <p>Doctor</p>
+                <h2>John Wick</h2>
+                <p>Corporate Company</p>
               </div>
-              <div className="social_medias">
-                <a
-                  href="https://www.facebook.com/aristostechindia"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bxl-facebook"></i>
-                  <small>Facebook</small>
-                  <div className="social_media_svg">
-                    <img src={profile_back_svg1} alt="social_svg" />
-                  </div>
+
+              {/* Actions */}
+              <div className="contacts_btns">
+                {/* Call */}
+                <a href="#">
+                  <BiSolidPhoneCall className="icon" />
+
+                  <small>Call</small>
                 </a>
-                <a
-                  href="https://www.instagram.com/aristostech_india/"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-               <i className='bx bxl-instagram-alt'></i>
-               <div className="social_media_svg">
-                    <img src={profile_back_svg1} alt="social_svg" />
-                  </div>
-                  <small>Instagram</small>
+                {/* Whatsup */}
+                <a href="#">
+                  <RiWhatsappFill className="icon" />
+
+                  <small>Whatsapp</small>
                 </a>
-                <a
-                  href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bxl-whatsapp"></i>
-                  <div className="social_media_svg">
-                    <img src={profile_back_svg1} alt="social_svg" />
-                  </div>
-                  <small>Whatsup</small>
+                {/* Direction */}
+                <a href="#">
+                  <FaDirections className="icon" />
+
+                  <small>Direction</small>
                 </a>
-                {/* <a href="#" className="social_media_icon">
-                  <i className="bx bxl-twitter"></i>
-                  <small>Twitter</small>
-                </a> */}
-                <a
-                  href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  <i className="bx bx-map"></i>
-                  <div className="social_media_svg">
-                    <img src={profile_back_svg1} alt="social_svg" />
-                  </div>
-                  <small>Location</small>
-                </a>
-                <a
-                  href="https://www.aristostechindia.com/"
-                  target="_blank"
-                  className="social_media_icon"
-                >
-                  
-                  <i className="bx bx-globe"></i>
-                  <div className="social_media_svg">
-                    <img src={profile_back_svg1} alt="social_svg" />
-                  </div>
-                  <small>Website</small>
+                {/* Mail */}
+                <a href="#">
+                  <MdOutgoingMail className="icon" />
+
+                  <small>Mail</small>
                 </a>
               </div>
             </div>
-          </div>
-          <div className="summary">
-            <p>
-              We started from a traditional marketing background and emerged to
-              be a successful Digital Marketing Agency since Digitalisation has
-              begun to evolve.
-            </p>
           </div>
         </div>
-        {/* ContactDetails */}
-        <div className="row_3">
-        <div className="doctor_title_demo">
-            <h3>Testimonial</h3>
-            {/* Contact */}
-          </div>
-          <div className="contact_list_container">
-            <div className="contact_list">
-              <div className="icons">
-                <i class="bx bxl-gmail"></i>
-                <small>Personal Email</small>
-              </div>
-
-              <div className="list_detail">
-                <p>jayakumarv@aristostech.in</p>
-
-              
-              </div>
+        {/* Contact Details */}
+        <div className="contact_row_3">
+          {/* Location */}
+          <a href="" target="_blank">
+            <div className="icon">
+              <MdLocationPin />
             </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-mobile-vibration"></i>
-                <small>Mobile Number</small>
-              </div>
-
-              <div className="list_detail">
-                <p>(+91) 93444 82370</p>
-              </div>
+            <div className="contact_data">
+              <small>Address</small>
+              <p>Main Road , Sirukadambur,Ariyalur-621714</p>
             </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-envelope"></i>
-                <small>Company Email</small>
-              </div>
-
-              <div className="list_detail">
-                <p>contact@aristostech.in</p>
-              </div>
+          </a>
+          {/* Mail */}
+          <a href="" target="_blank">
+            <div className="icon">
+              <IoMail />
             </div>
-            <div className="contact_list">
-              <div className="icons">
-                <i className="bx bx-map-alt"></i>
-                <small>Address</small>
-              </div>
-
-              <div className="list_detail address">
-                <p>
-                  Ankur Plasa No-113 (Old 52) G.N Chetty Road T. Nagar
-                  Chennai-600017
-                </p>
-              </div>
+            <div className="contact_data">
+              <small>Email</small>
+              <p>learnwithcodingbuddy@gmail.com</p>
+              <p>kodiyarasu01@gmail.com</p>
             </div>
-          </div>
-
+          </a>
+          {/* Website */}
+          <a href="" target="_blank">
+            <div className="icon">
+              <FaGlobe />
+            </div>
+            <div className="contact_data">
+              <small>Website</small>
+              <p>https://coding-buddy-portfolio.netlify.app/</p>
+            </div>
+          </a>
+          {/* PhoneNumber */}
+          <a href="" target="_blank">
+            <div className="icon">
+              <BiSolidPhoneCall />
+            </div>
+            <div className="contact_data">
+              <small>MobileNumber</small>
+              <p>+91 8825457794</p>
+              <p>+91 9568741235</p>
+            </div>
+          </a>
           {/* AddtoContact */}
           <div className="add_to_contact">
             <button onClick={generateVCF}>
               Add to Contact<i className="bx bxs-contact"></i>
             </button>
           </div>
+          {/* SocialMedia */}
+          <div className="social_medias">
+            <a
+              href="https://www.facebook.com/aristostechindia"
+              target="_blank"
+              className="social_media_icon"
+            >
+              <i className="bx bxl-facebook"></i>
+              <small>Facebook</small>
+              <div className="social_media_svg1">
+                <svg
+                  id="sw-js-blob-svg"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                >
+                  <defs>
+                    <linearGradient
+                      id="sw-gradient"
+                      x1="0"
+                      x2="1"
+                      y1="1"
+                      y2="0"
+                    >
+                      <stop
+                        id="stop1"
+                        stop-color="rgba(248, 117, 55, 1)"
+                        offset="0%"
+                      ></stop>
+                      <stop
+                        id="stop2"
+                        stop-color="rgba(251, 168, 31, 1)"
+                        offset="100%"
+                      ></stop>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#sw-gradient)"
+                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                    width="100%"
+                    height="100%"
+                    transform="translate(50 50)"
+                    strokeWidth="0"
+                    style={{ transition: 0.3 }}
+                  ></path>
+                </svg>
+              </div>
+            </a>
+            <a
+              href="https://www.instagram.com/aristostech_india/"
+              target="_blank"
+              className="social_media_icon"
+            >
+              <i className="bx bxl-instagram-alt"></i>
+              <div className="social_media_svg2">
+                <svg
+                  id="sw-js-blob-svg"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                >
+                  <defs>
+                    <linearGradient
+                      id="sw-gradient2"
+                      x1="0"
+                      x2="1"
+                      y1="1"
+                      y2="0"
+                    >
+                      <stop
+                        id="stop3"
+                        stop-color="rgba(248, 117, 55, 1)"
+                        offset="0%"
+                      ></stop>
+                      <stop
+                        id="stop4"
+                        stop-color="rgba(251, 168, 31, 1)"
+                        offset="100%"
+                      ></stop>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#sw-gradient2)"
+                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                    width="100%"
+                    height="100%"
+                    transform="translate(50 50)"
+                    strokeWidth="0"
+                    style={{ transition: 0.3 }}
+                  ></path>
+                </svg>
+              </div>
+              <small>Instagram</small>
+            </a>
+            <a
+              href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
+              target="_blank"
+              className="social_media_icon"
+            >
+              <i className="bx bxl-whatsapp"></i>
+              <div className="social_media_svg3">
+                <svg
+                  id="sw-js-blob-svg"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                >
+                  <defs>
+                    <linearGradient
+                      id="sw-gradient3"
+                      x1="0"
+                      x2="1"
+                      y1="1"
+                      y2="0"
+                    >
+                      <stop
+                        id="stop5"
+                        stop-color="rgba(248, 117, 55, 1)"
+                        offset="0%"
+                      ></stop>
+                      <stop
+                        id="stop6"
+                        stop-color="rgba(251, 168, 31, 1)"
+                        offset="100%"
+                      ></stop>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#sw-gradient3)"
+                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                    width="100%"
+                    height="100%"
+                    transform="translate(50 50)"
+                    strokeWidth="0"
+                    style={{ transition: 0.3 }}
+                  ></path>
+                </svg>
+              </div>
+              <small>Whatsup</small>
+            </a>
+            <a
+              href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
+              target="_blank"
+              className="social_media_icon"
+            >
+              <i className="bx bxl-twitter"></i>
+              <div className="social_media_svg6">
+                <svg
+                  id="sw-js-blob-svg6"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                >
+                  <defs>
+                    <linearGradient
+                      id="sw-gradient6"
+                      x1="0"
+                      x2="1"
+                      y1="1"
+                      y2="0"
+                    >
+                      <stop
+                        id="stop11"
+                        stop-color="rgba(248, 117, 55, 1)"
+                        offset="0%"
+                      ></stop>
+                      <stop
+                        id="stop12"
+                        stop-color="rgba(251, 168, 31, 1)"
+                        offset="100%"
+                      ></stop>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#sw-gradient6)"
+                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                    width="100%"
+                    height="100%"
+                    transform="translate(50 50)"
+                    strokeWidth="0"
+                    style={{ transition: 0.3 }}
+                  ></path>
+                </svg>
+              </div>
+              <small>Twiter</small>
+            </a>
+
+            <a
+              href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
+              target="_blank"
+              className="social_media_icon"
+            >
+              <i className="bx bx-map"></i>
+              <div className="social_media_svg4">
+                <svg
+                  id="sw-js-blob-svg"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                >
+                  <defs>
+                    <linearGradient
+                      id="sw-gradient4"
+                      x1="0"
+                      x2="1"
+                      y1="1"
+                      y2="0"
+                    >
+                      <stop
+                        id="stop7"
+                        stop-color="rgba(248, 117, 55, 1)"
+                        offset="0%"
+                      ></stop>
+                      <stop
+                        id="stop8"
+                        stop-color="rgba(251, 168, 31, 1)"
+                        offset="100%"
+                      ></stop>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#sw-gradient4)"
+                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                    width="100%"
+                    height="100%"
+                    transform="translate(50 50)"
+                    strokeWidth="0"
+                    style={{ transition: 0.3 }}
+                  ></path>
+                </svg>
+              </div>
+              <small>Location</small>
+            </a>
+            <a
+              href="https://www.aristostechindia.com/"
+              target="_blank"
+              className="social_media_icon"
+            >
+              <i className="bx bx-globe"></i>
+              <div className="social_media_svg5">
+                <svg
+                  id="sw-js-blob-svg"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                >
+                  <defs>
+                    <linearGradient
+                      id="sw-gradient5"
+                      x1="0"
+                      x2="1"
+                      y1="1"
+                      y2="0"
+                    >
+                      <stop
+                        id="stop9"
+                        stop-color="rgba(248, 117, 55, 1)"
+                        offset="0%"
+                      ></stop>
+                      <stop
+                        id="stop10"
+                        stop-color="rgba(251, 168, 31, 1)"
+                        offset="100%"
+                      ></stop>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill="url(#sw-gradient)"
+                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                    width="100%"
+                    height="100%"
+                    transform="translate(50 50)"
+                    strokeWidth="0"
+                    style={{ transition: 0.3 }}
+                  ></path>
+                </svg>
+              </div>
+              <small>Website</small>
+            </a>
+          </div>
         </div>
-        {/* Services */}
-        <div className="row_4">
+
+        {/* About US */}
+        <div className="about_row_4">
+          <div className="doctor_title_demo">
+            <h3>About Us</h3>
+          </div>
+
+          <div className="about_details">
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Company Name</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>Aristostech India Private Limited..</p>
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Category</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>IT Company</p>
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Year of Est..</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>2017</p>
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Nature Of Business</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>
+                  Digital Visiting Card,NFC Business Cards, NFC Google Review
+                  Card
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="doctor_sub_title_demo">
+            <h3>Our Specialities</h3>
+          </div>
+          <div className="specialities">
+            <ul>
+              <li>
+                Knowledgeable team of professionals Complete client satisfaction
+              </li>
+              <li>Ethical business policies On-time deliver/ execution</li>
+              <li>Easy payment mode Customized solutions Best Consultancy</li>
+              <li>Use of advanced technology We listen,We understand,</li>
+              <li>We provide Solution A great experience with</li>{" "}
+              <li>Happy clients 100% Trustable Service</li>{" "}
+              <li>
+                Provider We Empower our Clients to Utilize Digital Technology
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* Our Services */}
+        <div className="our_services">
           <div className="doctor_title_demo">
             <h3>Our Services</h3>
-         
           </div>
+          <div className="All_Services">
+            {/* Service */}
+            <div className="Service">
+              <div className="service_title">
+                <h5> Digital Marketing</h5>
+              </div>
+              <div className="service_description">
+                <p>
+                  Digital marketing, also called online marketing, is the
+                  promotion of brands to connect with potential customers using
+                  the internet and other forms of digital communication.
+                </p>
 
-          <div className="service_list_container">
-            <Slide 
-                 slidesToScroll={1}
-                 slidesToShow={width < 600 ? 1 : 2}
-                 indicators={true}
-                 autoplay
-                 {...gallery_properties}
-                 autoplayInterval={1000}
-            >
-            {/* //service_icon list */}
-            <a className="service_list">
-              <div className="icon">
-              <span className="material-symbols-outlined">palette</span>
+                <p>
+                  This includes not only email, social media, and web-based
+                  advertising, but also text and multimedia messages as a
+                  marketing channel.
+                </p>
               </div>
-           
+              <div className="service_link">
+                <a href="#" target="_blank">
+                  For More Details <TbUnlink />
+                </a>
+              </div>
+              <div className="service_image">
+                <img
+                  src="https://img.freepik.com/free-vector/digital-marketing-landing-page_33099-1726.jpg?t=st=1726786737~exp=1726790337~hmac=b765ce6cadc0c65e67fc2e8131cfd3616ebdd05a1735fa7e6d92d2a6c5fb012a&w=900"
+                  alt="service_image"
+                />
+              </div>
+              <div className="service_action">
+                <div className="service_price">
+                  <h5>Price : &nbsp;</h5>
+                  <p>₹2000</p>
+                </div>
+                <div className="service_enquiry">
+                  <a href="#" target="_blank" className="service_button">
+                    Enquire Now <GrChat />
+                  </a>
+                </div>
+              </div>
+            </div>
+            {/* Service */}
+            <div className="Service">
+              <div className="service_title">
+                <h5>Static WebSite Building</h5>
+              </div>
+              <div className="service_description">
+                <p>
+                  A static website is a website that displays the same content
+                  to every user, regardless of their location, preferences.
+                </p>
 
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Striching</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quasi nisi laborum reprehenderit sint doloribus ab!
-                  </p>
-                </div>
+                <p>
+                  Static websites are often used for personal or marketing
+                  sites. They are also sometimes called brochure sites because
+                  they provide similar information to a business brochure.
+                </p>
               </div>
-            </a>
-            <a className="service_list">
-          
-              <div className="icon">
-              <span className="material-symbols-outlined">
-directions_bike
-</span>
+              <div className="service_link">
+                <a href="#" target="_blank">
+                  For More Details <TbUnlink />
+                </a>
               </div>
-              <div className="service_detail">
-                <div className="service_title">
-                  <h4>Free Delivery</h4>
-                </div>
-                <div className="service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
-                </div>
-              </div>
-            </a>
-            {/* //service_image list */}
-            {/* <a className="img_service_list">
-         
-                <div className="service_image">
+              <div className="service_image">
                 <img
-                  src="https://img.freepik.com/free-photo/elevated-view-businessman-shaking-hands-with-his-partner-workplace_23-2147838558.jpg?t=st=1724258348~exp=1724261948~hmac=7f948678506d3b95893a29523b417ec7cbbdb794131111dbeb89d1227cfa6e8f&w=900"
-                  alt="service"
+                  src="https://img.freepik.com/free-photo/html-css-collage-concept-with-person_23-2150062008.jpg?t=st=1726784921~exp=1726788521~hmac=dd4bbc9d6130e6843510418659abe6f8ba58c314f37575d1c393aefcf4d50673&w=900"
+                  alt="service_image"
                 />
               </div>
-              <div className="img_service_detail">
-              <div className="service_title">
-                  <h4>Knowledge of diverse business</h4>
+              <div className="service_action">
+                <div className="service_price">
+                  <h5>Price : &nbsp;</h5>
+                  <p>₹3000</p>
                 </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint vero tenetur aliquid totam qui ipsam?
-                  </p>
+                <div className="service_enquiry">
+                  <a href="#" target="_blank" className="service_button">
+                    Enquire Now <GrChat />
+                  </a>
                 </div>
               </div>
-            </a>
-            <a className="img_service_list">
-         
-                <div className="service_image">
+            </div>
+            {/* Service */}
+            <div className="Service">
+              <div className="service_title">
+                <h5>FullStack Ecommerse Website </h5>
+              </div>
+              <div className="service_description">
+                <p>
+                  Full stack developers have expertise in systems architecture,
+                  and can code in multiple languages. As a full stack developer,
+                  your resume should reflect a balance between technical
+                  know-how and intuitive design.
+                </p>
+
+                <p>
+                  In this guide, we'll break down 10 full stack developer resume
+                  examples to help you position your qualifications for maximum
+                  impact.
+                </p>
+              </div>
+              <div className="service_link">
+                <a href="#" target="_blank">
+                  For More Details <TbUnlink />
+                </a>
+              </div>
+              <div className="service_image">
                 <img
-                  src="https://img.freepik.com/free-photo/close-up-business-partner-sitting-front-manager-looking-document_23-2147838536.jpg?t=st=1724258439~exp=1724262039~hmac=6aeddc50ea9f6c6996bb3fafe83382ee2ddfed32f0c72a7efde9ca6df2ebbaf5&w=900"
-                  alt="service"
+                  src="https://img.freepik.com/premium-photo/profile-it-developer-sitting-against-software-codding-monitor-gusher_31965-634451.jpg?w=900"
+                  alt="service_image"
                 />
               </div>
-              <div className="img_service_detail">
-              <div className="service_title">
-                  <h4>Outstanding communication</h4>
+              <div className="service_action">
+                <div className="service_price">
+                  <h5>Price : &nbsp;</h5>
+                  <p>₹6000</p>
                 </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cumque alias similique, recusandae, at, iste aperiam maiores
-                    quis quia incidunt mollitia laudantium corrupti laboriosam
-                    harum molestias!
-                  </p>
+                <div className="service_enquiry">
+                  <a href="#" target="_blank" className="service_button">
+                    Enquire Now <GrChat />
+                  </a>
                 </div>
               </div>
-            </a>
-            <a className="img_service_list">
-            
-                <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/group-businesspeople-working-graph-office_23-2147838537.jpg?t=st=1724258500~exp=1724262100~hmac=66ad26cf021b5cfa52c872a98e80231c0553b641b256bf2bfa7f45aa339d8335&w=740"
-                  alt="service"
-                />
-              </div>
-              <div className="img_service_detail">
-              <div className="service_title">
-                  <h4> creative problem-solving</h4>
-                </div>
-                <div className="img_service_summary">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cumque alias similique, recusandae, at, iste aperiam maiores
-                    quis quia incidunt mollitia laudantium corrupti laboriosam
-                    harum molestias!
-                  </p>
-                </div>
-              </div>
-            </a> */}
-            </Slide>
+            </div>
           </div>
         </div>
-             {/* Products */}
-             <div className="real_estate_row_7">
+        {/* Our Product */}
+        <div className="our_products">
           <div className="doctor_title_demo">
             <h3>Our Products</h3>
-            {/* Contact */}
           </div>
-          <div className="realEstate_product_list_container">
-            <Slider {...product_settings}
-             
-            >
-              <div className="product_list">
-            
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/young-consultant-showing-clothes-customer-shopping-center_23-2148101648.jpg?t=st=1724544731~exp=1724548331~hmac=1c14efa91ec858eda43f332296515d2ecba2de38fdf9c0b2547d644c349dc4b3&w=900"
-                    alt="product"
-                  />
+          <div className="All_Products">
+            {/* Product */}
+            <div className="Product">
+              <div className="product_image">
+                <img src={product1} alt="service_image" />
+              </div>
+              <div className="product_action">
+                <div className="product_price">
+                  <h5>Price : &nbsp;</h5>
+                  <p>₹599</p>
                 </div>
-                <div className="product_details">
-                <div className="product_title">
-                <h4>Weighless Cloth</h4>
-                </div>
-                  <small>
-                    {" "}
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut eveniet cupiditate magnam eos perspiciatis harum enim obcaecati dolor numquam iusto?
-               
-                  </small>
-                  <a href='#'className="link">
-                  <small>More Detail</small>
+                <div className="product_enquiry">
+                  <a href="#" target="_blank" className="product_button">
+                    Enquire Now <GrChat />
                   </a>
                 </div>
               </div>
-              <div className="product_list">
-             
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/boutique-owner-giving-yellow-paper-bag-smiling-young-woman_23-2148101564.jpg?t=st=1724544801~exp=1724548401~hmac=2897903fadb929baec9b05ad6a364acbde99c2404b670ccf176b7afdcde5d6cb&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                <div className="product_title">
-                <h4>Quality Product</h4>
-                </div>
-                  <small>
-                    {" "}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo eveniet sint, nihil iusto in veniam corporis non pariatur ducimus harum.
-                  
-                  </small>
-                  <a href='#'className="link">
-                  <small>More Detail</small>
-                  </a>
-                </div>
+              <div className="product_title">
+                <h5> MyVirtual Card</h5>
               </div>
-              <div className="product_list">
-          
-                <div className="product_image">
-                  <img
-                    src="https://img.freepik.com/free-photo/smiling-stylish-woman-showing-colorful-paper-bag_23-2148101563.jpg?t=st=1724544854~exp=1724548454~hmac=6f0e2ebe131bf68cac9708d52038c3b543bc07dd37712151b28fd86a1f8a619b&w=900"
-                    alt="product"
-                  />
-                </div>
-                <div className="product_details">
-                <div className="product_title">
-                <h4>Lowest Price Cloths</h4>
-                </div>
-                  <small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, saepe? Tempore cupiditate aliquid sint eius amet neque numquam fugiat eveniet!
-                    
-                  </small>
-                  <a href='#'className="link">
-                  <small>More Detail</small>
-                  </a>
-             
-                </div>
-              </div>
-           
-            </Slider>
-          </div>
-        </div>
-              {/* //Appinment */}
-              <div className="row_6">
-          <div className="doctor_title_demo">
-            <h3>Make An Appoinment</h3>
-          </div>
+              <div className="product_description">
+                <p>
+                  Customize Your Digital Identity Effortlessly with My Virtual
+                  Card!. People are online Now, So convert your Business Card
+                  Digitally to share on their mobiles and Wishing your customers
+                  encourage them to connect with you.
+                </p>
 
-          <div className="appinment_form_container">
-            <form className="appinment_form">
-              <div className="form_group">
-                <label htmlFor="date">Date</label>
-                <input
-                  type="date"
-                  name="data"
-                  id="date"
-                  className="date-input"
+                <p>
+                  A digital vCard, or virtual business card, is a modern
+                  alternative to traditional paper business cards. It contains
+                  essential contact information such as name, job title, company
+                  name, phone number, email address, and more, all stored in a
+                  digital format.
+                </p>
+              </div>
+              <div className="product_link">
+                <a href="#" target="_blank">
+                  For More Details <TbUnlink />
+                </a>
+              </div>
+            </div>
+            {/* Product */}
+            <div className="Product">
+              <div className="product_image">
+                <img
+                  src="https://img.freepik.com/premium-photo/ecommerce-market-shopping-online-vector-illustration_1108314-455389.jpg?w=826"
+                  alt="service_image"
                 />
               </div>
-              <div className="form_group">
-                <label htmlFor="time">Time</label>
-                <select name="time" id="time">
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="01:00 PM">01:00 PM</option>
-                  <option value="03:00 PM">03:00 PM</option>
-                </select>
+              <div className="product_action">
+                <div className="product_price">
+                  <h5>Price : &nbsp;</h5>
+                  <p>₹1099</p>
+                </div>
+                <div className="product_enquiry">
+                  <a href="#" target="_blank" className="product_button">
+                    Enquire Now <GrChat />
+                  </a>
+                </div>
               </div>
-              <div className="form_submit">
-                <button type="submit" className="submit-btn">
-                  Book Now
-                </button>
+              <div className="product_title">
+                <h5> My Orders</h5>
               </div>
-            </form>
+              <div className="product_description">
+                <p>
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </p>
+
+                <p>
+                  Many desktop publishing packages and web page editors now use
+                  Lorem Ipsum as their default model text, and a search for
+                  'lorem ipsum' will uncover many web sites still in their
+                  infancy. Various versions have evolved over the years,
+                  sometimes by accident, sometimes on purpose (injected humour
+                  and the like).
+                </p>
+              </div>
+              <div className="product_link">
+                <a href="#" target="_blank">
+                  For More Details <TbUnlink />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Payment */}
+        <div className="Payment">
+          <div className="doctor_title_demo">
+            <h3>For Payment</h3>
+          </div>
+          <div className="payment_details">
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Paytm Number</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>+91-93444 82370</p>
+                <RiFileCopyLine className="icon" />
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>PhonePay Number</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>+91-93444 82370</p>
+                <RiFileCopyLine className="icon" />
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Google Pay Number</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>+91-93444 82370</p>
+                <RiFileCopyLine className="icon" />
+              </div>
+            </div>
+          </div>
+
+          <div className="sub_title">
+            <h3>Account Details :</h3>
+          </div>
+          <div className="account_details">
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Bank Name</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>STATE BANK OF INDIA</p>
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>IFSC code</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>SBIN0007585</p>
+                <RiFileCopyLine className="icon" />
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>Account Number</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                <p>56676841548</p>
+                <RiFileCopyLine className="icon" />
+              </div>
+            </div>
+          </div>
+          <div className="sub_title">
+            <h3>QR Code :</h3>
+          </div>
+          <div className="qr_code_upi_name">
+            <h4>Google Pay</h4>
+          </div>
+          <div className="qr_image_box">
+            <div className="user_name">
+              <h4>
+                To John Wick <LiaHandPointDownSolid />
+              </h4>
+            </div>
+            <div className="qr_image">
+              <img
+                src="https://img.freepik.com/premium-vector/qr-code-white-box-circle_78370-5879.jpg?w=740"
+                alt="qrcode"
+              />
+            </div>
+            <div className="quote">
+              <small>Scan with pay any UPI App</small>
+            </div>
           </div>
         </div>
         {/* Gallery */}
-        <div className="row_8">
+        <div className="gallery">
           <div className="doctor_title_demo">
             <h3>Gallery</h3>
           </div>
-          <div className="gallery_container">
-            <div className="full_image" id="fullImageBox">
-              <div className="close_Full_Image_gallery">
-                <span
-                  className="material-symbols-outlined"
-                  onClick={closeFullImage}
-                >
-                  cancel
-                </span>
-              </div>
-              <img src={banner} alt="gallery" id="fullImage" />
-            </div>
 
-            <div className="gallery_box">
-              <Slide
-                slidesToScroll={1}
-                slidesToShow={width < 600 ? 2 : 2}
-                indicators={true}
-                autoplay
-                {...properties}
-                autoplayInterval={1000}
-              >
-                <img
-                  src="https://img.freepik.com/free-photo/focused-female-customer-shop-assistant-browsing-dresses-rack-together-choosing-clothes-fashion-store-full-length-shopping-retail-concept_74855-11722.jpg?t=st=1724544932~exp=1724548532~hmac=9095d9890738b8cc074bee39169fc168892ebec3f1b7f273e6f17c7e07d44bea&w=900"
-                  alt="developer"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/excited-female-friends-enjoying-shopping-fashion-store-together-holding-dress-taking-pictures-mobile-phone-consumerism-shopping-concept_74855-11671.jpg?t=st=1724544961~exp=1724548561~hmac=2e949540d3c4a733cfa45f5cc270e672c769fecf364c8c0091ac772e6ee7c62d&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/side-view-fashionable-beautiful-woman-shirt-holding-want-buying-elegant-red-dress-brunette-girl-with-long-hair-choosing-look-evening-spanding-time-shoppinh-mall_132075-12220.jpg?t=st=1724544975~exp=1724548575~hmac=55cbd4ad098d187de365574b8220037dbe6caa2a2843a8b4c173f5b0dbf7b861&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-                <img
-                  src="https://img.freepik.com/free-photo/two-fashionable-beautiful-girls-with-colorful-braids-makeup-after-beauty-salon-tacking-self-portrait-smart-phone-stylish-women-smiling-making-photo-store-with-clothes-shopping_132075-12245.jpg?t=st=1724544988~exp=1724548588~hmac=f26213c4e4c6df9101e3a9543b022d3b8872712686f6b7e9f57f13fb95c238c1&w=900"
-                  alt="dev"
-                  onClick={(e) => openFullImage(e.target.src)}
-                />
-              </Slide>
+          <div className="all_gallerys">
+            <div className="gallery_image">
+              <img
+                src="https://img.freepik.com/free-vector/isometric-e-commerce-concept-with-online-shop_23-2148561915.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                alt="image"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+            </div>
+            <div className="gallery_image">
+              <img
+                src="https://img.freepik.com/free-photo/add-cart-buy-now-online-commerce-graphic-concept_53876-133964.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                alt="image"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+            </div>
+            <div className="gallery_image">
+              <img
+                src="https://img.freepik.com/premium-photo/ecommerce-banner_1281315-2612.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                alt="image"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+            </div>
+            <div className="gallery_image">
+              <img
+                src="https://img.freepik.com/free-vector/flat-design-e-commerce-website-landing-page_23-2149581922.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                alt="image"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+            </div>
+            <div className="gallery_image">
+              <img
+                src="https://img.freepik.com/free-vector/isometric-e-commerce-concept-with-online-shop_23-2148561915.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                alt="image"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
+            </div>
+            <div className="gallery_image">
+              <img
+                src="https://img.freepik.com/premium-photo/shopping-ecommerce_1324152-859.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                alt="image"
+                onClick={(e) => openFullImage(e.target.src)}
+              />
             </div>
           </div>
         </div>
+        {/* Videos */}
+        <div className="video">
+          <div className="doctor_title_demo">
+            <h3>Videos</h3>
+          </div>
 
-   
-          {/* Opentime */}
-          <div className="row_5">
+          <div className="videos_container">
+            <div className="video_image">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/ZZ1lnw8D3Qo?si=69n8qzoZRXN-35nQ"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div className="video_image">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/DPSnDz8-GGs?si=rYYa3Fv6OD_aQLy1"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+        {/* Opentime */}
+        <div className="time_container">
           <div className="doctor_title_demo">
             <h3>Open&Close Time</h3>
             {/* Contact */}
@@ -798,7 +1231,7 @@ directions_bike
           <div className="time_list_container">
             <div className="time_list">
               <div className="day">
-                <span>Monday</span>
+                <span>Monday To Saturday</span>
               </div>
               <div className="time">
                 <div className="start">
@@ -811,69 +1244,10 @@ directions_bike
                 </div>
               </div>
             </div>
+
             <div className="time_list">
               <div className="day">
-                <span>Tuesday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Wednesday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Thursday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Friday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Weekend Days</span>
+                <span>For Weekend</span>
               </div>
               <div className="time">
                 <div className="start">
@@ -888,52 +1262,14 @@ directions_bike
             </div>
           </div>
         </div>
-    {/* QRCode */}
-    <div className="row_12">
-          <div className="doctor_title_demo">
-            <h3>QRCode</h3>
-            {/* Contact */}
-          </div>
-
-          <div className="qrcode_container">
-            <div className="qr_code_box">
-              <h4>
-                <small>Note :</small>Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Ducimus, enim?
-              </h4>
-   <div className="qr_image">
-   <div className="user_logo">
-            <img
-              src="https://img.freepik.com/free-photo/woman-with-black-jacket-black-jacket-with-light-bottom_1340-48120.jpg?t=st=1724522420~exp=1724526020~hmac=b0d5d77e5a16dffb7a7d196901cf0d5b376bc6a8d567a4aef690bdae5c0293e1&w=900"
-              alt="user_logo"
-            />
-          </div>
-
-          <div className="qr">
-          <img
-                src="https://img.freepik.com/premium-photo/qr-code-area-3d-illustration_118019-6664.jpg?w=740"
-                alt=""
-              />
-          </div>
-
-   </div>
-          
-            </div>
-          </div>
-        </div>
-        {/* Testimonial */}
-        <div className="row_9">
+        {/* Testimonials */}
+        <div className="testimonial">
           <div className="doctor_title_demo">
             <h3>Testimonial</h3>
             {/* Contact */}
           </div>
           <div className="testimonial_container">
-            <Carousel
-              showThumbs={true}
-              showStatus={true}
-              infiniteLoop
-              autoPlay
-            >
+            <Carousel showThumbs={true} showStatus={true} infiniteLoop autoPlay>
               <div className="testimonial_list">
                 <div className="client_feedback">
                   <small>
@@ -1017,21 +1353,21 @@ directions_bike
             </Carousel>
           </div>
         </div>
-    
+        {/* GoogleMap */}
 
-                {/* GoogleMap */}
-
-                <div className="google_map_container">
+        <div className="google_map_container">
           <div className="doctor_title_demo">
             <h3>Live Location</h3>
           </div>
 
           <div className="google_map">
-            <HtmlRenderer htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`} />
+            <HtmlRenderer
+              htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`}
+            />
           </div>
         </div>
-        {/* Feedback */}
-        <div className="row_10">
+            {/* Feedback */}
+            <div className="feedback_row">
           <div className="doctor_title_demo">
             <h3>Feedback</h3>
             {/* Contact */}
@@ -1084,7 +1420,7 @@ directions_bike
                   id="userFeedback"
                   name="userFeedback"
                   cols="30"
-                  rows="2"
+                  rows="3"
                   placeholder="Enter your Feedback"
                   // value={userFeedback}
                   // onChange={(e)=>setUserFeedback(e.target.value)}
@@ -1256,9 +1592,8 @@ directions_bike
             )}
           </div>
         </div>
-
-        {/* Inquries */}
-        <div className="row_11">
+             {/* Inquries */}
+             <div className="Inquries">
           <div className="doctor_title_demo">
             <h3>Inquries</h3>
           </div>
@@ -1315,11 +1650,10 @@ directions_bike
             </form>
           </div>
         </div>
-
-        {/* Footer */}
-        <div className="row_13">
+            {/* Footer */}
+            <div className="Footer">
           <div className="footer_container">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$first_back__color} fill-opacity="1" d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$second_back__color} fill-opacity="1" d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"></path></svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
