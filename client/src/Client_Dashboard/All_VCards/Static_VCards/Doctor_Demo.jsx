@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Doctor_Demo.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
 import profile_back_svg from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg.svg";
@@ -19,19 +19,27 @@ import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { BiSolidPhoneCall } from "react-icons/bi";
+import { BiSolidPhoneCall, BiSolidVideo } from "react-icons/bi";
 import { RiWhatsappFill } from "react-icons/ri";
 import { FaDirections } from "react-icons/fa";
-import { MdOutgoingMail } from "react-icons/md";
+import { MdOutgoingMail, MdSchedule } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
-import { IoMail } from "react-icons/io5";
+import { IoHome, IoMail } from "react-icons/io5";
 import { FaGlobe } from "react-icons/fa";
-import { GrChat } from "react-icons/gr";
+import { GrChat, GrGallery, GrMapLocation } from "react-icons/gr";
 import { TbUnlink } from "react-icons/tb";
 import { useFormik } from "formik";
 import { RiFileCopyLine } from "react-icons/ri";
 import { LiaHandPointDownSolid } from "react-icons/lia";
 import { RiCloseLargeLine } from "react-icons/ri";
+import { CiSquareChevDown, CiSquareChevUp } from "react-icons/ci";
+import { BiSolidUserDetail } from "react-icons/bi";
+import { MdMiscellaneousServices } from "react-icons/md";
+import { AiFillProduct } from "react-icons/ai";
+import { GiTakeMyMoney } from "react-icons/gi";
+import { MdOutlineRateReview } from "react-icons/md";
+import { VscFeedback } from "react-icons/vsc";
+import { TbMessageChatbotFilled } from "react-icons/tb";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 const Doctor_Demo = () => {
@@ -44,24 +52,7 @@ const Doctor_Demo = () => {
   ];
 
   const [sVGIndex, setSVGIndex] = useState(0);
-  // /Fashion stress:
-  // useEffect(() => {
-  //   if (sVGIndex >= 0) {
-  //     if (sVGIndex < profileSVG.length) {
-  //       const timer = setTimeout(() => {
-  //         setSVGIndex(sVGIndex + 1);
-  //       }, 5000);
 
-  //       // Cleanup the timer
-  //       return () => {
-  //         clearTimeout(timer);
-  //       };
-  //     }
-  //   }
-  //   if (sVGIndex === 4) {
-  //     setSVGIndex(0);
-  //   }
-  // }, [sVGIndex]);
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -347,7 +338,107 @@ const Doctor_Demo = () => {
     setScrollY(window.scrollY); // Number of pixels scrolled vertically
     totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
   });
-  console.log(scrollY);
+  //Menu actions
+
+  let [activeMenu, setActiveMenu] = useState("Home");
+  let HomeRef = useRef(null);
+
+  let AboutRef = useRef(null);
+  let ServiceRef = useRef(null);
+  let ProductRef = useRef(null);
+  let PaymentRef = useRef(null);
+  let GalleryRef = useRef(null);
+  let VideoRef = useRef(null);
+  let TimeRef = useRef(null);
+  let TestimonialRef = useRef(null);
+  let LocationRef = useRef(null);
+
+  let FeedbackRef = useRef(null);
+  let InquiryRef = useRef(null);
+
+  // const handleMenuClick = (menuItem) => {
+  //   console.log(menuItem, HomeRef.current.classList.value)
+  //   HomeRef.current.scrollTo = HomeRef.current.classList.value
+  //   setActiveMenu(menuItem);
+  //   HomeRef.current.value
+  //   // Scroll to the top of the page when a menu item is clicked
+  //   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // };
+  let scrollToSection = (elementRef) => {
+    console.log(elementRef);
+    elementRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  function HandleMenuDown() {
+    if (activeMenu === "Home") {
+      return scrollToSection(AboutRef), setActiveMenu("About");
+    };
+    if (activeMenu === "About") {
+      return scrollToSection(ServiceRef), setActiveMenu("Service");
+    };
+    if (activeMenu === "Service") {
+      return scrollToSection(ProductRef), setActiveMenu("Product");
+    };
+    if (activeMenu === "Product") {
+      return scrollToSection(PaymentRef), setActiveMenu("Payment");
+    };
+    if (activeMenu === "Payment") {
+      return scrollToSection(GalleryRef), setActiveMenu("Gallery");
+    };
+    if (activeMenu === "Gallery") {
+      return scrollToSection(VideoRef), setActiveMenu("Video");
+    };
+    if (activeMenu === "Video") {
+      return scrollToSection(TimeRef), setActiveMenu("Time");
+    };
+    if (activeMenu === "Time") {
+      return scrollToSection(TestimonialRef), setActiveMenu("Testimonial");
+    };
+    if (activeMenu === "Testimonial") {
+      return scrollToSection(LocationRef), setActiveMenu("Location");
+    };
+    if (activeMenu === "Location") {
+      return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
+    };
+    if (activeMenu === "Feedback") {
+      return scrollToSection(InquiryRef), setActiveMenu("Inquiry");
+    };
+  };
+  function HandleMenuUp() {
+    if (activeMenu === "About") {
+      return scrollToSection(HomeRef), setActiveMenu("Home");
+    };
+    if (activeMenu === "Service") {
+      return scrollToSection(AboutRef), setActiveMenu("About");
+    };
+    if (activeMenu === "Product") {
+      return scrollToSection(ServiceRef), setActiveMenu("Service");
+    };
+    if (activeMenu === "Payment") {
+      return scrollToSection(ProductRef), setActiveMenu("Product");
+    };
+    if (activeMenu === "Gallery") {
+      return scrollToSection(PaymentRef), setActiveMenu("Payment");
+    };
+    if (activeMenu === "Video") {
+      return scrollToSection(GalleryRef), setActiveMenu("Gallery");
+    };
+    if (activeMenu === "Time") {
+      return scrollToSection(VideoRef), setActiveMenu("Video");
+    };
+    if (activeMenu === "Testimonial") {
+      return scrollToSection(TimeRef), setActiveMenu("Time");
+    };
+    if (activeMenu === "Location") {
+      return scrollToSection(TestimonialRef), setActiveMenu("Testimonial");
+    };
+    if (activeMenu === "Feedback") {
+      return scrollToSection(LocationRef), setActiveMenu("Location");
+    };
+    if (activeMenu === "Inquiry") {
+      return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
+    };
+  }
   return (
     <div className="doctor_demo_container">
       {/* Gallery Full IMAGE */}
@@ -361,9 +452,130 @@ const Doctor_Demo = () => {
         </div>
         <img src={banner} alt="gallery" id="fullImage" />
       </div>
+      {/* Menu Navbar */}
+      <div className="menu_navbar_box">
+        <div className={`up_btn ${activeMenu === 'Home' ? 'hideUpArrow' :''}`}>
+          <CiSquareChevUp onClick={HandleMenuUp} />
+        </div>
+        <div className="all_menus">
+          <div
+            className={`menu ${activeMenu === "Home" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(HomeRef), setActiveMenu("Home");
+            }}
+          >
+            <IoHome className="icon" />
+            <p>Home</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "About" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(AboutRef), setActiveMenu("About");
+            }}
+          >
+            <BiSolidUserDetail className="icon" />
+            <p>About</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Service" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(ServiceRef), setActiveMenu("Service");
+            }}
+          >
+            <MdMiscellaneousServices className="icon" />
+            <p>Service</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Product" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(ProductRef), setActiveMenu("Product");
+            }}
+          >
+            <AiFillProduct className="icon" />
+            <p>Product</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Payment" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(PaymentRef), setActiveMenu("Payment");
+            }}
+          >
+            <GiTakeMyMoney className="icon" />
+            <p>Payment</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Gallery" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(GalleryRef), setActiveMenu("Gallery");
+            }}
+          >
+            <GrGallery className="icon" />
+            <p>Gallery</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Video" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(VideoRef), setActiveMenu("Video");
+            }}
+          >
+            <BiSolidVideo className="icon" />
+            <p>Videos</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Time" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(TimeRef), setActiveMenu("Time");
+            }}
+          >
+            <MdSchedule className="icon" />
+            <p>Time</p>
+          </div>
+          <div
+            className={`menu ${
+              activeMenu === "Testimonial" ? "menuActive" : ""
+            }`}
+            onClick={() => {
+              scrollToSection(TestimonialRef), setActiveMenu("Testimonial");
+            }}
+          >
+            <MdOutlineRateReview className="icon" />
+            <p>Testi..al</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Location" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(LocationRef), setActiveMenu("Location");
+            }}
+          >
+            <GrMapLocation className="icon" />
+            <p>Location</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Feedback" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(FeedbackRef), setActiveMenu("Feedback");
+            }}
+          >
+            <VscFeedback className="icon" />
+            <p>Feedback</p>
+          </div>
+          <div
+            className={`menu ${activeMenu === "Inquiry" ? "menuActive" : ""}`}
+            onClick={() => {
+              scrollToSection(InquiryRef), setActiveMenu("Inquiry");
+            }}
+          >
+            <TbMessageChatbotFilled className="icon" />
+            <p>Inquries</p>
+          </div>
+        </div>
+        <div className={`down_btn ${activeMenu === 'Inquiry' ? 'hideDownArrow' :''}`}>
+          <CiSquareChevDown onClick={HandleMenuDown} />
+        </div>
+      </div>
       <div className="doctor_box">
         {/* Banner and logo */}
-        <div className="Image_row_1">
+        <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
             <img
               src="https://img.freepik.com/premium-photo/group-people-sitting-around-table-front-cityscape_250469-22109.jpg?w=1060"
@@ -470,290 +682,10 @@ const Doctor_Demo = () => {
               Add to Contact<i className="bx bxs-contact"></i>
             </button>
           </div>
-          {/* SocialMedia */}
-          <div className="social_medias">
-            <a
-              href="https://www.facebook.com/aristostechindia"
-              target="_blank"
-              className="social_media_icon"
-            >
-              <i className="bx bxl-facebook"></i>
-              <small>Facebook</small>
-              <div className="social_media_svg1">
-                <svg
-                  id="sw-js-blob-svg"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                >
-                  <defs>
-                    <linearGradient
-                      id="sw-gradient"
-                      x1="0"
-                      x2="1"
-                      y1="1"
-                      y2="0"
-                    >
-                      <stop
-                        id="stop1"
-                        stop-color="rgba(248, 117, 55, 1)"
-                        offset="0%"
-                      ></stop>
-                      <stop
-                        id="stop2"
-                        stop-color="rgba(251, 168, 31, 1)"
-                        offset="100%"
-                      ></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#sw-gradient)"
-                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                    width="100%"
-                    height="100%"
-                    transform="translate(50 50)"
-                    strokeWidth="0"
-                    style={{ transition: 0.3 }}
-                  ></path>
-                </svg>
-              </div>
-            </a>
-            <a
-              href="https://www.instagram.com/aristostech_india/"
-              target="_blank"
-              className="social_media_icon"
-            >
-              <i className="bx bxl-instagram-alt"></i>
-              <div className="social_media_svg2">
-                <svg
-                  id="sw-js-blob-svg"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                >
-                  <defs>
-                    <linearGradient
-                      id="sw-gradient2"
-                      x1="0"
-                      x2="1"
-                      y1="1"
-                      y2="0"
-                    >
-                      <stop
-                        id="stop3"
-                        stop-color="rgba(248, 117, 55, 1)"
-                        offset="0%"
-                      ></stop>
-                      <stop
-                        id="stop4"
-                        stop-color="rgba(251, 168, 31, 1)"
-                        offset="100%"
-                      ></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#sw-gradient2)"
-                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                    width="100%"
-                    height="100%"
-                    transform="translate(50 50)"
-                    strokeWidth="0"
-                    style={{ transition: 0.3 }}
-                  ></path>
-                </svg>
-              </div>
-              <small>Instagram</small>
-            </a>
-            <a
-              href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
-              target="_blank"
-              className="social_media_icon"
-            >
-              <i className="bx bxl-whatsapp"></i>
-              <div className="social_media_svg3">
-                <svg
-                  id="sw-js-blob-svg"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                >
-                  <defs>
-                    <linearGradient
-                      id="sw-gradient3"
-                      x1="0"
-                      x2="1"
-                      y1="1"
-                      y2="0"
-                    >
-                      <stop
-                        id="stop5"
-                        stop-color="rgba(248, 117, 55, 1)"
-                        offset="0%"
-                      ></stop>
-                      <stop
-                        id="stop6"
-                        stop-color="rgba(251, 168, 31, 1)"
-                        offset="100%"
-                      ></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#sw-gradient3)"
-                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                    width="100%"
-                    height="100%"
-                    transform="translate(50 50)"
-                    strokeWidth="0"
-                    style={{ transition: 0.3 }}
-                  ></path>
-                </svg>
-              </div>
-              <small>Whatsup</small>
-            </a>
-            <a
-              href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
-              target="_blank"
-              className="social_media_icon"
-            >
-              <i className="bx bxl-twitter"></i>
-              <div className="social_media_svg6">
-                <svg
-                  id="sw-js-blob-svg6"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                >
-                  <defs>
-                    <linearGradient
-                      id="sw-gradient6"
-                      x1="0"
-                      x2="1"
-                      y1="1"
-                      y2="0"
-                    >
-                      <stop
-                        id="stop11"
-                        stop-color="rgba(248, 117, 55, 1)"
-                        offset="0%"
-                      ></stop>
-                      <stop
-                        id="stop12"
-                        stop-color="rgba(251, 168, 31, 1)"
-                        offset="100%"
-                      ></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#sw-gradient6)"
-                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                    width="100%"
-                    height="100%"
-                    transform="translate(50 50)"
-                    strokeWidth="0"
-                    style={{ transition: 0.3 }}
-                  ></path>
-                </svg>
-              </div>
-              <small>Twiter</small>
-            </a>
-
-            <a
-              href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
-              target="_blank"
-              className="social_media_icon"
-            >
-              <i className="bx bx-map"></i>
-              <div className="social_media_svg4">
-                <svg
-                  id="sw-js-blob-svg"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                >
-                  <defs>
-                    <linearGradient
-                      id="sw-gradient4"
-                      x1="0"
-                      x2="1"
-                      y1="1"
-                      y2="0"
-                    >
-                      <stop
-                        id="stop7"
-                        stop-color="rgba(248, 117, 55, 1)"
-                        offset="0%"
-                      ></stop>
-                      <stop
-                        id="stop8"
-                        stop-color="rgba(251, 168, 31, 1)"
-                        offset="100%"
-                      ></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#sw-gradient4)"
-                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                    width="100%"
-                    height="100%"
-                    transform="translate(50 50)"
-                    strokeWidth="0"
-                    style={{ transition: 0.3 }}
-                  ></path>
-                </svg>
-              </div>
-              <small>Location</small>
-            </a>
-            <a
-              href="https://www.aristostechindia.com/"
-              target="_blank"
-              className="social_media_icon"
-            >
-              <i className="bx bx-globe"></i>
-              <div className="social_media_svg5">
-                <svg
-                  id="sw-js-blob-svg"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                >
-                  <defs>
-                    <linearGradient
-                      id="sw-gradient5"
-                      x1="0"
-                      x2="1"
-                      y1="1"
-                      y2="0"
-                    >
-                      <stop
-                        id="stop9"
-                        stop-color="rgba(248, 117, 55, 1)"
-                        offset="0%"
-                      ></stop>
-                      <stop
-                        id="stop10"
-                        stop-color="rgba(251, 168, 31, 1)"
-                        offset="100%"
-                      ></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#sw-gradient)"
-                    d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                    width="100%"
-                    height="100%"
-                    transform="translate(50 50)"
-                    strokeWidth="0"
-                    style={{ transition: 0.3 }}
-                  ></path>
-                </svg>
-              </div>
-              <small>Website</small>
-            </a>
-          </div>
         </div>
 
         {/* About US */}
-        <div className="about_row_4">
+        <div className="about_row_4" ref={AboutRef}>
           <div className="doctor_title_demo">
             <h3>About Us</h3>
           </div>
@@ -786,6 +718,7 @@ const Doctor_Demo = () => {
                 <p>2017</p>
               </div>
             </div>
+
             <div className="detail">
               <div className="detail_title">
                 <h5>Nature Of Business</h5>
@@ -796,6 +729,294 @@ const Doctor_Demo = () => {
                   Digital Visiting Card,NFC Business Cards, NFC Google Review
                   Card
                 </p>
+              </div>
+            </div>
+            <div className="detail">
+              <div className="detail_title">
+                <h5>SocialMedia's</h5>
+              </div>
+              <div className="detail_message">
+                <strong>:</strong>
+                {/* SocialMedia */}
+                <div className="social_medias">
+                  <a
+                    href="https://www.facebook.com/aristostechindia"
+                    target="_blank"
+                    className="social_media_icon"
+                  >
+                    <i className="bx bxl-facebook"></i>
+                    <small>Facebook</small>
+                    <div className="social_media_svg1">
+                      <svg
+                        id="sw-js-blob-svg"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                      >
+                        <defs>
+                          <linearGradient
+                            id="sw-gradient"
+                            x1="0"
+                            x2="1"
+                            y1="1"
+                            y2="0"
+                          >
+                            <stop
+                              id="stop1"
+                              stop-color="rgba(248, 117, 55, 1)"
+                              offset="0%"
+                            ></stop>
+                            <stop
+                              id="stop2"
+                              stop-color="rgba(251, 168, 31, 1)"
+                              offset="100%"
+                            ></stop>
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#sw-gradient)"
+                          d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                          width="100%"
+                          height="100%"
+                          transform="translate(50 50)"
+                          strokeWidth="0"
+                          style={{ transition: 0.3 }}
+                        ></path>
+                      </svg>
+                    </div>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/aristostech_india/"
+                    target="_blank"
+                    className="social_media_icon"
+                  >
+                    <i className="bx bxl-instagram-alt"></i>
+                    <div className="social_media_svg2">
+                      <svg
+                        id="sw-js-blob-svg"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                      >
+                        <defs>
+                          <linearGradient
+                            id="sw-gradient2"
+                            x1="0"
+                            x2="1"
+                            y1="1"
+                            y2="0"
+                          >
+                            <stop
+                              id="stop3"
+                              stop-color="rgba(248, 117, 55, 1)"
+                              offset="0%"
+                            ></stop>
+                            <stop
+                              id="stop4"
+                              stop-color="rgba(251, 168, 31, 1)"
+                              offset="100%"
+                            ></stop>
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#sw-gradient2)"
+                          d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                          width="100%"
+                          height="100%"
+                          transform="translate(50 50)"
+                          strokeWidth="0"
+                          style={{ transition: 0.3 }}
+                        ></path>
+                      </svg>
+                    </div>
+                    <small>Instagram</small>
+                  </a>
+                  <a
+                    href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
+                    target="_blank"
+                    className="social_media_icon"
+                  >
+                    <i className="bx bxl-whatsapp"></i>
+                    <div className="social_media_svg3">
+                      <svg
+                        id="sw-js-blob-svg"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                      >
+                        <defs>
+                          <linearGradient
+                            id="sw-gradient3"
+                            x1="0"
+                            x2="1"
+                            y1="1"
+                            y2="0"
+                          >
+                            <stop
+                              id="stop5"
+                              stop-color="rgba(248, 117, 55, 1)"
+                              offset="0%"
+                            ></stop>
+                            <stop
+                              id="stop6"
+                              stop-color="rgba(251, 168, 31, 1)"
+                              offset="100%"
+                            ></stop>
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#sw-gradient3)"
+                          d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                          width="100%"
+                          height="100%"
+                          transform="translate(50 50)"
+                          strokeWidth="0"
+                          style={{ transition: 0.3 }}
+                        ></path>
+                      </svg>
+                    </div>
+                    <small>Whatsup</small>
+                  </a>
+                  <a
+                    href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
+                    target="_blank"
+                    className="social_media_icon"
+                  >
+                    <i className="bx bxl-twitter"></i>
+                    <div className="social_media_svg6">
+                      <svg
+                        id="sw-js-blob-svg6"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                      >
+                        <defs>
+                          <linearGradient
+                            id="sw-gradient6"
+                            x1="0"
+                            x2="1"
+                            y1="1"
+                            y2="0"
+                          >
+                            <stop
+                              id="stop11"
+                              stop-color="rgba(248, 117, 55, 1)"
+                              offset="0%"
+                            ></stop>
+                            <stop
+                              id="stop12"
+                              stop-color="rgba(251, 168, 31, 1)"
+                              offset="100%"
+                            ></stop>
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#sw-gradient6)"
+                          d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                          width="100%"
+                          height="100%"
+                          transform="translate(50 50)"
+                          strokeWidth="0"
+                          style={{ transition: 0.3 }}
+                        ></path>
+                      </svg>
+                    </div>
+                    <small>Twiter</small>
+                  </a>
+
+                  <a
+                    href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
+                    target="_blank"
+                    className="social_media_icon"
+                  >
+                    <i className="bx bx-map"></i>
+                    <div className="social_media_svg4">
+                      <svg
+                        id="sw-js-blob-svg"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                      >
+                        <defs>
+                          <linearGradient
+                            id="sw-gradient4"
+                            x1="0"
+                            x2="1"
+                            y1="1"
+                            y2="0"
+                          >
+                            <stop
+                              id="stop7"
+                              stop-color="rgba(248, 117, 55, 1)"
+                              offset="0%"
+                            ></stop>
+                            <stop
+                              id="stop8"
+                              stop-color="rgba(251, 168, 31, 1)"
+                              offset="100%"
+                            ></stop>
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#sw-gradient4)"
+                          d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                          width="100%"
+                          height="100%"
+                          transform="translate(50 50)"
+                          strokeWidth="0"
+                          style={{ transition: 0.3 }}
+                        ></path>
+                      </svg>
+                    </div>
+                    <small>Location</small>
+                  </a>
+                  <a
+                    href="https://www.aristostechindia.com/"
+                    target="_blank"
+                    className="social_media_icon"
+                  >
+                    <i className="bx bx-globe"></i>
+                    <div className="social_media_svg5">
+                      <svg
+                        id="sw-js-blob-svg5"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                      >
+                        <defs>
+                          <linearGradient
+                            id="sw-gradient"
+                            x1="0"
+                            x2="1"
+                            y1="1"
+                            y2="0"
+                          >
+                            <stop
+                              id="stop9"
+                              stop-color="rgba(248, 117, 55, 1)"
+                              offset="0%"
+                            ></stop>
+                            <stop
+                              id="stop10"
+                              stop-color="rgba(251, 168, 31, 1)"
+                              offset="100%"
+                            ></stop>
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#sw-gradient)"
+                          d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                          width="100%"
+                          height="100%"
+                          transform="translate(50 50)"
+                          strokeWidth="0"
+                          style={{ transition: 0.3 }}
+                        ></path>
+                      </svg>
+                    </div>
+                    <small>Website</small>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -819,7 +1040,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Our Services */}
-        <div className="our_services">
+        <div className="our_services" ref={ServiceRef}>
           <div className="doctor_title_demo">
             <h3>Our Services</h3>
           </div>
@@ -950,7 +1171,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Our Product */}
-        <div className="our_products">
+        <div className="our_products" ref={ProductRef}>
           <div className="doctor_title_demo">
             <h3>Our Products</h3>
           </div>
@@ -1044,7 +1265,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Payment */}
-        <div className="Payment">
+        <div className="Payment" ref={PaymentRef}>
           <div className="doctor_title_demo">
             <h3>For Payment</h3>
           </div>
@@ -1139,7 +1360,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Gallery */}
-        <div className="gallery">
+        <div className="gallery" ref={GalleryRef}>
           <div className="doctor_title_demo">
             <h3>Gallery</h3>
           </div>
@@ -1190,7 +1411,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Videos */}
-        <div className="video">
+        <div className="video" ref={VideoRef}>
           <div className="doctor_title_demo">
             <h3>Videos</h3>
           </div>
@@ -1223,7 +1444,7 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Opentime */}
-        <div className="time_container">
+        <div className="time_container" ref={TimeRef}>
           <div className="doctor_title_demo">
             <h3>Open&Close Time</h3>
             {/* Contact */}
@@ -1263,13 +1484,18 @@ const Doctor_Demo = () => {
           </div>
         </div>
         {/* Testimonials */}
-        <div className="testimonial">
+        <div className="testimonial" ref={TestimonialRef}>
           <div className="doctor_title_demo">
             <h3>Testimonial</h3>
             {/* Contact */}
           </div>
           <div className="testimonial_container">
-            <Carousel showThumbs={true} showStatus={true} infiniteLoop autoPlay>
+            <Carousel
+              showThumbs={false}
+              showStatus={true}
+              infiniteLoop
+              autoPlay
+            >
               <div className="testimonial_list">
                 <div className="client_feedback">
                   <small>
@@ -1355,7 +1581,7 @@ const Doctor_Demo = () => {
         </div>
         {/* GoogleMap */}
 
-        <div className="google_map_container">
+        <div className="google_map_container" ref={LocationRef}>
           <div className="doctor_title_demo">
             <h3>Live Location</h3>
           </div>
@@ -1366,8 +1592,8 @@ const Doctor_Demo = () => {
             />
           </div>
         </div>
-            {/* Feedback */}
-            <div className="feedback_row">
+        {/* Feedback */}
+        <div className="feedback_row" ref={FeedbackRef}>
           <div className="doctor_title_demo">
             <h3>Feedback</h3>
             {/* Contact */}
@@ -1592,8 +1818,8 @@ const Doctor_Demo = () => {
             )}
           </div>
         </div>
-             {/* Inquries */}
-             <div className="Inquries">
+        {/* Inquries */}
+        <div className="Inquries" ref={InquiryRef}>
           <div className="doctor_title_demo">
             <h3>Inquries</h3>
           </div>
@@ -1650,10 +1876,16 @@ const Doctor_Demo = () => {
             </form>
           </div>
         </div>
-            {/* Footer */}
-            <div className="Footer">
+        {/* Footer */}
+        <div className="Footer">
           <div className="footer_container">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$second_back__color} fill-opacity="1" d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill={style.$second_back__color}
+                fill-opacity="1"
+                d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
+              ></path>
+            </svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
