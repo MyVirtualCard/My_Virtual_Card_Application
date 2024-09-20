@@ -60,7 +60,13 @@ export const postVCardURLData = async (req, res) => {
         // Handle other errors
         return res.status(500).json({ message: `Error: ${err.message}` });
       }
-      if (!req.body.URL_Alies || !req.body.VCardName || !req.body.Description) {
+      if (
+        !req.body.URL_Alies ||
+        !req.body.VCardName ||
+        !req.body.FirstName ||
+        !req.body.LastName ||
+        !req.body.Profession
+      ) {
         return res.status(401).json({ message: "All * fields Required" });
       }
 
@@ -88,7 +94,9 @@ export const postVCardURLData = async (req, res) => {
           user: req.user.userName,
           URL_Alies: req.body.URL_Alies,
           VCardName: req.body.VCardName,
-          Description: req.body.Description,
+          FirstName: req.body.FirstName,
+          LastName: req.body.LastName,
+          Profession: req.body.Profession,
           Profile: Profile,
           Banner: Banner,
           ProfileType: req.body.ProfileType,
@@ -209,7 +217,9 @@ export const updateSpecificUserData = async (req, res) => {
           }
         }
         updateSpecificData.VCardName = req.body.VCardName;
-        updateSpecificData.Description = req.body.Description;
+        updateSpecificData.FirstName = req.body.FirstName;
+        updateSpecificData.LastName = req.body.LastName;
+        updateSpecificData.Profession = req.body.Profession;
         updateSpecificData.ProfileType = req.body.ProfileType;
         updateSpecificData.BannerType = req.body.BannerType;
         updateSpecificData.ProfileAddress = req.body.ProfileAddress;
@@ -261,9 +271,10 @@ export const updateSpecificUserData_Id = async (req, res) => {
       }
 
       product.name = req.body.name || product.name;
-      updateSpecificData.URL_Alies = req.body.URL_Alies;
       updateSpecificData.VCardName = req.body.VCardName;
-      updateSpecificData.Description = req.body.Description;
+      updateSpecificData.FirstName = req.body.FirstName;
+      updateSpecificData.LastName = req.body.LastName;
+      updateSpecificData.Profession = req.body.Profession;
       updateSpecificData.ProfileType = req.body.ProfileType;
       updateSpecificData.BannerType = req.body.BannerType;
       updateSpecificData.ProfileAddress = req.body.ProfileAddress;
@@ -312,22 +323,24 @@ export const deleteSpecificUserData = async (req, res) => {
     if (!checkSpecificData) {
       res.status(400).json({ message: "Data Not Found!" });
     } else {
-      if (checkSpecificData.ProfileType === "ImageUpload" || checkSpecificData.BannerType === "ImageUpload") {
-          fs.unlink(checkSpecificData.Profile, (err) => {
-            if (err) {
-              console.error("Failed to delete the old image:", err);
-            }
-          });
-          fs.unlink(checkSpecificData.Banner, (err) => {
-            if (err) {
-              console.error("Failed to delete the old image:", err);
-            }
-          });
-          let deleteSpecificData = await Vcard_URL.findByIdAndDelete(id);
-          res
-            .status(201)
-            .json({ message: "VCard Data Deleted!", data: deleteSpecificData });
-
+      if (
+        checkSpecificData.ProfileType === "ImageUpload" ||
+        checkSpecificData.BannerType === "ImageUpload"
+      ) {
+        fs.unlink(checkSpecificData.Profile, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
+        fs.unlink(checkSpecificData.Banner, (err) => {
+          if (err) {
+            console.error("Failed to delete the old image:", err);
+          }
+        });
+        let deleteSpecificData = await Vcard_URL.findByIdAndDelete(id);
+        res
+          .status(201)
+          .json({ message: "VCard Data Deleted!", data: deleteSpecificData });
       } else {
         let deleteSpecificData = await Vcard_URL.findByIdAndDelete(id);
         res

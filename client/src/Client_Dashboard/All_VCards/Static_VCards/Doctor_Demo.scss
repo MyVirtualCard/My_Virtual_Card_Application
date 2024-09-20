@@ -188,11 +188,11 @@ $error_text_color: tomato;
   // Menu Navbar
   .menu_navbar_box {
     width: 80px;
-    height: 600px;
+    height: 100%;
     background-color: $vcard_back_color;
     position: fixed;
-    top: 15%;
-    right: 15%;
+    top: 0%;
+    right: 0%;
     border-radius: 4rem;
 
     display: flex;
@@ -209,8 +209,8 @@ $error_text_color: tomato;
       font-size: 2.5rem;
       font-weight: bold;
       background-color: tomato;
-      border-top-left-radius: 4rem;
-      border-top-right-radius: 4rem;
+      border-top-left-radius: 0rem;
+      border-top-right-radius: 0rem;
       color: $vcard_back_color;
       cursor: pointer;
       overflow: hidden;
@@ -307,8 +307,8 @@ $error_text_color: tomato;
       font-size: 2.5rem;
       font-weight: bold;
       background-color: tomato;
-      border-bottom-left-radius: 4rem;
-      border-bottom-right-radius: 4rem;
+      border-bottom-left-radius: 0rem;
+      border-bottom-right-radius: 0rem;
       color: $vcard_back_color;
       cursor: pointer;
       overflow: hidden;

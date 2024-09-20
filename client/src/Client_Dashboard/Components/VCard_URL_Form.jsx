@@ -101,7 +101,9 @@ const VCard_URL_Form = () => {
     initialValues: {
       URL_Alies: URL_Alies,
       VCardName: "",
-      Description: Description,
+      FirstName: "",
+      LastName: "",
+      Profession: '',
       Profile: "",
       ProfileType: "ImageUpload",
       BannerType: "ImageUpload",
@@ -122,14 +124,13 @@ const VCard_URL_Form = () => {
       formData.append("Banner", Banner);
       formData.append("URL_Alies", values.URL_Alies);
       formData.append("VCardName", values.VCardName);
+      formData.append("FirstName", values.FirstName);
+      formData.append("LastName", values.LastName);
+      formData.append("Profession", values.Profession);
       formData.append("BannerType", values.BannerType);
       formData.append("ProfileType", values.ProfileType);
       formData.append("ProfileAddress", values.ProfileAddress);
       formData.append("BannerAddress", values.BannerAddress);
-      formData.append(
-        "Description",
-        (values.Description = stripHtmlTags(Description))
-      );
 
       await api
         .post("/vcard_URL", formData, {
@@ -147,7 +148,6 @@ const VCard_URL_Form = () => {
           }
 
           setTimeout(() => {
-           
             navigate(
               `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
             );
@@ -163,15 +163,7 @@ const VCard_URL_Form = () => {
         });
     },
   });
-  // const handleLogoChange = (event) => {
-  //   const Profile = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Profile);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Profile", reader.result);
-  //     setProfile(reader.result);
-  //   };
-  // };
+  console.log(formik.values.VCardName);
   // Handle file selection
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -309,69 +301,99 @@ const VCard_URL_Form = () => {
 
             <div className="form_group">
               <label htmlFor="VCardName">
-                VCard Name <sup>*</sup>
+                VCard Type <sup>*</sup>
               </label>
-              <input
-                type="text"
-                placeholder="Enter VCard Name"
+              <select
+                className={`VCardName ${
+                  formik.errors.VCardName && formik.touched.VCardName
+                    ? "input_error"
+                    : "input_success"
+                }`}
                 name="VCardName"
                 id="VCardName"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 value={formik.values.VCardName}
-                className={
-                  formik.errors.VCardName && formik.touched.VCardName
-                    ? "input_error"
-                    : "input_success"
-                }
-              />
+              >
+                <option value="" label="Select Your Vcard Type" />
+                <option value="Software_Developer">Software_Developer</option>
+                <option value="Real_Estate">Real_Estate_Bussiness</option>
+                <option value="Software_Company">Software_Company</option>
+                <option value="Small_Scale_Shop">Small_Scale_Shop</option>
+                <option value="Medical_Field">Medical_Field</option>
+                <option value="Hardware_Shop">Hardware_Shop</option>
+                <option value="Electrical_Shop">Electrical_Shop</option>
+                <option value="Plumber_or_Fitter">Plumber_or_Fitter</option>
+                <option value="Grocery_Store">Grocery_Store</option>
+                <option value="Mobile_Store">Mobile_Store</option>
+                <option value="Cloth_Shop">Cloth_Shop</option>
+              </select>
+
               <div className="error">{formik.errors.VCardName}</div>
             </div>
 
-            <div className="form_group editor">
-              <label htmlFor="Description">
-                Description<sup>*</sup>
+            <div className="form_group">
+              <label htmlFor="FirstName">
+                FirstName<sup>*</sup>
               </label>
-              <Editor
-                id="Description"
-                name="Description"
-                value={Description}
-                onTextChange={(e) => {
-                  formik.setFieldValue("Description", e.htmlValue),
-                    setDescription(e.htmlValue);
-                }}
+              <input
+                type="text"
+                placeholder="Enter Your FirstName"
+                name="FirstName"
+                id="FirstName"
                 onBlur={formik.handleBlur}
-                style={{ height: "150px" }}
-                placeholder="Enter Short Description..!"
+                onChange={formik.handleChange}
+                value={formik.values.FirstName}
                 className={
-                  formik.errors.Description && formik.touched.Description
+                  formik.errors.FirstName && formik.touched.FirstName
                     ? "input_error"
                     : "input_success"
                 }
               />
-
-              {/* <ReactQuill 
-               modules={modules}
-              theme="snow"    
-              id="Description"
-                name="Description"
-                value={formik.values.Description}
-                onTextChange={(e) => {
-                  formik.setFieldValue("Description", e.htmlValue),
-                    setDescription(e.htmlValue);
-                }}
-                // onChange={(value) => setFieldValue('Description', value)}
+              <div className="error">{formik.errors.FirstName}</div>
+            </div>
+            <div className="form_group">
+              <label htmlFor="LastName">
+                LastName<sup>*</sup>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Your LastName"
+                name="LastName"
+                id="LastName"
                 onBlur={formik.handleBlur}
-                style={{ height: "150px" }}
-                placeholder="Enter Short Description..!"
+                onChange={formik.handleChange}
+                value={formik.values.LastName}
                 className={
-                  formik.errors.Description && formik.touched.Description
+                  formik.errors.LastName && formik.touched.LastName
                     ? "input_error"
                     : "input_success"
-                } /> */}
-              <div className="desc_error">{formik.errors.Description}</div>
+                }
+              />
+              <div className="error">{formik.errors.LastName}</div>
             </div>
-            <div className="form_group double_col_inputs">
+            <div className="form_group profession">
+              <label htmlFor="LastName">
+                Company Name (or) Your Profession<sup>*</sup>
+              </label>
+              <input
+         
+                type="text"
+                placeholder="Enter Your Profession"
+                name="Profession"
+                id="Profession"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.Profession}
+                className={
+                  formik.errors.Profession && formik.touched.Profession
+                    ? "input_error"
+                    : "input_success"
+                }
+              />
+              <div className="error">{formik.errors.Profession}</div>
+            </div>
+            <div className="form_group image_col_inputs">
               <div className="image_upload_type">
                 <div className="logo_type">
                   <label htmlFor="Profile">Company Logo</label>
@@ -380,20 +402,6 @@ const VCard_URL_Form = () => {
                     id="ProfileType"
                     onChange={formik.handleChange}
                     value={formik.values.ProfileType}
-                  >
-                    <option value="ImageUpload">ImageUpload</option>
-                    <option value="Paste_ImageAddress">
-                      Paste_ImageAddress
-                    </option>
-                  </select>
-                </div>
-                <div className="banner_type">
-                  <label htmlFor="Banner">Company Banner</label>
-                  <select
-                    name="BannerType"
-                    id="BannerType"
-                    onChange={formik.handleChange}
-                    value={formik.values.BannerType}
                   >
                     <option value="ImageUpload">ImageUpload</option>
                     <option value="Paste_ImageAddress">
@@ -430,14 +438,7 @@ const VCard_URL_Form = () => {
                         />
                       )}
 
-                      <span
-                        className="material-symbols-outlined"
-                        onClick={() => {
-                          setProfile(undefined);
-                        }}
-                      >
-                        clear_all
-                      </span>
+                   
                     </label>
                     <p>
                       <strong>Note :</strong> Max file size limit 3MB
@@ -493,6 +494,27 @@ const VCard_URL_Form = () => {
                     <div className="error">{formik.errors.ProfileAddress}</div>
                   </div>
                 )}
+              </div>
+            </div>
+            <div className="form_group image_col_inputs">
+              <div className="image_upload_type">
+                <div className="banner_type">
+                  <label htmlFor="Banner">Company Banner</label>
+                  <select
+                    name="BannerType"
+                    id="BannerType"
+                    onChange={formik.handleChange}
+                    value={formik.values.BannerType}
+                  >
+                    <option value="ImageUpload">ImageUpload</option>
+                    <option value="Paste_ImageAddress">
+                      Paste_ImageAddress
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="images">
                 {/* //Banner Type */}
                 {formik.values.BannerType == "ImageUpload" ? (
                   <div className="second">
@@ -518,15 +540,7 @@ const VCard_URL_Form = () => {
                           alt="Banner"
                         />
                       )}
-                      <span
-                        className="material-symbols-outlined"
-                        onClick={() => {
-                          setBanner(undefined);
-                        }}
-                      >
-                        clear_all
-                      </span>
-                      {/* <i className="bx bxs-edit"></i> */}
+                 
                     </label>
                     <p>
                       <strong>Note :</strong> Max file size limit 3MB
@@ -582,7 +596,6 @@ const VCard_URL_Form = () => {
                 )}
               </div>
             </div>
-
             <div className="form_submit_actions">
               <button className="save" type="submit">
                 Save<i className="bx bxs-save"></i>
