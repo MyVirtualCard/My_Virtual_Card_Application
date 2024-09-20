@@ -125,7 +125,7 @@ const Products = () => {
       formData.append("ProductImage", ProductImage);
       formData.append(
         "ProductDescription",
-        (values.ProductDescription = stripHtmlTags(ProductDescription))
+        (values.ProductDescription = ProductDescription)
       );
 
       setFormSubmitLoader(true);
@@ -204,9 +204,9 @@ const Products = () => {
           setProductPrice(res.data.data.ProductPrice);
           setProductURL(res.data.data.ProductURL);
           setProductDescription(
-            (res.data.data.ProductDescription = stripHtmlTags(
+            (res.data.data.ProductDescription = 
               res.data.data.ProductDescription
-            ))
+            )
           );
           setFormSubmitLoader(false);
         })
@@ -265,7 +265,7 @@ const Products = () => {
     formData.append("ProductImage", ProductImage);
     formData.append(
       "ProductDescription",
-      (ProductDescription = stripHtmlTags(ProductDescription))
+      (ProductDescription = ProductDescription)
     );
     let data = {
       URL_Alies,
@@ -332,15 +332,7 @@ const Products = () => {
       console.log(error);
     }
   }
-  // const handleProductImageChange = (event) => {
-  //   const ProductImage = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(ProductImage);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("ProductImage", reader.result);
-  //     setProductImage(reader.result);
-  //   };
-  // };
+
   const handleProductImageChange = (e) => {
     const file = e.target.files[0];
     setProductImage(file);

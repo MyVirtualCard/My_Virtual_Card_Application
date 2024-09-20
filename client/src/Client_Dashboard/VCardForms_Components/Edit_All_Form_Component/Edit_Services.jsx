@@ -39,6 +39,7 @@ const Services = () => {
   let [viewServiceDetail, setViewServiceDetail] = useState(false);
   let [ServiceName, setServiceName] = useState();
   let [ServiceURL, setServiceURL] = useState();
+  let [ServicePrice, setServicePrice] = useState(0);
   let [ServiceDescription, setServiceDescription] = useState();
   let [ServiceImage, setServiceImage] = useState();
   let [ServicePreview, setServicePreview] = useState(null);
@@ -46,7 +47,7 @@ const Services = () => {
   let [ServiceType, setServiceType] = useState();
   let [ServiceIcon, setServiceIcon] = useState();
   let [ServiceAddress, setServiceAddress] = useState();
-  let[deleteParams,setDeleteParams]=useState();
+  let [deleteParams, setDeleteParams] = useState();
 
   const [key, setKey] = useState(0);
 
@@ -100,6 +101,7 @@ const Services = () => {
       URL_Alies: URL_Alies,
       ServiceName: "",
       ServiceURL: "",
+      ServicePrice: 0,
       ServiceDescription: "",
       ServiceType: "ImageUpload",
       ServiceIcon: "",
@@ -116,13 +118,14 @@ const Services = () => {
       formData.append("URL_Alies", URL_Alies);
       formData.append("ServiceName", values.ServiceName);
       formData.append("ServiceURL", values.ServiceURL);
+      formData.append("ServicePrice", values.ServicePrice);
       formData.append("ServiceType", values.ServiceType);
       formData.append("ServiceIcon", values.ServiceIcon);
       formData.append("ServiceAddress", values.ServiceAddress);
       formData.append("ServiceImage", ServiceImage);
       formData.append(
         "ServiceDescription",
-        (values.ServiceDescription = stripHtmlTags(ServiceDescription))
+        (values.ServiceDescription = ServiceDescription)
       );
 
       await api
@@ -142,6 +145,7 @@ const Services = () => {
           values.ServiceDescription = stripHtmlTags("");
           values.ServiceImage = undefined;
           setServiceImage(undefined);
+          setServicePrice(0);
           formik.handleReset();
           setFormSubmitLoader(false);
           setServicePreview(null);
@@ -196,22 +200,21 @@ const Services = () => {
           setServiceName(res.data.data.ServiceName);
           setServiceURL(res.data.data.ServiceURL);
           setServiceDescription(
-            (res.data.data.ServiceDescription = stripHtmlTags(
-              res.data.data.ServiceDescription
-            ))
+            (res.data.data.ServiceDescription =
+              res.data.data.ServiceDescription)
           );
+          setServicePrice(res.data.data.ServicePrice)
           setServiceId(res.data.data._id);
           setFormSubmitLoader(false);
           setServiceType(res.data.data.ServiceType);
           setServiceImage(res.data.data.ServiceImage);
-          setServicePreview(res.data.data.ServiceImage?.filename)
+          setServicePreview(res.data.data.ServiceImage?.filename);
           // if(res.data.data.ServiceType == 'ImageUpload'){
           //   return setServiceImage(res.data.data.ServiceImage);
           // };
           // if(res.data.data.ServiceType == 'Image_Address_Link'){
           //   return setServiceImage(res.data.data.ServiceImage.filename);
           // };
-      
         })
 
         .catch((error) => {
@@ -245,9 +248,10 @@ const Services = () => {
           setUpdateFormOpen(true);
           setServiceName(res.data.data.ServiceName);
           setServiceURL(res.data.data.ServiceURL);
+          setServicePrice(res.data.data.ServicePrice)
           setServiceDescription(res.data.data.ServiceDescription);
           setServiceImage(res.data.data.ServiceImage);
-      
+
           setServiceId(res.data.data._id);
           setServiceIcon(res.data.data.ServiceIcon);
           setServiceType(res.data.data.ServiceType);
@@ -270,13 +274,14 @@ const Services = () => {
     formData.append("URL_Alies", URL_Alies);
     formData.append("ServiceName", ServiceName);
     formData.append("ServiceURL", ServiceURL);
+    formData.append("ServicePrice", ServicePrice);
     formData.append("ServiceType", ServiceType);
     formData.append("ServiceIcon", ServiceIcon);
     formData.append("ServiceAddress", ServiceAddress);
     formData.append("ServiceImage", ServiceImage);
     formData.append(
       "ServiceDescription",
-      (ServiceDescription = stripHtmlTags(ServiceDescription))
+      (ServiceDescription = ServiceDescription)
     );
     try {
       api
@@ -294,6 +299,7 @@ const Services = () => {
           setTimeout(() => {
             setServiceName("");
             setServiceURL("");
+            setServicePrice(0)
             setServicePreview(null);
             setServiceIcon("");
             setServiceImage(undefined);
@@ -313,9 +319,6 @@ const Services = () => {
     }
   }
   async function handleServiceDelete(id) {
-
-
-
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
@@ -332,26 +335,16 @@ const Services = () => {
           setServiceCount(--ServiceCount);
           reloadComponent();
           setFormSubmitLoader(false);
-        
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setFormSubmitLoader(false);
-       
         });
     } catch (error) {
       console.log(error);
     }
-  }
-  // const handleServiceImage = (event) => {
-  //   const ServiceImage = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(ServiceImage);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("ServiceImage", reader.result);
-  //     setServiceImage(reader.result);
-  //   };
-  // };
+  };
+ 
   const handleServiceImage = (e) => {
     const file = e.target.files[0];
     setServiceImage(file);
@@ -526,7 +519,6 @@ const Services = () => {
                   {AllService != undefined && AllService.length > 0 ? (
                     <>
                       {AllService.map((data, index) => {
-                    
                         return (
                           <tr key={index}>
                             <td className="h-100 align-middle">
@@ -546,9 +538,7 @@ const Services = () => {
                                     <img
                                       src={`${
                                         import.meta.env.VITE_APP_BACKEND_API_URL
-                                      }/${
-                                        data?.ServiceImage
-                                      }`}
+                                      }/${data?.ServiceImage}`}
                                       className="ServiceImage"
                                       alt="ServiceImage"
                                     />
@@ -693,6 +683,32 @@ const Services = () => {
                     <div className="error">{formik.errors.ServiceName}</div>
                   </div>
                   <div className="form_group">
+                    <label htmlFor="ServicePrice">
+                      Service Price
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter Service Amount"
+                      id="ServicePrice"
+                      name="ServicePrice"
+                      onBlur={formik.handleBlur}
+                      onChange={
+                        updateFormOpen
+                          ? (e) => setServicePrice(e.target.value)
+                          : formik.handleChange
+                      }
+                      value={
+                        updateFormOpen ? ServicePrice : formik.values.ServicePrice
+                      }
+                      className={
+                        formik.errors.ServicePrice && formik.touched.ServicePrice
+                          ? "input_error"
+                          : "input_success"
+                      }
+                    />
+                    <div className="error">{formik.errors.ServicePrice}</div>
+                  </div>
+                  <div className="form_group Service_URL">
                     <label htmlFor="ServiceURL">Service URL</label>
                     <input
                       type="text"

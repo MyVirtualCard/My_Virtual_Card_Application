@@ -101,6 +101,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceName: req.body.ServiceName,
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceURL: req.body.ServiceURL,
+                ServicePrice:req.body.ServicePrice,
                 ServiceType: req.body.ServiceType,
                 ServiceIcon: req.body.ServiceIcon,
                 ServiceAddress: req.body.ServiceAddress,
@@ -143,6 +144,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
+                ServicePrice:req.body.ServicePrice,
                 ServiceIcon: req.body.ServiceIcon,
                 ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
@@ -211,6 +213,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
+                ServicePrice:req.body.ServicePrice,
                 ServiceIcon: req.body.ServiceIcon,
                 ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
@@ -251,6 +254,7 @@ export const PostServiceData = async (req, res) => {
                 ServiceDescription: req.body.ServiceDescription,
                 ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
+                ServicePrice:req.body.ServicePrice,
                 ServiceIcon: req.body.ServiceIcon,
                 ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
@@ -394,6 +398,7 @@ export const updateSpecificUserData = async (req, res) => {
             ServiceSpecificData.URL_Alies = req.body.URL_Alies;
             ServiceSpecificData.ServiceName = req.body.ServiceName;
             ServiceSpecificData.ServiceURL = req.body.ServiceURL;
+            ServiceSpecificData.ServicePrice=req.body.ServicePrice,
             ServiceSpecificData.ServiceType = req.body.ServiceType;
             ServiceSpecificData.ServiceIcon = req.body.ServiceIcon;
             ServiceSpecificData.ServiceAddress = req.body.ServiceAddress;
