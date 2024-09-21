@@ -29,6 +29,7 @@ import Edit_GoogleMap from "./Edit_All_Form_Component/Edit_GoogleMap";
 import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 import { SHORTKEY } from "quill/modules/keyboard";
 import Edit_About from "./Edit_All_Form_Component/Edit_About";
+import Edit_Payment from "./Edit_All_Form_Component/Edit_Payment";
 
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
@@ -167,7 +168,6 @@ const VCard_Form_Edit = () => {
     // freePlanFetchData();
     fetchCurrentManageContent();
   }, []);
-  console.log(URL_Alies);
   return (
     <>
       <div className="vcard_form_container">
@@ -345,6 +345,18 @@ const VCard_Form_Edit = () => {
                 id="Products"
               ></i>
               <small id="Products">Products</small>
+            </div>
+            <div
+              className="menu_item"
+              onClick={handleFormShow}
+              id={ShowForm === "Payment Details" ? "menu_active" : ""}
+            >
+              <i
+                className="bx bxs-bank"
+                style={{ color: "lightgreen" }}
+                id="Payment Details"
+              ></i>
+              <small id="Payment Details">Payment Details</small>
             </div>
             <div
               className="menu_item"
@@ -540,6 +552,7 @@ const VCard_Form_Edit = () => {
             {ShowForm === "About Details" ? <Edit_About /> : ""}
             {ShowForm === "Services" ? <Edit_Services /> : ""}
             {ShowForm === "Products" ? <Edit_Products /> : ""}
+            {ShowForm === "Payment Details" ? <Edit_Payment /> : ""}
             {ShowForm === "Galleries" ? <Edit_Gallery /> : ""}
             {ShowForm === "Blog" ? <Edit_Blog /> : ""}
             {ShowForm === "Testimonials" ? <Edit_Testimonial /> : ""}

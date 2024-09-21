@@ -154,22 +154,22 @@ const Products = () => {
 
           if (currentPlan === "Free Plan" && ProductCount == 2) {
             setTimeout(() => {
-              setShowForm("Galleries");
+              setShowForm("Payment Details");
             }, 2000);
           }
           if (currentPlan === "Basic" && ProductCount == 4) {
             setTimeout(() => {
-              setShowForm("Galleries");
+              setShowForm("Payment Details");
             }, 2000);
           }
           if (currentPlan === "Standard" && ProductCount == 6) {
             setTimeout(() => {
-              setShowForm("Galleries");
+              setShowForm("Payment Details");
             }, 2000);
           }
           if (currentPlan === "Enterprises" && ProductCount == 10) {
             setTimeout(() => {
-              setShowForm("Galleries");
+              setShowForm("Payment Details");
             }, 2000);
           }
 

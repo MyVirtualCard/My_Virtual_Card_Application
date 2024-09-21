@@ -61,7 +61,7 @@ const Edit_About = () => {
           },
         })
         .then((res) => {
-          console.log(res)
+         
           if (res.data.data.length == 1) {
             setUpdateButtonToggle(true);
             setCompanyName(res.data.data[0].CompanyName);
