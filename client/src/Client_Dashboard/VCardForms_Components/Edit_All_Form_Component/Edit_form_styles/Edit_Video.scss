@@ -79,79 +79,113 @@
         }
       }
     }
-  
-    .gallery_list_table {
-      margin: 0.5rem auto;
-      padding: 1rem 0.2rem;
-  z-index: 900;
+    .All_videos_container{
       width: 100%;
-  
-      table {
-        min-width: 100%;
-        border-collapse: collapse;
-        thead {
-          tr {
-            th {
-              text-align: center;
-            padding: 0.7rem 0.5rem;
-            font-size: 0.7rem;
-            background-color: #427dfa !important;
-            font-weight: 550 !important;
-            letter-spacing: 1px;
-            color: rgb(255, 255, 255);
-            background-color: rgb(248, 248, 248);
-            }
-          }
-        }
-        tbody {
-          p{
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 10px;
-            width: 100%;
-            font-size: 0.8rem;
+      // height: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      // grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1rem;
+      place-items: center;
+      margin: 1rem auto;
+
+      .video_box{
+        width: 200px;
+        height: auto;
+        background-color: rgb(243, 243, 243);
+        border-radius: 0.5rem;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+margin: auto;
+        .video_header{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 10px;
+          width: 100%;
+          h2{
+            font-size: 0.9rem;
             font-weight: 550;
-            color: tomato;
-            vertical-align: middle;
-          }
-          tr {
-            td {
-              padding: 0.5rem;
-              font-size: 0.8rem;
-              text-align: center;
-              font-weight: bold;
-              background-color: rgb(199, 255, 199);
-              color: rgb(43, 43, 43);
-              border-top: 1px solid #dddddd;
-  
-              img {
-                width: 100px;
-                height: 60px;
-                box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-                border: 1px solid lightcyan;
-                border-radius: 5px;
-                object-fit: cover;
-                object-position: center;
-              }
-  
-              i {
-                font-size: 1.5rem;
-                margin-right: 10px;
-                cursor: pointer;
-  
-                &:hover {
-                  filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.3));
-                }
-              }
-            }
+            color: royalblue;
+
           }
         }
-        @media screen and (max-width:600px){
-          min-width: 130%;
+        .video{
+          width: 95%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: auto;
+
+          iframe{
+
+            width: 100%;
+            height: 140px;
+            border-radius: 0.6rem;
+          }
+        }
+        .icon_actions{
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem 1rem;
+height: 50px;
+.edit,.delete{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-direction: column;
+
+  i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 1.5rem;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    &:hover {
+      scale: 1.1;
+      filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.3));
+      transition: all 0.3s ease-in;
+    }
+  }
+
+  small{
+    font-size: 0.6rem;
+    font-weight: 550;
+  }
+}
+
+
+        }
+
+        &:hover{
+          background-color: rgb(231, 231, 231);
         }
       }
+      .note{
+        width: 100% !important;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+      small{
+        font-size: 0.9rem;
+        font-weight: 550;
+        color: gray;
+      }
+      }
+      @media screen and (min-width:1400px){
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
     }
+  
+
   
     //Create new service form box
   
@@ -270,7 +304,8 @@
                 width: 100%;
                 iframe{
                     width: 100%;
-                    height: 200px;
+                    height: 250px;
+                    filter: brightness(105%);
                 }
             }
             @media screen and (max-width:776px){

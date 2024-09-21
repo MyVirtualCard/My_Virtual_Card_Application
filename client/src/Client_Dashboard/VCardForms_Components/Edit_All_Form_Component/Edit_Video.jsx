@@ -13,10 +13,12 @@ import { VideoDetailValidateShema } from "../../../Helper/Video.validate";
 import Context from "../../../Context/GlobalContext";
 const Edit_Video = () => {
   let { URL_Alies } = useParams();
-  let [AllGallery, setAllGallery] = useState();
+  let [AllVideo, setAllVideo] = useState();
   let [VideoId, setVideoId] = useState();
   let [updateFormOpen, setUpdateFormOpen] = useState(false);
   let [videoFormOpen, setVideoFormOpen] = useState(false);
+  let [GalleryType, setGalleryType] = useState();
+  let [GalleryImageURL, setGalleryImageURL] = useState();
   let {
     user,
     currentPlan,
@@ -34,9 +36,14 @@ const Edit_Video = () => {
     errorPopupOpen,
     setErrorPopupOpen,
   } = useContext(Context);
+
   let [VideoCount, setVideoCount] = useState(0);
   let [Video, setVideo] = useState();
+
+  let [fullImageToggle, setFullImageToggle] = useState(false);
+
   const [key, setKey] = useState(0);
+
   const reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
@@ -44,11 +51,11 @@ const Edit_Video = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-  async function fetchAllVideo() {
+  async function fetchCurrentGallery() {
     setFormSubmitLoader(true);
     try {
       await api
-        .get(`/galleryDetail/${URL_Alies}`, {
+        .get(`/videoDetail/${URL_Alies}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -56,10 +63,9 @@ const Edit_Video = () => {
         })
         .then((res) => {
           if (res.data.data.length == 0) {
-            // toast.error("No Gallery added!");
             setFormSubmitLoader(false);
           } else {
-            setAllGallery(res.data.data);
+            setAllVideo(res.data.data);
             setVideoCount(res.data.data.length);
             setFormSubmitLoader(false);
           }
@@ -74,7 +80,7 @@ const Edit_Video = () => {
     }
   }
   useEffect(() => {
-    fetchAllVideo();
+    fetchCurrentGallery();
   }, [key]);
 
   let formik = useFormik({
@@ -91,9 +97,9 @@ const Edit_Video = () => {
       formData.append("Video", Video);
       setFormSubmitLoader(true);
       await api
-        .post(`/galleryDetail/${URL_Alies}`, formData, {
+        .post(`/videoDetail/${URL_Alies}`, values, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         })
@@ -122,11 +128,12 @@ const Edit_Video = () => {
           setFormSubmitLoader(false);
           setVideoCount(++VideoCount);
           setVideo("");
+          formik.values.Video=''
 
           setTimeout(() => {
             setVideoFormOpen(false);
             reloadComponent();
-          }, 1000);
+          }, 200);
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -137,23 +144,42 @@ const Edit_Video = () => {
         });
     },
   });
-
-  async function handleGalleryEdit(id) {
+  async function handleFullImageShow(id) {
+    setFormSubmitLoader(true);
+    try {
+      api
+        .get(`/galleryDetail/specificID/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          setFormSubmitLoader(false);
+          setFullImageToggle(true);
+          setVideo(res.data.data.Video);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+  async function handleVideoEdit(id) {
     setFormSubmitLoader(true);
     try {
       await api
-        .get(`/galleryDetail/specificID/${id}`, {
+        .get(`/videoDetail/specificID/${id}`, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         })
         .then((res) => {
           setUpdateFormOpen(true);
-
           setVideo(res.data.data.Video);
-          setGalleryImageURL(res.data.data.GalleryImageURL);
-          setGalleryType(res.data.data.GalleryType);
           setVideoId(res.data.data._id);
           setFormSubmitLoader(false);
         })
@@ -174,8 +200,6 @@ const Edit_Video = () => {
     let data = {
       URL_Alies,
       Video,
-      GalleryImageURL,
-      GalleryType,
     };
     const formData = new FormData();
     formData.append("URL_Alies", URL_Alies);
@@ -184,9 +208,9 @@ const Edit_Video = () => {
     formData.append("Video", Video);
     try {
       api
-        .put(`/galleryDetail/updateID/${VideoId}`, formData, {
+        .put(`/videoDetail/updateID/${VideoId}`, data, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         })
@@ -195,7 +219,6 @@ const Edit_Video = () => {
           setFormSubmitLoader(false);
           reloadComponent();
           setTimeout(() => {
-            setGalleryPreview(null);
             setVideo(null);
             setUpdateFormOpen(false);
           }, 1000);
@@ -209,12 +232,12 @@ const Edit_Video = () => {
       setFormSubmitLoader(false);
     }
   }
-  async function handleGalleryDelete(id) {
+  async function handleVideoDelete(id) {
     // e.preventDefault();
     setFormSubmitLoader(true);
     try {
       await api
-        .delete(`/galleryDetail/deleteID/${id}`, {
+        .delete(`/videoDetail/deleteID/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -324,7 +347,48 @@ const Edit_Video = () => {
             )}
           </div>
         </div>
-    
+   
+        <div className="All_videos_container">
+          {AllVideo != undefined && AllVideo.length != 0 ? (
+            <>
+              {AllVideo.map((data, index) => {
+                return (
+                  <div className="video_box" key={index}>
+                    <div className="video_header">
+                      <h2>Video - {index + 1}</h2>
+                    </div>
+                    <div className="video">
+                      <div dangerouslySetInnerHTML={{ __html: data.Video }} />
+                    </div>
+                    <div className="icon_actions">
+                      <div className="delete">
+                        <i
+                          className="bx bx-trash-alt"
+                          style={{ color: "red" }}
+                          onClick={() => handleVideoDelete(data._id)}
+                        ></i>
+                        <small>Delete</small>
+                      </div>
+                      <div className="edit">
+                        <i
+                          className="bx bx-edit"
+                          style={{ color: "#6571FF" }}
+                          onClick={() => handleVideoEdit(data._id)}
+                        ></i>
+                        <small>Edit</small>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <div className="note">
+          <small> Video's not been Added!</small>
+            </div>
+  
+          )}
+        </div>
 
         {/* //Create New Video Form */}
 
@@ -344,12 +408,14 @@ const Edit_Video = () => {
               ></i>
             </div>
             <form action="" onSubmit={formik.handleSubmit}>
-              <div
-                className="video_show"
-               
-              >
-                <label htmlFor="video_preview">Video Preview <FaVideo className="icon"/></label>
-                 <div className="video" dangerouslySetInnerHTML={{ __html: formik.values.Video }}/>
+              <div className="video_show">
+                <label htmlFor="video_preview">
+                  Video Preview <FaVideo className="icon" />
+                </label>
+                <div
+                  className="video"
+                  dangerouslySetInnerHTML={{ __html: formik.values.Video }}
+                />
               </div>
               <div className="video_input">
                 <div className="form_group">
@@ -371,7 +437,7 @@ const Edit_Video = () => {
                     }
                     placeholder="Paste Your Youtube Embed frame"
                   ></textarea>
-                   <div className="error">{formik.errors.Video}</div>
+                  <div className="error">{formik.errors.Video}</div>
                 </div>
 
                 <div className="form_submit_actions">
@@ -410,27 +476,33 @@ const Edit_Video = () => {
               ></i>
             </div>
             <form action="" onSubmit={handleGalleryUpdate}>
-              <div className="form_group">
-                <div className="image_upload_type">
-                  <div className="banner_type">
-                    <label htmlFor="Service">Gallery Image Upload Type</label>
-                    <select
-                      name="GalleryType"
-                      id="GalleryType"
-                      value={GalleryType}
-                      onBlur={formik.handleBlur}
-                      onChange={(e) => setGalleryType(e.target.value)}
-                    >
-                      <option value="ImageUpload">ImageUpload</option>
-                      <option value="Image_Address_URL">
-                        Image_Address_URL
-                      </option>
-                    </select>
-                  </div>
-                </div>
+              <div className="video_show">
+                <label htmlFor="video_preview">
+                  Video Preview <FaVideo className="icon" />
+                </label>
+                <div
+                  className="video"
+                  dangerouslySetInnerHTML={{ __html: Video }}
+                />
               </div>
+              <div className="video_input">
+                <div className="form_group">
+                  <label htmlFor="video">
+                    Paste Your Youtube Embed Video IFrame <sup>*</sup>
+                  </label>
+                  <textarea
+                    name="Video"
+                    id="Video"
+                    rows="15"
+                    cols="6"
+                    value={Video}
+                   
+                    onChange={(e) => setVideo(e.target.value)}
+                    placeholder="Paste Your Youtube Embed frame"
+                  ></textarea>
+                </div>
 
-              <div className="form_submit_actions">
+                <div className="form_submit_actions">
                 <div className="save">
                   <button type="submit" disabled={FormSubmitLoader}>
                     Update
@@ -441,8 +513,10 @@ const Edit_Video = () => {
                     Discard
                   </button>
                 </div>
+                </div>
               </div>
             </form>
+    
           </div>
         </div>
       </div>

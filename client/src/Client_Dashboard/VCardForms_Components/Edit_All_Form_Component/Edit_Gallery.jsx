@@ -138,22 +138,22 @@ const Gallery = () => {
           toast.success(res.data.message);
           if (currentPlan === "Free Plan" && GalleryCount == 2) {
             setTimeout(() => {
-              setShowForm("Testimonials");
+              setShowForm("Videos");
             }, 500);
           }
           if (currentPlan === "Basic" && GalleryCount == 4) {
             setTimeout(() => {
-              setShowForm("Testimonials");
+              setShowForm("Videos");
             }, 500);
           }
           if (currentPlan === "Standard" && GalleryCount == 6) {
             setTimeout(() => {
-              setShowForm("Testimonials");
+              setShowForm("Videos");
             }, 500);
           }
           if (currentPlan === "Enterprises" && GalleryCount == 10) {
             setTimeout(() => {
-              setShowForm("Testimonials");
+              setShowForm("Videos");
             }, 500);
           }
           setFormSubmitLoader(false);
