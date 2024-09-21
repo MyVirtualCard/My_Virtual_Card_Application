@@ -24,7 +24,7 @@ const VCard_URL_Form = () => {
     useContext(Context);
 
   let [All_URL_Alies, setAll_URL_Alies] = useState([]);
-  let [URL_Alies, setURL_Alies] = useState("");
+  let [URL_Alies, setURL_Alies] = useState("demo_url");
   let [URL_error_toggle, setURL_error_toggle] = useState();
   let [BasicDetailLoader, setBasicDetailLoader] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -111,7 +111,8 @@ const VCard_URL_Form = () => {
       BannerAddress: "",
       Banner: "",
     },
-
+validateOnBlur:false,
+validateOnChange:false,
     validationSchema: VCardURLValidateShema,
 
     onSubmit: async (values) => {
@@ -163,7 +164,7 @@ const VCard_URL_Form = () => {
         });
     },
   });
-  console.log(formik.values.VCardName);
+
   // Handle file selection
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -243,7 +244,7 @@ const VCard_URL_Form = () => {
 
                 <p>
                   <strong>Ex :</strong>&nbsp;https://myvirtualcard.in/
-                  {URL_Alies}
+                  {formik.values.URL_Alies}
                 </p>
               </div>
             </div>

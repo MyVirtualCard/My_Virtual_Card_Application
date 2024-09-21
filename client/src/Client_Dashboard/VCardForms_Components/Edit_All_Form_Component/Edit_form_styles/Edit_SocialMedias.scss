@@ -68,7 +68,7 @@
           font-size: 0.7rem;
           font-weight: 600;
           padding: 5px 0px;
-          color: rgb(6, 120, 165);
+          color: rgb(73, 73, 73);
    
           i {
             height: 100%;
@@ -118,7 +118,9 @@
           left: 0%;
           background-color: rgb(255, 255, 255);
           border: 1px solid rgb(190, 190, 190);
-      
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+          border-radius: 5px;
           i {
             height: 100%;
             font-size: 2.4rem;

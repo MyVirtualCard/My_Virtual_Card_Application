@@ -61,8 +61,8 @@
       position: relative;
       .tooltip_banner {
         position: absolute;
-        top: 0%;
-        left: 20%;
+        top: -5%;
+        left: 22%;
         width: 200px;
         height: 80px;
         z-index: 1000;
@@ -173,6 +173,9 @@
             border: 1px solid rgb(185, 185, 185);
             border-radius: 5px;
             position: relative;
+            font-size: 1rem;
+            color: rgb(85, 85, 85);
+            font-size: 550;
   
             &::placeholder {
               font-size: 0.8rem;
@@ -575,6 +578,7 @@
             padding: 8px 1rem !important;
             font-size: 0.7rem;
             position: relative;
+            font-size: 550  !important;
           }
           .clear_action{
                 
