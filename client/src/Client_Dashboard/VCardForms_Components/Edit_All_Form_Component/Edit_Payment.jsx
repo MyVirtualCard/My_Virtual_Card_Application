@@ -9,6 +9,7 @@ import "primeicons/primeicons.css";
 import { useParams } from "react-router-dom";
 
 import { UPIDetailValidateShema } from "../../../Helper/UPI.validate";
+import { BankDetailValidateShema } from "../../../Helper/Bank.validate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast, Bounce } from "react-toastify";
@@ -32,11 +33,18 @@ const Edit_Payment = () => {
   } = useContext(Context);
 
   let [UpdateButtonToggle, setUpdateButtonToggle] = useState(false);
+  let [UpdateBankToggle, setUpdateBankToggle] = useState(false);
   let [gpay, setGpay] = useState();
   let [paytm, setPaytm] = useState();
   let [phonepay, setPhonepay] = useState();
   let [UPI_Type, setUPI_Type] = useState();
   let [QRCodeImage, setQRCodeImage] = useState(null);
+
+  let [HolderName, setHolderName] = useState();
+  let [BankName, setBankName] = useState();
+  let [AccountType, setAccountType] = useState();
+  let [AccountNumber, setAccountNumber] = useState();
+  let [IFSCCode, setIFSCCode] = useState();
 
   const [key, setKey] = useState(0);
   const reloadComponent = () => {
@@ -83,9 +91,7 @@ const Edit_Payment = () => {
       setFormSubmitLoader(false);
     }
   }
-  useEffect(() => {
-    fetchUPIData();
-  }, [key]);
+
 
   const handleQRCodeImage = (event) => {
     const QRCodeImage = event.currentTarget.files[0];
@@ -165,10 +171,112 @@ const Edit_Payment = () => {
         });
     },
   });
-  // Handler function for the change event
-  const handleUPITypeChange = (event) => {
-    setUPI_Type(event.target.value);
+  //Bank Actions
+  async function fetchBankData() {
+    try {
+      setFormSubmitLoader(true);
+      api
+        .get(`/bankDetail/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length == 1) {
+            setUpdateBankToggle(true);
+            setHolderName(res.data.data[0]?.HolderName);
+            setBankName(res.data.data[0]?.BankName);
+            setAccountType(res.data.data[0]?.AccountType);
+            setIFSCCode(res.data.data[0]?.IFSCCode);
+            setAccountNumber(res.data.data[0]?.AccountNumber);
+            setFormSubmitLoader(false);
+          } else {
+            setUpdateBankToggle(false);
+            setFormSubmitLoader(false);
+          }
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setFormSubmitLoader(false);
+    }
+  }
+  let Account_formik = useFormik({
+    initialValues: {
+      URL_Alies: URL_Alies,
+      HolderName: "",
+      BankName: "",
+      AccountType: "",
+      IFSCCode: "",
+      AccountNumber: "",
+    },
+
+    validationSchema: BankDetailValidateShema,
+
+    onSubmit: async (values) => {
+      setFormSubmitLoader(true);
+
+      await api
+        .post(`/bankDetail/${URL_Alies}`, values, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          toast.success(res.data.message);
+
+          setTimeout(() => {
+            setShowForm("Galleries");
+            reloadComponent();
+          }, 2000);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setFormSubmitLoader(false);
+        });
+    },
+  });
+  async function handleBankFormUpdate(e) {
+    e.preventDefault();
+    let data = {
+      HolderName,
+      BankName,
+      AccountType,
+      IFSCCode,
+      AccountNumber,
+    };
+    setFormSubmitLoader(true);
+    try {
+      api
+        .put(`/bankDetail/update_by_vcard_URL/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          reloadComponent();
+          toast.success(res.data.message);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  useEffect(() => {
+    fetchUPIData();
+    fetchBankData();
+  }, [key]);
   return (
     <div className="payment_container">
       <div className="payment_container_title">
@@ -176,6 +284,7 @@ const Edit_Payment = () => {
       </div>
 
       <div className="payments_box">
+        {/* UPI_App_details */}
         <div className="left_upi_app">
           <div className="upi_app_title">
             <h5>Add Your Online Payment UPI Number</h5>
@@ -266,7 +375,9 @@ const Edit_Payment = () => {
             <div className="form_group QRCODE">
               <div className="image_upload_type">
                 <div className="logo_type">
-                  <label htmlFor="Profile">Scan to pay with any UPI app</label>
+                  <label htmlFor="Profile">
+                    Scan to pay with any UPI app<sup>*</sup>
+                  </label>
                   <select
                     name="UPI_Type"
                     id="UPI_Type"
@@ -352,10 +463,201 @@ const Edit_Payment = () => {
             </div>
           </form>
         </div>
+        {/* BankDetails */}
         <div className="right_bank">
           <div className="bank_title">
             <h5>Add Your Bank Account Details</h5>
           </div>
+          <form
+            onSubmit={
+              UpdateBankToggle
+                ? handleBankFormUpdate
+                : Account_formik.handleSubmit
+            }
+            className="Form2"
+          >
+            <div className="form_group">
+              <label htmlFor="HolderName">
+                Account Holder Name<sup>*</sup>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Account Holder Name"
+                name="HolderName"
+                id="HolderName"
+                onBlur={Account_formik.handleBlur}
+                onChange={
+                  UpdateBankToggle
+                    ? (e) => setHolderName(e.target.value)
+                    : Account_formik.handleChange
+                }
+                value={UpdateBankToggle ? HolderName : Account_formik.values.HolderName}
+              />
+              {UpdateBankToggle ? (
+                ""
+              ) : (
+                <div className="error">{Account_formik.errors.HolderName}</div>
+              )}
+            </div>
+            <div className="form_group">
+              <label htmlFor="CompanyName">
+                Bank Name <sup>*</sup>
+              </label>
+              <select
+                name="BankName"
+                id="BankName"
+                className={`UPI_Type ${
+                  Account_formik.errors.UPI_Type &&
+                  Account_formik.touched.UPI_Type
+                    ? "input_error"
+                    : "input_success"
+                }`}
+                onBlur={UpdateBankToggle ? "" : Account_formik.handleBlur}
+                onChange={
+                  UpdateBankToggle
+                    ? (e) => setBankName(e.target.value)
+                    : Account_formik.handleChange
+                }
+                value={
+                  UpdateBankToggle ? BankName : Account_formik.values.BankName
+                }
+              >
+                <option value="" label="<----Select Your Bank Name-----> " />
+                <option value="State Bank Of India ">
+                  State Bank Of India{" "}
+                </option>
+                <option value="State Bank of Indore">
+                  State Bank of Indore
+                </option>
+                <option value="Bank of Baroda">Bank of Baroda</option>
+                <option value="Canara Bank">Canara Bank</option>
+                <option value="Central Bank of India">
+                  Central Bank of India
+                </option>
+                <option value="Indian Bank">Indian Bank</option>
+                <option value="Indian Overseas Bank">
+                  Indian Overseas Bank
+                </option>
+                <option value="Union Bank Of India">Union Bank Of India</option>
+                <option value="United Bank of India">
+                  United Bank of India
+                </option>
+                <option value="HDFC Bank">HDFC Bank</option>
+                <option value="ICICI Bank">ICICI Bank</option>
+                <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                <option value="Axis Bank">Axis Bank</option>
+                <option value="Karur Vysya Bank">Karur Vysya Bank</option>
+                <option value="Federal Bank">Federal Bank</option>
+              </select>
+              {UpdateBankToggle ? (
+                ""
+              ) : (
+                <div className="error">{Account_formik.errors.BankName}</div>
+              )}
+            </div>
+            <div className="form_group">
+              <label htmlFor="AccountType">
+                Account Type<sup>*</sup>
+              </label>
+              <select
+                name="AccountType"
+                id="AccountType"
+                className={`UPI_Type ${
+                  Account_formik.errors.AccountType &&
+                  Account_formik.touched.AccountType
+                    ? "input_error"
+                    : "input_success"
+                }`}
+                onBlur={UpdateBankToggle ? "" : Account_formik.handleBlur}
+                onChange={
+                  UpdateBankToggle
+                    ? (e) => setAccountType(e.target.value)
+                    : Account_formik.handleChange
+                }
+                value={
+                  UpdateBankToggle
+                    ? AccountType
+                    : Account_formik.values.AccountType
+                }
+              >
+                <option value="" label="<----Select Your Account Type-----> " />
+                <option value="Savings Account">Savings Account</option>
+                <option value="Current Account">Current Account</option>
+                <option value="Fixed Deposit Account">
+                  Fixed Deposit Account
+                </option>
+                <option value="NRI Account">NRI Account</option>
+                <option value="Recurring Deposit Account">
+                  Recurring Deposit Account
+                </option>
+                <option value="Salary Account">Salary Account</option>
+                <option value="Demat Account">Demat Account</option>
+                <option value="NRO Account">NRO Account</option>
+              </select>
+              {UpdateBankToggle ? (
+                ""
+              ) : (
+                <div className="error">{Account_formik.errors.AccountType}</div>
+              )}
+            </div>
+            <div className="form_group">
+              <label htmlFor="IFSCCode">
+                IFSC Code<sup>*</sup>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Your IFSC Code"
+                name="IFSCCode"
+                id="IFSCCode"
+                onBlur={Account_formik.handleBlur}
+                onChange={
+                  UpdateBankToggle
+                    ? (e) => setIFSCCode(e.target.value)
+                    : Account_formik.handleChange
+                }
+                value={UpdateBankToggle ? IFSCCode : Account_formik.values.IFSCCode}
+              />
+              {UpdateBankToggle ? (
+                ""
+              ) : (
+                <div className="error">{Account_formik.errors.IFSCCode}</div>
+              )}
+            </div>
+            <div className="form_group">
+              <label htmlFor="AccountNumber">
+                Account Number<sup>*</sup>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Your Account Number"
+                name="AccountNumber"
+                id="AccountNumber"
+                onBlur={Account_formik.handleBlur}
+                onChange={
+                  UpdateBankToggle
+                    ? (e) => setAccountNumber(e.target.value)
+                    : Account_formik.handleChange
+                }
+                value={UpdateBankToggle ? AccountNumber : Account_formik.values.AccountNumber}
+              />
+              {UpdateBankToggle ? (
+                ""
+              ) : (
+                <div className="error">{Account_formik.errors.AccountNumber}</div>
+              )}
+            </div>
+            <div className="form_submit_actions">
+              {UpdateBankToggle ? (
+                <button className="save" type="submit">
+                  Update<span class="material-symbols-outlined">update</span>
+                </button>
+              ) : (
+                <button className="save" type="submit">
+                  Save<i className="bx bxs-save"></i>
+                </button>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </div>

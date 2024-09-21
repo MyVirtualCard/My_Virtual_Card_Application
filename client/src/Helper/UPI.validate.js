@@ -63,7 +63,7 @@ export let UPIDetailValidateShema = Yup.object({
     )
     .required("Select Your UPI Type..."),
     QRCodeImage: Yup.mixed()
-    .notRequired()
+    .required('QRCode Image is required!')
     .test("fileSize", "File size is too large..Max 2mb Allowed", (value) => {
       if (value) {
         return value && getProductFileSize(value) <= FILE_SIZE;
