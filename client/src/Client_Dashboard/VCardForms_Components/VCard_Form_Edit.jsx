@@ -30,6 +30,7 @@ import Edit_ContactDetails from "./Edit_All_Form_Component/Edit_ContactDetails";
 import { SHORTKEY } from "quill/modules/keyboard";
 import Edit_About from "./Edit_All_Form_Component/Edit_About";
 import Edit_Payment from "./Edit_All_Form_Component/Edit_Payment";
+import Edit_Video from "./Edit_All_Form_Component/Edit_Video";
 
 const VCard_Form_Edit = () => {
   let { URL_Alies } = useParams();
@@ -370,7 +371,18 @@ const VCard_Form_Edit = () => {
               ></i>
               <small id="Galleries">Galleries</small>
             </div>
-
+            <div
+              className="menu_item"
+              onClick={handleFormShow}
+              id={ShowForm === "Videos" ? "menu_active" : ""}
+            >
+            
+              <i className='bx bxs-video'
+                style={{ color: "#4c4c4c" }}
+                id="Videos"
+              ></i>
+              <small id="Videos">Videos</small>
+            </div>
             <div
               className="menu_item"
               onClick={handleFormShow}
@@ -554,6 +566,7 @@ const VCard_Form_Edit = () => {
             {ShowForm === "Products" ? <Edit_Products /> : ""}
             {ShowForm === "Payment Details" ? <Edit_Payment /> : ""}
             {ShowForm === "Galleries" ? <Edit_Gallery /> : ""}
+            {ShowForm === "Videos" ? <Edit_Video /> : ""}
             {ShowForm === "Blog" ? <Edit_Blog /> : ""}
             {ShowForm === "Testimonials" ? <Edit_Testimonial /> : ""}
             {ShowForm === "GoogleMap" ? <Edit_GoogleMap /> : ""}
