@@ -66,6 +66,8 @@ export const postUPI = async (req, res) => {
           gpay: req.body.paytm,
           paytm: req.body.paytm,
           phonepay: req.body.phonepay,
+          UPI_Type:req.body.UPI_Type,
+          QRCodeImage:req.body.QRCodeImage
         };
         let createDatas = new UPIModel(data);
         try {

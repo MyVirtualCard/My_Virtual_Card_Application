@@ -10,17 +10,23 @@ let UPISchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-   gpay:{
-    type: String,
-    required: true,
-   },
-   paytm:{
-    type:String,
-    required: true,
-   },
-   phonepay:{
-    type:String
-   }
+    gpay: {
+      type: String,
+      required: true,
+    },
+    paytm: {
+      type: String,
+      required: true,
+    },
+    phonepay: {
+      type: String,
+    },
+    UPI_Type: {
+      type: String,
+    },
+    QRCodeImage: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

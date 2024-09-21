@@ -43,7 +43,7 @@ export let VCardURLValidateShema = Yup.object({
       "Content cannot be empty or just whitespace",
       (value) => !isEmptyOrWhitespace(value)
     )
-    .required("VCardName is required!"),
+    .required("Select Your Domain..."),
   FirstName: Yup.string()
     .min(3, "Minimum 3 char required!")
     .test(
