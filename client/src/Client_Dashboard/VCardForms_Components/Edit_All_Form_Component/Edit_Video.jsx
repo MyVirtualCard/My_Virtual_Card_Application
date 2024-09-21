@@ -469,7 +469,7 @@ const Edit_Video = () => {
             id={updateFormOpen ? "galleryUpdateOpen" : "galleryUpdateClose"}
           >
             <div className="title">
-              <p>Update Gallery</p>
+              <p>Update Video</p>
               <i
                 className="bx bx-x"
                 onClick={() => setUpdateFormOpen(false)}

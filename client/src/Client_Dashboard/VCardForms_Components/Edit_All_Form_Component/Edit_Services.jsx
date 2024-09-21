@@ -203,12 +203,13 @@ const Services = () => {
             (res.data.data.ServiceDescription =
               res.data.data.ServiceDescription)
           );
-          setServicePrice(res.data.data.ServicePrice)
+          setServicePrice(res.data.data.ServicePrice);
           setServiceId(res.data.data._id);
           setFormSubmitLoader(false);
+      
           setServiceType(res.data.data.ServiceType);
           setServiceImage(res.data.data.ServiceImage);
-          setServicePreview(res.data.data.ServiceImage?.filename);
+          setServicePreview(res.data.data.ServiceImage);
           // if(res.data.data.ServiceType == 'ImageUpload'){
           //   return setServiceImage(res.data.data.ServiceImage);
           // };
@@ -248,7 +249,7 @@ const Services = () => {
           setUpdateFormOpen(true);
           setServiceName(res.data.data.ServiceName);
           setServiceURL(res.data.data.ServiceURL);
-          setServicePrice(res.data.data.ServicePrice)
+          setServicePrice(res.data.data.ServicePrice);
           setServiceDescription(res.data.data.ServiceDescription);
           setServiceImage(res.data.data.ServiceImage);
 
@@ -299,7 +300,7 @@ const Services = () => {
           setTimeout(() => {
             setServiceName("");
             setServiceURL("");
-            setServicePrice(0)
+            setServicePrice(0);
             setServicePreview(null);
             setServiceIcon("");
             setServiceImage(undefined);
@@ -343,8 +344,8 @@ const Services = () => {
     } catch (error) {
       console.log(error);
     }
-  };
- 
+  }
+
   const handleServiceImage = (e) => {
     const file = e.target.files[0];
     setServiceImage(file);
@@ -493,141 +494,161 @@ const Services = () => {
                 )}
               </div>
             </div>
-            <div className="service_list_table table-responsive container w-100 rounded-3">
-              <table className="table table-borderless rounded-3" id="example">
-                <thead className="table-secondary rounded-3">
-                  <tr>
-                    <th className="fw-bold" style={{ width: "20%" }}>
-                      IMAGE OR ICON
-                    </th>
 
-                    <th className="fw-bold" style={{ width: "20%" }}>
-                      TITLE
-                    </th>
-                    <th className="fw-bold" style={{ width: "25%" }}>
-                      DESCRIPTION
-                    </th>
-                    <th className="fw-bold" style={{ width: "15%" }}>
-                      URL
-                    </th>
-                    <th className="fw-bold" style={{ width: "25%" }}>
-                      ACTIONS
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="shadow-sm">
-                  {AllService != undefined && AllService.length > 0 ? (
-                    <>
-                      {AllService.map((data, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="h-100 align-middle">
-                              {/* ServiceIpload image */}
-                              {data.ServiceType == "ImageUpload" ? (
-                                <>
-                                  {data.ServiceImage ? (
-                                    // <img
-                                    //   src={
-                                    //     data.ServiceImage != undefined
-                                    //       ? data.ServiceImage
-                                    //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                                    //   }
-                                    //   alt="ServiceImage"
-                                    //   name="ServiceImage"
-                                    // />
-                                    <img
-                                      src={`${
-                                        import.meta.env.VITE_APP_BACKEND_API_URL
-                                      }/${data?.ServiceImage}`}
-                                      className="ServiceImage"
-                                      alt="ServiceImage"
-                                    />
-                                  ) : (
-                                    "Null"
-                                  )}
-                                </>
+            {/* All Services */}
+            <div className="All_service_container">
+              {AllService != undefined && AllService.length != 0 ? (
+                <>
+                  {AllService.map((data, index) => {
+                    return (
+                      <div className="video_box" key={index}>
+                        <div className="video_header">
+                          <h2>Service - {index + 1}</h2>
+                        </div>
+                        <div className="video">
+                          {/* ServiceIpload image */}
+                          {data.ServiceType == "ImageUpload" ? (
+                            <>
+                              {data.ServiceImage ? (
+                                // <img
+                                //   src={
+                                //     data.ServiceImage != undefined
+                                //       ? data.ServiceImage
+                                //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                //   }
+                                //   alt="ServiceImage"
+                                //   name="ServiceImage"
+                                // />
+                                <img
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data?.ServiceImage}`}
+                                  className="ServiceImage"
+                                  alt="ServiceImage"
+                                />
                               ) : (
-                                ""
+                                "Null"
                               )}
-                              {/* Service Icons */}
-                              {data.ServiceType == "Icon_Tag" ? (
-                                <>
-                                  {data.ServiceIcon.length > 0 ? (
-                                    <HtmlRenderer
-                                      htmlString={data.ServiceIcon}
-                                    />
-                                  ) : (
-                                    "Null"
-                                  )}
-                                </>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {/* Service Icons */}
+                          {data.ServiceType == "Icon_Tag" ? (
+                            <>
+                              {data.ServiceIcon.length > 0 ? (
+                                <HtmlRenderer htmlString={data.ServiceIcon} />
                               ) : (
-                                ""
+                                "Null"
                               )}
-                              {/* ServiceAddresImage */}
-                              {data.ServiceType == "Image_Address_Link" ? (
-                                <>
-                                  {data.ServiceAddress.length != 0 ? (
-                                    <img
-                                      src={
-                                        data.ServiceAddress.length != 0
-                                          ? data.ServiceAddress
-                                          : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                                      }
-                                      alt="ServiceAddress"
-                                      name="ServiceAddress"
-                                    />
-                                  ) : (
-                                    "Null"
-                                  )}
-                                </>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {/* ServiceAddresImage */}
+                          {data.ServiceType == "Image_Address_Link" ? (
+                            <>
+                              {data.ServiceAddress.length != 0 ? (
+                                <img
+                                  src={
+                                    data.ServiceAddress.length != 0
+                                      ? data.ServiceAddress
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="ServiceAddress"
+                                  name="ServiceAddress"
+                                />
                               ) : (
-                                ""
+                                "Null"
                               )}
-                            </td>
-
-                            <td className="h-100 align-middle">
-                              {data.ServiceName}
-                            </td>
-                            <td className="h-100 align-middle">
-                              {data.ServiceDescription.slice(0, 20)}
-                            </td>
-                            <td className="h-100 align-middle">
-                              <a href={data.ServiceURL} target="_blank">
-                                {data.ServiceURL != ""
-                                  ? data.ServiceURL
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="product_details">
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Service Name </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>{data.ServiceName}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Service Price </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>₹ &nbsp;{data.ServicePrice}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Service Description </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p
+                              // dangerouslySetInnerHTML={{
+                              //   __html: data.ProductDescription.slice(0, 50),
+                              // }}
+                              >
+                                {data.ServiceDescription != undefined
+                                  ? stripHtmlTags(
+                                      data.ServiceDescription
+                                    ).slice(0, 40)
                                   : "N/A"}
-                              </a>
-                            </td>
-                            <td className="h-100 align-middle">
-                              <i
-                                className="bx bxs-show"
-                                style={{ color: "skyBlue" }}
-                                onClick={() => handleServiceView(data._id)}
-                              ></i>
-                              <i
-                                className="bx bx-edit"
-                                onClick={() => handleServiceEdit(data._id)}
-                                style={{ color: "#6571FF" }}
-                              ></i>
-                              <i
-                                className="bx bx-trash-alt"
-                                style={{ color: "red" }}
-                                onClick={() => handleServiceDelete(data._id)}
-                              ></i>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <tr>
-                      <td colSpan="6" className="text-center">
-                        No Service Added!
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                              </p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Service URL </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>{data.ServiceURL}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="icon_actions">
+                          <div className="delete">
+                            <i
+                              className="bx bx-trash-alt"
+                              style={{ color: "red" }}
+                              onClick={() => handleServiceDelete(data._id)}
+                            ></i>
+                            <small>Delete</small>
+                          </div>
+                          <div className="show">
+                            <i
+                              className="bx bxs-show"
+                              style={{ color: "skyBlue" }}
+                              onClick={() => handleServiceView(data._id)}
+                            ></i>
+                            <small>View</small>
+                          </div>
+                          <div className="edit">
+                            <i
+                              className="bx bx-edit"
+                              style={{ color: "#6571FF" }}
+                              onClick={() => handleServiceEdit(data._id)}
+                            ></i>
+                            <small>Edit</small>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <div className="note">
+                  <small> Service's not been Added!</small>
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -683,9 +704,7 @@ const Services = () => {
                     <div className="error">{formik.errors.ServiceName}</div>
                   </div>
                   <div className="form_group">
-                    <label htmlFor="ServicePrice">
-                      Service Price
-                    </label>
+                    <label htmlFor="ServicePrice">Service Price</label>
                     <input
                       type="text"
                       placeholder="Enter Service Amount"
@@ -698,10 +717,13 @@ const Services = () => {
                           : formik.handleChange
                       }
                       value={
-                        updateFormOpen ? ServicePrice : formik.values.ServicePrice
+                        updateFormOpen
+                          ? ServicePrice
+                          : formik.values.ServicePrice
                       }
                       className={
-                        formik.errors.ServicePrice && formik.touched.ServicePrice
+                        formik.errors.ServicePrice &&
+                        formik.touched.ServicePrice
                           ? "input_error"
                           : "input_success"
                       }
@@ -1206,26 +1228,62 @@ const Services = () => {
               <div className="service_image">
                 <div className="service_title">Service Image</div>
                 <div className="service_image">
+                  {/* ServiceIpload image */}
                   {ServiceType == "ImageUpload" ? (
-                    <img
-                      src={
-                        ServiceImage != "undefined"
-                          ? ServiceImage
-                          : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                      }
-                      alt="service"
-                    />
+                    <>
+                      {ServiceImage ? (
+                        // <img
+                        //   src={
+                        //     data.ServiceImage != undefined
+                        //       ? data.ServiceImage
+                        //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                        //   }
+                        //   alt="ServiceImage"
+                        //   name="ServiceImage"
+                        // />
+                        <img
+                          src={`${
+                            import.meta.env.VITE_APP_BACKEND_API_URL
+                          }/${ServiceImage}`}
+                          className="ServiceImage"
+                          alt="ServiceImage"
+                        />
+                      ) : (
+                        "Null"
+                      )}
+                    </>
                   ) : (
                     ""
                   )}
+                  {/* Service Icons */}
+                  {ServiceType == "Icon_Tag" ? (
+                    <>
+                      {ServiceIcon.length > 0 ? (
+                        <HtmlRenderer htmlString={ServiceIcon} />
+                      ) : (
+                        "Null"
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {/* ServiceAddresImage */}
                   {ServiceType == "Image_Address_Link" ? (
-                    <img
-                      src={`${
-                        import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/${ServicePreview}`}
-                      className="ServiceImage"
-                      alt="ServiceImage"
-                    />
+                    <>
+                      {ServiceAddress ? (
+                        <img
+                          src={
+                            ServiceAddress
+                              ? ServiceAddress
+                              : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                          }
+                          alt="ServiceAddress"
+                          name="ServiceAddress"
+                        />
+                      ) : (
+                        "Null"
+                      )}
+                    </>
                   ) : (
                     ""
                   )}

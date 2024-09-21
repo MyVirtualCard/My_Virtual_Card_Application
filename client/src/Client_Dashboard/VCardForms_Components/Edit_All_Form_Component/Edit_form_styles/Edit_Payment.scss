@@ -20,10 +20,11 @@
     gap: 4rem;
     flex: 1;
     margin: 1rem auto;
-    height: 100%;
+    height: auto;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 1rem;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
     background-color: rgba(192, 255, 231, 0.747);
     //Left
     .left_upi_app {

@@ -202,11 +202,12 @@ const Products = () => {
           setProductName(res.data.data.ProductName);
           setProductImage(res.data.data.ProductImage);
           setProductPrice(res.data.data.ProductPrice);
+          setProductType(res.data.data.ProductType);
+          setProductImageLink(res.data.data.ProductImageLink);
           setProductURL(res.data.data.ProductURL);
           setProductDescription(
-            (res.data.data.ProductDescription = 
-              res.data.data.ProductDescription
-            )
+            (res.data.data.ProductDescription =
+              res.data.data.ProductDescription)
           );
           setFormSubmitLoader(false);
         })
@@ -481,138 +482,143 @@ const Products = () => {
                 )}
               </div>
             </div>
-            <div className="product_list_table table-responsive container w-100 rounded-3">
-              <table className="table table-borderless rounded-3" id="example">
-                <thead className="table-secondary rounded-3">
-                  <tr>
-                    <th className="fw-bold">PRODUCT IMAGE</th>
-
-                    <th className="fw-bold" style={{ width: "20%" }}>
-                      PRODUCT NAME
-                    </th>
-                    <th className="fw-bold" style={{ width: "30%" }}>
-                      PRODUCT DESCRIPTION
-                    </th>
-                    <th className="fw-bold" style={{ width: "10%" }}>
-                      {" "}
-                      PRICE
-                    </th>
-                    <th className="fw-bold" style={{ width: "20%" }}>
-                      ACTIONS
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className=" shadow-sm">
-                  {AllProduct != undefined && AllProduct.length != 0 ? (
-                    <>
-                      {AllProduct.map((data, index) => {
-                        return (
-                          <tr key={index}>
-                            <td
-                              className="h-100 align-middle"
-                              style={{ width: "20%" }}
-                            >
-                              {data.ProductType == "ImageUpload" ? (
-                                <>
-                                  {data.ProductImage ? (
-                                    // <img
-                                    //   src={
-                                    //     data.ServiceImage != undefined
-                                    //       ? data.ServiceImage
-                                    //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                                    //   }
-                                    //   alt="ServiceImage"
-                                    //   name="ServiceImage"
-                                    // />
-                                    <img
-                                      src={`${
-                                        import.meta.env.VITE_APP_BACKEND_API_URL
-                                      }/${data.ProductImage}`}
-                                      className="ProductImage"
-                                      alt="ProductImage"
-                                    />
-                                  ) : (
-                                    "Null"
-                                  )}
-                                </>
+            {/* All Product */}
+            <div className="All_product_container">
+              {AllProduct != undefined && AllProduct.length != 0 ? (
+                <>
+                  {AllProduct.map((data, index) => {
+                    return (
+                      <div className="video_box" key={index}>
+                        <div className="video_header">
+                          <h2>Product - {index + 1}</h2>
+                        </div>
+                        <div className="video">
+                          {data.ProductType == "ImageUpload" ? (
+                            <>
+                              {data.ProductImage ? (
+                                // <img
+                                //   src={
+                                //     data.ServiceImage != undefined
+                                //       ? data.ServiceImage
+                                //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                //   }
+                                //   alt="ServiceImage"
+                                //   name="ServiceImage"
+                                // />
+                                <img
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.ProductImage}`}
+                                  className="ProductImage"
+                                  alt="ProductImage"
+                                />
                               ) : (
-                                ""
+                                "Null"
                               )}
-                              {data.ProductType == "Image_Address_Link" ? (
-                                <>
-                                  {data.ProductImageLink.length != 0 ? (
-                                    <img
-                                      src={
-                                        data.ProductImageLink.length != 0
-                                          ? data.ProductImageLink
-                                          : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                                      }
-                                      alt="product_image"
-                                    />
-                                  ) : (
-                                    "Null"
-                                  )}
-                                </>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {data.ProductType == "Image_Address_Link" ? (
+                            <>
+                              {data.ProductImageLink.length != 0 ? (
+                                <img
+                                  src={
+                                    data.ProductImageLink.length != 0
+                                      ? data.ProductImageLink
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="product_image"
+                                />
                               ) : (
-                                ""
+                                "Null"
                               )}
-                            </td>
-                            <td
-                              className="h-100 align-middle"
-                              style={{ width: "20%" }}
-                            >
-                              {data.ProductName}
-                            </td>
-                            <td
-                              className="h-100 align-middle"
-                              style={{ width: "30%" }}
-                            >
-                              {data.ProductDescription.slice(0, 20)}
-                            </td>
-                            <td
-                              className="h-100 align-middle"
-                              style={{ width: "10%" }}
-                            >
-                              Rs:&nbsp;{data.ProductPrice}
-                            </td>
-                            <td
-                              className="h-100 align-middle"
-                              style={{ width: "20%" }}
-                            >
-                              <i
-                                className="bx bxs-show"
-                                style={{ color: "skyBlue" }}
-                                onClick={() => handleProductView(data._id)}
-                              ></i>
-                              <i
-                                className="bx bx-edit"
-                                style={{ color: "#6571FF" }}
-                                onClick={() => handleProductEdit(data._id)}
-                              ></i>
-                              <i
-                                className="bx bx-trash-alt"
-                                style={{ color: "red" }}
-                                onClick={() =>
-                                  handleProductDelete(
-                                  
-                                    data._id
-                                  )
-                                }
-                              ></i>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <tr>
-                      <td colSpan="6" className="text-center">
-                        No Products Added!
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="product_details">
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Product Name </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>{data.ProductName}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Product Price </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>₹ &nbsp;{data.ProductPrice}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Product Description </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p
+                              // dangerouslySetInnerHTML={{
+                              //   __html: data.ProductDescription.slice(0, 50),
+                              // }}
+                              >
+                                {data.ProductDescription != undefined
+                                  ? stripHtmlTags(data.ProductDescription).slice(0,40)
+                                  : "N/A"}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Product URL </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>{data.ProductURL}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="icon_actions">
+                          <div className="delete">
+                            <i
+                              className="bx bx-trash-alt"
+                              style={{ color: "red" }}
+                              onClick={() => handleProductDelete(data._id)}
+                            ></i>
+                            <small>Delete</small>
+                          </div>
+                          <div className="show">
+                            <i
+                              className="bx bxs-show"
+                              style={{ color: "skyBlue" }}
+                              onClick={() => handleProductView(data._id)}
+                            ></i>
+                            <small>View</small>
+                          </div>
+                          <div className="edit">
+                            <i
+                              className="bx bx-edit"
+                              style={{ color: "#6571FF" }}
+                              onClick={() => handleProductEdit(data._id)}
+                            ></i>
+                            <small>Edit</small>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <div className="note">
+                  <small> Product's not been Added!</small>
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -1095,14 +1101,50 @@ const Products = () => {
               <div className="service_image">
                 <div className="service_title">Product Image</div>
                 <div className="service_image">
-                  <img
-                    src={
-                      ProductImage != "null"
-                        ? ProductImage
-                        : "https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996"
-                    }
-                    alt="service"
-                  />
+                  {ProductType == "ImageUpload" ? (
+                    <>
+                      {ProductImage ? (
+                        // <img
+                        //   src={
+                        //     data.ServiceImage != undefined
+                        //       ? data.ServiceImage
+                        //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                        //   }
+                        //   alt="ServiceImage"
+                        //   name="ServiceImage"
+                        // />
+                        <img
+                          src={`${
+                            import.meta.env.VITE_APP_BACKEND_API_URL
+                          }/${ProductImage}`}
+                          className="ProductImage"
+                          alt="ProductImage"
+                        />
+                      ) : (
+                        "Null"
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {ProductType == "Image_Address_Link" ? (
+                    <>
+                      {ProductImageLink.length != 0 ? (
+                        <img
+                          src={
+                            ProductImageLink.length != 0
+                              ? ProductImageLink
+                              : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                          }
+                          alt="product_image"
+                        />
+                      ) : (
+                        "Null"
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>

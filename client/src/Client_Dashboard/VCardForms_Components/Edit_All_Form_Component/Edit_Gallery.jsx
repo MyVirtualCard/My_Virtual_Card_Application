@@ -320,7 +320,7 @@ const Gallery = () => {
 
         <div className="plan_title">
           <p>
-            <strong>{currentPlan} </strong>&nbsp; Subscribed!
+            <strong>{currentPlan} Plan</strong>&nbsp; Subscribed!
           </p>
         </div>
         <div className="add_new_gallery">
@@ -400,55 +400,40 @@ const Gallery = () => {
             )}
           </div>
         </div>
-        {!fullImageToggle ? (
-          <div className="gallery_list_table table-responsive container w-100 rounded-3">
-            <table className="table table-borderless rounded-3" id="example">
-              <thead className="table-secondary rounded-3">
-                <tr>
-                  <th className="fw-bold" style={{ width: "10%" }}>
-                    COUNT
-                  </th>
-                  <th className="fw-bold" style={{ width: "50%" }}>
-                    UPLOAD IMAGE
-                  </th>
 
-                  <th className="fw-bold" style={{ width: "30%" }}>
-                    ACTIONS
-                  </th>
-                </tr>
-              </thead>
-              <tbody className=" shadow-sm">
-                {AllGallery != undefined && AllGallery.length != 0 ? (
-                  <>
-                    {AllGallery.map((data, index) => {
-                      console.log(data.GalleryImage);
-                      return (
-                        <tr key={index}>
-                          <td className="h-100 align-middle">{index + 1}</td>
-                          <td className="h-100 align-middle">
-                            {data.GalleryType == "ImageUpload" ? (
-                              <>
-                                {data.GalleryImage ? (
-                                  // <img
-                                  //   src={
-                                  //     data.ServiceImage != undefined
-                                  //       ? data.ServiceImage
-                                  //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                                  //   }
-                                  //   alt="ServiceImage"
-                                  //   name="ServiceImage"
-                                  // />I
-                                  <img
-                                    src={`${
-                                      import.meta.env.VITE_APP_BACKEND_API_URL
-                                    }/${data.GalleryImage}`}
-                                    className="GalleryImage"
-                                    alt="GalleryImage"
-                                  />
-                                ) : (
-                                  "Null"
-                                )}
-                                {/* {data.GalleryImage.length != 0 ? (
+        <div className="All_gallery_container">
+          {AllGallery != undefined && AllGallery.length != 0 ? (
+            <>
+              {AllGallery.map((data, index) => {
+                return (
+                  <div className="video_box" key={index}>
+                    <div className="video_header">
+                      <h2>Image - {index + 1}</h2>
+                    </div>
+                    <div className="video">
+                      {data.GalleryType == "ImageUpload" ? (
+                        <>
+                          {data.GalleryImage ? (
+                            // <img
+                            //   src={
+                            //     data.ServiceImage != undefined
+                            //       ? data.ServiceImage
+                            //       : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                            //   }
+                            //   alt="ServiceImage"
+                            //   name="ServiceImage"
+                            // />I
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/${data.GalleryImage}`}
+                              className="GalleryImage"
+                              alt="GalleryImage"
+                            />
+                          ) : (
+                            "Null"
+                          )}
+                          {/* {data.GalleryImage.length != 0 ? (
                                   <img
                                     src={
                                       data.GalleryImage.length != 0
@@ -460,70 +445,58 @@ const Gallery = () => {
                                 ) : (
                                   "Null"
                                 )} */}
-                              </>
-                            ) : (
-                              ""
-                            )}
+                        </>
+                      ) : (
+                        ""
+                      )}
 
-                            {data.GalleryType == "Image_Address_URL" ? (
-                              <>
-                                {data.GalleryImageURL.length != 0 ? (
-                                  <img
-                                    src={
-                                      data.GalleryImageURL.length != 0
-                                        ? data.GalleryImageURL
-                                        : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
-                                    }
-                                    alt="product_image"
-                                  />
-                                ) : (
-                                  "Null"
-                                )}
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </td>
-
-                          <td className="h-100 align-middle">
-                            <i
-                              className="bx bxs-show"
-                              style={{ color: "skyBlue" }}
-                              onClick={() => handleFullImageShow(data._id)}
-                            ></i>
-                            <i
-                              className="bx bx-edit"
-                              style={{ color: "#6571FF" }}
-                              onClick={() => handleGalleryEdit(data._id)}
-                            ></i>
-                            <i
-                              className="bx bx-trash-alt"
-                              style={{ color: "red" }}
-                              onClick={() =>
-                                handleGalleryDelete(data._id)
+                      {data.GalleryType == "Image_Address_URL" ? (
+                        <>
+                          {data.GalleryImageURL.length != 0 ? (
+                            <img
+                              src={
+                                data.GalleryImageURL.length != 0
+                                  ? data.GalleryImageURL
+                                  : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
                               }
-                            ></i>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <tr>
-                    <td></td>
-                    <td colSpan="1" className="text-center">
-                      No Gallery Images Added!
-                    </td>
-                    <td></td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          ""
-        )}
-
+                              alt="product_image"
+                            />
+                          ) : (
+                            "Null"
+                          )}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="icon_actions">
+                      <div className="delete">
+                        <i
+                          className="bx bx-trash-alt"
+                          style={{ color: "red" }}
+                          onClick={() => handleGalleryDelete(data._id)}
+                        ></i>
+                        <small>Delete</small>
+                      </div>
+                      <div className="edit">
+                        <i
+                          className="bx bx-edit"
+                          style={{ color: "#6571FF" }}
+                          onClick={() => handleGalleryEdit(data._id)}
+                        ></i>
+                        <small>Edit</small>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <div className="note">
+              <small> Image's not been Added!</small>
+            </div>
+          )}
+        </div>
         {/* //Create New Service Form */}
 
         <div
