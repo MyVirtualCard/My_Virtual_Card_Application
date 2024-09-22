@@ -9,6 +9,7 @@ import Bussiness from "../../../assets/Digicards/Bussiness_Consultant.png";
 import RealEstate from "../../../assets/Digicards/Real_Estate.png";
 import BeautyParlor from "../../../assets/Digicards/Beauty_Parlor1.png";
 import BoutiqueShop from "../../../assets/Digicards/Boutique_Shop.png";
+import CorporateCompany from "../../../assets/Digicards/Corporate_Company.png";
 import selected_gif from "../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../assets/animations/touch.gif";
 import Context from "../../../Context/GlobalContext";
@@ -25,45 +26,45 @@ let FreeTemplate = [
 let BasicTemplate = [
   {
     id: 1,
-    image: Gym_Trainer,
-    TemplateName: "Gym Trainer",
+    image: CorporateCompany,
+    TemplateName: "Corporate Company",
   },
-  {
-    id: 2,
+  // {
+  //   id: 2,
 
-    image: Taxi_Service,
-    TemplateName: "Taxi Service",
-  },
-  {
-    id: 3,
-    image: Fashion_Desinger,
-    TemplateName: "Fashion Designer",
-  },
-  {
-    id: 4,
-    image: Manager,
-    TemplateName: "Manager",
-  },
-  {
-    id: 5,
-    image: Bussiness,
-    TemplateName: "Bussiness Consultant",
-  },
-  {
-    id: 6,
-    image: RealEstate,
-    TemplateName: "Real Estate",
-  },
-  {
-    id: 7,
-    image: BeautyParlor,
-    TemplateName: "Beauty Parlor",
-  },
-  {
-    id: 8,
-    image: BoutiqueShop,
-    TemplateName: "Boutique Shop's",
-  },
+  //   image: Taxi_Service,
+  //   TemplateName: "Taxi Service",
+  // },
+  // {
+  //   id: 3,
+  //   image: Fashion_Desinger,
+  //   TemplateName: "Fashion Designer",
+  // },
+  // {
+  //   id: 4,
+  //   image: Manager,
+  //   TemplateName: "Manager",
+  // },
+  // {
+  //   id: 5,
+  //   image: Bussiness,
+  //   TemplateName: "Bussiness Consultant",
+  // },
+  // {
+  //   id: 6,
+  //   image: RealEstate,
+  //   TemplateName: "Real Estate",
+  // },
+  // {
+  //   id: 7,
+  //   image: BeautyParlor,
+  //   TemplateName: "Beauty Parlor",
+  // },
+  // {
+  //   id: 8,
+  //   image: BoutiqueShop,
+  //   TemplateName: "Boutique Shop's",
+  // },
 ];
 let StandardTemplate = [
   {
@@ -423,7 +424,7 @@ const Select_Template = () => {
                     return (
                       <div
                         className={
-                          savedTemplate != null ? "free_image" : "image"
+                          savedTemplate != null ? "free_image" : "single_template"
                         }
                         key={index}
                         id={

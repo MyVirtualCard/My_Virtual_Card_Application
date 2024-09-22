@@ -59,7 +59,7 @@ router.get("/allDataAPI/:URL_Alies", async (req, res) => {
     if (!WorkingDayDetails_data) {
       res.status(400).json({ message: "Bussiness Hour Data Not Found" });
     } else {
-      result["BussinessModel"] = WorkingDayDetails_data;
+      result["BussinessDetails"] = WorkingDayDetails_data;
     }
 
     //Gallery
@@ -174,15 +174,15 @@ router.get("/allDataAPI/:URL_Alies", async (req, res) => {
     }
 
     //VCard Template
-    let VCardTemplateDetails_data = await Current_VCardTemplate.find({
-      URL_Alies: URL_Alies,
-    });
+    // let VCardTemplateDetails_data = await Current_VCardTemplate.find({
+    //   URL_Alies: URL_Alies,
+    // });
 
-    if (!VCardTemplateDetails_data) {
-      res.status(400).json({ message: "VCard_Template Data Not Found" });
-    } else {
-      result["VCardTemplateDetails"] = VCardTemplateDetails_data;
-    }
+    // if (!VCardTemplateDetails_data) {
+    //   res.status(400).json({ message: "VCard_Template Data Not Found" });
+    // } else {
+    //   result["VCardTemplateDetails"] = VCardTemplateDetails_data;
+    // }
 
     // let QRCodeDetails_data = await QRCodeModel.find({    URL_Alies: URL_Alies});
 

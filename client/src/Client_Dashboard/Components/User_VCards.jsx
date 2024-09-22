@@ -1,14 +1,5 @@
 import React, { useContext, useMemo, useState, useEffect } from "react";
 import "./Styles/VCards.scss";
-import { DataGrid } from "@mui/x-data-grid";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { HiOutlineDotsVertical } from "react-icons/hi";
@@ -18,6 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import touch_hand from "../../assets/Client_Dashboard/touch.gif";
 const User_VCards = () => {
   let navigate = useNavigate();
   const handleCopyURL = () => {
@@ -58,6 +50,7 @@ const User_VCards = () => {
   };
 
   const [copied, setCopied] = useState(false);
+  let [Count, setCount] = useState(0);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -253,6 +246,23 @@ const User_VCards = () => {
     razorpayFetchData();
     // freePlanFetchData();
   }, []);
+  useEffect(() => {
+    // Set up the interval to increment the count every second
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
+
+    // Clear the interval after 10 seconds
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 5000); // 5 seconds
+
+    // Cleanup function: clear interval and timeout on component unmount
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <>
@@ -447,6 +457,13 @@ const User_VCards = () => {
                           </div>
 
                           <small>Edit</small>
+                          {Count != 5 ? (
+                            <div className="touch_hand">
+                              <img src={touch_hand} alt="hand" />
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         <div
                           className="delete"
@@ -501,7 +518,7 @@ const User_VCards = () => {
                                         .join("-")}
                                     </>
                                   ) : (
-                                    ""
+                                    "Plan not been activated!"
                                   )}
                                 </strong>
                               </p>

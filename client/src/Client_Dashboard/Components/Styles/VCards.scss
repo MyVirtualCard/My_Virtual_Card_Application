@@ -321,6 +321,22 @@
 
          
           }
+          .edit{
+            position: relative;
+
+            .touch_hand{
+              position: absolute;
+              bottom: -0%;
+              right: -85%;
+
+              img{
+                width: 30px;
+                height: 30px;
+                mix-blend-mode: multiply;
+                
+              }
+            }
+          }
           #show{
             opacity: 1;
           }

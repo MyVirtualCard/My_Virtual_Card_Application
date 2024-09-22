@@ -48,6 +48,7 @@ import Real_Estate from "./Client_Dashboard/All_VCards/Live_VCards/Real_Estate.j
 import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parlor.jsx";
 import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
 import Doctor_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Doctor_Demo.jsx";
+import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/Corporate_Company.jsx";
 
 //Import All component:
 const App = () => {
@@ -87,21 +88,17 @@ const App = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-  
+  let local_userName = JSON.parse(localStorage.getItem("userName"));
+  let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
+  let local_URL_Alies = localStorage.getItem("URL_Alies");
   useEffect(() => {
-    let local_userName = JSON.parse(localStorage.getItem("userName"));
-    let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
-    let local_URL_Alies = localStorage.getItem("URL_Alies");
-
     if (local_userName) {
       return setUserName(local_userName);
     }
     if (local_mobileNumber) {
-     return setMobileNumber(local_mobileNumber);
+      return setMobileNumber(local_mobileNumber);
     }
-   setURL_Alies(local_URL_Alies);
-    
-  
+    setURL_Alies(local_URL_Alies);
   }, [navigate]);
   useEffect(() => {
     const Localstorage_UserData = JSON.parse(localStorage.getItem("datas"));
@@ -118,11 +115,9 @@ const App = () => {
       api
         .get(`/templateDetail/${local_URL_Alies}`)
         .then((res) => {
-        
-          if(res.data?.data?.length >0){
+          if (res.data?.data?.length > 0) {
             setURL_Alies(res.data?.data[0].URL_Alies);
             setCurrentTemplate(res.data?.data[0].currentTemplate);
-          
           }
         })
         .catch((error) => {
@@ -132,8 +127,8 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
-
+  }, [navigate]);
+  console.log(URL_Alies);
   return (
     <>
       <div className="App_container">
@@ -187,7 +182,8 @@ const App = () => {
             setResetPassToken,
             resetPassId,
             setResetPassId,
-            CurrentPlanActive, setCurrentPlanActive
+            CurrentPlanActive,
+            setCurrentPlanActive,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -264,7 +260,7 @@ const App = () => {
               <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
               <Route path="/Doctor_Demo" element={<Doctor_Demo />} />
               {/* Live VCards */}
-              {URL_Alies == URL_Alies && currentTemplate === 1 ? (
+              {/* {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
               ) : (
                 ""
@@ -303,7 +299,13 @@ const App = () => {
                 <Route path={`/:URL_Alies`} element={<Boutique />} />
               ) : (
                 ""
+              )} */}
+              {URL_Alies == URL_Alies && currentTemplate === 1 ? (
+                <Route path={`/:URL_Alies`} element={<Corporate_Company />} />
+              ) : (
+                ""
               )}
+
               {/* <Route path='/coder' element={<Business_Consultant />} /> */}
             </Routes>
           </Suspense>
