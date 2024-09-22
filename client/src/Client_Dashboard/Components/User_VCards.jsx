@@ -50,6 +50,8 @@ const User_VCards = () => {
     setVCardCount,
   } = useContext(Context);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
+  let [ExpireAt, setExpireAt] = useState(null);
+  let [Info, setInfo] = useState(false);
   const [key, setKey] = useState(0);
   var reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
@@ -97,6 +99,7 @@ const User_VCards = () => {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
             setCurrentPlan(res.data.data[0]?.currentPlan);
+            setExpireAt(res.data.data[0]?.expireAt);
             setShowForm("VCard Templates");
           } else {
             setShowForm("Choose Your Plan");
@@ -386,7 +389,9 @@ const User_VCards = () => {
                       </div>
                       <div className="detail">
                         {currentTemplate === null ? (
-                          <small className="note">Select your VCard templete First!</small>
+                          <small className="note">
+                            Select your VCard templete First!
+                          </small>
                         ) : (
                           <>
                             <a
@@ -465,14 +470,42 @@ const User_VCards = () => {
                             setVcardDeleteToggle(true);
                           }}
                         >
-                          <div className="icon">
+                          <div
+                            className="icon"
+                            onMouseEnter={() => setInfo(true)}
+                            onMouseLeave={() => {
+                              setInfo(false);
+                            }}
+                          >
                             <HiOutlineDotsVertical />
                           </div>
 
                           <small>Info</small>
 
-                          <div className="info_message_box">
-
+                          <div
+                            className="info_message_box"
+                            id={Info ? "show" : ""}
+                          >
+                            <div className="info_title">
+                              <h5>Your Plan Will Be Expiring At!</h5>
+                            </div>
+                            <div className="info_message">
+                              <p>
+                                Plan Expiration Date:{" "}
+                                <strong>
+                                  {ExpireAt != null ? (
+                                    <>
+                                      {ExpireAt.slice(0, 10)
+                                        .split("-")
+                                        .reverse()
+                                        .join("-")}
+                                    </>
+                                  ) : (
+                                    ""
+                                  )}
+                                </strong>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
