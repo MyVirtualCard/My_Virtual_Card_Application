@@ -236,7 +236,7 @@ let [Website_URL,setWebsite_URL]=useState();
           handleManageContentSubmit();
       
           setTimeout(()=>{
-            setShowForm('Social Link - Website');
+            setShowForm('About Details');
             reloadComponent();
           },2000)
           setFormSubmitLoader(false);

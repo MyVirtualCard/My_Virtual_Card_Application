@@ -33,7 +33,7 @@ import Edit_Payment from "./Edit_All_Form_Component/Edit_Payment";
 import Edit_Video from "./Edit_All_Form_Component/Edit_Video";
 
 const VCard_Form_Edit = () => {
-  let { URL_Alies } = useParams();
+  // let { URL_Alies } = useParams();
 
   const [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   const [key, setKey] = useState(0);
@@ -54,7 +54,7 @@ const VCard_Form_Edit = () => {
     setShowForm,
     activePlan,
     setPlanActive,
-
+    URL_Alies,
     setURL_Alies,
 
     status,
@@ -62,7 +62,8 @@ const VCard_Form_Edit = () => {
     CurrentPlanActive,
     setCurrentPlanActive,
   } = useContext(Context);
-  console.log(URL_Alies);
+  let local_URL_Alies = localStorage.getItem("URL_Alies");
+  // setURL_Alies(local_URL_Alies)
   let navigate = useNavigate();
 
   let [formSliderToggle, setFormSliderToggle] = useState(false);
@@ -81,7 +82,7 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
-          console.log(res.data?.data[0]);
+       
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
@@ -163,8 +164,37 @@ const VCard_Form_Edit = () => {
       setFormSubmitLoader(false);
     }
   }
+  async function fetchURLData() {
+    setFormSubmitLoader(true);
+    try {
+      api
+        .get(`/vcard_URL/${user.userName}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length > 0) {
+            setURL_Alies(res.data.data[0].URL_Alies);
+            setFormSubmitLoader(false);
+            setVCardCount(res.data.data);
+          } else {
+            setFormSubmitLoader(false);
+          }
+        })
+        .catch((error) => {
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setFormSubmitLoader(false);
+    }
+  }
 
   useEffect(() => {
+    setURL_Alies(local_URL_Alies);
+    fetchURLData();
     razorpayFetchData();
     // freePlanFetchData();
     fetchCurrentManageContent();
@@ -376,8 +406,8 @@ const VCard_Form_Edit = () => {
               onClick={handleFormShow}
               id={ShowForm === "Videos" ? "menu_active" : ""}
             >
-            
-              <i className='bx bxs-video'
+              <i
+                className="bx bxs-video"
                 style={{ color: "#4c4c4c" }}
                 id="Videos"
               ></i>
@@ -431,14 +461,7 @@ const VCard_Form_Edit = () => {
               ></i>
               <small id="Business Hours">Business Hours</small>
             </div>
-            <div
-              className="menu_item"
-              onClick={handleFormShow}
-              id={ShowForm === "Customize QR Code" ? "menu_active" : ""}
-            >
-              <i className="bx bx-qr-scan" id="Customize QR Code"></i>
-              <small id="Customize QR Code">Customize QR Code</small>
-            </div>
+
             <div
               className="menu_item"
               onClick={handleFormShow}
@@ -572,7 +595,7 @@ const VCard_Form_Edit = () => {
             {ShowForm === "GoogleMap" ? <Edit_GoogleMap /> : ""}
             {ShowForm === "Iframes" ? <Edit_Iframe /> : ""}
             {ShowForm === "Social Link - Website" ? <Edit_SocialMedias /> : ""}
-            {ShowForm === "Customize QR Code" ? <Edit_QR_Code /> : ""}
+
             {ShowForm === "PopUp Banner" ? <Edit_Banner /> : ""}
             {ShowForm === "Dynamic VCard" ? <Edit_Dynamic_VCard /> : ""}
             {ShowForm === "Appoinment" ? <Edit_Appoinment /> : ""}

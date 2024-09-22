@@ -195,6 +195,8 @@ const Doctor_Demo = () => {
     let fullImage = document.getElementById("fullImage");
     fullImageBox.style.display = "block";
     fullImage.src = pic;
+    scrollToSection(GalleryRef), 
+    setActiveMenu("Gallery")
   }
 
   //Close FullImage Preview

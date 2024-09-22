@@ -1,8 +1,8 @@
 $root_nav_back_color: #ffffff;
 $root_text_color: #595F5B;
 $sidemenu_back_color:#49C087;
-$content_back_color:#EEF2F6;
-$sidemenu_back_color:#a8a8a8;
+$content_back_color:#ebebeb;
+$sidemenu_back_color:royalblue;
 $sidemenu_hover_text_color:#ffffffff;
 .client_Dashboard_container {
   width: 100dvw;
@@ -160,6 +160,7 @@ h5{
       padding: 2rem 0px;
       margin: auto;
       padding: 1rem 0.5rem;
+      border-right: 1px solid #ebebeb;
       .menu{
         width: 100%;
 color: $root_text_color;

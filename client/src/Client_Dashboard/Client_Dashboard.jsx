@@ -103,7 +103,6 @@ const Client_Dashboard = () => {
       console.log(err);
     }
   };
-console.log(URL_Alies)
   return (
     <>
       <div className="client_Dashboard_container">

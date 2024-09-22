@@ -9,6 +9,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
 import Context from "../../Context/GlobalContext";
 import axios from "axios";
@@ -29,7 +32,7 @@ const User_VCards = () => {
     currentPlan,
     setCurrentPlan,
     activePlan,
-    setCurrentPlanActive ,
+    setCurrentPlanActive,
     setPlanActive,
     userName,
     user,
@@ -67,8 +70,7 @@ const User_VCards = () => {
       })
       .then((res) => {
         if (res.data.data.length > 0) {
-         
-          setURL_Alies(res.data.data[0].URL_Alies)
+          setURL_Alies(res.data.data[0].URL_Alies);
           setFormSubmitLoader(false);
           setVCardCount(res.data.data);
         } else {
@@ -89,8 +91,8 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-          console.log(res)
-   
+          console.log(res);
+
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
@@ -150,13 +152,9 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-          
           if (res.data.data.length > 0) {
-          
-              setURL_Alies(res.data?.data[0]?.URL_Alies);
-              setCurrentTemplate(res.data?.data[0]?.currentTemplate);
-            
-   
+            setURL_Alies(res.data?.data[0]?.URL_Alies);
+            setCurrentTemplate(res.data?.data[0]?.currentTemplate);
           }
         })
         .catch((error) => {
@@ -206,10 +204,11 @@ const User_VCards = () => {
           toast.success("Your VCard Sucessfully Deleted!");
           setFormSubmitLoader(false);
           setVcardDeleteToggle(false);
-          localStorage.removeItem("URL_Alies");
+          localStorage.setItem("URL_Alies", "");
+          setURL_Alies("");
           let timer = setTimeout(() => {
             setVCardCount([]);
-          }, 3000);
+          }, 1000);
           return () => clearTimeout(timer);
         })
         .catch((error) => {
@@ -251,10 +250,10 @@ const User_VCards = () => {
     razorpayFetchData();
     // freePlanFetchData();
   }, []);
- 
+
   return (
     <>
- <div className="VCards_container">
+      <div className="VCards_container">
         {/* DeletePopup */}
         {VcardDeleteToggle ? (
           <div className="Vcard_delete_popupBox">
@@ -320,203 +319,172 @@ const User_VCards = () => {
             </button>
           </Link>
         </div>
-
-        {/* Table */}
-
+        {/* Card Box */}
         <div className="row_2">
-          <div className="table_container">
-            <table>
-              <thead className="bg-primary">
-                <tr>
-                  <th
-                    className="fw-semibold text-center"
-                    style={{ width: "10%" }}
-                  >
-                    PROFILE
-                  </th>
-                  <th
-                    className="text-center fw-semibold"
-                    style={{ width: "18%" }}
-                  >
-                    VCARD NAME
-                  </th>
-                  <th
-                    className="text-center fw-semibold"
-                    style={{ width: "25%" }}
-                  >
-                    PREVIEW URL
-                  </th>
-
-                  <th
-                    className="text-center fw-semibold "
-                    style={{ width: "15%" }}
-                  >
-                    PLAN
-                  </th>
-
-                  {/* <th
-                      className="text-center fw-semibold "
-                      style={{ width: "5%" }}
-                    >
-                      SUBSCRIBERS
-                    </th> */}
-                  <th
-                    className="text-center fw-semibold "
-                    style={{ width: "15%" }}
-                  >
-                    CREATED AT
-                  </th>
-                  <th
-                    className="text-center fw-semibold "
-                    style={{ width: "40%" }}
-                  >
-                    ACTIONS
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-light text-center">
-                {VCardCount != undefined && VCardCount.length > 0 ? (
-                  VCardCount.map((data, index) => {
-                    return (
-                      <tr key={index}>
-                        <td className="fw-light">
-                          {data.ProfileType == "Paste_ImageAddress" ? (
-                            <img
-                              src={
-                                data.ProfileAddress.length > 0 &&
-                                data.ProfileAddress != undefined
-                                  ? data.ProfileAddress
-                                  : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                              }
-                              alt="profile"
-                            />
-                          ) : (
-                            ""
-                          )}
-                          {data.ProfileType == "ImageUpload" ? (
-                            <>
-                              {data.Profile ? (
-                                <img
-                                  src={`${
-                                    import.meta.env.VITE_APP_BACKEND_API_URL
-                                  }/${data.Profile}`}
-                                  alt="profile"
-                                />
-                              ) : (
-                                <img
-                                  src="https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                                  alt="profile"
-                                />
-                              )}
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </td>
-                        <td className="fw-light">{data.VCardName}</td>
-                        {currentTemplate === null ? (
-                          <td className="fw-light text-center align-items-center">
-                            <small>Select your VCard templete First!</small>
-                          </td>
+          <div className="card_box">
+            <div className="card_title_box">
+              <div className="title">
+                <h4>PROFILE</h4>
+              </div>
+              <div className="title">
+                <h4>BUSSINESS CATEGORY</h4>
+              </div>
+              <div className="title">
+                <h4>PREVIEW URL</h4>
+              </div>
+              <div className="title">
+                <h4>SUBSCRIBED</h4>
+              </div>
+              <div className="title">
+                <h4>ACTIVATED AT</h4>
+              </div>
+              <div className="title">
+                <h4>ACTIONS</h4>
+              </div>
+            </div>
+            {VCardCount != undefined && VCardCount.length > 0 ? (
+              <>
+                {VCardCount.map((data, index) => {
+                  return (
+                    <div className="card_detail_box" key={index}>
+                      <div className="detail">
+                        {data.ProfileType == "Paste_ImageAddress" ? (
+                          <img
+                            src={
+                              data.ProfileAddress.length > 0 &&
+                              data.ProfileAddress != undefined
+                                ? data.ProfileAddress
+                                : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                            }
+                            alt="profile"
+                          />
                         ) : (
+                          ""
+                        )}
+                        {data.ProfileType == "ImageUpload" ? (
                           <>
-                            {LiveLinkActivate.length > 0 ? (
-                              <td className="fw-light text-center align-items-center">
-                                {" "}
-                                <a
-                                  href={`${
-                                    import.meta.env.VITE_CLIENT_DOMAIN_URL
-                                  }/${data.URL_Alies}`}
-                                  target="_blank"
-                                >
-                                  {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
-                                  {data.URL_Alies}
-                                </a>
-                                <CopyToClipboard
-                                  text={`${
-                                    import.meta.env.VITE_CLIENT_DOMAIN_URL
-                                  }/${data.URL_Alies}`}
-                                  onCopy={handleCopyURL}
-                                >
-                                  <i className="bx bx-copy"></i>
-                                </CopyToClipboard>
-                              </td>
+                            {data.Profile ? (
+                              <img
+                                src={`${
+                                  import.meta.env.VITE_APP_BACKEND_API_URL
+                                }/${data.Profile}`}
+                                alt="profile"
+                              />
                             ) : (
-                              <td
-                                className="fw-light text-center align-items-center"
-                                style={{
-                                  fontSize: "0.8rem",
-                                  color: "orange",
-                                }}
-                              >
-                                Live link not available!..Less VCard Details
-                                Added
-                              </td>
+                              <img
+                                src="https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                                alt="profile"
+                              />
                             )}
                           </>
+                        ) : (
+                          ""
                         )}
+                      </div>
+                      <div className="detail">
+                        <p>{data.VCardName}</p>
+                      </div>
+                      <div className="detail">
+                        {currentTemplate === null ? (
+                          <small className="note">Select your VCard templete First!</small>
+                        ) : (
+                          <>
+                            <a
+                              href={`${
+                                import.meta.env.VITE_CLIENT_DOMAIN_URL
+                              }/${data.URL_Alies}`}
+                              target="_blank"
+                            >
+                              {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
+                              {data.URL_Alies}
+                            </a>
+                            <CopyToClipboard
+                              text={`${
+                                import.meta.env.VITE_CLIENT_DOMAIN_URL
+                              }/${data.URL_Alies}`}
+                              onCopy={handleCopyURL}
+                            >
+                              <i className="bx bx-copy"></i>
+                            </CopyToClipboard>
+                          </>
+                        )}
+                      </div>
+                      <div className="detail">
+                        <small>
+                          {currentPlan != null
+                            ? currentPlan + " " + "Plan"
+                            : "No Plan"}
+                        </small>
+                      </div>
+                      <div className="detail">
+                        <p>
+                          {" "}
+                          {data.createdAt
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join("-")}
+                        </p>
+                      </div>
+                      <div className="detail_actions">
+                        <div
+                          className="edit"
+                          onClick={async () => {
+                            localStorage.setItem("URL_Alies", data.URL_Alies);
+                            navigate(
+                              `/${userName}/uadmin/vcard_form_edit/${data.URL_Alies}`
+                            );
+                            // setShowForm('Basic Details')
+                          }}
+                        >
+                          <div className="icon">
+                            <FaEdit />
+                          </div>
 
-                        <td className="fw-light plan">
-                          <small>
-                            {currentPlan != null ? currentPlan : "No Plan"}
-                          </small>
-                        </td>
+                          <small>Edit</small>
+                        </div>
+                        <div
+                          className="delete"
+                          onClick={() => {
+                            // handleVCardDelete(data.URL_Alies);
+                            setURL_Alies(data.URL_Alies);
+                            setVcardDeleteToggle(true);
+                          }}
+                        >
+                          <div className="icon">
+                            <MdDelete />
+                          </div>
 
-                        {/* <td className="fw-light plan">
-                            <i className="bx bxs-group"></i>
-                          </td> */}
-                        <td className="fw-bolder">
-                          <small>
-                            {data.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
-                          </small>
-                        </td>
-                        <td className="fw-light">
-                          <button
-                            onClick={async () => {
-                              localStorage.setItem("URL_Alies", data.URL_Alies);
-                              navigate(
-                                `/${userName}/uadmin/vcard_form_edit/${data.URL_Alies}`
-                              );
-                              // setShowForm('Basic Details')
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            style={{ color: "red" }}
-                            onClick={() => {
-                              // handleVCardDelete(data.URL_Alies);
-                              setURL_Alies(data.URL_Alies);
-                              setVcardDeleteToggle(true);
-                            }}
-                          >
-                            Delete
-                          </button>
-                          {/* <i className="bx bx-dots-vertical-rounded"></i> */}
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td colSpan="1" className="text-center">
-                      No Vcard Found!
-                    </td>
+                          <small>Delete</small>
+                        </div>
+                        <div
+                          className="info"
+                          onClick={() => {
+                            // handleVCardDelete(data.URL_Alies);
+                            setURL_Alies(data.URL_Alies);
+                            setVcardDeleteToggle(true);
+                          }}
+                        >
+                          <div className="icon">
+                            <HiOutlineDotsVertical />
+                          </div>
 
-                    {/* <td></td> */}
-                    <td></td>
-                    <td></td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                          <small>Info</small>
+
+                          <div className="info_message_box">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <div className="card_detail_box_empty">
+                <small>Empty VCard!</small>
+              </div>
+            )}
           </div>
         </div>
       </div>

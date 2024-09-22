@@ -77,7 +77,7 @@ const App = () => {
   let [VCardCount, setVCardCount] = useState([]);
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
   //URL_Alies
-  let [URL_Alies, setURL_Alies] = useState();
+  let [URL_Alies, setURL_Alies] = useState("");
 
   //Forget Pass
   let [ResetPassToken_Id, setResetPassToken_Id] = useState("");
@@ -87,28 +87,24 @@ const App = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
+  
   useEffect(() => {
     let local_userName = JSON.parse(localStorage.getItem("userName"));
     let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
     let local_URL_Alies = localStorage.getItem("URL_Alies");
 
-    console.log()
     if (local_userName) {
       return setUserName(local_userName);
     }
     if (local_mobileNumber) {
      return setMobileNumber(local_mobileNumber);
     }
-    if (localStorage?.URL_Alies) {
-      setURL_Alies(local_URL_Alies);
-    } else {
-      setURL_Alies("demo");
-    }
-
+   setURL_Alies(local_URL_Alies);
+    
   
   }, [navigate]);
   useEffect(() => {
-    const Localstorage_UserData = JSON.parse(localStorage?.getItem("datas"));
+    const Localstorage_UserData = JSON.parse(localStorage.getItem("datas"));
 
     if (Localstorage_UserData != null) {
       setUser(Localstorage_UserData);
@@ -120,16 +116,14 @@ const App = () => {
   useEffect(() => {
     try {
       api
-        .get(`/templateDetail/${URL_Alies}`)
+        .get(`/templateDetail/${local_URL_Alies}`)
         .then((res) => {
         
-          if(res.data.data.length >0){
-            setURL_Alies(res.data?.data[0]?.URL_Alies);
-            setCurrentTemplate(res.data?.data[0]?.currentTemplate);
-            return;
+          if(res.data?.data?.length >0){
+            setURL_Alies(res.data?.data[0].URL_Alies);
+            setCurrentTemplate(res.data?.data[0].currentTemplate);
+          
           }
-        
- 
         })
         .catch((error) => {
           console.log(error);
@@ -138,8 +132,8 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [navigate]);
-console.log(URL_Alies)
+  }, []);
+
   return (
     <>
       <div className="App_container">

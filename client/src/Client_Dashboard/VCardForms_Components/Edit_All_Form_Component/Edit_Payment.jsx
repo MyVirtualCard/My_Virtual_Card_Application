@@ -414,7 +414,7 @@ const Edit_Payment = () => {
                     src={
                       QRCodeImage != null
                         ? QRCodeImage
-                        : "https://img.freepik.com/free-photo/person-scanning-qr-code_23-2149321701.jpg?t=st=1726926661~exp=1726930261~hmac=11038d8e82906c67f5283e0d2e87591b7ce5cb75f47204727256b861b472184e&w=740"
+                        : "https://img.freepik.com/free-vector/qr-code-scanning-concept-with-characters-illustrated_23-2148625454.jpg?t=st=1726956435~exp=1726960035~hmac=3d26f0be47bae3d5da3b4a270e91ad945c69024998ef9a71b6355e4b7dafddca&w=740"
                     }
                     className="QRCodeImage"
                     alt="QRCodeImage"

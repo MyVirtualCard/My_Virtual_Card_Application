@@ -385,7 +385,7 @@ const Testimonial = () => {
             )}
           </div>
         </div>
-        <div className="testimonial_list_table table-responsive container w-100 rounded-3">
+        {/* <div className="testimonial_list_table table-responsive container w-100 rounded-3">
           <table className="table table-borderless rounded-3" id="example">
             <thead className="table-secondary rounded-3">
               <tr>
@@ -455,7 +455,105 @@ const Testimonial = () => {
               )}
             </tbody>
           </table>
-        </div>
+        </div> */}
+               {/* All Testimonial */}
+               <div className="All_testimonial_container">
+              {AllTestimonial != undefined && AllTestimonial.length != 0 ? (
+                <>
+                  {AllTestimonial.map((data, index) => {
+                    return (
+                      <div className="video_box" key={index}>
+                        <div className="video_header">
+                          <h2>Client Review - {index + 1}</h2>
+                        </div>
+                        <div className="video">
+                       
+                              {data.ClientImage ? (
+                                <img
+                                  src={
+                                    data.ClientImage != undefined
+                                      ? data.ClientImage
+                                      : `https://img.freepik.com/free-vector/illustration-cloud-storage_53876-37579.jpg?t=st=1723314357~exp=1723317957~hmac=c0048a06d35bbbc842bf16e401a16913a6c3237aa9c0fce7bed26b10f401c942&w=996`
+                                  }
+                                  alt="ClientImage"
+                                  name="ClientImage"
+                                />
+                             
+                              ) : (
+                                "Null"
+                              )}
+                        
+                      
+                        </div>
+                        <div className="product_details">
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Client Name </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>{data.ClientName}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Client Feedback </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p>{data.ClientFeedback}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="title">
+                              <h5>Review Date </h5>
+                            </div>
+                            <div className="data">
+                              <small>:</small>
+                              <p
+                            >
+                              {data.ClientReviewDate}
+                              </p>
+                            </div>
+                          </div>
+                     
+                        </div>
+                        <div className="icon_actions">
+                          <div className="delete">
+                            <i
+                              className="bx bx-trash-alt"
+                              style={{ color: "red" }}
+                              onClick={() => handleTestimonialDelete(data._id)}
+                            ></i>
+                            <small>Delete</small>
+                          </div>
+                          <div className="show">
+                            <i
+                              className="bx bxs-show"
+                              style={{ color: "skyBlue" }}
+                              onClick={() => handleTestimonialView(data._id)}
+                            ></i>
+                            <small>View</small>
+                          </div>
+                          <div className="edit">
+                            <i
+                              className="bx bx-edit"
+                              style={{ color: "#6571FF" }}
+                              onClick={() => handleTestimonialEdit(data._id)}
+                            ></i>
+                            <small>Edit</small>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <div className="note">
+                  <small> Product's not been Added!</small>
+                </div>
+              )}
+            </div>
         </>
         : <>
         

@@ -142,15 +142,16 @@ validateOnChange:false,
         })
         .then((res) => {
           toast.success(res.data.message);
-          setURL_Alies(res.data.data.URL_Alies);
-          localStorage.setItem("URL_Alies", res.data.data.URL_Alies);
+          setURL_Alies(res.data?.data?.URL_Alies);
+          localStorage.setItem("URL_Alies", res.data?.data?.URL_Alies);
           if (status == "successfull") {
             setShowForm("Basic Detail");
           }
 
           setTimeout(() => {
+            setURL_Alies(res.data?.data?.URL_Alies);
             navigate(
-              `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
+              `/${userName}/uadmin/VCards`
             );
 
             //  window.location.pathname = `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`

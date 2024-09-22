@@ -17,15 +17,15 @@ let Vcard_URL_Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    FirstName:{
+    FirstName: {
       type: String,
       required: true,
     },
-    LastName:{
+    LastName: {
       type: String,
       required: true,
     },
-    Profession:{
+    Profession: {
       type: String,
       required: true,
     },
@@ -54,6 +54,7 @@ let Vcard_URL_Schema = new mongoose.Schema(
     BannerAddress: {
       type: String,
     },
+
   },
   { timestamps: true }
 );
