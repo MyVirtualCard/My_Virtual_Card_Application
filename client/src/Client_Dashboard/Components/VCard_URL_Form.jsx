@@ -303,7 +303,7 @@ validateOnChange:false,
 
             <div className="form_group">
               <label htmlFor="VCardName">
-                VCard Type <sup>*</sup>
+                VCard Name <sup>*</sup>
               </label>
               <select
                 className={`VCardName ${

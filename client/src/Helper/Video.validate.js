@@ -11,6 +11,6 @@ export let VideoDetailValidateShema = Yup.object({
       "Content cannot be empty or just whitespace",
       (value) => !isEmptyOrWhitespace(value)
     )
-    .min(300, "Min 300-letters required!")
+    .min(40, "Min 40-letters required!")
     .required("Embed IFrame is required!"),
 });

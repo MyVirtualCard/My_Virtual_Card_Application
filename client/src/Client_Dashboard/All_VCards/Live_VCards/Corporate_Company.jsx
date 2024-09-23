@@ -1609,7 +1609,19 @@ END:VCARD
                 {VideoData.map((data, index) => {
                   return (
                     <div className="video_image" key={index}>
-                      <HtmlRenderer htmlString={data.Video} />
+                      <iframe
+                        width="560"
+                        height="315"
+                        src={`https://www.youtube.com/embed/${data.Video.slice(
+                          17,
+                          300
+                        )}`}
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                      ></iframe>
                     </div>
                   );
                 })}
@@ -1774,78 +1786,77 @@ END:VCARD
 
         {/* Testimonials */}
         {TestimonialData.length > 0 &&
-            ManageContentData[0].Testimonial == true ? 
-            <>
-                  <div className="testimonial" ref={TestimonialRef}>
-          <div className="Corporate_Company_title">
-            <h3>Testimonial</h3>
-            {/* Contact */}
-          </div>
-          <div className="testimonial_container">
-            <Carousel
-              showThumbs={false}
-              showStatus={true}
-              infiniteLoop
-              autoPlay
-            >
-
-                {TestimonialData.map((data, index) => {
-                        return (
-                          <div className="testimonial_list">
-                            <div className="client_feedback">
-                              <small>
-                                {data.ClientFeedback ||
-                                  ` Lorem ipsum dolor, sit amet consectetur adipisicing
+        ManageContentData[0].Testimonial == true ? (
+          <>
+            <div className="testimonial" ref={TestimonialRef}>
+              <div className="Corporate_Company_title">
+                <h3>Testimonial</h3>
+                {/* Contact */}
+              </div>
+              <div className="testimonial_container">
+                <Carousel
+                  showThumbs={false}
+                  showStatus={true}
+                  infiniteLoop
+                  autoPlay
+                >
+                  {TestimonialData.map((data, index) => {
+                    return (
+                      <div className="testimonial_list">
+                        <div className="client_feedback">
+                          <small>
+                            {data.ClientFeedback ||
+                              ` Lorem ipsum dolor, sit amet consectetur adipisicing
                               elit. Vel repellendus a ut! Architecto quis error
                               porro nemo beatae perspiciatis omnis?`}
-                              </small>
-                            </div>
-                            <div className="client_detail">
-                              <img
-                                src={
-                                  data.ClientImage ||
-                                  "https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                                }
-                                alt="clientImage"
-                              />
+                          </small>
+                        </div>
+                        <div className="client_detail">
+                          <img
+                            src={
+                              data.ClientImage ||
+                              "https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                            }
+                            alt="clientImage"
+                          />
 
-                              <div className="client_name">
-                                <h4>{data.ClientName}</h4>
-                                <small>-Member</small>
-                              </div>
-                            </div>
+                          <div className="client_name">
+                            <h4>{data.ClientName}</h4>
+                            <small>-Member</small>
                           </div>
-                        );
-                      })}
-              
-            </Carousel>
-          </div>
-        </div>
-            </>
-            : ''}
-  
-        {/* GoogleMap */}
-
-        {GoogleMapData.length > 0 &&
-            ManageContentData[0].GoogleMap == true ? (
-              <>
-                <div className="google_map_container">
-                  <div className="fashion_title">
-                    <h3>#&nbsp;Live Location</h3>
-                  </div>
-
-                  {GoogleMapData.map((data, index) => {
-                    return (
-                      <div className="google_map" key={index}>
-                        <HtmlRenderer htmlString={data.GoogleIframe} />
+                        </div>
                       </div>
                     );
                   })}
-                </div>
-              </>
-            ) : (
-              ""
-            )}
+                </Carousel>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+
+        {/* GoogleMap */}
+
+        {GoogleMapData.length > 0 && ManageContentData[0].GoogleMap == true ? (
+          <>
+            <div className="google_map_container">
+              <div className="fashion_title">
+                <h3>#&nbsp;Live Location</h3>
+              </div>
+
+              {GoogleMapData.map((data, index) => {
+                return (
+                  <div className="google_map" key={index}>
+                    <HtmlRenderer htmlString={data.GoogleIframe} />
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          ""
+        )}
         {/* Feedback */}
         <div className="feedback_row" ref={FeedbackRef}>
           <div className="Corporate_Company_title">

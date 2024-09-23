@@ -128,7 +128,7 @@ const Edit_Video = () => {
           setFormSubmitLoader(false);
           setVideoCount(++VideoCount);
           setVideo("");
-          formik.values.Video=''
+          formik.values.Video = "";
 
           setTimeout(() => {
             setVideoFormOpen(false);
@@ -262,6 +262,8 @@ const Edit_Video = () => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
 
+  console.log(formik.values.Video)
+
   return (
     <>
       <div className="update_video_container">
@@ -347,7 +349,7 @@ const Edit_Video = () => {
             )}
           </div>
         </div>
-   
+
         <div className="All_videos_container">
           {AllVideo != undefined && AllVideo.length != 0 ? (
             <>
@@ -358,7 +360,17 @@ const Edit_Video = () => {
                       <h2>Video - {index + 1}</h2>
                     </div>
                     <div className="video">
-                      <div dangerouslySetInnerHTML={{ __html: data.Video }} />
+                    <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${data.Video.slice(17,300)}`}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                      {/* <div dangerouslySetInnerHTML={{ __html: data.Video }} /> */}
                     </div>
                     <div className="icon_actions">
                       <div className="delete">
@@ -384,9 +396,8 @@ const Edit_Video = () => {
             </>
           ) : (
             <div className="note">
-          <small> Video's not been Added!</small>
+              <small> Video's not been Added!</small>
             </div>
-  
           )}
         </div>
 
@@ -412,21 +423,30 @@ const Edit_Video = () => {
                 <label htmlFor="video_preview">
                   Video Preview <FaVideo className="icon" />
                 </label>
-                <div
-                  className="video"
-                  dangerouslySetInnerHTML={{ __html: formik.values.Video }}
-                />
+                <div className="video">
+
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${formik.values.Video.slice(17,300)}`}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
               </div>
               <div className="video_input">
                 <div className="form_group">
                   <label htmlFor="video">
-                    Paste Your Youtube Embed Video IFrame <sup>*</sup>
+                    Paste Your Youtube URL <sup>*</sup>
                   </label>
-                  <textarea
+
+                  <input
+                    type="text"
                     name="Video"
                     id="Video"
-                    rows="15"
-                    cols="6"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.Video}
@@ -435,8 +455,8 @@ const Edit_Video = () => {
                         ? "input_error"
                         : "input_success"
                     }
-                    placeholder="Paste Your Youtube Embed frame"
-                  ></textarea>
+                    placeholder="Paste Your Youtube Link"
+                  />
                   <div className="error">{formik.errors.Video}</div>
                 </div>
 
@@ -488,35 +508,37 @@ const Edit_Video = () => {
               <div className="video_input">
                 <div className="form_group">
                   <label htmlFor="video">
-                    Paste Your Youtube Embed Video IFrame <sup>*</sup>
+                    Paste Your Youtube URL <sup>*</sup>
                   </label>
-                  <textarea
+            
+                        <input
+                    type="text"
                     name="Video"
                     id="Video"
-                    rows="15"
-                    cols="6"
                     value={Video}
-                   
                     onChange={(e) => setVideo(e.target.value)}
-                    placeholder="Paste Your Youtube Embed frame"
-                  ></textarea>
+                   
+                    placeholder="Paste Your Youtube Link"
+                  />
                 </div>
 
                 <div className="form_submit_actions">
-                <div className="save">
-                  <button type="submit" disabled={FormSubmitLoader}>
-                    Update
-                  </button>
-                </div>
-                <div className="discard">
-                  <button type="button" onClick={() => setVideoFormOpen(false)}>
-                    Discard
-                  </button>
-                </div>
+                  <div className="save">
+                    <button type="submit" disabled={FormSubmitLoader}>
+                      Update
+                    </button>
+                  </div>
+                  <div className="discard">
+                    <button
+                      type="button"
+                      onClick={() => setVideoFormOpen(false)}
+                    >
+                      Discard
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
-    
           </div>
         </div>
       </div>
