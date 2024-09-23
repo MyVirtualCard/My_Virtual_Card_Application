@@ -136,7 +136,7 @@
       .card_title_box {
         display: grid;
         width: 100%;
-        grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.7fr 1fr;
+        grid-template-columns: 0.5fr 1fr 1.5fr 0.5fr 0.7fr 1fr;
         place-items: center;
         // gap: 0px 1rem;
         background-color: gray;
@@ -172,7 +172,7 @@
       .card_detail_box {
         display: grid;
         width: 100%;
-        grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.7fr 1fr;
+        grid-template-columns: 0.5fr 1fr 1.5fr 0.5fr 0.7fr 1fr;
         place-items: center;
         // gap: 0px 1rem;
         background-color: rgb(243, 243, 243);
