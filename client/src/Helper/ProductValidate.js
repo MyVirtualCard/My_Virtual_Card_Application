@@ -25,7 +25,7 @@ export let ProductValidateShema = Yup.object({
     .required("ProductName is required!"),
     ProductDescription: Yup.string()
     .min(15, "Min 15 letter's required!")
-    .max(500, "Max 500 letter to be allowed!")
+    .max(2500, "Max 2500 letter to be allowed!")
     .required("ProductDescription is required!"),
     ProductPrice:Yup.number().required('Product price required!'),
     // ProductImage: Yup.mixed()

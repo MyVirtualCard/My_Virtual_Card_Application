@@ -158,8 +158,16 @@ const Corporate_Company = () => {
     fullImageBox.style.display = "block";
     fullImage.src = pic;
     // scrollToSection(GalleryRef), setActiveMenu("Gallery");
-  }
-
+  };
+  let totalHeight;
+  let [scrollY, setScrollY] = useState(0);
+  let innerHeight;
+  window.addEventListener("scroll", () => {
+    innerHeight = window.innerHeight; // Height of the viewport
+    setScrollY(window.scrollY); // Number of pixels scrolled vertically
+    totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
+  });
+  console.log(scrollY)
   //Close FullImage Preview
   function closeFullImage() {
     let fullImageBox = document.getElementById("fullImageBox");
@@ -206,14 +214,7 @@ const Corporate_Company = () => {
     });
   }
 
-  let totalHeight;
-  let [scrollY, setScrollY] = useState(0);
-  let innerHeight;
-  window.addEventListener("scroll", () => {
-    innerHeight = window.innerHeight; // Height of the viewport
-    setScrollY(window.scrollY); // Number of pixels scrolled vertically
-    totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
-  });
+
   //Menu actions
 
   let [activeMenu, setActiveMenu] = useState("Home");
@@ -1199,7 +1200,10 @@ END:VCARD
                     <h3>Our Specialities</h3>
                   </div>
                   <div className="specialities">
+                    <p>
                     <HtmlRenderer htmlString={data.Specialities || ""} />
+                    </p>
+                
                   </div>
                 </div>
               );

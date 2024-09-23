@@ -110,7 +110,7 @@ $error_text_color: tomato;
 .Corporate_Company_container {
   width: 100vw;
   min-height: 100vh;
-  height: 100vh;
+  height: auto;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -1009,6 +1009,11 @@ $error_text_color: tomato;
         margin: auto;
         font-size: 0.9rem;
 
+        p{
+          width: 100%;
+          font-size: $root_text_size;
+        }
+
         ul {
           display: flex;
           flex-direction: column;
@@ -1536,13 +1541,18 @@ $error_text_color: tomato;
       .all_gallerys {
         width: 100%;
         display: grid;
-        // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        // grid-template-columns: 1fr 1fr 1fr;
         gap: 0.5rem;
         place-items: center;
+        margin: auto;
 
         .gallery_image {
           width: 100%;
+          margin: auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
           img {
             cursor: pointer;

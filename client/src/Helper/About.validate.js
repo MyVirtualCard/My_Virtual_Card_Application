@@ -47,6 +47,6 @@ export let AboutDetailValidateShema = Yup.object({
       "Content cannot be empty or just whitespace",
       (value) => !isEmptyOrWhitespace(value)
     )
-    .min(150, "Min 150-letters required!")
+    .min(100, "Min 100 letters required!")
     .required("Features is required!"),
 });
