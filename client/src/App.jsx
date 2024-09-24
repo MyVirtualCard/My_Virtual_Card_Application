@@ -49,6 +49,8 @@ import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parl
 import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
 import Doctor_Demo from "./Client_Dashboard/All_VCards/Static_VCards/Doctor_Demo.jsx";
 import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/Corporate_Company.jsx";
+import GYM_TRAINER_DEMO from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/GYM_TRAINER.jsx";
+
 
 //Import All component:
 const App = () => {
@@ -258,6 +260,8 @@ const App = () => {
               <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
               <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
               <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
+              {/* //New Designs */}
+              <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
               <Route path="/Doctor_Demo" element={<Doctor_Demo />} />
               {/* Live VCards */}
               {/* {URL_Alies == URL_Alies && currentTemplate === 1 ? (
