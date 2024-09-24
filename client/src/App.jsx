@@ -52,6 +52,7 @@ import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/Corpora
 import GYM_TRAINER_DEMO from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/GYM_TRAINER.jsx";
 import TAXI_DRIVER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/TAXI_DRIVER_PREVIEW.jsx";
 import FASHION_DESIGNER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/FASHION_DESIGNER_PREVIEW.jsx";
+import MANAGER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/MANAGER_PREVIEW.jsx";
 
 
 //Import All component:
@@ -266,6 +267,7 @@ const App = () => {
               <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
               <Route path="/Taxi_Driver_Preview" element={<TAXI_DRIVER_PREVIEW />} />
               <Route path="/Fashion_Designer_Preview" element={<FASHION_DESIGNER_PREVIEW />} />
+              <Route path="/Manager_Preview" element={<MANAGER_PREVIEW />} />
               <Route path="/Doctor_Demo" element={<Doctor_Demo />} />
               {/* Live VCards */}
               {/* {URL_Alies == URL_Alies && currentTemplate === 1 ? (
