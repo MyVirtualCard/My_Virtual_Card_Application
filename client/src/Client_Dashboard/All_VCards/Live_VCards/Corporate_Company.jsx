@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Corporate_Company.scss";
 import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import profile_back_svg from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg.svg";
-import profile_back_svg1 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg1.svg";
-import profile_back_svg2 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg2.svg";
-import profile_back_svg3 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg3.svg";
-import profile_back_svg4 from "../../../assets/AllVCard_Image/Boutique_Shop/profile_back_svg4.svg";
-import product1 from "../../../assets/AllVCard_Image/Doctor/product_1.png";
 import axios from "axios";
 import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
 import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
@@ -38,9 +32,11 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
+
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
+import ReactStars from "react-stars";
 const Corporate_Company = () => {
   let style = {
     $first_back__color: "#ffffff",
@@ -56,13 +52,23 @@ const Corporate_Company = () => {
     $svg_wave_back_color: "#ffffff",
   };
   const [width, setWidth] = useState(window.innerWidth);
-  let [feedbackForm, setFeedbackForm] = useState({
-    userName: "",
-    userFeedback: "",
-    currentRatting: 0,
-  });
+  //Success and error popup state
+  let [successMessage, setSuccessMessage] = useState();
+  let [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  let [errorMessage, setErrorMessage] = useState();
+  let [errorPopupOpen, setErrorPopupOpen] = useState(false);
+  let [InquiryLoader, setInquiryLoader] = useState(false);
   let [feedbackLoader, setFeedbackLoader] = useState(false);
+  let [appoinmentLoader, setappoinmentLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
+  let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
+  let [FeedbackPopup, setFeedbackPopup] = useState(false);
+  let [FeedbackPopupError, setFeedbackPopupError] = useState(false);
+  let [AppoinmentPopup, setAppoinmentPopup] = useState(false);
+  let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
+  let [ClientName, setClientName] = useState("");
+  let [ClientFeedback, setClientFeedback] = useState("");
+  let [ClientRatting, setClientRatting] = useState(0);
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -158,7 +164,7 @@ const Corporate_Company = () => {
     fullImageBox.style.display = "block";
     fullImage.src = pic;
     // scrollToSection(GalleryRef), setActiveMenu("Gallery");
-  };
+  }
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
@@ -167,7 +173,7 @@ const Corporate_Company = () => {
     setScrollY(window.scrollY); // Number of pixels scrolled vertically
     totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
   });
-  console.log(scrollY)
+
   //Close FullImage Preview
   function closeFullImage() {
     let fullImageBox = document.getElementById("fullImageBox");
@@ -187,17 +193,18 @@ const Corporate_Company = () => {
   }
   //Remove Ratting:
   function removeRatting() {
-    highlightStar(feedbackForm.currentRatting);
+    highlightStar(ClientRatting);
   }
   //Staring Setted
   function RattingSetted(e) {
     let starRating = document.querySelector(".ratting_container");
     let star = e.target;
-    // console.log(star,star.classList);
+    console.log(star, star.classList);
     if (star.classList.contains("star")) {
-      feedbackForm.currentRatting = parseInt(star.dataset.rating, 10);
-      starRating.setAttribute("data-rating", feedbackForm.currentRatting);
-      highlightStar(feedbackForm.currentRatting);
+      setClientRatting(parseInt(star.dataset.rating, 10));
+      console.log(ClientRatting);
+      starRating.setAttribute("data-rating", ClientRatting);
+      highlightStar(ClientRatting);
     }
   }
 
@@ -213,7 +220,6 @@ const Corporate_Company = () => {
       }
     });
   }
-
 
   //Menu actions
 
@@ -319,7 +325,7 @@ const Corporate_Company = () => {
     },
 
     //Validation :
-    validationSchema: Yup.object({
+    validationSchema: Yup.object().shape({
       ClientName: Yup.string()
         .min(3, "Min 3 char required")
         .max(50, "Name must be 20 character or less")
@@ -328,6 +334,9 @@ const Corporate_Company = () => {
         .min(10, "Minimum 10 character required")
         .max(400, "Feedback must be 100 character or less")
         .required("Feedback is required"),
+      ClientRatting: Yup.number()
+        .required("Rating is required")
+        .min(1, "Rating must be at least 1 star"),
     }),
     //Form Submit :
     onSubmit: async (values) => {
@@ -342,6 +351,8 @@ const Corporate_Company = () => {
           setSuccessMessage(res.data.message);
           feedbackFormik.values.ClientName = "";
           feedbackFormik.values.ClientFeedback = "";
+          feedbackFormik.values.ClientRatting = 0;
+          setCommentOpen(false);
           setTimeout(() => {
             setFeedbackPopup(false);
           }, 2000);
@@ -358,6 +369,7 @@ const Corporate_Company = () => {
         });
     },
   });
+
   //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
@@ -537,7 +549,7 @@ END:VCARD
       .catch((error) => {
         console.log(error);
       });
-  }, [commentOpen]);
+  }, [feedbackFormik]);
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
@@ -545,6 +557,7 @@ END:VCARD
   if (SiteLoader) {
     return <VCard_Loader />;
   }
+
   return (
     <div className="Corporate_Company_container">
       {/* Gallery Full IMAGE */}
@@ -1201,9 +1214,8 @@ END:VCARD
                   </div>
                   <div className="specialities">
                     <p>
-                    <HtmlRenderer htmlString={data.Specialities || ""} />
+                      <HtmlRenderer htmlString={data.Specialities || ""} />
                     </p>
-                
                   </div>
                 </div>
               );
@@ -1624,7 +1636,7 @@ END:VCARD
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen
+                        allowFullScreen
                       ></iframe>
                     </div>
                   );
@@ -1635,7 +1647,206 @@ END:VCARD
         ) : (
           ""
         )}
+   {/* //Appinment */}
+   {VCard_URL_Data.length > 0 &&
+            ManageContentData[0].Appoinment == true ? (
+              <>
+                <div className="Appoinment">
+                <div className="Corporate_Company_title">
+                <h3>Appoinment</h3>
+              </div>
+                    {/* Success and Error Popup */}
+                    <div className="popup_message_container">
+                      <div
+                        className="popup_success_box"
+                        id={AppoinmentPopup ? "successOpen" : "successClose"}
+                      >
+                        <div className="popup_message">{successMessage}</div>
+                        <div
+                          className="popup_close"
+                          onClick={() => setAppoinmentPopup(false)}
+                        >
+                          <i className="bx bx-x"></i>
+                        </div>
+                      </div>
 
+                      {AppoinmentPopupError ? (
+                        <div className="popup_error_box">
+                          <div className="popup_message">{errorMessage}</div>
+                          <div
+                            className="popup_close"
+                            onClick={() => setAppoinmentPopupError(false)}
+                          >
+                            <i className="bx bx-x"></i>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  <div className="appinment_form_container">
+              
+                    <form
+                      className="appinment_form"
+                      onSubmit={Appoinment_formik.handleSubmit}
+                    >
+                      <div className="form_group">
+                        <label
+                          htmlFor="FullName"
+                          className={
+                            Appoinment_formik.errors.FullName
+                              ? "labelError"
+                              : ""
+                          }
+                        >
+                          {Appoinment_formik.errors.FullName
+                            ? Appoinment_formik.errors.FullName
+                            : `FullName`}
+                          <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <input
+                          type="text"
+                          name="FullName"
+                          id="FullName"
+                            placeholder="Enter Your FullName"
+                          value={Appoinment_formik.values.FullName}
+                          onChange={Appoinment_formik.handleChange}
+                          className={
+                            Appoinment_formik.errors.FullName &&
+                            Appoinment_formik.touched.FullName
+                              ? "input_error"
+                              : "input_success"
+                          }
+                          //  className="date-input"
+                        />
+                      </div>
+                      <div className="form_group">
+                        <label
+                          htmlFor="MobileNumber"
+                          className={
+                            Appoinment_formik.errors.MobileNumber
+                              ? "labelError"
+                              : ""
+                          }
+                        >
+                          {Appoinment_formik.errors.MobileNumber
+                            ? Appoinment_formik.errors.MobileNumber
+                            : `MobileNumber`}
+                          <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <input
+                          type="tel"
+                          name="MobileNumber"
+                          id="MobileNumber"
+                          placeholder="Enter Your MobileNumber"
+                          value={Appoinment_formik.values.MobileNumber}
+                          onChange={Appoinment_formik.handleChange}
+                          className={
+                            Appoinment_formik.errors.MobileNumber &&
+                            Appoinment_formik.touched.MobileNumber
+                              ? "input_error"
+                              : "input_success"
+                          }
+                        />
+                      </div>
+                      <div className="form_group">
+                        <label
+                          htmlFor="Date"
+                          className={
+                            Appoinment_formik.errors.Date ? "labelError" : ""
+                          }
+                        >
+                          {Appoinment_formik.errors.Date
+                            ? Appoinment_formik.errors.Date
+                            : `Date`}
+                          <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <input
+                          type="date"
+                          name="Date"
+                          id="Date"
+                            placeholder="Enter Your date"
+                          value={Appoinment_formik.values.Date}
+                          onChange={Appoinment_formik.handleChange}
+                          className={` date-input
+                                ${
+                                  Appoinment_formik.errors.Date &&
+                                  Appoinment_formik.touched.Date
+                                }
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                        />
+                      </div>
+                      <div className="form_group">
+                        <label
+                          htmlFor="Time"
+                          className={
+                            Appoinment_formik.errors.Time ? "labelError" : ""
+                          }
+                        >
+                          {Appoinment_formik.errors.Time
+                            ? Appoinment_formik.errors.Time
+                            : `Time`}
+                          <sup style={{ color: "red" }}>*</sup>
+                        </label>
+                        <select
+                          name="Time"
+                          id="Time"
+                            placeholder="Enter Your Time"
+                          value={Appoinment_formik.values.Time}
+                          onChange={Appoinment_formik.handleChange}
+                          className={` date-input
+                                ${
+                                  Appoinment_formik.errors.Time &&
+                                  Appoinment_formik.touched.Time
+                                }
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                        >
+                          <option value="">Select Your Time</option>
+                          <option value="9:00 AM">9:00 AM</option>
+                          <option value="9:00 AM">10:00 AM</option>
+                          <option value="11:00 AM">11:00 AM</option>
+                          <option value="11:00 AM">12:00 AM</option>
+                          <option value="01:00 PM">01:00 PM</option>
+                          <option value="01:00 PM">02:00 PM</option>
+                          <option value="03:00 PM">03:00 PM</option>
+                          <option value="03:00 PM">04:00 PM</option>
+                          <option value="03:00 PM">05:00 PM</option>
+                          <option value="03:00 PM">06:00 PM</option>
+                        </select>
+                      </div>
+                      <div className="form_submit">
+                        <button type="submit" className="submit-btn">
+                          {appoinmentLoader ? (
+                            <span className="inquiryloader"></span>
+                          ) : (
+                            <span className="material-symbols-outlined">
+                              send
+                            </span>
+                          )}
+                          Book Now
+                        </button>
+                        <button
+                          type="button"
+                          className="submit-btn"
+                          onClick={Appoinment_formik.resetForm}
+                        >
+                          <span class="material-symbols-outlined">
+                            clear_all
+                          </span>
+                          clear
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
         {/* Opentime */}
         {BussinessHourData.length > 0 &&
         ManageContentData[0].BussinessHour == true ? (
@@ -1845,8 +2056,9 @@ END:VCARD
         {GoogleMapData.length > 0 && ManageContentData[0].GoogleMap == true ? (
           <>
             <div className="google_map_container">
-              <div className="fashion_title">
-                <h3>#&nbsp;Live Location</h3>
+              <div className="Corporate_Company_title">
+                <h3>Live Location</h3>
+                {/* Contact */}
               </div>
 
               {GoogleMapData.map((data, index) => {
@@ -1862,289 +2074,439 @@ END:VCARD
           ""
         )}
         {/* Feedback */}
-        <div className="feedback_row" ref={FeedbackRef}>
-          <div className="Corporate_Company_title">
-            <h3>Feedback</h3>
-            {/* Contact */}
-          </div>
-          <div className="feedback_container">
-            <form action="" onSubmit={feedbackFormik.handleSubmit}>
-              <div className="form_group">
-                <label
-                  htmlFor="clientName_Input"
-                  className={`${
-                    feedbackFormik.errors.userName ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.userName &&
-                  feedbackFormik.errors.userName
-                    ? feedbackFormik.errors.userName
-                    : "Your Name"}
-                  <span>
-                    <sup>*</sup>
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Name"
-                  name="userName"
-                  id="userName"
-                  // value={userName}
-                  // onChange={(e)=>setUserName(e.target.value)}
-                  value={feedbackFormik.values.userName}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
-                />
+        {VCard_URL_Data.length > 0 &&
+        BasicData.length > 0 &&
+        SocialMediaData.length > 0 &&
+        ManageContentData[0].FeedbackForm == true ? (
+          <>
+            <div className="feedback_row">
+              <div className="Corporate_Company_title">
+                <h3>Feedback</h3>
               </div>
-              <div className="form_group">
-                <label
-                  htmlFor="clientFeedBack_Input"
-                  className={`${
-                    feedbackFormik.errors.userFeedback ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.userFeedback &&
-                  feedbackFormik.errors.userFeedback
-                    ? feedbackFormik.errors.userFeedback
-                    : "Your FeedBack"}
-                  <span>
-                    <sup>*</sup>
-                  </span>
-                </label>
-                <textarea
-                  id="userFeedback"
-                  name="userFeedback"
-                  cols="30"
-                  rows="3"
-                  placeholder="Enter your Feedback"
-                  // value={userFeedback}
-                  // onChange={(e)=>setUserFeedback(e.target.value)}
-                  value={feedbackFormik.values.userFeedback}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
-                ></textarea>
-              </div>
-              <div className="form_group">
-                <label
-                  htmlFor="clientName_Input"
-                  className={`${
-                    feedbackFormik.errors.currentRatting ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.currentRatting &&
-                  feedbackFormik.errors.currentRatting
-                    ? feedbackFormik.errors.currentRatting
-                    : "Ratting"}
-                  <span>
-                    <sup>*</sup>
-                  </span>
-                </label>
+              {/* Success and Error Popup */}
+              <div className="popup_message_container">
                 <div
-                  className="ratting_container"
-                  data-rating="0"
-                  name="currentRatting"
-                  id="currentRatting"
-                  onMouseOver={handleRatting}
-                  onMouseLeave={removeRatting}
-                  onClick={RattingSetted}
-                  // value={currentRatting}
-                  // onChange={(e)=>setCurrentRatting(e.target.value)}
-                  value={feedbackFormik.values.currentRatting}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
+                  className="popup_success_box"
+                  id={FeedbackPopup ? "successOpen" : "successClose"}
                 >
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="1"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="2"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="3"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="4"></i>
-                  </span>
-                  <span className="ratting_star">
-                    <i className="bx bxs-star star" data-rating="5"></i>
-                  </span>
+                  <div className="popup_message">{successMessage}</div>
+                  <div
+                    className="popup_close"
+                    onClick={() => setFeedbackPopup(false)}
+                  >
+                    <i className="bx bx-x"></i>
+                  </div>
                 </div>
-              </div>
-              <div className="form_actions">
-                <button type="submit">
-                  <span className="material-symbols-outlined">send</span>
-                  Send Feedback
-                </button>
-              </div>
-            </form>
-          </div>
-          {/* //Feedback messages */}
-          <div className="Feedback_container_message">
-            <div className="feeback_title">
-              {commentOpen ? (
-                <button onClick={() => setCommentOpen(false)}>
-                  <span className="material-symbols-outlined">
-                    thumbs_up_down
-                  </span>
-                  Hide All Feedbacks
-                </button>
-              ) : (
-                <button onClick={() => setCommentOpen(true)}>
-                  <span className="material-symbols-outlined">
-                    thumbs_up_down
-                  </span>
-                  See All Feedbacks
-                </button>
-              )}
 
-              {feedbackLoader ? <span className="feedBack_loader"></span> : ""}
-            </div>
+                {FeedbackPopupError ? (
+                  <div className="popup_error_box">
+                    <div className="popup_message">{errorMessage}</div>
+                    <div
+                      className="popup_close"
+                      onClick={() => setFeedbackPopupError(false)}
+                    >
+                      <i className="bx bx-x"></i>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {/* //Feedback messages */}
+              <div className="Feedback_container_message">
+                <div className="feeback_title">
+                  {commentOpen ? (
+                    <button onClick={() => setCommentOpen(false)}>
+                      <span className="material-symbols-outlined">
+                        thumbs_up_down
+                      </span>
+                      Hide All Feedbacks
+                    </button>
+                  ) : (
+                    <button onClick={() => setCommentOpen(true)}>
+                      <span className="material-symbols-outlined">
+                        thumbs_up_down
+                      </span>
+                      See All Feedbacks
+                      <i className="bx bxs-bell-ring bx-tada"></i>
+                      <div className="count">{AllFeedBacks.length}</div>
+                    </button>
+                  )}
 
-            {commentOpen ? (
-              <div className="comment_box">
-                {AllFeedBacks.map((data, index) => {
-                  return (
-                    <div className="message" key={index}>
-                      <div className="user_detail">
-                        <div className="profile">
-                          <img src={profile} alt="profile" />
-                        </div>
-                        <div className="details">
-                          <div className="userName">
-                            <p>
-                              {data.userName}
-                              <i className="bx bxs-user-check"></i>
-                            </p>
-                          </div>
-                          <div className="stars">
-                            <div
-                              className="ratting_container1"
-                              data-rating={data.currentRatting}
-                              name="currentRatting"
-                              // id="currentRatting"
-                              id={
-                                data.currentRatting == 0
-                                  ? "noRatting"
-                                  : "" || data.currentRatting == 1
-                                  ? "singleRatting"
-                                  : "" || data.currentRatting == 2
-                                  ? "doubleRatting"
-                                  : "" || data.currentRatting == 3
-                                  ? "ThreeRatting"
-                                  : "" || data.currentRatting == 4
-                                  ? "fourRatting"
-                                  : "" || data.currentRatting == 5
-                                  ? "fullRatting"
-                                  : ""
-                              }
-                              value={data.currentRatting}
-                            >
-                              <span className="ratting_star">
-                                <i
-                                  className="bx bxs-star star1"
-                                  data-rating="1"
-                                ></i>
-                              </span>
-                              <span className="ratting_star">
-                                <i
-                                  className="bx bxs-star star1"
-                                  data-rating="2"
-                                ></i>
-                              </span>
-                              <span className="ratting_star">
-                                <i
-                                  className="bx bxs-star star1"
-                                  data-rating="3"
-                                ></i>
-                              </span>
-                              <span className="ratting_star">
-                                <i
-                                  className="bx bxs-star star1"
-                                  data-rating="4"
-                                ></i>
-                              </span>
-                              <span className="ratting_star">
-                                <i
-                                  className="bx bxs-star star1"
-                                  data-rating="5"
-                                ></i>
-                              </span>
+                  {feedbackLoader ? (
+                    <span className="feedBack_loader"></span>
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+                {commentOpen ? (
+                  <div className="comment_box">
+                    <div className="comment_box_title">
+                      <h5>Client's All Feedbacks</h5>
+                    </div>
+                    {AllFeedBacks.map((data, index) => {
+                      return (
+                        <div className="message" key={index}>
+                          <div className="user_detail">
+                            <div className="details">
+                              <div className="userName">
+                                <p>
+                                  {data.ClientName}
+                                  <i className="bx bxs-user-check"></i>
+                                </p>
+                              </div>
+                              <div className="stars">
+                                <div
+                                  className="ratting_container1"
+                                  data-rating={data.ClientRatting}
+                                  name="currentRatting"
+                                  // id="currentRatting"
+                                  id={
+                                    data.ClientRatting == 0
+                                      ? "noRatting"
+                                      : "" || data.ClientRatting == 1
+                                      ? "singleRatting"
+                                      : "" || data.ClientRatting == 2
+                                      ? "doubleRatting"
+                                      : "" || data.ClientRatting == 3
+                                      ? "ThreeRatting"
+                                      : "" || data.ClientRatting == 4
+                                      ? "fourRatting"
+                                      : "" || data.ClientRatting == 5
+                                      ? "fullRatting"
+                                      : ""
+                                  }
+                                  value={data.ClientRatting}
+                                >
+                                  <span className="ratting_star">
+                                    <i
+                                      className="bx bxs-star star1"
+                                      data-rating="1"
+                                    ></i>
+                                  </span>
+                                  <span className="ratting_star">
+                                    <i
+                                      className="bx bxs-star star1"
+                                      data-rating="2"
+                                    ></i>
+                                  </span>
+                                  <span className="ratting_star">
+                                    <i
+                                      className="bx bxs-star star1"
+                                      data-rating="3"
+                                    ></i>
+                                  </span>
+                                  <span className="ratting_star">
+                                    <i
+                                      className="bx bxs-star star1"
+                                      data-rating="4"
+                                    ></i>
+                                  </span>
+                                  <span className="ratting_star">
+                                    <i
+                                      className="bx bxs-star star1"
+                                      data-rating="5"
+                                    ></i>
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
 
-                      <div className="comments">
-                        <i className="bx bx-chat"></i>
-                        <span>{data.userFeedback}</span>
+                          <div className="comments">
+                            <i className="bx bx-chat"></i>
+                            <span>{data.ClientFeedback}</span>
+                          </div>
+
+                          <div className="date">
+                            <i className="bx bx-calendar"></i>
+                            <p>
+                              {" "}
+                              {data.createdAt
+                                .slice(0, 10)
+                                .split("-")
+                                .reverse()
+                                .join("-")}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="feedback_container">
+                <form action="" onSubmit={feedbackFormik.handleSubmit}>
+                  <div className="form_group">
+                    <label
+                      htmlFor="clientName_Input"
+                      className={`${
+                        feedbackFormik.errors.ClientName ? "error" : ""
+                      } `}
+                    >
+                      {feedbackFormik.touched.ClientName &&
+                      feedbackFormik.errors.ClientName
+                        ? feedbackFormik.errors.ClientName
+                        : "Your Name"}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter Your Name"
+                      name="ClientName"
+                      id="ClientName"
+                      // value={userName}
+                      // onChange={(e)=>setUserName(e.target.value)}
+                      value={feedbackFormik.values.ClientName}
+                      onChange={feedbackFormik.handleChange}
+                      onBlur={feedbackFormik.handleBlur}
+                    />
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="clientFeedBack_Input"
+                      className={`${
+                        feedbackFormik.errors.ClientFeedback ? "error" : ""
+                      } `}
+                    >
+                      {feedbackFormik.touched.ClientFeedback &&
+                      feedbackFormik.errors.ClientFeedback
+                        ? feedbackFormik.errors.ClientFeedback
+                        : "Your FeedBack"}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <textarea
+                      id="ClientFeedback"
+                      name="ClientFeedback"
+                      cols="30"
+                      rows="2"
+                      placeholder="Enter your Feedback"
+                      // value={userFeedback}
+                      // onChange={(e)=>setUserFeedback(e.target.value)}
+                      value={feedbackFormik.values.ClientFeedback}
+                      onChange={feedbackFormik.handleChange}
+                      onBlur={feedbackFormik.handleBlur}
+                    ></textarea>
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="clientName_Input"
+                      className={`${
+                        feedbackFormik.errors.ClientRatting ? "error" : ""
+                      } `}
+                    >
+                      {feedbackFormik.touched.ClientRatting &&
+                      feedbackFormik.errors.ClientRatting
+                        ? feedbackFormik.errors.ClientRatting
+                        : "Ratting"}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+
+                    <ReactStars
+                      count={5}
+                      value={feedbackFormik.values.ClientRatting}
+                      onChange={(newRating) => {
+                        // Directly use Formik's handleChange by creating an event-like object for the rating field
+                        feedbackFormik.handleChange({
+                          target: {
+                            name: "ClientRatting",
+                            value: newRating,
+                          },
+                        });
+                      }}
+                      size={44}
+                      style={{ paddingRight: "15px" }}
+                      half={false}
+                      color2={"#ffd700"}
+                    />
+                  </div>
+                  <div className="form_actions">
+                    <button type="submit">
+                      <span className="material-symbols-outlined">send</span>
+                      Send Feedback
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </>
+        ) : (
+          " "
+        )}
+        {/* Inquries */}
+        {VCard_URL_Data.length > 0 &&
+        BasicData.length > 0 &&
+        SocialMediaData.length > 0 &&
+        ManageContentData[0].InquiryForm == true ? (
+          <>
+            <div className="Inquries">
+              <div className="Corporate_Company_title">
+                <h3>Inquries</h3>
+              </div>
+                  {/* Success and Error Popup */}
+                  <div className="popup_message_container">
+                  <div
+                    className="popup_success_box"
+                    id={successPopupOpen ? "successOpen" : "successClose"}
+                  >
+                    <div className="popup_message">{successMessage}</div>
+                    <div
+                      className="popup_close"
+                      onClick={() => setSuccessPopupOpen(false)}
+                    >
+                      <i className="bx bx-x"></i>
+                    </div>
+                  </div>
+
+                  {errorPopupOpen ? (
+                    <div className="popup_error_box">
+                      <div className="popup_message">{errorMessage}</div>
+                      <div
+                        className="popup_close"
+                        onClick={() => setErrorPopupOpen(false)}
+                      >
+                        <i className="bx bx-x"></i>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-        {/* Inquries */}
-        <div className="Inquries" ref={InquiryRef}>
-          <div className="Corporate_Company_title">
-            <h3>Inquries</h3>
-          </div>
-          <div className="inquiries_container5">
-            <form action="">
-              <div className="form_group">
-                <label htmlFor="name">
-                  Name <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <input type="text" placeholder="Your Name" />
-                  <i className="bx bxs-user-pin"></i>
+                  ) : (
+                    ""
+                  )}
                 </div>
+              <div className="inquiries_container5">
+            
+                <form action="" onSubmit={formik.handleSubmit}>
+                  <div className="form_group">
+                    <label
+                      htmlFor="name"
+                      className={formik.errors.Name ? "labelError" : ""}
+                    >
+                      {formik.errors.Name ? formik.errors.Name : `Name`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <div className="input">
+                      <input
+                        type="text"
+                        placeholder="Your Name"
+                        name="Name"
+                        id="Name"
+                        value={formik.values.Name}
+                        onChange={formik.handleChange}
+                        className={
+                          formik.errors.Name && formik.touched.Name
+                            ? "input_error"
+                            : "input_success"
+                        }
+                      />
+                      <i className="bx bxs-user-pin"></i>
+                    </div>
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="name"
+                      className={formik.errors.Email ? "labelError" : ""}
+                    >
+                      {formik.errors.Email ? formik.errors.Email : `Email`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <div className="input">
+                      <input
+                        type="email"
+                        placeholder="Your Email"
+                        name="Email"
+                        id="Email"
+                        value={formik.values.Email}
+                        onChange={formik.handleChange}
+                        className={
+                          formik.errors.Email && formik.touched.Email
+                            ? "input_error"
+                            : "input_success"
+                        }
+                      />
+                      <i className="bx bxs-envelope"></i>
+                    </div>
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="name"
+                      className={formik.errors.MobileNumber ? "labelError" : ""}
+                    >
+                      {formik.errors.MobileNumber
+                        ? formik.errors.MobileNumber
+                        : `MobileNumber`}
+                      {/* <sup style={{ color: "red" }}>*</sup> */}
+                    </label>
+                    <div className="input">
+                      <input
+                        type="tel"
+                        placeholder="Enter Mobile Number"
+                        name="MobileNumber"
+                        id="MobileNumber"
+                        value={formik.values.MobileNumber}
+                        onChange={formik.handleChange}
+                        className={
+                          formik.errors.MobileNumber &&
+                          formik.touched.MobileNumber
+                            ? "input_error"
+                            : "input_success"
+                        }
+                      />
+                      <i className="bx bxs-phone-call"></i>
+                    </div>
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="name"
+                      className={formik.errors.Message ? "labelError" : ""}
+                    >
+                      {formik.errors.Message
+                        ? formik.errors.Message
+                        : `Message`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <div className="input">
+                      <textarea
+                        name="Message"
+                        id="Message"
+                        value={formik.values.Message}
+                        onChange={formik.handleChange}
+                        className={
+                          formik.errors.Message && formik.touched.Message
+                            ? "input_error"
+                            : "input_success"
+                        }
+                        cols="30"
+                        rows="4"
+                        placeholder="Enter Your Message Here..."
+                      ></textarea>
+                      <i className="bx bxs-message-dots"></i>
+                    </div>
+                  </div>
+                  <div className="form_actions">
+                    <button type="submit">
+                      {InquiryLoader ? (
+                        <span className="inquiryloader"></span>
+                      ) : (
+                        <span className="material-symbols-outlined">send</span>
+                      )}
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div className="form_group">
-                <label htmlFor="email">
-                  Email <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <input type="email" placeholder="Your Email" />
-                  <i className="bx bxs-envelope"></i>
-                </div>
-              </div>
-              <div className="form_group">
-                <label htmlFor="name">
-                  Phone <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <input type="tel" placeholder="Enter Phone Number" />
-                  <i className="bx bxs-phone-call"></i>
-                </div>
-              </div>
-              <div className="form_group">
-                <label htmlFor="name">
-                  Message <sup style={{ color: "red" }}>*</sup>
-                </label>
-                <div className="input">
-                  <textarea
-                    name="message"
-                    id="message"
-                    cols="30"
-                    rows="2"
-                    placeholder="Enter Your Message Here..."
-                  ></textarea>
-                  <i className="bx bxs-message-dots"></i>
-                </div>
-              </div>
-              <div className="form_actions">
-                <button type="submit">
-                  <span className="material-symbols-outlined">send</span>
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
         {/* Footer */}
         <div className="Footer">
           <div className="footer_container">
