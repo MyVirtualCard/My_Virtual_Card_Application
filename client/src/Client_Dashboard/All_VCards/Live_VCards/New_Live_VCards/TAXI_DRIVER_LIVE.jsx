@@ -1825,6 +1825,7 @@ END:VCARD
         ) : (
           ""
         )}
+        {/* Appoinment */}
            {VCard_URL_Data.length > 0 &&
         ManageContentData[0].Appoinment == true ? (
           <>
@@ -2085,7 +2086,7 @@ groups
         {/* GoogleMap */}
         {GoogleMapData.length > 0 && ManageContentData[0].GoogleMap == true ? (
           <>
-            <div className="google_map_container">
+            <div className="google_map_container" ref={LocationRef}>
             <div className="TAXI_DRIVER_LIVE_DEMO_TITLE">
             <h3>
               Live Location

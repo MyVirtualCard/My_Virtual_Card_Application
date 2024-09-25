@@ -56,6 +56,9 @@ import BEAUTY_PARLOR_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/N
 import CORPORATE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/CORPORATE_PREVIEW.jsx";
 import GYM_TRAINER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/GYM_TRAINER_LIVE.jsx";
 import TAXI_DRIVER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/TAXI_DRIVER_LIVE.jsx";
+import FASHION_DESIGNER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/FASHION_DESIGNER_LIVE.jsx";
+import MANAGER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/MANAGER_LIVE.jsx";
+import BEAUTY_PARLOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/BEAUTY_PARLOR_LIVE.jsx";
 
 //Import All component:
 const App = () => {
@@ -339,8 +342,26 @@ const App = () => {
               ) : (
                 ""
               )}
-                  {URL_Alies == URL_Alies && currentTemplate === 3 ? (
+              {URL_Alies == URL_Alies && currentTemplate === 3 ? (
                 <Route path={`/:URL_Alies`} element={<TAXI_DRIVER_LIVE />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 4 ? (
+                <Route
+                  path={`/:URL_Alies`}
+                  element={<FASHION_DESIGNER_LIVE />}
+                />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 5 ? (
+                <Route path={`/:URL_Alies`} element={<MANAGER_LIVE />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 6 ? (
+                <Route path={`/:URL_Alies`} element={<BEAUTY_PARLOR_LIVE />} />
               ) : (
                 ""
               )}
