@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Corporate_Company.scss";
-import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
+import banner from "../../../../assets/AllVCard_Image/VCard3/Banner.jpg";
 import axios from "axios";
-import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
-import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
+import { InquiryValidateSchema } from "../../../../Helper/InquiryValidate";
+import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
 //service Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -36,7 +36,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
+import VCard_Loader from "../../../../VCard_Loader/VCard_Loader";
 import ReactStars from "react-stars";
 const Corporate_Company = () => {
   let style = {
@@ -813,7 +813,7 @@ END:VCARD
                     </div>
                     <div className="contact_data">
                       <small>Address</small>
-                      <p>Main Road , Sirukadambur,Ariyalur-621714</p>
+                      <p>{data.Location}</p>
                     </div>
                   </a>
                   {/* Mail */}
@@ -842,7 +842,7 @@ END:VCARD
                       </div>
                       <div className="contact_data">
                         <small>Website</small>
-                        <p>https://coding-buddy-portfolio.netlify.app/</p>
+                        <p>{data.Website_URL}</p>
                       </div>
                     </a>
                   ) : (

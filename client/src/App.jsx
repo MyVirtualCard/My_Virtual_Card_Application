@@ -47,7 +47,6 @@ import Manager from "./Client_Dashboard/All_VCards/Live_VCards/Manager.jsx";
 import Real_Estate from "./Client_Dashboard/All_VCards/Live_VCards/Real_Estate.jsx";
 import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parlor.jsx";
 import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
-import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/Corporate_Company.jsx";
 import GYM_TRAINER_DEMO from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/GYM_TRAINER.jsx";
 import TAXI_DRIVER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/TAXI_DRIVER_PREVIEW.jsx";
 import FASHION_DESIGNER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/FASHION_DESIGNER_PREVIEW.jsx";
@@ -59,6 +58,7 @@ import TAXI_DRIVER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live
 import FASHION_DESIGNER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/FASHION_DESIGNER_LIVE.jsx";
 import MANAGER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/MANAGER_LIVE.jsx";
 import BEAUTY_PARLOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/BEAUTY_PARLOR_LIVE.jsx";
+import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/Corporate_Company.jsx";
 
 //Import All component:
 const App = () => {

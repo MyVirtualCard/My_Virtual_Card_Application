@@ -820,7 +820,7 @@ END:VCARD
                     </div>
                     <div className="contact_data">
                       <small>Address</small>
-                      <p>Main Road , Sirukadambur,Ariyalur-621714</p>
+                      <p>{data.Location}</p>
                     </div>
                   </a>
                   {/* Mail */}
@@ -849,7 +849,7 @@ END:VCARD
                       </div>
                       <div className="contact_data">
                         <small>Website</small>
-                        <p>https://coding-buddy-portfolio.netlify.app/</p>
+                        <p>{data.Website_URL}</p>
                       </div>
                     </a>
                   ) : (
