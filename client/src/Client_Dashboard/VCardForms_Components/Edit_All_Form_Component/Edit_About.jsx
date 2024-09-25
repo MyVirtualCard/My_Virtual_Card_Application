@@ -1,19 +1,19 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import "../Edit_All_Form_Component/Edit_form_styles/Edit_About.scss";
 import { Editor } from "primereact/editor";
-import "primereact/resources/themes/saga-blue/theme.css"; // Choose a theme
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
+import "primereact/resources/themes/saga-blue/theme.css"; // Theme
+import "primereact/resources/primereact.min.css"; // Core CSS
+import "primeicons/primeicons.css"; // Icons
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import Context from "../../../Context/GlobalContext";
-
 import { useParams } from "react-router-dom";
 import { AboutDetailValidateShema } from "../../../Helper/About.validate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer, toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from "react-toastify";
 const Edit_About = () => {
-  
   let {
     user,
     setURL_Alies,
@@ -33,12 +33,48 @@ const Edit_About = () => {
   } = useContext(Context);
 
   let [UpdateButtonToggle, setUpdateButtonToggle] = useState(false);
-  let [CompanyName,setCompanyName]=useState();
+  let [CompanyName, setCompanyName] = useState();
   let [Category, setCategory] = useState();
   let [Year, setYear] = useState();
   let [Bussiness, setBussiness] = useState();
   let [Specialities, setSpecialities] = useState();
   const [key, setKey] = useState(0);
+
+  const modules = {
+    clipboard: {
+      matchVisual: false, // Ensures pasted content matches the editor's styling
+    },
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }], // Custom dropdown
+      [{ list: "ordered" }, { list: "bullet" },{ list: "square" }], // Ordered and Unordered list
+      ["bold", "italic", "underline", "strike"], // Text formatting options
+      [{ color: [] }, { background: [] }], // Text color and background color
+      [{ align: [] }], // Text alignment
+      ["link", "image", "video"], // Adding links, images, and videos
+      ["clean"], // Remove formatting
+    ],
+  };
+
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "video",
+    "align",
+    "color",
+    "background",
+  ];
+
   const reloadComponent = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
@@ -61,7 +97,6 @@ const Edit_About = () => {
           },
         })
         .then((res) => {
-         
           if (res.data.data.length == 1) {
             setUpdateButtonToggle(true);
             setCompanyName(res.data.data[0].CompanyName);
@@ -89,8 +124,6 @@ const Edit_About = () => {
     fetchAboutData();
   }, [key]);
 
-
-
   async function handleBasicFormUpdate(e) {
     e.preventDefault();
     let data = {
@@ -98,7 +131,7 @@ const Edit_About = () => {
       Category,
       Year,
       Bussiness,
-      Specialities
+      Specialities,
     };
     setFormSubmitLoader(true);
     try {
@@ -112,9 +145,9 @@ const Edit_About = () => {
         .then((res) => {
           reloadComponent();
           toast.success(res.data.message);
-          setTimeout(()=>{
-            setShowForm('Social Link - Website')
-          },2000)
+          setTimeout(() => {
+            setShowForm("Social Link - Website");
+          }, 2000);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -128,18 +161,18 @@ const Edit_About = () => {
   let formik = useFormik({
     initialValues: {
       URL_Alies: URL_Alies,
-      CompanyName:'',
-      Category:'',
-      Year:'',
-      Bussiness:'',
-      Specialities:''
+      CompanyName: "",
+      Category: "",
+      Year: "",
+      Bussiness: "",
+      Specialities: "",
     },
 
     validationSchema: AboutDetailValidateShema,
 
     onSubmit: async (values) => {
       setFormSubmitLoader(true);
-   
+
       await api
         .post(`/aboutDetail/${URL_Alies}`, values, {
           headers: {
@@ -149,12 +182,11 @@ const Edit_About = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
-       
-      
-          setTimeout(()=>{
-            setShowForm('Social Link - Website');
+
+          setTimeout(() => {
+            setShowForm("Social Link - Website");
             reloadComponent();
-          },2000)
+          }, 2000);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
@@ -164,23 +196,20 @@ const Edit_About = () => {
     },
   });
 
-
-
-
   return (
     <>
       <div className="aboutForm_container">
         <div className="AboutForm_container_box">
-        <div className="form2_title">
-              <h4>About Details</h4>
-            </div>
+          <div className="form2_title">
+            <h4>About Details</h4>
+          </div>
           <form
             onSubmit={
               UpdateButtonToggle ? handleBasicFormUpdate : formik.handleSubmit
             }
             className="Form2"
           >
-         <div className="form_group">
+            <div className="form_group">
               <label htmlFor="CompanyName">
                 Company Name<sup>*</sup>
               </label>
@@ -195,7 +224,9 @@ const Edit_About = () => {
                     ? (e) => setCompanyName(e.target.value)
                     : formik.handleChange
                 }
-                value={UpdateButtonToggle ? CompanyName : formik.values.CompanyName}
+                value={
+                  UpdateButtonToggle ? CompanyName : formik.values.CompanyName
+                }
                 // className={
                 //   formik.errors.Email && formik.touched.Email
                 //     ? "input_error"
@@ -210,7 +241,7 @@ const Edit_About = () => {
             </div>
             <div className="form_group">
               <label htmlFor="Category">
-               Category<sup>*</sup>
+                Category<sup>*</sup>
               </label>
               <input
                 type="text"
@@ -223,9 +254,7 @@ const Edit_About = () => {
                     ? (e) => setCategory(e.target.value)
                     : formik.handleChange
                 }
-                value={
-                  UpdateButtonToggle ? Category : formik.values.Category
-                }
+                value={UpdateButtonToggle ? Category : formik.values.Category}
                 // className={
                 //   formik.errors.MobileNumber && formik.touched.MobileNumber
                 //     ? "input_error"
@@ -240,7 +269,7 @@ const Edit_About = () => {
             </div>
             <div className="form_group">
               <label htmlFor="Year">
-              Year of Established<sup>*</sup>
+                Year of Established<sup>*</sup>
               </label>
               <input
                 type="text"
@@ -253,9 +282,7 @@ const Edit_About = () => {
                     ? (e) => setYear(e.target.value)
                     : formik.handleChange
                 }
-                value={
-                  UpdateButtonToggle ? Year : formik.values.Year
-                }
+                value={UpdateButtonToggle ? Year : formik.values.Year}
                 // className={
                 //   formik.errors.MobileNumber && formik.touched.MobileNumber
                 //     ? "input_error"
@@ -269,7 +296,9 @@ const Edit_About = () => {
               )}
             </div>
             <div className="form_group">
-              <label htmlFor="Bussiness">Bussiness List<sup>*</sup></label>
+              <label htmlFor="Bussiness">
+                Bussiness List<sup>*</sup>
+              </label>
               <input
                 id="Bussiness"
                 name="Bussiness"
@@ -280,93 +309,52 @@ const Edit_About = () => {
                     ? (e) => setBussiness(e.target.value)
                     : formik.handleChange
                 }
-                value={
-                  UpdateButtonToggle
-                    ? Bussiness
-                    : formik.values.Bussiness
-                }
+                value={UpdateButtonToggle ? Bussiness : formik.values.Bussiness}
               />
               {UpdateButtonToggle ? (
                 ""
               ) : (
-                <div className="error">
-                  {formik.errors.Bussiness}
-                </div>
+                <div className="error">{formik.errors.Bussiness}</div>
               )}
             </div>
-     
+
             <div className="form_group Specialities">
-                    <label htmlFor="ServiceDescription">
-                      Our Specialities <sup>*</sup>
-                    </label>
-                    <Editor
-                      {...formik.getFieldProps("Specialities")}
-                      value={
-                        UpdateButtonToggle
-                          ? Specialities
-                          : formik.values.Specialities
-                      }
-                      onTextChange={
-                        UpdateButtonToggle
-                          ? (e) => setSpecialities(e.htmlValue)
-                          : (e) => {
-                              formik.setFieldValue(
-                                "Specialities",
-                                e.htmlValue
-                              ),
-                                setSpecialities(e.htmlValue);
-                            }
-                      }
-                      handleBlur={formik.handleBlur}
-                      id="Specialities"
-                      name="Specialities"
-                      style={{ height: "200px" }}
-                      placeholder="Enter Short Description"
-                      className={
-                        formik.errors.Specialities &&
-                        formik.touched.Specialities
-                          ? "input_error"
-                          : "input_success"
-                      }
-                    />
-                    {/* <ReactQuill
-                modules={modules}
-                formats={formats}
-                       id="ServiceDescription"
-                name="ServiceDescription"
-                {...formik.getFieldProps("ServiceDescription")}
-                value={
-                  updateFormOpen
-                    ? ServiceDescription
-                    : formik.values.ServiceDescription
-                }
-                onChange={
-                  updateFormOpen
-                    ? (e) => setServiceDescription(e)
-                    : (e) => {
-                        formik.setFieldValue(
-                          "ServiceDescription",
-                          e
-                        ),
-                          setServiceDescription(e);
-                      }
-                }
+              <label htmlFor="ServiceDescription">
+                Our Specialities <sup>*</sup>
+              </label>
+              {UpdateButtonToggle ? (
+                <ReactQuill
+                  modules={modules}
+                  formats={formats}
+                  id="Specialities"
+                  name="Specialities"
+                  placeholder="Enter Your Specialities"
+                  value={Specialities}
+                  onChange={(e) => setSpecialities(e)}
+                />
+              ) : (
+                <Editor
+                  {...formik.getFieldProps("Specialities")}
+                  value={formik.values.Specialities}
+                  onTextChange={(e) => {
+                    formik.setFieldValue("Specialities", e.htmlValue),
+                      setSpecialities(e.htmlValue);
+                  }}
+                  handleBlur={formik.handleBlur}
+                  id="Specialities"
+                  name="Specialities"
+                  // style={{ height: "200px" }}
+                  placeholder="Enter Your Specialities"
+                  className={
+                    formik.errors.Specialities && formik.touched.Specialities
+                      ? "input_error"
+                      : "input_success"
+                  }
+                />
+              )}
 
-                // style={{ height: "180px",border:'none' }}
-                placeholder="Enter Short Description"
-                className={
-                  formik.errors.ServiceDescription &&
-                  formik.touched.ServiceDescription
-                    ? "input_error"
-                    : "input_success"
-                }
-                /> */}
-
-                    <div className="desc_error">
-                      {formik.errors.Specialities}
-                    </div>
-                    {/* <textarea name="service_description" id="service_description" cols="48" rows="4" placeholder="Enter Short Description"></textarea> */}
-                  </div>
+              <div className="desc_error">{formik.errors.Specialities}</div>
+            </div>
             <div className="form_submit_actions">
               {UpdateButtonToggle ? (
                 <button className="save" type="submit">
@@ -374,7 +362,7 @@ const Edit_About = () => {
                 </button>
               ) : (
                 <button className="save" type="submit">
-                  Save<i className='bx bxs-save'></i>
+                  Save<i className="bx bxs-save"></i>
                 </button>
               )}
             </div>

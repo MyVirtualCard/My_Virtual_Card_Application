@@ -33,6 +33,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import { FaUserGroup } from "react-icons/fa6";
+import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
@@ -106,11 +107,14 @@ const Corporate_Company = () => {
   }
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
-  window.addEventListener("scroll", () => {
-    innerHeight = window.innerHeight; // Height of the viewport
-    setScrollY(window.scrollY); // Number of pixels scrolled vertically
-    totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
-  });
+  useEffect(()=>{
+    window.addEventListener("scroll", () => {
+      innerHeight = window.innerHeight; // Height of the viewport
+      setScrollY(window.scrollY); // Number of pixels scrolled vertically
+      totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
+    });
+  },[openFullImage])
+ 
 
   //Close FullImage Preview
   function closeFullImage() {
@@ -132,7 +136,7 @@ const Corporate_Company = () => {
   let LocationRef = useRef(null);
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
-  let AppoinmentRef=useRef(null);
+  let AppoinmentRef = useRef(null);
   let scrollToSection = (elementRef) => {
     console.log(elementRef);
     elementRef.current.scrollIntoView({ behavior: "smooth" });
@@ -436,7 +440,6 @@ END:VCARD
   }
   useEffect(() => {
     fetchAllData();
-  
   }, []);
 
   useEffect(() => {
@@ -574,10 +577,12 @@ END:VCARD
             ) : (
               ""
             )}
-              {VCard_URL_Data.length > 0 &&
-            ManageContentData[0].Appoinment == true ?  (
+            {VCard_URL_Data.length > 0 &&
+            ManageContentData[0].Appoinment == true ? (
               <div
-                className={`menu ${activeMenu === "Appoinment" ? "menuActive" : ""}`}
+                className={`menu ${
+                  activeMenu === "Appoinment" ? "menuActive" : ""
+                }`}
                 onClick={() => {
                   scrollToSection(AppoinmentRef), setActiveMenu("Appoinment");
                 }}
@@ -1816,7 +1821,9 @@ END:VCARD
                       className="submit-btn"
                       onClick={Appoinment_formik.resetForm}
                     >
-                      <span className="material-symbols-outlined">clear_all</span>
+                      <span className="material-symbols-outlined">
+                        clear_all
+                      </span>
                       clear
                     </button>
                   </div>
@@ -2041,13 +2048,9 @@ END:VCARD
                 {/* Contact */}
               </div>
 
-              {GoogleMapData.map((data, index) => { 
-                return (
-                  <div className="google_map" key={index}>
-                    <HtmlRenderer htmlString={data.GoogleIframe} />
-                  </div>
-                );
-              })}
+              <div className="google_map">
+                <HtmlRenderer htmlString={GoogleMapData[0].GoogleIframe} />
+              </div>
             </div>
           </>
         ) : (
@@ -2074,7 +2077,7 @@ END:VCARD
                     className="popup_close"
                     onClick={() => setFeedbackPopup(false)}
                   >
-                    <i className="bx bx-x"></i>
+                    <TiTick className="icon" />
                   </div>
                 </div>
 
