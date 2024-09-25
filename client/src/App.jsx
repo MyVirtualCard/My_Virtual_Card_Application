@@ -54,7 +54,8 @@ import FASHION_DESIGNER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCard
 import MANAGER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/MANAGER_PREVIEW.jsx";
 import BEAUTY_PARLOR_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/BEAUTY_PARLOR_PREVIEW.jsx";
 import CORPORATE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/CORPORATE_PREVIEW.jsx";
-
+import GYM_TRAINER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/GYM_TRAINER_LIVE.jsx";
+import TAXI_DRIVER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/TAXI_DRIVER_LIVE.jsx";
 
 //Import All component:
 const App = () => {
@@ -265,13 +266,29 @@ const App = () => {
               <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
               <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
               {/* //New Designs */}
-              <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
-              <Route path="/Taxi_Driver_Preview" element={<TAXI_DRIVER_PREVIEW />} />
-              <Route path="/Fashion_Designer_Preview" element={<FASHION_DESIGNER_PREVIEW />} />
+              <Route
+                path="/Gym_Trainer_Preview"
+                element={<GYM_TRAINER_DEMO />}
+              />
+              <Route
+                path="/Taxi_Driver_Preview"
+                element={<TAXI_DRIVER_PREVIEW />}
+              />
+              <Route
+                path="/Fashion_Designer_Preview"
+                element={<FASHION_DESIGNER_PREVIEW />}
+              />
               <Route path="/Manager_Preview" element={<MANAGER_PREVIEW />} />
-              <Route path="/Beauty_Parlor_Preview" element={<BEAUTY_PARLOR_PREVIEW />} />
-              <Route path="/Corporate_Company_Preview" element={<CORPORATE_PREVIEW />} />
+              <Route
+                path="/Beauty_Parlor_Preview"
+                element={<BEAUTY_PARLOR_PREVIEW />}
+              />
+              <Route
+                path="/Corporate_Company_Preview"
+                element={<CORPORATE_PREVIEW />}
+              />
               {/* Live VCards */}
+
               {/* {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
               ) : (
@@ -317,6 +334,17 @@ const App = () => {
               ) : (
                 ""
               )}
+              {URL_Alies == URL_Alies && currentTemplate === 2 ? (
+                <Route path={`/:URL_Alies`} element={<GYM_TRAINER_LIVE />} />
+              ) : (
+                ""
+              )}
+                  {URL_Alies == URL_Alies && currentTemplate === 3 ? (
+                <Route path={`/:URL_Alies`} element={<TAXI_DRIVER_LIVE />} />
+              ) : (
+                ""
+              )}
+              {/* <Route path="/Gym_Trainer_Live" element={<GYM_TRAINER_LIVE />} /> */}
 
               {/* <Route path='/coder' element={<Business_Consultant />} /> */}
             </Routes>

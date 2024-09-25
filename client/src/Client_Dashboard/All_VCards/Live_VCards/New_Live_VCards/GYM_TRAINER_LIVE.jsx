@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Corporate_Company.scss";
-import banner from "../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import axios from "axios";
-import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
-import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
+import "./GYM_TRAINER_LIVE.scss";
 //service Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+//Product Slider
+import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
@@ -32,13 +31,16 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
-import { FaUserGroup } from "react-icons/fa6";
-import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
+import VCard_Loader from "../../../../VCard_Loader/VCard_Loader";
 import ReactStars from "react-stars";
-const Corporate_Company = () => {
+import axios from "axios";
+import { FaUserGroup } from "react-icons/fa6";
+import { TiTick } from "react-icons/ti";
+import { InquiryValidateSchema } from "../../../../Helper/InquiryValidate";
+import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
+const GYM_TRAINER_LIVE = () => {
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -47,9 +49,7 @@ const Corporate_Company = () => {
     $root_backgound: "#fcfdc8,#ffffff",
     //Vcard background
     $vcard_back_color: "#a1046d",
-
     //SVG Wave backgound
-
     $svg_wave_back_color: "#ffffff",
   };
   const [width, setWidth] = useState(window.innerWidth);
@@ -81,14 +81,13 @@ const Corporate_Company = () => {
   }
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       innerHeight = window.innerHeight; // Height of the viewport
       setScrollY(window.scrollY); // Number of pixels scrolled vertically
       totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
     });
-  },[openFullImage])
- 
+  }, [openFullImage]);
 
   //Close FullImage Preview
   function closeFullImage() {
@@ -435,7 +434,7 @@ END:VCARD
   }
 
   return (
-    <div className="Corporate_Company_container">
+    <div className="GYM_TRAINER_LIVE_CONTAINER">
       {/* Gallery Full IMAGE */}
       <div
         className="full_image"
@@ -445,7 +444,7 @@ END:VCARD
         <div className="close_Full_Image_gallery">
           <RiCloseLargeLine className="icon" onClick={closeFullImage} />
         </div>
-        <img src={banner} alt="gallery" id="fullImage" />
+        <img src="" alt="gallery" id="fullImage" />
       </div>
       {/* Menu Navbar */}
       {VCard_URL_Data.length > 0 ? (
@@ -661,9 +660,8 @@ END:VCARD
       ) : (
         ""
       )}
-
-      <div className="Corporate_Company_box">
-        {/* VcardUrl and logo */}
+      <div className="GYM_TRAINER_LIVE_CARD">
+        {/* Banner and logo */}
         {VCard_URL_Data.map((data, index) => {
           return (
             <div className="Image_row_1" ref={HomeRef} key={index}>
@@ -694,105 +692,114 @@ END:VCARD
                 <div className="overlay"></div>
               </div>
               <div className="user_logo">
-                {data.ProfileType == "ImageUpload" ? (
-                  <img
-                    src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                      data.Profile
-                    }`}
-                    alt="user_logo"
-                  />
-                ) : (
-                  ""
-                )}
-                {data.ProfileType == "Paste_ImageAddress" ? (
-                  <img
-                    src={
-                      data.ProfileAddress ||
-                      "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
-                    }
-                    alt="user_logo"
-                  />
-                ) : (
-                  ""
-                )}
+                <div className="logo">
+                  {data.ProfileType == "ImageUpload" ? (
+                    <img
+                      src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                        data.Profile
+                      }`}
+                      alt="user_logo"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {data.ProfileType == "Paste_ImageAddress" ? (
+                    <img
+                      src={
+                        data.ProfileAddress ||
+                        "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
+                      }
+                      alt="user_logo"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+                {/* basic Details */}
+                <div className="basic_row_2">
+                  <div className="user_details">
+                    <div className="user_data">
+                      <div className="user_information">
+                        <h2>
+                          {VCard_URL_Data[0].FirstName || "John"} &nbsp;
+                          {VCard_URL_Data[0].LastName || " Wick"}
+                        </h2>
+                        <p>
+                          {VCard_URL_Data[0].Profession || "Corporate Company"}
+                        </p>
+                      </div>
+
+                      {/* Actions */}
+                      {BasicData.length > 0 ? (
+                        <>
+                          {BasicData.map((data, index) => {
+                            return (
+                              <div className="contacts_btns" key={index}>
+                                {/* Call */}
+                                <a
+                                  href={`tel:${
+                                    data.MobileNumber ? data.MobileNumber : "#"
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <BiSolidPhoneCall className="icon" />
+
+                                  <small>Call</small>
+                                </a>
+                                {/* Mail */}
+                                <a
+                                  href={`mailto:${
+                                    data.Email ? data.Email : "#"
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <MdOutgoingMail className="icon" />
+
+                                  <small>Mail</small>
+                                </a>
+                                {/* Whatsup */}
+                                <a
+                                  href={`https://wa.me/+91${
+                                    data.MobileNumber
+                                  }?text=${encodeURIComponent(
+                                    `Hi ${data.user}`
+                                  )}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <RiWhatsappFill className="icon" />
+
+                                  <small>Whatsapp</small>
+                                </a>
+                                {/* Direction */}
+                                <a
+                                  href={`https://www.google.com/maps/search/?api=1&query=${
+                                    data.Location
+                                      ? data.Location
+                                      : "No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017"
+                                  }`}
+                                  target="_blank"
+                                >
+                                  <FaDirections className="icon" />
+
+                                  <small>Direction</small>
+                                </a>
+                              </div>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           );
         })}
 
-        {/* basic Details */}
-        <div className="basic_row_2">
-          <div className="user_details">
-            <div className="user_data">
-              <div className="user_information">
-                <h2>
-                  {VCard_URL_Data[0].FirstName || "John"} &nbsp;
-                  {VCard_URL_Data[0].LastName || " Wick"}
-                </h2>
-                <p>{VCard_URL_Data[0].Profession || "Corporate Company"}</p>
-              </div>
-
-              {/* Actions */}
-              {BasicData.length > 0 ? (
-                <>
-                  {BasicData.map((data, index) => {
-                    return (
-                      <div className="contacts_btns" key={index}>
-                        {/* Call */}
-                        <a
-                          href={`tel:${
-                            data.MobileNumber ? data.MobileNumber : "#"
-                          }`}
-                          target="_blank"
-                        >
-                          <BiSolidPhoneCall className="icon" />
-
-                          <small>Call</small>
-                        </a>
-                        {/* Whatsup */}
-                        <a
-                          href={`https://wa.me/+91${
-                            data.MobileNumber
-                          }?text=${encodeURIComponent(`Hi ${data.user}`)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <RiWhatsappFill className="icon" />
-
-                          <small>Whatsapp</small>
-                        </a>
-                        {/* Direction */}
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${
-                            data.Location
-                              ? data.Location
-                              : "No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017"
-                          }`}
-                          target="_blank"
-                        >
-                          <FaDirections className="icon" />
-
-                          <small>Direction</small>
-                        </a>
-                        {/* Mail */}
-                        <a
-                          href={`mailto:${data.Email ? data.Email : "#"}`}
-                          target="_blank"
-                        >
-                          <MdOutgoingMail className="icon" />
-
-                          <small>Mail</small>
-                        </a>
-                      </div>
-                    );
-                  })}
-                </>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        </div>
         {/* Contact Details */}
         {BasicData.length > 0 && ManageContentData[0].ContactDetails == true ? (
           <>
@@ -885,13 +892,17 @@ END:VCARD
         )}
 
         {/* About US */}
+
         {AboutData.length > 0 ? (
           <>
             {AboutData.map((data, index) => {
               return (
                 <div className="about_row_4" ref={AboutRef} key={index}>
-                  <div className="Corporate_Company_title">
-                    <h3>About Us</h3>
+                  <div className="GYM_TRAINER_LIVE_TITLE">
+                    <h3>
+                      About Us
+                      <span className="material-symbols-outlined">person</span>
+                    </h3>
                   </div>
 
                   <div className="about_details">
@@ -932,250 +943,280 @@ END:VCARD
                         <p>{data.Bussiness}</p>
                       </div>
                     </div>
-                    <div className="detail">
-                      <div className="detail_title">
-                        <h5>SocialMedia's</h5>
-                      </div>
-                      <div className="detail_message">
-                        <strong>:</strong>
-                        {/* SocialMedia */}
-                        <div className="social_medias">
-                          <a
-                            href="https://www.facebook.com/aristostechindia"
-                            target="_blank"
-                            className="social_media_icon"
-                          >
-                            <i className="bx bxl-facebook"></i>
-                            <small>Facebook</small>
-                            <div className="social_media_svg1">
-                              <svg
-                                id="sw-js-blob-svg"
-                                viewBox="0 0 100 100"
-                                xmlns="http://www.w3.org/2000/svg"
-                                version="1.1"
-                              >
-                                <defs>
-                                  <linearGradient
-                                    id="sw-gradient"
-                                    x1="0"
-                                    x2="1"
-                                    y1="1"
-                                    y2="0"
-                                  >
-                                    <stop
-                                      id="stop1"
-                                      stopColor="rgba(248, 117, 55, 1)"
-                                      offset="0%"
-                                    ></stop>
-                                    <stop
-                                      id="stop2"
-                                      stopColor="rgba(251, 168, 31, 1)"
-                                      offset="100%"
-                                    ></stop>
-                                  </linearGradient>
-                                </defs>
-                                <path
-                                  fill="url(#sw-gradient)"
-                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                  width="100%"
-                                  height="100%"
-                                  transform="translate(50 50)"
-                                  strokeWidth="0"
-                                  style={{ transition: 0.3 }}
-                                ></path>
-                              </svg>
-                            </div>
-                          </a>
-                          <a
-                            href="https://www.instagram.com/aristostech_india/"
-                            target="_blank"
-                            className="social_media_icon"
-                          >
-                            <i className="bx bxl-instagram-alt"></i>
-                            <div className="social_media_svg2">
-                              <svg
-                                id="sw-js-blob-svg"
-                                viewBox="0 0 100 100"
-                                xmlns="http://www.w3.org/2000/svg"
-                                version="1.1"
-                              >
-                                <defs>
-                                  <linearGradient
-                                    id="sw-gradient2"
-                                    x1="0"
-                                    x2="1"
-                                    y1="1"
-                                    y2="0"
-                                  >
-                                    <stop
-                                      id="stop3"
-                                      stopColor="rgba(248, 117, 55, 1)"
-                                      offset="0%"
-                                    ></stop>
-                                    <stop
-                                      id="stop4"
-                                      stopColor="rgba(251, 168, 31, 1)"
-                                      offset="100%"
-                                    ></stop>
-                                  </linearGradient>
-                                </defs>
-                                <path
-                                  fill="url(#sw-gradient2)"
-                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                  width="100%"
-                                  height="100%"
-                                  transform="translate(50 50)"
-                                  strokeWidth="0"
-                                  style={{ transition: 0.3 }}
-                                ></path>
-                              </svg>
-                            </div>
-                            <small>Instagram</small>
-                          </a>
-                          <a
-                            href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
-                            target="_blank"
-                            className="social_media_icon"
-                          >
-                            <i className="bx bxl-whatsapp"></i>
-                            <div className="social_media_svg3">
-                              <svg
-                                id="sw-js-blob-svg"
-                                viewBox="0 0 100 100"
-                                xmlns="http://www.w3.org/2000/svg"
-                                version="1.1"
-                              >
-                                <defs>
-                                  <linearGradient
-                                    id="sw-gradient3"
-                                    x1="0"
-                                    x2="1"
-                                    y1="1"
-                                    y2="0"
-                                  >
-                                    <stop
-                                      id="stop5"
-                                      stopColor="rgba(248, 117, 55, 1)"
-                                      offset="0%"
-                                    ></stop>
-                                    <stop
-                                      id="stop6"
-                                      stopColor="rgba(251, 168, 31, 1)"
-                                      offset="100%"
-                                    ></stop>
-                                  </linearGradient>
-                                </defs>
-                                <path
-                                  fill="url(#sw-gradient3)"
-                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                  width="100%"
-                                  height="100%"
-                                  transform="translate(50 50)"
-                                  strokeWidth="0"
-                                  style={{ transition: 0.3 }}
-                                ></path>
-                              </svg>
-                            </div>
-                            <small>Whatsup</small>
-                          </a>
-                          <a
-                            href="https://wa.me/+919344482370?text=Welcome to Aristostech Team!, How can we assest u ?"
-                            target="_blank"
-                            className="social_media_icon"
-                          >
-                            <i className="bx bxl-twitter"></i>
-                            <div className="social_media_svg6">
-                              <svg
-                                id="sw-js-blob-svg6"
-                                viewBox="0 0 100 100"
-                                xmlns="http://www.w3.org/2000/svg"
-                                version="1.1"
-                              >
-                                <defs>
-                                  <linearGradient
-                                    id="sw-gradient6"
-                                    x1="0"
-                                    x2="1"
-                                    y1="1"
-                                    y2="0"
-                                  >
-                                    <stop
-                                      id="stop11"
-                                      stopColor="rgba(248, 117, 55, 1)"
-                                      offset="0%"
-                                    ></stop>
-                                    <stop
-                                      id="stop12"
-                                      stopColor="rgba(251, 168, 31, 1)"
-                                      offset="100%"
-                                    ></stop>
-                                  </linearGradient>
-                                </defs>
-                                <path
-                                  fill="url(#sw-gradient6)"
-                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                  width="100%"
-                                  height="100%"
-                                  transform="translate(50 50)"
-                                  strokeWidth="0"
-                                  style={{ transition: 0.3 }}
-                                ></path>
-                              </svg>
-                            </div>
-                            <small>Twiter</small>
-                          </a>
+                    {SocialMediaData.length > 0 ? (
+                      <>
+                        <div className="detail">
+                          <div className="detail_title">
+                            <h5>SocialMedia's</h5>
+                          </div>
+                          <div className="detail_message">
+                            <strong>:</strong>
+                            {/* SocialMedia */}
+                            {SocialMediaData.map((data, index) => {
+                              return (
+                                <div className="social_medias" key={index}>
+                                  {data.Facebook != "" ? (
+                                    <a
+                                      href={data.Facebook}
+                                      target="_blank"
+                                      className="social_media_icon"
+                                    >
+                                      <i className="bx bxl-facebook"></i>
+                                      <small>Facebook</small>
+                                      <div className="social_media_svg1">
+                                        <svg
+                                          id="sw-js-blob-svg"
+                                          viewBox="0 0 100 100"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          version="1.1"
+                                        >
+                                          <defs>
+                                            <linearGradient
+                                              id="sw-gradient"
+                                              x1="0"
+                                              x2="1"
+                                              y1="1"
+                                              y2="0"
+                                            >
+                                              <stop
+                                                id="stop1"
+                                                stopColor="rgba(248, 117, 55, 1)"
+                                                offset="0%"
+                                              ></stop>
+                                              <stop
+                                                id="stop2"
+                                                stopColor="rgba(251, 168, 31, 1)"
+                                                offset="100%"
+                                              ></stop>
+                                            </linearGradient>
+                                          </defs>
+                                          <path
+                                            fill="url(#sw-gradient)"
+                                            d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                            width="100%"
+                                            height="100%"
+                                            transform="translate(50 50)"
+                                            strokeWidth="0"
+                                            style={{ transition: 0.3 }}
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                    </a>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {data.Instagram != "" ? (
+                                    <a
+                                      href={data.Instagram}
+                                      target="_blank"
+                                      className="social_media_icon"
+                                    >
+                                      <i className="bx bxl-instagram-alt"></i>
+                                      <div className="social_media_svg2">
+                                        <svg
+                                          id="sw-js-blob-svg"
+                                          viewBox="0 0 100 100"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          version="1.1"
+                                        >
+                                          <defs>
+                                            <linearGradient
+                                              id="sw-gradient2"
+                                              x1="0"
+                                              x2="1"
+                                              y1="1"
+                                              y2="0"
+                                            >
+                                              <stop
+                                                id="stop3"
+                                                stopColor="rgba(248, 117, 55, 1)"
+                                                offset="0%"
+                                              ></stop>
+                                              <stop
+                                                id="stop4"
+                                                stopColor="rgba(251, 168, 31, 1)"
+                                                offset="100%"
+                                              ></stop>
+                                            </linearGradient>
+                                          </defs>
+                                          <path
+                                            fill="url(#sw-gradient2)"
+                                            d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                            width="100%"
+                                            height="100%"
+                                            transform="translate(50 50)"
+                                            strokeWidth="0"
+                                            style={{ transition: 0.3 }}
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                      <small>Instagram</small>
+                                    </a>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {data.LinkedIn != "" ? (
+                                    <a
+                                      href={data.LinkedIn}
+                                      target="_blank"
+                                      className="social_media_icon"
+                                    >
+                                      <i className="bx bxl-linkedin"></i>
+                                      <div className="social_media_svg4">
+                                        <svg
+                                          id="sw-js-blob-svg"
+                                          viewBox="0 0 100 100"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          version="1.1"
+                                        >
+                                          <defs>
+                                            <linearGradient
+                                              id="sw-gradient4"
+                                              x1="0"
+                                              x2="1"
+                                              y1="1"
+                                              y2="0"
+                                            >
+                                              <stop
+                                                id="stop7"
+                                                stopColor="rgba(248, 117, 55, 1)"
+                                                offset="0%"
+                                              ></stop>
+                                              <stop
+                                                id="stop8"
+                                                stopColor="rgba(251, 168, 31, 1)"
+                                                offset="100%"
+                                              ></stop>
+                                            </linearGradient>
+                                          </defs>
+                                          <path
+                                            fill="url(#sw-gradient4)"
+                                            d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                            width="100%"
+                                            height="100%"
+                                            transform="translate(50 50)"
+                                            strokeWidth="0"
+                                            style={{ transition: 0.3 }}
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                      <small>LinkedIn</small>
+                                    </a>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {data.WhatsUp != "" ? (
+                                    <a
+                                      href={`https://wa.me/+91${data.WhatsUp}?text=Welcome to Aristostech Team!, How can we assest u ?`}
+                                      target="_blank"
+                                      className="social_media_icon"
+                                    >
+                                      <i className="bx bxl-whatsapp"></i>
+                                      <div className="social_media_svg3">
+                                        <svg
+                                          id="sw-js-blob-svg"
+                                          viewBox="0 0 100 100"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          version="1.1"
+                                        >
+                                          <defs>
+                                            <linearGradient
+                                              id="sw-gradient3"
+                                              x1="0"
+                                              x2="1"
+                                              y1="1"
+                                              y2="0"
+                                            >
+                                              <stop
+                                                id="stop5"
+                                                stopColor="rgba(248, 117, 55, 1)"
+                                                offset="0%"
+                                              ></stop>
+                                              <stop
+                                                id="stop6"
+                                                stopColor="rgba(251, 168, 31, 1)"
+                                                offset="100%"
+                                              ></stop>
+                                            </linearGradient>
+                                          </defs>
+                                          <path
+                                            fill="url(#sw-gradient3)"
+                                            d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                            width="100%"
+                                            height="100%"
+                                            transform="translate(50 50)"
+                                            strokeWidth="0"
+                                            style={{ transition: 0.3 }}
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                      <small>Whatsup</small>
+                                    </a>
+                                  ) : (
+                                    ""
+                                  )}
 
-                          <a
-                            href="https://maps.app.goo.gl/PCJCqMK7UJBNxBuf9"
-                            target="_blank"
-                            className="social_media_icon"
-                          >
-                            <i className="bx bx-map"></i>
-                            <div className="social_media_svg4">
-                              <svg
-                                id="sw-js-blob-svg"
-                                viewBox="0 0 100 100"
-                                xmlns="http://www.w3.org/2000/svg"
-                                version="1.1"
-                              >
-                                <defs>
-                                  <linearGradient
-                                    id="sw-gradient4"
-                                    x1="0"
-                                    x2="1"
-                                    y1="1"
-                                    y2="0"
-                                  >
-                                    <stop
-                                      id="stop7"
-                                      stopColor="rgba(248, 117, 55, 1)"
-                                      offset="0%"
-                                    ></stop>
-                                    <stop
-                                      id="stop8"
-                                      stopColor="rgba(251, 168, 31, 1)"
-                                      offset="100%"
-                                    ></stop>
-                                  </linearGradient>
-                                </defs>
-                                <path
-                                  fill="url(#sw-gradient4)"
-                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                  width="100%"
-                                  height="100%"
-                                  transform="translate(50 50)"
-                                  strokeWidth="0"
-                                  style={{ transition: 0.3 }}
-                                ></path>
-                              </svg>
-                            </div>
-                            <small>Location</small>
-                          </a>
+                                  {data.Twiter != "" ? (
+                                    <a
+                                      href={data.Twiter}
+                                      target="_blank"
+                                      className="social_media_icon"
+                                    >
+                                      <i className="bx bxl-twitter"></i>
+                                      <div className="social_media_svg6">
+                                        <svg
+                                          id="sw-js-blob-svg6"
+                                          viewBox="0 0 100 100"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          version="1.1"
+                                        >
+                                          <defs>
+                                            <linearGradient
+                                              id="sw-gradient6"
+                                              x1="0"
+                                              x2="1"
+                                              y1="1"
+                                              y2="0"
+                                            >
+                                              <stop
+                                                id="stop11"
+                                                stopColor="rgba(248, 117, 55, 1)"
+                                                offset="0%"
+                                              ></stop>
+                                              <stop
+                                                id="stop12"
+                                                stopColor="rgba(251, 168, 31, 1)"
+                                                offset="100%"
+                                              ></stop>
+                                            </linearGradient>
+                                          </defs>
+                                          <path
+                                            fill="url(#sw-gradient6)"
+                                            d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                            width="100%"
+                                            height="100%"
+                                            transform="translate(50 50)"
+                                            strokeWidth="0"
+                                            style={{ transition: 0.3 }}
+                                          ></path>
+                                        </svg>
+                                      </div>
+                                      <small>Twiter</small>
+                                    </a>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </div>
-                  <div className="Corporate_Company__demo_title">
+                  <div className="GYM_TRAINER_DEMO_SUB_TITLE">
                     <h3>Our Specialities</h3>
                   </div>
                   <div className="specialities">
@@ -1190,13 +1231,17 @@ END:VCARD
         ) : (
           ""
         )}
-
         {/* Our Services */}
         {ServiceData.length > 0 && ManageContentData[0].Service == true ? (
           <>
             <div className="our_services" ref={ServiceRef}>
-              <div className="Corporate_Company_title">
-                <h3>Our Services</h3>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Our Services
+                  <span className="material-symbols-outlined">
+                    design_services
+                  </span>
+                </h3>
               </div>
               <div className="All_Services">
                 {/* Service */}
@@ -1288,8 +1333,13 @@ END:VCARD
         {ProductData.length > 0 && ManageContentData[0].Product == true ? (
           <>
             <div className="our_products" ref={ProductRef}>
-              <div className="Corporate_Company_title">
-                <h3>Our Products</h3>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Our Products
+                  <span className="material-symbols-outlined">
+                    shopping_cart
+                  </span>
+                </h3>
               </div>
               <div className="All_Products">
                 {/* Product */}
@@ -1376,8 +1426,11 @@ END:VCARD
         {UPIData.length > 0 || BankData.length > 0 ? (
           <>
             <div className="Payment" ref={PaymentRef}>
-              <div className="Corporate_Company_title">
-                <h3>For Payment</h3>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  For Payment
+                  <span className="material-symbols-outlined">payments</span>
+                </h3>
               </div>
               {UPIData.length > 0 ? (
                 <>
@@ -1429,8 +1482,8 @@ END:VCARD
 
               {BankData.length > 0 ? (
                 <>
-                  <div className="sub_title">
-                    <h3>Account Details :</h3>
+                  <div className="GYM_TRAINER_LIVE_SUB_TITLE">
+                    <h4>Account Details :</h4>
                   </div>
                   {BankData.map((data, index) => {
                     return (
@@ -1492,8 +1545,8 @@ END:VCARD
 
               {UPIData.length > 0 ? (
                 <>
-                  <div className="sub_title">
-                    <h3>QR Code :</h3>
+                  <div className="GYM_TRAINER_LIVE_SUB_TITLE">
+                    <h4>QR Code :</h4>
                   </div>
                   {UPIData.map((data, index) => {
                     return (
@@ -1535,11 +1588,17 @@ END:VCARD
         )}
 
         {/* Gallery */}
+
         {GalleryData.length > 0 && ManageContentData[0].Gallery == true ? (
           <>
             <div className="gallery" ref={GalleryRef}>
-              <div className="Corporate_Company_title">
-                <h3>Gallery</h3>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Gallery
+                  <span className="material-symbols-outlined">
+                    gallery_thumbnail
+                  </span>
+                </h3>
               </div>
 
               <div className="all_gallerys">
@@ -1578,13 +1637,18 @@ END:VCARD
         ) : (
           ""
         )}
-
         {/* Videos */}
+
         {VideoData.length > 0 ? (
           <>
             <div className="video" ref={VideoRef}>
-              <div className="Corporate_Company_title">
-                <h3>Videos</h3>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Videos
+                  <span className="material-symbols-outlined">
+                    video_library
+                  </span>
+                </h3>
               </div>
 
               <div className="videos_container">
@@ -1613,13 +1677,172 @@ END:VCARD
         ) : (
           ""
         )}
-        {/* //Appinment */}
-        {VCard_URL_Data.length > 0 &&
+        {/* Opentime */}
+        {BussinessHourData.length > 0 &&
+        ManageContentData[0].BussinessHour == true ? (
+          <>
+            <div className="row_5" ref={TimeRef}>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Open&Close Time<i className="bx bx-timer"></i>
+                </h3>
+                {/* Contact */}
+              </div>
+              <div className="time_list_container">
+                {BussinessHourData[0].Monday.from.length > 0 &&
+                BussinessHourData[0].Monday.to.length > 0 ? (
+                  <div className="time_list">
+                    <div className="day">
+                      <span>Monday</span>
+                    </div>
+                    <div className="time">
+                      <div className="start">
+                        <h6>Open Time</h6>
+                        <span>{BussinessHourData[0].Monday.from}AM</span>
+                      </div>
+                      <div className="end">
+                        <h6>Close Time</h6>
+                        <span>{BussinessHourData[0].Monday.to}PM</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {BussinessHourData[0].Tuesday.from.length > 0 &&
+                BussinessHourData[0].Tuesday.to.length > 0 ? (
+                  <>
+                    <div className="time_list">
+                      <div className="day">
+                        <span>Tuesday</span>
+                      </div>
+                      <div className="time">
+                        <div className="start">
+                          <h6>Open Time</h6>
+                          <span>{BussinessHourData[0].Tuesday.from}AM</span>
+                        </div>
+                        <div className="end">
+                          <h6>Close Time</h6>
+                          <span>{BussinessHourData[0].Tuesday.to}PM</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+
+                {BussinessHourData[0].Wednesday.from.length > 0 &&
+                BussinessHourData[0].Wednesday.to.length > 0 ? (
+                  <>
+                    <div className="time_list">
+                      <div className="day">
+                        <span>Wednesday</span>
+                      </div>
+                      <div className="time">
+                        <div className="start">
+                          <h6>Open Time</h6>
+                          <span>{BussinessHourData[0].Wednesday.from}AM</span>
+                        </div>
+                        <div className="end">
+                          <h6>Close Time</h6>
+                          <span>{BussinessHourData[0].Wednesday.to}PM</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+
+                {BussinessHourData[0].Thursday.from.length > 0 &&
+                BussinessHourData[0].Thursday.to.length > 0 ? (
+                  <div className="time_list">
+                    <div className="day">
+                      <span>Thursday</span>
+                    </div>
+                    <div className="time">
+                      <div className="start">
+                        <h6>Open Time</h6>
+                        <span>{BussinessHourData[0].Thursday.from}AM</span>
+                      </div>
+                      <div className="end">
+                        <h6>Close Time</h6>
+                        <span>{BussinessHourData[0].Thursday.to}PM</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {BussinessHourData[0].Friday.from.length > 0 &&
+                BussinessHourData[0].Friday.to.length > 0 ? (
+                  <>
+                    <div className="time_list">
+                      <div className="day">
+                        <span>Friday</span>
+                      </div>
+                      <div className="time">
+                        <div className="start">
+                          <h6>Open Time</h6>
+                          <span>{BussinessHourData[0].Friday.from}AM</span>
+                        </div>
+                        <div className="end">
+                          <h6>Close Time</h6>
+                          <span>{BussinessHourData[0].Friday.to}PM</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+
+                {(BussinessHourData[0].Saturday.from.length > 0 &&
+                  BussinessHourData[0].Saturday.to.length > 0) ||
+                BussinessHourData[0].Sunday.from.length > 0 ||
+                BussinessHourData[0].Sunday.from.length ? (
+                  <>
+                    <div className="time_list">
+                      <div className="day">
+                        <span>Weekend Days</span>
+                      </div>
+                      <div className="time">
+                        <div className="start">
+                          <h6>Open Time</h6>
+                          <span>{BussinessHourData[0].Saturday.from}AM</span>
+                        </div>
+                        <div className="end">
+                          <h6>Close Time</h6>
+                          <span>{BussinessHourData[0].Saturday.to}PM</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+   {/* //Appinment */}
+   {VCard_URL_Data.length > 0 &&
         ManageContentData[0].Appoinment == true ? (
           <>
             <div className="Appoinment" ref={AppoinmentRef}>
-              <div className="Corporate_Company_title">
-                <h3>Appoinment</h3>
+            <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Appoinment
+                  <span className="material-symbols-outlined">
+groups
+</span>
+                </h3>
+                {/* Contact */}
               </div>
               {/* Success and Error Popup */}
               <div className="popup_message_container">
@@ -1808,166 +2031,19 @@ END:VCARD
         ) : (
           ""
         )}
-        {/* Opentime */}
-        {BussinessHourData.length > 0 &&
-        ManageContentData[0].BussinessHour == true ? (
-          <>
-            <div className="time_container" ref={TimeRef}>
-              <div className="Corporate_Company_title">
-                <h3>Open&Close Time</h3>
-                {/* Contact */}
-              </div>
-              <div className="time_list_container">
-                {BussinessHourData[0].Monday.from.length > 0 &&
-                BussinessHourData[0].Monday.to.length > 0 ? (
-                  <div className="time_list">
-                    <div className="day">
-                      <span>Monday</span>
-                    </div>
-                    <div className="time">
-                      <div className="start">
-                        <h6>Open Time</h6>
-                        <span>{BussinessHourData[0].Monday.from}AM</span>
-                      </div>
-                      <div className="end">
-                        <h6>Close Time</h6>
-                        <span>{BussinessHourData[0].Monday.to}PM</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                {BussinessHourData[0].Tuesday.from.length > 0 &&
-                BussinessHourData[0].Tuesday.to.length > 0 ? (
-                  <>
-                    <div className="time_list">
-                      <div className="day">
-                        <span>Tuesday</span>
-                      </div>
-                      <div className="time">
-                        <div className="start">
-                          <h6>Open Time</h6>
-                          <span>{BussinessHourData[0].Tuesday.from}AM</span>
-                        </div>
-                        <div className="end">
-                          <h6>Close Time</h6>
-                          <span>{BussinessHourData[0].Tuesday.to}PM</span>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-
-                {BussinessHourData[0].Wednesday.from.length > 0 &&
-                BussinessHourData[0].Wednesday.to.length > 0 ? (
-                  <>
-                    <div className="time_list">
-                      <div className="day">
-                        <span>Wednesday</span>
-                      </div>
-                      <div className="time">
-                        <div className="start">
-                          <h6>Open Time</h6>
-                          <span>{BussinessHourData[0].Wednesday.from}AM</span>
-                        </div>
-                        <div className="end">
-                          <h6>Close Time</h6>
-                          <span>{BussinessHourData[0].Wednesday.to}PM</span>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-
-                {BussinessHourData[0].Thursday.from.length > 0 &&
-                BussinessHourData[0].Thursday.to.length > 0 ? (
-                  <div className="time_list">
-                    <div className="day">
-                      <span>Thursday</span>
-                    </div>
-                    <div className="time">
-                      <div className="start">
-                        <h6>Open Time</h6>
-                        <span>{BussinessHourData[0].Thursday.from}AM</span>
-                      </div>
-                      <div className="end">
-                        <h6>Close Time</h6>
-                        <span>{BussinessHourData[0].Thursday.to}PM</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                {BussinessHourData[0].Friday.from.length > 0 &&
-                BussinessHourData[0].Friday.to.length > 0 ? (
-                  <>
-                    <div className="time_list">
-                      <div className="day">
-                        <span>Friday</span>
-                      </div>
-                      <div className="time">
-                        <div className="start">
-                          <h6>Open Time</h6>
-                          <span>{BussinessHourData[0].Friday.from}AM</span>
-                        </div>
-                        <div className="end">
-                          <h6>Close Time</h6>
-                          <span>{BussinessHourData[0].Friday.to}PM</span>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-
-                {(BussinessHourData[0].Saturday.from.length > 0 &&
-                  BussinessHourData[0].Saturday.to.length > 0) ||
-                BussinessHourData[0].Sunday.from.length > 0 ||
-                BussinessHourData[0].Sunday.from.length ? (
-                  <>
-                    <div className="time_list">
-                      <div className="day">
-                        <span>Weekend Days</span>
-                      </div>
-                      <div className="time">
-                        <div className="start">
-                          <h6>Open Time</h6>
-                          <span>{BussinessHourData[0].Saturday.from}AM</span>
-                        </div>
-                        <div className="end">
-                          <h6>Close Time</h6>
-                          <span>{BussinessHourData[0].Saturday.to}PM</span>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
-
         {/* Testimonials */}
         {TestimonialData.length > 0 &&
         ManageContentData[0].Testimonial == true ? (
           <>
-            <div className="testimonial" ref={TestimonialRef}>
-              <div className="Corporate_Company_title">
-                <h3>Testimonial</h3>
-                {/* Contact */}
+            <div className="Testimonial" ref={TestimonialRef}>
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Testimonial
+                  <span className="material-symbols-outlined">
+                    settings_accessibility
+                  </span>
+                </h3>
+              
               </div>
               <div className="testimonial_container">
                 <Carousel
@@ -2011,15 +2087,15 @@ END:VCARD
         ) : (
           ""
         )}
-
         {/* GoogleMap */}
-
         {GoogleMapData.length > 0 && ManageContentData[0].GoogleMap == true ? (
           <>
             <div className="google_map_container">
-              <div className="Corporate_Company_title">
-                <h3>Live Location</h3>
-                {/* Contact */}
+              <div className="GYM_TRAINER_LIVE_TITLE">
+                <h3>
+                  Live Location
+                  <span className="material-symbols-outlined">map</span>
+                </h3>
               </div>
 
               <div className="google_map">
@@ -2037,9 +2113,12 @@ END:VCARD
         ManageContentData[0].FeedbackForm == true ? (
           <>
             <div className="feedback_row" ref={FeedbackRef}>
-              <div className="Corporate_Company_title">
-                <h3>Feedback</h3>
-              </div>
+            <div className="GYM_TRAINER_LIVE_TITLE">
+            <h3>
+              Feedback<span className="material-symbols-outlined">forum</span>
+            </h3>
+           
+          </div>
               {/* Success and Error Popup */}
               <div className="popup_message_container">
                 <div
@@ -2300,15 +2379,18 @@ END:VCARD
           " "
         )}
         {/* Inquries */}
-        {VCard_URL_Data.length > 0 &&
+        
+            {VCard_URL_Data.length > 0 &&
         BasicData.length > 0 &&
         SocialMediaData.length > 0 &&
         ManageContentData[0].InquiryForm == true ? (
           <>
             <div className="Inquries" ref={InquiryRef}>
-              <div className="Corporate_Company_title">
-                <h3>Inquries</h3>
-              </div>
+            <div className="GYM_TRAINER_LIVE_TITLE">
+            <h3>Inquries<span className="material-symbols-outlined">
+info
+</span></h3>
+          </div>
               {/* Success and Error Popup */}
               <div className="popup_message_container">
                 <div
@@ -2464,12 +2546,12 @@ END:VCARD
           ""
         )}
         {/* Footer */}
-        <div className="Footer">
-          <div className="footer_container">
+        <div className="Gym_Footer">
+          <div className="gym_footer_container">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path
                 fill={style.$second_back__color}
-                fillOpacity="1"
+                fill-opacity="1"
                 d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
               ></path>
             </svg>
@@ -2481,4 +2563,4 @@ END:VCARD
   );
 };
 
-export default Corporate_Company;
+export default GYM_TRAINER_LIVE;
