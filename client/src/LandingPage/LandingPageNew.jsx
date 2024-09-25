@@ -8,13 +8,14 @@ import slide2banner from "../assets/Landing_Page/view/slide1_banner1.png";
 import slide3banner from "../assets/Landing_Page/view/slide1_banner3.png";
 import slide4banner from "../assets/Landing_Page/view/slide1_banner4.png";
 import slide5banner from "../assets/Landing_Page/view/slide1_banner5.png";
-import vcard1 from "../assets/Landing_Page/VCard_Designs/gym_mobile.png";
-import vcard2 from "../assets/Landing_Page/VCard_Designs/fashion_mobile.png";
-import vcard3 from "../assets/Landing_Page/VCard_Designs/manager_mobile.png";
-import vcard4 from "../assets/Landing_Page/VCard_Designs/taxi_mobile.png";
-import vcard5 from "../assets/Landing_Page/VCard_Designs/consultant_mobile.png";
-import vcard6 from "../assets/Landing_Page/VCard_Designs/Real_Estate_Mobile.png";
-import vcard7 from "../assets/Landing_Page/VCard_Designs/Beauty_Parlor_Mobile.png";
+import vcard1 from "../assets/Landing_Page/VCard_Designs/GYM_TRAINER.png";
+import vcard2 from "../assets/Landing_Page/VCard_Designs/FASHION_DESIGNER.png";
+import vcard3 from "../assets/Landing_Page/VCard_Designs/MANAGER.png";
+import vcard4 from "../assets/Landing_Page/VCard_Designs/TAXI_DRIVER.png";
+import vcard5 from "../assets/Landing_Page/VCard_Designs/CORPORATE_COMPANY.png";
+import vcard6 from "../assets/Landing_Page/VCard_Designs/BEAUTY_PARLOR.png";
+import vcard7 from "../assets/Landing_Page/VCard_Designs/Real_Estate_Mobile.png";
+
 import vcard8 from "../assets/Landing_Page/VCard_Designs/Boutique_Shop_Mobile.png";
 import view1 from "../assets/Landing_Page/view/1.svg";
 import view2 from "../assets/Landing_Page/view/2.svg";
@@ -95,7 +96,7 @@ const LandingPageNew = () => {
       TemplateCount: 1,
       VCard_Name: "CORPORATE_MANAGER",
       VCard_Image: vcard3,
-      VCard_Link: "https://myvirtualcard.in/Manager",
+      VCard_Link: "https://myvirtualcard.in/Manager_Preview",
     },
   
     {
@@ -103,43 +104,44 @@ const LandingPageNew = () => {
       TemplateCount: 2,
       VCard_Name: "FASHION_DESIGNER",
       VCard_Image: vcard2,
-      VCard_Link: "https://myvirtualcard.in/Fashion_Designer",
+      VCard_Link: "https://myvirtualcard.in/fashion_Designer_Preview",
     },
     {
       Id: 3,
       TemplateCount: 3,
       VCard_Name: "GYM_TRAINER",
       VCard_Image: vcard1,
-      VCard_Link: "https://myvirtualcard.in/Gym_Trainer",
+      VCard_Link: "https://myvirtualcard.in/Gym_Trainer_Preview",
     },
     {
       Id: 4,
       TemplateCount: 4,
       VCard_Name: "TAXI_SERVICE",
       VCard_Image: vcard4,
-      VCard_Link: "https://myvirtualcard.in/Taxi_Service",
+      VCard_Link: "https://myvirtualcard.in/Taxi_Driver_Preview",
     },
     {
       Id: 5,
       TemplateCount: 5,
       VCard_Name: "BUSSINESS_CONSULTANT",
       VCard_Image: vcard5,
-      VCard_Link: "https://myvirtualcard.in/Business_Consultant",
+      VCard_Link: "https://myvirtualcard.in/Corporate_Company_Preview",
     },
     {
       Id: 6,
       TemplateCount: 6,
-      VCard_Name: "REAL_ESTATE",
+      VCard_Name: "BEAUTY_PARLOR",
       VCard_Image: vcard6,
-      VCard_Link: "https://myvirtualcard.in/Real_Estate",
+      VCard_Link: "https://myvirtualcard.in/Beauty_Parlor_Preview",
     },
     {
       Id: 7,
       TemplateCount: 7,
-      VCard_Name: "BEAUTY_PARLOR",
+      VCard_Name: "REAL_ESTATE",
       VCard_Image: vcard7,
-      VCard_Link: "https://myvirtualcard.in/Beauty_Parlor",
+      VCard_Link: "https://myvirtualcard.in/Real_Estate",
     },
+
     {
       Id: 8,
       TemplateCount: 8,
@@ -362,7 +364,7 @@ const LandingPageNew = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("September 25, 2024 00:00:00").getTime();
+    const countdownDate = new Date("September 31, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -637,7 +639,7 @@ const LandingPageNew = () => {
             </div>
 
             <div className="right">
-              <div className="landingpage_title">
+              <div className="landingpage_title2">
                 <h3>
                   Design Your <span>Digital Identity</span>
                 </h3>
