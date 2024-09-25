@@ -1,24 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Macondo&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 //Text Color
-$first_text_color: #f0f0f0;
-$second_text_color: #ffff7a;
+$first_text_color: #e8ecd6;
+$second_text_color: rgb(255, 255, 61);
 $third_text_color: #3d3d3d;
+$fourth_text_color:#90afc5;
 
 //SocialMedia Icon Color::after
 $social_media_icon_color: #ffffff;
 //Background
 $first_back__color: #ffffff;
-$second_back__color: #FFA500;
-$third_back__color: #303030;
+$second_back__color: #90afc5;
+$third_back__color: #763626;
 //Root Background
-$root_backgound: #1a464698, #20182e93;
+$root_backgound: #90afc5, #90afc5;
 $root_text_size: 0.9rem;
 $root_font_weight: 500;
 //Vcard background
-$vcard_back_color: #2a4172, #2a4172;
+$vcard_back_color: #2a3132, #2a3132;
 $vcard_back_second_color: #ffffff;
 
 // Title
@@ -29,8 +29,8 @@ $sub_title_color: #cacaca;
 
 //Button
 
-$first_btn_back_color: #FFA500;
-$second_btn_back_color: #686868;
+$first_btn_back_color: #90afc5;
+$second_btn_back_color: #763626;
 $third_btn_back_color: #ffffff;
 $first_btn_text_color: #ffffff;
 $second_btn_text_color: #474747;
@@ -39,15 +39,15 @@ $third_btn_text_color: #ffffff;
 // Service
 
 $service_back_color: #f2ffeb;
-$service_btn_color: #FFA500;
+$service_btn_color: #90afc5;
 $service_title_color: #2c2c2c;
 $service_text_color: rgb(63, 63, 63);
 $link_text_color: royalblue;
 
 // Product
 
-$product_back_color: #fff59af5;
-$product_back_color_second: #2a4172;
+$product_back_color: #d2ecff;
+$product_back_color_second: #763626;
 $product_title_color: #181818;
 $product_text_color: rgb(78, 78, 78);
 $link_text_color: royalblue;
@@ -60,17 +60,14 @@ $error_text_color: tomato;
 
 //NavMenu
 
-$NavMenu_back_color: #2a4172;
-$NavMenu_second_back_color: #FFA500;
-$NavBtn_back_color: rgb(255, 255, 255);
+$NavMenu_back_color: #2a3132;
+$NavMenu_second_back_color: #90afc5;
+$NavBtn_back_color: #ffffff;
 $NavMenu_first_text_color: #ffffff;
 $NavMenu_second_text_color: rgb(90, 90, 90);
 
 //Title for each list
-.MANAGER_PREVIEW_DEMO_TITLE {
-  font-family: "Exo 2", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 550;
+.BEAUTY_PARLOR_PREVIEW_DEMO_TITLE {
 
   width: 100%;
   display: flex;
@@ -82,32 +79,32 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: "Exo 2", sans-serif;
-    font-optical-sizing: auto;
+    font-family: "Macondo", cursive;
     font-weight: 600;
+    font-style: normal;
     font-size: 1.2rem;
     color: #ffde82;
 
-    .icon{
+    .icon {
       animation: handDownAnime 3s infinite linear;
 
       @keyframes handDownAnime {
-        0%{
+        0% {
           transform: translateY(0px);
         }
-     
-        50%{
+
+        50% {
           transform: translateY(10px);
         }
-     
-        100%{
+
+        100% {
           transform: translateY(0px);
         }
       }
     }
   }
 }
-.MANAGER_PREVIEW_DEMO_SUB_TITLE {
+.BEAUTY_PARLOR_PREVIEW_DEMO_SUB_TITLE {
   width: 100%;
   display: flex;
   align-items: center;
@@ -129,7 +126,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     position: relative;
   }
 }
-.MANAGER_PREVIEW_CONTAINER {
+.BEAUTY_PARLOR_PREVIEW_CONTAINER {
   width: 100vw;
   min-height: 100vh;
   height: auto;
@@ -145,8 +142,11 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(90deg, $root_backgound 100%, $root_backgound 100%);
-
+  background: linear-gradient(
+    90deg,
+    $root_backgound 100%,
+    $root_backgound 100%
+  );
   //   Gallery full image
 
   .full_image {
@@ -391,47 +391,38 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     }
   }
 
-  .MANAGER_PREVIEW_CARD {
+  .FASHION_DESIGNER_PREVIEW_CARD {
     width: 450px;
     max-width: 450px;
     margin-top: 0.5rem;
     height: auto;
     overflow-x: hidden;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
     font-style: normal;
     background: linear-gradient(
       160deg,
       $vcard_back_color 50%,
       $vcard_back_color 50%
     );
+    z-index: 10;
     filter: drop-shadow(0px 4px 5px #b073d893);
     //BasicDetails and socialmedias and baner and logo
-    .Manager_Image_row_1 {
+    .Image_row_1 {
       width: 100%;
       max-height: 300px;
       height: 300px;
       position: relative;
 
-      .slide_svg {
+      .slide_svg1 {
         position: absolute;
+        bottom: -5%;
         width: 100%;
-        bottom: -6px;
 
-        svg {
-          transform: rotate(0deg);
-          height: 150px;
-        }
-        .overlay {
-          position: relative;
-          top: -3px;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(#cd62e200 0%, $vcard_back_color 100%);
-        }
+        z-index: 5;
       }
-      .banner_image {
+      .banner_image1 {
         width: 100%;
         max-height: 300px;
         height: 300px;
@@ -446,29 +437,30 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           object-fit: cover;
           object-position: center;
         }
-        .overlay {
-          position: absolute;
-          bottom: -50px;
-          left: 0;
-          width: 100%;
-          height: 50%;
-          background: linear-gradient(#85858500 0%, $vcard_back_color 100%);
-        }
+        // .overlay {
+        //   position: absolute;
+        //   bottom: -50px;
+        //   left: 0;
+        //   width: 100%;
+        //   height: 50%;
+        //   background: linear-gradient(#85858500 0%, $vcard_back_color 100%);
+        // }
       }
       .user_logo {
         position: absolute;
         bottom: -5%;
-        left: 1%;
-      
-        // transform: translate(-5%, -5%);
+
+        left: 60%;
+
+        transform: translate(-5%, 5%);
         width: 100%;
 
         display: flex;
         align-items: center;
-        flex-direction: row;
-        justify-content: flex-start;
+
         gap: 5px;
         margin: 0.5rem auto;
+        z-index: 5;
         .logo {
           display: flex;
           flex: 0.3;
@@ -476,15 +468,15 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           justify-content: center;
           img {
             z-index: 2;
-            width: 100px;
-            height: 100px;
-            border-radius: 0.3rem;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
             // border-top-left-radius: 2.5rem;
             // border-bottom-right-radius: 2.5rem;
             object-fit: cover;
             object-position: center;
-            border: 2px solid $second_text_color;
-            filter: drop-shadow(0px 4px 5px #ffd20966);
+            // border: 2px solid $third_back__color;
+            filter: drop-shadow(0px 4px 5px #49494966);
             // animation: profileBorder 5s infinite linear;
             @keyframes profileBorder {
               0% {
@@ -514,16 +506,77 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
               }
             }
           }
+          .svg_image {
+            position: absolute;
+            z-index: -1;
+
+            img {
+              width: 150px;
+              height: 150px;
+              border: none;
+              filter: drop-shadow(0px 4px 5px #ffffffa1);
+              animation: profileSVGAnime 5s infinite linear;
+              @keyframes profileSVGAnime {
+                0% {
+                  transform: rotate(0deg);
+                }
+                50% {
+                  transform: rotate(90deg);
+                }
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+            }
+          }
         }
+
+        .svg_image {
+          position: absolute;
+          z-index: 1;
+
+          img {
+            width: 200px;
+            height: 200px;
+            border: none;
+            filter: drop-shadow(0px 4px 5px #ffffffa1);
+            animation: profileSVGAnime 5s infinite linear;
+            @keyframes profileSVGAnime {
+              0% {
+                transform: rotate(0deg);
+                // scale: 0;
+              }
+              25% {
+                transform: rotate(90deg);
+                // scale: 0.3;
+              }
+              50% {
+                transform: rotate(180deg);
+                // scale: 1;
+              }
+              75% {
+                transform: rotate(270deg);
+                // scale: 0.9;
+              }
+              100% {
+                transform: rotate(360deg);
+                // scale: 0;
+              }
+            }
+          }
+        }
+      }
+    }
     //UserDetails
     .basic_row_2 {
-      padding: 1rem;
-      flex: 0.7;
+      padding: 0rem 1rem;
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+
+      align-items: flex-start;
+      justify-content: flex-start;
       gap: 1rem;
+      z-index: 15;
 
       .user_details {
         width: 100%;
@@ -553,6 +606,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             justify-content: center;
             gap: 5px;
             position: relative;
+            z-index: 50;
 
             h2 {
               font-size: 1.2rem;
@@ -594,7 +648,6 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
               //   }
             }
           }
-      
 
           @media screen and (max-width: 600px) {
             align-items: flex-start;
@@ -602,45 +655,9 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
         }
       }
     }
-        .svg_image {
-          position: absolute;
-          z-index: 1;
-
-          img {
-            width: 200px;
-            height: 200px;
-            border: none;
-            filter: drop-shadow(0px 4px 5px #ffffffa1);
-            animation: profileSVGAnime 5s infinite linear;
-            @keyframes profileSVGAnime {
-              0% {
-                transform: rotate(0deg);
-                // scale: 0;
-              }
-              25% {
-                transform: rotate(90deg);
-                // scale: 0.3;
-              }
-              50% {
-                transform: rotate(180deg);
-                // scale: 1;
-              }
-              75% {
-                transform: rotate(270deg);
-                // scale: 0.9;
-              }
-              100% {
-                transform: rotate(360deg);
-                // scale: 0;
-              }
-            }
-          }
-        }
-      }
-    }
     //   Actions
     .contacts_btns {
-      padding:2rem 1rem;
+      padding: 1rem 1rem;
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
@@ -704,9 +721,33 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           font-size: 1.5rem;
           padding: 5px;
           border-radius: 1rem;
-          background-color: $second_back__color;
+          // background-color: $second_back__color;
           filter: drop-shadow(0px 3px 3px $second_back__color);
-          color: $first_text_color;
+          color: $third_text_color;
+          position: relative;
+          z-index: 10;
+
+          .social_media_svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+
+            img {
+              position: relative;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 120px;
+              // height: 120px;
+
+              z-index: -1;
+              transition: all 0.3s ease-in-out;
+            }
+          }
         }
         .contact_data {
           display: flex;
@@ -844,7 +885,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
                 // border-radius: 0.3rem;
                 position: relative;
-             
+
                 transition: all 0.3s ease-in-out;
 
                 i {
@@ -1122,8 +1163,12 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       justify-content: flex-start;
       gap: 1rem;
       position: relative;
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
       .All_Services {
         width: 100%;
         height: auto;
@@ -1243,7 +1288,10 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
                 gap: 5px;
 
                 &:hover {
-               background: linear-gradient($vcard_back_color,$vcard_back_color);
+                  background: linear-gradient(
+                    $vcard_back_color,
+                    $vcard_back_color
+                  );
                 }
               }
             }
@@ -1261,8 +1309,11 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       justify-content: flex-start;
       gap: 1rem;
       position: relative;
-
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      font-family: "Montserrat", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
       .All_Products {
         width: 100%;
         height: auto;
@@ -1403,7 +1454,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       gap: 1rem;
       position: relative;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
 
       .payment_details {
         display: flex;
@@ -1619,7 +1670,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       gap: 1rem;
       position: relative;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
 
       .all_gallerys {
         width: 100%;
@@ -1659,7 +1710,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       gap: 1rem;
       position: relative;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
 
       .videos_container {
         width: 100%;
@@ -1691,7 +1742,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       flex-direction: column;
       justify-content: center;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
       .time_list_container {
         width: 100%;
         display: grid;
@@ -1771,75 +1822,86 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       }
     }
     //Testimonial
-    .Tesimonial {
+    .Testimonial {
       width: 100%;
-      padding: 1rem;
+      padding: 1rem 1rem;
       display: flex;
-      align-items: center;
       flex-direction: column;
+      gap: 1rem;
+      align-items: center;
       justify-content: center;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
-
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
 
       .testimonial_container {
         margin: 1rem auto;
         width: 100%;
         height: 180px;
-        max-height: 180px;
+        min-height: 180px;
 
         .testimonial_list {
           margin: 1rem 1rem;
-          width: 90%;
+          width: 100%;
           height: 180px;
-          background: linear-gradient(
-            360deg,
-            $first_back__color 100% , $first_back__color
-          );
-
+          min-height: 180px;
+          // background: linear-gradient(90deg,$first_back__color 50%,$social_media_icon_color 50%);
+          background-color: $first_back__color;
+          // box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+          overflow-y: auto;
           margin: auto;
           display: flex;
-          flex-direction: column;
+          flex-direction: row-reverse;
           align-items: center;
           justify-content: flex-start;
           border-radius: 0.5rem;
-          padding: 0.5rem 1rem;
+        
+       
           position: relative;
-
+   
           .client_feedback {
+        
             width: 100%;
-            height: 60%;
-            max-height: 60%;
+            height: 100%;
+            flex: 0.6;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: flex-start;
-            overflow-y: scroll;
+            padding: 10px;
 
-            small {
-              text-align: start;
+            small{
+              width: 100%;
+              font-size: 0.8rem;
               color: $third_text_color;
-            }
-            &::-webkit-scrollbar {
-              display: none;
+              font-weight: 500;
+              overflow-y: scroll;
+              text-align: start;
+
+              &::-webkit-scrollbar{
+                display: none;
+              }
             }
           }
           .client_detail {
+      
             display: flex;
             align-items: center;
+            flex-direction: column-reverse;
             width: 100%;
-            justify-content: flex-end;
+            height: 100%;
+            flex: 0.4;
+            justify-content: center;
             gap: 10px;
-            margin-top: 0.5rem;
-            height: 40%;
-            max-height: 40%;
-            overflow-y: scroll;
-
+          
+background-color: $second_back__color;
+border-top-right-radius: 0rem;
+border-bottom-right-radius: 6rem;
             img {
-              width: 50px;
-              height: 50px;
-              border-radius: 50%;
+              width: 60px;
+              height: 60px;
+              border-radius: 0.5rem;
               object-fit: cover;
               object-position: center;
+              border: 1px solid $first_back__color;
             }
 
             .client_name {
@@ -1850,16 +1912,15 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
               h4 {
                 font-size: 0.8rem;
-                color: #353535;
+                color: $second_text_color;
                 font-weight: 550;
+                color: $first_back__color;
               }
               small {
                 font-size: 0.7rem;
-                color: rgb(68, 143, 255);
+                color: $first_back__color;
+                font-weight: 550;
               }
-            }
-            &::-webkit-scrollbar {
-              display: none;
             }
           }
 
@@ -1879,7 +1940,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       justify-content: center;
       padding: 1rem;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
 
       .google_map {
         width: 100%;
@@ -1904,7 +1965,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       align-items: center;
       justify-content: center;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
       .feedback_container {
         width: 100%;
         position: relative;
@@ -2503,7 +2564,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       align-items: center;
       justify-content: center;
 
-      @extend .MANAGER_PREVIEW_DEMO_TITLE;
+      @extend .BEAUTY_PARLOR_PREVIEW_DEMO_TITLE;
       .inquiries_container5 {
         width: 100%;
         display: flex;

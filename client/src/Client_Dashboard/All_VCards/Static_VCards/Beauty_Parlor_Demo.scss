@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 //Text Color
 $first_text_color: #ffffff;
 $second_text_color: #6b6b6b;
@@ -78,7 +79,6 @@ $error_text_color:tomato;
 .beauty_parlor_demo_container {
   width: 100vw;
   min-height: 100vh;
-  
   height: auto;
   position: relative;
   display: flex;
@@ -91,10 +91,17 @@ $error_text_color:tomato;
   background-repeat: no-repeat;
   background-size: cover;
   background: linear-gradient(120deg, $root_backgound 50%, $root_backgound 50%);
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
   // background-image: url("https://img.freepik.com/free-photo/abstract-brown-gradient-well-used-as-background-product-display_1258-53887.jpg?t=st=1722545340~exp=1722548940~hmac=83a6311e30e57b459c8fcdc7794082a848f2235cbd110eb29226bf7c55fe844c&w=900");
 
   .beauty_parlor_box {
-    
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
     width: 450px;
     max-width: 450px;
     height: auto;
@@ -107,6 +114,7 @@ $error_text_color:tomato;
       max-height: 300px;
       height: 300px;
       position: relative;
+      
       .slide_svg{
         position: absolute;
         width: 100%;

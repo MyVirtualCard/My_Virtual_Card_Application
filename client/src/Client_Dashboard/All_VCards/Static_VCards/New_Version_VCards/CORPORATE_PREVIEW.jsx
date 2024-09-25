@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./MANAGER_PREVIEW.scss";
+import "./CORPORATE_PREVIEW.scss";
+
+
+import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
+
 //service Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,7 +11,6 @@ import Slider from "react-slick";
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import { FaHandPointDown } from "react-icons/fa";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -34,17 +37,20 @@ import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-import { Typewriter, Cursor } from "react-simple-typewriter";
-const MANAGER_PREVIEW = () => {
+const CORPORATE_PREVIEW = () => {
+
+
   let style = {
     $first_back__color: "#ffffff",
-    $second_back__color: "#ffffff",
+    $second_back__color: "#6b6b6b",
     $third_back__color: "#303030",
     //Root Background
     $root_backgound: "#fcfdc8,#ffffff",
     //Vcard background
     $vcard_back_color: "#a1046d",
+
     //SVG Wave backgound
+
     $svg_wave_back_color: "#ffffff",
   };
   const [width, setWidth] = useState(window.innerWidth);
@@ -56,11 +62,13 @@ const MANAGER_PREVIEW = () => {
   let [feedbackLoader, setFeedbackLoader] = useState(false);
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
+
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
   //create a new vCard
   var vCard = vCardsJS();
+
   function generateVCF() {
     //set properties
     vCard.firstName = "Jayakumar";
@@ -87,6 +95,86 @@ const MANAGER_PREVIEW = () => {
     linkElement.click();
     document.body.removeChild(linkElement);
   }
+  //gallery
+  const buttonStyle = {
+    width: "20px",
+    background: "none",
+    opacity: 1,
+    border: "0px",
+    padding: "0px",
+    fontSize: "2rem",
+    borderRadius: "10px",
+    color: "#ffffff",
+  };
+  const properties = {
+    prevArrow: (
+      <button style={{ ...buttonStyle }}>
+        <span className="material-symbols-outlined">keyboard_backspace</span>
+      </button>
+    ),
+    nextArrow: (
+      <button style={{ ...buttonStyle }}>
+        <span className="material-symbols-outlined">east</span>
+      </button>
+    ),
+  };
+  const gallery_buttonStyle = {
+    width: "20px",
+    background: "none",
+    opacity: 1,
+    border: "0px",
+    padding: "0px",
+    fontSize: "2rem",
+    borderRadius: "10px",
+    color: "#ffffff",
+  };
+  const gallery_properties = {
+    prevArrow: (
+      <button style={{ ...gallery_buttonStyle }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
+        </svg>
+      </button>
+    ),
+    nextArrow: (
+      <button style={{ ...gallery_buttonStyle }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
+        </svg>
+      </button>
+    ),
+  };
+
+  //Service
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 2,
+    slidesToScroll: width < 700 ? 1 : 2,
+  };
+  //Product
+  const product_settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 2 : 2,
+    slidesToScroll: width < 700 ? 2 : 2,
+    rtl: true, // Scroll from left to right
+    arrows: true, // Show navigation arrows
+  };
   //Gallery Functionality
   //openFullImage preview:
   function openFullImage(pic) {
@@ -104,7 +192,40 @@ const MANAGER_PREVIEW = () => {
 
     fullImageBox.style.display = "none";
   }
+  //Form Logic :
+  let feedbackFormik = useFormik({
+    initialValues: {
+      userName: "",
+      userFeedback: "",
+      currentRatting: 0,
+    },
 
+    //Validation :
+    validationSchema: Yup.object({
+      userName: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(50, "Name must be 20 character or less")
+        .required("Name is required"),
+      userFeedback: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(400, "Feedback must be 100 character or less")
+        .required("Feedback is required"),
+    }),
+    //Form Submit :
+    onSubmit: async (values) => {
+      setFeedbackForm({
+        userName: values.userName,
+        userFeedback: values.userFeedback,
+        currentRatting: values.currentRatting,
+      });
+      feedBackSubmit();
+      setTimeout(() => {
+        feedbackFormik.values.userName = "";
+        feedbackFormik.values.userFeedback = "";
+        feedbackFormik.values.currentRatting = 0;
+      }, 4000);
+    },
+  });
   //Start Ratting:
   // let currentRatting=0;
   function handleRatting(e) {
@@ -143,6 +264,61 @@ const MANAGER_PREVIEW = () => {
       }
     });
   }
+  //Form Logic :
+  let formik = useFormik({
+    initialValues: {
+      clientFullName1: "",
+      clientEmail1: "",
+      clientMobileNumber1: "",
+      clientInquiries1: "",
+    },
+
+    //Validation :
+    validationSchema: Yup.object({
+      clientFullName1: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(20, "Name must be 20 character or less")
+        .required("Name is required"),
+      clientEmail1: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      clientMobileNumber1: Yup.string()
+        .min(10, "Invalid Mobile number")
+        .max(10, "Invalid Mobile number")
+        .required("MobileNumber is required"),
+      clientInquiries1: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(100, "Inquiries must be 100 character or less")
+        .required("Inquiries is required"),
+    }),
+    //Form Submit :
+    onSubmit: (values) => {
+      setFormData({
+        clientFullName1: values.clientFullName1,
+        clientEmail1: values.clientEmail1,
+        clientMobileNumber1: values.clientMobileNumber1,
+        clientInquiries1: values.clientInquiries1,
+      });
+
+      sendEmail();
+      setLoading(!loading);
+      setConfetti(true);
+      setTimeout(() => {
+        setPopup(!popup);
+        setLoading(false);
+        setConfetti(!confetti);
+        formik.values.clientFullName1 = "";
+        formik.values.clientEmail1 = "";
+        formik.values.clientMobileNumber1 = "";
+        formik.values.clientInquiries1 = "";
+      }, 4000);
+
+      setTimeout(() => {
+        setPopup(false);
+      }, 7000);
+      StopConfetti();
+    },
+  });
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
@@ -168,6 +344,15 @@ const MANAGER_PREVIEW = () => {
 
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
+
+  // const handleMenuClick = (menuItem) => {
+  //   console.log(menuItem, HomeRef.current.classList.value)
+  //   HomeRef.current.scrollTo = HomeRef.current.classList.value
+  //   setActiveMenu(menuItem);
+  //   HomeRef.current.value
+  //   // Scroll to the top of the page when a menu item is clicked
+  //   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // };
   let scrollToSection = (elementRef) => {
     console.log(elementRef);
     elementRef.current.scrollIntoView({ behavior: "smooth" });
@@ -242,43 +427,9 @@ const MANAGER_PREVIEW = () => {
     if (activeMenu === "Inquiry") {
       return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
     };
-  };
-    //Form Logic :
-    let feedbackFormik = useFormik({
-      initialValues: {
-        userName: "",
-        userFeedback: "",
-        currentRatting: 0,
-      },
-  
-      //Validation :
-      validationSchema: Yup.object({
-        userName: Yup.string()
-          .min(3, "Min 3 char required")
-          .max(50, "Name must be 20 character or less")
-          .required("Name is required"),
-        userFeedback: Yup.string()
-          .min(10, "Minimum 10 character required")
-          .max(400, "Feedback must be 100 character or less")
-          .required("Feedback is required"),
-      }),
-      //Form Submit :
-      onSubmit: async (values) => {
-        setFeedbackForm({
-          userName: values.userName,
-          userFeedback: values.userFeedback,
-          currentRatting: values.currentRatting,
-        });
-        feedBackSubmit();
-        setTimeout(() => {
-          feedbackFormik.values.userName = "";
-          feedbackFormik.values.userFeedback = "";
-          feedbackFormik.values.currentRatting = 0;
-        }, 4000);
-      },
-    });
+  }
   return (
-    <div className="MANAGER_PREVIEW_CONTAINER">
+    <div className="doctor_demo_container">
       {/* Gallery Full IMAGE */}
       <div
         className="full_image"
@@ -411,65 +562,42 @@ const MANAGER_PREVIEW = () => {
           <CiSquareChevDown onClick={HandleMenuDown} className="down" />
         </div>
       </div>
-      <div className="MANAGER_PREVIEW_CARD">
+      <div className="doctor_box">
         {/* Banner and logo */}
-        <div className="Manager_Image_row_1" ref={HomeRef}>
+        <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/free-photo/young-handsome-business-man-choosing-car-car-showroom_1303-17903.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+              src="https://img.freepik.com/premium-photo/group-people-sitting-around-table-front-cityscape_250469-22109.jpg?w=1060"
               alt="banner"
             />
             <div className="overlay"></div>
           </div>
           <div className="user_logo">
-            <div className="logo">
             <img
-              src="https://img.freepik.com/free-photo/successful-handsome-business-man-office_1303-20918.jpg?t=st=1727206315~exp=1727209915~hmac=897b2f69ed33c3cb37851738a6eb853a8934de2e18464e728c59cff063236607&w=900"
+              src="https://img.freepik.com/premium-photo/man-suit-smiles-camera_1315312-85909.jpg?w=1060"
               alt="user_logo"
             />
-            </div>
-                            {/* basic Details */}
-                            <div className="basic_row_2">
+            {/* <div className="svg_image">
+              <img src={profileSVG[sVGIndex]} alt="svg_logo_back" />
+            </div> */}
+          </div>
+        </div>
+        {/* basic Details */}
+        <div className="basic_row_2">
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Jayakumar</h2>
-                <p>
-                <Typewriter
-                    words={["Corporate CEO", "Manager", "Organizer"]}
-                    loop={true}
-                    cursor
-                    cursorStyle="|"
-                    typeSpeed={200}
-                    deleteSpeed={100}
-                    delaySpeed={1000}
-                  />
-                </p>
+                <h2>John Wick</h2>
+                <p>Corporate Company</p>
               </div>
 
-       
-            </div>
-          </div>
-        </div>
-
-          </div>
-
-        </div>
-        {/* //Actions
-         */}
-                {/* Actions */}
-                <div className="contacts_btns">
+              {/* Actions */}
+              <div className="contacts_btns">
                 {/* Call */}
                 <a href="#">
                   <BiSolidPhoneCall className="icon" />
 
                   <small>Call</small>
-                </a>
-                    {/* Mail */}
-                    <a href="#">
-                  <MdOutgoingMail className="icon" />
-
-                  <small>Mail</small>
                 </a>
                 {/* Whatsup */}
                 <a href="#">
@@ -483,9 +611,16 @@ const MANAGER_PREVIEW = () => {
 
                   <small>Direction</small>
                 </a>
-            
-              </div>
+                {/* Mail */}
+                <a href="#">
+                  <MdOutgoingMail className="icon" />
 
+                  <small>Mail</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Contact Details */}
         <div className="contact_row_3">
           {/* Location */}
@@ -495,7 +630,7 @@ const MANAGER_PREVIEW = () => {
             </div>
             <div className="contact_data">
               <small>Address</small>
-              <p>16 Quai des Belges,France</p>
+              <p>Main Road , Sirukadambur,Ariyalur-621714</p>
             </div>
           </a>
           {/* Mail */}
@@ -505,8 +640,8 @@ const MANAGER_PREVIEW = () => {
             </div>
             <div className="contact_data">
               <small>Email</small>
-              <p>karthick@gmail.com</p>
-              <p>fitnesscoachkarthick@gmail.com</p>
+              <p>learnwithcodingbuddy@gmail.com</p>
+              <p>kodiyarasu01@gmail.com</p>
             </div>
           </a>
           {/* Website */}
@@ -516,7 +651,7 @@ const MANAGER_PREVIEW = () => {
             </div>
             <div className="contact_data">
               <small>Website</small>
-              <p>https://www.cult.fit/</p>
+              <p>https://coding-buddy-portfolio.netlify.app/</p>
             </div>
           </a>
           {/* PhoneNumber */}
@@ -526,8 +661,8 @@ const MANAGER_PREVIEW = () => {
             </div>
             <div className="contact_data">
               <small>MobileNumber</small>
-              <p>+91 6354468689</p>
-              <p>+91 1454585858</p>
+              <p>+91 8825457794</p>
+              <p>+91 9568741235</p>
             </div>
           </a>
           {/* AddtoContact */}
@@ -540,8 +675,8 @@ const MANAGER_PREVIEW = () => {
 
         {/* About US */}
         <div className="about_row_4" ref={AboutRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>About Us <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>About Us</h3>
           </div>
 
           <div className="about_details">
@@ -829,43 +964,47 @@ const MANAGER_PREVIEW = () => {
               </div>
             </div>
           </div>
-          <div className="MANAGER_PREVIEW_DEMO_SUB_TITLE">
+          <div className="doctor_sub_title_demo">
             <h3>Our Specialities</h3>
           </div>
           <div className="specialities">
             <ul>
               <li>
-              Personal training: Evaluate clients' fitness levels and goals, and create personalized training programs.
+                Knowledgeable team of professionals Complete client satisfaction
               </li>
-              <li>Group fitness instruction: Lead group exercise classes, such as cardiovascular exercises, stretching, or muscle strengthening.</li>
-              <li>Nutrition: Create meal plans for clients based on their needs and goals.</li>
-              <li>Strength and conditioning: Offer specialized athletic training..</li>
-              <li>Corrective exercise: Help clients with movement dysfunction.</li>{" "}
-              <li>Senior fitness: Help older clients with fitness challenges.</li>{" "}
+              <li>Ethical business policies On-time deliver/ execution</li>
+              <li>Easy payment mode Customized solutions Best Consultancy</li>
+              <li>Use of advanced technology We listen,We understand,</li>
+              <li>We provide Solution A great experience with</li>{" "}
+              <li>Happy clients 100% Trustable Service</li>{" "}
               <li>
-              Sports performance: A specialization within the fitness industry.
+                Provider We Empower our Clients to Utilize Digital Technology
               </li>
             </ul>
           </div>
         </div>
         {/* Our Services */}
         <div className="our_services" ref={ServiceRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Our Services <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Our Services</h3>
           </div>
           <div className="All_Services">
             {/* Service */}
             <div className="Service">
               <div className="service_title">
-                <h5>Personalized training programs</h5>
+                <h5> Digital Marketing</h5>
               </div>
               <div className="service_description">
                 <p>
-                Personalized training is a tailored approach to learning and development that addresses the specific needs and preferences of individual learners.
+                  Digital marketing, also called online marketing, is the
+                  promotion of brands to connect with potential customers using
+                  the internet and other forms of digital communication.
                 </p>
 
                 <p>
-                It goes beyond a one-size-fits-all approach by customizing training content, delivery methods, and pace to match the learner's knowledge, skills, and learning style.
+                  This includes not only email, social media, and web-based
+                  advertising, but also text and multimedia messages as a
+                  marketing channel.
                 </p>
               </div>
               <div className="service_link">
@@ -875,7 +1014,7 @@ const MANAGER_PREVIEW = () => {
               </div>
               <div className="service_image">
                 <img
-                  src="https://img.freepik.com/free-photo/young-sports-people-training-morning-gym_1157-28958.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                  src="https://img.freepik.com/free-vector/digital-marketing-landing-page_33099-1726.jpg?t=st=1726786737~exp=1726790337~hmac=b765ce6cadc0c65e67fc2e8131cfd3616ebdd05a1735fa7e6d92d2a6c5fb012a&w=900"
                   alt="service_image"
                 />
               </div>
@@ -894,16 +1033,18 @@ const MANAGER_PREVIEW = () => {
             {/* Service */}
             <div className="Service">
               <div className="service_title">
-                <h5>Nutrition Advice </h5>
+                <h5>Static WebSite Building</h5>
               </div>
               <div className="service_description">
                 <p>
-                Eat a variety of foods: Eat a variety of foods from each of the five food groups, including fruits, vegetables, whole grains, protein sources, and healthy fats. 
-
+                  A static website is a website that displays the same content
+                  to every user, regardless of their location, preferences.
                 </p>
 
                 <p>
-                Reduce unhealthy fats, salt, and sugar: Eat less salt, sugars, and saturated and industrially-produced trans-fats.
+                  Static websites are often used for personal or marketing
+                  sites. They are also sometimes called brochure sites because
+                  they provide similar information to a business brochure.
                 </p>
               </div>
               <div className="service_link">
@@ -913,44 +1054,7 @@ const MANAGER_PREVIEW = () => {
               </div>
               <div className="service_image">
                 <img
-                  src="https://img.freepik.com/free-photo/nutrition-facts-comparison-food-dietery_53876-123817.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
-                  alt="service_image"
-                />
-              </div>
-              <div className="service_action">
-                <div className="service_price">
-                  <h5>Price : &nbsp;</h5>
-                  <p>₹1000</p>
-                </div>
-                <div className="service_enquiry">
-                  <a href="#" target="_blank" className="service_button">
-                    Enquire Now <GrChat />
-                  </a>
-                </div>
-              </div>
-            </div>
-            {/* Service */}
-            <div className="Service">
-              <div className="service_title">
-                <h5>Motivational Coaching</h5>
-              </div>
-              <div className="service_description">
-                <p>
-                Motivational coaches focus on helping clients tap into their inner resources and push themselves to achieve their goals and lead more fulfilling lives.
-                </p>
-
-                <p>
-                It's important to note that while coaches often act as cheerleaders for clients, motivational coaches understand that real motivation comes from within.
-                </p>
-              </div>
-              <div className="service_link">
-                <a href="#" target="_blank">
-                  For More Details <TbUnlink />
-                </a>
-              </div>
-              <div className="service_image">
-                <img
-                  src="https://img.freepik.com/free-photo/portrait-basketball-coach-with-player_23-2151098185.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                  src="https://img.freepik.com/free-photo/html-css-collage-concept-with-person_23-2150062008.jpg?t=st=1726784921~exp=1726788521~hmac=dd4bbc9d6130e6843510418659abe6f8ba58c314f37575d1c393aefcf4d50673&w=900"
                   alt="service_image"
                 />
               </div>
@@ -966,23 +1070,65 @@ const MANAGER_PREVIEW = () => {
                 </div>
               </div>
             </div>
+            {/* Service */}
+            <div className="Service">
+              <div className="service_title">
+                <h5>FullStack Ecommerse Website </h5>
+              </div>
+              <div className="service_description">
+                <p>
+                  Full stack developers have expertise in systems architecture,
+                  and can code in multiple languages. As a full stack developer,
+                  your resume should reflect a balance between technical
+                  know-how and intuitive design.
+                </p>
+
+                <p>
+                  In this guide, we'll break down 10 full stack developer resume
+                  examples to help you position your qualifications for maximum
+                  impact.
+                </p>
+              </div>
+              <div className="service_link">
+                <a href="#" target="_blank">
+                  For More Details <TbUnlink />
+                </a>
+              </div>
+              <div className="service_image">
+                <img
+                  src="https://img.freepik.com/premium-photo/profile-it-developer-sitting-against-software-codding-monitor-gusher_31965-634451.jpg?w=900"
+                  alt="service_image"
+                />
+              </div>
+              <div className="service_action">
+                <div className="service_price">
+                  <h5>Price : &nbsp;</h5>
+                  <p>₹6000</p>
+                </div>
+                <div className="service_enquiry">
+                  <a href="#" target="_blank" className="service_button">
+                    Enquire Now <GrChat />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         {/* Our Product */}
         <div className="our_products" ref={ProductRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Our Products <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Our Products</h3>
           </div>
           <div className="All_Products">
             {/* Product */}
             <div className="Product">
               <div className="product_image">
-                <img src='https://img.freepik.com/premium-photo/gym-with-large-window-large-window-with-view-back-gym_1064589-39949.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid' alt="service_image" />
+                <img src={product1} alt="service_image" />
               </div>
               <div className="product_action">
                 <div className="product_price">
                   <h5>Price : &nbsp;</h5>
-                  <p>₹5000</p>
+                  <p>₹599</p>
                 </div>
                 <div className="product_enquiry">
                   <a href="#" target="_blank" className="product_button">
@@ -991,16 +1137,23 @@ const MANAGER_PREVIEW = () => {
                 </div>
               </div>
               <div className="product_title">
-                <h5>Treadmills</h5>
+                <h5> MyVirtual Card</h5>
               </div>
               <div className="product_description">
                 <p>
-                Rather than the user powering a mill, the device provides a moving platform with a wide conveyor belt driven by an electric motor or a flywheel. 
+                  Customize Your Digital Identity Effortlessly with My Virtual
+                  Card!. People are online Now, So convert your Business Card
+                  Digitally to share on their mobiles and Wishing your customers
+                  encourage them to connect with you.
                 </p>
+
                 <p>
-                The belt moves to the rear, requiring the user to walk or run at a speed matching the belt. The rate at which the belt moves is the rate of walking or running.
+                  A digital vCard, or virtual business card, is a modern
+                  alternative to traditional paper business cards. It contains
+                  essential contact information such as name, job title, company
+                  name, phone number, email address, and more, all stored in a
+                  digital format.
                 </p>
-              
               </div>
               <div className="product_link">
                 <a href="#" target="_blank">
@@ -1012,14 +1165,14 @@ const MANAGER_PREVIEW = () => {
             <div className="Product">
               <div className="product_image">
                 <img
-                  src="https://img.freepik.com/premium-photo/machine-with-word-gears-it_9493-74095.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                  src="https://img.freepik.com/premium-photo/ecommerce-market-shopping-online-vector-illustration_1108314-455389.jpg?w=826"
                   alt="service_image"
                 />
               </div>
               <div className="product_action">
                 <div className="product_price">
                   <h5>Price : &nbsp;</h5>
-                  <p>₹7099</p>
+                  <p>₹1099</p>
                 </div>
                 <div className="product_enquiry">
                   <a href="#" target="_blank" className="product_button">
@@ -1028,15 +1181,23 @@ const MANAGER_PREVIEW = () => {
                 </div>
               </div>
               <div className="product_title">
-                <h5>Exercise Bikes</h5>
+                <h5> My Orders</h5>
               </div>
               <div className="product_description">
                 <p>
-                Exercise bikes are used for exercise, to increase general fitness, for weight loss, and for training for cycle events. 
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
                 </p>
 
                 <p>
-                The exercise bike has long been used for physical therapy because of the low-impact, safe, and effective cardiovascular exercise it provides.
+                  Many desktop publishing packages and web page editors now use
+                  Lorem Ipsum as their default model text, and a search for
+                  'lorem ipsum' will uncover many web sites still in their
+                  infancy. Various versions have evolved over the years,
+                  sometimes by accident, sometimes on purpose (injected humour
+                  and the like).
                 </p>
               </div>
               <div className="product_link">
@@ -1049,8 +1210,8 @@ const MANAGER_PREVIEW = () => {
         </div>
         {/* Payment */}
         <div className="Payment" ref={PaymentRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>For Payment <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>For Payment</h3>
           </div>
           <div className="payment_details">
             <div className="detail">
@@ -1086,7 +1247,7 @@ const MANAGER_PREVIEW = () => {
           </div>
 
           <div className="sub_title">
-            <h4>Account Details :</h4>
+            <h3>Account Details :</h3>
           </div>
           <div className="account_details">
           <div className="detail">
@@ -1095,7 +1256,7 @@ const MANAGER_PREVIEW = () => {
               </div>
               <div className="detail_message">
                 <strong>:</strong>
-                <p>Auntony</p>
+                <p>John Wick</p>
               </div>
             </div>
             <div className="detail">
@@ -1138,7 +1299,7 @@ const MANAGER_PREVIEW = () => {
             </div>
           </div>
           <div className="sub_title">
-            <h4>QR Code :</h4>
+            <h3>QR Code :</h3>
           </div>
           <div className="qr_code_upi_name">
             <h4>Google Pay</h4>
@@ -1146,12 +1307,12 @@ const MANAGER_PREVIEW = () => {
           <div className="qr_image_box">
             <div className="user_name">
               <h4>
-                To Karthick<LiaHandPointDownSolid />
+                To John Wick <LiaHandPointDownSolid />
               </h4>
             </div>
             <div className="qr_image">
               <img
-                src="https://img.freepik.com/free-vector/scan-me-qr-code_78370-2915.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/premium-vector/qr-code-white-box-circle_78370-5879.jpg?w=740"
                 alt="qrcode"
               />
             </div>
@@ -1162,49 +1323,49 @@ const MANAGER_PREVIEW = () => {
         </div>
         {/* Gallery */}
         <div className="gallery" ref={GalleryRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Gallery <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Gallery</h3>
           </div>
 
           <div className="all_gallerys">
             <div className="gallery_image">
               <img
-                src="https://img.freepik.com/free-photo/female-instructor-giving-training-young-woman-exercising-with-dumbbell_23-2147827948.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/free-vector/isometric-e-commerce-concept-with-online-shop_23-2148561915.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                 alt="image"
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
             <div className="gallery_image">
               <img
-                src="https://img.freepik.com/free-photo/dumbbells-arrangement-gym_23-2150007137.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/free-photo/add-cart-buy-now-online-commerce-graphic-concept_53876-133964.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                 alt="image"
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
             <div className="gallery_image">
               <img
-                src="https://img.freepik.com/premium-photo/commercial-gym-equipment-room-background-with-black-walls_1092689-36688.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/premium-photo/ecommerce-banner_1281315-2612.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                 alt="image"
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
             <div className="gallery_image">
               <img
-                src="https://img.freepik.com/free-photo/cast-iron-dumbbell-weights_1048-11523.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/free-vector/flat-design-e-commerce-website-landing-page_23-2149581922.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                 alt="image"
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
             <div className="gallery_image">
               <img
-                src="https://img.freepik.com/premium-photo/participate-fitness-challenge-exercise-rou-generative-ai_1198283-94300.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/free-vector/isometric-e-commerce-concept-with-online-shop_23-2148561915.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                 alt="image"
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
             <div className="gallery_image">
               <img
-                src="https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114221.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                src="https://img.freepik.com/premium-photo/shopping-ecommerce_1324152-859.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                 alt="image"
                 onClick={(e) => openFullImage(e.target.src)}
               />
@@ -1213,31 +1374,47 @@ const MANAGER_PREVIEW = () => {
         </div>
         {/* Videos */}
         <div className="video" ref={VideoRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Videos <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Videos</h3>
           </div>
 
           <div className="videos_container">
             <div className="video_image">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/eaRQF-7hhmo?si=rhJXPt75nvOfwQV1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/ZZ1lnw8D3Qo?si=69n8qzoZRXN-35nQ"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
             </div>
             <div className="video_image">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/24fdcMw0Bj0?si=82wS4nfudZoDuTly" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/DPSnDz8-GGs?si=rYYa3Fv6OD_aQLy1"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
             </div>
           </div>
         </div>
         {/* Opentime */}
-        <div className="row_5" ref={TimeRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>
-            Open&Close Time <FaHandPointDown className="icon"/>
-            </h3>
+        <div className="time_container" ref={TimeRef}>
+          <div className="doctor_title_demo">
+            <h3>Open&Close Time</h3>
             {/* Contact */}
           </div>
           <div className="time_list_container">
             <div className="time_list">
               <div className="day">
-                <span>Monday</span>
+                <span>Monday To Saturday</span>
               </div>
               <div className="time">
                 <div className="start">
@@ -1250,69 +1427,10 @@ const MANAGER_PREVIEW = () => {
                 </div>
               </div>
             </div>
+
             <div className="time_list">
               <div className="day">
-                <span>Tuesday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Wednesday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Thursday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Friday</span>
-              </div>
-              <div className="time">
-                <div className="start">
-                  <h6>Open Time</h6>
-                  <span>9:00 AM</span>
-                </div>
-                <div className="end">
-                  <h6>Close Time</h6>
-                  <span>6:00 PM</span>
-                </div>
-              </div>
-            </div>
-            <div className="time_list">
-              <div className="day">
-                <span>Weekend Days</span>
+                <span>For Weekend</span>
               </div>
               <div className="time">
                 <div className="start">
@@ -1328,17 +1446,15 @@ const MANAGER_PREVIEW = () => {
           </div>
         </div>
         {/* Testimonials */}
-        <div className="Tesimonial" ref={TestimonialRef}>
-        <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>
-            Testimonial<FaHandPointDown className="icon"/>
-            </h3>
-           
+        <div className="testimonial" ref={TestimonialRef}>
+          <div className="doctor_title_demo">
+            <h3>Testimonial</h3>
+            {/* Contact */}
           </div>
           <div className="testimonial_container">
             <Carousel
               showThumbs={false}
-              showStatus={false}
+              showStatus={true}
               infiniteLoop
               autoPlay
             >
@@ -1428,8 +1544,8 @@ const MANAGER_PREVIEW = () => {
         {/* GoogleMap */}
 
         <div className="google_map_container" ref={LocationRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Live Location <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Live Location</h3>
           </div>
 
           <div className="google_map">
@@ -1440,8 +1556,8 @@ const MANAGER_PREVIEW = () => {
         </div>
         {/* Feedback */}
         <div className="feedback_row" ref={FeedbackRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Feedback <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Feedback</h3>
             {/* Contact */}
           </div>
           <div className="feedback_container">
@@ -1666,8 +1782,8 @@ const MANAGER_PREVIEW = () => {
         </div>
         {/* Inquries */}
         <div className="Inquries" ref={InquiryRef}>
-          <div className="MANAGER_PREVIEW_DEMO_TITLE">
-            <h3>Inquries <FaHandPointDown className="icon"/></h3>
+          <div className="doctor_title_demo">
+            <h3>Inquries</h3>
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1723,8 +1839,8 @@ const MANAGER_PREVIEW = () => {
           </div>
         </div>
         {/* Footer */}
-        <div className="Gym_Footer">
-          <div className="gym_footer_container">
+        <div className="Footer">
+          <div className="footer_container">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path
                 fill={style.$second_back__color}
@@ -1740,4 +1856,4 @@ const MANAGER_PREVIEW = () => {
   );
 };
 
-export default MANAGER_PREVIEW;
+export default CORPORATE_PREVIEW;
