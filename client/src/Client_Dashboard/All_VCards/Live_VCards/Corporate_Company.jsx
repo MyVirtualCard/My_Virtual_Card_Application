@@ -66,9 +66,6 @@ const Corporate_Company = () => {
   let [FeedbackPopupError, setFeedbackPopupError] = useState(false);
   let [AppoinmentPopup, setAppoinmentPopup] = useState(false);
   let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
-  let [ClientName, setClientName] = useState("");
-  let [ClientFeedback, setClientFeedback] = useState("");
-  let [ClientRatting, setClientRatting] = useState(0);
   //create a new vCard
   var vCard = vCardsJS();
 
@@ -98,64 +95,6 @@ const Corporate_Company = () => {
     linkElement.click();
     document.body.removeChild(linkElement);
   }
-  //gallery
-  const buttonStyle = {
-    width: "20px",
-    background: "none",
-    opacity: 1,
-    border: "0px",
-    padding: "0px",
-    fontSize: "2rem",
-    borderRadius: "10px",
-    color: "#ffffff",
-  };
-  const properties = {
-    prevArrow: (
-      <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">keyboard_backspace</span>
-      </button>
-    ),
-    nextArrow: (
-      <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">east</span>
-      </button>
-    ),
-  };
-  const gallery_buttonStyle = {
-    width: "20px",
-    background: "none",
-    opacity: 1,
-    border: "0px",
-    padding: "0px",
-    fontSize: "2rem",
-    borderRadius: "10px",
-    color: "#ffffff",
-  };
-  const gallery_properties = {
-    prevArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
-      </button>
-    ),
-    nextArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
-      </button>
-    ),
-  };
-
   //Gallery Functionality
   //openFullImage preview:
   function openFullImage(pic) {
@@ -165,7 +104,6 @@ const Corporate_Company = () => {
     fullImage.src = pic;
     // scrollToSection(GalleryRef), setActiveMenu("Gallery");
   }
-  let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
   window.addEventListener("scroll", () => {
@@ -180,49 +118,7 @@ const Corporate_Company = () => {
 
     fullImageBox.style.display = "none";
   }
-
-  //Start Ratting:
-  // let currentRatting=0;
-  function handleRatting(e) {
-    let star = e.target;
-    // console.log(star,star.classList);
-    if (star.classList.contains("star")) {
-      let ratting = parseInt(star.dataset.rating, 10);
-      highlightStar(ratting);
-    }
-  }
-  //Remove Ratting:
-  function removeRatting() {
-    highlightStar(ClientRatting);
-  }
-  //Staring Setted
-  function RattingSetted(e) {
-    let starRating = document.querySelector(".ratting_container");
-    let star = e.target;
-    console.log(star, star.classList);
-    if (star.classList.contains("star")) {
-      setClientRatting(parseInt(star.dataset.rating, 10));
-      console.log(ClientRatting);
-      starRating.setAttribute("data-rating", ClientRatting);
-      highlightStar(ClientRatting);
-    }
-  }
-
-  //Highlight star color:
-  function highlightStar(ratting) {
-    let stars = document.querySelectorAll(".star");
-
-    stars.forEach((star, index) => {
-      if (index < ratting) {
-        star.classList.add("highlight");
-      } else {
-        star.classList.remove("highlight");
-      }
-    });
-  }
-
   //Menu actions
-
   let [activeMenu, setActiveMenu] = useState("Home");
   let HomeRef = useRef(null);
   let AboutRef = useRef(null);
@@ -476,7 +372,7 @@ const Corporate_Company = () => {
     const vCardData = `
 BEGIN:VCARD
 VERSION:3.0
-FN:${BasicData.length > 0 ? BasicData[0].FirstName : ""}
+FN:${BasicData.length > 0 ? VCard_URL_Data[0].FirstName : ""}
 TEL;TYPE=cell:${BasicData.length > 0 ? BasicData[0].MobileNumber : ""}
 EMAIL:${BasicData.length > 0 ? BasicData[0].Email : ""}
 END:VCARD
@@ -492,7 +388,7 @@ END:VCARD
       "JPEG"
     );
     link.download = `${
-      BasicData.length > 0 ? BasicData[0].FirstName : "card.vcf"
+      VCard_URL_Data.length > 0 ? VCard_URL_Data[0].FirstName : "card.vcf"
     }.vcf`;
     document.body.appendChild(link);
     link.click();
@@ -540,7 +436,9 @@ END:VCARD
   }
   useEffect(() => {
     fetchAllData();
+  
   }, []);
+
   useEffect(() => {
     api
       .get(`/feedback${window.location.pathname}`)
@@ -550,7 +448,7 @@ END:VCARD
       .catch((error) => {
         console.log(error);
       });
-  }, [feedbackFormik]);
+  }, [InquiryLoader]);
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
@@ -995,7 +893,7 @@ END:VCARD
                   </a>
                   {/* AddtoContact */}
                   <div className="add_to_contact">
-                    <button onClick={generateVCF}>
+                    <button onClick={handleDownloadVCard}>
                       Add to Contact<i className="bx bxs-contact"></i>
                     </button>
                   </div>
@@ -1087,12 +985,12 @@ END:VCARD
                                   >
                                     <stop
                                       id="stop1"
-                                      stop-color="rgba(248, 117, 55, 1)"
+                                      stopColor="rgba(248, 117, 55, 1)"
                                       offset="0%"
                                     ></stop>
                                     <stop
                                       id="stop2"
-                                      stop-color="rgba(251, 168, 31, 1)"
+                                      stopColor="rgba(251, 168, 31, 1)"
                                       offset="100%"
                                     ></stop>
                                   </linearGradient>
@@ -1132,12 +1030,12 @@ END:VCARD
                                   >
                                     <stop
                                       id="stop3"
-                                      stop-color="rgba(248, 117, 55, 1)"
+                                      stopColor="rgba(248, 117, 55, 1)"
                                       offset="0%"
                                     ></stop>
                                     <stop
                                       id="stop4"
-                                      stop-color="rgba(251, 168, 31, 1)"
+                                      stopColor="rgba(251, 168, 31, 1)"
                                       offset="100%"
                                     ></stop>
                                   </linearGradient>
@@ -1178,12 +1076,12 @@ END:VCARD
                                   >
                                     <stop
                                       id="stop5"
-                                      stop-color="rgba(248, 117, 55, 1)"
+                                      stopColor="rgba(248, 117, 55, 1)"
                                       offset="0%"
                                     ></stop>
                                     <stop
                                       id="stop6"
-                                      stop-color="rgba(251, 168, 31, 1)"
+                                      stopColor="rgba(251, 168, 31, 1)"
                                       offset="100%"
                                     ></stop>
                                   </linearGradient>
@@ -1224,12 +1122,12 @@ END:VCARD
                                   >
                                     <stop
                                       id="stop11"
-                                      stop-color="rgba(248, 117, 55, 1)"
+                                      stopColor="rgba(248, 117, 55, 1)"
                                       offset="0%"
                                     ></stop>
                                     <stop
                                       id="stop12"
-                                      stop-color="rgba(251, 168, 31, 1)"
+                                      stopColor="rgba(251, 168, 31, 1)"
                                       offset="100%"
                                     ></stop>
                                   </linearGradient>
@@ -1271,12 +1169,12 @@ END:VCARD
                                   >
                                     <stop
                                       id="stop7"
-                                      stop-color="rgba(248, 117, 55, 1)"
+                                      stopColor="rgba(248, 117, 55, 1)"
                                       offset="0%"
                                     ></stop>
                                     <stop
                                       id="stop8"
-                                      stop-color="rgba(251, 168, 31, 1)"
+                                      stopColor="rgba(251, 168, 31, 1)"
                                       offset="100%"
                                     ></stop>
                                   </linearGradient>
@@ -1722,9 +1620,9 @@ END:VCARD
                           300
                         )}`}
                         title="YouTube video player"
-                        frameborder="0"
+                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
+                        referrerPolicy="strict-origin-when-cross-origin"
                         allowFullScreen
                       ></iframe>
                     </div>
@@ -1918,7 +1816,7 @@ END:VCARD
                       className="submit-btn"
                       onClick={Appoinment_formik.resetForm}
                     >
-                      <span class="material-symbols-outlined">clear_all</span>
+                      <span className="material-symbols-outlined">clear_all</span>
                       clear
                     </button>
                   </div>
@@ -2143,7 +2041,7 @@ END:VCARD
                 {/* Contact */}
               </div>
 
-              {GoogleMapData.map((data, index) => {
+              {GoogleMapData.map((data, index) => { 
                 return (
                   <div className="google_map" key={index}>
                     <HtmlRenderer htmlString={data.GoogleIframe} />

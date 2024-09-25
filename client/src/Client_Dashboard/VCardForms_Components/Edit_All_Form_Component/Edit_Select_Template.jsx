@@ -167,6 +167,7 @@ const Select_Template = () => {
   let [VCardAdded, setVCardAdded] = useState(0);
   let [savedTemplate, setSavedTemplate] = useState(null);
   let [Count, setCount] = useState(0);
+
   let handShow=()=>{
   // Set up the interval to increment the count every second
   const interval = setInterval(() => {
