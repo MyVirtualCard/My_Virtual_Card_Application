@@ -1,26 +1,27 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import "./Edit_form_styles/Edit_Select_Template.scss";
 import { ToastContainer, toast,Bounce } from 'react-toastify';
-import Gym_Trainer from "../../../assets/Digicards/Gym_Trainer.png";
-import Taxi_Service from "../../../assets/Digicards/Taxi_Service.png";
-import Fashion_Desinger from "../../../assets/Digicards/Fashion_Designer.png";
-import Manager from "../../../assets/Digicards/Manager-1.png";
-import Bussiness from "../../../assets/Digicards/Bussiness_Consultant.png";
-import RealEstate from "../../../assets/Digicards/Real_Estate.png";
-import BeautyParlor from "../../../assets/Digicards/Beauty_Parlor1.png";
-import BoutiqueShop from "../../../assets/Digicards/Boutique_Shop.png";
-import CorporateCompany from "../../../assets/Digicards/Corporate_Company.png";
+import Gym_Trainer from "../../../assets/Digicards/Preview/GYM_TRAINER_PREVIEW.png";
+import Taxi_Service from "../../../assets/Digicards/Preview/TAXI_DRIVER_PREVIEW.png";
+import Fashion_Desinger from "../../../assets/Digicards/Preview/FASHION_DESIGNER_PREVIEW.png";
+import Manager from "../../../assets/Digicards/Preview/MANAGER_PREVIEW.png";
+// import Bussiness from "../../../assets/Digicards/Bussiness_Consultant.png";
+// import RealEstate from "../../../assets/Digicards/Real_Estate.png";
+import BeautyParlor from "../../../assets/Digicards/Preview/BEAUTY_PARLOR_PREVIEW.png";
+// import BoutiqueShop from "../../../assets/Digicards/Boutique_Shop.png";
+import CorporateCompany from "../../../assets/Digicards/Preview/CORPORATE_COMPANY_PREVIEW.png";
 import selected_gif from "../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../assets/animations/touch.gif";
 import Context from "../../../Context/GlobalContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
+import touch_hand from "../../../assets/Client_Dashboard/touch.gif";
 let FreeTemplate = [
   {
     id: 5,
-    image: Bussiness,
-    TemplateName: "Bussiness Consultant",
+    image: CorporateCompany,
+    TemplateName: "Corporate Company",
   },
 ];
 let BasicTemplate = [
@@ -29,42 +30,34 @@ let BasicTemplate = [
     image: CorporateCompany,
     TemplateName: "Corporate Company",
   },
-  // {
-  //   id: 2,
+  {
+    id: 2,
+    image: Gym_Trainer,
+    TemplateName: "Gym Trainer",
+  },
+  {
+    id: 3,
 
-  //   image: Taxi_Service,
-  //   TemplateName: "Taxi Service",
-  // },
-  // {
-  //   id: 3,
-  //   image: Fashion_Desinger,
-  //   TemplateName: "Fashion Designer",
-  // },
-  // {
-  //   id: 4,
-  //   image: Manager,
-  //   TemplateName: "Manager",
-  // },
-  // {
-  //   id: 5,
-  //   image: Bussiness,
-  //   TemplateName: "Bussiness Consultant",
-  // },
-  // {
-  //   id: 6,
-  //   image: RealEstate,
-  //   TemplateName: "Real Estate",
-  // },
-  // {
-  //   id: 7,
-  //   image: BeautyParlor,
-  //   TemplateName: "Beauty Parlor",
-  // },
-  // {
-  //   id: 8,
-  //   image: BoutiqueShop,
-  //   TemplateName: "Boutique Shop's",
-  // },
+    image: Taxi_Service,
+    TemplateName: "Taxi Service",
+  },
+  {
+    id: 4,
+    image: Fashion_Desinger,
+    TemplateName: "Fashion Designer",
+  },
+  {
+    id: 5,
+    image: Manager,
+    TemplateName: "Manager",
+  },
+
+  {
+    id: 6,
+    image: BeautyParlor,
+    TemplateName: "Beauty Parlor",
+  },
+
 ];
 let StandardTemplate = [
   {
@@ -90,13 +83,13 @@ let StandardTemplate = [
   },
   {
     id: 5,
-    image: Bussiness,
-    TemplateName: "Bussiness Consultant",
+    image: CorporateCompany,
+    TemplateName: "Corporate Company",
   },
   {
     id: 6,
-    image: RealEstate,
-    TemplateName: "Real Estate",
+    image: BeautyParlor,
+    TemplateName: "Beauty Parlor",
   },
 
 ];
@@ -124,48 +117,14 @@ let EnterpriceTemplate = [
   },
   {
     id: 5,
-    image: Bussiness,
-    TemplateName: "Bussiness Consultant",
+    image: CorporateCompany,
+    TemplateName: "Corporate Company",
   },
   {
     id: 6,
-    image: RealEstate,
-    TemplateName: "Real Estate",
-  },
-  {
-    id: 7,
     image: BeautyParlor,
     TemplateName: "Beauty Parlor",
   },
-  {
-    id: 8,
-    image: BoutiqueShop,
-    TemplateName: "Boutique Shop's",
-  },
-  // {
-  //   id: 4,
-  //   image: card4,
-  // },
-  // {
-  //   id: 5,
-  //   image: card3,
-  // },
-  // {
-  //   id: 6,
-  //   image: card7,
-  // },
-  // {
-  //   id: 7,
-  //   image: card1,
-  // },
-  // {
-  //   id: 8,
-  //   image: card9,
-  // },
-  // {
-  //   id: 9,
-  //   image: card8,
-  // },
 ];
 
 const Select_Template = () => {
@@ -207,15 +166,37 @@ const Select_Template = () => {
   // let [currentTemplate, setCurrentTemplate] = useState(null);
   let [VCardAdded, setVCardAdded] = useState(0);
   let [savedTemplate, setSavedTemplate] = useState(null);
+  let [Count, setCount] = useState(0);
+  let handShow=()=>{
+  // Set up the interval to increment the count every second
+  const interval = setInterval(() => {
+    setCount((prevCount) => prevCount + 1);
+  }, 1000);
+
+  // Clear the interval after 10 seconds
+  const timeout = setTimeout(() => {
+    clearInterval(interval);
+  }, 3000); // 5 seconds
+
+  // Cleanup function: clear interval and timeout on component unmount
+  return () => {
+    clearInterval(interval);
+    clearTimeout(timeout);
+  };
+  }
+
   function handle_Template_Selection(getCurrentId) {
     setCurrentTemplate(getCurrentId === currentTemplate ? null : getCurrentId);
-
+     setCount(0)
     if (getCurrentId === currentTemplate) {
       toast.error("Select Your VCard Template!");
+      setCount(3)
     } else if (currentTemplate != savedTemplate && savedTemplate != null) {
+      setCount(3)
       toast.error("Already VCard Selected!");
     } else {
       toast.success("VCard Selected!");
+      handShow();
     }
   }
   const api = axios.create({
@@ -247,6 +228,7 @@ const Select_Template = () => {
   }
   useEffect(() => {
     fetchCurrentTemplate();
+    setCount(3)
   }, []);
 
   let formik = useFormik({
@@ -272,6 +254,7 @@ const Select_Template = () => {
         .then((res) => {
           toast.success(res.data.message);
           setFormSubmitLoader(false);
+          setCount(3)
           setTimeout(() => {
             setShowForm("Contact Details");
           }, 1000);
@@ -284,6 +267,7 @@ const Select_Template = () => {
   });
 
   async function handleTemplateUpdate() {
+    setCount(3)
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
@@ -299,6 +283,7 @@ const Select_Template = () => {
       .then((res) => {
         setFormSubmitLoader(false);
         toast.success(res.data.message);
+        setCount(3)
         setTimeout(() => {
           setShowForm("Contact Details");
         }, 2000);
@@ -317,11 +302,11 @@ const Select_Template = () => {
         <div className="row_one">
           {currentTemplate == null ? (
             <h6>
-              Select {currentPlan} Template <sup>*</sup>
+              Select {currentPlan} Plan Template <sup>*</sup>
             </h6>
           ) : (
             <h6>
-              Selected {currentPlan} Template <sup>*</sup>
+              Selected {currentPlan} Plan Template <sup>*</sup>
             </h6>
           )}
 
@@ -333,6 +318,13 @@ const Select_Template = () => {
             <button onClick={handleTemplateUpdate} type="submit">
               Update VCard Design
               <span class="material-symbols-outlined">update</span>
+              {Count != 3 ? (
+                            <div className="touch_hand">
+                              <img src={touch_hand} alt="hand" />
+                            </div>
+                          ) : (
+                            ""
+                          )}
             </button>
           )}
         </div>
@@ -424,7 +416,7 @@ const Select_Template = () => {
                     return (
                       <div
                         className={
-                          savedTemplate != null ? "free_image" : "single_template"
+                          savedTemplate != null ? "free_image" : "image"
                         }
                         key={index}
                         id={

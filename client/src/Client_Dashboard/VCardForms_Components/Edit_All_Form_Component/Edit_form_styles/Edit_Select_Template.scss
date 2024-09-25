@@ -36,8 +36,21 @@
     background-color: royalblue;
     color: #fff;
     transition: all 0.3s ease;
+    position: relative;
     span{
       font-size: 1.2rem;
+    }
+    .touch_hand{
+      position: absolute;
+      top: 65%;
+      right: 50%;
+
+      img{
+        width: 30px;
+        height: 30px;
+        mix-blend-mode: multiply;
+        
+      }
     }
     &:hover{
       background-color: rgb(105, 141, 248);
@@ -72,39 +85,41 @@
       overflow-y: scroll;
       .image_container {
         display: grid;
-        width: 90%;
-        height: 100%;
+        width: 100%;
+        height: auto;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         // grid-template-columns: 1fr 1fr 1fr;
         grid-row-gap: 1rem;
         grid-column-gap: 1rem;
        margin:1rem auto;
         // place-items: star;
+        // padding-bottom: 2rem;
+      
         .image {
           width: 200px !important;
           max-width: 200px;
           height: 450px;
           background-color: #ffffff;
-          box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
           position: relative;
-          border-radius: 0.5rem;
+      
           overflow-y: scroll;
         padding: 0px;
-          // border: 1px solid rgb(152, 226, 255);s
+        
           opacity: 1;
           transition: all 1s ease-in-out;
           scroll-behavior: smooth;
           margin: 1rem auto;
           .selected_gif{
             position: absolute;
-            right: 2%;
-            top: 5%;
+            right: 1%;
+            top: 1%;
             z-index: 800;
             img{
-              width: 20px;
-              height: 20px;
+              width: 30px;
+              height: 30px;
               mix-blend-mode: multiply !important;
-          border-radius: 5px;
+          border-radius: 1rem;
         
             }
             small{
@@ -125,7 +140,6 @@
             }
           }
           .vcard_name{
-
             h4{
               display: flex;
               align-items: center;
@@ -152,7 +166,7 @@
        
             img {
               width: 100%;
-              border-radius: 0.5rem;
+              // border-radius: 0.5rem;
               object-fit: cover;
               object-position: center;
               transform: translateY(0%);
@@ -179,7 +193,7 @@
        
             img {
               width: 100%;
-              border-radius: 0.5rem;
+              // border-radius: 0.5rem;
               object-fit: cover;
               object-position: center;
               transform: translateY(0%);
@@ -203,7 +217,7 @@
               // height: 1500px;
               scroll-behavior: smooth;
               opacity: 0.8;
-              border: 1px solid rgb(8, 128, 133);
+              border: 1px solid rgb(255, 255, 255);
                 transition: all 1s ease-in-out;
          
                   img{
@@ -230,7 +244,7 @@ width: 90% !important;
           border-radius: 0.5rem;
           overflow-y: scroll;
         padding: 0px;
-          border: 1px solid rgb(214, 214, 214);
+          border: 1px solid rgb(255, 255, 255);
           opacity: 1;
           transition: all 0.2s ease-in-out;
           scroll-behavior: smooth;
