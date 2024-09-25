@@ -32,7 +32,7 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
-
+import { FaUserGroup } from "react-icons/fa6";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
@@ -236,6 +236,7 @@ const Corporate_Company = () => {
   let LocationRef = useRef(null);
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
+  let AppoinmentRef=useRef(null);
   let scrollToSection = (elementRef) => {
     console.log(elementRef);
     elementRef.current.scrollIntoView({ behavior: "smooth" });
@@ -572,130 +573,218 @@ END:VCARD
         <img src={banner} alt="gallery" id="fullImage" />
       </div>
       {/* Menu Navbar */}
-      <div className="menu_navbar_box">
-        <div className={`up_btn ${activeMenu === "Home" ? "hideUpArrow" : ""}`}>
-          <CiSquareChevUp onClick={HandleMenuUp} className="icon" />
-        </div>
-        <div className="all_menus">
+      {VCard_URL_Data.length > 0 ? (
+        <div className="menu_navbar_box">
           <div
-            className={`menu ${activeMenu === "Home" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(HomeRef), setActiveMenu("Home");
-            }}
+            className={`up_btn ${activeMenu === "Home" ? "hideUpArrow" : ""}`}
           >
-            <IoHome className="icon" />
-            <p>Home</p>
+            <CiSquareChevUp onClick={HandleMenuUp} className="icon" />
+          </div>
+          <div className="all_menus">
+            <div
+              className={`menu ${activeMenu === "Home" ? "menuActive" : ""}`}
+              onClick={() => {
+                scrollToSection(HomeRef), setActiveMenu("Home");
+              }}
+            >
+              <IoHome className="icon" />
+              <p>Home</p>
+            </div>
+            {AboutData.length > 0 ? (
+              <div
+                className={`menu ${activeMenu === "About" ? "menuActive" : ""}`}
+                onClick={() => {
+                  scrollToSection(AboutRef), setActiveMenu("About");
+                }}
+              >
+                <BiSolidUserDetail className="icon" />
+                <p>About</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {ServiceData.length > 0 && ManageContentData[0].Service == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Service" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(ServiceRef), setActiveMenu("Service");
+                }}
+              >
+                <MdMiscellaneousServices className="icon" />
+                <p>Service</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {ProductData.length > 0 && ManageContentData[0].Product == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Product" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(ProductRef), setActiveMenu("Product");
+                }}
+              >
+                <AiFillProduct className="icon" />
+                <p>Product</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {UPIData.length > 0 || BankData.length > 0 ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Payment" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(PaymentRef), setActiveMenu("Payment");
+                }}
+              >
+                <GiTakeMyMoney className="icon" />
+                <p>Payment</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {GalleryData.length > 0 && ManageContentData[0].Gallery == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Gallery" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(GalleryRef), setActiveMenu("Gallery");
+                }}
+              >
+                <GrGallery className="icon" />
+                <p>Gallery</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {VideoData.length > 0 ? (
+              <div
+                className={`menu ${activeMenu === "Video" ? "menuActive" : ""}`}
+                onClick={() => {
+                  scrollToSection(VideoRef), setActiveMenu("Video");
+                }}
+              >
+                <BiSolidVideo className="icon" />
+                <p>Videos</p>
+              </div>
+            ) : (
+              ""
+            )}
+              {VCard_URL_Data.length > 0 &&
+            ManageContentData[0].Appoinment == true ?  (
+              <div
+                className={`menu ${activeMenu === "Appoinment" ? "menuActive" : ""}`}
+                onClick={() => {
+                  scrollToSection(AppoinmentRef), setActiveMenu("Appoinment");
+                }}
+              >
+                <FaUserGroup className="icon" />
+                <p>Appoinment</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {BussinessHourData.length > 0 &&
+            ManageContentData[0].BussinessHour == true ? (
+              <div
+                className={`menu ${activeMenu === "Time" ? "menuActive" : ""}`}
+                onClick={() => {
+                  scrollToSection(TimeRef), setActiveMenu("Time");
+                }}
+              >
+                <MdSchedule className="icon" />
+                <p>Time</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {TestimonialData.length > 0 &&
+            ManageContentData[0].Testimonial == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Testimonial" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(TestimonialRef), setActiveMenu("Testimonial");
+                }}
+              >
+                <MdOutlineRateReview className="icon" />
+                <p>Testi..al</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {GoogleMapData.length > 0 &&
+            ManageContentData[0].GoogleMap == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Location" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(LocationRef), setActiveMenu("Location");
+                }}
+              >
+                <GrMapLocation className="icon" />
+                <p>Location</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {VCard_URL_Data.length > 0 &&
+            BasicData.length > 0 &&
+            SocialMediaData.length > 0 &&
+            ManageContentData[0].FeedbackForm == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Feedback" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(FeedbackRef), setActiveMenu("Feedback");
+                }}
+              >
+                <VscFeedback className="icon" />
+                <p>Feedback</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {VCard_URL_Data.length > 0 &&
+            BasicData.length > 0 &&
+            SocialMediaData.length > 0 &&
+            ManageContentData[0].InquiryForm == true ? (
+              <div
+                className={`menu ${
+                  activeMenu === "Inquiry" ? "menuActive" : ""
+                }`}
+                onClick={() => {
+                  scrollToSection(InquiryRef), setActiveMenu("Inquiry");
+                }}
+              >
+                <TbMessageChatbotFilled className="icon" />
+                <p>Inquries</p>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div
-            className={`menu ${activeMenu === "About" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(AboutRef), setActiveMenu("About");
-            }}
-          >
-            <BiSolidUserDetail className="icon" />
-            <p>About</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Service" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(ServiceRef), setActiveMenu("Service");
-            }}
-          >
-            <MdMiscellaneousServices className="icon" />
-            <p>Service</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Product" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(ProductRef), setActiveMenu("Product");
-            }}
-          >
-            <AiFillProduct className="icon" />
-            <p>Product</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Payment" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(PaymentRef), setActiveMenu("Payment");
-            }}
-          >
-            <GiTakeMyMoney className="icon" />
-            <p>Payment</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Gallery" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(GalleryRef), setActiveMenu("Gallery");
-            }}
-          >
-            <GrGallery className="icon" />
-            <p>Gallery</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Video" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(VideoRef), setActiveMenu("Video");
-            }}
-          >
-            <BiSolidVideo className="icon" />
-            <p>Videos</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Time" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(TimeRef), setActiveMenu("Time");
-            }}
-          >
-            <MdSchedule className="icon" />
-            <p>Time</p>
-          </div>
-          <div
-            className={`menu ${
-              activeMenu === "Testimonial" ? "menuActive" : ""
+            className={`down_btn ${
+              activeMenu === "Inquiry" ? "hideDownArrow" : ""
             }`}
-            onClick={() => {
-              scrollToSection(TestimonialRef), setActiveMenu("Testimonial");
-            }}
           >
-            <MdOutlineRateReview className="icon" />
-            <p>Testi..al</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Location" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(LocationRef), setActiveMenu("Location");
-            }}
-          >
-            <GrMapLocation className="icon" />
-            <p>Location</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Feedback" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(FeedbackRef), setActiveMenu("Feedback");
-            }}
-          >
-            <VscFeedback className="icon" />
-            <p>Feedback</p>
-          </div>
-          <div
-            className={`menu ${activeMenu === "Inquiry" ? "menuActive" : ""}`}
-            onClick={() => {
-              scrollToSection(InquiryRef), setActiveMenu("Inquiry");
-            }}
-          >
-            <TbMessageChatbotFilled className="icon" />
-            <p>Inquries</p>
+            <CiSquareChevDown onClick={HandleMenuDown} className="down" />
           </div>
         </div>
-        <div
-          className={`down_btn ${
-            activeMenu === "Inquiry" ? "hideDownArrow" : ""
-          }`}
-        >
-          <CiSquareChevDown onClick={HandleMenuDown} className="down" />
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
+
       <div className="Corporate_Company_box">
         {/* VcardUrl and logo */}
         {VCard_URL_Data.map((data, index) => {
@@ -1647,128 +1736,125 @@ END:VCARD
         ) : (
           ""
         )}
-   {/* //Appinment */}
-   {VCard_URL_Data.length > 0 &&
-            ManageContentData[0].Appoinment == true ? (
-              <>
-                <div className="Appoinment">
-                <div className="Corporate_Company_title">
+        {/* //Appinment */}
+        {VCard_URL_Data.length > 0 &&
+        ManageContentData[0].Appoinment == true ? (
+          <>
+            <div className="Appoinment" ref={AppoinmentRef}>
+              <div className="Corporate_Company_title">
                 <h3>Appoinment</h3>
               </div>
-                    {/* Success and Error Popup */}
-                    <div className="popup_message_container">
-                      <div
-                        className="popup_success_box"
-                        id={AppoinmentPopup ? "successOpen" : "successClose"}
-                      >
-                        <div className="popup_message">{successMessage}</div>
-                        <div
-                          className="popup_close"
-                          onClick={() => setAppoinmentPopup(false)}
-                        >
-                          <i className="bx bx-x"></i>
-                        </div>
-                      </div>
+              {/* Success and Error Popup */}
+              <div className="popup_message_container">
+                <div
+                  className="popup_success_box"
+                  id={AppoinmentPopup ? "successOpen" : "successClose"}
+                >
+                  <div className="popup_message">{successMessage}</div>
+                  <div
+                    className="popup_close"
+                    onClick={() => setAppoinmentPopup(false)}
+                  >
+                    <i className="bx bx-x"></i>
+                  </div>
+                </div>
 
-                      {AppoinmentPopupError ? (
-                        <div className="popup_error_box">
-                          <div className="popup_message">{errorMessage}</div>
-                          <div
-                            className="popup_close"
-                            onClick={() => setAppoinmentPopupError(false)}
-                          >
-                            <i className="bx bx-x"></i>
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  <div className="appinment_form_container">
-              
-                    <form
-                      className="appinment_form"
-                      onSubmit={Appoinment_formik.handleSubmit}
+                {AppoinmentPopupError ? (
+                  <div className="popup_error_box">
+                    <div className="popup_message">{errorMessage}</div>
+                    <div
+                      className="popup_close"
+                      onClick={() => setAppoinmentPopupError(false)}
                     >
-                      <div className="form_group">
-                        <label
-                          htmlFor="FullName"
-                          className={
-                            Appoinment_formik.errors.FullName
-                              ? "labelError"
-                              : ""
-                          }
-                        >
-                          {Appoinment_formik.errors.FullName
-                            ? Appoinment_formik.errors.FullName
-                            : `FullName`}
-                          <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <input
-                          type="text"
-                          name="FullName"
-                          id="FullName"
-                            placeholder="Enter Your FullName"
-                          value={Appoinment_formik.values.FullName}
-                          onChange={Appoinment_formik.handleChange}
-                          className={
-                            Appoinment_formik.errors.FullName &&
-                            Appoinment_formik.touched.FullName
-                              ? "input_error"
-                              : "input_success"
-                          }
-                          //  className="date-input"
-                        />
-                      </div>
-                      <div className="form_group">
-                        <label
-                          htmlFor="MobileNumber"
-                          className={
-                            Appoinment_formik.errors.MobileNumber
-                              ? "labelError"
-                              : ""
-                          }
-                        >
-                          {Appoinment_formik.errors.MobileNumber
-                            ? Appoinment_formik.errors.MobileNumber
-                            : `MobileNumber`}
-                          <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <input
-                          type="tel"
-                          name="MobileNumber"
-                          id="MobileNumber"
-                          placeholder="Enter Your MobileNumber"
-                          value={Appoinment_formik.values.MobileNumber}
-                          onChange={Appoinment_formik.handleChange}
-                          className={
-                            Appoinment_formik.errors.MobileNumber &&
-                            Appoinment_formik.touched.MobileNumber
-                              ? "input_error"
-                              : "input_success"
-                          }
-                        />
-                      </div>
-                      <div className="form_group">
-                        <label
-                          htmlFor="Date"
-                          className={
-                            Appoinment_formik.errors.Date ? "labelError" : ""
-                          }
-                        >
-                          {Appoinment_formik.errors.Date
-                            ? Appoinment_formik.errors.Date
-                            : `Date`}
-                          <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <input
-                          type="date"
-                          name="Date"
-                          id="Date"
-                            placeholder="Enter Your date"
-                          value={Appoinment_formik.values.Date}
-                          onChange={Appoinment_formik.handleChange}
-                          className={` date-input
+                      <i className="bx bx-x"></i>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="appinment_form_container">
+                <form
+                  className="appinment_form"
+                  onSubmit={Appoinment_formik.handleSubmit}
+                >
+                  <div className="form_group">
+                    <label
+                      htmlFor="FullName"
+                      className={
+                        Appoinment_formik.errors.FullName ? "labelError" : ""
+                      }
+                    >
+                      {Appoinment_formik.errors.FullName
+                        ? Appoinment_formik.errors.FullName
+                        : `FullName`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <input
+                      type="text"
+                      name="FullName"
+                      id="FullName"
+                      placeholder="Enter Your FullName"
+                      value={Appoinment_formik.values.FullName}
+                      onChange={Appoinment_formik.handleChange}
+                      className={
+                        Appoinment_formik.errors.FullName &&
+                        Appoinment_formik.touched.FullName
+                          ? "input_error"
+                          : "input_success"
+                      }
+                      //  className="date-input"
+                    />
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="MobileNumber"
+                      className={
+                        Appoinment_formik.errors.MobileNumber
+                          ? "labelError"
+                          : ""
+                      }
+                    >
+                      {Appoinment_formik.errors.MobileNumber
+                        ? Appoinment_formik.errors.MobileNumber
+                        : `MobileNumber`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <input
+                      type="tel"
+                      name="MobileNumber"
+                      id="MobileNumber"
+                      placeholder="Enter Your MobileNumber"
+                      value={Appoinment_formik.values.MobileNumber}
+                      onChange={Appoinment_formik.handleChange}
+                      className={
+                        Appoinment_formik.errors.MobileNumber &&
+                        Appoinment_formik.touched.MobileNumber
+                          ? "input_error"
+                          : "input_success"
+                      }
+                    />
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="Date"
+                      className={
+                        Appoinment_formik.errors.Date ? "labelError" : ""
+                      }
+                    >
+                      {Appoinment_formik.errors.Date
+                        ? Appoinment_formik.errors.Date
+                        : `Date`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <input
+                      type="date"
+                      name="Date"
+                      id="Date"
+                      placeholder="Enter Your date"
+                      value={Appoinment_formik.values.Date}
+                      onChange={Appoinment_formik.handleChange}
+                      className={` date-input
                                 ${
                                   Appoinment_formik.errors.Date &&
                                   Appoinment_formik.touched.Date
@@ -1776,27 +1862,27 @@ END:VCARD
                                   ? "input_error"
                                   : "input_success"
                               `}
-                        />
-                      </div>
-                      <div className="form_group">
-                        <label
-                          htmlFor="Time"
-                          className={
-                            Appoinment_formik.errors.Time ? "labelError" : ""
-                          }
-                        >
-                          {Appoinment_formik.errors.Time
-                            ? Appoinment_formik.errors.Time
-                            : `Time`}
-                          <sup style={{ color: "red" }}>*</sup>
-                        </label>
-                        <select
-                          name="Time"
-                          id="Time"
-                            placeholder="Enter Your Time"
-                          value={Appoinment_formik.values.Time}
-                          onChange={Appoinment_formik.handleChange}
-                          className={` date-input
+                    />
+                  </div>
+                  <div className="form_group">
+                    <label
+                      htmlFor="Time"
+                      className={
+                        Appoinment_formik.errors.Time ? "labelError" : ""
+                      }
+                    >
+                      {Appoinment_formik.errors.Time
+                        ? Appoinment_formik.errors.Time
+                        : `Time`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <select
+                      name="Time"
+                      id="Time"
+                      placeholder="Enter Your Time"
+                      value={Appoinment_formik.values.Time}
+                      onChange={Appoinment_formik.handleChange}
+                      className={` date-input
                                 ${
                                   Appoinment_formik.errors.Time &&
                                   Appoinment_formik.touched.Time
@@ -1804,49 +1890,45 @@ END:VCARD
                                   ? "input_error"
                                   : "input_success"
                               `}
-                        >
-                          <option value="">Select Your Time</option>
-                          <option value="9:00 AM">9:00 AM</option>
-                          <option value="9:00 AM">10:00 AM</option>
-                          <option value="11:00 AM">11:00 AM</option>
-                          <option value="11:00 AM">12:00 AM</option>
-                          <option value="01:00 PM">01:00 PM</option>
-                          <option value="01:00 PM">02:00 PM</option>
-                          <option value="03:00 PM">03:00 PM</option>
-                          <option value="03:00 PM">04:00 PM</option>
-                          <option value="03:00 PM">05:00 PM</option>
-                          <option value="03:00 PM">06:00 PM</option>
-                        </select>
-                      </div>
-                      <div className="form_submit">
-                        <button type="submit" className="submit-btn">
-                          {appoinmentLoader ? (
-                            <span className="inquiryloader"></span>
-                          ) : (
-                            <span className="material-symbols-outlined">
-                              send
-                            </span>
-                          )}
-                          Book Now
-                        </button>
-                        <button
-                          type="button"
-                          className="submit-btn"
-                          onClick={Appoinment_formik.resetForm}
-                        >
-                          <span class="material-symbols-outlined">
-                            clear_all
-                          </span>
-                          clear
-                        </button>
-                      </div>
-                    </form>
+                    >
+                      <option value="">Select Your Time</option>
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="9:00 AM">10:00 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                      <option value="11:00 AM">12:00 AM</option>
+                      <option value="01:00 PM">01:00 PM</option>
+                      <option value="01:00 PM">02:00 PM</option>
+                      <option value="03:00 PM">03:00 PM</option>
+                      <option value="03:00 PM">04:00 PM</option>
+                      <option value="03:00 PM">05:00 PM</option>
+                      <option value="03:00 PM">06:00 PM</option>
+                    </select>
                   </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
+                  <div className="form_submit">
+                    <button type="submit" className="submit-btn">
+                      {appoinmentLoader ? (
+                        <span className="inquiryloader"></span>
+                      ) : (
+                        <span className="material-symbols-outlined">send</span>
+                      )}
+                      Book Now
+                    </button>
+                    <button
+                      type="button"
+                      className="submit-btn"
+                      onClick={Appoinment_formik.resetForm}
+                    >
+                      <span class="material-symbols-outlined">clear_all</span>
+                      clear
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
         {/* Opentime */}
         {BussinessHourData.length > 0 &&
         ManageContentData[0].BussinessHour == true ? (
@@ -2079,7 +2161,7 @@ END:VCARD
         SocialMediaData.length > 0 &&
         ManageContentData[0].FeedbackForm == true ? (
           <>
-            <div className="feedback_row">
+            <div className="feedback_row" ref={FeedbackRef}>
               <div className="Corporate_Company_title">
                 <h3>Feedback</h3>
               </div>
@@ -2348,41 +2430,40 @@ END:VCARD
         SocialMediaData.length > 0 &&
         ManageContentData[0].InquiryForm == true ? (
           <>
-            <div className="Inquries">
+            <div className="Inquries" ref={InquiryRef}>
               <div className="Corporate_Company_title">
                 <h3>Inquries</h3>
               </div>
-                  {/* Success and Error Popup */}
-                  <div className="popup_message_container">
+              {/* Success and Error Popup */}
+              <div className="popup_message_container">
+                <div
+                  className="popup_success_box"
+                  id={successPopupOpen ? "successOpen" : "successClose"}
+                >
+                  <div className="popup_message">{successMessage}</div>
                   <div
-                    className="popup_success_box"
-                    id={successPopupOpen ? "successOpen" : "successClose"}
+                    className="popup_close"
+                    onClick={() => setSuccessPopupOpen(false)}
                   >
-                    <div className="popup_message">{successMessage}</div>
+                    <i className="bx bx-x"></i>
+                  </div>
+                </div>
+
+                {errorPopupOpen ? (
+                  <div className="popup_error_box">
+                    <div className="popup_message">{errorMessage}</div>
                     <div
                       className="popup_close"
-                      onClick={() => setSuccessPopupOpen(false)}
+                      onClick={() => setErrorPopupOpen(false)}
                     >
                       <i className="bx bx-x"></i>
                     </div>
                   </div>
-
-                  {errorPopupOpen ? (
-                    <div className="popup_error_box">
-                      <div className="popup_message">{errorMessage}</div>
-                      <div
-                        className="popup_close"
-                        onClick={() => setErrorPopupOpen(false)}
-                      >
-                        <i className="bx bx-x"></i>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                ) : (
+                  ""
+                )}
+              </div>
               <div className="inquiries_container5">
-            
                 <form action="" onSubmit={formik.handleSubmit}>
                   <div className="form_group">
                     <label
