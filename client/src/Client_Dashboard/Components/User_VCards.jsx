@@ -404,23 +404,32 @@ const User_VCards = () => {
                           </small>
                         ) : (
                           <>
-                            <a
-                              href={`${
-                                import.meta.env.VITE_CLIENT_DOMAIN_URL
-                              }/${data.URL_Alies}`}
-                              target="_blank"
-                            >
-                              {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
-                              {data.URL_Alies}
-                            </a>
-                            <CopyToClipboard
-                              text={`${
-                                import.meta.env.VITE_CLIENT_DOMAIN_URL
-                              }/${data.URL_Alies}`}
-                              onCopy={handleCopyURL}
-                            >
-                              <i className="bx bx-copy"></i>
-                            </CopyToClipboard>
+                            {LiveLinkActivate.length > 0 ? (
+                              <>
+                                <a
+                                  href={`${
+                                    import.meta.env.VITE_CLIENT_DOMAIN_URL
+                                  }/${data.URL_Alies}`}
+                                  target="_blank"
+                                >
+                                  {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
+                                  {data.URL_Alies}
+                                </a>
+                                <CopyToClipboard
+                                  text={`${
+                                    import.meta.env.VITE_CLIENT_DOMAIN_URL
+                                  }/${data.URL_Alies}`}
+                                  onCopy={handleCopyURL}
+                                >
+                                  <i className="bx bx-copy"></i>
+                                </CopyToClipboard>
+                              </>
+                            ) : (
+                              <small className="note2">
+                                Live link not available!..Less VCard Details
+                                Added
+                              </small>
+                            )}
                           </>
                         )}
                       </div>
@@ -484,7 +493,6 @@ const User_VCards = () => {
                           onClick={() => {
                             // handleVCardDelete(data.URL_Alies);
                             setURL_Alies(data.URL_Alies);
-                            setVcardDeleteToggle(true);
                           }}
                         >
                           <div

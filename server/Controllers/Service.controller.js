@@ -175,7 +175,7 @@ export const PostServiceData = async (req, res) => {
           }
 
           if (checkCurrentPlan[0]?.amount === 599) {
-            if (checkServiceLength.length < 4) {
+            if (checkServiceLength.length < 5) {
               const ServiceImage = req.files["ServiceImage"]
                 ? req.files["ServiceImage"][0]?.path
                 : "";
@@ -237,7 +237,7 @@ export const PostServiceData = async (req, res) => {
             } else {
               res.status(400).json({
                 message:
-                  "Max Service limit crossed..Basic plan Only accept 4  Service Details! ",
+                  "Max Service limit crossed..Basic plan Only accept 5  Service Details! ",
               });
             }
           }

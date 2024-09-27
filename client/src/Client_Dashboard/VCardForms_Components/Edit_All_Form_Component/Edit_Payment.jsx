@@ -297,11 +297,11 @@ const Edit_Payment = () => {
           >
             <div className="form_group">
               <label htmlFor="CompanyName">
-                GooglePay UPI <sup>*</sup>
+                GooglePay UPI
               </label>
               <input
                 type="text"
-                placeholder="Enter Your Gpay Number"
+                placeholder="Enter Your Gpay UPI ID"
                 name="gpay"
                 id="gpay"
                 onBlur={formik.handleBlur}
@@ -325,11 +325,11 @@ const Edit_Payment = () => {
             </div>
             <div className="form_group">
               <label htmlFor="paytm">
-                Paytm UPI <sup>*</sup>
+                Paytm UPI
               </label>
               <input
                 type="text"
-                placeholder="Enter Your Paytm Number"
+                placeholder="Enter Your Paytm UPI ID"
                 name="paytm"
                 id="paytm"
                 onBlur={formik.handleBlur}
@@ -350,7 +350,7 @@ const Edit_Payment = () => {
               <label htmlFor="phonepay">PhonePay UPI</label>
               <input
                 type="text"
-                placeholder="Enter Your PhonePay Number"
+                placeholder="Enter Your PhonePay UPI ID"
                 name="phonepay"
                 id="phonepay"
                 onBlur={formik.handleBlur}
@@ -396,7 +396,7 @@ const Edit_Payment = () => {
                       UpdateButtonToggle ? UPI_Type : formik.values.UPI_Type
                     }
                   >
-                    <option value="" label="Select Your UPI Type" />
+                    <option value="" label="Select Your UPI App" />
                     <option value="GooglePay QRCode">GooglePay QRCode</option>
                     <option value="Paytm QRCode">Paytm QRCode</option>
                     <option value="PhonePay QRCode">PhonePay QRCode</option>
@@ -463,6 +463,9 @@ const Edit_Payment = () => {
             </div>
           </form>
         </div>
+      <div className="border">
+
+      </div>
         {/* BankDetails */}
         <div className="right_bank">
           <div className="bank_title">

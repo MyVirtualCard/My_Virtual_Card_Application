@@ -124,10 +124,10 @@ const Testimonial = () => {
               setShowForm("GoogleMap");
             }, 2000);
           }
-          if (currentPlan === "Basic" && ClientCount == 4) {
+          if (currentPlan === "Basic" && ClientCount == 5) {
             setTimeout(() => {
               setShowForm("GoogleMap");
-            }, 2000);
+            }, 100);
           }
           if (currentPlan === "Standard" && ClientCount == 6) {
             setTimeout(() => {
@@ -312,7 +312,7 @@ const Testimonial = () => {
           ) : (
             ""
           )}
-          {currentPlan === "Basic" && ClientCount != 4 ? (
+          {currentPlan === "Basic" && ClientCount != 5 ? (
             <button onClick={() => setTestimonialFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Testimonial
             </button>
@@ -353,7 +353,7 @@ const Testimonial = () => {
                 <i class="bx bx-upload "></i>
                 <small>
                   Max Client Detail addOn limit :
-                  <strong> {ClientCount} / 4 </strong>
+                  <strong> {ClientCount} / 5 </strong>
                 </small>
               </>
             ) : (

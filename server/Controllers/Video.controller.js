@@ -124,7 +124,7 @@ export const postVideoData = async (req, res) => {
             }
             if (checkCurrentPlan[0]?.amount === 599) {
               //Basic Image File limit checked:
-              if (checkTestimonialLength.length < 4) {
+              if (checkTestimonialLength.length < 5) {
                 // Create a new image instance and save to MongoDB
                 const newTestimonial = new VideoModel({
                   user: req.user.userName,
@@ -149,7 +149,7 @@ export const postVideoData = async (req, res) => {
                   });
               } else {
                 res.status(400).json({
-                  message:"Max Slide Upload limit crossed..Only accept 4 Video's ",
+                  message:"Max Slide Upload limit crossed..Only accept 5 Video's ",
               
                 });
               }

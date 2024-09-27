@@ -12,11 +12,11 @@ let UPISchema = new mongoose.Schema(
     },
     gpay: {
       type: String,
-      required: true,
+      required: false,
     },
     paytm: {
       type: String,
-      required: true,
+      required: false,
     },
     phonepay: {
       type: String,

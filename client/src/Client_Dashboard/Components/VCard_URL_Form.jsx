@@ -141,19 +141,18 @@ validateOnChange:false,
           },
         })
         .then((res) => {
+        
           toast.success(res.data.message);
           setURL_Alies(res.data?.data?.URL_Alies);
-          localStorage.setItem("URL_Alies", res.data?.data?.URL_Alies);
+          localStorage.setItem("URL_Alies", res.data.data.URL_Alies);
           if (status == "successfull") {
             setShowForm("Basic Detail");
           }
 
           setTimeout(() => {
-            setURL_Alies(res.data?.data?.URL_Alies);
             navigate(
-              `/${userName}/uadmin/VCards`
+              `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
             );
-
             //  window.location.pathname = `/${userName}/uadmin/vcard_form_edit/${res.data.data.URL_Alies}`
           }, 1000);
           setFormSubmitLoader(false);
@@ -181,15 +180,7 @@ validateOnChange:false,
     setBannerPreview(URL.createObjectURL(file)); // Show a preview of the image
     formik.setFieldValue("Banner", BannerPreview);
   };
-  // const handleBannerChange = (event) => {
-  //   const Banner = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Banner);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Banner", reader.result);
-  //     setBanner(reader.result);
-  //   };
-  // };
+
   async function handleURLErrorHandling() {
     {
       All_URL_Alies.length == 0 || All_URL_Alies.length > 0

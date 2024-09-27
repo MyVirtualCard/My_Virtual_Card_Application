@@ -60,6 +60,9 @@ import MANAGER_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCa
 import BEAUTY_PARLOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/BEAUTY_PARLOR_LIVE.jsx";
 import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/Corporate_Company.jsx";
 
+import Page_Not_Found_Error_Page from "./Page_Not_Found_Error_Page/Page_Not_Found_Error_Page.jsx";
+import URLNotFound from "./Client_Dashboard/404_Error_Page/404.jsx";
+
 //Import All component:
 const App = () => {
   let navigate = useNavigate();
@@ -108,7 +111,11 @@ const App = () => {
     if (local_mobileNumber) {
       return setMobileNumber(local_mobileNumber);
     }
-    setURL_Alies(local_URL_Alies);
+    if (local_URL_Alies === "") {
+      setURL_Alies(URL_Alies);
+    } else {
+      setURL_Alies(local_URL_Alies);
+    }
   }, [navigate]);
   useEffect(() => {
     const Localstorage_UserData = JSON.parse(localStorage.getItem("datas"));
@@ -138,7 +145,7 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
-  console.log(URL_Alies);
+  console.log("local" + local_URL_Alies, "state" + URL_Alies);
   return (
     <>
       <div className="App_container">
@@ -365,9 +372,10 @@ const App = () => {
               ) : (
                 ""
               )}
-              {/* <Route path="/Gym_Trainer_Live" element={<GYM_TRAINER_LIVE />} /> */}
-
-              {/* <Route path='/coder' element={<Business_Consultant />} /> */}
+         
+            {/* <Route path="*" element={<Page_Not_Found_Error_Page />} /> */}
+           
+              
             </Routes>
           </Suspense>
         </Context.Provider>

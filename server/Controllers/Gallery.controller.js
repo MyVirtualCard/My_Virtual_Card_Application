@@ -151,7 +151,7 @@ export const PostGalleryData = async (req, res) => {
             ? req.files["GalleryImage"][0]?.path
             : "";
             //Basic Image File limit checked:
-            if (checkCurrentImages.length < 4) {
+            if (checkCurrentImages.length < 5) {
               // Create a new image instance and save to MongoDB
               const newImage = new GalleryModel({
                 user: req.user.userName,
@@ -176,7 +176,7 @@ export const PostGalleryData = async (req, res) => {
                 });
             } else {
               res.status(400).json({
-                message: "Max Image Upload limit crossed!..Only accept 4 Images ",
+                message: "Max Image Upload limit crossed!..Only accept 5 Images ",
               });
             }
           }

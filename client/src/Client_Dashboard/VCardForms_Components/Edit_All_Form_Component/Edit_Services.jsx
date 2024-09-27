@@ -156,10 +156,10 @@ const Services = () => {
               setShowForm("Products");
             }, 2000);
           }
-          if (currentPlan === "Basic" && ServiceCount == 4) {
+          if (currentPlan === "Basic" && ServiceCount == 5) {
             setTimeout(() => {
               setShowForm("Products");
-            }, 2000);
+            }, 100);
           }
           if (currentPlan === "Standard" && ServiceCount == 6) {
             setTimeout(() => {
@@ -394,7 +394,7 @@ const Services = () => {
               ) : (
                 ""
               )}
-              {currentPlan === "Basic" && ServiceCount != 4 ? (
+              {currentPlan === "Basic" && ServiceCount != 5 ? (
                 <button
                   onClick={() => {
                     setServiceFormOpen(true),
@@ -462,7 +462,7 @@ const Services = () => {
                     <i class="bx bx-upload "></i>
                     <small>
                       Max Service addOn limit :
-                      <strong> {ServiceCount} / 4 </strong>
+                      <strong> {ServiceCount} / 5 </strong>
                     </small>
                   </>
                 ) : (

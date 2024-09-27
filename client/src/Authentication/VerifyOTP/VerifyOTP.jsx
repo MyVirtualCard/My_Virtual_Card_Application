@@ -110,7 +110,7 @@ let[  OTP_Value,
         setTimeout(() => {
           setUser(userData)
           // setVerifyOTPToggle(false);
-          handleSpeak(userName);
+          // handleSpeak(userName);
           navigate(`/${userName}/uadmin/VCards`);
         }, 2000);
       })

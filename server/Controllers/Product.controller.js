@@ -165,7 +165,7 @@ export const PostProductData = async (req, res) => {
             ? req.files["ProductImage"][0]?.path
             : "";
             //Basic Image File limit checked:
-            if (checkProductLength.length < 4) {
+            if (checkProductLength.length < 5) {
               // Create a new image instance and save to MongoDB
               const newProduct = new ProductModel({
                 user: req.user.userName,
@@ -196,7 +196,7 @@ export const PostProductData = async (req, res) => {
             } else {
               res.status(400).json({
                 message:
-                  "Max Product Upload limit crossed..Only accept 4 Product Details! ",
+                  "Max Product Upload limit crossed..Only accept 5 Product Details! ",
               });
             }
           }

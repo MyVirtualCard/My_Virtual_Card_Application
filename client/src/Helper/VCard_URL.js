@@ -35,7 +35,8 @@ const getFileSize = (base64String) => {
 };
 
 export let VCardURLValidateShema = Yup.object({
-  URL_Alies: Yup.string().trim().required("URL_Alies is required!"),
+  URL_Alies: Yup.string().matches(/^[A-Za-z0-9-]*$/, 'Only letters, numbers, and hyphens are allowed.')
+    .required("URL_Alies is required!"),
   VCardName: Yup.string()
     .min(4, "Minimum 4 char required!")
     .test(
@@ -60,7 +61,7 @@ export let VCardURLValidateShema = Yup.object({
       (value) => !isEmptyOrWhitespace(value)
     )
     .required("LastName is required!"),
-    Profession: Yup.string()
+  Profession: Yup.string()
     .min(10, "Minimum 10 char required!")
     .test(
       "isEmptyOrWhitespace",

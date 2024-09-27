@@ -113,7 +113,7 @@ const Login = () => {
 
           setTimeout(() => {
             setUser(userData)
-            handleSpeak(userData.userName);
+            // handleSpeak(userData.userName);
             navigate(`/${userData.userName}/uadmin/VCards`);
           }, 2000);
         })

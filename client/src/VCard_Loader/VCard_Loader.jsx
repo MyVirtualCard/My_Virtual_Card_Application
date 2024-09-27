@@ -4,14 +4,14 @@ import trianglelogo from "../assets/Fallback/Triangle_logo.png";
 const VCard_Loader = () => {
   return (
     <div className="VCard_Loader_container">
-      <div className="logo">
+      {/* <div className="logo">
         <img src={trianglelogo} alt="LOGO" className="aris_logo" />
       </div>
       <div className="slogan">
         <small>Your VirtualCard on Progressing...</small>
         
-        {/* <span className="bubble_loader"></span> */}
-      </div>
+  
+      </div> */}
       <div className="site_loader">
         <span className="site_box"></span>
       </div>

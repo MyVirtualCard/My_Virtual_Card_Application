@@ -128,7 +128,7 @@ export const postTestimonialData = async (req, res) => {
             }
             if (checkCurrentPlan[0]?.amount === 599) {
               //Basic Image File limit checked:
-              if (checkTestimonialLength.length < 4) {
+              if (checkTestimonialLength.length < 5) {
                 // Create a new image instance and save to MongoDB
                 const newTestimonial = new TestimonialModel({
                   user: req.user.userName,

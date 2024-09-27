@@ -26,9 +26,9 @@ export const getUPIAllData = async (req, res) => {
 };
 //Post Async allback function :
 export const postUPI = async (req, res) => {
-  if (!req.body.URL_Alies || !req.body.gpay || !req.body.paytm) {
-    return res.status(401).json({ message: "All * fields Required" });
-  }
+  // if (!req.body.URL_Alies || !req.body.gpay || !req.body.paytm) {
+  //   return res.status(401).json({ message: "All * fields Required" });
+  // }
   let checkCurrentPlan = await Payment.find({
     user: req.user.userName,
   });

@@ -262,7 +262,7 @@ const Edit_Video = () => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
 
-  console.log(formik.values.Video)
+  console.log(formik.values.Video.split('/')[3])
 
   return (
     <>
@@ -280,7 +280,7 @@ const Edit_Video = () => {
           ) : (
             ""
           )}
-          {currentPlan === "Basic" && VideoCount != 4 ? (
+          {currentPlan === "Basic" && VideoCount != 5 ? (
             <button onClick={() => setVideoFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Video
             </button>
@@ -319,7 +319,7 @@ const Edit_Video = () => {
               <>
                 <i class="bx bx-upload "></i>
                 <small>
-                  Max Video addOn limit :<strong> {VideoCount} / 4</strong>
+                  Max Video addOn limit :<strong> {VideoCount} / 5</strong>
                 </small>
               </>
             ) : (
@@ -363,7 +363,7 @@ const Edit_Video = () => {
                     <iframe
                     width="560"
                     height="315"
-                    src={`https://www.youtube.com/embed/${data.Video.slice(17,300)}`}
+                    src={`https://www.youtube.com/embed/${data.Video.split('/')[3]}`}
                     title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -428,7 +428,7 @@ const Edit_Video = () => {
                   <iframe
                     width="560"
                     height="315"
-                    src={`https://www.youtube.com/embed/${formik.values.Video.slice(17,300)}`}
+                    src={`https://www.youtube.com/embed/${formik.values.Video.split('/')[3]}`}
                     title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -502,8 +502,19 @@ const Edit_Video = () => {
                 </label>
                 <div
                   className="video"
-                  dangerouslySetInnerHTML={{ __html: Video }}
-                />
+                  
+                >
+                   <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${Video!=null ? Video.split('/')[3] : ''}`}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
               </div>
               <div className="video_input">
                 <div className="form_group">

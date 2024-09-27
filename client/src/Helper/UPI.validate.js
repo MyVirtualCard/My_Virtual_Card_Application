@@ -23,23 +23,30 @@ export let UPIDetailValidateShema = Yup.object({
   gpay: Yup.string()
     .trim()
     .test(
-      "isEmptyOrWhitespace",
-      "Content cannot be empty or just whitespace",
-      (value) => !isEmptyOrWhitespace(value)
+      'isEmptyOrWhitespace',
+      'Content cannot be empty or just whitespace',
+      value => {
+          if(value){
+              return  !isEmptyOrWhitespace(value)
+          }
+         return true;
+      }
     )
-    .min(10, "Min 10-Digits required!")
-    .max(10, "Invalid Gpay Number!")
-    .required("Gpay is required!"),
+    .min(10, "Min 10-Digits required!").notRequired(),
   paytm: Yup.string()
     .trim()
     .test(
-      "isEmptyOrWhitespace",
-      "Content cannot be empty or just whitespace",
-      (value) => !isEmptyOrWhitespace(value)
+      'isEmptyOrWhitespace',
+      'Content cannot be empty or just whitespace',
+      value => {
+          if(value){
+              return  !isEmptyOrWhitespace(value)
+          }
+         return true;
+      }
     )
     .min(10, "Min 10-Digits required!")
-    .max(10, "Invalid Paytm Number!")
-    .required("Paytm is required!"),
+    .notRequired(),
   phonepay: Yup.string()
     .trim()
     .test(
@@ -52,8 +59,7 @@ export let UPIDetailValidateShema = Yup.object({
         return true;
       }
     )
-    .min(10, "Min 10-Digits required!")
-    .max(10, "Invalid PhonePay Number!"),
+    .min(10, "Min 10-Digits required!"),
   UPI_Type: Yup.string()
     .min(4, "Minimum 4 char required!")
     .test(

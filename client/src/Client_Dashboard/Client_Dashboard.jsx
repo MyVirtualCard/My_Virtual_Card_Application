@@ -163,7 +163,7 @@ const Client_Dashboard = () => {
                 className={
                   window.location.pathname === `/${userName}/uadmin/VCards` ||
                   window.location.pathname ===
-                    `/${userName}/uadmin/vcard_form_edit/${URL_Alies}` ||
+                    `/${userName}/uadmin/vcard_form_edit/${localStorage.getItem('URL_Alies')}` ||
                   window.location.pathname ===
                     `/${userName}/uadmin/create_new_vcard`
                     ? "activeMenu"
@@ -448,10 +448,9 @@ const Client_Dashboard = () => {
             ) : (
               ""
             )}
-            {window.location.pathname ==
-              `/${userName}/uadmin/vcard_form_edit/${URL_Alies}` ||
+            {
             window.location.pathname ==
-              `/${userName}/uadmin/vcard_form_edit/${URL_Alies}` ? (
+              `/${userName}/uadmin/vcard_form_edit/${localStorage.getItem('URL_Alies')}` ? (
               <VCard_Form_Edit />
             ) : (
               ""

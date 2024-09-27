@@ -141,10 +141,10 @@ const Gallery = () => {
               setShowForm("Videos");
             }, 500);
           }
-          if (currentPlan === "Basic" && GalleryCount == 4) {
+          if (currentPlan === "Basic" && GalleryCount == 5) {
             setTimeout(() => {
               setShowForm("Videos");
-            }, 500);
+            }, 100);
           }
           if (currentPlan === "Standard" && GalleryCount == 6) {
             setTimeout(() => {
@@ -331,7 +331,7 @@ const Gallery = () => {
           ) : (
             ""
           )}
-          {currentPlan === "Basic" && GalleryCount != 4 ? (
+          {currentPlan === "Basic" && GalleryCount != 5 ? (
             <button onClick={() => setGalleryFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Gallery
             </button>
@@ -370,7 +370,7 @@ const Gallery = () => {
               <>
                 <i class="bx bx-upload "></i>
                 <small>
-                  Max Image addOn limit :<strong> {GalleryCount} / 4</strong>
+                  Max Image addOn limit :<strong> {GalleryCount} / 5</strong>
                 </small>
               </>
             ) : (
