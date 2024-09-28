@@ -94,6 +94,7 @@ export const postVCardURLData = async (req, res) => {
           user: req.user.userName,
           URL_Alies: req.body.URL_Alies,
           VCardName: req.body.VCardName,
+          BussinessType:req.body.BussinessType,
           FirstName: req.body.FirstName,
           LastName: req.body.LastName,
           Profession: req.body.Profession,
@@ -217,6 +218,7 @@ export const updateSpecificUserData = async (req, res) => {
           }
         }
         updateSpecificData.VCardName = req.body.VCardName;
+        updateSpecificData.BussinessType=req.body.BussinessType,
         updateSpecificData.FirstName = req.body.FirstName;
         updateSpecificData.LastName = req.body.LastName;
         updateSpecificData.Profession = req.body.Profession;
@@ -272,6 +274,7 @@ export const updateSpecificUserData_Id = async (req, res) => {
 
       product.name = req.body.name || product.name;
       updateSpecificData.VCardName = req.body.VCardName;
+      updateSpecificData.BussinessType=req.body.BussinessType,
       updateSpecificData.FirstName = req.body.FirstName;
       updateSpecificData.LastName = req.body.LastName;
       updateSpecificData.Profession = req.body.Profession;

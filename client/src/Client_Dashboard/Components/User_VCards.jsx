@@ -395,7 +395,7 @@ const User_VCards = () => {
                         )}
                       </div>
                       <div className="detail">
-                        <p>{data.VCardName}</p>
+                        <p>{data.VCardName == 'Others' ? data.BussinessType : data.VCardName}</p>
                       </div>
                       <div className="detail">
                         {currentTemplate === null ? (

@@ -190,7 +190,7 @@ const Select_Template = () => {
   async function fetchCurrentTemplate() {
     try {
       await api
-        .get(`/templateDetail/specificAll/${URL_Alies}`, {
+        .get(`/templateDetail/${URL_Alies}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,

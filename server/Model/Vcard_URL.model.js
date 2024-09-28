@@ -17,6 +17,10 @@ let Vcard_URL_Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    BussinessType:{
+      type: String,
+      required: false,
+    },
     FirstName: {
       type: String,
       required: true,

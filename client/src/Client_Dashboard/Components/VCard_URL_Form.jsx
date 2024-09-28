@@ -101,6 +101,7 @@ const VCard_URL_Form = () => {
     initialValues: {
       URL_Alies: URL_Alies,
       VCardName: "",
+      BussinessType:'',
       FirstName: "",
       LastName: "",
       Profession: '',
@@ -125,6 +126,7 @@ validateOnChange:false,
       formData.append("Banner", Banner);
       formData.append("URL_Alies", values.URL_Alies);
       formData.append("VCardName", values.VCardName);
+      formData.append("BussinessType", values.BussinessType);
       formData.append("FirstName", values.FirstName);
       formData.append("LastName", values.LastName);
       formData.append("Profession", values.Profession);
@@ -292,36 +294,58 @@ validateOnChange:false,
               </div>
             </div>
 
-            <div className="form_group">
+            <div className="form_group double_input">
               <label htmlFor="VCardName">
-                VCard Name <sup>*</sup>
+                Bussiness Type <sup>*</sup>
               </label>
+              <div className="double_input">
               <select
-                className={`VCardName ${
-                  formik.errors.VCardName && formik.touched.VCardName
-                    ? "input_error"
-                    : "input_success"
-                }`}
-                name="VCardName"
-                id="VCardName"
+              className={`VCardName ${
+                formik.errors.VCardName && formik.touched.VCardName
+                  ? "input_error"
+                  : "input_success"
+              }`}
+              name="VCardName"
+              id="VCardName"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.VCardName}
+            >
+              <option value="" label="Select Your Vcard Type" />
+              <option value="Software_Developer">Software_Developer</option>
+              <option value="Real_Estate">Real_Estate_Bussiness</option>
+              <option value="Software_Company">Software_Company</option>
+              <option value="Small_Scale_Shop">Small_Scale_Shop</option>
+              <option value="Medical_Field">Medical_Field</option>
+              <option value="Hardware_Shop">Hardware_Shop</option>
+              <option value="Electrical_Shop">Electrical_Shop</option>
+              <option value="Plumber_or_Fitter">Plumber_or_Fitter</option>
+              <option value="Grocery_Store">Grocery_Store</option>
+              <option value="Mobile_Store">Mobile_Store</option>
+              <option value="Cloth_Shop">Cloth_Shop</option>
+              <option value="Others" style={{backgroundColor:'gray',color:'#fff'}}>Others...</option>
+            </select>
+              {formik.values.VCardName == 'Others' ? 
+                <input
+                type="text"
+                placeholder="Enter Your Bussiness Type"
+                name="BussinessType"
+                id="BussinessType"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                value={formik.values.VCardName}
-              >
-                <option value="" label="Select Your Vcard Type" />
-                <option value="Software_Developer">Software_Developer</option>
-                <option value="Real_Estate">Real_Estate_Bussiness</option>
-                <option value="Software_Company">Software_Company</option>
-                <option value="Small_Scale_Shop">Small_Scale_Shop</option>
-                <option value="Medical_Field">Medical_Field</option>
-                <option value="Hardware_Shop">Hardware_Shop</option>
-                <option value="Electrical_Shop">Electrical_Shop</option>
-                <option value="Plumber_or_Fitter">Plumber_or_Fitter</option>
-                <option value="Grocery_Store">Grocery_Store</option>
-                <option value="Mobile_Store">Mobile_Store</option>
-                <option value="Cloth_Shop">Cloth_Shop</option>
-                <option value="Others" style={{backgroundColor:'gray',color:'#fff'}}>Others...</option>
-              </select>
+                value={formik.values.BussinessType}
+                className={
+                  formik.errors.BussinessType && formik.touched.BussinessType
+                    ? "input_error"
+                    : "input_success"
+                }
+              />
+              : 
+         ''
+              }
+              </div>
+ 
+           
 
               <div className="error">{formik.errors.VCardName}</div>
             </div>

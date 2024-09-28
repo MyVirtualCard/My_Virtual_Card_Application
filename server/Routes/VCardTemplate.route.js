@@ -10,10 +10,10 @@ import { verifyToken } from '../Middleware/verifyToken.js';
 let router=express.Router();
 
 
-router.get('/:URL_Alies',getTemplateData);
+router.get('/:URL_Alies',getSpecificUserAllData);
 router.post('/:URL_Alies',verifyToken,postTemplateData);
  //Read Specific user all Data:
- router.get("/specificAll/:URL_Alies",verifyToken, getSpecificUserAllData);
+ router.get("/specificAll",verifyToken, getTemplateData);
  //Read Specific ID Data:
  router.get("/specific/:userName",verifyToken, getSpecificUserNameData);
  //Update Specific user Single Data:

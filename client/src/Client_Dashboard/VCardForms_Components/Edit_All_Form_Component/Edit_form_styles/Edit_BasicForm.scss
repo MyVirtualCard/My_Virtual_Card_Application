@@ -46,6 +46,14 @@
             height: 70px;
           }
         }
+        .double_input{
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 10px;
+          flex-direction: row !important;
+          width: 100%;
+        }
         .p-editor-toolbar {
           border: 1px solid #b9b9b9;
         }

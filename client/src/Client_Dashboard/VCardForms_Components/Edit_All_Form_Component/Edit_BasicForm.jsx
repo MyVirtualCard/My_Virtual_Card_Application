@@ -22,6 +22,7 @@ const BasicForm = () => {
     FormSubmitLoader,
     setFormSubmitLoader,
     userName,
+    setShowForm,
     successMessage,
     setSuccessMessage,
     successPopupOpen,
@@ -90,6 +91,7 @@ const BasicForm = () => {
   let [BannerAddress, setBannerAddress] = useState();
   let [ProfileType, setProfileType] = useState();
   let [BannerType, setBannerType] = useState();
+  let [BussinessType, setBussinessType] = useState();
   let [imagePath, setImagePath] = useState(null);
   const [key, setKey] = useState(0);
   console.log(Description);
@@ -124,6 +126,7 @@ const BasicForm = () => {
           setProfession(res.data.data.Profession);
           setProfile(res.data.data.Profile);
           setBanner(res.data.data.Banner);
+          setBussinessType(res.data.data.BussinessType);
           setProfileType(res.data.data.ProfileType);
           setBannerType(res.data.data.BannerType);
           setProfileAddress(res.data.data.ProfileAddress);
@@ -208,6 +211,7 @@ const BasicForm = () => {
       Profile,
       Banner,
       ProfileType,
+      BussinessType,
       BannerType,
       ProfileAddress,
       BannerAddress,
@@ -219,6 +223,7 @@ const BasicForm = () => {
     formData.append("VCardName", VCardName);
     formData.append("FirstName", FirstName);
     formData.append("LastName", LastName);
+    formData.append("BussinessType", BussinessType);
     formData.append("Profession", Profession);
     formData.append("BannerType", BannerType);
     formData.append("ProfileType", ProfileType);
@@ -238,6 +243,7 @@ const BasicForm = () => {
 
           toast.success(res.data.message);
           setFormSubmitLoader(false);
+          setShowForm('VCard Templates')
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -284,24 +290,7 @@ const BasicForm = () => {
         });
     },
   });
-  // const handleLogoChange = (event) => {
-  //   const Profile = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Profile);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Profile", reader.result);
-  //     setProfile(reader.result);
-  //   };
-  // };
-  // const handleBannerChange = (event) => {
-  //   const Banner = event.currentTarget.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(Banner);
-  //   reader.onload = () => {
-  //     formik.setFieldValue("Banner", reader.result);
-  //     setBanner(reader.result);
-  //   };
-  // };
+  
   // Handle file selection
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -345,32 +334,48 @@ const BasicForm = () => {
             </div>
             <div className="form_group">
               <label htmlFor="VCardName">
-                VCard Type <sup>*</sup>
+                Bussiness Type <sup>*</sup>
               </label>
-              <select
-                className='VCardName'
-                name="VCardName"
-                id="VCardName"
-             
-                value={VCardName}
-                onChange={(e) => setVCardName(e.target.value)}
-              >
-                <option value="" label="Select Your Vcard Type" />
-                <option value="Software_Developer">Software_Developer</option>
-                <option value="Real_Estate">Real_Estate_Bussiness</option>
-                <option value="Software_Company">Software_Company</option>
-                <option value="Small_Scale_Shop">Small_Scale_Shop</option>
-                <option value="Medical_Field">Medical_Field</option>
-                <option value="Hardware_Shop">Hardware_Shop</option>
-                <option value="Electrical_Shop">Electrical_Shop</option>
-                <option value="Plumber_or_Fitter">Plumber_or_Fitter</option>
-                <option value="Grocery_Store">Grocery_Store</option>
-                <option value="Mobile_Store">Mobile_Store</option>
-                <option value="Cloth_Shop">Cloth_Shop</option>
-                <option value="Others" style={{backgroundColor:'gray',color:'#fff'}}>Others...</option>
-              </select>
-
-           
+              <div className="double_input">
+                <select
+                  className="VCardName"
+                  name="VCardName"
+                  id="VCardName"
+                  value={VCardName}
+                  onChange={(e) => setVCardName(e.target.value)}
+                >
+                  <option value="" label="Select Your Vcard Type" />
+                  <option value="Software_Developer">Software_Developer</option>
+                  <option value="Real_Estate">Real_Estate_Bussiness</option>
+                  <option value="Software_Company">Software_Company</option>
+                  <option value="Small_Scale_Shop">Small_Scale_Shop</option>
+                  <option value="Medical_Field">Medical_Field</option>
+                  <option value="Hardware_Shop">Hardware_Shop</option>
+                  <option value="Electrical_Shop">Electrical_Shop</option>
+                  <option value="Plumber_or_Fitter">Plumber_or_Fitter</option>
+                  <option value="Grocery_Store">Grocery_Store</option>
+                  <option value="Mobile_Store">Mobile_Store</option>
+                  <option value="Cloth_Shop">Cloth_Shop</option>
+                  <option
+                    value="Others"
+                    style={{ backgroundColor: "gray", color: "#fff" }}
+                  >
+                    Others...
+                  </option>
+                </select>
+                {VCardName == "Others" ? (
+                  <input
+                    type="text"
+                    placeholder="Enter Your Bussiness Type"
+                    name="BussinessType"
+                    id="BussinessType"
+                    onChange={(e) => setBussinessType(e.target.value)}
+                    value={BussinessType}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
             <div className="form_group">
               <label htmlFor="FirstName">
@@ -381,12 +386,9 @@ const BasicForm = () => {
                 placeholder="Enter Your FirstName"
                 name="FirstName"
                 id="FirstName"
-          
-                onChange={()=>setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
                 value={FirstName}
-              
               />
-         
             </div>
             <div className="form_group">
               <label htmlFor="LastName">
@@ -397,33 +399,25 @@ const BasicForm = () => {
                 placeholder="Enter Your LastName"
                 name="LastName"
                 id="LastName"
-          
-                onChange={()=>setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
                 value={LastName}
-             
               />
-         
             </div>
             <div className="form_group profession">
               <label htmlFor="LastName">
                 Company Name (or) Your Profession<sup>*</sup>
               </label>
               <input
-         
                 type="text"
                 placeholder="Enter Your Profession"
                 name="Profession"
                 id="Profession"
-            
-                onChange={()=>setProfession(e.target.value)}
+                onChange={(e) => setProfession(e.target.value)}
                 value={Profession}
-             
               />
-          
             </div>
 
-           
-{/* //Logo */}
+            {/* //Logo */}
             <div className="form_group double_col_inputs">
               <div className="image_upload_type">
                 <div className="logo_type">
@@ -438,7 +432,6 @@ const BasicForm = () => {
                     <option>Paste_ImageAddress</option>
                   </select>
                 </div>
-               
               </div>
 
               <div className="images">
@@ -525,13 +518,11 @@ const BasicForm = () => {
                     </div>
                   </div>
                 )}
-             
               </div>
             </div>
             {/* Banner */}
             <div className="form_group double_col_inputs">
               <div className="image_upload_type">
-             
                 <div className="banner_type">
                   <label htmlFor="Banner">Company Banner</label>
                   <select

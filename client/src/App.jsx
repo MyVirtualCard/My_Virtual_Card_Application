@@ -62,6 +62,7 @@ import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/New_Liv
 
 import Page_Not_Found_Error_Page from "./Page_Not_Found_Error_Page/Page_Not_Found_Error_Page.jsx";
 import URLNotFound from "./Client_Dashboard/404_Error_Page/404.jsx";
+import DOCTOR_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/DOCTOR_PREVIEW.jsx";
 
 //Import All component:
 const App = () => {
@@ -296,6 +297,10 @@ const App = () => {
               <Route
                 path="/Corporate_Company_Preview"
                 element={<CORPORATE_PREVIEW />}
+              />
+                  <Route
+                path="/Doctor_Preview"
+                element={<DOCTOR_PREVIEW />}
               />
               {/* Live VCards */}
 
