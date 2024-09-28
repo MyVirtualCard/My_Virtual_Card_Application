@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import "./Edit_form_styles/Edit_Select_Template.scss";
-import { ToastContainer, toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import Gym_Trainer from "../../../assets/Digicards/Preview/GYM_TRAINER_PREVIEW.png";
 import Taxi_Service from "../../../assets/Digicards/Preview/TAXI_DRIVER_PREVIEW.png";
 import Fashion_Desinger from "../../../assets/Digicards/Preview/FASHION_DESIGNER_PREVIEW.png";
@@ -57,7 +57,6 @@ let BasicTemplate = [
     image: BeautyParlor,
     TemplateName: "Beauty Parlor",
   },
-
 ];
 let StandardTemplate = [
   {
@@ -91,7 +90,6 @@ let StandardTemplate = [
     image: BeautyParlor,
     TemplateName: "Beauty Parlor",
   },
-
 ];
 let EnterpriceTemplate = [
   {
@@ -168,38 +166,24 @@ const Select_Template = () => {
   let [savedTemplate, setSavedTemplate] = useState(null);
   let [Count, setCount] = useState(0);
 
-  let handShow=()=>{
-  // Set up the interval to increment the count every second
-  const interval = setInterval(() => {
-    setCount((prevCount) => prevCount + 1);
-  }, 1000);
+  let handShow = () => {
+    // Set up the interval to increment the count every second
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
 
-  // Clear the interval after 10 seconds
-  const timeout = setTimeout(() => {
-    clearInterval(interval);
-  }, 3000); // 5 seconds
+    // Clear the interval after 10 seconds
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 3000); // 5 seconds
 
-  // Cleanup function: clear interval and timeout on component unmount
-  return () => {
-    clearInterval(interval);
-    clearTimeout(timeout);
+    // Cleanup function: clear interval and timeout on component unmount
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   };
-  }
 
-  function handle_Template_Selection(getCurrentId) {
-    setCurrentTemplate(getCurrentId === currentTemplate ? null : getCurrentId);
-     setCount(0)
-    if (getCurrentId === currentTemplate) {
-      toast.error("Select Your VCard Template!");
-      setCount(3)
-    } else if (currentTemplate != savedTemplate && savedTemplate != null) {
-      setCount(3)
-      toast.error("Already VCard Selected!");
-    } else {
-      toast.success("VCard Selected!");
-      handShow();
-    }
-  }
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
@@ -229,7 +213,7 @@ const Select_Template = () => {
   }
   useEffect(() => {
     fetchCurrentTemplate();
-    setCount(3)
+    setCount(3);
   }, []);
 
   let formik = useFormik({
@@ -255,7 +239,7 @@ const Select_Template = () => {
         .then((res) => {
           toast.success(res.data.message);
           setFormSubmitLoader(false);
-          setCount(3)
+          setCount(3);
           setTimeout(() => {
             setShowForm("Contact Details");
           }, 1000);
@@ -268,7 +252,7 @@ const Select_Template = () => {
   });
 
   async function handleTemplateUpdate() {
-    setCount(3)
+    setCount(3);
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
@@ -284,7 +268,7 @@ const Select_Template = () => {
       .then((res) => {
         setFormSubmitLoader(false);
         toast.success(res.data.message);
-        setCount(3)
+        setCount(3);
         setTimeout(() => {
           setShowForm("Contact Details");
         }, 2000);
@@ -294,6 +278,20 @@ const Select_Template = () => {
 
         setFormSubmitLoader(false);
       });
+  }
+  function handle_Template_Selection(getCurrentId) {
+    setCurrentTemplate(getCurrentId === currentTemplate ? null : getCurrentId);
+    setCount(0);
+    if (getCurrentId === currentTemplate) {
+      toast.error("Select Your VCard Template!");
+      setCount(3);
+    } else if (currentTemplate != savedTemplate && savedTemplate != null) {
+      setCount(3);
+      toast.error("Already VCard Selected!");
+    } else {
+      // toast.success("VCard Selected!");
+      handShow();
+    }
   }
 
   return (
@@ -320,12 +318,12 @@ const Select_Template = () => {
               Update VCard Design
               <span class="material-symbols-outlined">update</span>
               {Count != 3 ? (
-                            <div className="touch_hand">
-                              <img src={touch_hand} alt="hand" />
-                            </div>
-                          ) : (
-                            ""
-                          )}
+                <div className="touch_hand">
+                  <img src={touch_hand} alt="hand" />
+                </div>
+              ) : (
+                ""
+              )}
             </button>
           )}
         </div>
@@ -391,7 +389,7 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-    <div className="vcard_name">
+                        <div className="vcard_name">
                           <h4>{data.TemplateName}</h4>
                         </div>
                         <div
@@ -444,7 +442,7 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-    <div className="vcard_name">
+                        <div className="vcard_name">
                           <h4>{data.TemplateName}</h4>
                         </div>
                         <div className="image_box">
@@ -536,7 +534,7 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-    <div className="vcard_name">
+                        <div className="vcard_name">
                           <h4>{data.TemplateName}</h4>
                         </div>
                         <div className="image_box">

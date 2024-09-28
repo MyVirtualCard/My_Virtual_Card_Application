@@ -145,7 +145,7 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
-  console.log("local" + local_URL_Alies, "state" + URL_Alies);
+
   return (
     <>
       <div className="App_container">

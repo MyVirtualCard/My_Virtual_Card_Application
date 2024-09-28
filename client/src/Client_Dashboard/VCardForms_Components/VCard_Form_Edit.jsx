@@ -174,7 +174,7 @@ const VCard_Form_Edit = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.data)
+       
           if (res.data.data.length > 0) {
             setURL_Alies(res.data.data[0].URL_Alies);
             setFormSubmitLoader(false);
@@ -199,7 +199,7 @@ const VCard_Form_Edit = () => {
     // freePlanFetchData();
     fetchCurrentManageContent();
   }, [navigate]);
-console.log('Current Path' + window.location.pathname)
+
 console.log(URL_Alies)
   return (
     <>

@@ -320,6 +320,7 @@ validateOnChange:false,
                 <option value="Grocery_Store">Grocery_Store</option>
                 <option value="Mobile_Store">Mobile_Store</option>
                 <option value="Cloth_Shop">Cloth_Shop</option>
+                <option value="Others" style={{backgroundColor:'gray',color:'#fff'}}>Others...</option>
               </select>
 
               <div className="error">{formik.errors.VCardName}</div>

@@ -460,16 +460,18 @@ animation: lines 2s infinite;
     }
   
     #ProfileCardOpen{
-      position: absolute;
-      top: 9dvh;
-      right: 1dvh;
+      transform: translateY(0px);
+      // position: absolute;
+      // top: 9dvh;
+      // right: 1dvh;
       // display: block;
       transition: all 0.3s linear;
     }
     #ProfileCardClose{
-      position: absolute;
-      top: -90dvh;
-      right: 1dvh;
+      transform: translateY(-500px);
+      // position: absolute;
+      // top: -90dvh;
+      // right: 1dvh;
       // display: none;
       transition: all 0.3s linear;
     }
