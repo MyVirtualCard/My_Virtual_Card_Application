@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./ADVOCATE_PREVIEW.scss";
+import "./EDUCATION_PREVIEW.scss";
 
 import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
 
@@ -34,12 +34,17 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
-import { FaAnglesDown, FaAnglesUp, FaArrowTurnDown, FaArrowTurnUp } from "react-icons/fa6";
+import {
+  FaAnglesDown,
+  FaAnglesUp,
+  FaArrowTurnDown,
+  FaArrowTurnUp,
+} from "react-icons/fa6";
 import { FaHandPointUp } from "react-icons/fa";
 import { LuCornerLeftDown } from "react-icons/lu";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-const ADVOCATE_PREVIEW = () => {
+const EDUCATION_PREVIEW = () => {
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -321,13 +326,13 @@ const ADVOCATE_PREVIEW = () => {
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       innerHeight = window.innerHeight; // Height of the viewport
       setScrollY(window.scrollY); // Number of pixels scrolled vertically
       totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
     });
-  },[])
+  }, []);
 
   //Menu actions
 
@@ -340,7 +345,7 @@ const ADVOCATE_PREVIEW = () => {
   let PaymentRef = useRef(null);
   let GalleryRef = useRef(null);
   let VideoRef = useRef(null);
-  let AppinmentRef=useRef(null);
+  let AppinmentRef = useRef(null);
   let TimeRef = useRef(null);
   let TestimonialRef = useRef(null);
   let LocationRef = useRef(null);
@@ -349,7 +354,6 @@ const ADVOCATE_PREVIEW = () => {
   let InquiryRef = useRef(null);
 
   let scrollToSection = (elementRef) => {
-    
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -422,7 +426,7 @@ const ADVOCATE_PREVIEW = () => {
     if (activeMenu === "Inquiry") {
       return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
     }
-  };
+  }
   useEffect(() => {
     const handleScroll = () => {
       const section1Top = HomeRef.current?.offsetTop || 0;
@@ -439,59 +443,79 @@ const ADVOCATE_PREVIEW = () => {
       const section12Top = FeedbackRef.current?.offsetTop || 0;
       const section13Top = InquiryRef.current?.offsetTop || 0;
       const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
+
       if (scrollPosition >= section1Top && scrollPosition < section2Top) {
-        setActiveMenu('Home');
-      } 
-      else if (scrollPosition >= section2Top && scrollPosition < section3Top) {
-        setActiveMenu('About');
-      } 
-      else if (scrollPosition >= section3Top && scrollPosition < section4Top) {
-        setActiveMenu('Service');
-      } 
-      else if (scrollPosition >= section4Top && scrollPosition < section5Top) {
-        setActiveMenu('Product');
-      } 
-      else if (scrollPosition >= section5Top && scrollPosition < section6Top) {
-        setActiveMenu('Payment');
-      } 
-      else if (scrollPosition >= section6Top && scrollPosition < section7Top) {
-        setActiveMenu('Gallery');
-      } 
-      else if (scrollPosition >= section7Top && scrollPosition < section8Top) {
-        setActiveMenu('Video');
-      } 
-      else if (scrollPosition >= section8Top && scrollPosition < section9Top) {
-        setActiveMenu('Appoinment');
-      } 
-      else if (scrollPosition >= section9Top && scrollPosition < section10Top) {
-        setActiveMenu('Time');
-      } 
-      else if (scrollPosition >= section10Top && scrollPosition < section11Top) {
-        setActiveMenu('Testimonial');
-      } 
-      else if (scrollPosition >= section11Top && scrollPosition < section12Top) {
-        setActiveMenu('Location');
-      } 
-      else if (scrollPosition >= section12Top && scrollPosition < section13Top) {
-        setActiveMenu('Feedback');
-      } 
-      else if (scrollPosition >= section13Top) {
-        setActiveMenu('Inquiry');
+        setActiveMenu("Home");
+      } else if (
+        scrollPosition >= section2Top &&
+        scrollPosition < section3Top
+      ) {
+        setActiveMenu("About");
+      } else if (
+        scrollPosition >= section3Top &&
+        scrollPosition < section4Top
+      ) {
+        setActiveMenu("Service");
+      } else if (
+        scrollPosition >= section4Top &&
+        scrollPosition < section5Top
+      ) {
+        setActiveMenu("Product");
+      } else if (
+        scrollPosition >= section5Top &&
+        scrollPosition < section6Top
+      ) {
+        setActiveMenu("Payment");
+      } else if (
+        scrollPosition >= section6Top &&
+        scrollPosition < section7Top
+      ) {
+        setActiveMenu("Gallery");
+      } else if (
+        scrollPosition >= section7Top &&
+        scrollPosition < section8Top
+      ) {
+        setActiveMenu("Video");
+      } else if (
+        scrollPosition >= section8Top &&
+        scrollPosition < section9Top
+      ) {
+        setActiveMenu("Appoinment");
+      } else if (
+        scrollPosition >= section9Top &&
+        scrollPosition < section10Top
+      ) {
+        setActiveMenu("Time");
+      } else if (
+        scrollPosition >= section10Top &&
+        scrollPosition < section11Top
+      ) {
+        setActiveMenu("Testimonial");
+      } else if (
+        scrollPosition >= section11Top &&
+        scrollPosition < section12Top
+      ) {
+        setActiveMenu("Location");
+      } else if (
+        scrollPosition >= section12Top &&
+        scrollPosition < section13Top
+      ) {
+        setActiveMenu("Feedback");
+      } else if (scrollPosition >= section13Top) {
+        setActiveMenu("Inquiry");
       }
-      
     };
 
-    window.addEventListener('scroll', handleScroll);
-    
+    window.addEventListener("scroll", handleScroll);
+
     // Cleanup event listener on unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
   return (
-    <div className="ADVOCATE_PREVIEW_CONTAINER">
+    <div className="EDUCATION_PREVIEW_CONTAINER">
       {/* Gallery Full IMAGE */}
       <div
         className="full_image"
@@ -506,7 +530,7 @@ const ADVOCATE_PREVIEW = () => {
       {/* Menu Navbar */}
       <div className="menu_navbar_box">
         <div className={`up_btn ${activeMenu === "Home" ? "hideUpArrow" : ""}`}>
-          <FaArrowUp onClick={HandleMenuUp} className="icon" />
+          <CiSquareChevUp onClick={HandleMenuUp} className="icon" />
         </div>
         <div className="all_menus">
           <div
@@ -625,27 +649,37 @@ const ADVOCATE_PREVIEW = () => {
             activeMenu === "Inquiry" ? "hideDownArrow" : ""
           }`}
         >
-          <FaArrowDown onClick={HandleMenuDown} className="down" />
+          <CiSquareChevDown onClick={HandleMenuDown} className="down" />
         </div>
       </div>
-      <div className="ADVOCATE_PREVIEW_CARD">
+      <div className="EDUCATION_PREVIEW_CARD">
         {/* Banner and logo */}
         <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/premium-photo/horizontal-banner-international-justice-day-gold-themis-scales-balance-blue-green-background-human-rights-concept-free-space-text-copy-space_1225180-595.jpg?w=1060"
+              src="https://img.freepik.com/premium-photo/education-institutes-universities-colleges-school-buildings_29977-6423.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
               alt="banner"
             />
             <div className="overlay"></div>
           </div>
           <div className="user_logo">
             <img
-              src="https://img.freepik.com/free-photo/portrait-confident-young-businessman-with-his-arms-crossed_23-2148176206.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
+              src="https://img.freepik.com/premium-photo/logo-education-education-all-see_1280538-7325.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
               alt="user_logo"
             />
           </div>
           <div className="svg_image">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3B475C" fill-opacity="1" d="M0,0L1440,192L1440,320L0,320Z"></path></svg>
+            <svg
+              className="svg_image"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1440 320"
+            >
+              <path
+                fill="#16423C"
+                fill-opacity="1"
+                d="M0,320L48,304C96,288,192,256,288,256C384,256,480,288,576,293.3C672,299,768,277,864,224C960,171,1056,85,1152,48C1248,11,1344,21,1392,26.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              ></path>
+            </svg>
           </div>
         </div>
         {/* basic Details */}
@@ -653,8 +687,8 @@ const ADVOCATE_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Krishna Kumar</h2>
-                <p>Senior Advocate Officer</p>
+                <h2>Harish Kalyan. Dr</h2>
+                <p>Educational Institute</p>
               </div>
 
               {/* Actions */}
@@ -687,6 +721,7 @@ const ADVOCATE_PREVIEW = () => {
             </div>
           </div>
         </div>
+
         {/* Contact Details */}
         <div className="contact_row_3">
           {/* Location */}
@@ -741,10 +776,10 @@ const ADVOCATE_PREVIEW = () => {
 
         {/* About US */}
         <div className="about_row_4" ref={AboutRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3> About Us </h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
 
           <div className="about_details">
@@ -1031,7 +1066,7 @@ const ADVOCATE_PREVIEW = () => {
               </div>
             </div>
           </div>
-          <div className="ADVOCATE_SUB_TITLE_PREVIEW">
+          <div className="EDUCATION_SUB_TITLE_PREVIEW">
             <h3>Our Specialities</h3>
           </div>
           <div className="specialities">
@@ -1052,11 +1087,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Our Services */}
         <div className="our_services" ref={ServiceRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-        
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Our Services</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="All_Services">
             {/* Service */}
@@ -1186,16 +1220,15 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Our Product */}
         <div className="our_products" ref={ProductRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-     
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Our Products</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="All_Products">
             {/* Product */}
             <div className="Product">
-            <div className="product_title">
+              <div className="product_title">
                 <h5> MyVirtual Card</h5>
               </div>
               <div className="product_image">
@@ -1212,7 +1245,7 @@ const ADVOCATE_PREVIEW = () => {
                   </a>
                 </div>
               </div>
-            
+
               <div className="product_description">
                 <p>
                   Customize Your Digital Identity Effortlessly with My Virtual
@@ -1237,7 +1270,7 @@ const ADVOCATE_PREVIEW = () => {
             </div>
             {/* Product */}
             <div className="Product">
-            <div className="product_title">
+              <div className="product_title">
                 <h5> My Orders</h5>
               </div>
               <div className="product_image">
@@ -1257,7 +1290,7 @@ const ADVOCATE_PREVIEW = () => {
                   </a>
                 </div>
               </div>
-             
+
               <div className="product_description">
                 <p>
                   It was popularised in the 1960s with the release of Letraset
@@ -1285,11 +1318,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Payment */}
         <div className="Payment" ref={PaymentRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>For Payment</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="payment_details">
             <div className="detail">
@@ -1401,11 +1433,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Gallery */}
         <div className="gallery" ref={GalleryRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-            
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Gallery</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
 
           <div className="all_gallerys">
@@ -1444,15 +1475,11 @@ const ADVOCATE_PREVIEW = () => {
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
-    
           </div>
         </div>
         {/* Videos */}
         <div className="video" ref={VideoRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          
-         
-          </div>
+          <div className="EDUCATION_TITLE_PREVIEW"></div>
 
           <div className="videos_container">
             <div className="video_image">
@@ -1483,12 +1510,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Opentime */}
         <div className="time_container" ref={TimeRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-       
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Open&Close Time</h3>
-            <FaArrowTurnDown className="right_icon"/>
-          
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="time_list_container">
             <div className="time_list">
@@ -1526,11 +1551,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Testimonials */}
         <div className="testimonial" ref={TestimonialRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-           
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Testimonial</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="testimonial_container">
             <Carousel
@@ -1541,7 +1565,7 @@ const ADVOCATE_PREVIEW = () => {
             >
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1562,7 +1586,7 @@ const ADVOCATE_PREVIEW = () => {
               </div>
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1604,7 +1628,7 @@ const ADVOCATE_PREVIEW = () => {
               </div>
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1629,11 +1653,10 @@ const ADVOCATE_PREVIEW = () => {
         {/* GoogleMap */}
 
         <div className="google_map_container" ref={LocationRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Live Location</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
 
           <div className="google_map">
@@ -1644,12 +1667,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Feedback */}
         <div className="feedback_row" ref={FeedbackRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-        
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Feedback</h3>
-            <FaArrowTurnDown className="right_icon"/>
-          
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="feedback_container">
             <form action="" onSubmit={feedbackFormik.handleSubmit}>
@@ -1873,11 +1894,10 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Inquries */}
         <div className="Inquries" ref={InquiryRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-           
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="EDUCATION_TITLE_PREVIEW">
+            <FaArrowTurnUp className="left_icon" />
             <h3>Inquries</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            <FaArrowTurnDown className="right_icon" />
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1935,9 +1955,17 @@ const ADVOCATE_PREVIEW = () => {
         {/* Footer */}
         <div className="Advocate_Footer">
           <div className="advocate_footer_container">
-        
-          
-            <svg className='svg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,192L720,96L1440,256L1440,320L720,320L0,320Z"></path></svg>
+            <svg
+              className="svg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1440 320"
+            >
+              <path
+                fill={style.$svg_wave_back_color}
+                fill-opacity="1"
+                d="M0,32L60,42.7C120,53,240,75,360,74.7C480,75,600,53,720,42.7C840,32,960,32,1080,53.3C1200,75,1320,117,1380,138.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+              ></path>
+            </svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
@@ -1946,4 +1974,4 @@ const ADVOCATE_PREVIEW = () => {
   );
 };
 
-export default ADVOCATE_PREVIEW;
+export default EDUCATION_PREVIEW;

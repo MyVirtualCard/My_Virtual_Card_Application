@@ -63,6 +63,9 @@ import Corporate_Company from "./Client_Dashboard/All_VCards/Live_VCards/New_Liv
 import Page_Not_Found_Error_Page from "./Page_Not_Found_Error_Page/Page_Not_Found_Error_Page.jsx";
 import URLNotFound from "./Client_Dashboard/404_Error_Page/404.jsx";
 import DOCTOR_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/DOCTOR_PREVIEW.jsx";
+import ADVOCATE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/ADVOCATE_PREVIEW.jsx";
+import EDUCATION_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/EDUCATION_PREVIEW.jsx";
+import CAB_DRIVERS_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/CAB_DRIVERS_PREVIEW.jsx";
 
 //Import All component:
 const App = () => {
@@ -298,9 +301,15 @@ const App = () => {
                 path="/Corporate_Company_Preview"
                 element={<CORPORATE_PREVIEW />}
               />
-                  <Route
-                path="/Doctor_Preview"
-                element={<DOCTOR_PREVIEW />}
+              <Route path="/Doctor_Preview" element={<DOCTOR_PREVIEW />} />
+              <Route path="/Advocate_Preview" element={<ADVOCATE_PREVIEW />} />
+              <Route
+                path="/Education_Preview"
+                element={<EDUCATION_PREVIEW />}
+              />
+              <Route
+                path="/Cab_Drivers_Preview"
+                element={<CAB_DRIVERS_PREVIEW />}
               />
               {/* Live VCards */}
 
@@ -377,10 +386,8 @@ const App = () => {
               ) : (
                 ""
               )}
-         
-            {/* <Route path="*" element={<Page_Not_Found_Error_Page />} /> */}
-           
-              
+
+              {/* <Route path="*" element={<Page_Not_Found_Error_Page />} /> */}
             </Routes>
           </Suspense>
         </Context.Provider>

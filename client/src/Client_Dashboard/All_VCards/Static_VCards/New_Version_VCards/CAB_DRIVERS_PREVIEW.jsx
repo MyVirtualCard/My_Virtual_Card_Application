@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./ADVOCATE_PREVIEW.scss";
+import "./CAB_DRIVERS_PREVIEW.scss";
 
 import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
 
@@ -15,7 +15,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { BiSolidPhoneCall, BiSolidVideo } from "react-icons/bi";
 import { RiWhatsappFill } from "react-icons/ri";
-import { FaArrowDown, FaArrowUp, FaDirections } from "react-icons/fa";
+import { FaDirections } from "react-icons/fa";
 import { MdOutgoingMail, MdSchedule } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
 import { IoHome, IoMail } from "react-icons/io5";
@@ -34,12 +34,9 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
-import { FaAnglesDown, FaAnglesUp, FaArrowTurnDown, FaArrowTurnUp } from "react-icons/fa6";
-import { FaHandPointUp } from "react-icons/fa";
-import { LuCornerLeftDown } from "react-icons/lu";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-const ADVOCATE_PREVIEW = () => {
+const CAB_DRIVERS_PREVIEW = () => {
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -51,7 +48,7 @@ const ADVOCATE_PREVIEW = () => {
 
     //SVG Wave backgound
 
-    $svg_wave_back_color: "#ffffff",
+    $svg_wave_back_color: "#6ebe4b",
   };
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
@@ -491,7 +488,7 @@ const ADVOCATE_PREVIEW = () => {
   }, []);
   
   return (
-    <div className="ADVOCATE_PREVIEW_CONTAINER">
+    <div className="CAB_DRIVERS_PREVIEW_CONTAINER">
       {/* Gallery Full IMAGE */}
       <div
         className="full_image"
@@ -506,7 +503,7 @@ const ADVOCATE_PREVIEW = () => {
       {/* Menu Navbar */}
       <div className="menu_navbar_box">
         <div className={`up_btn ${activeMenu === "Home" ? "hideUpArrow" : ""}`}>
-          <FaArrowUp onClick={HandleMenuUp} className="icon" />
+          <CiSquareChevUp onClick={HandleMenuUp} className="icon" />
         </div>
         <div className="all_menus">
           <div
@@ -625,27 +622,33 @@ const ADVOCATE_PREVIEW = () => {
             activeMenu === "Inquiry" ? "hideDownArrow" : ""
           }`}
         >
-          <FaArrowDown onClick={HandleMenuDown} className="down" />
+          <CiSquareChevDown onClick={HandleMenuDown} className="down" />
         </div>
       </div>
-      <div className="ADVOCATE_PREVIEW_CARD">
+      <div className="CAB_DRIVERS_PREVIEW_CARD">
         {/* Banner and logo */}
         <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/premium-photo/horizontal-banner-international-justice-day-gold-themis-scales-balance-blue-green-background-human-rights-concept-free-space-text-copy-space_1225180-595.jpg?w=1060"
+              src="https://img.freepik.com/free-photo/doctor-nurses-special-equipment_23-2148980721.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
               alt="banner"
             />
             <div className="overlay"></div>
           </div>
           <div className="user_logo">
             <img
-              src="https://img.freepik.com/free-photo/portrait-confident-young-businessman-with-his-arms-crossed_23-2148176206.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
+              src="https://img.freepik.com/premium-vector/medical-logo-health-icon-vector-logo-design_1128391-16722.jpg?w=740"
               alt="user_logo"
             />
           </div>
           <div className="svg_image">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3B475C" fill-opacity="1" d="M0,0L1440,192L1440,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill="#fff"
+                fill-opacity="1"
+                d="M0,32L120,64C240,96,480,160,720,160C960,160,1200,96,1320,64L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+              ></path>
+            </svg>
           </div>
         </div>
         {/* basic Details */}
@@ -653,8 +656,8 @@ const ADVOCATE_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Krishna Kumar</h2>
-                <p>Senior Advocate Officer</p>
+                <h2>Senthil Kumar</h2>
+                <p>KRN Private Hospital</p>
               </div>
 
               {/* Actions */}
@@ -741,10 +744,8 @@ const ADVOCATE_PREVIEW = () => {
 
         {/* About US */}
         <div className="about_row_4" ref={AboutRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          <FaArrowTurnUp className="left_icon"/>
-            <h3> About Us </h3>
-            <FaArrowTurnDown className="right_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
+            <h3>About Us</h3>
           </div>
 
           <div className="about_details">
@@ -1031,7 +1032,7 @@ const ADVOCATE_PREVIEW = () => {
               </div>
             </div>
           </div>
-          <div className="ADVOCATE_SUB_TITLE_PREVIEW">
+          <div className="CAB_DRIVERS_SUB_TITLE_PREVIEW">
             <h3>Our Specialities</h3>
           </div>
           <div className="specialities">
@@ -1052,11 +1053,8 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Our Services */}
         <div className="our_services" ref={ServiceRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-        
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Our Services</h3>
-            <FaArrowTurnDown className="right_icon"/>
           </div>
           <div className="All_Services">
             {/* Service */}
@@ -1186,11 +1184,8 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Our Product */}
         <div className="our_products" ref={ProductRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-     
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Our Products</h3>
-            <FaArrowTurnDown className="right_icon"/>
           </div>
           <div className="All_Products">
             {/* Product */}
@@ -1285,11 +1280,8 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Payment */}
         <div className="Payment" ref={PaymentRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>For Payment</h3>
-            <FaArrowTurnDown className="right_icon"/>
           </div>
           <div className="payment_details">
             <div className="detail">
@@ -1401,11 +1393,8 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Gallery */}
         <div className="gallery" ref={GalleryRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-            
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Gallery</h3>
-            <FaArrowTurnDown className="right_icon"/>
           </div>
 
           <div className="all_gallerys">
@@ -1449,9 +1438,8 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Videos */}
         <div className="video" ref={VideoRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          
-         
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
+            <h3>Videos</h3>
           </div>
 
           <div className="videos_container">
@@ -1483,12 +1471,9 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Opentime */}
         <div className="time_container" ref={TimeRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-       
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Open&Close Time</h3>
-            <FaArrowTurnDown className="right_icon"/>
-          
+            {/* Contact */}
           </div>
           <div className="time_list_container">
             <div className="time_list">
@@ -1526,11 +1511,9 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Testimonials */}
         <div className="testimonial" ref={TestimonialRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-           
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Testimonial</h3>
-            <FaArrowTurnDown className="right_icon"/>
+            {/* Contact */}
           </div>
           <div className="testimonial_container">
             <Carousel
@@ -1629,11 +1612,8 @@ const ADVOCATE_PREVIEW = () => {
         {/* GoogleMap */}
 
         <div className="google_map_container" ref={LocationRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-          
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Live Location</h3>
-            <FaArrowTurnDown className="right_icon"/>
           </div>
 
           <div className="google_map">
@@ -1644,12 +1624,9 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Feedback */}
         <div className="feedback_row" ref={FeedbackRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-        
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Feedback</h3>
-            <FaArrowTurnDown className="right_icon"/>
-          
+            {/* Contact */}
           </div>
           <div className="feedback_container">
             <form action="" onSubmit={feedbackFormik.handleSubmit}>
@@ -1873,11 +1850,8 @@ const ADVOCATE_PREVIEW = () => {
         </div>
         {/* Inquries */}
         <div className="Inquries" ref={InquiryRef}>
-          <div className="ADVOCATE_TITLE_PREVIEW">
-           
-            <FaArrowTurnUp className="left_icon"/>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Inquries</h3>
-            <FaArrowTurnDown className="right_icon"/>
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1933,11 +1907,10 @@ const ADVOCATE_PREVIEW = () => {
           </div>
         </div>
         {/* Footer */}
-        <div className="Advocate_Footer">
-          <div className="advocate_footer_container">
+        <div className="Footer">
+          <div className="footer_container">
         
-          
-            <svg className='svg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,192L720,96L1440,256L1440,320L720,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path  fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>
@@ -1946,4 +1919,4 @@ const ADVOCATE_PREVIEW = () => {
   );
 };
 
-export default ADVOCATE_PREVIEW;
+export default CAB_DRIVERS_PREVIEW;

@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 //Text Color
 $root_text_color: #ffffff;
 $second_text_color: rgb(112, 112, 112);
@@ -14,12 +14,12 @@ $first_back__color: #797979;
 $second_back__color: #a3a3a3;
 $third_back__color: #303030;
 //Root Background
-$root_backgound: #bbbbbb, #f5f5f5;
+$root_backgound: #c5c5c5a4, #c7c7c7b0;
 $root_text_size: 0.9rem;
 $root_font_weight: 400;
 //Vcard background
-$vcard_back_color: #3B475C;
-$vcard_back_second_color: #3B475C;
+$vcard_back_color: #16423C;
+$vcard_back_second_color: #16423C;
 
 // Title
 $title_text_color:#F6BE71;
@@ -29,7 +29,7 @@ $sub_title_color: #F6BE71;
 
 //Button
 
-$first_btn_back_color: #DA9107;
+$first_btn_back_color: #6A9C89;
 $second_btn_back_color: #727272;
 $third_btn_back_color: #ffffff;
 $first_btn_text_color: #ffffff;
@@ -46,7 +46,7 @@ $link_text_color: royalblue;
 
 // Product
 
-$product_back_color: #535353;
+$product_back_color: #6A9C89;
 $product_back_color_second: #56ffff;
 $product_title_color: #ffffff;
 $product_text_color: rgb(255, 255, 255);
@@ -61,14 +61,14 @@ $error_text_color: tomato;
 
 //NavMenu
 
-$NavMenu_back_color: #3B475C;
-$NavMenu_second_back_color: #DA9107;
-$NavBtn_back_color: #696969;
+$NavMenu_back_color: #16423C;
+$NavMenu_second_back_color: #6A9C89;
+$NavBtn_back_color: #6A9C89;
 $NavBtn_Icon_Color:#ffffff;
 $NavMenu_first_text_color: #ffffff;
 $NavMenu_second_text_color: #ffffff;
 //Title for each list
-.ADVOCATE_TITLE_PREVIEW {
+.EDUCATION_TITLE_PREVIEW {
   width: 100%;
   display: flex;
   align-items: center;
@@ -79,14 +79,15 @@ $NavMenu_second_text_color: #ffffff;
 
   margin: auto;
   h3 {
-    // width: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content:center;
     gap: 10px;
-    font-family: "Roboto", sans-serif;
-    font-weight: 550;
-    font-style: normal;
+    font-family: "Indie Flower", cursive;
+
+    font-weight: 600;
+ 
     // border-top: 2px solid $title_text_color;
  
 border-radius: 5px;
@@ -98,24 +99,24 @@ border-radius: 5px;
       font-size: 1.7rem !important;
       color: $second_back__color !important;
     }
-    // &::before {
-    //   content: "";
-    //   width: 100px;
-    //   height: 2px;
-    //   background-color:$title_after_before_line;
-    //   position: absolute;
-    //   border-radius: 4px;
-    //   left: 0%;
-    // }
-    // &::after {
-    //   content: "";
-    //   width: 100px;
-    //   height: 2px;
-    //   border-radius: 4px;
-    //   background-color: $title_after_before_line;
-    //   position: absolute;
-    //   right: 0%;
-    // }
+    &::before {
+      content: "";
+      width: 100px;
+      height: 2px;
+      background-color:$title_after_before_line;
+      position: absolute;
+      border-radius: 4px;
+      left: 0%;
+    }
+    &::after {
+      content: "";
+      width: 100px;
+      height: 2px;
+      border-radius: 4px;
+      background-color: $title_after_before_line;
+      position: absolute;
+      right: 0%;
+    }
   }
   .left_icon{
     display: flex;
@@ -124,6 +125,7 @@ border-radius: 5px;
     font-size: 1.1rem;
     transform: rotate(180deg);
     color: $title_text_color;
+    display: none;
   }
   .right_icon{
     display: flex;
@@ -131,10 +133,11 @@ border-radius: 5px;
     justify-content: center;
     font-size: 1.1rem;
     color: $title_text_color;
+    display: none;
   
   }
 }
-.ADVOCATE_SUB_TITLE_PREVIEW {
+.EDUCATION_SUB_TITLE_PREVIEW {
   width: 100%;
   display: flex;
   align-items: center;
@@ -156,7 +159,7 @@ border-radius: 5px;
     position: relative;
   }
 }
-.ADVOCATE_PREVIEW_CONTAINER{
+.EDUCATION_PREVIEW_CONTAINER{
   width: 100vw;
   min-height: 100vh;
   height: auto;
@@ -172,7 +175,7 @@ border-radius: 5px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(90deg, $root_backgound , $root_backgound );
+  background: linear-gradient(90deg, $root_backgound 50%, $root_backgound 50%);
 
   //   Gallery full image
 
@@ -418,14 +421,15 @@ color: $NavMenu_first_text_color;
     }
   }
 
-  .ADVOCATE_PREVIEW_CARD {
+  .EDUCATION_PREVIEW_CARD {
     width: 450px;
     max-width: 450px;
     margin-top: 0.5rem;
     height: auto;
     overflow-x: hidden;
-    font-family: "Poppins", sans-serif;
-    font-weight: $root_font_weight;
+    font-family: "Exo 2", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: $root_text_size;
     font-style: normal;
     background: linear-gradient(
       160deg,
@@ -486,13 +490,13 @@ color: $NavMenu_first_text_color;
       .user_logo {
         position: absolute;
         bottom: -20%;
-        right: 2%;
-        transform: translate(-2%, -20%);
-        width: 100px;
-        height: 100px;
+        right: 3%;
+        transform: translate(-3%, -20%);
+        width: 100%;
+        // height: 100px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         z-index: 2;
         // width: 100%;
 
@@ -507,30 +511,30 @@ color: $NavMenu_first_text_color;
           object-position: center;
           border: 2px solid rgb(214, 214, 214) !important;
           filter: drop-shadow(0px 4px 5px #ffffff66);
-          // animation: profileBorder 5s infinite linear;
-          @keyframes profileBorder {
+          animation: educationprofileBorder 5s infinite linear;
+          @keyframes educationprofileBorder {
             0% {
-              border: 3px solid $card_back_colour;
+          
 
               transform: translateY(0px);
             }
             25% {
-              border: 3px solid #ffffff;
+            
 
               transform: translateY(-5px);
             }
             50% {
-              border: 3px solid #ffffff;
+          
 
               transform: translateY(-10px);
             }
             75% {
-              border: 3px solid rgb(255, 255, 255);
+           
 
               transform: translateY(-5px);
             }
             100% {
-              border: 3px solid $card_back_colour;
+             
 
               transform: translateY(0px);
             }
@@ -541,9 +545,11 @@ color: $NavMenu_first_text_color;
       }
       .svg_image {
         position: absolute;
-        bottom:-15%;
+        bottom:-0%;
+    
         left: 0%;
         right: 0%;
+       
         width: 100%;
         z-index: 1;
       
@@ -553,24 +559,26 @@ color: $NavMenu_first_text_color;
     }
     //UserDetails
     .basic_row_2 {
-      padding:0rem 1rem 1rem 1rem;
+      padding:1rem;
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items:center;
       justify-content: center;
       gap: 1rem;
       position: relative;
       z-index: 3;
-
+ 
+ 
       .user_details {
+       
         width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content:flex-start;
+        justify-content:center;
         gap: 0.5rem;
-
+  
         .user_data {
           color: #fff;
           display: flex;
@@ -581,7 +589,7 @@ color: $NavMenu_first_text_color;
           gap: 15px;
           width: 100%;
           height: 100%;
-
+  
           .user_information {
             display: flex;
             flex: 0.5;
@@ -589,14 +597,14 @@ color: $NavMenu_first_text_color;
             flex-direction: column;
             align-items:flex-start;
             justify-content: center;
-
+  
             h2 {
               font-size: 1.2rem;
               font-weight: 500;
               letter-spacing: 1px;
               color: $root_text_color;
             }
-
+  
             p {
               font-size: 0.9rem;
               font-weight: 400;
@@ -607,13 +615,13 @@ color: $NavMenu_first_text_color;
               justify-content: center;
               gap: 0rem;
               // animation: professionAnime 15s infinite linear;
-
+  
               img {
                 width: 40px;
                 height: 40px;
                 object-fit: cover;
                 object-position: center;
-
+  
                 @media screen and (max-width: 600px) {
                   width: 25px;
                   height: 25px;
@@ -625,11 +633,11 @@ color: $NavMenu_first_text_color;
           .contacts_btns {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 5px;
+            justify-content: flex-start;
+            gap: 10px;
             width: 100%;
             flex-wrap: wrap;
-
+  
             a {
               text-decoration: none;
               display: flex;
@@ -639,7 +647,7 @@ color: $NavMenu_first_text_color;
               padding: 0.4rem 1rem;
               background-color: $first_btn_back_color;
               color: $first_btn_text_color;
-              border-radius: 1rem;
+              border-radius: 0.2rem;
               transition: all 0.4s linear;
               .icon {
                 font-size: 1rem;
@@ -648,7 +656,7 @@ color: $NavMenu_first_text_color;
                 font-size: 0.7rem;
                 font-weight: 500;
               }
-
+  
               &:hover {
                 background-color: $second_btn_back_color;
                 filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
@@ -657,13 +665,14 @@ color: $NavMenu_first_text_color;
               }
             }
           }
-
+  
           @media screen and (max-width: 600px) {
             align-items: flex-start;
           }
         }
       }
     }
+
     //Contact Details
 
     .contact_row_3 {
@@ -675,6 +684,7 @@ color: $NavMenu_first_text_color;
       justify-content: flex-start;
       gap: 1rem;
       position: relative;
+     
 
       //   COntact Detail
       a {
@@ -692,7 +702,7 @@ color: $NavMenu_first_text_color;
           justify-content: center;
           font-size: 1.2rem;
           padding: 5px;
-          border-radius: 1rem;
+          border-radius: 0.2rem;
           background-color: $first_btn_back_color;
           color: $third_text_color;
           filter: drop-shadow(0px 3px 3px rgba(250, 250, 250, 0.4));
@@ -1080,7 +1090,7 @@ color: $NavMenu_first_text_color;
       gap: 1rem;
       position: relative;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
       .All_Services {
         width: 100%;
         height: auto;
@@ -1220,7 +1230,7 @@ color: $NavMenu_first_text_color;
       gap: 1rem;
       position: relative;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
       .All_Products {
         width: 100%;
         height: auto;
@@ -1360,7 +1370,7 @@ color: $product_text_color;
       gap: 1rem;
       position: relative;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
 
       .payment_details {
         display: flex;
@@ -1577,7 +1587,7 @@ color: $product_text_color;
       gap: 1rem;
       position: relative;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
 
       .all_gallerys {
         width: 100%;
@@ -1609,25 +1619,25 @@ color: $product_text_color;
       
 .span-1 {
   grid-row: span 2;
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 .span-2 {
-  grid-row: span 1;
-  grid-column: span 1;
+  grid-row: span 2;
+  grid-column: span 2;
 }
 
 .span-3 {
   grid-row: span 3;
-  grid-column: span 1;
+  grid-column: span 3;
 }
 .span-4 {
   grid-row: span 2;
   grid-column: span 2;
 }
 .span-5 {
-  grid-row: span 3;
-  grid-column: span 3;
+  grid-row: span 2;
+  grid-column: span 1;
 }
       }
     }
@@ -1642,7 +1652,7 @@ color: $product_text_color;
       gap: 1rem;
       position: relative;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
 
       .videos_container {
         width: 100%;
@@ -1672,7 +1682,7 @@ color: $product_text_color;
       align-items: center;
       justify-content: center;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
 
       .time_list_container {
         width: 100%;
@@ -1688,7 +1698,7 @@ color: $product_text_color;
           align-items: center;
           justify-content: space-around;
           padding: 5px 1rem 5px 1rem;
-          background-color: $first_back__color;
+          background-color: $first_btn_back_color;
           width: 100%;
           height: 80px;
           max-height: 80px;
@@ -1787,7 +1797,7 @@ color: $product_text_color;
       gap: 1rem;
       position: relative;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
 
       .testimonial_container {
         margin: 1rem auto;
@@ -1801,12 +1811,12 @@ color: $product_text_color;
           height: 180px;
           min-height: 180px;
           // background: linear-gradient(90deg,$first_back__color 50%,$social_media_icon_color 50%);
-          background-color: $third_back__color;
+          background-color: $first_btn_back_color;
           // box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
           overflow-y: auto;
           margin: auto;
           display: flex;
-          flex-direction: row;
+          flex-direction: row-reverse;
           align-items: center;
           justify-content: flex-start;
           // border-radius: 0.5rem;
@@ -1827,7 +1837,7 @@ color: $product_text_color;
             h4{
               font-size: 0.9rem;
               font-weight: 550;
-              color:$first_btn_back_color;
+              color:$second_text_color;
             }
             small {
               width: 100%;
@@ -1852,9 +1862,9 @@ color: $product_text_color;
             flex: 0.4;
             justify-content: center;
             gap: 10px;
-            position: absolute;
-            right: 15%;
-            top: -20%;
+            // position: absolute;
+            // right: 15%;
+            // top: -20%;
 
             // background-color: $first_btn_back_color;
             // border-bottom-left-radius: 6rem;
@@ -1906,7 +1916,7 @@ color: $product_text_color;
       justify-content: center;
       padding: 1rem;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
 
       .google_map {
         width: 100%;
@@ -1931,7 +1941,7 @@ color: $product_text_color;
       align-items: center;
       justify-content: center;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
       .feedback_container {
         width: 100%;
         position: relative;
@@ -2530,7 +2540,7 @@ color: $product_text_color;
       align-items: center;
       justify-content: center;
 
-      @extend .ADVOCATE_TITLE_PREVIEW;
+      @extend .EDUCATION_TITLE_PREVIEW;
       .inquiries_container5 {
         width: 100%;
         display: flex;
@@ -2704,7 +2714,7 @@ color: $product_text_color;
           height: 100%;
 
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
           color: $second_text_color;
           font-weight: 600;
