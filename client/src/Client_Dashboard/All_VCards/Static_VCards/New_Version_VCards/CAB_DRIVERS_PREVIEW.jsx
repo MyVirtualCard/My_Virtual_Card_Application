@@ -48,7 +48,7 @@ const CAB_DRIVERS_PREVIEW = () => {
 
     //SVG Wave backgound
 
-    $svg_wave_back_color: "#6ebe4b",
+    $svg_wave_back_color: "#fff",
   };
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
@@ -318,13 +318,13 @@ const CAB_DRIVERS_PREVIEW = () => {
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       innerHeight = window.innerHeight; // Height of the viewport
       setScrollY(window.scrollY); // Number of pixels scrolled vertically
       totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
     });
-  },[])
+  }, []);
 
   //Menu actions
 
@@ -337,7 +337,7 @@ const CAB_DRIVERS_PREVIEW = () => {
   let PaymentRef = useRef(null);
   let GalleryRef = useRef(null);
   let VideoRef = useRef(null);
-  let AppinmentRef=useRef(null);
+  let AppinmentRef = useRef(null);
   let TimeRef = useRef(null);
   let TestimonialRef = useRef(null);
   let LocationRef = useRef(null);
@@ -346,7 +346,6 @@ const CAB_DRIVERS_PREVIEW = () => {
   let InquiryRef = useRef(null);
 
   let scrollToSection = (elementRef) => {
-    
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -419,7 +418,7 @@ const CAB_DRIVERS_PREVIEW = () => {
     if (activeMenu === "Inquiry") {
       return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
     }
-  };
+  }
   useEffect(() => {
     const handleScroll = () => {
       const section1Top = HomeRef.current?.offsetTop || 0;
@@ -436,57 +435,77 @@ const CAB_DRIVERS_PREVIEW = () => {
       const section12Top = FeedbackRef.current?.offsetTop || 0;
       const section13Top = InquiryRef.current?.offsetTop || 0;
       const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
+
       if (scrollPosition >= section1Top && scrollPosition < section2Top) {
-        setActiveMenu('Home');
-      } 
-      else if (scrollPosition >= section2Top && scrollPosition < section3Top) {
-        setActiveMenu('About');
-      } 
-      else if (scrollPosition >= section3Top && scrollPosition < section4Top) {
-        setActiveMenu('Service');
-      } 
-      else if (scrollPosition >= section4Top && scrollPosition < section5Top) {
-        setActiveMenu('Product');
-      } 
-      else if (scrollPosition >= section5Top && scrollPosition < section6Top) {
-        setActiveMenu('Payment');
-      } 
-      else if (scrollPosition >= section6Top && scrollPosition < section7Top) {
-        setActiveMenu('Gallery');
-      } 
-      else if (scrollPosition >= section7Top && scrollPosition < section8Top) {
-        setActiveMenu('Video');
-      } 
-      else if (scrollPosition >= section8Top && scrollPosition < section9Top) {
-        setActiveMenu('Appoinment');
-      } 
-      else if (scrollPosition >= section9Top && scrollPosition < section10Top) {
-        setActiveMenu('Time');
-      } 
-      else if (scrollPosition >= section10Top && scrollPosition < section11Top) {
-        setActiveMenu('Testimonial');
-      } 
-      else if (scrollPosition >= section11Top && scrollPosition < section12Top) {
-        setActiveMenu('Location');
-      } 
-      else if (scrollPosition >= section12Top && scrollPosition < section13Top) {
-        setActiveMenu('Feedback');
-      } 
-      else if (scrollPosition >= section13Top) {
-        setActiveMenu('Inquiry');
+        setActiveMenu("Home");
+      } else if (
+        scrollPosition >= section2Top &&
+        scrollPosition < section3Top
+      ) {
+        setActiveMenu("About");
+      } else if (
+        scrollPosition >= section3Top &&
+        scrollPosition < section4Top
+      ) {
+        setActiveMenu("Service");
+      } else if (
+        scrollPosition >= section4Top &&
+        scrollPosition < section5Top
+      ) {
+        setActiveMenu("Product");
+      } else if (
+        scrollPosition >= section5Top &&
+        scrollPosition < section6Top
+      ) {
+        setActiveMenu("Payment");
+      } else if (
+        scrollPosition >= section6Top &&
+        scrollPosition < section7Top
+      ) {
+        setActiveMenu("Gallery");
+      } else if (
+        scrollPosition >= section7Top &&
+        scrollPosition < section8Top
+      ) {
+        setActiveMenu("Video");
+      } else if (
+        scrollPosition >= section8Top &&
+        scrollPosition < section9Top
+      ) {
+        setActiveMenu("Appoinment");
+      } else if (
+        scrollPosition >= section9Top &&
+        scrollPosition < section10Top
+      ) {
+        setActiveMenu("Time");
+      } else if (
+        scrollPosition >= section10Top &&
+        scrollPosition < section11Top
+      ) {
+        setActiveMenu("Testimonial");
+      } else if (
+        scrollPosition >= section11Top &&
+        scrollPosition < section12Top
+      ) {
+        setActiveMenu("Location");
+      } else if (
+        scrollPosition >= section12Top &&
+        scrollPosition < section13Top
+      ) {
+        setActiveMenu("Feedback");
+      } else if (scrollPosition >= section13Top) {
+        setActiveMenu("Inquiry");
       }
-      
     };
 
-    window.addEventListener('scroll', handleScroll);
-    
+    window.addEventListener("scroll", handleScroll);
+
     // Cleanup event listener on unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
   return (
     <div className="CAB_DRIVERS_PREVIEW_CONTAINER">
       {/* Gallery Full IMAGE */}
@@ -630,23 +649,23 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
             <img
-              src="https://img.freepik.com/free-photo/doctor-nurses-special-equipment_23-2148980721.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+              src="https://img.freepik.com/premium-photo/online-cab-booking-service_1029473-646478.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
               alt="banner"
             />
             <div className="overlay"></div>
           </div>
           <div className="user_logo">
             <img
-              src="https://img.freepik.com/premium-vector/medical-logo-health-icon-vector-logo-design_1128391-16722.jpg?w=740"
+              src="https://img.freepik.com/premium-photo/highway-heroes-commemorative-drivers-day-visuals_1046319-46196.jpg?w=740"
               alt="user_logo"
             />
           </div>
           <div className="svg_image">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path
-                fill="#fff"
+                fill="#B75A48"
                 fill-opacity="1"
-                d="M0,32L120,64C240,96,480,160,720,160C960,160,1200,96,1320,64L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+                d="M0,160L30,176C60,192,120,224,180,218.7C240,213,300,171,360,160C420,149,480,171,540,197.3C600,224,660,256,720,256C780,256,840,224,900,197.3C960,171,1020,149,1080,122.7C1140,96,1200,64,1260,53.3C1320,43,1380,53,1410,58.7L1440,64L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
               ></path>
             </svg>
           </div>
@@ -656,8 +675,8 @@ const CAB_DRIVERS_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Senthil Kumar</h2>
-                <p>KRN Private Hospital</p>
+                <h2>Mr.Dongley</h2>
+                <p>Cab Driver With 5 Years Of Exp</p>
               </div>
 
               {/* Actions */}
@@ -746,6 +765,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="about_row_4" ref={AboutRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>About Us</h3>
+            <span className="material-symbols-outlined">info</span>
           </div>
 
           <div className="about_details">
@@ -1055,6 +1075,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="our_services" ref={ServiceRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Our Services</h3>
+            <span className="material-symbols-outlined">design_services</span>
           </div>
           <div className="All_Services">
             {/* Service */}
@@ -1186,11 +1207,12 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="our_products" ref={ProductRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Our Products</h3>
+            <span className="material-symbols-outlined">shopping_cart</span>
           </div>
           <div className="All_Products">
             {/* Product */}
             <div className="Product">
-            <div className="product_title">
+              <div className="product_title">
                 <h5> MyVirtual Card</h5>
               </div>
               <div className="product_image">
@@ -1207,7 +1229,7 @@ const CAB_DRIVERS_PREVIEW = () => {
                   </a>
                 </div>
               </div>
-            
+
               <div className="product_description">
                 <p>
                   Customize Your Digital Identity Effortlessly with My Virtual
@@ -1232,7 +1254,7 @@ const CAB_DRIVERS_PREVIEW = () => {
             </div>
             {/* Product */}
             <div className="Product">
-            <div className="product_title">
+              <div className="product_title">
                 <h5> My Orders</h5>
               </div>
               <div className="product_image">
@@ -1252,7 +1274,7 @@ const CAB_DRIVERS_PREVIEW = () => {
                   </a>
                 </div>
               </div>
-             
+
               <div className="product_description">
                 <p>
                   It was popularised in the 1960s with the release of Letraset
@@ -1282,6 +1304,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="Payment" ref={PaymentRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>For Payment</h3>
+            <span className="material-symbols-outlined">payments</span>
           </div>
           <div className="payment_details">
             <div className="detail">
@@ -1374,27 +1397,30 @@ const CAB_DRIVERS_PREVIEW = () => {
           <div className="qr_code_upi_name">
             <h4>Google Pay</h4>
           </div>
+          <div className="quote">
+              <small>Scan with pay any UPI App</small>
+            </div>
           <div className="qr_image_box">
             <div className="user_name">
               <h4>
-                To Senthil Kumar <LiaHandPointDownSolid />
+                To Dongley <LiaHandPointDownSolid />
               </h4>
             </div>
             <div className="qr_image">
               <img
-                src="https://img.freepik.com/premium-vector/qr-code-white-box-circle_78370-5879.jpg?w=740"
+                src="https://img.freepik.com/premium-vector/man-scans-qr-code-with-cellphone_331474-642.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
                 alt="qrcode"
               />
             </div>
-            <div className="quote">
-              <small>Scan with pay any UPI App</small>
-            </div>
+        
           </div>
+  
         </div>
         {/* Gallery */}
         <div className="gallery" ref={GalleryRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Gallery</h3>
+            <span className="material-symbols-outlined">gallery_thumbnail</span>
           </div>
 
           <div className="all_gallerys">
@@ -1433,13 +1459,13 @@ const CAB_DRIVERS_PREVIEW = () => {
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
-    
           </div>
         </div>
         {/* Videos */}
         <div className="video" ref={VideoRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Videos</h3>
+            <span className="material-symbols-outlined">video_library</span>
           </div>
 
           <div className="videos_container">
@@ -1473,6 +1499,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="time_container" ref={TimeRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Open&Close Time</h3>
+            <span className="material-symbols-outlined">schedule</span>
             {/* Contact */}
           </div>
           <div className="time_list_container">
@@ -1513,7 +1540,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="testimonial" ref={TestimonialRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Testimonial</h3>
-            {/* Contact */}
+            <span className="material-symbols-outlined">share_reviews</span>
           </div>
           <div className="testimonial_container">
             <Carousel
@@ -1524,7 +1551,11 @@ const CAB_DRIVERS_PREVIEW = () => {
             >
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
+                  <div className="client_name">
+                    <h4>John Doe</h4>
+                    <small>-Member</small>
+                  </div>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1537,15 +1568,16 @@ const CAB_DRIVERS_PREVIEW = () => {
                     alt=""
                   />
 
-                  <div className="client_name">
-                    <h4>John Doe</h4>
-                    <small>-Member</small>
-                  </div>
+               
                 </div>
               </div>
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
+                  <div className="client_name">
+                    <h4>Jayakumar </h4>
+                    <small>-CEO</small>
+                  </div>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1558,36 +1590,16 @@ const CAB_DRIVERS_PREVIEW = () => {
                     alt=""
                   />
 
-                  <div className="client_name">
-                    <h4>Jayakumar </h4>
-                    <small>-CEO</small>
-                  </div>
+                
                 </div>
               </div>
               <div className="testimonial_list">
                 <div className="client_feedback">
                   <h4>Feedback</h4>
-                  <small>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Vel repellendus a ut! Architecto quis error porro nemo
-                    beatae perspiciatis omnis?
-                  </small>
-                </div>
-                <div className="client_detail">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                    alt=""
-                  />
-
                   <div className="client_name">
                     <h4>Dinesh Kumar</h4>
                     <small>-Member</small>
                   </div>
-                </div>
-              </div>
-              <div className="testimonial_list">
-                <div className="client_feedback">
-                <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1600,10 +1612,29 @@ const CAB_DRIVERS_PREVIEW = () => {
                     alt=""
                   />
 
+                 
+                </div>
+              </div>
+              <div className="testimonial_list">
+                <div className="client_feedback">
+                  <h4>Feedback</h4>
                   <div className="client_name">
                     <h4>Punitha</h4>
                     <small>-Member</small>
                   </div>
+                  <small>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Vel repellendus a ut! Architecto quis error porro nemo
+                    beatae perspiciatis omnis?
+                  </small>
+                </div>
+                <div className="client_detail">
+                  <img
+                    src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
+                    alt=""
+                  />
+
+                 
                 </div>
               </div>
             </Carousel>
@@ -1614,6 +1645,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="google_map_container" ref={LocationRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Live Location</h3>
+            <span className="material-symbols-outlined">map</span>
           </div>
 
           <div className="google_map">
@@ -1626,7 +1658,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="feedback_row" ref={FeedbackRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Feedback</h3>
-            {/* Contact */}
+            <span className="material-symbols-outlined">reviews</span>
           </div>
           <div className="feedback_container">
             <form action="" onSubmit={feedbackFormik.handleSubmit}>
@@ -1852,6 +1884,7 @@ const CAB_DRIVERS_PREVIEW = () => {
         <div className="Inquries" ref={InquiryRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
             <h3>Inquries</h3>
+            <span className="material-symbols-outlined">forum</span>
           </div>
           <div className="inquiries_container5">
             <form action="">
@@ -1908,9 +1941,14 @@ const CAB_DRIVERS_PREVIEW = () => {
         </div>
         {/* Footer */}
         <div className="Footer">
-          <div className="footer_container">
-        
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path  fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
+          <div className="cab_footer_container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill={style.$svg_wave_back_color}
+                fill-opacity="1"
+                d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+              ></path>
+            </svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>

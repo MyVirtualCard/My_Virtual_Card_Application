@@ -1,43 +1,43 @@
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap');
 //Text Color
-$first_text_color: #424242;
-$second_text_color: rgb(112, 112, 112);
-$third_text_color: #ffffff;
+$first_text_color: #ffffff;
+$second_text_color: #272727;
+$third_text_color: #6b6b6b;
 
 //SocialMedia Icon Color::after
 $social_media_icon_color: #ffffff;
 //Background
 $card_back_colour: #ffffff;
 $first_back__color: #797979;
-$second_back__color: #a3a3a3;
+$second_back__color: #E8ECD6;
 $third_back__color: #303030;
 //Root Background
-$root_backgound: #a1a1a1, #c9c9c9;
+$root_backgound: #B2C6B6, #B2C6B6;
 $root_text_size: 0.9rem;
 $root_font_weight: 500;
 //Vcard background
-$vcard_back_color: #ffffff;
-$vcard_back_second_color: #ffffff;
+$vcard_back_color: #B75A48;
+$vcard_back_second_color: #B75A48;
 
 // Title
 $title_after_before_line: #ffffff;
-$primary_title_color: #161616;
-$sub_title_color: #2e2d2d;
+$primary_title_color: #ffffff;
+$sub_title_color: #ffe574;
 
 //Button
 
-$first_btn_back_color: #6ebe4b;
+$first_btn_back_color: #E8ECD6;
 $second_btn_back_color: #727272;
 $third_btn_back_color: #ffffff;
 $first_btn_text_color: #ffffff;
-$second_btn_text_color: #474747;
+$second_btn_text_color: #555555;
 $third_btn_text_color: #ffffff;
 
 // Service
 
-$service_back_color: #d6feff;
+$service_back_color: #E8ECD6;
 $service_back_color_second: #ff99cc;
 $service_title_color: #3a3a3a;
 $service_text_color: rgb(46, 46, 46);
@@ -45,44 +45,46 @@ $link_text_color: royalblue;
 
 // Product
 
-$product_back_color: #fff6f6;
+$product_back_color: #B2C6B6;
 $product_back_color_second: #56ffff;
 $product_title_color: #2c2c2c;
 $product_text_color: rgb(63, 63, 63);
 $link_text_color: royalblue;
 
 // QR code
-$qr_code_back_color: #bcffee;
+$qr_code_back_color: #E8ECD6;
 
 // Form
 $error_text_color: tomato;
 
 //NavMenu
 
-$NavMenu_back_color: #ffffff;
-$NavMenu_second_back_color: #6ebe4b;
-$NavBtn_back_color: royalBlue;
+$NavMenu_back_color: #B75A48;
+$NavMenu_second_back_color: #E8ECD6;
+$NavBtn_back_color: rgb(238, 238, 238);
 $NavMenu_first_text_color: #ffffff;
-$NavMenu_second_text_color: rgb(90, 90, 90);
+$NavMenu_second_text_color: rgb(255, 255, 255);
 //Title for each list
 .CAB_DRIVERS_TITLE_PREVIEW {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 10px;
+
   position: relative;
   // margin-bottom: 1rem;
+  color: $first_text_color;
 
   h3 {
-    width: 100%;
+   
     display: flex;
     align-items: center;
-    justify-content:center;
+    justify-content: flex-start;
     gap: 10px;
-    font-family: "Lora", serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
+    font-family: "Trade Winds", system-ui;
+  font-weight: 400;
+  font-style: normal;
 
     font-size: 1.2rem;
     color: $primary_title_color;
@@ -92,24 +94,24 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       font-size: 1.7rem !important;
       color: $second_back__color !important;
     }
-    &::before {
-      content: "";
-      width: 100px;
-      height: 2px;
-      background-color:$first_btn_back_color;
-      position: absolute;
-      border-radius: 4px;
-      left: 0%;
-    }
-    &::after {
-      content: "";
-      width: 100px;
-      height: 2px;
-      border-radius: 4px;
-      background-color: $first_btn_back_color;
-      position: absolute;
-      right: 0%;
-    }
+    // &::before {
+    //   content: "";
+    //   width: 100px;
+    //   height: 2px;
+    //   background-color: $first_btn_back_color;
+    //   position: absolute;
+    //   border-radius: 4px;
+    //   left: 0%;
+    // }
+    // &::after {
+    //   content: "";
+    //   width: 60%;
+    //   height: 2px;
+    //   border-radius: 4px;
+    //   background-color: $first_btn_back_color;
+    //   position: relative;
+    //   right: 0%;
+    // }
   }
 }
 .CAB_DRIVERS_SUB_TITLE_PREVIEW {
@@ -134,7 +136,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     position: relative;
   }
 }
-.CAB_DRIVERS_PREVIEW_CONTAINER{
+.CAB_DRIVERS_PREVIEW_CONTAINER {
   width: 100vw;
   min-height: 100vh;
   height: auto;
@@ -150,7 +152,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(90deg, $root_backgound , $root_backgound );
+  background: linear-gradient(90deg, $root_backgound, $root_backgound);
 
   //   Gallery full image
 
@@ -290,6 +292,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
         border-radius: 4px;
         transition: all 0.5s ease-in-out;
+        color: $NavMenu_first_text_color;
 
         .icon {
           font-size: 1.4rem;
@@ -456,9 +459,9 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       }
       .user_logo {
         position: absolute;
-        bottom: 0%;
-        left: 50%;
-        transform: translate(-50%, -0%);
+        bottom: 10%;
+        left: 0%;
+        transform: translate(-0%, 10%);
         width: 100px;
         height: 100px;
         display: flex;
@@ -470,59 +473,49 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           z-index: 2;
           width: 100%;
           height: 100%;
-          border-radius: 0.3rem;
-          // border-top-left-radius: 2.5rem;
-          // border-bottom-right-radius: 2.5rem;
+          // border-radius: 50%;
+          border-top-right-radius: 3rem;
+          border-top-left-radius: 3rem;
+          border-bottom-right-radius: 3rem;
           object-fit: cover;
           object-position: center;
-          border: 2px solid rgb(214, 214, 214) !important;
+          border: 2px solid $first_text_color !important;
           filter: drop-shadow(0px 4px 5px #ffffff66);
-          // animation: profileBorder 5s infinite linear;
-          @keyframes profileBorder {
+
+          animation: CabProfileRotate 5s infinite linear;
+          @keyframes CabProfileRotate {
             0% {
-              border: 3px solid $card_back_colour;
-
-              transform: translateY(0px);
+              transform: rotate(0deg);
+              border-bottom-left-radius: 0rem;
+              border-top-left-radius: 3rem;
             }
-            25% {
-              border: 3px solid #ffffff;
 
-              transform: translateY(-5px);
-            }
             50% {
-              border: 3px solid #ffffff;
-
-              transform: translateY(-10px);
+              transform: rotate(5deg);
+              border-bottom-left-radius: 3rem;
+              border-top-left-radius: 0rem;
             }
-            75% {
-              border: 3px solid rgb(255, 255, 255);
 
-              transform: translateY(-5px);
-            }
             100% {
-              border: 3px solid $card_back_colour;
-
-              transform: translateY(0px);
+              transform: rotate(0deg);
+              border-bottom-left-radius: 0rem;
+              border-top-left-radius: 3rem;
             }
           }
         }
-
-
       }
       .svg_image {
         position: absolute;
-        bottom:-5%;
+        bottom: -5%;
         left: 0%;
         right: 0%;
         width: 100%;
         z-index: 1;
-
-        
       }
     }
     //UserDetails
     .basic_row_2 {
-      padding: 1rem;
+      padding: 0rem 1rem;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -530,21 +523,23 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       justify-content: center;
       gap: 1rem;
       position: relative;
+      z-index: 1;
 
       .user_details {
         width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0.5rem;
 
         .user_data {
           color: #fff;
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
+
           flex: 1;
           gap: 15px;
           width: 100%;
@@ -555,8 +550,9 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             flex: 0.5;
             width: 100%;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            gap: 10px;
 
             h2 {
               font-size: 1.2rem;
@@ -605,7 +601,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
               gap: 5px;
               padding: 0.4rem 1rem;
               background-color: $first_btn_back_color;
-              color: $first_btn_text_color;
+              color: $second_text_color;
               border-radius: 0.2rem;
               transition: all 0.4s linear;
               .icon {
@@ -617,8 +613,9 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
               }
 
               &:hover {
-                background-color: $second_btn_back_color;
+                background-color: $second_back__color;
                 filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                color: $second_text_color;
                 scale: 1.05;
                 transition: all 0.4s linear;
               }
@@ -660,7 +657,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           padding: 5px;
           border-radius: 5px;
           background-color: $first_btn_back_color;
-          color: $third_text_color;
+          color: $second_text_color;
         }
         .contact_data {
           display: flex;
@@ -690,7 +687,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
         button {
           padding: 7px 2rem;
-          color: $third_text_color;
+          color: $second_text_color;
           background-color: $first_btn_back_color;
           font-weight: 550;
           font-size: 0.8rem;
@@ -700,9 +697,10 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           justify-content: center;
           gap: 10px;
           transition: all 0.4s ease-in-out;
+          cursor: pointer;
           &:hover {
             background-color: $first_btn_back_color;
-            color: $third_btn_text_color;
+            color: $second_text_color;
             box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
             transition: all 0.4s ease-in-out;
           }
@@ -721,6 +719,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       justify-content: flex-start;
       gap: 1rem;
       position: relative;
+      color: $first_text_color;
       // About
       .about_details {
         display: flex;
@@ -1043,6 +1042,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       justify-content: flex-start;
       gap: 1rem;
       position: relative;
+      color: $first_text_color;
 
       @extend .CAB_DRIVERS_TITLE_PREVIEW;
       .All_Services {
@@ -1066,6 +1066,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           align-items: flex-start;
           justify-content: flex-start;
           gap: 10px;
+          color: $service_text_color;
 
           .service_title {
             display: flex;
@@ -1132,7 +1133,6 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             align-items: center;
             justify-content: space-between;
 
-
             .service_price {
               display: flex;
               align-items: center;
@@ -1166,6 +1166,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
                 &:hover {
                   background-color: $second_btn_back_color;
+                  color: $first_text_color;
                 }
               }
             }
@@ -1206,6 +1207,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           align-items: flex-start;
           justify-content: flex-start;
           gap: 10px;
+          color: $product_text_color;
 
           .product_title {
             display: flex;
@@ -1228,7 +1230,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             gap: 10px;
             font-size: $root_text_size;
             font-weight: $root_font_weight;
-            color: $first_text_color;
+            color: $product_text_color;
           }
           .product_link {
             width: 100%;
@@ -1306,6 +1308,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
                 &:hover {
                   background-color: $second_btn_back_color;
+                  color: $first_text_color;
                 }
               }
             }
@@ -1372,7 +1375,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             .icon {
               font-size: 1.2rem;
               cursor: pointer;
-              color: rgb(104, 104, 104);
+              color: $first_text_color;
 
               &:hover {
                 color: royalblue;
@@ -1452,7 +1455,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             .icon {
               font-size: 1.2rem;
               cursor: pointer;
-              color: rgb(104, 104, 104);
+              color: $first_text_color;
 
               &:hover {
                 color: royalblue;
@@ -1486,6 +1489,12 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           position: relative;
         }
       }
+      .quote{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .qr_image_box {
         width: 60%;
         height: 250px;
@@ -1502,6 +1511,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           display: flex;
           align-items: center;
           justify-content: center;
+          color: $second_text_color;
 
           h4 {
             font-size: 1rem;
@@ -1520,7 +1530,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           justify-content: center;
 
           img {
-            width: 80%;
+            width: 100%;
             height: 90%;
             object-fit: cover;
             margin: auto;
@@ -1557,7 +1567,8 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             width: 100%;
             height: 150px;
             // border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+              rgb(209, 213, 219) 0px 0px 0px 1px inset;
             border: 1px solid rgb(196, 196, 196);
             object-fit: cover;
             transition: all 0.3s ease;
@@ -1568,29 +1579,29 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           }
         }
         /* Different spans for larger images */
-      
-.span-1 {
-  grid-row: span 1;
-  grid-column: span 1;
-}
 
-.span-2 {
-  grid-row: span 2;
-  grid-column: span 2;
-}
+        .span-1 {
+          grid-row: span 1;
+          grid-column: span 1;
+        }
 
-.span-3 {
-  grid-row: span 3;
-  grid-column: span 3;
-}
-.span-4 {
-  grid-row: span 1;
-  grid-column: span 1;
-}
-.span-5 {
-  grid-row: span 2;
-  grid-column: span 2;
-}
+        .span-2 {
+          grid-row: span 1;
+          grid-column: span 1;
+        }
+
+        .span-3 {
+          grid-row: span 1;
+          grid-column: span 1;
+        }
+        .span-4 {
+          grid-row: span 1;
+          grid-column: span 1;
+        }
+        .span-5 {
+          grid-row: span 2;
+          grid-column: span 2;
+        }
       }
     }
     //Video
@@ -1650,7 +1661,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           align-items: center;
           justify-content: space-around;
           padding: 5px 1rem 5px 1rem;
-          background-color: $first_back__color;
+          background-color: $first_btn_back_color;
           width: 100%;
           height: 80px;
           max-height: 80px;
@@ -1763,7 +1774,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           height: 180px;
           min-height: 180px;
           // background: linear-gradient(90deg,$first_back__color 50%,$social_media_icon_color 50%);
-          background-color: $second_back__color;
+          background-color: $first_btn_back_color;
           // box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
           overflow-y: auto;
           margin: auto;
@@ -1786,9 +1797,29 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             padding: 10px;
             height: 100%;
 
-            h4{
+            h4 {
               font-size: 0.9rem;
               font-weight: 550;
+              color: $second_text_color;
+            }
+            
+            .client_name {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+
+              h4 {
+                font-size: 0.8rem;
+                color: $third_text_color;
+                font-weight: 550;
+              }
+              small {
+                color: $vcard_back_color;
+                font-size: 0.7rem;
+
+                font-weight: 550;
+              }
             }
             small {
               width: 100%;
@@ -1816,35 +1847,16 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             background-color: $first_btn_back_color;
             border-bottom-left-radius: 6rem;
             border-top-left-radius: 6rem;
-           
+
             img {
-              width: 60px;
-              height: 60px;
-              border-radius: 0.5rem;
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
               object-fit: cover;
               object-position: center;
               border: 1px solid $second_back__color;
             }
 
-            .client_name {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-
-              h4 {
-                font-size: 0.8rem;
-                color: $third_text_color;
-                font-weight: 550;
-            
-              }
-              small {
-                color: yellow;
-                font-size: 0.7rem;
-
-                font-weight: 550;
-              }
-            }
           }
 
           &::-webkit-scrollbar {
@@ -1981,7 +1993,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 
               border-radius: 0.5rem;
               background-color: transparent;
-              border: 1px solid $first_back__color;
+              border: 1px solid $first_text_color;
               color: $first_text_color;
               background-origin: border-box;
               background-clip: padding-box, border-box;
@@ -2047,7 +2059,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
               border: double 1px transparent;
               border-radius: 0.5rem;
               background-color: transparent;
-              border: 1px solid $first_back__color;
+              border: 1px solid $first_text_color;
               background-origin: border-box;
               background-clip: padding-box, border-box;
               border-radius: 0.3rem;
@@ -2642,7 +2654,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       bottom: 0%;
       width: 100%;
       margin-top: 3rem;
-      .footer_container {
+      .cab_footer_container {
         width: 100%;
 
         min-height: 50px;
@@ -2662,7 +2674,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
           align-items: center;
           justify-content: center;
           color: $third_text_color;
-          font-weight: 400;
+          font-weight: 600;
           letter-spacing: 1px;
 
           @media (max-width: 600px) {
@@ -2696,7 +2708,7 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     background-color: $root_backgound;
     // z-index: 100;
 
-    @media screen and (max-width:650px){
+    @media screen and (max-width: 650px) {
       display: none !important;
     }
   }
