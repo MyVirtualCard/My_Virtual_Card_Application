@@ -6,7 +6,7 @@ import React, {
   useContext,
   createContext,
 } from "react";
-import "./App.css";
+import "./App.scss";
 
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import FallBack from "./Fallback/FallBack";

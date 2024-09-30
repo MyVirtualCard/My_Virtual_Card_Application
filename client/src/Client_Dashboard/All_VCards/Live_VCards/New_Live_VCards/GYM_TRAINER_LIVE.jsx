@@ -741,7 +741,7 @@ END:VCARD
                                <div className="contacts_btns" key={index}>
                                  {/* Call */}
                                  <a
-                                   href={`tel:${
+                                   href={`tel:+91${
                                      data.MobileNumber ? data.MobileNumber : "#"
                                    }`}
                                    target="_blank"
@@ -861,7 +861,7 @@ END:VCARD
  
                    {/* PhoneNumber */}
                    <a
-                     href={`tel:${data.MobileNumber ? data.MobileNumber : "#"}`}
+                     href={`tel:+91${data.MobileNumber ? data.MobileNumber : "#"}`}
                      target="_blank"
                    >
                      <div className="icon">

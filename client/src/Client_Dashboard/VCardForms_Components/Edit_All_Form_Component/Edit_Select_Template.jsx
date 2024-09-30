@@ -68,16 +68,16 @@ let BasicTemplate = [
     image: Advocate,
     TemplateName: "Advocate Officer",
   },
-  {
-    id: 9,
-    image: Education,
-    TemplateName: "Education Institute",
-  },
-  {
-    id: 10,
-    image: CabDriver,
-    TemplateName: "Cab Driver",
-  },
+  // {
+  //   id: 9,
+  //   image: Education,
+  //   TemplateName: "Education Institute",
+  // },
+  // {
+  //   id: 10,
+  //   image: CabDriver,
+  //   TemplateName: "Cab Driver",
+  // },
 ];
 let StandardTemplate = [
   {
