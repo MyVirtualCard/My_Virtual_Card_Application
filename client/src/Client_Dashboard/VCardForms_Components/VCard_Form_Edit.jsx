@@ -18,6 +18,7 @@ import Edit_Business_Hour from "./Edit_All_Form_Component/Edit_Business_Hour";
 import Edit_Font from "./Edit_All_Form_Component/Edit_Font";
 import Edit_Terms_Conditions from "./Edit_All_Form_Component/Edit_Terms&Conditions";
 import Edit_Manage_Session from "./Edit_All_Form_Component/Edit_Manage_Session";
+import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Context from "../../Context/GlobalContext";
@@ -31,6 +32,7 @@ import { SHORTKEY } from "quill/modules/keyboard";
 import Edit_About from "./Edit_All_Form_Component/Edit_About";
 import Edit_Payment from "./Edit_All_Form_Component/Edit_Payment";
 import Edit_Video from "./Edit_All_Form_Component/Edit_Video";
+import { IoCreate } from "react-icons/io5";
 
 const VCard_Form_Edit = () => {
   // let { URL_Alies } = useParams();
@@ -56,7 +58,7 @@ const VCard_Form_Edit = () => {
     setPlanActive,
     URL_Alies,
     setURL_Alies,
-
+    PaymentSuccessPopup,setPaymentSuccessPopup,
     status,
     setStatus,
     CurrentPlanActive,
@@ -84,10 +86,17 @@ const VCard_Form_Edit = () => {
         .then((res) => {
        
           if (res.data.data.length > 0) {
-            setCurrentPlanActive(res.data.data.length);
+          
             setStatus(res.data?.data[0]?.status);
             setCurrentPlan(res.data.data[0]?.currentPlan);
-            setShowForm("VCard Templates");
+            if(res.data?.data[0]?.status != 'created'){
+              setShowForm('VCard Templates')
+              setCurrentPlanActive(res.data.data.length);
+            }else{
+              setShowForm('Choose Your Plan')
+              setCurrentPlanActive([]);
+            }
+          
           } else {
             setShowForm("Choose Your Plan");
             setStatus(null);
@@ -198,9 +207,8 @@ const VCard_Form_Edit = () => {
     razorpayFetchData();
     // freePlanFetchData();
     fetchCurrentManageContent();
-  }, [navigate]);
+  }, [status]);
 
-console.log(URL_Alies)
   return (
     <>
       <div className="vcard_form_container">
@@ -264,7 +272,7 @@ console.log(URL_Alies)
             className="form_sidenav"
             id={!formSliderToggle ? "slideClose" : "slideOpen"}
           >
-            {status != null ? (
+            {status != null && status != 'created' ? (
               <div
                 className="menu_item"
                 onClick={handleFormShow}
@@ -572,7 +580,7 @@ console.log(URL_Alies)
             className="all_form_inputs"
             id={!formSliderToggle ? "formExpand" : "formMinimize"}
           >
-            {status != null ? (
+            {status != null && status != 'created' ? (
               <> {ShowForm === "Basic Detail" ? <Edit_BasicForm /> : ""}</>
             ) : (
               <>{ShowForm === "Choose Your Plan" ? <Edit_Plan /> : ""}</>
@@ -607,7 +615,29 @@ console.log(URL_Alies)
             {ShowForm === "Terms & Conditions" ? <Edit_Terms_Conditions /> : ""}
             {ShowForm === "Manage Sections" ? <Edit_Manage_Session /> : ""}
           </div>
+            {/* PaymentSuccess_banner
+         */}
+         {PaymentSuccessPopup ? 
+           <div className="payment_success_container">
+           <div className="popup_box" id={PaymentSuccessPopup ? 'open':'close'}>
+            <div className="close">
+              {/* <i className="fa fa-close" onClick={() => setPaymentSuccessPopup(false)}></i> */}
+              <RxCross2 onClick={()=>setPaymentSuccessPopup(false)}/>
+            </div>
+            <div className="left">
+              <h4>Your Plan Successfully Purchased!</h4>
+              <p>Let's build your brand identity increase your sales and client's easily...</p>
+              <button onClick={()=>setPaymentSuccessPopup(false)}>Let's Build <IoCreate className="icon"/></button>
+            </div>
+            <div className="right">
+              <img src="https://img.freepik.com/free-vector/flat-man-with-golden-coins-receive-cashback-e-wallet_88138-835.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid" alt="" />
+            </div>
+           </div>
         </div>
+         : ""}
+       
+        </div>
+      
       </div>
     </>
   );

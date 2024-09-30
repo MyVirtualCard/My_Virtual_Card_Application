@@ -67,6 +67,8 @@ import ADVOCATE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Ve
 import EDUCATION_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/EDUCATION_PREVIEW.jsx";
 import CAB_DRIVERS_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/CAB_DRIVERS_PREVIEW.jsx";
 import TAXI_SERVICE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/TAXI_SERVICE_PREVIEW.jsx";
+import DOCTOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/DOCTOR_LIVE.jsx";
+import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/ADVOCATE_LIVE.jsx";
 
 //Import All component:
 const App = () => {
@@ -95,6 +97,7 @@ const App = () => {
   let [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   let [VCardCount, setVCardCount] = useState([]);
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
+  let[PaymentSuccessPopup,setPaymentSuccessPopup]=useState(false);
   //URL_Alies
   let [URL_Alies, setURL_Alies] = useState("");
 
@@ -206,6 +209,7 @@ const App = () => {
             setResetPassId,
             CurrentPlanActive,
             setCurrentPlanActive,
+            PaymentSuccessPopup,setPaymentSuccessPopup,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -387,7 +391,16 @@ const App = () => {
               ) : (
                 ""
               )}
-
+              {URL_Alies == URL_Alies && currentTemplate === 7 ? (
+                <Route path={`/:URL_Alies`} element={<DOCTOR_LIVE />} />
+              ) : (
+                ""
+              )}
+              {URL_Alies == URL_Alies && currentTemplate === 8 ? (
+                <Route path={`/:URL_Alies`} element={<ADVOCATE_LIVE />} />
+              ) : (
+                ""
+              )}
               {/* <Route path="*" element={<Page_Not_Found_Error_Page />} /> */}
             </Routes>
           </Suspense>

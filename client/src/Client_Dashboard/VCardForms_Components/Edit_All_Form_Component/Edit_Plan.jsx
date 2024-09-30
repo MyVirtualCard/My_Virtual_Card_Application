@@ -369,7 +369,7 @@ const Plan = () => {
   let { URL_Alies } = useParams();
   let {
     user,
-    setPaymentSuccessPopup,
+    PaymentSuccessPopup,setPaymentSuccessPopup,
     currentPlan,
     setCurrentPlan,
     PlanPrice,
@@ -388,7 +388,7 @@ const Plan = () => {
  
 
   const [amount, setAmount] = useState("");
-  let [Seconds, setSeconds] = useState("180");
+  let [Seconds, setSeconds] = useState("300");
   const [key, setKey] = useState(0);
 
 
@@ -470,6 +470,7 @@ const Plan = () => {
 
   //Razor Payment
   const handlePayment = async (amount, token) => {
+    setPaymentPopup(false)
     const order = await createOrder(amount, user.token);
 
     const options = {
@@ -498,14 +499,15 @@ const Plan = () => {
           },
           config
         );
-    
+     
+        reloadComponent();
         setTimeout(() => {
           reloadComponent();
-          setPaymentPopup(false);
-          navigate(`/${userName}/uadmin/VCards`)
+        
+          navigate(`/${userName}/uadmin/vcard_form_edit/${URL_Alies}`)
         }, 500);
-        setPaymentSuccessPopup(true);
-        setPaymentPopup(false);
+        setPaymentSuccessPopup(true)
+       
         setCurrentPlan(null);
       },
       prefill: {
@@ -530,7 +532,12 @@ const Plan = () => {
       .then((res) => {
     if(res.data.data.length > 0){
       setPlanActive(res.data.data);
-      setShowForm('VCard Templates')
+      if(status != 'created'){
+        setShowForm('VCard Templates')
+      }else{
+        setShowForm('Choose Your Plan')
+      }
+      
       setStatus(res.data?.data[0]?.status);
       setCurrentPlan(res.data?.data[0]?.currentPlan);
     }else{
@@ -541,7 +548,7 @@ const Plan = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [navigate]);
+  }, [Seconds]);
   //Free Plan
   useEffect(()=>{
     api.get(`/currentplan/${URL_Alies}`,{
@@ -566,7 +573,7 @@ const Plan = () => {
   useEffect(() => {
     if (Seconds > 0) {
       const timerId = setTimeout(() => {
-        setSeconds(Seconds - 1);
+        setSeconds(pre=>pre - 1);
       }, 1000);
 
       return () => {
@@ -574,11 +581,15 @@ const Plan = () => {
       };
     }
   }, [Seconds]);
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(Seconds / 60);
+    const secs = Seconds % 60;
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+  };
   function handleAccessDetails(data) {
     setCurrentAccessDetails(data);
     setCurrentAccessActive(true);
-  }
-
+  };
   return (
     <>
       <div className="plan_container">
@@ -588,11 +599,11 @@ const Plan = () => {
               <div className="note">
                 <p>
                   <strong>Note :</strong>&nbsp; If Your Payment created but not
-                  deduct any amount from your account retry payment after 3 min
+                  deduct any amount from your account retry payment after 5 min
                 </p>
               </div>
               <h4>
-                {Seconds} <small>-Seconds more to retry payment!</small>
+                {formatTime(Seconds)} <small>-Seconds more to retry payment!</small>
               </h4>
             </div>
           </div>

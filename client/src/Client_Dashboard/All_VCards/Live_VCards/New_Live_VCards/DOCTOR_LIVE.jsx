@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Corporate_Company.scss";
-import banner from "../../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import axios from "axios";
-import { InquiryValidateSchema } from "../../../../Helper/InquiryValidate";
-import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
+import "./DOCTOR_LIVE.scss";
+import { throttle } from "lodash"; // Optional, for throttling
+import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
+
 //service Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+//Product Slider
+import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
@@ -36,10 +38,13 @@ import { FaUserGroup } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-import VCard_Loader from "../../../../VCard_Loader/VCard_Loader";
 import ReactStars from "react-stars";
 import URLNotFound from "../../../404_Error_Page/404";
-const Corporate_Company = () => {
+import axios from "axios";
+import VCard_Loader from "../../../../VCard_Loader/VCard_Loader";
+import { InquiryValidateSchema } from "../../../../Helper/InquiryValidate";
+import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
+const DOCTOR_LIVE = () => {
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -51,7 +56,7 @@ const Corporate_Company = () => {
 
     //SVG Wave backgound
 
-    $svg_wave_back_color: "#ffffff",
+    $svg_wave_back_color: "#6ebe4b",
   };
   const [width, setWidth] = useState(window.innerWidth);
   //Success and error popup state
@@ -81,6 +86,7 @@ const Corporate_Company = () => {
     // scrollToSection(GalleryRef), setActiveMenu("Gallery");
   }
   let [scrollY, setScrollY] = useState(0);
+  let totalHeight;
   let innerHeight;
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -112,7 +118,6 @@ const Corporate_Company = () => {
   let InquiryRef = useRef(null);
   let AppoinmentRef = useRef(null);
   let scrollToSection = (elementRef) => {
-    console.log(elementRef);
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -303,7 +308,6 @@ const Corporate_Company = () => {
       await api
         .post(`/appoinment${window.location.pathname}`, values)
         .then((res) => {
-          console.log(res);
           formik.values.FullName = "";
           formik.values.Time = "";
           formik.values.MobileNumber = "";
@@ -406,7 +410,6 @@ END:VCARD
         });
     } catch (error) {
       console.log(error);
- 
     } finally {
       setSiteLoader(false);
     }
@@ -432,11 +435,126 @@ END:VCARD
   if (SiteLoader) {
     return <VCard_Loader />;
   }
+  // let section1Top = HomeRef.current?.offsetTop || 0;
+  // let section2Top = AboutRef.current?.offsetTop || 0;
+  // let section3Top = ServiceRef.current?.offsetTop || 0;
+  // let section4Top = ProductRef.current?.offsetTop || 0;
+  // let section5Top = PaymentRef.current?.offsetTop || 0;
+  // let section6Top = GalleryRef.current?.offsetTop || 0;
+  // let section7Top = VideoRef.current?.offsetTop || 0;
+  // let section8Top = AppoinmentPopup.current?.offsetTop || 0;
+  // let section9Top = TimeRef.current?.offsetTop || 0;
+  // let section10Top = TestimonialRef.current?.offsetTop || 0;
+  // let section11Top = LocationRef.current?.offsetTop || 0;
+  // let section12Top = FeedbackRef.current?.offsetTop || 0;
+  // let section13Top = InquiryRef.current?.offsetTop || 0;
+  // let scrollPosition = window.scrollY + window.innerHeight / 2;
+  // let handleScroll = () => {
+  //   if (scrollPosition >= section1Top && scrollPosition < section2Top) {
+  //     setActiveMenu("Home");
+  //   };
+  //     if (scrollPosition >= section2Top && scrollPosition < section3Top) {
+  //     setActiveMenu("About");
+  //   };
+  //   if (scrollPosition >= section3Top && scrollPosition < section4Top) {
+  //     setActiveMenu("Service");
+  //   };
+  //   if (scrollPosition >= section4Top && scrollPosition < section5Top) {
+  //     setActiveMenu("Product");
+  //   };
+  //   if (scrollPosition >= section5Top && scrollPosition < section6Top) {
+  //     setActiveMenu("Payment");
+  //   };
+  //   if (scrollPosition >= section6Top && scrollPosition < section7Top) {
+  //     setActiveMenu("Gallery");
+  //   };
+  //   if (scrollPosition >= section7Top && scrollPosition < section8Top) {
+  //     setActiveMenu("Video");
+  //   };
+  //   if (scrollPosition >= section8Top && scrollPosition < section9Top) {
+  //     setActiveMenu("Appoinment");
+  //   };
+  //   if (scrollPosition >= section9Top && scrollPosition < section10Top) {
+  //     setActiveMenu("Time");
+  //   };
+  //   if (
+  //     scrollPosition >= section10Top &&
+  //     scrollPosition < section11Top
+  //   ) {
+  //     setActiveMenu("Testimonial");
+  //   };
+  //   if (
+  //     scrollPosition >= section11Top &&
+  //     scrollPosition < section12Top
+  //   ) {
+  //     setActiveMenu("Location");
+  //   };
 
+  //   if (
+  //     scrollPosition >= section12Top &&
+  //     scrollPosition < section13Top
+  //   ){
+  //     setActiveMenu("Feedback");
+  //   };
+  //   if (scrollPosition >= section13Top) {
+  //     setActiveMenu("Inquiry");
+  //   }
+  // };
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   // Cleanup event listener on unmount
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+  // const handleScroll = () => {
+  //   let scrollPosition = window.scrollY + window.innerHeight / 2;
+
+  //   const sectionPositions = [
+  //     { top: HomeRef.current?.offsetTop || 0, menu: "Home" },
+  //     { top: AboutRef.current?.offsetTop || 0, menu: "About" },
+  //     { top: ServiceRef.current?.offsetTop || 0, menu: "Service" },
+  //     { top: ProductRef.current?.offsetTop || 0, menu: "Product" },
+  //     { top: PaymentRef.current?.offsetTop || 0, menu: "Payment" },
+  //     { top: GalleryRef.current?.offsetTop || 0, menu: "Gallery" },
+  //     { top: VideoRef.current?.offsetTop || 0, menu: "Video" },
+  //     { top: AppoinmentRef.current?.offsetTop || 0, menu: "Appoinment" },
+  //     { top: TimeRef.current?.offsetTop || 0, menu: "Time" },
+  //     { top: TestimonialRef.current?.offsetTop || 0, menu: "Testimonial" },
+  //     { top: LocationRef.current?.offsetTop || 0, menu: "Location" },
+  //     { top: FeedbackRef.current?.offsetTop || 0, menu: "Feedback" },
+  //     { top: InquiryRef.current?.offsetTop || 0, menu: "Inquiry" }
+  //   ];
+
+  //   for (let i = 0; i < sectionPositions.length - 1; i++) {
+  //     if (scrollPosition >= sectionPositions[i].top && scrollPosition < sectionPositions[i + 1].top) {
+  //       console.log(`Setting active menu to: ${sectionPositions[i].menu}`);
+  //       setActiveMenu(sectionPositions[i].menu); // Ensure setActiveMenu is not conditional
+  //       break;
+  //     }
+  //   }
+
+  //   if (scrollPosition >= sectionPositions[sectionPositions.length - 1].top) {
+  //     console.log(`Setting active menu to: ${sectionPositions[sectionPositions.length - 1].menu}`);
+  //     setActiveMenu(sectionPositions[sectionPositions.length - 1].menu);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const throttledScroll = throttle(handleScroll, 100); // Throttle the scroll event handler
+
+  //   window.addEventListener("scroll", throttledScroll);
+
+  //   // Clean up event listener on component unmount
+  //   return () => {
+  //     window.removeEventListener("scroll", throttledScroll);
+  //   };
+  // }, []); // No dependencies to avoid rerender issues
   return (
     <>
       {VCard_URL_Data.length > 0 ? (
-        <div className="Corporate_Company_container">
+        <div className="DOCTOR_LIVE_CONTAINER">
           {/* Gallery Full IMAGE */}
           <div
             className="full_image"
@@ -446,7 +564,7 @@ END:VCARD
             <div className="close_Full_Image_gallery">
               <RiCloseLargeLine className="icon" onClick={closeFullImage} />
             </div>
-            <img src={banner} alt="gallery" id="fullImage" />
+            <img src="" alt="gallery" id="fullImage" />
           </div>
           {/* Menu Navbar */}
           {VCard_URL_Data.length > 0 ? (
@@ -679,62 +797,75 @@ END:VCARD
           ) : (
             ""
           )}
-
-          <div className="Corporate_Company_box">
-            {/* VcardUrl and logo */}
+          <div className="DOCTOR_LIVE_CARD">
+            {/* Banner and logo */}
             {VCard_URL_Data.map((data, index) => {
               return (
-                <div className="Image_row_1" ref={HomeRef} key={index}>
-                  <div className="banner_image">
-                    {data.BannerType == "Paste_ImageAddress" ? (
-                      <>
+                <>
+                  <div className="Image_row_1" ref={HomeRef} key={index}>
+                    <div className="banner_image">
+                      {data.BannerType == "Paste_ImageAddress" ? (
+                        <>
+                          <img
+                            src={
+                              data.BannerAddress ||
+                              "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
+                            }
+                            alt="banner"
+                          />
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      {data.BannerType == "ImageUpload" ? (
                         <img
-                          src={
-                            data.BannerAddress ||
-                            "https://img.freepik.com/premium-psd/isolated-realistic-shiny-metalic-orange-luxury-city-taxi-cab-car-from-left-front-view_16145-9734.jpg?w=996"
-                          }
+                          src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                            data.Banner
+                          }`}
                           alt="banner"
                         />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {data.BannerType == "ImageUpload" ? (
-                      <img
-                        src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                          data.Banner
-                        }`}
-                        alt="banner"
-                      />
-                    ) : (
-                      ""
-                    )}
-                    <div className="overlay"></div>
+                      ) : (
+                        ""
+                      )}
+                      <div className="overlay"></div>
+                    </div>
+                    <div className="user_logo">
+                      {data.ProfileType == "ImageUpload" ? (
+                        <img
+                          src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                            data.Profile
+                          }`}
+                          alt="user_logo"
+                        />
+                      ) : (
+                        ""
+                      )}
+                      {data.ProfileType == "Paste_ImageAddress" ? (
+                        <img
+                          src={
+                            data.ProfileAddress ||
+                            "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
+                          }
+                          alt="user_logo"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="svg_image">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1440 320"
+                      >
+                        <path
+                          fill="#fff"
+                          fill-opacity="1"
+                          d="M0,32L120,64C240,96,480,160,720,160C960,160,1200,96,1320,64L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+                        ></path>
+                      </svg>
+                    </div>
                   </div>
-                  <div className="user_logo">
-                    {data.ProfileType == "ImageUpload" ? (
-                      <img
-                        src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
-                          data.Profile
-                        }`}
-                        alt="user_logo"
-                      />
-                    ) : (
-                      ""
-                    )}
-                    {data.ProfileType == "Paste_ImageAddress" ? (
-                      <img
-                        src={
-                          data.ProfileAddress ||
-                          "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
-                        }
-                        alt="user_logo"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
+                </>
               );
             })}
 
@@ -742,23 +873,17 @@ END:VCARD
             <div className="basic_row_2">
               <div className="user_details">
                 <div className="user_data">
-                  {VCard_URL_Data.length > 0 ? (
-                    <>
-                      {VCard_URL_Data.map((data, index) => {
-                        return (
-                          <div className="user_information" key={index}>
-                            <h2>
-                              {data.FirstName || "John"} &nbsp;
-                              {data.LastName || " Wick"}
-                            </h2>
-                            <p>{data.Profession || "Corporate Company"}</p>
-                          </div>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    ""
-                  )}
+                  {VCard_URL_Data.map((data, index) => {
+                    return (
+                      <div className="user_information" key={index}>
+                        <h2>
+                          {data.FirstName || "John"} &nbsp;
+                          {data.LastName || " Wick"}
+                        </h2>
+                        <p>{data.Profession || "Corporate Company"}</p>
+                      </div>
+                    );
+                  })}
 
                   {/* Actions */}
                   {BasicData.length > 0 ? (
@@ -768,7 +893,7 @@ END:VCARD
                           <div className="contacts_btns" key={index}>
                             {/* Call */}
                             <a
-                              href={`tel:${
+                              href={`tel:+91${
                                 data.MobileNumber ? data.MobileNumber : "#"
                               }`}
                               target="_blank"
@@ -781,7 +906,9 @@ END:VCARD
                             <a
                               href={`https://wa.me/+91${
                                 data.MobileNumber
-                              }?text=${encodeURIComponent(`Hi ${data.user}`)}`}
+                              }?text=${encodeURIComponent(
+                                `Hi ${VCard_URL_Data[0].FirstName}`
+                              )}`}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -880,7 +1007,7 @@ END:VCARD
 
                       {/* PhoneNumber */}
                       <a
-                        href={`tel:${
+                        href={`tel:+91${
                           data.MobileNumber ? data.MobileNumber : "#"
                         }`}
                         target="_blank"
@@ -920,335 +1047,342 @@ END:VCARD
             {/* About US */}
             {AboutData.length > 0 ? (
               <>
-                {AboutData.map((data, index) => {
-                  return (
-                    <div className="about_row_4" ref={AboutRef} key={index}>
-                      <div className="Corporate_Company_title">
-                        <h3>About Us</h3>
-                      </div>
+                <div className="about_row_4" ref={AboutRef}>
+                  <div className="DOCTOR_TITLE_LIVE">
+                    <h3>About Us</h3>
+                  </div>
 
-                      <div className="about_details">
-                        <div className="detail">
-                          <div className="detail_title">
-                            <h5>Company Name</h5>
-                          </div>
-                          <div className="detail_message">
-                            <strong>:</strong>
-                            <p>{data.CompanyName || " "}</p>
-                          </div>
-                        </div>
-                        <div className="detail">
-                          <div className="detail_title">
-                            <h5>Category</h5>
-                          </div>
-                          <div className="detail_message">
-                            <strong>:</strong>
-                            <p>{data.Category || ""}</p>
-                          </div>
-                        </div>
-                        <div className="detail">
-                          <div className="detail_title">
-                            <h5>Year of Est..</h5>
-                          </div>
-                          <div className="detail_message">
-                            <strong>:</strong>
-                            <p>{data.Year || " "}</p>
-                          </div>
-                        </div>
-
-                        <div className="detail">
-                          <div className="detail_title">
-                            <h5>Nature Of Business</h5>
-                          </div>
-                          <div className="detail_message">
-                            <strong>:</strong>
-                            <p>{data.Bussiness}</p>
-                          </div>
-                        </div>
-                        {SocialMediaData.length > 0 ? (
-                          <>
-                            <div className="detail">
-                              <div className="detail_title">
-                                <h5>SocialMedia's</h5>
-                              </div>
-                              <div className="detail_message">
-                                <strong>:</strong>
-                                {/* SocialMedia */}
-                                {SocialMediaData.map((data, index) => {
-                                  return (
-                                    <div className="social_medias" key={index}>
-                                      {data.Facebook != "" ? (
-                                        <a
-                                          href={data.Facebook}
-                                          target="_blank"
-                                          className="social_media_icon"
-                                        >
-                                          <i className="bx bxl-facebook"></i>
-                                          <small>Facebook</small>
-                                          <div className="social_media_svg1">
-                                            <svg
-                                              id="sw-js-blob-svg"
-                                              viewBox="0 0 100 100"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              version="1.1"
-                                            >
-                                              <defs>
-                                                <linearGradient
-                                                  id="sw-gradient"
-                                                  x1="0"
-                                                  x2="1"
-                                                  y1="1"
-                                                  y2="0"
-                                                >
-                                                  <stop
-                                                    id="stop1"
-                                                    stopColor="rgba(248, 117, 55, 1)"
-                                                    offset="0%"
-                                                  ></stop>
-                                                  <stop
-                                                    id="stop2"
-                                                    stopColor="rgba(251, 168, 31, 1)"
-                                                    offset="100%"
-                                                  ></stop>
-                                                </linearGradient>
-                                              </defs>
-                                              <path
-                                                fill="url(#sw-gradient)"
-                                                d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                                width="100%"
-                                                height="100%"
-                                                transform="translate(50 50)"
-                                                strokeWidth="0"
-                                                style={{ transition: 0.3 }}
-                                              ></path>
-                                            </svg>
-                                          </div>
-                                        </a>
-                                      ) : (
-                                        ""
-                                      )}
-                                      {data.Instagram != "" ? (
-                                        <a
-                                          href={data.Instagram}
-                                          target="_blank"
-                                          className="social_media_icon"
-                                        >
-                                          <i className="bx bxl-instagram-alt"></i>
-                                          <div className="social_media_svg2">
-                                            <svg
-                                              id="sw-js-blob-svg"
-                                              viewBox="0 0 100 100"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              version="1.1"
-                                            >
-                                              <defs>
-                                                <linearGradient
-                                                  id="sw-gradient2"
-                                                  x1="0"
-                                                  x2="1"
-                                                  y1="1"
-                                                  y2="0"
-                                                >
-                                                  <stop
-                                                    id="stop3"
-                                                    stopColor="rgba(248, 117, 55, 1)"
-                                                    offset="0%"
-                                                  ></stop>
-                                                  <stop
-                                                    id="stop4"
-                                                    stopColor="rgba(251, 168, 31, 1)"
-                                                    offset="100%"
-                                                  ></stop>
-                                                </linearGradient>
-                                              </defs>
-                                              <path
-                                                fill="url(#sw-gradient2)"
-                                                d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                                width="100%"
-                                                height="100%"
-                                                transform="translate(50 50)"
-                                                strokeWidth="0"
-                                                style={{ transition: 0.3 }}
-                                              ></path>
-                                            </svg>
-                                          </div>
-                                          <small>Instagram</small>
-                                        </a>
-                                      ) : (
-                                        ""
-                                      )}
-                                      {data.LinkedIn != "" ? (
-                                        <a
-                                          href={data.LinkedIn}
-                                          target="_blank"
-                                          className="social_media_icon"
-                                        >
-                                          <i className="bx bxl-linkedin"></i>
-                                          <div className="social_media_svg4">
-                                            <svg
-                                              id="sw-js-blob-svg"
-                                              viewBox="0 0 100 100"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              version="1.1"
-                                            >
-                                              <defs>
-                                                <linearGradient
-                                                  id="sw-gradient4"
-                                                  x1="0"
-                                                  x2="1"
-                                                  y1="1"
-                                                  y2="0"
-                                                >
-                                                  <stop
-                                                    id="stop7"
-                                                    stopColor="rgba(248, 117, 55, 1)"
-                                                    offset="0%"
-                                                  ></stop>
-                                                  <stop
-                                                    id="stop8"
-                                                    stopColor="rgba(251, 168, 31, 1)"
-                                                    offset="100%"
-                                                  ></stop>
-                                                </linearGradient>
-                                              </defs>
-                                              <path
-                                                fill="url(#sw-gradient4)"
-                                                d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                                width="100%"
-                                                height="100%"
-                                                transform="translate(50 50)"
-                                                strokeWidth="0"
-                                                style={{ transition: 0.3 }}
-                                              ></path>
-                                            </svg>
-                                          </div>
-                                          <small>LinkedIn</small>
-                                        </a>
-                                      ) : (
-                                        ""
-                                      )}
-                                      {data.WhatsUp != "" ? (
-                                        <a
-                                          href={`https://wa.me/+91${data.WhatsUp}?text=Welcome to Aristostech Team!, How can we assest u ?`}
-                                          target="_blank"
-                                          className="social_media_icon"
-                                        >
-                                          <i className="bx bxl-whatsapp"></i>
-                                          <div className="social_media_svg3">
-                                            <svg
-                                              id="sw-js-blob-svg"
-                                              viewBox="0 0 100 100"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              version="1.1"
-                                            >
-                                              <defs>
-                                                <linearGradient
-                                                  id="sw-gradient3"
-                                                  x1="0"
-                                                  x2="1"
-                                                  y1="1"
-                                                  y2="0"
-                                                >
-                                                  <stop
-                                                    id="stop5"
-                                                    stopColor="rgba(248, 117, 55, 1)"
-                                                    offset="0%"
-                                                  ></stop>
-                                                  <stop
-                                                    id="stop6"
-                                                    stopColor="rgba(251, 168, 31, 1)"
-                                                    offset="100%"
-                                                  ></stop>
-                                                </linearGradient>
-                                              </defs>
-                                              <path
-                                                fill="url(#sw-gradient3)"
-                                                d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                                width="100%"
-                                                height="100%"
-                                                transform="translate(50 50)"
-                                                strokeWidth="0"
-                                                style={{ transition: 0.3 }}
-                                              ></path>
-                                            </svg>
-                                          </div>
-                                          <small>Whatsup</small>
-                                        </a>
-                                      ) : (
-                                        ""
-                                      )}
-
-                                      {data.Twiter != "" ? (
-                                        <a
-                                          href={data.Twiter}
-                                          target="_blank"
-                                          className="social_media_icon"
-                                        >
-                                          <i className="bx bxl-twitter"></i>
-                                          <div className="social_media_svg6">
-                                            <svg
-                                              id="sw-js-blob-svg6"
-                                              viewBox="0 0 100 100"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              version="1.1"
-                                            >
-                                              <defs>
-                                                <linearGradient
-                                                  id="sw-gradient6"
-                                                  x1="0"
-                                                  x2="1"
-                                                  y1="1"
-                                                  y2="0"
-                                                >
-                                                  <stop
-                                                    id="stop11"
-                                                    stopColor="rgba(248, 117, 55, 1)"
-                                                    offset="0%"
-                                                  ></stop>
-                                                  <stop
-                                                    id="stop12"
-                                                    stopColor="rgba(251, 168, 31, 1)"
-                                                    offset="100%"
-                                                  ></stop>
-                                                </linearGradient>
-                                              </defs>
-                                              <path
-                                                fill="url(#sw-gradient6)"
-                                                d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
-                                                width="100%"
-                                                height="100%"
-                                                transform="translate(50 50)"
-                                                strokeWidth="0"
-                                                style={{ transition: 0.3 }}
-                                              ></path>
-                                            </svg>
-                                          </div>
-                                          <small>Twiter</small>
-                                        </a>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                              </div>
+                  {AboutData.map((data, index) => {
+                    return (
+                      <>
+                        <div className="about_details" key={index}>
+                          <div className="detail">
+                            <div className="detail_title">
+                              <h5>Company Name</h5>
                             </div>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="Corporate_Company__demo_title">
-                        <h3>Our Specialities</h3>
-                      </div>
-                      <div className="specialities">
-                        <p>
-                          <HtmlRenderer htmlString={data.Specialities || ""} />
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+                            <div className="detail_message">
+                              <strong>:</strong>
+                              <p>{data.CompanyName || " "}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="detail_title">
+                              <h5>Category</h5>
+                            </div>
+                            <div className="detail_message">
+                              <strong>:</strong>
+                              <p>{data.Category || ""}</p>
+                            </div>
+                          </div>
+                          <div className="detail">
+                            <div className="detail_title">
+                              <h5>Year of Est..</h5>
+                            </div>
+                            <div className="detail_message">
+                              <strong>:</strong>
+                              <p>{data.Year || " "}</p>
+                            </div>
+                          </div>
+
+                          <div className="detail">
+                            <div className="detail_title">
+                              <h5>Nature Of Business</h5>
+                            </div>
+                            <div className="detail_message">
+                              <strong>:</strong>
+                              <p>{data.Bussiness || ""}</p>
+                            </div>
+                          </div>
+                          {SocialMediaData.length > 0 ? (
+                            <>
+                              <div className="detail">
+                                <div className="detail_title">
+                                  <h5>SocialMedia's</h5>
+                                </div>
+                                <div className="detail_message">
+                                  <strong>:</strong>
+                                  {/* SocialMedia */}
+                                  {SocialMediaData.map((data, index) => {
+                                    return (
+                                      <div
+                                        className="social_medias"
+                                        key={index}
+                                      >
+                                        {data.Facebook != "" ? (
+                                          <a
+                                            href={data.Facebook}
+                                            target="_blank"
+                                            className="social_media_icon"
+                                          >
+                                            <i className="bx bxl-facebook"></i>
+                                            <small>Facebook</small>
+                                            <div className="social_media_svg1">
+                                              <svg
+                                                id="sw-js-blob-svg"
+                                                viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                version="1.1"
+                                              >
+                                                <defs>
+                                                  <linearGradient
+                                                    id="sw-gradient"
+                                                    x1="0"
+                                                    x2="1"
+                                                    y1="1"
+                                                    y2="0"
+                                                  >
+                                                    <stop
+                                                      id="stop1"
+                                                      stopColor="rgba(248, 117, 55, 1)"
+                                                      offset="0%"
+                                                    ></stop>
+                                                    <stop
+                                                      id="stop2"
+                                                      stopColor="rgba(251, 168, 31, 1)"
+                                                      offset="100%"
+                                                    ></stop>
+                                                  </linearGradient>
+                                                </defs>
+                                                <path
+                                                  fill="url(#sw-gradient)"
+                                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                                  width="100%"
+                                                  height="100%"
+                                                  transform="translate(50 50)"
+                                                  strokeWidth="0"
+                                                  style={{ transition: 0.3 }}
+                                                ></path>
+                                              </svg>
+                                            </div>
+                                          </a>
+                                        ) : (
+                                          ""
+                                        )}
+                                        {data.Instagram != "" ? (
+                                          <a
+                                            href={data.Instagram}
+                                            target="_blank"
+                                            className="social_media_icon"
+                                          >
+                                            <i className="bx bxl-instagram-alt"></i>
+                                            <div className="social_media_svg2">
+                                              <svg
+                                                id="sw-js-blob-svg"
+                                                viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                version="1.1"
+                                              >
+                                                <defs>
+                                                  <linearGradient
+                                                    id="sw-gradient2"
+                                                    x1="0"
+                                                    x2="1"
+                                                    y1="1"
+                                                    y2="0"
+                                                  >
+                                                    <stop
+                                                      id="stop3"
+                                                      stopColor="rgba(248, 117, 55, 1)"
+                                                      offset="0%"
+                                                    ></stop>
+                                                    <stop
+                                                      id="stop4"
+                                                      stopColor="rgba(251, 168, 31, 1)"
+                                                      offset="100%"
+                                                    ></stop>
+                                                  </linearGradient>
+                                                </defs>
+                                                <path
+                                                  fill="url(#sw-gradient2)"
+                                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                                  width="100%"
+                                                  height="100%"
+                                                  transform="translate(50 50)"
+                                                  strokeWidth="0"
+                                                  style={{ transition: 0.3 }}
+                                                ></path>
+                                              </svg>
+                                            </div>
+                                            <small>Instagram</small>
+                                          </a>
+                                        ) : (
+                                          ""
+                                        )}
+                                        {data.LinkedIn != "" ? (
+                                          <a
+                                            href={data.LinkedIn}
+                                            target="_blank"
+                                            className="social_media_icon"
+                                          >
+                                            <i className="bx bxl-linkedin"></i>
+                                            <div className="social_media_svg4">
+                                              <svg
+                                                id="sw-js-blob-svg"
+                                                viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                version="1.1"
+                                              >
+                                                <defs>
+                                                  <linearGradient
+                                                    id="sw-gradient4"
+                                                    x1="0"
+                                                    x2="1"
+                                                    y1="1"
+                                                    y2="0"
+                                                  >
+                                                    <stop
+                                                      id="stop7"
+                                                      stopColor="rgba(248, 117, 55, 1)"
+                                                      offset="0%"
+                                                    ></stop>
+                                                    <stop
+                                                      id="stop8"
+                                                      stopColor="rgba(251, 168, 31, 1)"
+                                                      offset="100%"
+                                                    ></stop>
+                                                  </linearGradient>
+                                                </defs>
+                                                <path
+                                                  fill="url(#sw-gradient4)"
+                                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                                  width="100%"
+                                                  height="100%"
+                                                  transform="translate(50 50)"
+                                                  strokeWidth="0"
+                                                  style={{ transition: 0.3 }}
+                                                ></path>
+                                              </svg>
+                                            </div>
+                                            <small>LinkedIn</small>
+                                          </a>
+                                        ) : (
+                                          ""
+                                        )}
+                                        {data.WhatsUp != "" ? (
+                                          <a
+                                            href={`https://wa.me/+91${data.WhatsUp}?text=Welcome to Aristostech Team!, How can we assest u ?`}
+                                            target="_blank"
+                                            className="social_media_icon"
+                                          >
+                                            <i className="bx bxl-whatsapp"></i>
+                                            <div className="social_media_svg3">
+                                              <svg
+                                                id="sw-js-blob-svg"
+                                                viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                version="1.1"
+                                              >
+                                                <defs>
+                                                  <linearGradient
+                                                    id="sw-gradient3"
+                                                    x1="0"
+                                                    x2="1"
+                                                    y1="1"
+                                                    y2="0"
+                                                  >
+                                                    <stop
+                                                      id="stop5"
+                                                      stopColor="rgba(248, 117, 55, 1)"
+                                                      offset="0%"
+                                                    ></stop>
+                                                    <stop
+                                                      id="stop6"
+                                                      stopColor="rgba(251, 168, 31, 1)"
+                                                      offset="100%"
+                                                    ></stop>
+                                                  </linearGradient>
+                                                </defs>
+                                                <path
+                                                  fill="url(#sw-gradient3)"
+                                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                                  width="100%"
+                                                  height="100%"
+                                                  transform="translate(50 50)"
+                                                  strokeWidth="0"
+                                                  style={{ transition: 0.3 }}
+                                                ></path>
+                                              </svg>
+                                            </div>
+                                            <small>Whatsup</small>
+                                          </a>
+                                        ) : (
+                                          ""
+                                        )}
+
+                                        {data.Twiter != "" ? (
+                                          <a
+                                            href={data.Twiter}
+                                            target="_blank"
+                                            className="social_media_icon"
+                                          >
+                                            <i className="bx bxl-twitter"></i>
+                                            <div className="social_media_svg6">
+                                              <svg
+                                                id="sw-js-blob-svg6"
+                                                viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                version="1.1"
+                                              >
+                                                <defs>
+                                                  <linearGradient
+                                                    id="sw-gradient6"
+                                                    x1="0"
+                                                    x2="1"
+                                                    y1="1"
+                                                    y2="0"
+                                                  >
+                                                    <stop
+                                                      id="stop11"
+                                                      stopColor="rgba(248, 117, 55, 1)"
+                                                      offset="0%"
+                                                    ></stop>
+                                                    <stop
+                                                      id="stop12"
+                                                      stopColor="rgba(251, 168, 31, 1)"
+                                                      offset="100%"
+                                                    ></stop>
+                                                  </linearGradient>
+                                                </defs>
+                                                <path
+                                                  fill="url(#sw-gradient6)"
+                                                  d="M17.1,-26.9C23.4,-22.6,30.6,-19.9,34.1,-14.8C37.5,-9.7,37.2,-2.2,35,4.2C32.8,10.7,28.7,16,24.4,21.2C20,26.3,15.3,31.3,9.6,33.3C3.9,35.3,-2.9,34.2,-10.4,33.1C-18,32,-26.2,30.9,-29.8,26.2C-33.3,21.4,-32.3,12.9,-33.4,4.8C-34.5,-3.3,-37.7,-11,-36,-17.2C-34.3,-23.4,-27.7,-28,-20.8,-32.1C-14,-36.2,-7,-39.7,-0.8,-38.4C5.4,-37.2,10.8,-31.2,17.1,-26.9Z"
+                                                  width="100%"
+                                                  height="100%"
+                                                  transform="translate(50 50)"
+                                                  strokeWidth="0"
+                                                  style={{ transition: 0.3 }}
+                                                ></path>
+                                              </svg>
+                                            </div>
+                                            <small>Twiter</small>
+                                          </a>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="DOCTOR_SUB_TITLE_LIVE">
+                          <h3>Our Specialities</h3>
+                        </div>
+                        <div className="specialities">
+                          <p>
+                            <HtmlRenderer
+                              htmlString={data.Specialities || ""}
+                            />
+                          </p>
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
               </>
             ) : (
               ""
@@ -1258,25 +1392,25 @@ END:VCARD
             {ServiceData.length > 0 && ManageContentData[0].Service == true ? (
               <>
                 <div className="our_services" ref={ServiceRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Our Services</h3>
                   </div>
                   <div className="All_Services">
-                    {/* Service */}
                     {ServiceData.map((data, index) => {
                       return (
-                        <div className="Service" key={index}>
-                          <div className="service_title">
-                            <h5> {data.ServiceName || "No Title"}</h5>
-                          </div>
-                          <div className="service_description">
-                            <p>
-                              <HtmlRenderer
-                                htmlString={data.ServiceDescription}
-                              />
-                            </p>
-                          </div>
-                          {data.ServiceURL != "" ? (
+                        <>
+                          <div className="Service" key={index}>
+                            <div className="service_title">
+                              <h5> {data.ServiceName || "No Title"}</h5>
+                            </div>
+                            <div className="service_description">
+                              <p>
+                                <HtmlRenderer
+                                  htmlString={data.ServiceDescription}
+                                />
+                              </p>
+                            </div>
+                            {data.ServiceURL != "" ? (
                               <div className="service_link">
                                 <a
                                   href={data.ServiceURL ? data.ServiceURL : ""}
@@ -1288,62 +1422,63 @@ END:VCARD
                             ) : (
                               ""
                             )}
-                          <div className="service_image">
-                            {data.ServiceType == "Icon_Tag" ? (
-                              <>
-                                <HtmlRenderer htmlString={data.ServiceIcon} />
-                              </>
-                            ) : (
-                              ""
-                            )}
-                            {data.ServiceType == "ImageUpload" ? (
-                              <>
-                                <img
-                                  src={`${
-                                    import.meta.env.VITE_APP_BACKEND_API_URL
-                                  }/${data.ServiceImage}`}
-                                  alt="Service Upload Image"
-                                />
-                              </>
-                            ) : (
-                              ""
-                            )}
-                            {data.ServiceType == "Image_Address_Link" ? (
-                              <>
-                                <img
-                                  src={data.ServiceAddress}
-                                  alt="ServiceAddressImage"
-                                />
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                          <div className="service_action">
-                            {data.ServicePrice != "" ? (
-                              <div className="service_price">
-                                <h5>Price : &nbsp;</h5>
-                                <p>₹{data.ServicePrice}</p>
-                              </div>
-                            ) : (
-                              ""
-                            )}
 
-                            <div className="service_enquiry">
-                              <a
-                                href={`https://wa.me/+91${
-                                  BasicData[0].MobileNumber
-                                }?text=${encodeURIComponent(
-                                  `Hi ${BasicData[0].user}`
-                                )}`}
-                                target="_blank"
-                                className="service_button"
-                              >
-                                Enquire Now <GrChat />
-                              </a>
+                            <div className="service_image">
+                              {data.ServiceType == "Icon_Tag" ? (
+                                <>
+                                  <HtmlRenderer htmlString={data.ServiceIcon} />
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {data.ServiceType == "ImageUpload" ? (
+                                <>
+                                  <img
+                                    src={`${
+                                      import.meta.env.VITE_APP_BACKEND_API_URL
+                                    }/${data.ServiceImage}`}
+                                    alt="Service Upload Image"
+                                  />
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              {data.ServiceType == "Image_Address_Link" ? (
+                                <>
+                                  <img
+                                    src={data.ServiceAddress}
+                                    alt="ServiceAddressImage"
+                                  />
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                            <div className="service_action">
+                              {data.ServicePrice != "" ? (
+                                <div className="service_price">
+                                  <h5>Price : &nbsp;</h5>
+                                  <p>₹{data.ServicePrice}</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              <div className="service_enquiry">
+                                <a
+                                  href={`https://wa.me/+91${
+                                    BasicData[0].MobileNumber
+                                  }?text=${encodeURIComponent(
+                                    `Hi ${BasicData[0].user}`
+                                  )}`}
+                                  target="_blank"
+                                  className="service_button"
+                                >
+                                  Enquire Now <GrChat />
+                                </a>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        </>
                       );
                     })}
                   </div>
@@ -1357,83 +1492,85 @@ END:VCARD
             {ProductData.length > 0 && ManageContentData[0].Product == true ? (
               <>
                 <div className="our_products" ref={ProductRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Our Products</h3>
                   </div>
                   <div className="All_Products">
-                    {/* Product */}
                     {ProductData.map((data, index) => {
                       return (
-                        <div className="Product" key={index}>
-                          <div className="product_image">
-                            {data.ProductType == "ImageUpload" ? (
-                              <img
-                                src={`${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/${data.ProductImage}`}
-                                alt="product"
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {data.ProductType == "Image_Address_Link" ? (
-                              <img
-                                src={
-                                  data.ProductImageLink != undefined ||
-                                  data.ProductImageLink != null
-                                    ? data.ProductImageLink
-                                    : `https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114181.jpg?t=st=1722480930~exp=1722484530~hmac=b3e99f19f2f2261ec0d7c5f1da8914dbfa376f325e37125598579ea7d7eced3b&w=900`
-                                }
-                                alt="product"
-                              />
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                          <div className="product_action">
-                            {data.ProductPrice != null ? (
-                              <div className="product_price">
-                                <h5>Price : &nbsp;</h5>
-                                <p>₹{data.ProductPrice}</p>
+                        <>
+                          {/* Product */}
+                          <div className="Product" key={index}>
+                            <div className="product_title">
+                              <h5> {data.ProductName || "No Title"}</h5>
+                            </div>
+                            <div className="product_image">
+                              {data.ProductType == "ImageUpload" ? (
+                                <img
+                                  src={`${
+                                    import.meta.env.VITE_APP_BACKEND_API_URL
+                                  }/${data.ProductImage}`}
+                                  alt="product"
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {data.ProductType == "Image_Address_Link" ? (
+                                <img
+                                  src={
+                                    data.ProductImageLink != undefined ||
+                                    data.ProductImageLink != null
+                                      ? data.ProductImageLink
+                                      : `https://img.freepik.com/free-photo/3d-gym-equipment_23-2151114181.jpg?t=st=1722480930~exp=1722484530~hmac=b3e99f19f2f2261ec0d7c5f1da8914dbfa376f325e37125598579ea7d7eced3b&w=900`
+                                  }
+                                  alt="product"
+                                />
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                            <div className="product_action">
+                              {data.ProductPrice != null ? (
+                                <div className="product_price">
+                                  <h5>Price : &nbsp;</h5>
+                                  <p>₹{data.ProductPrice}</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              <div className="product_enquiry">
+                                <a
+                                  href={`https://wa.me/+91${
+                                    BasicData[0].MobileNumber
+                                  }?text=${encodeURIComponent(
+                                    `Hi ${BasicData[0].user}`
+                                  )}`}
+                                  target="_blank"
+                                  className="product_button"
+                                >
+                                  Enquire Now <GrChat />
+                                </a>
+                              </div>
+                            </div>
+
+                            <div className="product_description">
+                              <p>
+                                <HtmlRenderer
+                                  htmlString={data.ProductDescription}
+                                />
+                              </p>
+                            </div>
+                            {data.ProductURL != "" ? (
+                              <div className="product_link">
+                                <a href={data.ProductURL} target="_blank">
+                                  For More Details <TbUnlink />
+                                </a>
                               </div>
                             ) : (
                               ""
                             )}
-
-                            <div className="product_enquiry">
-                              <a
-                                href={`https://wa.me/+91${
-                                  BasicData[0].MobileNumber
-                                }?text=${encodeURIComponent(
-                                  `Hi ${BasicData[0].user}`
-                                )}`}
-                                target="_blank"
-                                className="product_button"
-                              >
-                                Enquire Now <GrChat />
-                              </a>
-                            </div>
                           </div>
-                          <div className="product_title">
-                            <h5> {data.ProductName || "No Title"}</h5>
-                          </div>
-                          <div className="product_description">
-                            <p>
-                              <HtmlRenderer
-                                htmlString={data.ProductDescription}
-                              />
-                            </p>
-                          </div>
-                          {data.ProductURL != '' ? (
-                            <div className="product_link">
-                              <a href={data.ProductURL} target="_blank">
-                                For More Details <TbUnlink />
-                              </a>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </div>
+                        </>
                       );
                     })}
                   </div>
@@ -1447,7 +1584,7 @@ END:VCARD
             {UPIData.length > 0 || BankData.length > 0 ? (
               <>
                 <div className="Payment" ref={PaymentRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>For Payment</h3>
                   </div>
                   {UPIData.length > 0 ? (
@@ -1501,7 +1638,7 @@ END:VCARD
                   {BankData.length > 0 ? (
                     <>
                       <div className="sub_title">
-                        <h3>Account Details :</h3>
+                        <h4>Account Details :</h4>
                       </div>
                       {BankData.map((data, index) => {
                         return (
@@ -1564,15 +1701,16 @@ END:VCARD
                   {UPIData.length > 0 ? (
                     <>
                       <div className="sub_title">
-                        <h3>QR Code :</h3>
+                        <h4>QR Code :</h4>
                       </div>
                       {UPIData.map((data, index) => {
                         return (
                           <>
-                            <div className="qr_code_upi_name" key={index}>
+                          <div key={index}>
+                          <div className="qr_code_upi_name" style={{paddingBottom:'10px'}}>
                               <h4>{data.UPI_Type}</h4>
                             </div>
-                            <div className="qr_image_box" key={index}>
+                            <div className="qr_image_box" >
                               {/* <div className="user_name">
                             <h4>
                               To John Wick <LiaHandPointDownSolid />
@@ -1592,6 +1730,8 @@ END:VCARD
                             <small>Scan with pay any UPI App</small>
                           </div> */}
                             </div>
+                          </div>
+                          
                           </>
                         );
                       })}
@@ -1604,83 +1744,6 @@ END:VCARD
             ) : (
               ""
             )}
-
-            {/* Gallery */}
-            {GalleryData.length > 0 && ManageContentData[0].Gallery == true ? (
-              <>
-                <div className="gallery" ref={GalleryRef}>
-                  <div className="Corporate_Company_title">
-                    <h3>Gallery</h3>
-                  </div>
-
-                  <div className="all_gallerys">
-                    {GalleryData.map((data, index) => {
-                      return (
-                        <div className="gallery_image" key={index}>
-                          {data.GalleryType == "ImageUpload" ? (
-                            <img
-                              src={`${
-                                import.meta.env.VITE_APP_BACKEND_API_URL
-                              }/${data.GalleryImage}`}
-                              alt="developer"
-                              onClick={(e) => openFullImage(e.target.src)}
-                            />
-                          ) : (
-                            ""
-                          )}
-                          {data.GalleryType == "Image_Address_URL" ? (
-                            <img
-                              src={
-                                data.GalleryImageURL ||
-                                "https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
-                              }
-                              alt="developer"
-                              onClick={(e) => openFullImage(e.target.src)}
-                            />
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-
-            {/* Videos */}
-            {VideoData.length > 0 ? (
-              <>
-                <div className="video" ref={VideoRef}>
-                  <div className="Corporate_Company_title">
-                    <h3>Videos</h3>
-                  </div>
-
-                  <div className="videos_container">
-                    {VideoData.map((data, index) => {
-                      return (
-                        <div className="video_image" key={index}>
-                          <iframe
-                            width="560"
-                            height="315"
-                            src={`https://www.youtube.com/embed/${data.Video.split('/')[3]}`}
-                            title="YouTube video player"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen
-                          ></iframe>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
             {/* //Appinment */}
             {(VCard_URL_Data.length > 0 &&
               ManageContentData[0].Appoinment == true &&
@@ -1688,7 +1751,7 @@ END:VCARD
             ProductData.length > 0 ? (
               <>
                 <div className="Appoinment" ref={AppoinmentRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Appoinment</h3>
                   </div>
                   {/* Success and Error Popup */}
@@ -1882,14 +1945,93 @@ END:VCARD
             ) : (
               ""
             )}
+            {/* Gallery */}
+            {GalleryData.length > 0 && ManageContentData[0].Gallery == true ? (
+              <>
+                <div className="gallery" ref={GalleryRef}>
+                  <div className="DOCTOR_TITLE_LIVE">
+                    <h3>Gallery</h3>
+                  </div>
+
+                  <div className="all_gallerys">
+                    {GalleryData.map((data, index) => {
+                      return (
+                        <div
+                          className={`gallery_image span-${index + 1}`}
+                          key={index}
+                        >
+                          {data.GalleryType == "ImageUpload" ? (
+                            <img
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/${data.GalleryImage}`}
+                              alt="developer"
+                              onClick={(e) => openFullImage(e.target.src)}
+                            />
+                          ) : (
+                            ""
+                          )}
+                          {data.GalleryType == "Image_Address_URL" ? (
+                            <img
+                              src={
+                                data.GalleryImageURL ||
+                                "https://i0.wp.com/www.aristostechindia.com/wp-content/uploads/2023/12/Mobilebannerhojo-3.png?fit=1030%2C679&ssl=1"
+                              }
+                              alt="developer"
+                              onClick={(e) => openFullImage(e.target.src)}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+
+            {/* Videos */}
+            {VideoData.length > 0 ? (
+              <div className="video" ref={VideoRef}>
+                <div className="DOCTOR_TITLE_LIVE">
+                  <h3>Videos</h3>
+                </div>
+
+                <div className="videos_container">
+                  {VideoData.map((data, index) => {
+                    return (
+                      <div className="video_image" key={index}>
+                        <iframe
+                          width="560"
+                          height="315"
+                          src={`https://www.youtube.com/embed/${
+                            data.Video.split("/")[3]
+                          }`}
+                          title="YouTube video player"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+
             {/* Opentime */}
             {BussinessHourData.length > 0 &&
             ManageContentData[0].BussinessHour == true ? (
               <>
                 <div className="time_container" ref={TimeRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Open&Close Time</h3>
-                    {/* Contact */}
                   </div>
                   <div className="time_list_container">
                     {BussinessHourData[0].Monday.from.length > 0 &&
@@ -2037,15 +2179,14 @@ END:VCARD
             ) : (
               ""
             )}
-
             {/* Testimonials */}
+
             {TestimonialData.length > 0 &&
             ManageContentData[0].Testimonial == true ? (
               <>
                 <div className="testimonial" ref={TestimonialRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Testimonial</h3>
-                    {/* Contact */}
                   </div>
                   <div className="testimonial_container">
                     <Carousel
@@ -2058,6 +2199,7 @@ END:VCARD
                         return (
                           <div className="testimonial_list">
                             <div className="client_feedback">
+                              <h4>Feedback</h4>
                               <small>
                                 {data.ClientFeedback ||
                                   ` Lorem ipsum dolor, sit amet consectetur adipisicing
@@ -2089,14 +2231,12 @@ END:VCARD
             ) : (
               ""
             )}
-
             {/* GoogleMap */}
-
             {GoogleMapData.length > 0 &&
             ManageContentData[0].GoogleMap == true ? (
               <>
                 <div className="google_map_container">
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Live Location</h3>
                     {/* Contact */}
                   </div>
@@ -2116,7 +2256,7 @@ END:VCARD
             ManageContentData[0].FeedbackForm == true ? (
               <>
                 <div className="feedback_row" ref={FeedbackRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Feedback</h3>
                   </div>
                   {/* Success and Error Popup */}
@@ -2178,97 +2318,103 @@ END:VCARD
 
                     {commentOpen ? (
                       <div className="comment_box">
-                        <div className="comment_box_title">
-                          <h5>Client's All Feedbacks</h5>
-                        </div>
-                        {AllFeedBacks.map((data, index) => {
-                          return (
-                            <div className="message" key={index}>
-                              <div className="user_detail">
-                                <div className="details">
-                                  <div className="userName">
-                                    <p>
-                                      {data.ClientName}
-                                      <i className="bx bxs-user-check"></i>
-                                    </p>
-                                  </div>
-                                  <div className="stars">
-                                    <div
-                                      className="ratting_container1"
-                                      data-rating={data.ClientRatting}
-                                      name="currentRatting"
-                                      // id="currentRatting"
-                                      id={
-                                        data.ClientRatting == 0
-                                          ? "noRatting"
-                                          : "" || data.ClientRatting == 1
-                                          ? "singleRatting"
-                                          : "" || data.ClientRatting == 2
-                                          ? "doubleRatting"
-                                          : "" || data.ClientRatting == 3
-                                          ? "ThreeRatting"
-                                          : "" || data.ClientRatting == 4
-                                          ? "fourRatting"
-                                          : "" || data.ClientRatting == 5
-                                          ? "fullRatting"
-                                          : ""
-                                      }
-                                      value={data.ClientRatting}
-                                    >
-                                      <span className="ratting_star">
-                                        <i
-                                          className="bx bxs-star star1"
-                                          data-rating="1"
-                                        ></i>
-                                      </span>
-                                      <span className="ratting_star">
-                                        <i
-                                          className="bx bxs-star star1"
-                                          data-rating="2"
-                                        ></i>
-                                      </span>
-                                      <span className="ratting_star">
-                                        <i
-                                          className="bx bxs-star star1"
-                                          data-rating="3"
-                                        ></i>
-                                      </span>
-                                      <span className="ratting_star">
-                                        <i
-                                          className="bx bxs-star star1"
-                                          data-rating="4"
-                                        ></i>
-                                      </span>
-                                      <span className="ratting_star">
-                                        <i
-                                          className="bx bxs-star star1"
-                                          data-rating="5"
-                                        ></i>
-                                      </span>
+                        {AllFeedBacks.length > 0 ? (
+                          <>
+                            <div className="comment_box_title">
+                              <h5>Client's All Feedbacks</h5>
+                            </div>
+                            {AllFeedBacks.map((data, index) => {
+                              return (
+                                <div className="message" key={index}>
+                                  <div className="user_detail">
+                                    <div className="details">
+                                      <div className="userName">
+                                        <p>
+                                          {data.ClientName}
+                                          <i className="bx bxs-user-check"></i>
+                                        </p>
+                                      </div>
+                                      <div className="stars">
+                                        <div
+                                          className="ratting_container1"
+                                          data-rating={data.ClientRatting}
+                                          name="currentRatting"
+                                          // id="currentRatting"
+                                          id={
+                                            data.ClientRatting == 0
+                                              ? "noRatting"
+                                              : "" || data.ClientRatting == 1
+                                              ? "singleRatting"
+                                              : "" || data.ClientRatting == 2
+                                              ? "doubleRatting"
+                                              : "" || data.ClientRatting == 3
+                                              ? "ThreeRatting"
+                                              : "" || data.ClientRatting == 4
+                                              ? "fourRatting"
+                                              : "" || data.ClientRatting == 5
+                                              ? "fullRatting"
+                                              : ""
+                                          }
+                                          value={data.ClientRatting}
+                                        >
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="1"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="2"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="3"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="4"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="5"
+                                            ></i>
+                                          </span>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
+
+                                  <div className="comments">
+                                    <i className="bx bx-chat"></i>
+                                    <span>{data.ClientFeedback}</span>
+                                  </div>
+
+                                  <div className="date">
+                                    <i className="bx bx-calendar"></i>
+                                    <p>
+                                      {" "}
+                                      {data.createdAt
+                                        .slice(0, 10)
+                                        .split("-")
+                                        .reverse()
+                                        .join("-")}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-
-                              <div className="comments">
-                                <i className="bx bx-chat"></i>
-                                <span>{data.ClientFeedback}</span>
-                              </div>
-
-                              <div className="date">
-                                <i className="bx bx-calendar"></i>
-                                <p>
-                                  {" "}
-                                  {data.createdAt
-                                    .slice(0, 10)
-                                    .split("-")
-                                    .reverse()
-                                    .join("-")}
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })}
+                              );
+                            })}
+                          </>
+                        ) : (
+                          <small>No Feedback Found!</small>
+                        )}
                       </div>
                     ) : (
                       ""
@@ -2380,14 +2526,15 @@ END:VCARD
             ) : (
               " "
             )}
-            {/* Inquries */}
-            {VCard_URL_Data.length > 0 &&
+
+                    {/* Inquries */}
+                    {VCard_URL_Data.length > 0 &&
             BasicData.length > 0 &&
             SocialMediaData.length > 0 &&
             ManageContentData[0].InquiryForm == true ? (
               <>
                 <div className="Inquries" ref={InquiryRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="DOCTOR_TITLE_LIVE">
                     <h3>Inquries</h3>
                   </div>
                   {/* Success and Error Popup */}
@@ -2553,9 +2700,9 @@ END:VCARD
               <div className="footer_container">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                   <path
-                    fill={style.$second_back__color}
-                    fillOpacity="1"
-                    d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
+                    fill={style.$svg_wave_back_color}
+                    fill-opacity="1"
+                    d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
                   ></path>
                 </svg>
                 <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
@@ -2564,13 +2711,10 @@ END:VCARD
           </div>
         </div>
       ) : (
-       
-          <URLNotFound />
-    
-      
+        <URLNotFound />
       )}
     </>
   );
 };
 
-export default Corporate_Company;
+export default DOCTOR_LIVE;
