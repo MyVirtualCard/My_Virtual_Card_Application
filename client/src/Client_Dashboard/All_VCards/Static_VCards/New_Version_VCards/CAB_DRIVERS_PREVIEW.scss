@@ -588,8 +588,8 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
           .contacts_btns {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 5px;
+            justify-content: flex-start;
+            gap: 10px;
             width: 100%;
             flex-wrap: wrap;
 

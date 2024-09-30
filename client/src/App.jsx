@@ -48,7 +48,7 @@ import Real_Estate from "./Client_Dashboard/All_VCards/Live_VCards/Real_Estate.j
 import Beauty_Parlor from "./Client_Dashboard/All_VCards/Live_VCards/Beauty_Parlor.jsx";
 import Boutique from "./Client_Dashboard/All_VCards/Live_VCards/Boutique.jsx";
 import GYM_TRAINER_DEMO from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/GYM_TRAINER.jsx";
-import TAXI_DRIVER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/TAXI_DRIVER_PREVIEW.jsx";
+
 import FASHION_DESIGNER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/FASHION_DESIGNER_PREVIEW.jsx";
 import MANAGER_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/MANAGER_PREVIEW.jsx";
 import BEAUTY_PARLOR_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/BEAUTY_PARLOR_PREVIEW.jsx";
@@ -66,6 +66,7 @@ import DOCTOR_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Vers
 import ADVOCATE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/ADVOCATE_PREVIEW.jsx";
 import EDUCATION_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/EDUCATION_PREVIEW.jsx";
 import CAB_DRIVERS_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/CAB_DRIVERS_PREVIEW.jsx";
+import TAXI_SERVICE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/TAXI_SERVICE_PREVIEW.jsx";
 
 //Import All component:
 const App = () => {
@@ -285,8 +286,8 @@ const App = () => {
                 element={<GYM_TRAINER_DEMO />}
               />
               <Route
-                path="/Taxi_Driver_Preview"
-                element={<TAXI_DRIVER_PREVIEW />}
+                path="/Taxi_Service_Preview"
+                element={<TAXI_SERVICE_PREVIEW />}
               />
               <Route
                 path="/Fashion_Designer_Preview"

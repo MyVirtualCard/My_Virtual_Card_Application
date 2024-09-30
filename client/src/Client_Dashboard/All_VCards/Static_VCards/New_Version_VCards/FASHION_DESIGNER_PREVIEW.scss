@@ -194,7 +194,7 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
   // Menu Navbar
   .menu_navbar_box {
     width: 80px;
-    height: 100%;
+    height: 100vh;
     background-color: $NavMenu_back_color;
     position: fixed;
     top: 0%;
@@ -205,7 +205,8 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    filter: drop-shadow(0px 4px 5px rgba(238, 238, 238, 0.308));
+    // filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.308));
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     .up_btn {
       width: 100%;
       display: flex;
@@ -252,9 +253,11 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
       flex-direction: column;
       gap: 1rem;
       flex: 0.8;
+      max-height: 80%;
       padding: 0.5rem;
       width: 100%;
       overflow-y: scroll;
+      scroll-behavior: smooth;
 
       .menu {
         display: flex;
@@ -264,11 +267,11 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
         gap: 5px;
         width: 100%;
         cursor: pointer;
-
+color: $NavMenu_first_text_color;
         padding: 5px 10px;
 
-        border-radius: 10px;
-        transition: 1ll 0.5s ease-in-out;
+        border-radius: 4px;
+        transition: all 0.5s ease-in-out;
 
         .icon {
           font-size: 1.4rem;
@@ -286,7 +289,7 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
         &:hover {
           color: $NavMenu_second_text_color;
           background-color: $NavMenu_second_back_color;
-          transition: 1ll 0.5s ease-in-out;
+          transition: all 0.5s ease-in-out;
         }
       }
       .menuActive {
@@ -356,14 +359,15 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
     }
     @media screen and (max-width: 650px) {
       position: fixed;
-      top: 96.5%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      top: 100%;
+      left: 0%;
+      right: 0%;
+      transform: translate(-0%, -100%);
       z-index: 100;
       display: flex;
       flex-direction: row;
       width: 100%;
-      height: 50px;
+      height: 60px;
       align-items: center;
       justify-content: space-between;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,

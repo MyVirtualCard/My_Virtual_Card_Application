@@ -625,8 +625,8 @@ color: $NavMenu_first_text_color;
           .contacts_btns {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 5px;
+            justify-content: flex-start;
+            gap: 10px;
             width: 100%;
             flex-wrap: wrap;
 
@@ -735,6 +735,7 @@ color: $NavMenu_first_text_color;
           justify-content: center;
           gap: 10px;
           transition: all 0.4s ease-in-out;
+          cursor: pointer;
           &:hover {
             background-color: $first_btn_back_color;
             color: $third_btn_text_color;

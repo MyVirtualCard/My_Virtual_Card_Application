@@ -89,7 +89,7 @@ const ADVOCATE_PREVIEW = () => {
     // vCard.saveToFile('./eric-nesser.vcf');
     const linkElement = document.createElement("a");
     linkElement.setAttribute("href", `data:,${vCard.getFormattedString()}`);
-    linkElement.setAttribute("download", "card.vcf");
+    linkElement.setAttribute("download", "Aristostech.vcf");
     linkElement.style.display = "none";
     document.body.appendChild(linkElement);
     linkElement.click();
@@ -659,76 +659,87 @@ const ADVOCATE_PREVIEW = () => {
 
               {/* Actions */}
               <div className="contacts_btns">
-                {/* Call */}
-                <a href="#">
-                  <BiSolidPhoneCall className="icon" />
+          {/* Call */}
+          <a href="tel:+919344482370" target="_blank">
+            <BiSolidPhoneCall className="icon" />
 
-                  <small>Call</small>
-                </a>
-                {/* Whatsup */}
-                <a href="#">
-                  <RiWhatsappFill className="icon" />
+            <small>Call</small>
+          </a>
+          {/* Mail */}
+          <a href={`mailto:contact@aristostechindia.com`} target="_blank">
+            <MdOutgoingMail className="icon" />
 
-                  <small>Whatsapp</small>
-                </a>
-                {/* Direction */}
-                <a href="#">
-                  <FaDirections className="icon" />
+            <small>Mail</small>
+          </a>
+          {/* Whatsup */}
+          <a
+            href={`https://wa.me/+919344482370?text=${encodeURIComponent(
+              `Hi there!`
+            )}`}
+            target="_blank"
+          >
+            <RiWhatsappFill className="icon" />
 
-                  <small>Direction</small>
-                </a>
-                {/* Mail */}
-                <a href="#">
-                  <MdOutgoingMail className="icon" />
+            <small>Whatsapp</small>
+          </a>
+          {/* Direction */}
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
+            target="_blank"
+          >
+            <FaDirections className="icon" />
 
-                  <small>Mail</small>
-                </a>
-              </div>
+            <small>Direction</small>
+          </a>
+        </div>
             </div>
           </div>
         </div>
         {/* Contact Details */}
         <div className="contact_row_3">
           {/* Location */}
-          <a href="" target="_blank">
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
+            target="_blank"
+          >
             <div className="icon">
               <MdLocationPin />
             </div>
             <div className="contact_data">
               <small>Address</small>
-              <p>Main Road , Sirukadambur,Ariyalur-621714</p>
+              <p>G. N Chetty Road, T. Nagar, Chennai-600017</p>
             </div>
           </a>
           {/* Mail */}
-          <a href="" target="_blank">
+          <a href={`mailto:contact@aristostechindia.com`} target="_blank">
             <div className="icon">
               <IoMail />
             </div>
             <div className="contact_data">
               <small>Email</small>
-              <p>learnwithcodingbuddy@gmail.com</p>
-              <p>kodiyarasu01@gmail.com</p>
+              <p>contact@aristostechindia.com</p>
+              <p>aristostechteam@gmail.com</p>
             </div>
           </a>
           {/* Website */}
-          <a href="" target="_blank">
+          <a href="https://aristostechindia.com" target="_blank">
             <div className="icon">
               <FaGlobe />
             </div>
             <div className="contact_data">
               <small>Website</small>
-              <p>https://coding-buddy-portfolio.netlify.app/</p>
+              <p>https://aristostechindia.com</p>
             </div>
           </a>
           {/* PhoneNumber */}
-          <a href="" target="_blank">
+          <a href="tel:+919344482370" target="_blank">
             <div className="icon">
               <BiSolidPhoneCall />
             </div>
             <div className="contact_data">
               <small>MobileNumber</small>
-              <p>+91 8825457794</p>
-              <p>+91 9568741235</p>
+              <p>+91 93444 82370</p>
+              <p>+91 93635 47744</p>
             </div>
           </a>
           {/* AddtoContact */}

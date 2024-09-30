@@ -10,6 +10,10 @@ import Manager from "../../../assets/Digicards/Preview/MANAGER_PREVIEW.png";
 import BeautyParlor from "../../../assets/Digicards/Preview/BEAUTY_PARLOR_PREVIEW.png";
 // import BoutiqueShop from "../../../assets/Digicards/Boutique_Shop.png";
 import CorporateCompany from "../../../assets/Digicards/Preview/CORPORATE_COMPANY_PREVIEW.png";
+import Doctor from "../../../assets/Digicards/Preview/DOCTOR_PREVIEW.png";
+import Advocate from "../../../assets/Digicards/Preview/ADVOCATE_PREVIEW.png";
+import Education from "../../../assets/Digicards/Preview/EDUCATION_PREVIEW.png";
+import CabDriver from "../../../assets/Digicards/Preview/CABDRIVER_PREVIEW.png";
 import selected_gif from "../../../assets/animations/vcard_selected.gif";
 import touch_gif from "../../../assets/animations/touch.gif";
 import Context from "../../../Context/GlobalContext";
@@ -56,6 +60,26 @@ let BasicTemplate = [
     id: 6,
     image: BeautyParlor,
     TemplateName: "Beauty Parlor",
+  },
+  {
+    id: 7,
+    image: Doctor,
+    TemplateName: "Doctor",
+  },
+  {
+    id: 8,
+    image: Advocate,
+    TemplateName: "Advocate Officer",
+  },
+  {
+    id: 9,
+    image: Education,
+    TemplateName: "Education Institute",
+  },
+  {
+    id: 10,
+    image: CabDriver,
+    TemplateName: "Cab Driver",
   },
 ];
 let StandardTemplate = [

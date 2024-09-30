@@ -89,7 +89,7 @@ const CORPORATE_PREVIEW = () => {
     // vCard.saveToFile('./eric-nesser.vcf');
     const linkElement = document.createElement("a");
     linkElement.setAttribute("href", `data:,${vCard.getFormattedString()}`);
-    linkElement.setAttribute("download", "card.vcf");
+    linkElement.setAttribute("download", "Aristostech.vcf");
     linkElement.style.display = "none";
     document.body.appendChild(linkElement);
     linkElement.click();
@@ -322,11 +322,13 @@ const CORPORATE_PREVIEW = () => {
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
-  window.addEventListener("scroll", () => {
-    innerHeight = window.innerHeight; // Height of the viewport
-    setScrollY(window.scrollY); // Number of pixels scrolled vertically
-    totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
-  });
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      innerHeight = window.innerHeight; // Height of the viewport
+      setScrollY(window.scrollY); // Number of pixels scrolled vertically
+      totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
+    });
+  }, []);
   //Menu actions
 
   let [activeMenu, setActiveMenu] = useState("Home");
@@ -341,7 +343,7 @@ const CORPORATE_PREVIEW = () => {
   let TimeRef = useRef(null);
   let TestimonialRef = useRef(null);
   let LocationRef = useRef(null);
-
+  let AppinmentRef = useRef(null);
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
 
@@ -427,7 +429,93 @@ const CORPORATE_PREVIEW = () => {
     if (activeMenu === "Inquiry") {
       return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
     };
-  }
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const section1Top = HomeRef.current?.offsetTop || 0;
+      const section2Top = AboutRef.current?.offsetTop || 0;
+      const section3Top = ServiceRef.current?.offsetTop || 0;
+      const section4Top = ProductRef.current?.offsetTop || 0;
+      const section5Top = PaymentRef.current?.offsetTop || 0;
+      const section6Top = GalleryRef.current?.offsetTop || 0;
+      const section7Top = VideoRef.current?.offsetTop || 0;
+      const section8Top = AppinmentRef.current?.offsetTop || 0;
+      const section9Top = TimeRef.current?.offsetTop || 0;
+      const section10Top = TestimonialRef.current?.offsetTop || 0;
+      const section11Top = LocationRef.current?.offsetTop || 0;
+      const section12Top = FeedbackRef.current?.offsetTop || 0;
+      const section13Top = InquiryRef.current?.offsetTop || 0;
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      if (scrollPosition >= section1Top && scrollPosition < section2Top) {
+        setActiveMenu("Home");
+      } else if (
+        scrollPosition >= section2Top &&
+        scrollPosition < section3Top
+      ) {
+        setActiveMenu("About");
+      } else if (
+        scrollPosition >= section3Top &&
+        scrollPosition < section4Top
+      ) {
+        setActiveMenu("Service");
+      } else if (
+        scrollPosition >= section4Top &&
+        scrollPosition < section5Top
+      ) {
+        setActiveMenu("Product");
+      } else if (
+        scrollPosition >= section5Top &&
+        scrollPosition < section6Top
+      ) {
+        setActiveMenu("Payment");
+      } else if (
+        scrollPosition >= section6Top &&
+        scrollPosition < section7Top
+      ) {
+        setActiveMenu("Gallery");
+      } else if (
+        scrollPosition >= section7Top &&
+        scrollPosition < section8Top
+      ) {
+        setActiveMenu("Video");
+      } else if (
+        scrollPosition >= section8Top &&
+        scrollPosition < section9Top
+      ) {
+        setActiveMenu("Appoinment");
+      } else if (
+        scrollPosition >= section9Top &&
+        scrollPosition < section10Top
+      ) {
+        setActiveMenu("Time");
+      } else if (
+        scrollPosition >= section10Top &&
+        scrollPosition < section11Top
+      ) {
+        setActiveMenu("Testimonial");
+      } else if (
+        scrollPosition >= section11Top &&
+        scrollPosition < section12Top
+      ) {
+        setActiveMenu("Location");
+      } else if (
+        scrollPosition >= section12Top &&
+        scrollPosition < section13Top
+      ) {
+        setActiveMenu("Feedback");
+      } else if (scrollPosition >= section13Top) {
+        setActiveMenu("Inquiry");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <div className="doctor_demo_container">
       {/* Gallery Full IMAGE */}
@@ -593,76 +681,87 @@ const CORPORATE_PREVIEW = () => {
 
               {/* Actions */}
               <div className="contacts_btns">
-                {/* Call */}
-                <a href="#">
-                  <BiSolidPhoneCall className="icon" />
+          {/* Call */}
+          <a href="tel:+919344482370" target="_blank">
+            <BiSolidPhoneCall className="icon" />
 
-                  <small>Call</small>
-                </a>
-                {/* Whatsup */}
-                <a href="#">
-                  <RiWhatsappFill className="icon" />
+            <small>Call</small>
+          </a>
+          {/* Mail */}
+          <a href={`mailto:contact@aristostechindia.com`} target="_blank">
+            <MdOutgoingMail className="icon" />
 
-                  <small>Whatsapp</small>
-                </a>
-                {/* Direction */}
-                <a href="#">
-                  <FaDirections className="icon" />
+            <small>Mail</small>
+          </a>
+          {/* Whatsup */}
+          <a
+            href={`https://wa.me/+919344482370?text=${encodeURIComponent(
+              `Hi there!`
+            )}`}
+            target="_blank"
+          >
+            <RiWhatsappFill className="icon" />
 
-                  <small>Direction</small>
-                </a>
-                {/* Mail */}
-                <a href="#">
-                  <MdOutgoingMail className="icon" />
+            <small>Whatsapp</small>
+          </a>
+          {/* Direction */}
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
+            target="_blank"
+          >
+            <FaDirections className="icon" />
 
-                  <small>Mail</small>
-                </a>
-              </div>
+            <small>Direction</small>
+          </a>
+        </div>
             </div>
           </div>
         </div>
         {/* Contact Details */}
         <div className="contact_row_3">
           {/* Location */}
-          <a href="" target="_blank">
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
+            target="_blank"
+          >
             <div className="icon">
               <MdLocationPin />
             </div>
             <div className="contact_data">
               <small>Address</small>
-              <p>Main Road , Sirukadambur,Ariyalur-621714</p>
+              <p>G. N Chetty Road, T. Nagar, Chennai-600017</p>
             </div>
           </a>
           {/* Mail */}
-          <a href="" target="_blank">
+          <a href={`mailto:contact@aristostechindia.com`} target="_blank">
             <div className="icon">
               <IoMail />
             </div>
             <div className="contact_data">
               <small>Email</small>
-              <p>learnwithcodingbuddy@gmail.com</p>
-              <p>kodiyarasu01@gmail.com</p>
+              <p>contact@aristostechindia.com</p>
+              <p>aristostechteam@gmail.com</p>
             </div>
           </a>
           {/* Website */}
-          <a href="" target="_blank">
+          <a href="https://aristostechindia.com" target="_blank">
             <div className="icon">
               <FaGlobe />
             </div>
             <div className="contact_data">
               <small>Website</small>
-              <p>https://coding-buddy-portfolio.netlify.app/</p>
+              <p>https://aristostechindia.com</p>
             </div>
           </a>
           {/* PhoneNumber */}
-          <a href="" target="_blank">
+          <a href="tel:+919344482370" target="_blank">
             <div className="icon">
               <BiSolidPhoneCall />
             </div>
             <div className="contact_data">
               <small>MobileNumber</small>
-              <p>+91 8825457794</p>
-              <p>+91 9568741235</p>
+              <p>+91 93444 82370</p>
+              <p>+91 93635 47744</p>
             </div>
           </a>
           {/* AddtoContact */}

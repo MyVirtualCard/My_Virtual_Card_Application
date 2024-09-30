@@ -14,9 +14,11 @@ import vcard3 from "../assets/Landing_Page/VCard_Designs/MANAGER.png";
 import vcard4 from "../assets/Landing_Page/VCard_Designs/TAXI_DRIVER.png";
 import vcard5 from "../assets/Landing_Page/VCard_Designs/CORPORATE_COMPANY.png";
 import vcard6 from "../assets/Landing_Page/VCard_Designs/BEAUTY_PARLOR.png";
-import vcard7 from "../assets/Landing_Page/VCard_Designs/Real_Estate_Mobile.png";
-
-import vcard8 from "../assets/Landing_Page/VCard_Designs/Boutique_Shop_Mobile.png";
+import vcard7 from "../assets/Landing_Page/VCard_Designs/DOCTOR_MOBILE.png";
+import vcard8 from "../assets/Landing_Page/VCard_Designs/CAB_DRIVER_MOBILE.png";
+import vcard9 from "../assets/Landing_Page/VCard_Designs/ADVOCATE_MOBILE.png";
+import vcard10 from "../assets/Landing_Page/VCard_Designs/EDUCATION_MOBILE.png";
+// import vcard8 from "../assets/Landing_Page/VCard_Designs/Boutique_Shop_Mobile.png";
 import view1 from "../assets/Landing_Page/view/1.svg";
 import view2 from "../assets/Landing_Page/view/2.svg";
 import view3 from "../assets/Landing_Page/view/3.svg";
@@ -118,7 +120,7 @@ const LandingPageNew = () => {
       TemplateCount: 4,
       VCard_Name: "TAXI_SERVICE",
       VCard_Image: vcard4,
-      VCard_Link: "https://myvirtualcard.in/Taxi_Driver_Preview",
+      VCard_Link: "https://myvirtualcard.in/Taxi_Service_Preview",
     },
     {
       Id: 5,
@@ -137,17 +139,31 @@ const LandingPageNew = () => {
     {
       Id: 7,
       TemplateCount: 7,
-      VCard_Name: "REAL_ESTATE",
+      VCard_Name: "DOCTOR",
       VCard_Image: vcard7,
-      VCard_Link: "https://myvirtualcard.in/Real_Estate",
+      VCard_Link: "https://myvirtualcard.in/Doctor_Preview",
     },
 
     {
       Id: 8,
       TemplateCount: 8,
-      VCard_Name: "BOUTIQUE_SHOP'S",
+      VCard_Name: "CAB DRIVER",
       VCard_Image: vcard8,
-      VCard_Link: "https://myvirtualcard.in/Boutique_Shop",
+      VCard_Link: "https://myvirtualcard.in/Cab_Drivers_Preview",
+    },
+    {
+      Id: 9,
+      TemplateCount: 9,
+      VCard_Name: "ADVOCATE OFFICER",
+      VCard_Image: vcard9,
+      VCard_Link: "https://myvirtualcard.in/Advocate_Preview",
+    },
+    {
+      Id: 10,
+      TemplateCount: 10,
+      VCard_Name: "EDUCATION INSTITUTE",
+      VCard_Image: vcard10,
+      VCard_Link: "https://myvirtualcard.in/Education_Preview",
     },
   ];
   //PLan list
@@ -364,7 +380,7 @@ const LandingPageNew = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("September 31, 2024 00:00:00").getTime();
+    const countdownDate = new Date("October 15, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
