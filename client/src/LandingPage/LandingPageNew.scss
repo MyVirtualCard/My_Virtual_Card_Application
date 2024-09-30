@@ -1085,6 +1085,10 @@ z-index: 1;
               font-size: 0.9rem;
               font-weight: 600;
               color: #007582;
+
+              @media screen and (max-width:776px){
+             font-size: 0.8rem;
+              }
             }
           }
 
@@ -1162,6 +1166,10 @@ z-index: 1;
                   transition: all 0.5s linear;
                 }
               }
+              @media screen and (max-width:776px){
+                font-size: 0.8rem;
+                padding: 0.4rem;
+                 }
             }
           }
 
@@ -1240,18 +1248,27 @@ z-index: 1;
                 }
               }
 
-           
+              @media screen and (max-width:776px){
+                font-size: 0.8rem;
+                width: auto;
+                padding: 0.5rem 1rem;
+                 }
             }
+          }
+          @media screen and (max-width:776px){
+         width: 150px;
           }
         }
         @media screen and (min-width:1200px){
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
+          // grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        @media screen and (max-width:776px){
+          width: 100%;
+          grid-template-columns: 1fr 1fr !important;
         }
       }
-      @media screen and (max-width:776px){
-        width: 100%;
-      }
+   
     }
     // Slide3
     .slide3 {
