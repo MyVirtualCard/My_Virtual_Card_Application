@@ -98,7 +98,7 @@ const App = () => {
   let [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   let [VCardCount, setVCardCount] = useState([]);
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
-  let[PaymentSuccessPopup,setPaymentSuccessPopup]=useState(false);
+  let [PaymentSuccessPopup, setPaymentSuccessPopup] = useState(false);
   //URL_Alies
   let [URL_Alies, setURL_Alies] = useState("");
 
@@ -106,6 +106,14 @@ const App = () => {
   let [ResetPassToken_Id, setResetPassToken_Id] = useState("");
   let [resetPassToken, setResetPassToken] = useState();
   let [resetPassId, setResetPassId] = useState();
+
+  // Dynamic Form States
+
+  // 1]Vcard theme states
+  let [VCardColour, setVCardColour] = useState("#fff");
+  let [VCardTextColour, setVCardTextColour] = useState("#000");
+  let [SVG_Design, setSVG_Design] = useState('');
+
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -179,7 +187,8 @@ const App = () => {
             userName,
             mobileNumber,
             user,
-            DynamicForm, setDynamicForm,
+            DynamicForm,
+            setDynamicForm,
             setUser,
             registeredData,
             setRegisteredData,
@@ -211,7 +220,15 @@ const App = () => {
             setResetPassId,
             CurrentPlanActive,
             setCurrentPlanActive,
-            PaymentSuccessPopup,setPaymentSuccessPopup,
+            PaymentSuccessPopup,
+            setPaymentSuccessPopup,
+            // Vcard Theme states
+            VCardColour,
+            setVCardColour,
+            VCardTextColour,
+            setVCardTextColour,
+            SVG_Design,
+            setSVG_Design,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -269,6 +286,7 @@ const App = () => {
                   path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
                   element={<VCard_Form_Edit />}
                 />
+     
               </Route>
 
               {/* Static VCard */}

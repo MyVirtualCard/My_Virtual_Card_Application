@@ -400,6 +400,7 @@ const Edit_Payment = () => {
                     <option value="GooglePay QRCode">GooglePay QRCode</option>
                     <option value="Paytm QRCode">Paytm QRCode</option>
                     <option value="PhonePay QRCode">PhonePay QRCode</option>
+                    <option value="Bank QRCode">Bank QRCode</option>
                   </select>
                 </div>
               </div>
@@ -481,7 +482,7 @@ const Edit_Payment = () => {
           >
             <div className="form_group">
               <label htmlFor="HolderName">
-                Account Holder Name<sup>*</sup>
+                Account Name<sup>*</sup>
               </label>
               <input
                 type="text"

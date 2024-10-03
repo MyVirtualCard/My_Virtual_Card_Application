@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./DOCTOR_PREVIEW.scss";
 
 import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
@@ -36,9 +36,19 @@ import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
+import Context from "../../../../Context/GlobalContext";
 const DOCTOR_PREVIEW = () => {
+  let {
+    VCardColour,
+    setVCardColour,
+    VCardTextColour,
+    setVCardTextColour,
+    SVG_Design,
+    setSVG_Design,
+  } = useContext(Context);
+
   let style = {
-    $first_back__color: "#ffffff",
+    $first_back__color:VCardColour,
     $second_back__color: "#6b6b6b",
     $third_back__color: "#303030",
     //Root Background
@@ -50,6 +60,7 @@ const DOCTOR_PREVIEW = () => {
 
     $svg_wave_back_color: "#6ebe4b",
   };
+
   const [width, setWidth] = useState(window.innerWidth);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
@@ -91,86 +102,6 @@ const DOCTOR_PREVIEW = () => {
     document.body.appendChild(linkElement);
     linkElement.click();
     document.body.removeChild(linkElement);
-  }
-  //gallery
-  const buttonStyle = {
-    width: "20px",
-    background: "none",
-    opacity: 1,
-    border: "0px",
-    padding: "0px",
-    fontSize: "2rem",
-    borderRadius: "10px",
-    color: "#ffffff",
-  };
-  const properties = {
-    prevArrow: (
-      <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">keyboard_backspace</span>
-      </button>
-    ),
-    nextArrow: (
-      <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">east</span>
-      </button>
-    ),
-  };
-  const gallery_buttonStyle = {
-    width: "20px",
-    background: "none",
-    opacity: 1,
-    border: "0px",
-    padding: "0px",
-    fontSize: "2rem",
-    borderRadius: "10px",
-    color: "#ffffff",
-  };
-  const gallery_properties = {
-    prevArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
-      </button>
-    ),
-    nextArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
-      </button>
-    ),
-  };
-
-  //Service
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll: width < 700 ? 1 : 2,
-  };
-  //Product
-  const product_settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 2 : 2,
-    slidesToScroll: width < 700 ? 2 : 2,
-    rtl: true, // Scroll from left to right
-    arrows: true, // Show navigation arrows
   };
   //Gallery Functionality
   //openFullImage preview:
@@ -486,7 +417,7 @@ const DOCTOR_PREVIEW = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  
+
   return (
     <div className="DOCTOR_PREVIEW_CONTAINER">
       {/* Gallery Full IMAGE */}
@@ -625,7 +556,7 @@ const DOCTOR_PREVIEW = () => {
           <CiSquareChevDown onClick={HandleMenuDown} className="down" />
         </div>
       </div>
-      <div className="DOCTOR_PREVIEW_CARD">
+      <div className="DOCTOR_PREVIEW_CARD" style={{backgroundColor:style.$first_back__color}}>
         {/* Banner and logo */}
         <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
@@ -1460,10 +1391,10 @@ const DOCTOR_PREVIEW = () => {
                 height="315"
                 src="https://www.youtube.com/embed/ZZ1lnw8D3Qo?si=69n8qzoZRXN-35nQ"
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
               ></iframe>
             </div>
             <div className="video_image">
@@ -1472,10 +1403,10 @@ const DOCTOR_PREVIEW = () => {
                 height="315"
                 src="https://www.youtube.com/embed/DPSnDz8-GGs?si=rYYa3Fv6OD_aQLy1"
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
               ></iframe>
             </div>
           </div>
@@ -1629,7 +1560,7 @@ const DOCTOR_PREVIEW = () => {
 
           <div className="google_map">
             <HtmlRenderer
-              htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`}
+              htmlString={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8650172790676!2d80.23659527507537!3d13.044262813281074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526650e0b6c595%3A0x4f74ddbff946af6b!2sAristostech%20India%20Pvt%20Ltd%20Software%20Company%20%26%20Website%20Design%20Experts!5e0!3m2!1sen!2sin!4v1724171244060!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>`}
             />
           </div>
         </div>
@@ -1905,7 +1836,7 @@ const DOCTOR_PREVIEW = () => {
                     rows="2"
                     placeholder="Enter Your Message Here..."
                   ></textarea>
-                  <i class="bx bxs-message-dots"></i>
+                  <i className="bx bxs-message-dots"></i>
                 </div>
               </div>
               <div className="form_actions">

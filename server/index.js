@@ -35,6 +35,8 @@ import GoogleMapRoute from "./Routes/GoogleMap.route.js";
 import ManageContentRoute from "./Routes/ManageContent.route.js";
 import InquiryRoute from "./Routes/Inquiry.route.js";
 import AppoinmentRoute from "./Routes/Appoinment.route.js";
+// Import Dynmaic Routes;
+import DynamicRoute from './Routes/Dynamic_Vcard_Routes/First_Vcard_Theme.route.js'
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -96,6 +98,8 @@ app.use("/feedback", FeedbackRoute);
 app.use("/manageContent", ManageContentRoute);
 app.use("/inquiry", InquiryRoute);
 app.use("/appoinment", AppoinmentRoute);
+//Dynamic Middlewares
+app.use('/vcard_theme',DynamicRoute)
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");
