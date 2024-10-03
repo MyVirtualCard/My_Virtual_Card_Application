@@ -39,6 +39,8 @@ import { TbMessageChatbotFilled } from "react-icons/tb";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import { Cursor } from "react-simple-typewriter";
+import { filter } from "lodash";
+import { translate } from "react-range/lib/utils";
 const Edit_Dynamic_Theme = () => {
   let {
     user,
@@ -69,7 +71,36 @@ const Edit_Dynamic_Theme = () => {
     setVCardTextColour,
     SVG_Design,
     setSVG_Design,
+    BannerHeight,
+    setBannerHeight,
+    BannerBrightness,
+    setBannerBrightness,
+    LogoWidth,
+    setLogoWidth,
+    LogoWidthUnit,
+    setLogoWidthUnit,
+    LogoHeight,
+    setLogoHeight,
+    LogoHeightUnit,
+    setLogoHeightUnit,
+    LogoBorderRadius,
+    setLogoBorderRadius,
+    LogoBorderRadiusUnit,
+    setLogoBorderRadiusUnit,
+    LogoPosition,
+    setLogoPosition,
+    LogoTopPosition,
+    setLogoTopPosition,
+    LogoPositionUnit,
+    setLogoPositionUnit,
+    LogoLeftPosition,
+    setLogoLeftPosition,
+    LogoBottomPosition,
+    setLogoBottomPosition,
+    LogoRightPosition,
+    setLogoRightPosition,
   } = useContext(Context);
+  console.log(BannerHeight[0]);
   let Dynamic_Style = {
     $first_back__color: "gray",
     $second_back__color: "#6b6b6b",
@@ -90,6 +121,44 @@ const Edit_Dynamic_Theme = () => {
       color: VCardTextColour,
       textDecoration: "none",
       Cursor: "pointer",
+    },
+    Slide1: {
+      height: `${BannerHeight[0]}px`,
+      minHeight: `${BannerHeight[0]}px`,
+      width: "100%",
+      objectFit: "cover",
+      objectPostition: "top",
+
+      bannerImg: {
+        filter: `brightness(${BannerBrightness}%)`,
+        height: `${BannerHeight[0]}px`,
+        minHeight: `${BannerHeight[0]}px`,
+        width: "100%",
+        objectFit: "cover",
+        objectPostition: "top",
+      },
+
+      logoImg: {
+        height: `${LogoHeight}${LogoHeightUnit}`,
+        minHeight: `${LogoHeight}${LogoHeightUnit}`,
+        width: `${LogoWidth}${LogoWidthUnit}`,
+        objectFit: "cover",
+        objectPostition: "top",
+        position: `${LogoPosition}`,
+        top: `${LogoTopPosition}${LogoPositionUnit}`,
+        left: `${LogoLeftPosition}${LogoPositionUnit}`,
+        bottom: `${LogoBottomPosition}${LogoPositionUnit}`,
+        right: `${LogoRightPosition}${LogoPositionUnit}`,
+        transform: `translate(-${LogoLeftPosition}${LogoPositionUnit},-${LogoTopPosition}${LogoPositionUnit})`,
+        borderRadius: `${LogoBorderRadius}${LogoBorderRadiusUnit}`,
+      },
+      // logoPosition: {
+      //   top: `${LogoTopPosition}${LogoPositionUnit}`,
+      //   left: `${LogoLeftPosition}${LogoPositionUnit}`,
+      //   bottom: `${LogoBottomPosition}${LogoPositionUnit}`,
+      //   right: `${LogoRightPosition}${LogoPositionUnit}`,
+      //   transform: `translate(-${LogoLeftPosition},-${LogoTopPosition})`,
+      // },
     },
   };
 
@@ -330,7 +399,10 @@ const Edit_Dynamic_Theme = () => {
               }}
             >
               {/* Menu Navbar */}
-              <div className="menu_navbar_box" style={{backgroundColor:Dynamic_Style.$vcard_back_color}}>
+              <div
+                className="menu_navbar_box"
+                style={{ backgroundColor: Dynamic_Style.$vcard_back_color }}
+              >
                 <div
                   className={`up_btn ${
                     activeMenu === "Home" ? "hideUpArrow" : ""
@@ -483,10 +555,11 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Banner and logo */}
               <div className="Image_row_1" ref={HomeRef}>
-                <div className="banner_image">
+                <div className="banner_image" style={styles.Slide1}>
                   <img
-                    src="https://img.freepik.com/free-photo/doctor-nurses-special-equipment_23-2148980721.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                    src="https://img.freepik.com/premium-photo/computer-monitor-with-purple-flower-corner_916191-285310.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                     alt="banner"
+                    style={styles.Slide1.bannerImg}
                   />
                   <div
                     className="overlay"
@@ -495,10 +568,11 @@ const Edit_Dynamic_Theme = () => {
                     }}
                   ></div>
                 </div>
-                <div className="user_logo">
+                <div className="user_logo" style={styles.Slide1.logoImg}>
                   <img
-                    src="https://img.freepik.com/premium-vector/medical-logo-health-icon-vector-logo-design_1128391-16722.jpg?w=740"
+                    src="https://img.freepik.com/free-photo/smiling-redhead-man-with-laptop-looking-camera-cafe_1163-5162.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                     alt="user_logo"
+                    style={styles.Slide1.logoImg}
                   />
                 </div>
                 <div className="svg_image">
@@ -533,7 +607,11 @@ const Edit_Dynamic_Theme = () => {
                     {/* Actions */}
                     <div className="contacts_btns" style={styles.link}>
                       {/* Call */}
-                      <a href="tel:+919344482370" target="_blank" style={styles.link}>
+                      <a
+                        href="tel:+919344482370"
+                        target="_blank"
+                        style={styles.link}
+                      >
                         <BiSolidPhoneCall className="icon" />
 
                         <small>Call</small>
@@ -542,7 +620,6 @@ const Edit_Dynamic_Theme = () => {
                       <a
                         href={`mailto:contact@aristostechindia.com`}
                         target="_blank"
-
                         style={styles.link}
                       >
                         <MdOutgoingMail className="icon" />
@@ -555,7 +632,6 @@ const Edit_Dynamic_Theme = () => {
                           `Hi there!`
                         )}`}
                         target="_blank"
-
                         style={styles.link}
                       >
                         <RiWhatsappFill className="icon" />
@@ -566,7 +642,6 @@ const Edit_Dynamic_Theme = () => {
                       <a
                         href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
                         target="_blank"
-
                         style={styles.link}
                       >
                         <FaDirections className="icon" />
@@ -594,7 +669,11 @@ const Edit_Dynamic_Theme = () => {
                   </div>
                 </a>
                 {/* Mail */}
-                <a href={`mailto:contact@aristostechindia.com`} target="_blank"  style={styles.link}>
+                <a
+                  href={`mailto:contact@aristostechindia.com`}
+                  target="_blank"
+                  style={styles.link}
+                >
                   <div className="icon">
                     <IoMail />
                   </div>
@@ -605,7 +684,11 @@ const Edit_Dynamic_Theme = () => {
                   </div>
                 </a>
                 {/* Website */}
-                <a href="https://aristostechindia.com" target="_blank"  style={styles.link}>
+                <a
+                  href="https://aristostechindia.com"
+                  target="_blank"
+                  style={styles.link}
+                >
                   <div className="icon">
                     <FaGlobe />
                   </div>
@@ -615,7 +698,7 @@ const Edit_Dynamic_Theme = () => {
                   </div>
                 </a>
                 {/* PhoneNumber */}
-                <a href="tel:+919344482370" target="_blank"  style={styles.link}>
+                <a href="tel:+919344482370" target="_blank" style={styles.link}>
                   <div className="icon">
                     <BiSolidPhoneCall />
                   </div>

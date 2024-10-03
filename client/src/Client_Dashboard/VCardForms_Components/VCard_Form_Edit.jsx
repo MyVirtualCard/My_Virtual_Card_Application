@@ -518,7 +518,7 @@ const VCard_Form_Edit = () => {
               </div>
               <div
                 className="menu_item"
-                onClick={handleFormShow}
+                onClick={()=>{setShowForm('Dynamic Theme');setDynamicForm('Vcard_Theme')}}
                 id={ShowForm === "Dynamic Theme" ? "menu_active" : ""}
               >
                 <i
@@ -571,9 +571,9 @@ const VCard_Form_Edit = () => {
                 }}
                 id={DynamicForm === "Vcard_Theme" ? "menu_active" : ""}
               >
-             
-                <i className='bx bxs-brush' 
-                   style={{ color: "Gray" }}
+                <i
+                  className="bx bxs-brush"
+                  style={{ color: "Gray" }}
                   id="Vcard_Theme"
                 ></i>
                 <small id="Vcard_Theme">Vcard Theme</small>
@@ -586,9 +586,9 @@ const VCard_Form_Edit = () => {
                 }}
                 id={DynamicForm === "Logo_Banner_Design" ? "menu_active" : ""}
               >
-              
-                <i className='bx bxs-image'
-                   style={{ color: "orange" }}
+                <i
+                  className="bx bxs-image"
+                  style={{ color: "orange" }}
                   id="Logo_Banner_Design"
                 ></i>
                 <small id="Logo_Banner_Design">Logo_Banner_Design</small>

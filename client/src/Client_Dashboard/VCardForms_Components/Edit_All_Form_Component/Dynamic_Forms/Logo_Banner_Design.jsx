@@ -1,13 +1,368 @@
-import React from 'react'
-import './Logo_Banner_Design.scss';
+import React, { useContext, useEffect, useState } from "react";
+import "./Logo_Banner_Design.scss";
+import { Range } from "react-range";
+import Context from "../../../../Context/GlobalContext";
 const Logo_Banner_Design = () => {
-  return (
-   <div className="logo_banner_design_container">
-    Logo Banner Design 
-   </div>
+  let {
+    BannerHeight,
+    setBannerHeight,
+    BannerBrightness,
+    setBannerBrightness,
+    LogoWidth,
+    setLogoWidth,
+    LogoWidthUnit,
+    setLogoWidthUnit,
+    LogoHeight,
+    setLogoHeight,
+    LogoHeightUnit,
+    setLogoHeightUnit,
+    LogoBorderRadius,
+    setLogoBorderRadius,
+    LogoBorderRadiusUnit,
+    setLogoBorderRadiusUnit,
+    LogoPosition,
+    setLogoPosition,
+    LogoTopPosition,
+    setLogoTopPosition,
+    LogoPositionUnit,
+    setLogoPositionUnit,
+    LogoLeftPosition,
+    setLogoLeftPosition,
+    LogoBottomPosition,
+    setLogoBottomPosition,
+    LogoRightPosition,
+    setLogoRightPosition,
+  } = useContext(Context);
 
-  )
-}
+  useEffect(() => {
+    if (LogoPosition == "relative") {
+      setLogoLeftPosition("0"), setLogoRightPosition("0");
+      setLogoBottomPosition("0");
+      setLogoTopPosition("0");
+    } else {
+      setLogoLeftPosition("50"), setLogoRightPosition("0");
+      setLogoBottomPosition("0");
+      setLogoTopPosition("100");
+    }
+  }, [LogoPosition == "relative"]);
+  return (
+    <div className="logo_banner_design_container">
+      <form action="">
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Banner Height
+          </label>
+          <div className="current">
+            <p>Current Height - &nbsp; {BannerHeight} &nbsp;px</p>
+          </div>
+
+          <Range
+            label="Select your value"
+            step={0.1}
+            min={250}
+            max={600}
+            values={BannerHeight}
+            onChange={(BannerHeight) => setBannerHeight(BannerHeight)}
+            renderTrack={({ props, children }) => (
+              <div
+                {...props}
+                style={{
+                  ...props.style,
+                  height: "10px",
+                  width: "100%",
+                  backgroundColor: "royalBlue",
+                  borderRadius: "5px",
+                }}
+              >
+                {children}
+              </div>
+            )}
+            renderThumb={({ props }) => (
+              <div
+                {...props}
+                key={props.key}
+                style={{
+                  ...props.style,
+                  height: "18px",
+                  width: "18px",
+                  backgroundColor: "tomato",
+                  borderRadius: "50%",
+                  outline: "none",
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Banner Brightness
+          </label>
+          <div className="current">
+            <p>Current Brightness - &nbsp; {BannerBrightness} &nbsp;%</p>
+          </div>
+
+          <Range
+            label="Select your value"
+            step={0.1}
+            min={25}
+            max={200}
+            values={BannerBrightness}
+            onChange={(BannerBrightness) =>
+              setBannerBrightness(BannerBrightness)
+            }
+            renderTrack={({ props, children }) => (
+              <div
+                {...props}
+                style={{
+                  ...props.style,
+                  height: "10px",
+                  width: "100%",
+                  backgroundColor: "royalBlue",
+                  borderRadius: "5px",
+                }}
+              >
+                {children}
+              </div>
+            )}
+            renderThumb={({ props }) => (
+              <div
+                {...props}
+                key={props.key}
+                style={{
+                  ...props.style,
+                  height: "18px",
+                  width: "18px",
+                  backgroundColor: "tomato",
+                  borderRadius: "50%",
+                  outline: "none",
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Logo Width
+          </label>
+          <div className="current">
+            <p>
+              Current Width - &nbsp; {LogoWidth}
+              {LogoWidthUnit}
+            </p>
+          </div>
+          <div className="input_container">
+            <input
+              type="number"
+              name="LogoWidth"
+              id="LogoWidth"
+              value={LogoWidth}
+              onChange={(e) => setLogoWidth(e.target.value)}
+            />
+            <select
+              name="LogoWidthUnit"
+              id="LogoWidthUnit"
+              value={LogoWidthUnit}
+              onChange={(e) => setLogoWidthUnit(e.target.value)}
+            >
+              <option value="px">PX</option>
+              <option value="rem">REM</option>
+            </select>
+          </div>
+        </div>
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Logo Height
+          </label>
+          <div className="current">
+            <p>
+              Current Height - &nbsp; {LogoHeight}
+              {LogoHeightUnit}
+            </p>
+          </div>
+          <div className="input_container">
+            <input
+              type="number"
+              name="LogoHeight"
+              id="LogoHeight"
+              value={LogoHeight}
+              onChange={(e) => setLogoHeight(e.target.value)}
+            />
+            <select
+              name="LogoHeightUnit"
+              id="LogoHeightUnit"
+              value={LogoHeightUnit}
+              onChange={(e) => setLogoHeightUnit(e.target.value)}
+            >
+              <option value="px">PX</option>
+              <option value="rem">REM</option>
+            </select>
+          </div>
+        </div>
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Logo Border Radius
+          </label>
+          <div className="current">
+            <p>
+              Current Border Radius - &nbsp; {LogoBorderRadius}
+              {LogoBorderRadiusUnit}
+            </p>
+          </div>
+          <div className="input_container">
+            <input
+              type="number"
+              name="LogoBorderRadius"
+              id="LogoBorderRadius"
+              value={LogoBorderRadius}
+              onChange={(e) => setLogoBorderRadius(e.target.value)}
+            />
+            <select
+              name="LogoBorderRadiusUnit"
+              id="LogoBorderRadiusUnit"
+              value={LogoBorderRadiusUnit}
+              onChange={(e) => setLogoBorderRadiusUnit(e.target.value)}
+            >
+              <option value="px">PX</option>
+              <option value="rem">REM</option>
+              <option value="%">%</option>
+            </select>
+          </div>
+        </div>
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Logo Position
+          </label>
+          <div className="current">
+            <p>Current Position - &nbsp; {LogoPosition}</p>
+          </div>
+          <div className="input_container">
+            <select
+              name="LogoPosition"
+              id="LogoPosition"
+              value={LogoPosition}
+              onChange={(e) => {
+                setLogoPosition(e.target.value);
+              }}
+            >
+              <option value="absolute">Absolute</option>
+              <option value="relative">Relative</option>
+              <option value="sticky">Sticky</option>
+            </select>
+          </div>
+        </div>
+        {LogoPosition == "absolute" || LogoPosition == "sticky" ? (
+          <>
+            {/* Top position */}
+            <div className="form_group">
+              <label className="form_label" for="BannerHeight">
+                Adjust Logo Top Position
+              </label>
+              <div className="current">
+                <p>Current Top Position - &nbsp; {LogoTopPosition}%</p>
+              </div>
+              <div className="input_container">
+                <input
+                  type="number"
+                  name="LogoTopPosition"
+                  id="LogoTopPosition"
+                  value={LogoTopPosition}
+                  onChange={(e) => setLogoTopPosition(e.target.value)}
+                />
+                <select
+                  name="LogoPositionUnit"
+                  id="LogoPositionUnit"
+                  value={LogoPositionUnit}
+                  onChange={(e) => setLogoPositionUnit(e.target.value)}
+                >
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div>
+            {/* left Poition */}
+            <div className="form_group">
+              <label className="form_label" for="BannerHeight">
+                Adjust Logo Left Position
+              </label>
+              <div className="current">
+                <p>Current Left Position - &nbsp; {LogoLeftPosition}%</p>
+              </div>
+              <div className="input_container">
+                <input
+                  type="number"
+                  name="LogoLeftPosition"
+                  id="LogoLeftPosition"
+                  value={LogoLeftPosition}
+                  onChange={(e) => setLogoLeftPosition(e.target.value)}
+                />
+                <select
+                  name="LogoPositionUnit"
+                  id="LogoPositionUnit"
+                  value={LogoPositionUnit}
+                  onChange={(e) => setLogoPositionUnit(e.target.value)}
+                >
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div>
+            {/* Bottom position */}
+            {/* <div className="form_group">
+              <label className="form_label" for="BannerHeight">
+                Adjust Logo Bottom Position
+              </label>
+              <div className="current">
+                <p>Current Bottom Position - &nbsp; {LogoBottomPosition}%</p>
+              </div>
+              <div className="input_container">
+                <input
+                  type="number"
+                  name="LogoBottomPosition"
+                  id="LogoBottomPosition"
+                  value={LogoBottomPosition}
+                  onChange={(e) => setLogoBottomPosition(e.target.value)}
+                />
+                <select
+                  name="LogoPositionUnit"
+                  id="LogoPositionUnit"
+                  value={LogoPositionUnit}
+                  onChange={(e) => setLogoPositionUnit(e.target.value)}
+                >
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div> */}
+            {/* Right Position */}
+            {/* <div className="form_group">
+              <label className="form_label" for="BannerHeight">
+                Adjust Logo Right Position
+              </label>
+              <div className="current">
+                <p>Current Right Position - &nbsp; {LogoRightPosition}%</p>
+              </div>
+              <div className="input_container">
+                <input
+                  type="number"
+                  name="LogoRightPosition"
+                  id="LogoRightPosition"
+                  value={LogoRightPosition}
+                  onChange={(e) => setLogoRightPosition(e.target.value)}
+                />
+                <select
+                  name="LogoPositionUnit"
+                  id="LogoPositionUnit"
+                  value={LogoPositionUnit}
+                  onChange={(e) => setLogoPositionUnit(e.target.value)}
+                >
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div> */}
+          </>
+        ) : (
+          ""
+        )}
+      </form>
+    </div>
+  );
+};
 
 export default Logo_Banner_Design;
-

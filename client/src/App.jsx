@@ -112,7 +112,24 @@ const App = () => {
   // 1]Vcard theme states
   let [VCardColour, setVCardColour] = useState("#fff");
   let [VCardTextColour, setVCardTextColour] = useState("#000");
-  let [SVG_Design, setSVG_Design] = useState('');
+  let [SVG_Design, setSVG_Design] = useState("");
+  // 2]Banner and Logo
+  const [BannerHeight, setBannerHeight] = React.useState([300]);
+  const [BannerBrightness, setBannerBrightness] = React.useState([100]);
+  let [LogoWidth, setLogoWidth] = useState(100);
+  let [LogoWidthUnit, setLogoWidthUnit] = useState("px");
+  let [LogoHeight, setLogoHeight] = useState(100);
+  let [LogoHeightUnit, setLogoHeightUnit] = useState("px");
+  let [LogoBorderRadius, setLogoBorderRadius] = useState("0");
+  let [LogoBorderRadiusUnit, setLogoBorderRadiusUnit] = useState("px");
+  let [LogoPosition, setLogoPosition] = useState("absolute");
+  let [LogoTopPosition, setLogoTopPosition] = useState("100");
+  let [LogoPositionUnit, setLogoPositionUnit] = useState("%");
+  let [LogoLeftPosition, setLogoLeftPosition] = useState("50");
+
+  let [LogoBottomPosition, setLogoBottomPosition] = useState("0");
+
+  let [LogoRightPosition, setLogoRightPosition] = useState("0");
 
   // Server API
   const api = axios.create({
@@ -229,6 +246,29 @@ const App = () => {
             setVCardTextColour,
             SVG_Design,
             setSVG_Design,
+            // Dynamic Banner and Logo states
+            BannerHeight,
+            setBannerHeight,
+            BannerBrightness,
+            setBannerBrightness,
+            LogoWidth,
+            setLogoWidth,
+            LogoWidthUnit,
+            setLogoWidthUnit,
+            LogoHeight,
+            setLogoHeight,
+            LogoHeightUnit,
+            setLogoHeightUnit,
+            LogoBorderRadius,
+            setLogoBorderRadius,
+            LogoBorderRadiusUnit,
+            setLogoBorderRadiusUnit,
+            LogoPosition, setLogoPosition,
+            LogoTopPosition, setLogoTopPosition,
+            LogoPositionUnit, setLogoPositionUnit,
+            LogoLeftPosition, setLogoLeftPosition,
+            LogoBottomPosition, setLogoBottomPosition,
+            LogoRightPosition, setLogoRightPosition,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -286,7 +326,6 @@ const App = () => {
                   path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
                   element={<VCard_Form_Edit />}
                 />
-     
               </Route>
 
               {/* Static VCard */}
