@@ -418,8 +418,8 @@ z-index: 1;
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: center;
+          object-fit: cover; /* Ensures image covers the area */
+          object-position: top; /* Ensures head portion is not cropped */
         }
         .overlay {
           position: absolute;
@@ -447,9 +447,8 @@ z-index: 1;
           height: 100%;
           border-radius: 1rem;
           // border-top-left-radius: 2.5rem;
-          // border-bottom-right-radius: 2.5rem;
-          object-fit: cover;
-          object-position: center;
+          object-fit: cover; /* Ensures image covers the area */
+          object-position: top; /* Ensures head portion is not cropped */
           border: 3px solid $card_back_colour;
           box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
           animation: profileBorder 5s infinite linear;

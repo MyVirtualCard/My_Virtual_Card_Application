@@ -465,14 +465,13 @@ color: $NavMenu_first_text_color;
         max-height: 280px;
         height: 280px;
         overflow: hidden;
-        object-fit: cover;
-        object-position: center;
+
 
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: center;
+          object-fit: cover; /* Ensures image covers the area */
+          object-position: top; /* Ensures head portion is not cropped */
         }
         // .overlay {
         //   position: absolute;
@@ -485,26 +484,26 @@ color: $NavMenu_first_text_color;
       }
       .user_logo {
         position: absolute;
-        bottom: -20%;
-        right: 5%;
-        transform: translate(-5%, -20%);
-        width: 100px;
-        height: 100px;
+        bottom: -10%;
+        right: 2%;
+        transform: translate(-2%, 10%);
+        width: 100%;
+        // height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         z-index: 2;
         // width: 100%;
 
         img {
           z-index: 2;
-          width: 130px;
-          height: 130px;
+          width: 120px;
+          height: 120px;
           border-radius: 50%;
           // border-top-left-radius: 2.5rem;
           // border-bottom-right-radius: 2.5rem;
-          object-fit: cover;
-          object-position: center;
+          object-fit: cover; /* Ensures image covers the area */
+  object-position: top; /* Ensures head portion is not cropped */
           border: 2px solid rgb(214, 214, 214) !important;
           filter: drop-shadow(0px 4px 5px #ffffff66);
           // animation: profileBorder 5s infinite linear;

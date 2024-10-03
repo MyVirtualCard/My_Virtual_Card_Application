@@ -437,8 +437,8 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: center;
+          object-fit: cover; /* Ensures image covers the area */
+          object-position: top; /* Ensures head portion is not cropped */
         }
         // .overlay {
         //   position: absolute;
@@ -476,8 +476,8 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
             border-radius: 50%;
             // border-top-left-radius: 2.5rem;
             // border-bottom-right-radius: 2.5rem;
-            object-fit: cover;
-            object-position: center;
+            object-fit: cover; /* Ensures image covers the area */
+            object-position: top; /* Ensures head portion is not cropped */
             // border: 2px solid $third_back__color;
             filter: drop-shadow(0px 4px 5px #49494966);
             // animation: profileBorder 5s infinite linear;
