@@ -2082,15 +2082,70 @@ z-index: 1;
             }
           }
           .plan_price {
-            h2 {
-              font-size: 2rem;
-              color: #09465d;
-
-              small {
-                font-size: 0.9rem;
-                font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            gap: 5px;
+            flex: 1;
+            width:100%;
+      
+            .actual{
+        
+              display: flex;
+              flex: 0.5;
+              align-items: center;
+              justify-content: center;
+           
+              h2 {
+                font-size: 0.8rem;
+                color: #09465d;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+               
+  
+                small {
+                  font-size: 0.9rem;
+                  font-weight: 500;
+                  text-decoration: none !important;
+            
+                }
+                strong{
+                  font-size: 1.2rem;
+                  font-weight: 600;
+                  text-decoration: line-through;
+                  color: tomato;
+               
+                }
               }
             }
+            .offer{
+              display: flex;
+              flex: 0.5;
+              align-items: center;
+              justify-content: center;
+              h2 {
+                font-size: 0.8rem;
+                color: #09465d;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+  
+                small {
+                  font-size: 0.9rem;
+                  font-weight: 500;
+                }
+                strong{
+                  font-size: 1.2rem;
+                  font-weight: 600;
+               
+                }
+              }
+            }
+         
           }
 
           .plan_action {

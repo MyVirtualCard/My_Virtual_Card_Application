@@ -547,6 +547,7 @@ const Edit_Payment = () => {
                 </option>
                 <option value="HDFC Bank">HDFC Bank</option>
                 <option value="ICICI Bank">ICICI Bank</option>
+                <option value="IDFC First Bank">IDFC First Bank</option>
                 <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
                 <option value="Axis Bank">Axis Bank</option>
                 <option value="Karur Vysya Bank">Karur Vysya Bank</option>

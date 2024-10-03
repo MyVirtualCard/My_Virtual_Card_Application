@@ -86,7 +86,6 @@ const User_VCards = () => {
           },
         })
         .then((res) => {
-          console.log(res);
 
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);

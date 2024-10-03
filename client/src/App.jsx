@@ -94,6 +94,7 @@ const App = () => {
   let [status, setStatus] = useState(null);
   let [activePlan, setPlanActive] = useState([]);
   let [ShowForm, setShowForm] = useState("Choose Your Plan");
+  let [DynamicForm, setDynamicForm] = useState();
   let [LiveLinkActivate, setLiveLinkActivate] = useState([]);
   let [VCardCount, setVCardCount] = useState([]);
   let [CurrentPlanActive, setCurrentPlanActive] = useState(0);
@@ -178,6 +179,7 @@ const App = () => {
             userName,
             mobileNumber,
             user,
+            DynamicForm, setDynamicForm,
             setUser,
             registeredData,
             setRegisteredData,

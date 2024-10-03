@@ -1,0 +1,54 @@
+.Dynamic_theme_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0px 1rem;
+  display: none;
+.dynamic_title{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    h4{
+        font-size: 1.2rem;
+        font-weight:550;
+        color: blueviolet;
+    }
+}
+
+  .dynamic_box {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+    height: 100%;
+    position: relative;
+   
+    .dynanic_content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex: 0.6;
+      height: 100%;
+      // overflow-y: scroll;
+    }
+    .vcard_preview {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      flex: 0.4;
+      height: 100%;
+
+      iframe{
+        height: 100%;
+        width:345px !important;
+        flex: 1;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+      }
+    }
+  }
+}

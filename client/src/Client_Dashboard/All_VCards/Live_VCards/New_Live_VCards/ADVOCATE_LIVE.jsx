@@ -1341,7 +1341,7 @@ END:VCARD
                               )}
                             </div>
                             <div className="service_action">
-                              {data.ServicePrice != "" ? (
+                              {data.ServicePrice !=null ? (
                                 <div className="service_price">
                                   <h5>Price : &nbsp;</h5>
                                   <p>₹{data.ServicePrice}</p>

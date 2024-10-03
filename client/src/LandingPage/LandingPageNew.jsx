@@ -79,7 +79,13 @@ const LandingPageNew = () => {
       setImageToggle(!ImageToggle);
     }, 5000);
   });
-  let vcardImages = [slide1banner, slide2banner, slide3banner, slide4banner,slide5banner];
+  let vcardImages = [
+    slide1banner,
+    slide2banner,
+    slide3banner,
+    slide4banner,
+    slide5banner,
+  ];
   let [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     if (currentIndex < vcardImages.length) {
@@ -100,7 +106,7 @@ const LandingPageNew = () => {
       VCard_Image: vcard3,
       VCard_Link: "https://myvirtualcard.in/Manager_Preview",
     },
-  
+
     {
       Id: 2,
       TemplateCount: 2,
@@ -466,33 +472,34 @@ const LandingPageNew = () => {
             </div>
           </div>
           <div className="right">
-  <div className="address">
-  <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
-  <small><strong>Mobile Number : </strong>&nbsp;+91 9344482370</small>
-  </div>
+            <div className="address">
+              <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+              <small>
+                <strong>Mobile Number : </strong>&nbsp;+91 9344482370
+              </small>
+            </div>
             <div className="socialmedias">
-            <div className="link">
-              <a href="#" className="btn btn-primary">
-                <FaFacebookF />
-              </a>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaFacebookF />
+                </a>
+              </div>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaInstagram />
+                </a>
+              </div>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaTwitter />
+                </a>
+              </div>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaLinkedin />
+                </a>
+              </div>
             </div>
-            <div className="link">
-              <a href="#" className="btn btn-primary">
-                <FaInstagram />
-              </a>
-            </div>
-            <div className="link">
-              <a href="#" className="btn btn-primary">
-                <FaTwitter />
-              </a>
-            </div>
-            <div className="link">
-              <a href="#" className="btn btn-primary">
-                <FaLinkedin />
-              </a>
-            </div>
-            </div>
-         
           </div>
         </div>
         <div className="Navbar2">
@@ -609,7 +616,7 @@ const LandingPageNew = () => {
               <li></li>
               <li></li>
               <li></li>
-         
+
               <li></li>
               <li></li>
               <li></li>
@@ -617,7 +624,6 @@ const LandingPageNew = () => {
               <li></li>
               <li></li>
             </ul>
-       
 
             <div className="back_image">
               <img src={backImage} alt="image" />
@@ -680,7 +686,6 @@ const LandingPageNew = () => {
                 </div>
                 <p>Sample VCard Designs</p>
               </div>
-            
             </div>
             <div className="template_container">
               {TemplateList.map((data, index) => {
@@ -1099,7 +1104,10 @@ const LandingPageNew = () => {
           {/* Slide6 */}
           <div className="slide_6_page" ref={PricingRef}>
             <div className="plan_heading" initial="hide" animate="show">
-              <h1><FaRupeeSign className="icon"/>MyVirtualCard Pricing</h1>
+              <h1>
+                <FaRupeeSign className="icon" />
+                MyVirtualCard Pricing
+              </h1>
               <h2>
                 Select the <span>Perfect Plan</span> for You
               </h2>
@@ -1167,9 +1175,18 @@ const LandingPageNew = () => {
                   <h3>BASIC PLAN</h3>
                 </div>
                 <div className="plan_price">
-                  <h2>
-                    ₹ 599 <small>/Yearly</small>
-                  </h2>
+                  <div className="actual">
+                    <h2>
+                      Actual Price <strong>₹ 999 <small>/Yearly</small></strong>
+                    </h2>
+                  </div>
+
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                     Offer Price <strong>₹ 599 <small>/Yearly</small></strong>
+                    </h2>
+                  </div>
                 </div>
 
                 <div className="plan_action">
@@ -1298,7 +1315,6 @@ const LandingPageNew = () => {
             </div>
           </div>
 
-
           {/* OurService */}
           <div className="Our_Service_Slide" ref={OurServiceRef}>
             <div className="slide1_1_title">
@@ -1383,8 +1399,8 @@ const LandingPageNew = () => {
               </div>
             </div>
           </div>
-                    {/* Questions */}
-                    <div
+          {/* Questions */}
+          <div
             className="slide_7_page"
             initial="hide"
             animate="show"
@@ -1469,8 +1485,10 @@ const LandingPageNew = () => {
 
           <div className="footer">
             <div className="company">
-        
-              <p>Group Of Aristostech India Pvt Limited &copy;Copyright 2024 - All Rights Reserved.</p>
+              <p>
+                Group Of Aristostech India Pvt Limited &copy;Copyright 2024 -
+                All Rights Reserved.
+              </p>
               {/* <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
 
               <small>

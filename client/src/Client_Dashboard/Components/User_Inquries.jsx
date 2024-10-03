@@ -9,7 +9,6 @@ const User_Inquries = () => {
     userName,
     URL_Alies,
     setURL_Alies,
-
     setFormSubmitLoader,
     setCurrentTemplate,
     currentTemplate,
@@ -17,6 +16,7 @@ const User_Inquries = () => {
     setShowForm,
  
   } = useContext(Context);
+  console.log(URL_Alies)
    let[   AllFeedback,
     setAllFeedback]=useState([])
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
@@ -30,11 +30,11 @@ const User_Inquries = () => {
     setKey((prevKey) => prevKey + 1); // Change the key to trigger a remount
   };
 
-  // Server API
-  const api = axios.create({
-    baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
-  });
-  async function fetchCurrentPopUpBanner() {
+//Server API
+const api = axios.create({
+  baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
+});
+  async function fetchAllInquiry() {
     setFormSubmitLoader(true);
     try {
       await api
@@ -45,11 +45,12 @@ const User_Inquries = () => {
           },
         })
         .then((res) => {
+          console.log(res)
           setAllFeedback(res.data.data);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          console.log(error.response.data.message);
+          console.log(error);
           setFormSubmitLoader(false);
         });
     } catch (error) {
@@ -59,7 +60,7 @@ const User_Inquries = () => {
   }
 
   useEffect(() => {
-    fetchCurrentPopUpBanner();
+    fetchAllInquiry();
   }, [key]);
   //Delete Inquiry
   async function handleInquiryDelete() {
