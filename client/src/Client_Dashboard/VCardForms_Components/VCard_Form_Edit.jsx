@@ -607,7 +607,21 @@ const VCard_Form_Edit = () => {
                   id="Contact_Icons"/>
                 <small id="Contact_Icons">Contact_Icons</small>
               </div>
-          
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"),
+                    setDynamicForm("Title_Design");
+                }}
+                id={DynamicForm === "Title_Design" ? "menu_active" : ""}
+              >
+             <i className='bx bx-captions'
+              style={{ color: "#4c4c4c" }}
+                  id="Title_Design"
+             ></i>
+             
+                <small id="Title_Design">Title_Design</small>
+              </div>
             </div>
           )}
 

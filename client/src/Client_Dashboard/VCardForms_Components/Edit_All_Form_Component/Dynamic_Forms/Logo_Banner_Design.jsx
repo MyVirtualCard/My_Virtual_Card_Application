@@ -191,7 +191,7 @@ const Logo_Banner_Design = () => {
     <div className="logo_banner_design_container">
       <form action="" onSubmit={UpdateToggle ? handleImageThemeUpdate : handleImageThemeSubmit}>
         <div className="form_group">
-          <label className="form_label" for="BannerHeight">
+          <label className="form_label" htmlFor="BannerHeight">
             Adjust Banner Height
           </label>
           <div className="current">
@@ -236,7 +236,7 @@ const Logo_Banner_Design = () => {
           />
         </div>
         <div className="form_group">
-          <label className="form_label" for="BannerHeight">
+          <label className="form_label" htmlFor="BannerHeight">
             Adjust Banner Brightness
           </label>
           <div className="current">
@@ -283,7 +283,7 @@ const Logo_Banner_Design = () => {
           />
         </div>
         <div className="form_group">
-          <label className="form_label" for="BannerHeight">
+          <label className="form_label" htmlFor="BannerHeight">
             Adjust Logo Width
           </label>
           <div className="current">
@@ -312,7 +312,7 @@ const Logo_Banner_Design = () => {
           </div>
         </div>
         <div className="form_group">
-          <label className="form_label" for="BannerHeight">
+          <label className="form_label" htmlFor="BannerHeight">
             Adjust Logo Height
           </label>
           <div className="current">
@@ -341,7 +341,7 @@ const Logo_Banner_Design = () => {
           </div>
         </div>
         <div className="form_group">
-          <label className="form_label" for="BannerHeight">
+          <label className="form_label" htmlFor="BannerHeight">
             Adjust Logo Border Radius
           </label>
           <div className="current">
@@ -371,7 +371,7 @@ const Logo_Banner_Design = () => {
           </div>
         </div>
         <div className="form_group">
-          <label className="form_label" for="BannerHeight">
+          <label className="form_label" htmlFor="BannerHeight">
             Adjust Logo Position
           </label>
           <div className="current">
@@ -396,7 +396,7 @@ const Logo_Banner_Design = () => {
           <>
             {/* Top position */}
             <div className="form_group">
-              <label className="form_label" for="BannerHeight">
+              <label className="form_label" htmlFor="BannerHeight">
                 Adjust Logo Top Position
               </label>
               <div className="current">
@@ -422,7 +422,7 @@ const Logo_Banner_Design = () => {
             </div>
             {/* left Poition */}
             <div className="form_group">
-              <label className="form_label" for="BannerHeight">
+              <label className="form_label" htmlFor="BannerHeight">
                 Adjust Logo Left Position
               </label>
               <div className="current">
@@ -448,7 +448,7 @@ const Logo_Banner_Design = () => {
             </div>
             {/* Bottom position */}
             {/* <div className="form_group">
-              <label className="form_label" for="BannerHeight">
+              <label className="form_label" htmlFor="BannerHeight">
                 Adjust Logo Bottom Position
               </label>
               <div className="current">
@@ -474,7 +474,7 @@ const Logo_Banner_Design = () => {
             </div> */}
             {/* Right Position */}
             {/* <div className="form_group">
-              <label className="form_label" for="BannerHeight">
+              <label className="form_label" htmlFor="BannerHeight">
                 Adjust Logo Right Position
               </label>
               <div className="current">

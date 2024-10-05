@@ -73,44 +73,27 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
   position: relative;
   // margin-bottom: 1rem;
 
-  h3 {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: "Lora", serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
+  // h3 {
+  //   width: 100%;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   gap: 10px;
+  //   font-family: "Lora", serif;
+  //   font-optical-sizing: auto;
+  //   font-weight: 600;
+  //   font-style: normal;
 
-    font-size: 1.2rem;
-    color: $primary_title_color;
-    position: relative;
+  //   font-size: 1.2rem;
+  //   color: $primary_title_color;
+  //   position: relative;
 
-    &::first-letter {
-      font-size: 1.7rem !important;
-      color: $second_back__color !important;
-    }
-    &::before {
-      content: "";
-      width: 100px;
-      height: 2px;
-      background-color: $first_btn_back_color;
-      position: absolute;
-      border-radius: 4px;
-      left: 0%;
-    }
-    &::after {
-      content: "";
-      width: 100px;
-      height: 2px;
-      border-radius: 4px;
-      background-color: $first_btn_back_color;
-      position: absolute;
-      right: 0%;
-    }
-  }
+  //   &::first-letter {
+  //     font-size: 1.7rem !important;
+  //     color: $second_back__color !important;
+  //   }
+  
+  // }
 }
 .DOCTOR_SUB_TITLE_PREVIEW {
   width: 100%;
@@ -138,20 +121,8 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
 .Dynamic_theme_container {
   position: relative;
   width: 100%;
-  height: 95%;
-  padding: 0px 1rem;
-  .dynamic_title {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-
-    h4 {
-      font-size: 1.2rem;
-      font-weight: 550;
-      color: blueviolet;
-    }
-  }
+  height: 100%;
+  padding: 0px 0.5rem;
 
   .dynamic_box {
     display: flex;
@@ -172,6 +143,24 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
       overflow-y: scroll;
       padding-bottom: 1rem;
 
+      .dynamic_title {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    
+    
+        color: #fff;
+    
+        h4 {
+          font-size: 1rem;
+          font-weight: 550;
+          padding: 5px 0px;
+          color: rgb(70, 70, 70);
+          border-bottom:2px solid royalblue ;
+        }
+      }
+    
       &::-webkit-scrollbar {
         display: none;
       }
@@ -179,11 +168,13 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     .vcard_preview {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: center;
       justify-content: flex-start;
       flex: 0.3;
-      height: 99%;
+      height: 100%;
       position: relative;
+    
+     
 
       // border-left: 1px solid rgb(119, 119, 119);
       // .iframe{
@@ -256,12 +247,12 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
         .DOCTOR_PREVIEW_CARD {
           width: 350px;
           max-width: 350px;
-          margin-top: 0.5rem;
+          
           min-height: 100%;
           height: auto;
           overflow-x: hidden;
           background-color: $vcard_back_color;
-          box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+          box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
           overflow-y: scroll;
           //BasicDetails and socialmedias and baner and logo
          // Menu Navbar
@@ -269,15 +260,15 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     // width: 80px;
     // height: 100vh;
     background-color: $NavMenu_back_color;
-    position: fixed;
-    // position: fixed;
-    // top: 0%;
-    // right: 0%;
 
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
-    // justify-content: space-between;
+    position: fixed;
+    top: 100%;
+    right: 0%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     .up_btn {
       width: 100%;
       display: flex;
@@ -420,16 +411,16 @@ $NavMenu_second_text_color: rgb(90, 90, 90);
     }
 
     @media screen and (max-width: 1650px) {
-      position: sticky !important;
-      top: 0%;
+      position: fixed !important;
+      top: 100%;
       left: 0%;
-      right: 0%;
-      transform: translate(-0%, -0%);
+  
+      transform: translate(-0%, -100%);
       z-index: 100;
       display: flex;
       flex-direction: row;
       width: 100%;
-      height: 60px;
+      height: 50px;
       align-items: center;
       justify-content: space-between;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,

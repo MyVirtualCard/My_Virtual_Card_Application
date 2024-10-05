@@ -43,6 +43,7 @@ import { filter } from "lodash";
 import { translate } from "react-range/lib/utils";
 import Dynamic_Contact_Icon from "./Dynamic_Forms/Dynamic_Contact_Icon";
 import { color } from "framer-motion";
+import Title_Design from "./Dynamic_Forms/Title_Design";
 
 const Edit_Dynamic_Theme = () => {
   let {
@@ -120,6 +121,19 @@ const Edit_Dynamic_Theme = () => {
     setIconBorderRadius,
     IconUnit,
     setIconUnit,
+    // 4]Title states
+    TitleColor,
+    setTitleColor,
+    TitleSize,
+    setTitleSize,
+    TitleUnit,
+    setTitleUnit,
+    TitleFontWeight,
+    setTitleFontWeight,
+    TitleFont,
+    setTitleFont,
+    TitlePosition,setTitlePosition,
+
   } = useContext(Context);
   let [isHovered, setIsHovered] = useState(false);
   let [BtnisHovered, setBtnIsHovered] = useState(false);
@@ -137,7 +151,10 @@ const Edit_Dynamic_Theme = () => {
     //SVG Wave backgound
 
     $svg_wave_back_color: VCardColour,
+
+    
   };
+  
   // Define the inline styles as a JavaScript object
   const styles = {
     link: {
@@ -426,30 +443,55 @@ const Edit_Dynamic_Theme = () => {
   }, []);
   return (
     <>
-      <div className="Dynamic_theme_container">
-        <div className="dynamic_title">
-          <h4>{ShowForm}</h4>
-        </div>
+    <style>
+      /* Add your CSS here */
+      {`
+      .Preview_Title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: ${TitlePosition};
+  position: relative;
+  // margin-bottom: 1rem;
 
+  h3 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: ${TitlePosition};
+    gap: 10px;
+    font-family:${TitleFont};
+    font-optical-sizing: auto;
+    font-weight: ${TitleFontWeight};
+    font-style: normal;
+
+    font-size: ${TitleSize}${TitleUnit};
+    color: ${TitleColor};
+    position: relative;
+
+    &::first-letter {
+      font-size: 1.7rem !important;
+      color: $second_back__color !important;
+    }
+  
+  }
+}
+      `}
+      </style>
+
+  
+      <div className="Dynamic_theme_container">
         <div className="dynamic_box">
           <div className="dynanic_content">
+            <div className="dynamic_title">
+              <h4>Dynamic VCard Theme - {DynamicForm}</h4>
+            </div>
             {DynamicForm == "Vcard_Theme" ? <Vcard_Theme /> : ""}
             {DynamicForm == "Logo_Banner_Design" ? <Logo_Banner_Design /> : ""}
             {DynamicForm == "Contact_Icons" ? <Dynamic_Contact_Icon /> : ""}
+            {DynamicForm == "Title_Design" ? <Title_Design /> : ""}
           </div>
           <div className="vcard_preview">
-            {/* Gallery Full IMAGE */}
-            {/* <div
-              className="full_image"
-              id="fullImageBox"
-              style={{ position: "absolute", top: scrollY }}
-            >
-              <div className="close_Full_Image_gallery">
-                <RiCloseLargeLine className="icon" onClick={closeFullImage} />
-              </div>
-              <img src="" alt="gallery" id="fullImage" />
-            </div> */}
-
             <div
               className="DOCTOR_PREVIEW_CARD"
               style={{
@@ -790,7 +832,7 @@ const Edit_Dynamic_Theme = () => {
 
               {/* About US */}
               <div className="about_row_4" ref={AboutRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>About Us</h3>
                 </div>
 
@@ -1105,7 +1147,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Our Services */}
               <div className="our_services" ref={ServiceRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Our Services</h3>
                 </div>
                 <div className="All_Services">
@@ -1239,7 +1281,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Our Product */}
               <div className="our_products" ref={ProductRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Our Products</h3>
                 </div>
                 <div className="All_Products">
@@ -1336,7 +1378,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Payment */}
               <div className="Payment" ref={PaymentRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>For Payment</h3>
                 </div>
                 <div className="payment_details">
@@ -1449,7 +1491,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Gallery */}
               <div className="gallery" ref={GalleryRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Gallery</h3>
                 </div>
 
@@ -1488,7 +1530,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Videos */}
               <div className="video" ref={VideoRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Videos</h3>
                 </div>
 
@@ -1521,7 +1563,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Opentime */}
               <div className="time_container" ref={TimeRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Open&Close Time</h3>
                   {/* Contact */}
                 </div>
@@ -1561,7 +1603,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Testimonials */}
               <div className="testimonial" ref={TestimonialRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Testimonial</h3>
                   {/* Contact */}
                 </div>
@@ -1662,7 +1704,7 @@ const Edit_Dynamic_Theme = () => {
               {/* GoogleMap */}
 
               <div className="google_map_container" ref={LocationRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Live Location</h3>
                 </div>
 
@@ -1674,7 +1716,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Feedback */}
               <div className="feedback_row" ref={FeedbackRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Feedback</h3>
                   {/* Contact */}
                 </div>
@@ -1859,7 +1901,7 @@ const Edit_Dynamic_Theme = () => {
               </div>
               {/* Inquries */}
               <div className="Inquries" ref={InquiryRef}>
-                <div className="DOCTOR_TITLE_PREVIEW">
+                <div className="Preview_Title">
                   <h3>Inquries</h3>
                 </div>
                 <div className="inquiries_container5">

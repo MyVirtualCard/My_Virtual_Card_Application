@@ -39,6 +39,7 @@ import AppoinmentRoute from "./Routes/Appoinment.route.js";
 import FirstTheme from './Routes/Dynamic_Vcard_Routes/First_Vcard_Theme.route.js';
 import SecondTheme from './Routes/Dynamic_Vcard_Routes/Second_Banner_Logo.route.js';
 import ThirdTheme from './Routes/Dynamic_Vcard_Routes/Third_Button_Design.route.js';
+import FourthTheme from './Routes/Dynamic_Vcard_Routes/Fourth_Title_Design.route.js';
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -104,6 +105,7 @@ app.use("/appoinment", AppoinmentRoute);
 app.use('/vcard_theme',FirstTheme);
 app.use('/image_theme',SecondTheme);
 app.use('/button_theme',ThirdTheme);
+app.use('/title_theme',FourthTheme);
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");

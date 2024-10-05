@@ -134,10 +134,18 @@ const App = () => {
   let [BtnHoverColour, setBtnHoverColour] = useState("tomato");
   let [BtnHoverTextColour, setBtnHoverTextColour] = useState("white");
   const [isHovered, setIsHovered] = useState(false);
-  let[ContactBtnBorderRadius,setContactBtnBorderRadius]=useState('0');
-let[ContactBtnUnit,setContactBtnUnit]=useState('px');
-let[IconBorderRadius,setIconBorderRadius]=useState('0');
-let[IconUnit,setIconUnit]=useState('px');
+  let [ContactBtnBorderRadius, setContactBtnBorderRadius] = useState("0");
+  let [ContactBtnUnit, setContactBtnUnit] = useState("px");
+  let [IconBorderRadius, setIconBorderRadius] = useState("0");
+  let [IconUnit, setIconUnit] = useState("px");
+
+  // 4]Title states
+  let [TitleColor, setTitleColor] = useState("#4c4c4c");
+  let [TitleSize, setTitleSize] = useState("15");
+  let [TitleUnit, setTitleUnit] = useState("px");
+  let [TitleFontWeight, setTitleFontWeight] = useState("600");
+  let [TitleFont, setTitleFont] = useState("Arial");
+  let [TitlePosition,setTitlePosition]=useState('center');
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -282,16 +290,39 @@ let[IconUnit,setIconUnit]=useState('px');
             setLogoBottomPosition,
             LogoRightPosition,
             setLogoRightPosition,
-          // 3]Dynamic Button and Icon states
-            BtnBackColour, setBtnBackColour,
-            BtnTextColour, setBtnTextColour,
-            BtnHoverColour, setBtnHoverColour,
-            BtnHoverTextColour, setBtnHoverTextColour,
-            isHovered, setIsHovered,
-            ContactBtnBorderRadius,setContactBtnBorderRadius,
-            ContactBtnUnit,setContactBtnUnit,
-            IconBorderRadius,setIconBorderRadius,
-            IconUnit,setIconUnit,
+            // 3]Dynamic Button and Icon states
+            BtnBackColour,
+            setBtnBackColour,
+            BtnTextColour,
+            setBtnTextColour,
+            BtnHoverColour,
+            setBtnHoverColour,
+            BtnHoverTextColour,
+            setBtnHoverTextColour,
+            isHovered,
+            setIsHovered,
+            ContactBtnBorderRadius,
+            setContactBtnBorderRadius,
+            ContactBtnUnit,
+            setContactBtnUnit,
+            IconBorderRadius,
+            setIconBorderRadius,
+            IconUnit,
+            setIconUnit,
+
+            // 4]Title states
+            TitleColor,
+            setTitleColor,
+            TitleSize,
+            setTitleSize,
+            TitleUnit,
+            setTitleUnit,
+            TitleFontWeight,
+            setTitleFontWeight,
+            TitleFont,
+            setTitleFont,
+            TitlePosition,setTitlePosition,
+            
           }}
         >
           <Suspense fallback={<FallBack />}>
