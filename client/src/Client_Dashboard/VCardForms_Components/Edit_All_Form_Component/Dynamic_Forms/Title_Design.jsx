@@ -17,7 +17,21 @@ const Title_Design = () => {
     TitleFont,
     setTitleFont,
     TitlePosition,setTitlePosition,
+    // SubTitle
+    SubTitleColor,
+    setSubTitleColor,
+    SubTitleSize,
+    setSubTitleSize,
+    SubTitleUnit,
+    setSubTitleUnit,
+    SubTitleFontWeight,
+    setSubTitleFontWeight,
+    SubTitleFont,
+    setSubTitleFont,
+    SubTitlePosition,setSubTitlePosition,
     setFormSubmitLoader,
+    TitleThemeUpdateToggle,
+    setTitleThemeUpdateToggle,
     URL_Alies,
     user,
   } = useContext(Context);
@@ -49,48 +63,7 @@ const Title_Design = () => {
     "Lucida Console",
   ];
   const fontWeight = [400, 450, 500, 550, 600, 650, 700, 750, 800];
-  // Fetch Vcard Theme
-  async function handleTitleThemeFetch() {
-    setFormSubmitLoader(true);
-    try {
-      await api
-        .get(`/title_theme/${URL_Alies}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.data.length == 0) {
-            setFormSubmitLoader(false);
-            setUpdateToggle(false);
-          } else {
-            setTitleColor(res.data.data[0].TitleColor);
-            setTitleSize(res.data.data[0].TitleSize);
-            setTitleUnit(res.data.data[0].TitleUnit);
-            setTitleFontWeight(res.data.data[0].TitleFontWeight);
-            setTitleFont(res.data.data[0].TitleFont);
-            setTitlePosition(res.data.data[0].TitlePosition);
-            
-            setUpdateToggle(true);
-            setFormSubmitLoader(false);
-          }
-        })
-        .catch((error) => {
-          // toast.error(error.response.data.message);
-          setFormSubmitLoader(false);
-          setUpdateToggle(false);
-        });
-    } catch (error) {
-      toast.error(error.message);
-      setFormSubmitLoader(false);
-      setUpdateToggle(false);
-    }
-  }
 
-  useEffect(() => {
-    handleTitleThemeFetch();
-  }, []);
   // Create Vcard Theme
   async function handleTitleThemeSubmit(e) {
     e.preventDefault();
@@ -103,6 +76,13 @@ const Title_Design = () => {
       TitleFontWeight:TitleFontWeight,
       TitleFont:TitleFont,
       TitlePosition:TitlePosition,
+
+      SubTitleColor:SubTitleColor,
+      SubTitleSize:SubTitleSize,
+      SubTitleUnit:SubTitleUnit,
+      SubTitleFontWeight:SubTitleFontWeight,
+      SubTitleFont:SubTitleFont,
+      SubTitlePosition:SubTitlePosition,
     };
     try {
       await api
@@ -113,17 +93,18 @@ const Title_Design = () => {
           },
         })
         .then((res) => {
-          console.log(res.data)
+    setTitleThemeUpdateToggle(true)
           toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          console.log(error);
+          setTitleThemeUpdateToggle(false)
           setFormSubmitLoader(false);
           toast.error(error.response.data.message);
         });
     } catch (error) {
-      console.log(error);
+    
+      setTitleThemeUpdateToggle(false)
       setFormSubmitLoader(false);
     }
   };
@@ -140,6 +121,12 @@ const Title_Design = () => {
       TitleFontWeight:TitleFontWeight,
       TitleFont:TitleFont,
       TitlePosition:TitlePosition,
+      SubTitleColor:SubTitleColor,
+      SubTitleSize:SubTitleSize,
+      SubTitleUnit:SubTitleUnit,
+      SubTitleFontWeight:SubTitleFontWeight,
+      SubTitleFont:SubTitleFont,
+      SubTitlePosition:SubTitlePosition,
     };
     try {
       await api
@@ -166,7 +153,7 @@ const Title_Design = () => {
   };
   return (
     <div className="title_design_container">
-      <form action="" onSubmit={UpdateToggle ? handleTitleThemeUpdate : handleTitleThemeSubmit}>
+      <form action="" onSubmit={TitleThemeUpdateToggle ? handleTitleThemeUpdate : handleTitleThemeSubmit}>
         <div className="form_group">
           <label className="form_label" for="TitleColor">
             Title Color
@@ -288,9 +275,130 @@ const Title_Design = () => {
             </div>
           </div>
         </div>
+<p style={{gridColumn:'1/-1',borderTop:'1px solid #4C4C4C',margin:'10px 0px'}} />
+<div className="form_group">
+          <label className="form_label" for="TitleColor">
+            Sub-Title Color
+          </label>
 
+          <ChromePicker
+            className="colourPicker"
+            color={SubTitleColor}
+            onChange={(e) => setSubTitleColor(e.hex)}
+          />
+          {/* <input type="color" value={VCardColour} onChange={(e)=>setVCardColour(e.target.value)} name="VCardColour" id="VCardColour"/> */}
+
+          <h2>
+            You Picked - &nbsp;<strong>{SubTitleColor}</strong>
+          </h2>
+        </div>
+        <div className="form_group">
+          <label className="form_label" for="BannerHeight">
+            Adjust Font-Size
+          </label>
+          <div className="current">
+            <p>
+              Current FontSize - &nbsp; {SubTitleSize}
+              {TitleUnit}
+            </p>
+          </div>
+          <div className="input_container">
+            <input
+              type="number"
+              name="SubTitleSize"
+              id="SubTitleSize"
+              value={SubTitleSize}
+              onChange={(e) => setSubTitleSize(e.target.value)}
+            />
+            <select
+              name="SubTitleUnit"
+              id="SubTitleUnit"
+              value={SubTitleUnit}
+              onChange={(e) => setSubTitleUnit(e.target.value)}
+            >
+              <option value="px">PX</option>
+              <option value="rem">REM</option>
+            </select>
+          </div>
+
+          <label className="form_label" for="BannerHeight">
+            Adjust Font-Wight
+          </label>
+          <div className="current">
+            <p>Current FontWeight - &nbsp; {SubTitleFontWeight}</p>
+          </div>
+          <div className="input_container">
+            <select
+              name="SubTitleFontWeight"
+              id="SubTitleFontWeight"
+              value={SubTitleFontWeight}
+              onChange={(e) => setSubTitleFontWeight(e.target.value)}
+            >
+              {fontWeight.map((data, index) => {
+                return (
+                  <option key={index} value={data}>
+                    {data}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <label className="form_label" for="BannerHeight">
+            Apply Font-Family
+          </label>
+          <div className="current">
+            <p>Current FontFamily - &nbsp; {SubTitleFont}</p>
+          </div>
+          <div className="input_container">
+            <select
+              name="SubTitleFont"
+              id="SubTitleFont"
+              value={SubTitleFont}
+              onChange={(e) => setSubTitleFont(e.target.value)}
+            >
+              {fontFamilies.map((data, index) => {
+                return (
+                  <option key={index} value={data}>
+                    {data}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <label className="form_label" for="SubTitlePosition">
+            Adjust Title Position
+          </label>
+
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <input type="radio" name="start" id="start" value={SubTitlePosition} 
+                 checked={SubTitlePosition === 'start'}
+              onChange={(e)=>setSubTitlePosition('start')}/>
+              <label htmlFor="start">Start</label>
+            </div>
+            <div className="radio_input">
+              <input type="radio" name="center" id="center" value={SubTitlePosition} onChange={(e)=>setSubTitlePosition('center')}
+              
+              checked={SubTitlePosition === 'center'}/>
+
+            
+              <label htmlFor="center">Middle</label>
+            </div>
+            <div className="radio_input">
+              <input type="radio" name="end" id="end" value={SubTitlePosition} onChange={(e)=>setSubTitlePosition('end')}
+              
+              checked={SubTitlePosition === 'end'}/>
+
+            
+              <label htmlFor="end">End</label>
+            </div>
+          </div>
+        </div>
         <div className="form_actions">
-          {UpdateToggle ? (
+          {TitleThemeUpdateToggle ? (
             <button type="submit">Update</button>
           ) : (
             <button type="submit">Save</button>

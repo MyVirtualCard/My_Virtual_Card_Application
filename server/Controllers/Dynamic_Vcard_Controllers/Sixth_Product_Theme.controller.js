@@ -1,8 +1,9 @@
 import Payment from "../../Model/Payment.model.js";
 import currentPlan from "../../Model/Plan.model.js";
-import Dynamic_Title_Model from "../../Model/Dynamic_Vcard_Models/Fourth_Title_Design.model.js";
+
+import ProductThemeModel from "../../Model/Dynamic_Vcard_Models/Sixth_Product_Theme.model.js";
 //Post basic detail data to database:
-export const CreateTitleThemeData = async (req, res) => {
+export const CreateProductThemeData = async (req, res) => {
   try {
     let checkCurrentPlan = await Payment.find({
       user: req.user.userName,
@@ -21,53 +22,53 @@ export const CreateTitleThemeData = async (req, res) => {
       checkCurrentPlan[0]?.amount === 1299
     ) {
       //check images
-      let checkPopupBannerLength = await Dynamic_Title_Model.find({
+      let checkPopupBannerLength = await ProductThemeModel.find({
         URL_Alies: req.params.URL_Alies,
       });
 
       if (!checkPopupBannerLength) {
         return res
           .status(400)
-          .json({ message: "Title Theme details not be there!" });
+          .json({ message: "Product Theme details not be there!" });
       } else {
         //Basic Image File limit checked:
         if (checkPopupBannerLength.length < 1) {
           // Create a new image instance and save to MongoDB
-          const NewVcardThemeData = new Dynamic_Title_Model({
+          const NewVcardThemeData = new ProductThemeModel({
             user: req.user.userName,
             URL_Alies: req.params.URL_Alies,
-            TitleColor: req.body.TitleColor,
-            TitleSize: req.body.TitleSize,
-            TitleUnit: req.body.TitleUnit,
-            TitleFontWeight: req.body.TitleFontWeight,
-            TitleFont: req.body.TitleFont,
-            TitlePosition: req.body.TitlePosition,
+            ProductBackColor: req.body.ProductBackColor,
+            ProductTextColor: req.body.ProductTextColor,
+            ProductTitleColor: req.body.ProductTitleColor,
+            ProductTitleFont: req.body.ProductTitleFont,
+            ProductTitleSize: req.body.ProductTitleSize,
+            ProductTitleUnit: req.body.ProductTitleUnit,
+            ProductFontWeight: req.body.ProductFontWeight,
+            ProductTitleAlign: req.body.ProductTitleAlign,
+            ProductBtnBackColor: req.body.ProductBtnBackColor,
+            ProductBtnTextColor: req.body.ProductBtnTextColor,
+            ProductBtnHoverBackColor: req.body.ProductBtnHoverBackColor,
+            ProductBtnHoverTextColor:req.body.ProductBtnHoverTextColor,
 
-            SubTitleColor: req.body.SubTitleColor,
-            SubTitleSize: req.body.SubTitleSize,
-            SubTitleUnit: req.body.SubTitleUnit,
-            SubTitleFontWeight: req.body.SubTitleFontWeight,
-            SubTitleFont: req.body.SubTitleFont,
-            SubTitlePosition: req.body.SubTitlePosition,
-      
+          
           });
 
           await NewVcardThemeData.save()
             .then(() => {
               res.status(200).json({
-                message: "Title Theme saved!",
+                message: "Product Theme saved!",
                 data: NewVcardThemeData,
               });
             })
             .catch((err) => {
               console.log(err);
               res.status(400).json({
-                message: "Failed to save Title Theme Details!",
+                message: "Failed to save Product Theme Details!",
               });
             });
         } else {
           res.status(400).json({
-            message: "Already Title Theme detail saved ! ",
+            message: "Already Product Theme detail saved ! ",
           });
         }
       }
@@ -80,9 +81,9 @@ export const CreateTitleThemeData = async (req, res) => {
 };
 
 // //Read or get Specific User all Data  :
-export const readUserTitleThemeData = async (req, res) => {
+export const readUserProductThemeData = async (req, res) => {
   try {
-    let getSpecificData = await Dynamic_Title_Model.find({
+    let getSpecificData = await ProductThemeModel.find({
       URL_Alies: req.params.URL_Alies,
     });
 
@@ -104,11 +105,11 @@ export const readUserTitleThemeData = async (req, res) => {
 };
 //Update Specific document user data:
 
-export const updateUserTitleThemeData = async (req, res) => {
+export const updateUserProductThemeData = async (req, res) => {
   try {
     let { id } = req.params;
     let data = req.body;
-    let updateSpecificData = await Dynamic_Title_Model.findOneAndUpdate(
+    let updateSpecificData = await ProductThemeModel.findOneAndUpdate(
       { URL_Alies: req.params.URL_Alies },
       data,
       { new: true }
@@ -119,16 +120,16 @@ export const updateUserTitleThemeData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Title Theme Updated!", data: updateSpecificData });
+        .json({ message: "Product Theme Updated!", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 //Delete Specific User Bssic detail All data deleted By using user Id:
-export const deleteUserTitleThemeData = async (req, res) => {
+export const deleteUserProductThemeData = async (req, res) => {
   try {
-    let deleteSpecificData = await Dynamic_Title_Model.deleteMany({
+    let deleteSpecificData = await ProductThemeModel.deleteMany({
       URL_Alies: req.params.URL_Alies,
     });
 
@@ -137,7 +138,7 @@ export const deleteUserTitleThemeData = async (req, res) => {
     } else {
       res
         .status(201)
-        .json({ message: "Title Theme Deleted!", data: deleteSpecificData });
+        .json({ message: "Product Theme Deleted!", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

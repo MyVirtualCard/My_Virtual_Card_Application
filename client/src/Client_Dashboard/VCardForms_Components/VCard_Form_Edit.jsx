@@ -35,7 +35,7 @@ import Edit_Payment from "./Edit_All_Form_Component/Edit_Payment";
 import Edit_Video from "./Edit_All_Form_Component/Edit_Video";
 import { IoCreate } from "react-icons/io5";
 import { MdMiscellaneousServices } from "react-icons/md";
-
+import { FiArrowLeftCircle } from "react-icons/fi";
 import Edit_Dynamic_Theme from "./Edit_All_Form_Component/Edit_Dynamic_Theme";
 import { FaHandPointDown } from "react-icons/fa";
 
@@ -532,7 +532,7 @@ const VCard_Form_Edit = () => {
                   style={{ color: "orange" }}
                   id="Dynamic Theme"
                 ></i>
-                <small id="Dynamic Theme">Dynamic Theme</small>
+                <small id="Dynamic Theme">Dynamic VCard</small>
               </div>
               {/* <div
                       className="menu_item"
@@ -566,8 +566,8 @@ const VCard_Form_Edit = () => {
               id={!formSliderToggle ? "slideClose" : "slideOpen"}
             >
               <div className="progressing">
-                <small>Create Your Own Design</small>
-                <FaHandPointDown />
+               
+               <FiArrowLeftCircle className="icon" onClick={()=>setShowForm('Basic Detail')}/>
               </div>
 
               <div
@@ -597,7 +597,7 @@ const VCard_Form_Edit = () => {
                   style={{ color: "orange" }}
                   id="Logo_Banner_Design"
                 ></i>
-                <small id="Logo_Banner_Design">Logo_Banner_Design</small>
+                <small id="Logo_Banner_Design">Images_Design</small>
               </div>
               <div
                 className="menu_item"
@@ -648,6 +648,22 @@ const VCard_Form_Edit = () => {
                 </div>
 
                 <small id="Service_Design">Service_Design</small>
+              </div>
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"),
+                    setDynamicForm("Product_Design");
+                }}
+                id={DynamicForm === "Product_Design" ? "menu_active" : ""}
+              >
+                <i className='bx bx-cart-alt' 
+                style={{ color: "skyblue" }}
+                  id="Product_Design"
+                ></i>
+             
+
+                <small id="Product_Design">Product_Design</small>
               </div>
             </div>
           )}

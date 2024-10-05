@@ -9,18 +9,20 @@ const Product_Design = () => {
 user,
 URL_Alies,
 setFormSubmitLoader,
-ServiceBackColor, setServiceBackColor,
-ServiceTextColor, setServiceTextColor,
-ServiceTitleColor, setServiceTitleColor,
-ServiceTitleFont, setServiceTitleFont,
-ServiceTitleSize, setServiceTitleSize,
-ServiceTitleUnit, setServiceTitleUnit,
-ServiceFontWeight,setServiceFontWeight,
-ServiceTitleAlign, setServiceTitleAlign,
-BtnBackColor,setBtnBackColor,
-BtnTextColor,setBtnTextColor,
-BtnHoverBackColor,setBtnHoverBackColor,
-BtnHoverTextColor,setBtnHoverTextColor,
+ProductBackColor, setProductBackColor,
+ProductTextColor, setProductTextColor,
+ProductTitleColor, setProductTitleColor,
+ProductTitleFont, setProductTitleFont,
+ProductTitleSize, setProductTitleSize,
+ProductTitleUnit, setProductTitleUnit,
+ProductFontWeight,setProductFontWeight,
+ProductTitleAlign, setProductTitleAlign,
+ProductBtnBackColor,setProductBtnBackColor,
+ProductBtnTextColor,setProductBtnTextColor,
+ProductBtnHoverBackColor,setProductBtnHoverBackColor,
+ProductBtnHoverTextColor,setProductBtnHoverTextColor,
+ProductThemeUpdateToggle,
+setProductThemeUpdateToggle
   }=useContext(Context)
 
 
@@ -51,11 +53,11 @@ BtnHoverTextColor,setBtnHoverTextColor,
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
      // Fetch Vcard Theme
-     async function handleServiceThemeFetch() {
+     async function handleProductThemeFetch() {
       setFormSubmitLoader(true);
       try {
         await api
-          .get(`/service_theme/${URL_Alies}`, {
+          .get(`/product_theme/${URL_Alies}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.token}`,
@@ -66,18 +68,18 @@ BtnHoverTextColor,setBtnHoverTextColor,
               setFormSubmitLoader(false);
               setUpdateToggle(false);
             } else {
-              setServiceBackColor(res.data.data[0].ServiceBackColor);
-              setServiceTextColor(res.data.data[0].ServiceTextColor);
-              setServiceTitleColor(res.data.data[0].ServiceTitleColor);
-              setServiceTitleFont(res.data.data[0].ServiceTitleFont);
-              setServiceTitleSize(res.data.data[0].ServiceTitleSize);
-              setServiceTitleUnit(res.data.data[0].ServiceTitleUnit);
-              setServiceFontWeight(res.data.data[0].ServiceFontWeight);
-              setServiceTitleAlign(res.data.data[0].ServiceTitleAlign);
-              setBtnBackColor(res.data.data[0].BtnBackColor);
-              setBtnTextColor(res.data.data[0].BtnTextColor);
-              setBtnHoverBackColor(res.data.data[0].BtnHoverBackColor);
-              setBtnHoverTextColor(res.data.data[0].BtnHoverTextColor)
+              setProductBackColor(res.data.data[0].ProductBackColor);
+              setProductTextColor(res.data.data[0].ProductTextColor);
+              setProductTitleColor(res.data.data[0].ProductTitleColor);
+              setProductTitleFont(res.data.data[0].ProductTitleFont);
+              setProductTitleSize(res.data.data[0].ProductTitleSize);
+              setProductTitleUnit(res.data.data[0].ProductTitleUnit);
+              setProductFontWeight(res.data.data[0].ProductFontWeight);
+              setProductTitleAlign(res.data.data[0].ProductTitleAlign);
+              setProductBtnBackColor(res.data.data[0].ProductBtnBackColor);
+              setProductBtnTextColor(res.data.data[0].ProductBtnTextColor);
+              setProductBtnHoverBackColor(res.data.data[0].ProductBtnHoverBackColor);
+              setProductBtnHoverTextColor(res.data.data[0].ProductBtnHoverTextColor)
             
               setUpdateToggle(true);
               setFormSubmitLoader(false);
@@ -96,73 +98,73 @@ BtnHoverTextColor,setBtnHoverTextColor,
     }
   
     useEffect(() => {
-      handleServiceThemeFetch();
+    //   handleProductThemeFetch();
     }, []);
     // Create Vcard Theme
-    async function handleServiceThemeSubmit(e) {
+    async function handleProductThemeSubmit(e) {
       e.preventDefault();
       setFormSubmitLoader(true);
       let data = {
         URL_Alies: URL_Alies,
-        ServiceBackColor:ServiceBackColor,
-        ServiceTextColor:ServiceTextColor,
-        ServiceTitleColor:ServiceTitleColor,
-        ServiceTitleFont:ServiceTitleFont,
-        ServiceTitleSize:ServiceTitleSize,
-        ServiceTitleUnit:ServiceTitleUnit,
-        ServiceFontWeight:ServiceFontWeight,
-        ServiceTitleAlign:ServiceTitleAlign,
-        BtnBackColor:BtnBackColor,
-        BtnTextColor:BtnTextColor,
-        BtnHoverBackColor:BtnHoverBackColor,
-        BtnHoverTextColor:BtnHoverTextColor,
+        ProductBackColor:ProductBackColor,
+        ProductTextColor:ProductTextColor,
+        ProductTitleColor:ProductTitleColor,
+        ProductTitleFont:ProductTitleFont,
+        ProductTitleSize:ProductTitleSize,
+        ProductTitleUnit:ProductTitleUnit,
+        ProductFontWeight:ProductFontWeight,
+        ProductTitleAlign:ProductTitleAlign,
+        ProductBtnBackColor:ProductBtnBackColor,
+        ProductBtnTextColor:ProductBtnTextColor,
+        ProductBtnHoverBackColor:ProductBtnHoverBackColor,
+        ProductBtnHoverTextColor:ProductBtnHoverTextColor,
       };
       try {
         await api
-          .post(`/service_theme/${URL_Alies}`, data, {
+          .post(`/product_theme/${URL_Alies}`, data, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.token}`,
             },
           })
           .then((res) => {
-          
+          setProductThemeUpdateToggle(true);
             toast.success(res.data.message);
             setFormSubmitLoader(false);
           })
           .catch((error) => {
-          
+            setProductThemeUpdateToggle(false);
             setFormSubmitLoader(false);
             toast.error(error.response.data.message);
           });
       } catch (error) {
-        console.log(error);
+        setProductThemeUpdateToggle(false);
         setFormSubmitLoader(false);
       }
     };
   
     // Update Vcard Theme
-    async function handleServiceThemeUpdate(e) {
+    async function handleProductThemeUpdate(e) {
       e.preventDefault();
       setFormSubmitLoader(true);
       let data = {
         URL_Alies: URL_Alies,
-        ServiceBackColor:ServiceBackColor,
-        ServiceTextColor:ServiceTextColor,
-        ServiceTitleColor:ServiceTitleColor,
-        ServiceTitleFont:ServiceTitleFont,
-        ServiceTitleSize:ServiceTitleSize,
-        ServiceTitleUnit:ServiceTitleUnit,
-        ServiceFontWeight:ServiceFontWeight,
-        ServiceTitleAlign:ServiceTitleAlign,
-        BtnBackColor:BtnBackColor,
-        BtnTextColor:BtnTextColor,
-        BtnHoverBackColor:BtnHoverBackColor,
-        BtnHoverTextColor:BtnHoverTextColor,
+        ProductBackColor:ProductBackColor,
+        ProductTextColor:ProductTextColor,
+        ProductTitleColor:ProductTitleColor,
+        ProductTitleFont:ProductTitleFont,
+        ProductTitleSize:ProductTitleSize,
+        ProductTitleUnit:ProductTitleUnit,
+        ProductFontWeight:ProductFontWeight,
+        ProductTitleAlign:ProductTitleAlign,
+        ProductBtnBackColor:ProductBtnBackColor,
+        ProductBtnTextColor:ProductBtnTextColor,
+        ProductBtnHoverBackColor:ProductBtnHoverBackColor,
+        ProductBtnHoverTextColor:ProductBtnHoverTextColor,
       };
       try {
         await api
-          .put(`/service_theme/${URL_Alies}`, data, {
+          .put(`/product_theme/${URL_Alies}`, data, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.token}`,
@@ -185,50 +187,50 @@ BtnHoverTextColor,setBtnHoverTextColor,
     };
   return (
     <div className="product_design_container">
-      <form action="" onSubmit={UpdateToggle ? handleServiceThemeUpdate : handleServiceThemeSubmit}>
+      <form action="" onSubmit={ProductThemeUpdateToggle ? handleProductThemeUpdate : handleProductThemeSubmit}>
         <div className="First_colour">
           <div className="theme_title">
-            <h5>Service Background Colour</h5>
+            <h5>Product Background Colour</h5>
           </div>
 
           <ChromePicker
             className="colourPicker"
-            color={ServiceBackColor}
-            onChange={(e) => setServiceBackColor(e.hex)}
+            color={ProductBackColor}
+            onChange={(e) => setProductBackColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{ServiceBackColor}</strong>
+            You Picked - &nbsp;<strong>{ProductBackColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
           <div className="theme_title">
-            <h5>Service Text Colour</h5>
+            <h5>Product Text Colour</h5>
           </div>
 
           <ChromePicker
             className="colourPicker"
-            color={ServiceTextColor}
-            onChange={(e) => setServiceTextColor(e.hex)}
+            color={ProductTextColor}
+            onChange={(e) => setProductTextColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{ServiceTextColor}</strong>
+            You Picked - &nbsp;<strong>{ProductTextColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
           <div className="theme_title">
-            <h5>Service Title Colour</h5>
+            <h5>Product Title Colour</h5>
           </div>
 
           <ChromePicker
             className="colourPicker"
-            color={ServiceTitleColor}
-            onChange={(e) => setServiceTitleColor(e.hex)}
+            color={ProductTitleColor}
+            onChange={(e) => setProductTitleColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{ServiceTitleColor}</strong>
+            You Picked - &nbsp;<strong>{ProductTitleColor}</strong>
           </h2>
         </div>
         <div className="form_group">
@@ -237,23 +239,23 @@ BtnHoverTextColor,setBtnHoverTextColor,
           </label>
           <div className="current">
             <p>
-              Current FontSize - &nbsp; {ServiceTitleSize}
-              {ServiceTitleUnit}
+              Current FontSize - &nbsp; {ProductTitleSize}
+              {ProductTitleUnit}
             </p>
           </div>
           <div className="input_container">
             <input
               type="number"
-              name="ServiceTitleSize"
-              id="ServiceTitleSize"
-              value={ServiceTitleSize}
-              onChange={(e) => setServiceTitleSize(e.target.value)}
+              name="ProductTitleSize"
+              id="ProductTitleSize"
+              value={ProductTitleSize}
+              onChange={(e) => setProductTitleSize(e.target.value)}
             />
             <select
-              name="ServiceTitleUnit"
-              id="ServiceTitleUnit"
-              value={ServiceTitleUnit}
-              onChange={(e) => setServiceTitleUnit(e.target.value)}
+              name="ProductTitleUnit"
+              id="ProductTitleUnit"
+              value={ProductTitleUnit}
+              onChange={(e) => setProductTitleUnit(e.target.value)}
             >
               <option value="px">PX</option>
               <option value="rem">REM</option>
@@ -264,14 +266,14 @@ BtnHoverTextColor,setBtnHoverTextColor,
             Adjust Title Font-Wight
           </label>
           <div className="current">
-            <p>Current FontWeight - &nbsp; {ServiceFontWeight}</p>
+            <p>Current FontWeight - &nbsp; {ProductFontWeight}</p>
           </div>
           <div className="input_container">
             <select
-              name="ServiceFontWeight"
-              id="ServiceFontWeight"
-              value={ServiceFontWeight}
-              onChange={(e) => setServiceFontWeight(e.target.value)}
+              name="ProductFontWeight"
+              id="ProductFontWeight"
+              value={ProductFontWeight}
+              onChange={(e) => setProductFontWeight(e.target.value)}
             >
               {fontWeight.map((data, index) => {
                 return (
@@ -283,17 +285,17 @@ BtnHoverTextColor,setBtnHoverTextColor,
             </select>
           </div>
           <label className="form_label" for="BannerHeight">
-            Apply Service Font-Family
+            Apply Product Font-Family
           </label>
           <div className="current">
-            <p>Current FontFamily - &nbsp; {ServiceTitleFont}</p>
+            <p>Current FontFamily - &nbsp; {ProductTitleFont}</p>
           </div>
           <div className="input_container">
             <select
-              name="ServiceTitleFont"
-              id="ServiceTitleFont"
-              value={ServiceTitleFont}
-              onChange={(e) => setServiceTitleFont(e.target.value)}
+              name="ProductTitleFont"
+              id="ProductTitleFont"
+              value={ProductTitleFont}
+              onChange={(e) => setProductTitleFont(e.target.value)}
             >
               {fontFamilies.map((data, index) => {
                 return (
@@ -313,23 +315,23 @@ BtnHoverTextColor,setBtnHoverTextColor,
 
           <div className="radio_inputs">
             <div className="radio_input">
-              <input type="radio" name="start" id="start" value={ServiceTitleAlign} 
-                 checked={ServiceTitleAlign === 'start'}
-              onChange={(e)=>setServiceTitleAlign('start')}/>
+              <input type="radio" name="start" id="start" value={ProductTitleAlign} 
+                 checked={ProductTitleAlign === 'start'}
+              onChange={(e)=>setProductTitleAlign('start')}/>
               <label htmlFor="start">Start</label>
             </div>
             <div className="radio_input">
-              <input type="radio" name="center" id="center" value={ServiceTitleAlign} onChange={(e)=>setServiceTitleAlign('center')}
+              <input type="radio" name="center" id="center" value={ProductTitleAlign} onChange={(e)=>setProductTitleAlign('center')}
               
-              checked={ServiceTitleAlign === 'center'}/>
+              checked={ProductTitleAlign === 'center'}/>
 
             
               <label htmlFor="center">Middle</label>
             </div>
             <div className="radio_input">
-              <input type="radio" name="end" id="end" value={ServiceTitleAlign} onChange={(e)=>setServiceTitleAlign('end')}
+              <input type="radio" name="end" id="end" value={ProductTitleAlign} onChange={(e)=>setProductTitleAlign('end')}
               
-              checked={ServiceTitleAlign === 'end'}/>
+              checked={ProductTitleAlign === 'end'}/>
 
             
               <label htmlFor="end">End</label>
@@ -343,13 +345,13 @@ BtnHoverTextColor,setBtnHoverTextColor,
 
           <ChromePicker
             className="colourPicker"
-            color={BtnBackColor}
-            onChange={(e) => setBtnBackColor(e.hex)}
+            color={ProductBtnBackColor}
+            onChange={(e) => setProductBtnBackColor(e.hex)}
           />
           {/* <input type="color" value={VCardColour} onChange={(e)=>setVCardColour(e.target.value)} name="VCardColour" id="VCardColour"/> */}
 
           <h2>
-            You Picked - &nbsp;<strong>{BtnBackColor}</strong>
+            You Picked - &nbsp;<strong>{ProductBtnBackColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
@@ -359,36 +361,15 @@ BtnHoverTextColor,setBtnHoverTextColor,
 
           <ChromePicker
             className="colourPicker"
-            color={BtnTextColor}
-            onChange={(e) => setBtnTextColor(e.hex)}
+            color={ProductBtnTextColor}
+            onChange={(e) => setProductBtnTextColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{BtnTextColor}</strong>
+            You Picked - &nbsp;<strong>{ProductBtnTextColor}</strong>
           </h2>
         </div>
-        {/* <div className="btn_preview">
-          <div className="btn">
-            <div className="title">Button Preview</div>
-            <button
-              style={{backgroundColor: isHovered ? BtnHoverColour : BtnBackColour,
-                color: isHovered ? BtnHoverTextColour : BtnTextColour,
-              }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              Demo Btn
-            </button>
-          </div>
-
-          <div className="icon">
-            <div className="title">Icon Preview</div>
-            <i
-              className="bx bxl-tiktok"
-              style={{ backgroundColor: BtnBackColour, color: BtnTextColour }}
-            ></i>
-          </div>
-        </div> */}
+        
         <div className="First_colour">
           <div className="theme_title">
             <h5>Button  Hover Back Colour</h5>
@@ -396,13 +377,13 @@ BtnHoverTextColor,setBtnHoverTextColor,
 
           <ChromePicker
             className="colourPicker"
-            color={BtnHoverBackColor}
-            onChange={(e) => setBtnHoverBackColor(e.hex)}
+            color={ProductBtnHoverBackColor}
+            onChange={(e) => setProductBtnHoverBackColor(e.hex)}
           />
           {/* <input type="color" value={VCardColour} onChange={(e)=>setVCardColour(e.target.value)} name="VCardColour" id="VCardColour"/> */}
 
           <h2>
-            You Picked - &nbsp;<strong>{BtnHoverBackColor}</strong>
+            You Picked - &nbsp;<strong>{ProductBtnHoverBackColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
@@ -412,16 +393,16 @@ BtnHoverTextColor,setBtnHoverTextColor,
 
           <ChromePicker
             className="colourPicker"
-            color={BtnHoverTextColor}
-            onChange={(e) => setBtnHoverTextColor(e.hex)}
+            color={ProductBtnHoverTextColor}
+            onChange={(e) => setProductBtnHoverTextColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{BtnHoverTextColor}</strong>
+            You Picked - &nbsp;<strong>{ProductBtnHoverTextColor}</strong>
           </h2>
         </div>
         <div className="form_actions">
-          {UpdateToggle ? (
+          {ProductThemeUpdateToggle ? (
             <button type="submit">Update</button>
           ) : (
             <button type="submit">Save</button>

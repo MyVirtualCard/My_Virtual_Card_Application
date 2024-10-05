@@ -113,6 +113,7 @@ const App = () => {
   let [VCardColour, setVCardColour] = useState("#fff");
   let [VCardTextColour, setVCardTextColour] = useState("#000");
   let [SVG_Design, setSVG_Design] = useState("");
+  let[VcardThemeUpdateToggle,setVcardThemeUpdateToggle]=useState(false);
   // 2]Banner and Logo
   const [BannerHeight, setBannerHeight] = React.useState([200]);
   const [BannerBrightness, setBannerBrightness] = React.useState([100]);
@@ -128,6 +129,7 @@ const App = () => {
   let [LogoLeftPosition, setLogoLeftPosition] = useState("50");
   let [LogoBottomPosition, setLogoBottomPosition] = useState("0");
   let [LogoRightPosition, setLogoRightPosition] = useState("0");
+  let[ImageThemeUpdateToggle,setImageThemeUpdateToggle]=useState(false);
   //3]Button/icon states
   let [BtnBackColour, setBtnBackColour] = useState("violet");
   let [BtnTextColour, setBtnTextColour] = useState("white");
@@ -138,7 +140,7 @@ const App = () => {
   let [ContactBtnUnit, setContactBtnUnit] = useState("px");
   let [IconBorderRadius, setIconBorderRadius] = useState("0");
   let [IconUnit, setIconUnit] = useState("px");
-
+  let[ButtonThemeUpdateToggle,setButtonThemeUpdateToggle]=useState(false);
   // 4]Title states
   let [TitleColor, setTitleColor] = useState("#4c4c4c");
   let [TitleSize, setTitleSize] = useState("15");
@@ -146,12 +148,20 @@ const App = () => {
   let [TitleFontWeight, setTitleFontWeight] = useState("600");
   let [TitleFont, setTitleFont] = useState("Arial");
   let [TitlePosition, setTitlePosition] = useState("center");
+  // SubTitle
+  let [SubTitleColor, setSubTitleColor] = useState("#4c4c4c");
+  let [SubTitleSize, setSubTitleSize] = useState("10");
+  let [SubTitleUnit, setSubTitleUnit] = useState("px");
+  let [SubTitleFontWeight, setSubTitleFontWeight] = useState("500");
+  let [SubTitleFont, setSubTitleFont] = useState("Arial");
+  let [SubTitlePosition, setSubTitlePosition] = useState("start");
+  let[TitleThemeUpdateToggle,setTitleThemeUpdateToggle]=useState(false);
   // 5] Service States
   let [ServiceBackColor, setServiceBackColor] = useState("lightGray");
   let [ServiceTextColor, setServiceTextColor] = useState("white");
   let [ServiceTitleColor, setServiceTitleColor] = useState("gray");
   let [ServiceTitleFont, setServiceTitleFont] = useState("Arial");
-  let [ServiceTitleSize, setServiceTitleSize] = useState(10);
+  let [ServiceTitleSize, setServiceTitleSize] = useState(15);
   let [ServiceTitleUnit, setServiceTitleUnit] = useState("px");
   let [ServiceFontWeight, setServiceFontWeight] = useState(500);
   let [ServiceTitleAlign, setServiceTitleAlign] = useState("start");
@@ -159,6 +169,23 @@ const App = () => {
   let [BtnTextColor, setBtnTextColor] = useState("white");
   let [BtnHoverBackColor, setBtnHoverBackColor] = useState("white");
   let [BtnHoverTextColor, setBtnHoverTextColor] = useState("orange");
+  let[ServiceThemeUpdateToggle,setServiceThemeUpdateToggle]=useState(false);
+  //Product states
+  let [ProductBackColor, setProductBackColor] = useState("yellow");
+  let [ProductTextColor, setProductTextColor] = useState("black");
+  let [ProductTitleColor, setProductTitleColor] = useState("gray");
+  let [ProductTitleFont, setProductTitleFont] = useState("Arial");
+  let [ProductTitleSize, setProductTitleSize] = useState(15);
+  let [ProductTitleUnit, setProductTitleUnit] = useState("px");
+  let [ProductFontWeight, setProductFontWeight] = useState(500);
+  let [ProductTitleAlign, setProductTitleAlign] = useState("start");
+  let [ProductBtnBackColor, setProductBtnBackColor] = useState("gray");
+  let [ProductBtnTextColor, setProductBtnTextColor] = useState("white");
+  let [ProductBtnHoverBackColor, setProductBtnHoverBackColor] =
+    useState("white");
+  let [ProductBtnHoverTextColor, setProductBtnHoverTextColor] =
+    useState("gray");
+    let[ProductThemeUpdateToggle,setProductThemeUpdateToggle]=useState(false);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -274,6 +301,7 @@ const App = () => {
             setVCardTextColour,
             SVG_Design,
             setSVG_Design,
+           VcardThemeUpdateToggle,setVcardThemeUpdateToggle,
             //2] Dynamic Banner and Logo states
             BannerHeight,
             setBannerHeight,
@@ -303,6 +331,7 @@ const App = () => {
             setLogoBottomPosition,
             LogoRightPosition,
             setLogoRightPosition,
+            ImageThemeUpdateToggle,setImageThemeUpdateToggle,
             // 3]Dynamic Button and Icon states
             BtnBackColour,
             setBtnBackColour,
@@ -322,7 +351,7 @@ const App = () => {
             setIconBorderRadius,
             IconUnit,
             setIconUnit,
-
+            ButtonThemeUpdateToggle,setButtonThemeUpdateToggle,
             // 4]Title states
             TitleColor,
             setTitleColor,
@@ -336,6 +365,19 @@ const App = () => {
             setTitleFont,
             TitlePosition,
             setTitlePosition,
+              // SubTitle
+    SubTitleColor,
+    setSubTitleColor,
+    SubTitleSize,
+    setSubTitleSize,
+    SubTitleUnit,
+    setSubTitleUnit,
+    SubTitleFontWeight,
+    setSubTitleFontWeight,
+    SubTitleFont,
+    setSubTitleFont,
+    SubTitlePosition,setSubTitlePosition,
+            TitleThemeUpdateToggle,setTitleThemeUpdateToggle,
             // 5]ServiceStates
             ServiceBackColor,
             setServiceBackColor,
@@ -361,6 +403,33 @@ const App = () => {
             setBtnHoverBackColor,
             BtnHoverTextColor,
             setBtnHoverTextColor,
+            ServiceThemeUpdateToggle,setServiceThemeUpdateToggle,
+            // 6]Product States
+            ProductBackColor,
+            setProductBackColor,
+            ProductTextColor,
+            setProductTextColor,
+            ProductTitleColor,
+            setProductTitleColor,
+            ProductTitleFont,
+            setProductTitleFont,
+            ProductTitleSize,
+            setProductTitleSize,
+            ProductTitleUnit,
+            setProductTitleUnit,
+            ProductFontWeight,
+            setProductFontWeight,
+            ProductTitleAlign,
+            setProductTitleAlign,
+            ProductBtnBackColor,
+            setProductBtnBackColor,
+            ProductBtnTextColor,
+            setProductBtnTextColor,
+            ProductBtnHoverBackColor,
+            setProductBtnHoverBackColor,
+            ProductBtnHoverTextColor,
+            setProductBtnHoverTextColor,
+            ProductThemeUpdateToggle,setProductThemeUpdateToggle,
           }}
         >
           <Suspense fallback={<FallBack />}>

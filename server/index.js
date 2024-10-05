@@ -41,6 +41,7 @@ import SecondTheme from './Routes/Dynamic_Vcard_Routes/Second_Banner_Logo.route.
 import ThirdTheme from './Routes/Dynamic_Vcard_Routes/Third_Button_Design.route.js';
 import FourthTheme from './Routes/Dynamic_Vcard_Routes/Fourth_Title_Design.route.js';
 import FifthTheme from './Routes/Dynamic_Vcard_Routes/Fifth_Service_Theme.route.js';
+import SixthTheme from './Routes/Dynamic_Vcard_Routes/Sixth_Product_Theme.route.js';
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -108,6 +109,7 @@ app.use('/image_theme',SecondTheme);
 app.use('/button_theme',ThirdTheme);
 app.use('/title_theme',FourthTheme);
 app.use('/service_theme',FifthTheme);
+app.use('/product_theme',SixthTheme);
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");

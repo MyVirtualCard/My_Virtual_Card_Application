@@ -21,6 +21,8 @@ BtnBackColor,setBtnBackColor,
 BtnTextColor,setBtnTextColor,
 BtnHoverBackColor,setBtnHoverBackColor,
 BtnHoverTextColor,setBtnHoverTextColor,
+ServiceThemeUpdateToggle,
+setServiceThemeUpdateToggle
   }=useContext(Context)
 
 
@@ -96,7 +98,7 @@ BtnHoverTextColor,setBtnHoverTextColor,
     }
   
     useEffect(() => {
-      handleServiceThemeFetch();
+      // handleServiceThemeFetch();
     }, []);
     // Create Vcard Theme
     async function handleServiceThemeSubmit(e) {
@@ -126,17 +128,17 @@ BtnHoverTextColor,setBtnHoverTextColor,
             },
           })
           .then((res) => {
-          
+          setServiceThemeUpdateToggle(true);
             toast.success(res.data.message);
             setFormSubmitLoader(false);
           })
           .catch((error) => {
-          
+            setServiceThemeUpdateToggle(false);
             setFormSubmitLoader(false);
             toast.error(error.response.data.message);
           });
       } catch (error) {
-        console.log(error);
+        setServiceThemeUpdateToggle(false);
         setFormSubmitLoader(false);
       }
     };
@@ -185,7 +187,7 @@ BtnHoverTextColor,setBtnHoverTextColor,
     };
   return (
     <div className="service_design_container">
-      <form action="" onSubmit={UpdateToggle ? handleServiceThemeUpdate : handleServiceThemeSubmit}>
+      <form action="" onSubmit={ServiceThemeUpdateToggle ? handleServiceThemeUpdate : handleServiceThemeSubmit}>
         <div className="First_colour">
           <div className="theme_title">
             <h5>Service Background Colour</h5>
@@ -421,7 +423,7 @@ BtnHoverTextColor,setBtnHoverTextColor,
           </h2>
         </div>
         <div className="form_actions">
-          {UpdateToggle ? (
+          {ServiceThemeUpdateToggle ? (
             <button type="submit">Update</button>
           ) : (
             <button type="submit">Save</button>

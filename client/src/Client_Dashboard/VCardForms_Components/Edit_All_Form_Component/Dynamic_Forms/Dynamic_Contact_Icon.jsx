@@ -14,6 +14,8 @@ const Dynamic_Contact_Icon = () => {
     ContactBtnBorderRadius,setContactBtnBorderRadius,
     ContactBtnUnit,setContactBtnUnit,
     IconBorderRadius,setIconBorderRadius,
+    ButtonThemeUpdateToggle,
+    setButtonThemeUpdateToggle,
     IconUnit,setIconUnit,
     setFormSubmitLoader,
     URL_Alies,
@@ -72,7 +74,7 @@ const Dynamic_Contact_Icon = () => {
   }
 
   useEffect(() => {
-    handleButtonThemeFetch();
+    // handleButtonThemeFetch();
   }, []);
   // Create Vcard Theme
   async function handleButtonThemeSubmit(e) {
@@ -101,14 +103,17 @@ const Dynamic_Contact_Icon = () => {
         
           toast.success(res.data.message);
           setFormSubmitLoader(false);
+          setButtonThemeUpdateToggle(true)
         })
         .catch((error) => {
         
           setFormSubmitLoader(false);
+          setButtonThemeUpdateToggle(false)
           toast.error(error.response.data.message);
         });
     } catch (error) {
       console.log(error);
+      setButtonThemeUpdateToggle(false);
       setFormSubmitLoader(false);
     }
   };
@@ -153,7 +158,7 @@ const Dynamic_Contact_Icon = () => {
   };
   return (
     <div className="Dynamic_contact_icon_container">
-      <form action="" onSubmit={UpdateToggle ? handleButtonThemeUpdate : handleButtonThemeSubmit}>
+      <form action="" onSubmit={ButtonThemeUpdateToggle ? handleButtonThemeUpdate : handleButtonThemeSubmit}>
         <div className="First_colour">
           <div className="theme_title">
             <h5>Icon/Button Background Colour</h5>
@@ -299,7 +304,7 @@ const Dynamic_Contact_Icon = () => {
           </div>
         </div>
         <div className="form_actions">
-          {UpdateToggle ? (
+          {ButtonThemeUpdateToggle ? (
             <button type="submit">Update</button>
           ) : (
             <button type="submit">Save</button>

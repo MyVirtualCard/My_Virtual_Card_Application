@@ -19,10 +19,11 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
-      flex: 0.7;
+      flex: 0.6;
       height: 100%;
       overflow-y: scroll;
       padding-bottom: 1rem;
+     
 
       .dynamic_title {
         width: 100%;
@@ -37,8 +38,8 @@
           font-size: 1rem;
           font-weight: 550;
           padding: 5px 0px;
-          color: rgb(70, 70, 70);
-          border-bottom:2px solid royalblue ;
+          color: rgb(1, 126, 105);
+          // border-bottom:2px solid royalblue ;
         }
       }
     
@@ -51,9 +52,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      flex: 0.3;
+      flex: 0.4;
       height: 100%;
       position: relative;
+     
 
     }
   }

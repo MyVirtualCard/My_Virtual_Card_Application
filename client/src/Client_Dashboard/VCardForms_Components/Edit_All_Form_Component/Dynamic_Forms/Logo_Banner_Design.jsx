@@ -37,6 +37,7 @@ const Logo_Banner_Design = () => {
     setLogoBottomPosition,
     LogoRightPosition,
     setLogoRightPosition,
+    ImageThemeUpdateToggle,setImageThemeUpdateToggle,
   } = useContext(Context);
 
   useEffect(() => {
@@ -100,7 +101,7 @@ const Logo_Banner_Design = () => {
   }
 
   useEffect(() => {
-    handleImageThemeFetch();
+    // handleImageThemeFetch();
   }, []);
   // Create Vcard Theme
   async function handleImageThemeSubmit(e) {
@@ -130,17 +131,18 @@ const Logo_Banner_Design = () => {
           },
         })
         .then((res) => {
-          console.log(res.data)
+          setImageThemeUpdateToggle(true)
           toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          console.log(error);
+          setImageThemeUpdateToggle(false)
           setFormSubmitLoader(false);
           toast.error(error.response.data.message);
         });
     } catch (error) {
-      console.log(error);
+      
+      setImageThemeUpdateToggle(false)
       setFormSubmitLoader(false);
     }
   };
@@ -189,7 +191,7 @@ const Logo_Banner_Design = () => {
   };
   return (
     <div className="logo_banner_design_container">
-      <form action="" onSubmit={UpdateToggle ? handleImageThemeUpdate : handleImageThemeSubmit}>
+      <form action="" onSubmit={ImageThemeUpdateToggle ? handleImageThemeUpdate : handleImageThemeSubmit}>
         <div className="form_group">
           <label className="form_label" htmlFor="BannerHeight">
             Adjust Banner Height
@@ -503,7 +505,7 @@ const Logo_Banner_Design = () => {
           ""
         )}
               <div className="form_actions">
-            {UpdateToggle ? (
+            {ImageThemeUpdateToggle ? (
               <button type="submit">Update</button>
             ) : (
               <button type="submit">Save</button>

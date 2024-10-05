@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-let Dynamic_Title_Schema = new mongoose.Schema(
+let Product_Theme_Schema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.String,
@@ -11,60 +11,60 @@ let Dynamic_Title_Schema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    TitleColor: {
+    ProductBackColor: {
       type: String,
       required: false,
     },
-    TitleSize: {
+    ProductTextColor: {
       type: String,
       required: false,
     },
-    TitleUnit: {
+    ProductTitleColor: {
       type: String,
       required: false,
     },
-    TitleFontWeight: {
+    ProductTitleFont: {
       type: String,
       required: false,
     },
-    TitleFont: {
+    ProductTitleSize: {
       type: String,
       required: false,
     },
-    TitlePosition: {
+    ProductTitleUnit: {
       type: String,
       required: false,
     },
-    SubTitleColor: {
+    ProductFontWeight: {
       type: String,
       required: false,
     },
-    SubTitleSize: {
+    ProductTitleAlign: {
       type: String,
       required: false,
     },
-    SubTitleUnit: {
+    ProductBtnBackColor: {
       type: String,
       required: false,
     },
-    SubTitleFontWeight: {
+    ProductBtnTextColor: {
       type: String,
       required: false,
     },
-    SubTitleFont: {
+    ProductBtnHoverBackColor: {
       type: String,
       required: false,
     },
-    SubTitlePosition: {
+    ProductBtnHoverTextColor: {
       type: String,
       required: false,
     },
   },
   { timestamps: true }
 );
-let Dynamic_Title_Model = mongoose.model(
-  "Dynamic_Title_Details",
-  Dynamic_Title_Schema
+let ProductThemeModel = mongoose.model(
+  "ProductThemeDetails",
+  Product_Theme_Schema
 );
 
-export default Dynamic_Title_Model;
+export default ProductThemeModel;

@@ -13,6 +13,7 @@ const Vcard_Theme = () => {
     SVG_Design,
     setSVG_Design,
     setFormSubmitLoader,
+    VcardThemeUpdateToggle,setVcardThemeUpdateToggle,
     URL_Alies,
     user,
   } = useContext(Context);
@@ -63,7 +64,7 @@ const Vcard_Theme = () => {
   }
 
   useEffect(() => {
-    handleVcardThemeFetch();
+    // handleVcardThemeFetch();
   }, []);
   // Create Vcard Theme
   async function handleVcardThemeSubmit(e) {
@@ -86,15 +87,18 @@ const Vcard_Theme = () => {
         .then((res) => {
      
           toast.success(res.data.data.message);
+          setVcardThemeUpdateToggle(true)
           setFormSubmitLoader(false);
         })
         .catch((error) => {
           console.log(error);
           setFormSubmitLoader(false);
+          setVcardThemeUpdateToggle(false)
           toast.error(error.response.data.message);
         });
     } catch (error) {
       console.log(error);
+      setVcardThemeUpdateToggle(false);
       setFormSubmitLoader(false);
     }
   };
@@ -135,7 +139,7 @@ const Vcard_Theme = () => {
   return (
     <>
       <div className="VCardTheme_container">
-        <form action="" onSubmit={UpdateToggle ? handleVcardThemeUpdate : handleVcardThemeSubmit}>
+        <form action="" onSubmit={VcardThemeUpdateToggle ? handleVcardThemeUpdate : handleVcardThemeSubmit}>
           <div className="First_colour">
             <div className="theme_title">
               <h5>Vcard Background Colour</h5>
@@ -189,7 +193,7 @@ const Vcard_Theme = () => {
             </div>
           </div>
           <div className="form_actions">
-            {UpdateToggle ? (
+            {VcardThemeUpdateToggle ? (
               <button type="submit">Update</button>
             ) : (
               <button type="submit">Save</button>

@@ -7,6 +7,7 @@ import Dynamic_Contact_Icon from "./Dynamic_Forms/Dynamic_Contact_Icon";
 import Title_Design from "./Dynamic_Forms/Title_Design";
 import DynamicVcard from "./Dynamic_Preview_Vcard/DynamicVcard";
 import Service_Design from "./Dynamic_Forms/Service_Design";
+import Product_Design from "./Dynamic_Forms/Product_Design";
 const Edit_Dynamic_Theme = () => {
   let { user, userName, ShowForm, DynamicForm } = useContext(Context);
 
@@ -27,6 +28,7 @@ const Edit_Dynamic_Theme = () => {
             {DynamicForm == "Contact_Icons" ? <Dynamic_Contact_Icon /> : ""}
             {DynamicForm == "Title_Design" ? <Title_Design /> : ""}
             {DynamicForm == "Service_Design" ? <Service_Design /> : ""}
+            {DynamicForm == "Product_Design" ? <Product_Design /> : ""}
           </div>
           <div className="vcard_preview">
             <DynamicVcard />
