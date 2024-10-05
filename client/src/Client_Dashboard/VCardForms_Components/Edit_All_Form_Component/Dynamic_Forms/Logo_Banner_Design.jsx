@@ -56,53 +56,7 @@ const Logo_Banner_Design = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-  // Fetch Vcard Theme
-  async function handleImageThemeFetch() {
-    setFormSubmitLoader(true);
-    try {
-      await api
-        .get(`/image_theme/${URL_Alies}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.data.length == 0) {
-            setFormSubmitLoader(false);
-            setUpdateToggle(false);
-          } else {
-            setBannerHeight(res.data.data[0].BannerHeight);
-            setBannerBrightness(res.data.data[0].BannerBrightness);
-            setLogoWidth(res.data.data[0].LogoWidth);
-            setLogoWidthUnit(res.data.data[0].LogoWidthUnit);
-            setLogoHeight(res.data.data[0].LogoHeight);
-            setLogoHeightUnit(res.data.data[0].LogoHeightUnit);
-            setLogoBorderRadius(res.data.data[0].LogoBorderRadius);
-            setLogoBorderRadiusUnit(res.data.data[0].LogoBorderRadiusUnit);
-            setLogoPosition(res.data.data[0].LogoPosition);
-            setLogoTopPosition(res.data.data[0].LogoTopPosition);
-            setLogoLeftPosition(res.data.data[0].LogoLeftPosition);
-            setLogoPositionUnit(res.data.data[0].LogoPositionUnit)
-            setUpdateToggle(true);
-            setFormSubmitLoader(false);
-          }
-        })
-        .catch((error) => {
-          // toast.error(error.response.data.message);
-          setFormSubmitLoader(false);
-          setUpdateToggle(false);
-        });
-    } catch (error) {
-      toast.error(error.message);
-      setFormSubmitLoader(false);
-      setUpdateToggle(false);
-    }
-  }
 
-  useEffect(() => {
-    // handleImageThemeFetch();
-  }, []);
   // Create Vcard Theme
   async function handleImageThemeSubmit(e) {
     e.preventDefault();

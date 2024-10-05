@@ -113,7 +113,7 @@ const App = () => {
   let [VCardColour, setVCardColour] = useState("#fff");
   let [VCardTextColour, setVCardTextColour] = useState("#000");
   let [SVG_Design, setSVG_Design] = useState("");
-  let[VcardThemeUpdateToggle,setVcardThemeUpdateToggle]=useState(false);
+  let [VcardThemeUpdateToggle, setVcardThemeUpdateToggle] = useState(false);
   // 2]Banner and Logo
   const [BannerHeight, setBannerHeight] = React.useState([200]);
   const [BannerBrightness, setBannerBrightness] = React.useState([100]);
@@ -129,7 +129,8 @@ const App = () => {
   let [LogoLeftPosition, setLogoLeftPosition] = useState("50");
   let [LogoBottomPosition, setLogoBottomPosition] = useState("0");
   let [LogoRightPosition, setLogoRightPosition] = useState("0");
-  let[ImageThemeUpdateToggle,setImageThemeUpdateToggle]=useState(false);
+
+  let [ImageThemeUpdateToggle, setImageThemeUpdateToggle] = useState(false);
   //3]Button/icon states
   let [BtnBackColour, setBtnBackColour] = useState("violet");
   let [BtnTextColour, setBtnTextColour] = useState("white");
@@ -140,7 +141,8 @@ const App = () => {
   let [ContactBtnUnit, setContactBtnUnit] = useState("px");
   let [IconBorderRadius, setIconBorderRadius] = useState("0");
   let [IconUnit, setIconUnit] = useState("px");
-  let[ButtonThemeUpdateToggle,setButtonThemeUpdateToggle]=useState(false);
+  let [UserDataPosition, setUserDataPosition] = useState("center");
+  let [ButtonThemeUpdateToggle, setButtonThemeUpdateToggle] = useState(false);
   // 4]Title states
   let [TitleColor, setTitleColor] = useState("#4c4c4c");
   let [TitleSize, setTitleSize] = useState("15");
@@ -155,7 +157,7 @@ const App = () => {
   let [SubTitleFontWeight, setSubTitleFontWeight] = useState("500");
   let [SubTitleFont, setSubTitleFont] = useState("Arial");
   let [SubTitlePosition, setSubTitlePosition] = useState("start");
-  let[TitleThemeUpdateToggle,setTitleThemeUpdateToggle]=useState(false);
+  let [TitleThemeUpdateToggle, setTitleThemeUpdateToggle] = useState(false);
   // 5] Service States
   let [ServiceBackColor, setServiceBackColor] = useState("lightGray");
   let [ServiceTextColor, setServiceTextColor] = useState("white");
@@ -169,7 +171,7 @@ const App = () => {
   let [BtnTextColor, setBtnTextColor] = useState("white");
   let [BtnHoverBackColor, setBtnHoverBackColor] = useState("white");
   let [BtnHoverTextColor, setBtnHoverTextColor] = useState("orange");
-  let[ServiceThemeUpdateToggle,setServiceThemeUpdateToggle]=useState(false);
+  let [ServiceThemeUpdateToggle, setServiceThemeUpdateToggle] = useState(false);
   //Product states
   let [ProductBackColor, setProductBackColor] = useState("yellow");
   let [ProductTextColor, setProductTextColor] = useState("black");
@@ -185,7 +187,7 @@ const App = () => {
     useState("white");
   let [ProductBtnHoverTextColor, setProductBtnHoverTextColor] =
     useState("gray");
-    let[ProductThemeUpdateToggle,setProductThemeUpdateToggle]=useState(false);
+  let [ProductThemeUpdateToggle, setProductThemeUpdateToggle] = useState(false);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -301,7 +303,8 @@ const App = () => {
             setVCardTextColour,
             SVG_Design,
             setSVG_Design,
-           VcardThemeUpdateToggle,setVcardThemeUpdateToggle,
+            VcardThemeUpdateToggle,
+            setVcardThemeUpdateToggle,
             //2] Dynamic Banner and Logo states
             BannerHeight,
             setBannerHeight,
@@ -331,7 +334,10 @@ const App = () => {
             setLogoBottomPosition,
             LogoRightPosition,
             setLogoRightPosition,
-            ImageThemeUpdateToggle,setImageThemeUpdateToggle,
+            UserDataPosition,
+            setUserDataPosition,
+            ImageThemeUpdateToggle,
+            setImageThemeUpdateToggle,
             // 3]Dynamic Button and Icon states
             BtnBackColour,
             setBtnBackColour,
@@ -351,7 +357,8 @@ const App = () => {
             setIconBorderRadius,
             IconUnit,
             setIconUnit,
-            ButtonThemeUpdateToggle,setButtonThemeUpdateToggle,
+            ButtonThemeUpdateToggle,
+            setButtonThemeUpdateToggle,
             // 4]Title states
             TitleColor,
             setTitleColor,
@@ -365,19 +372,21 @@ const App = () => {
             setTitleFont,
             TitlePosition,
             setTitlePosition,
-              // SubTitle
-    SubTitleColor,
-    setSubTitleColor,
-    SubTitleSize,
-    setSubTitleSize,
-    SubTitleUnit,
-    setSubTitleUnit,
-    SubTitleFontWeight,
-    setSubTitleFontWeight,
-    SubTitleFont,
-    setSubTitleFont,
-    SubTitlePosition,setSubTitlePosition,
-            TitleThemeUpdateToggle,setTitleThemeUpdateToggle,
+            // SubTitle
+            SubTitleColor,
+            setSubTitleColor,
+            SubTitleSize,
+            setSubTitleSize,
+            SubTitleUnit,
+            setSubTitleUnit,
+            SubTitleFontWeight,
+            setSubTitleFontWeight,
+            SubTitleFont,
+            setSubTitleFont,
+            SubTitlePosition,
+            setSubTitlePosition,
+            TitleThemeUpdateToggle,
+            setTitleThemeUpdateToggle,
             // 5]ServiceStates
             ServiceBackColor,
             setServiceBackColor,
@@ -403,7 +412,8 @@ const App = () => {
             setBtnHoverBackColor,
             BtnHoverTextColor,
             setBtnHoverTextColor,
-            ServiceThemeUpdateToggle,setServiceThemeUpdateToggle,
+            ServiceThemeUpdateToggle,
+            setServiceThemeUpdateToggle,
             // 6]Product States
             ProductBackColor,
             setProductBackColor,
@@ -429,7 +439,8 @@ const App = () => {
             setProductBtnHoverBackColor,
             ProductBtnHoverTextColor,
             setProductBtnHoverTextColor,
-            ProductThemeUpdateToggle,setProductThemeUpdateToggle,
+            ProductThemeUpdateToggle,
+            setProductThemeUpdateToggle,
           }}
         >
           <Suspense fallback={<FallBack />}>

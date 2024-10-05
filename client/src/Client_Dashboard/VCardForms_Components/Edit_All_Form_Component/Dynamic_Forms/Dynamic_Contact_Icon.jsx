@@ -6,22 +6,31 @@ import { toast } from "react-toastify";
 import axios from "axios";
 const Dynamic_Contact_Icon = () => {
   let {
-    BtnBackColour, setBtnBackColour,
-    BtnTextColour, setBtnTextColour,
-    BtnHoverColour, setBtnHoverColour,
-    BtnHoverTextColour, setBtnHoverTextColour,
-    isHovered, setIsHovered,
-    ContactBtnBorderRadius,setContactBtnBorderRadius,
-    ContactBtnUnit,setContactBtnUnit,
-    IconBorderRadius,setIconBorderRadius,
+    BtnBackColour,
+    setBtnBackColour,
+    BtnTextColour,
+    setBtnTextColour,
+    BtnHoverColour,
+    setBtnHoverColour,
+    BtnHoverTextColour,
+    setBtnHoverTextColour,
+    isHovered,
+    setIsHovered,
+    ContactBtnBorderRadius,
+    setContactBtnBorderRadius,
+    ContactBtnUnit,
+    setContactBtnUnit,
+    IconBorderRadius,
+    setIconBorderRadius,
     ButtonThemeUpdateToggle,
     setButtonThemeUpdateToggle,
-    IconUnit,setIconUnit,
+    IconUnit,
+    setIconUnit,
+    UserDataPosition, setUserDataPosition,
     setFormSubmitLoader,
     URL_Alies,
     user,
   } = useContext(Context);
-
 
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
@@ -33,63 +42,23 @@ const Dynamic_Contact_Icon = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-   // Fetch Vcard Theme
-   async function handleButtonThemeFetch() {
-    setFormSubmitLoader(true);
-    try {
-      await api
-        .get(`/button_theme/${URL_Alies}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.data.length == 0) {
-            setFormSubmitLoader(false);
-            setUpdateToggle(false);
-          } else {
-            setBtnBackColour(res.data.data[0].BtnBackColour);
-            setBtnTextColour(res.data.data[0].BtnTextColour);
-            setBtnHoverColour(res.data.data[0].BtnHoverColour);
-            setBtnHoverTextColour(res.data.data[0].BtnHoverTextColour);
-            setContactBtnBorderRadius(res.data.data[0].ContactBtnBorderRadius);
-            setContactBtnUnit(res.data.data[0].ContactBtnUnit);
-            setIconBorderRadius(res.data.data[0].IconBorderRadius);
-            setIconUnit(res.data.data[0].IconUnit);
-            setUpdateToggle(true);
-            setFormSubmitLoader(false);
-          }
-        })
-        .catch((error) => {
-          // toast.error(error.response.data.message);
-          setFormSubmitLoader(false);
-          setUpdateToggle(false);
-        });
-    } catch (error) {
-      toast.error(error.message);
-      setFormSubmitLoader(false);
-      setUpdateToggle(false);
-    }
-  }
-
-  useEffect(() => {
-    // handleButtonThemeFetch();
-  }, []);
+ 
   // Create Vcard Theme
   async function handleButtonThemeSubmit(e) {
     e.preventDefault();
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
-      BtnBackColour:BtnBackColour,
-      BtnTextColour:BtnTextColour,
-      BtnHoverColour:BtnHoverColour,
-      BtnHoverTextColour:BtnHoverTextColour,
-      ContactBtnBorderRadius:ContactBtnBorderRadius,
-      ContactBtnUnit:ContactBtnUnit,
-      IconBorderRadius:IconBorderRadius,
-      IconUnit:IconUnit,
+      BtnBackColour: BtnBackColour,
+      BtnTextColour: BtnTextColour,
+      BtnHoverColour: BtnHoverColour,
+      BtnHoverTextColour: BtnHoverTextColour,
+      ContactBtnBorderRadius: ContactBtnBorderRadius,
+      ContactBtnUnit: ContactBtnUnit,
+      IconBorderRadius: IconBorderRadius,
+
+      IconUnit: IconUnit,
+      UserDataPosition:UserDataPosition,
     };
     try {
       await api
@@ -100,15 +69,13 @@ const Dynamic_Contact_Icon = () => {
           },
         })
         .then((res) => {
-        
           toast.success(res.data.message);
           setFormSubmitLoader(false);
-          setButtonThemeUpdateToggle(true)
+          setButtonThemeUpdateToggle(true);
         })
         .catch((error) => {
-        
           setFormSubmitLoader(false);
-          setButtonThemeUpdateToggle(false)
+          setButtonThemeUpdateToggle(false);
           toast.error(error.response.data.message);
         });
     } catch (error) {
@@ -116,7 +83,7 @@ const Dynamic_Contact_Icon = () => {
       setButtonThemeUpdateToggle(false);
       setFormSubmitLoader(false);
     }
-  };
+  }
 
   // Update Vcard Theme
   async function handleButtonThemeUpdate(e) {
@@ -124,14 +91,15 @@ const Dynamic_Contact_Icon = () => {
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
-      BtnBackColour:BtnBackColour,
-      BtnTextColour:BtnTextColour,
-      BtnHoverColour:BtnHoverColour,
-      BtnHoverTextColour:BtnHoverTextColour,
-      ContactBtnBorderRadius:ContactBtnBorderRadius,
-      ContactBtnUnit:ContactBtnUnit,
-      IconBorderRadius:IconBorderRadius,
-      IconUnit:IconUnit,
+      BtnBackColour: BtnBackColour,
+      BtnTextColour: BtnTextColour,
+      BtnHoverColour: BtnHoverColour,
+      BtnHoverTextColour: BtnHoverTextColour,
+      ContactBtnBorderRadius: ContactBtnBorderRadius,
+      ContactBtnUnit: ContactBtnUnit,
+      IconBorderRadius: IconBorderRadius,
+      IconUnit: IconUnit,
+      UserDataPosition:UserDataPosition,
     };
     try {
       await api
@@ -142,7 +110,6 @@ const Dynamic_Contact_Icon = () => {
           },
         })
         .then((res) => {
-        
           toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
@@ -155,10 +122,17 @@ const Dynamic_Contact_Icon = () => {
       console.log(error);
       setFormSubmitLoader(false);
     }
-  };
+  }
   return (
     <div className="Dynamic_contact_icon_container">
-      <form action="" onSubmit={ButtonThemeUpdateToggle ? handleButtonThemeUpdate : handleButtonThemeSubmit}>
+      <form
+        action=""
+        onSubmit={
+          ButtonThemeUpdateToggle
+            ? handleButtonThemeUpdate
+            : handleButtonThemeSubmit
+        }
+      >
         <div className="First_colour">
           <div className="theme_title">
             <h5>Icon/Button Background Colour</h5>
@@ -194,7 +168,8 @@ const Dynamic_Contact_Icon = () => {
           <div className="btn">
             <div className="title">Button Preview</div>
             <button
-              style={{backgroundColor: isHovered ? BtnHoverColour : BtnBackColour,
+              style={{
+                backgroundColor: isHovered ? BtnHoverColour : BtnBackColour,
                 color: isHovered ? BtnHoverTextColour : BtnTextColour,
               }}
               onMouseEnter={() => setIsHovered(true)}
@@ -301,6 +276,49 @@ const Dynamic_Contact_Icon = () => {
               <option value="rem">REM</option>
               <option value="%">%</option>
             </select>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <label className="form_label" for="SubTitlePosition">
+            Adjust User Details  Position
+          </label>
+
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <input
+                type="radio"
+                name="start"
+                id="start"
+                value={UserDataPosition}
+                checked={UserDataPosition === "start"}
+                onChange={(e) => setUserDataPosition("start")}
+              />
+              <label htmlFor="start">Start</label>
+            </div>
+            <div className="radio_input">
+              <input
+                type="radio"
+                name="center"
+                id="center"
+                value={UserDataPosition}
+                onChange={(e) => setUserDataPosition("center")}
+                checked={UserDataPosition === "center"}
+              />
+
+              <label htmlFor="center">Middle</label>
+            </div>
+            <div className="radio_input">
+              <input
+                type="radio"
+                name="end"
+                id="end"
+                value={UserDataPosition}
+                onChange={(e) => setUserDataPosition("end")}
+                checked={UserDataPosition === "end"}
+              />
+
+              <label htmlFor="end">End</label>
+            </div>
           </div>
         </div>
         <div className="form_actions">

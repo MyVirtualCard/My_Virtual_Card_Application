@@ -102,6 +102,7 @@ const DynamicVcard = () => {
     setLogoBottomPosition,
     LogoRightPosition,
     setLogoRightPosition,
+    UserDataPosition, setUserDataPosition,
     ImageThemeUpdateToggle,
     setImageThemeUpdateToggle,
     // 3]Btn and Icon
@@ -576,6 +577,8 @@ const DynamicVcard = () => {
             setLogoTopPosition(res.data.data[0].LogoTopPosition);
             setLogoLeftPosition(res.data.data[0].LogoLeftPosition);
             setLogoPositionUnit(res.data.data[0].LogoPositionUnit);
+         
+
             setImageThemeUpdateToggle(true);
           }
         })
@@ -616,6 +619,7 @@ const DynamicVcard = () => {
             setContactBtnUnit(res.data.data[0].ContactBtnUnit);
             setIconBorderRadius(res.data.data[0].IconBorderRadius);
             setIconUnit(res.data.data[0].IconUnit);
+            setUserDataPosition(res.data.data[0].UserDataPosition);
             setButtonThemeUpdateToggle(true);
             setVcardPreviewLoader(false);
           }
@@ -783,11 +787,120 @@ const DynamicVcard = () => {
           <style>
             /* Add your CSS here */
             {`
-      
+         .basic_row_2 {
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      position: relative;
+
+      .user_details {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+        .user_data {
+          // color: #fff;
+          display: flex;
+          flex-direction: column;
+          align-items: ${UserDataPosition};
+          justify-content: center;
+          flex: 1;
+          gap: 15px;
+          width: 100%;
+          height: 100%;
+
+          .user_information {
+            display: flex;
+            flex: 0.5;
+            width: 100%;
+            flex-direction: column;
+            align-items: ${UserDataPosition};
+            justify-content: center;
+
+            h2 {
+              font-size: 1.2rem;
+              font-weight: 500;
+              letter-spacing: 1px;
+              // color: $first_text_color;
+            }
+
+            p {
+              font-size: 0.9rem;
+              font-weight: 500;
+              // color: $first_text_color;
+              display: flex;
+              align-items: center;
+              justify-content: ${UserDataPosition};
+              gap: 0rem;
+              // animation: professionAnime 15s infinite linear;
+
+              img {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                object-position: center;
+
+                @media screen and (max-width: 600px) {
+                  width: 25px;
+                  height: 25px;
+                }
+              }
+            }
+          }
+          // //   Actions
+          // .contacts_btns {
+          //   display: flex;
+          //   align-items: center;
+          //   justify-content: center;
+          //   gap: 10px;
+          //   width: 100%;
+          //   flex-wrap: wrap;
+
+          //   a {
+          //     text-decoration: none;
+          //     display: flex;
+          //     align-items: center;
+          //     justify-content: center;
+          //     gap: 5px;
+          //     padding: 0.4rem 1rem;
+          //     background-color: $first_btn_back_color;
+          //     // color: $first_btn_text_color;
+          //     border-radius: 0.2rem;
+          //     transition: all 0.4s linear;
+          //     .icon {
+          //       font-size: 1rem;
+          //     }
+          //     small {
+          //       font-size: 0.7rem;
+          //       font-weight: 500;
+          //     }
+
+          //     &:hover {
+          //       background-color: $second_btn_back_color;
+          //       filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+          //       scale: 1.05;
+          //       transition: all 0.4s linear;
+          //     }
+          //   }
+          // }
+
+          @media screen and (max-width: 600px) {
+            align-items: flex-start;
+          }
+        }
+      }
+    }
           .contacts_btns {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: ${UserDataPosition};
             gap: 10px;
             width: 100%;
             flex-wrap: wrap;

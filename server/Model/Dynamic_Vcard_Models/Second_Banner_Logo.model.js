@@ -59,6 +59,7 @@ let Dynamic_Logo_Banner_Schema = new mongoose.Schema(
       type: String,
       required: false,
     },
+  
   },
   { timestamps: true }
 );

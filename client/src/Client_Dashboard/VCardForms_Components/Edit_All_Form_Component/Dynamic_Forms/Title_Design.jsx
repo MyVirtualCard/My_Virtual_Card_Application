@@ -275,7 +275,7 @@ const Title_Design = () => {
             </div>
           </div>
         </div>
-<p style={{gridColumn:'1/-1',borderTop:'1px solid #4C4C4C',margin:'10px 0px'}} />
+<p style={{gridColumn:'1/-1',borderTop:'2px solid #EBEBEB',margin:'10px 0px'}} />
 <div className="form_group">
           <label className="form_label" for="TitleColor">
             Sub-Title Color

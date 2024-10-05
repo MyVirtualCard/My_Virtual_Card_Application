@@ -43,6 +43,10 @@ let Dynamic_button_icon_Schema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    UserDataPosition:{
+      type: String,
+      required: false,
+    }
   },
   { timestamps: true }
 );
