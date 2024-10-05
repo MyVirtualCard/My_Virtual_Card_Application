@@ -41,6 +41,9 @@ import vCardsJS from "vcards-js";
 import { Cursor } from "react-simple-typewriter";
 import { filter } from "lodash";
 import { translate } from "react-range/lib/utils";
+import Dynamic_Contact_Icon from "./Dynamic_Forms/Dynamic_Contact_Icon";
+import { color } from "framer-motion";
+
 const Edit_Dynamic_Theme = () => {
   let {
     user,
@@ -99,8 +102,28 @@ const Edit_Dynamic_Theme = () => {
     setLogoBottomPosition,
     LogoRightPosition,
     setLogoRightPosition,
+    // 3]Btn and Icon
+    BtnBackColour,
+    setBtnBackColour,
+    BtnTextColour,
+    setBtnTextColour,
+    BtnHoverColour,
+    setBtnHoverColour,
+    BtnHoverTextColour,
+    setBtnHoverTextColour,
+
+    ContactBtnBorderRadius,
+    setContactBtnBorderRadius,
+    ContactBtnUnit,
+    setContactBtnUnit,
+    IconBorderRadius,
+    setIconBorderRadius,
+    IconUnit,
+    setIconUnit,
   } = useContext(Context);
-  console.log(BannerHeight[0]);
+  let [isHovered, setIsHovered] = useState(false);
+  let [BtnisHovered, setBtnIsHovered] = useState(false);
+
   let Dynamic_Style = {
     $first_back__color: "gray",
     $second_back__color: "#6b6b6b",
@@ -159,6 +182,42 @@ const Edit_Dynamic_Theme = () => {
       //   right: `${LogoRightPosition}${LogoPositionUnit}`,
       //   transform: `translate(-${LogoLeftPosition},-${LogoTopPosition})`,
       // },
+    },
+    ContactBtn: {
+      backgroundColor: isHovered ? BtnHoverColour : BtnBackColour,
+      color: isHovered ? BtnHoverTextColour : BtnTextColour,
+      cursor: "pointer",
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "5px",
+      padding: "0.4rem 1rem",
+      borderRadius: `${ContactBtnBorderRadius}${ContactBtnUnit}`,
+      transition: "all 0.4s linear",
+    },
+    AddToContactBtn: {
+      backgroundColor: BtnisHovered ? BtnHoverColour : BtnBackColour,
+      color: BtnisHovered ? BtnHoverTextColour : BtnTextColour,
+      cursor: "pointer",
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "5px",
+      padding: "0.4rem 1rem",
+      borderRadius: "0.2rem",
+      transition: "all 0.4s linear",
+    },
+    Icons: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "1.2rem",
+      padding: "5px",
+      borderRadius: `${IconBorderRadius}${IconUnit}`,
+      backgroundColor: BtnBackColour,
+      color: BtnTextColour,
     },
   };
 
@@ -365,7 +424,6 @@ const Edit_Dynamic_Theme = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
   return (
     <>
       <div className="Dynamic_theme_container">
@@ -377,6 +435,7 @@ const Edit_Dynamic_Theme = () => {
           <div className="dynanic_content">
             {DynamicForm == "Vcard_Theme" ? <Vcard_Theme /> : ""}
             {DynamicForm == "Logo_Banner_Design" ? <Logo_Banner_Design /> : ""}
+            {DynamicForm == "Contact_Icons" ? <Dynamic_Contact_Icon /> : ""}
           </div>
           <div className="vcard_preview">
             {/* Gallery Full IMAGE */}
@@ -587,7 +646,7 @@ const Edit_Dynamic_Theme = () => {
                       fill={Dynamic_Style.$vcard_back_color}
                       fill-opacity="1"
                       d={
-                        SVG_Design != ""
+                        SVG_Design != "" || SVG_Design.length != 0
                           ? SVG_Design.split("=")[5].split('"')[1]
                           : ""
                       }
@@ -610,7 +669,10 @@ const Edit_Dynamic_Theme = () => {
                       <a
                         href="tel:+919344482370"
                         target="_blank"
-                        style={styles.link}
+                        style={styles.ContactBtn}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        className="Contact_btn"
                       >
                         <BiSolidPhoneCall className="icon" />
 
@@ -620,7 +682,9 @@ const Edit_Dynamic_Theme = () => {
                       <a
                         href={`mailto:contact@aristostechindia.com`}
                         target="_blank"
-                        style={styles.link}
+                        style={styles.ContactBtn}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
                       >
                         <MdOutgoingMail className="icon" />
 
@@ -632,7 +696,9 @@ const Edit_Dynamic_Theme = () => {
                           `Hi there!`
                         )}`}
                         target="_blank"
-                        style={styles.link}
+                        style={styles.ContactBtn}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
                       >
                         <RiWhatsappFill className="icon" />
 
@@ -642,7 +708,9 @@ const Edit_Dynamic_Theme = () => {
                       <a
                         href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
                         target="_blank"
-                        style={styles.link}
+                        style={styles.ContactBtn}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
                       >
                         <FaDirections className="icon" />
 
@@ -660,7 +728,7 @@ const Edit_Dynamic_Theme = () => {
                   target="_blank"
                   style={styles.link}
                 >
-                  <div className="icon">
+                  <div className="icon" style={styles.Icons}>
                     <MdLocationPin />
                   </div>
                   <div className="contact_data">
@@ -674,7 +742,7 @@ const Edit_Dynamic_Theme = () => {
                   target="_blank"
                   style={styles.link}
                 >
-                  <div className="icon">
+                  <div className="icon" style={styles.Icons}>
                     <IoMail />
                   </div>
                   <div className="contact_data">
@@ -689,7 +757,7 @@ const Edit_Dynamic_Theme = () => {
                   target="_blank"
                   style={styles.link}
                 >
-                  <div className="icon">
+                  <div className="icon" style={styles.Icons}>
                     <FaGlobe />
                   </div>
                   <div className="contact_data">
@@ -699,7 +767,7 @@ const Edit_Dynamic_Theme = () => {
                 </a>
                 {/* PhoneNumber */}
                 <a href="tel:+919344482370" target="_blank" style={styles.link}>
-                  <div className="icon">
+                  <div className="icon" style={styles.Icons}>
                     <BiSolidPhoneCall />
                   </div>
                   <div className="contact_data">
@@ -710,7 +778,11 @@ const Edit_Dynamic_Theme = () => {
                 </a>
                 {/* AddtoContact */}
                 <div className="add_to_contact">
-                  <button>
+                  <button
+                    style={styles.AddToContactBtn}
+                    onMouseEnter={() => setBtnIsHovered(true)}
+                    onMouseLeave={() => setBtnIsHovered(false)}
+                  >
                     Add to Contact<i className="bx bxs-contact"></i>
                   </button>
                 </div>

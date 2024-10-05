@@ -9,6 +9,7 @@ import Edit_Products from "./Edit_All_Form_Component/Edit_Products";
 import Edit_Gallery from "./Edit_All_Form_Component/Edit_Gallery";
 import Edit_Blog from "./Edit_All_Form_Component/Edit_Blog";
 import Edit_Testimonial from "./Edit_All_Form_Component/Edit_Testimonial";
+import { SiIconfinder } from "react-icons/si";
 import Edit_Iframe from "./Edit_All_Form_Component/Edit_Iframe";
 import Edit_SocialMedias from "./Edit_All_Form_Component/Edit_SocialMedias";
 import Edit_Banner from "./Edit_All_Form_Component/Edit_Banner";
@@ -593,31 +594,20 @@ const VCard_Form_Edit = () => {
                 ></i>
                 <small id="Logo_Banner_Design">Logo_Banner_Design</small>
               </div>
-              {/* <div
-            className="menu_item"
-            onClick={handleFormShow}
-            id={ShowForm === "Blog" ? "menu_active" : ""}
-          >
-            <i
-              className="bx bxl-blogger"
-              style={{ color: "purple" }}
-              id="Blog"
-            ></i>
-            <small id="Blog">Blog</small>
-          </div>
-
-          <div
-            className="menu_item"
-            onClick={handleFormShow}
-            id={ShowForm === "Fonts" ? "menu_active" : ""}
-          >
-            <i
-              className="bx bx-font-family"
-              style={{ color: "skyblue" }}
-              id="Fonts"
-            ></i>
-            <small id="Fonts">Fonts</small>
-          </div> */}
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"),
+                    setDynamicForm("Contact_Icons");
+                }}
+                id={DynamicForm === "Contact_Icons" ? "menu_active" : ""}
+              >
+             
+                <SiIconfinder  style={{ color: "royalblue" }}
+                  id="Contact_Icons"/>
+                <small id="Contact_Icons">Contact_Icons</small>
+              </div>
+          
             </div>
           )}
 

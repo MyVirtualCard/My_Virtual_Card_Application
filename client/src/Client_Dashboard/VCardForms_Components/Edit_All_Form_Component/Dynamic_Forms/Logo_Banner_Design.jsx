@@ -2,8 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Logo_Banner_Design.scss";
 import { Range } from "react-range";
 import Context from "../../../../Context/GlobalContext";
+import axios from 'axios';
+import { toast } from "react-toastify";
 const Logo_Banner_Design = () => {
   let {
+    URL_Alies,
+    user,
+    setFormSubmitLoader,
     BannerHeight,
     setBannerHeight,
     BannerBrightness,
@@ -45,9 +50,146 @@ const Logo_Banner_Design = () => {
       setLogoTopPosition("100");
     }
   }, [LogoPosition == "relative"]);
+  let [UpdateToggle, setUpdateToggle] = useState(false);
+  // Server API
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
+  });
+  // Fetch Vcard Theme
+  async function handleImageThemeFetch() {
+    setFormSubmitLoader(true);
+    try {
+      await api
+        .get(`/image_theme/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length == 0) {
+            setFormSubmitLoader(false);
+            setUpdateToggle(false);
+          } else {
+            setBannerHeight(res.data.data[0].BannerHeight);
+            setBannerBrightness(res.data.data[0].BannerBrightness);
+            setLogoWidth(res.data.data[0].LogoWidth);
+            setLogoWidthUnit(res.data.data[0].LogoWidthUnit);
+            setLogoHeight(res.data.data[0].LogoHeight);
+            setLogoHeightUnit(res.data.data[0].LogoHeightUnit);
+            setLogoBorderRadius(res.data.data[0].LogoBorderRadius);
+            setLogoBorderRadiusUnit(res.data.data[0].LogoBorderRadiusUnit);
+            setLogoPosition(res.data.data[0].LogoPosition);
+            setLogoTopPosition(res.data.data[0].LogoTopPosition);
+            setLogoLeftPosition(res.data.data[0].LogoLeftPosition);
+            setLogoPositionUnit(res.data.data[0].LogoPositionUnit)
+            setUpdateToggle(true);
+            setFormSubmitLoader(false);
+          }
+        })
+        .catch((error) => {
+          // toast.error(error.response.data.message);
+          setFormSubmitLoader(false);
+          setUpdateToggle(false);
+        });
+    } catch (error) {
+      toast.error(error.message);
+      setFormSubmitLoader(false);
+      setUpdateToggle(false);
+    }
+  }
+
+  useEffect(() => {
+    handleImageThemeFetch();
+  }, []);
+  // Create Vcard Theme
+  async function handleImageThemeSubmit(e) {
+    e.preventDefault();
+    setFormSubmitLoader(true);
+    let data = {
+      URL_Alies: URL_Alies,
+      BannerHeight:BannerHeight,
+      BannerBrightness:BannerBrightness,
+      LogoWidth:LogoWidth,
+      LogoWidthUnit:LogoWidthUnit,
+      LogoHeight:LogoHeight,
+      LogoHeightUnit:LogoHeightUnit,
+      LogoBorderRadius:LogoBorderRadius,
+      LogoBorderRadiusUnit:LogoBorderRadiusUnit,
+      LogoPosition:LogoPosition,
+      LogoTopPosition:LogoTopPosition,
+      LogoLeftPosition:LogoLeftPosition,
+      LogoPositionUnit:LogoPositionUnit,
+    };
+    try {
+      await api
+        .post(`/image_theme/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+          toast.success(res.data.message);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setFormSubmitLoader(false);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+      setFormSubmitLoader(false);
+    }
+  };
+
+  // Update Vcard Theme
+  async function handleImageThemeUpdate(e) {
+    e.preventDefault();
+    setFormSubmitLoader(true);
+    let data = {
+      URL_Alies: URL_Alies,
+      BannerHeight:BannerHeight,
+      BannerBrightness:BannerBrightness,
+      LogoWidth:LogoWidth,
+      LogoWidthUnit:LogoWidthUnit,
+      LogoHeight:LogoHeight,
+      LogoHeightUnit:LogoHeightUnit,
+      LogoBorderRadius:LogoBorderRadius,
+      LogoBorderRadiusUnit:LogoBorderRadiusUnit,
+      LogoPosition:LogoPosition,
+      LogoTopPosition:LogoTopPosition,
+      LogoLeftPosition:LogoLeftPosition,
+      LogoPositionUnit:LogoPositionUnit,
+    };
+    try {
+      await api
+        .put(`/image_theme/${URL_Alies}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+        
+          toast.success(res.data.message);
+          setFormSubmitLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setFormSubmitLoader(false);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+      setFormSubmitLoader(false);
+    }
+  };
   return (
     <div className="logo_banner_design_container">
-      <form action="">
+      <form action="" onSubmit={UpdateToggle ? handleImageThemeUpdate : handleImageThemeSubmit}>
         <div className="form_group">
           <label className="form_label" for="BannerHeight">
             Adjust Banner Height
@@ -59,7 +201,7 @@ const Logo_Banner_Design = () => {
           <Range
             label="Select your value"
             step={0.1}
-            min={250}
+            min={200}
             max={600}
             values={BannerHeight}
             onChange={(BannerHeight) => setBannerHeight(BannerHeight)}
@@ -360,6 +502,13 @@ const Logo_Banner_Design = () => {
         ) : (
           ""
         )}
+              <div className="form_actions">
+            {UpdateToggle ? (
+              <button type="submit">Update</button>
+            ) : (
+              <button type="submit">Save</button>
+            )}
+          </div>
       </form>
     </div>
   );

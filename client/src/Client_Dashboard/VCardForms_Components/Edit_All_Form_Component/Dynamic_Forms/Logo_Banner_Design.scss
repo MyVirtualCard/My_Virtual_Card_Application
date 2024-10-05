@@ -82,6 +82,28 @@
                 }
             }
         }
+        .form_actions{
+            grid-column: 1/-1;
+            margin: 1rem 0px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+
+            button{
+                background-color: royalblue;
+                padding: 0.4rem 2rem;
+                cursor: pointer;
+                font-size: 0.9rem;
+                font-weight: 550;
+                color: #fff;
+
+                &:hover{
+                    background-color: gray;
+                }
+            }
+        }
 
 @media screen and (min-width:1000px){
     grid-template-columns: 1fr 1fr;

@@ -17,6 +17,11 @@ const Vcard_Theme = () => {
     user,
   } = useContext(Context);
 
+
+  const HtmlRenderer = ({ htmlString }) => {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
+  
   let [UpdateToggle, setUpdateToggle] = useState(false);
   // Server API
   const api = axios.create({
@@ -60,10 +65,6 @@ const Vcard_Theme = () => {
   useEffect(() => {
     handleVcardThemeFetch();
   }, []);
-
-  const HtmlRenderer = ({ htmlString }) => {
-    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
-  };
   // Create Vcard Theme
   async function handleVcardThemeSubmit(e) {
     e.preventDefault();
@@ -83,6 +84,7 @@ const Vcard_Theme = () => {
           },
         })
         .then((res) => {
+     
           toast.success(res.data.data.message);
           setFormSubmitLoader(false);
         })

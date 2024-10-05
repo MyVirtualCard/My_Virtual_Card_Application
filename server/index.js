@@ -36,7 +36,9 @@ import ManageContentRoute from "./Routes/ManageContent.route.js";
 import InquiryRoute from "./Routes/Inquiry.route.js";
 import AppoinmentRoute from "./Routes/Appoinment.route.js";
 // Import Dynmaic Routes;
-import DynamicRoute from './Routes/Dynamic_Vcard_Routes/First_Vcard_Theme.route.js'
+import FirstTheme from './Routes/Dynamic_Vcard_Routes/First_Vcard_Theme.route.js';
+import SecondTheme from './Routes/Dynamic_Vcard_Routes/Second_Banner_Logo.route.js';
+import ThirdTheme from './Routes/Dynamic_Vcard_Routes/Third_Button_Design.route.js';
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -99,7 +101,9 @@ app.use("/manageContent", ManageContentRoute);
 app.use("/inquiry", InquiryRoute);
 app.use("/appoinment", AppoinmentRoute);
 //Dynamic Middlewares
-app.use('/vcard_theme',DynamicRoute)
+app.use('/vcard_theme',FirstTheme);
+app.use('/image_theme',SecondTheme);
+app.use('/button_theme',ThirdTheme);
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");

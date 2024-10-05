@@ -114,7 +114,7 @@ const App = () => {
   let [VCardTextColour, setVCardTextColour] = useState("#000");
   let [SVG_Design, setSVG_Design] = useState("");
   // 2]Banner and Logo
-  const [BannerHeight, setBannerHeight] = React.useState([300]);
+  const [BannerHeight, setBannerHeight] = React.useState([200]);
   const [BannerBrightness, setBannerBrightness] = React.useState([100]);
   let [LogoWidth, setLogoWidth] = useState(100);
   let [LogoWidthUnit, setLogoWidthUnit] = useState("px");
@@ -126,11 +126,18 @@ const App = () => {
   let [LogoTopPosition, setLogoTopPosition] = useState("100");
   let [LogoPositionUnit, setLogoPositionUnit] = useState("%");
   let [LogoLeftPosition, setLogoLeftPosition] = useState("50");
-
   let [LogoBottomPosition, setLogoBottomPosition] = useState("0");
-
   let [LogoRightPosition, setLogoRightPosition] = useState("0");
-
+  //3]Button/icon states
+  let [BtnBackColour, setBtnBackColour] = useState("violet");
+  let [BtnTextColour, setBtnTextColour] = useState("white");
+  let [BtnHoverColour, setBtnHoverColour] = useState("tomato");
+  let [BtnHoverTextColour, setBtnHoverTextColour] = useState("white");
+  const [isHovered, setIsHovered] = useState(false);
+  let[ContactBtnBorderRadius,setContactBtnBorderRadius]=useState('0');
+let[ContactBtnUnit,setContactBtnUnit]=useState('px');
+let[IconBorderRadius,setIconBorderRadius]=useState('0');
+let[IconUnit,setIconUnit]=useState('px');
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -239,14 +246,14 @@ const App = () => {
             setCurrentPlanActive,
             PaymentSuccessPopup,
             setPaymentSuccessPopup,
-            // Vcard Theme states
+            //1] Vcard Theme states
             VCardColour,
             setVCardColour,
             VCardTextColour,
             setVCardTextColour,
             SVG_Design,
             setSVG_Design,
-            // Dynamic Banner and Logo states
+            //2] Dynamic Banner and Logo states
             BannerHeight,
             setBannerHeight,
             BannerBrightness,
@@ -263,12 +270,28 @@ const App = () => {
             setLogoBorderRadius,
             LogoBorderRadiusUnit,
             setLogoBorderRadiusUnit,
-            LogoPosition, setLogoPosition,
-            LogoTopPosition, setLogoTopPosition,
-            LogoPositionUnit, setLogoPositionUnit,
-            LogoLeftPosition, setLogoLeftPosition,
-            LogoBottomPosition, setLogoBottomPosition,
-            LogoRightPosition, setLogoRightPosition,
+            LogoPosition,
+            setLogoPosition,
+            LogoTopPosition,
+            setLogoTopPosition,
+            LogoPositionUnit,
+            setLogoPositionUnit,
+            LogoLeftPosition,
+            setLogoLeftPosition,
+            LogoBottomPosition,
+            setLogoBottomPosition,
+            LogoRightPosition,
+            setLogoRightPosition,
+          // 3]Dynamic Button and Icon states
+            BtnBackColour, setBtnBackColour,
+            BtnTextColour, setBtnTextColour,
+            BtnHoverColour, setBtnHoverColour,
+            BtnHoverTextColour, setBtnHoverTextColour,
+            isHovered, setIsHovered,
+            ContactBtnBorderRadius,setContactBtnBorderRadius,
+            ContactBtnUnit,setContactBtnUnit,
+            IconBorderRadius,setIconBorderRadius,
+            IconUnit,setIconUnit,
           }}
         >
           <Suspense fallback={<FallBack />}>
