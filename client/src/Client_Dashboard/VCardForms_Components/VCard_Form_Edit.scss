@@ -181,6 +181,7 @@ display: none  !important;
           align-items: center;
           justify-content: center;
         }
+     
         small {
           display: flex;
           align-items: center;
@@ -285,6 +286,10 @@ display: none  !important;
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+
+          .icon{
+            font-size: 1.3rem;
           }
           small {
             display: flex;

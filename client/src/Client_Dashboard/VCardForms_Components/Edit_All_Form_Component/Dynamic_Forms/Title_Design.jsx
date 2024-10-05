@@ -34,6 +34,12 @@ const Title_Design = () => {
   });
   const fontFamilies = [
     "Arial",
+    "Poppins",
+    "Afacad Flux",
+    "Montserrat",
+    "Playwrite DE Grund",
+    "Outfit",
+    "Pacifico",
     "Georgia",
     "Courier New",
     "Tahoma",

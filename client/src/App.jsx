@@ -145,7 +145,20 @@ const App = () => {
   let [TitleUnit, setTitleUnit] = useState("px");
   let [TitleFontWeight, setTitleFontWeight] = useState("600");
   let [TitleFont, setTitleFont] = useState("Arial");
-  let [TitlePosition,setTitlePosition]=useState('center');
+  let [TitlePosition, setTitlePosition] = useState("center");
+  // 5] Service States
+  let [ServiceBackColor, setServiceBackColor] = useState("lightGray");
+  let [ServiceTextColor, setServiceTextColor] = useState("white");
+  let [ServiceTitleColor, setServiceTitleColor] = useState("gray");
+  let [ServiceTitleFont, setServiceTitleFont] = useState("Arial");
+  let [ServiceTitleSize, setServiceTitleSize] = useState(10);
+  let [ServiceTitleUnit, setServiceTitleUnit] = useState("px");
+  let [ServiceFontWeight, setServiceFontWeight] = useState(500);
+  let [ServiceTitleAlign, setServiceTitleAlign] = useState("start");
+  let [BtnBackColor, setBtnBackColor] = useState("orange");
+  let [BtnTextColor, setBtnTextColor] = useState("white");
+  let [BtnHoverBackColor, setBtnHoverBackColor] = useState("white");
+  let [BtnHoverTextColor, setBtnHoverTextColor] = useState("orange");
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -321,8 +334,33 @@ const App = () => {
             setTitleFontWeight,
             TitleFont,
             setTitleFont,
-            TitlePosition,setTitlePosition,
-            
+            TitlePosition,
+            setTitlePosition,
+            // 5]ServiceStates
+            ServiceBackColor,
+            setServiceBackColor,
+            ServiceTextColor,
+            setServiceTextColor,
+            ServiceTitleColor,
+            setServiceTitleColor,
+            ServiceTitleFont,
+            setServiceTitleFont,
+            ServiceTitleSize,
+            setServiceTitleSize,
+            ServiceTitleUnit,
+            setServiceTitleUnit,
+            ServiceFontWeight,
+            setServiceFontWeight,
+            ServiceTitleAlign,
+            setServiceTitleAlign,
+            BtnBackColor,
+            setBtnBackColor,
+            BtnTextColor,
+            setBtnTextColor,
+            BtnHoverBackColor,
+            setBtnHoverBackColor,
+            BtnHoverTextColor,
+            setBtnHoverTextColor,
           }}
         >
           <Suspense fallback={<FallBack />}>

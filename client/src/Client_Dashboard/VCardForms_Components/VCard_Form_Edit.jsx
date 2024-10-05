@@ -34,6 +34,8 @@ import Edit_About from "./Edit_All_Form_Component/Edit_About";
 import Edit_Payment from "./Edit_All_Form_Component/Edit_Payment";
 import Edit_Video from "./Edit_All_Form_Component/Edit_Video";
 import { IoCreate } from "react-icons/io5";
+import { MdMiscellaneousServices } from "react-icons/md";
+
 import Edit_Dynamic_Theme from "./Edit_All_Form_Component/Edit_Dynamic_Theme";
 import { FaHandPointDown } from "react-icons/fa";
 
@@ -519,7 +521,10 @@ const VCard_Form_Edit = () => {
               </div>
               <div
                 className="menu_item"
-                onClick={()=>{setShowForm('Dynamic Theme');setDynamicForm('Vcard_Theme')}}
+                onClick={() => {
+                  setShowForm("Dynamic Theme");
+                  setDynamicForm("Vcard_Theme");
+                }}
                 id={ShowForm === "Dynamic Theme" ? "menu_active" : ""}
               >
                 <i
@@ -597,30 +602,52 @@ const VCard_Form_Edit = () => {
               <div
                 className="menu_item"
                 onClick={() => {
-                  setShowForm("Dynamic Theme"),
-                    setDynamicForm("Contact_Icons");
+                  setShowForm("Dynamic Theme"), setDynamicForm("Contact_Icons");
                 }}
                 id={DynamicForm === "Contact_Icons" ? "menu_active" : ""}
               >
-             
-                <SiIconfinder  style={{ color: "royalblue" }}
-                  id="Contact_Icons"/>
+                <div
+                  className="icon"
+                  style={{ color: "royalblue" }}
+                  id="Contact_Icons"
+                >
+                  <SiIconfinder />
+                </div>
+
                 <small id="Contact_Icons">Contact_Icons</small>
               </div>
               <div
                 className="menu_item"
                 onClick={() => {
-                  setShowForm("Dynamic Theme"),
-                    setDynamicForm("Title_Design");
+                  setShowForm("Dynamic Theme"), setDynamicForm("Title_Design");
                 }}
                 id={DynamicForm === "Title_Design" ? "menu_active" : ""}
               >
-             <i className='bx bx-captions'
-              style={{ color: "#4c4c4c" }}
+                <i
+                  className="bx bx-captions"
+                  style={{ color: "#4c4c4c" }}
                   id="Title_Design"
-             ></i>
-             
+                ></i>
+
                 <small id="Title_Design">Title_Design</small>
+              </div>
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"),
+                    setDynamicForm("Service_Design");
+                }}
+                id={DynamicForm === "Service_Design" ? "menu_active" : ""}
+              >
+                <div
+                  className="icon"
+                  style={{ color: "#4c4c4c" }}
+                  id="Service_Design"
+                >
+                  <MdMiscellaneousServices />
+                </div>
+
+                <small id="Service_Design">Service_Design</small>
               </div>
             </div>
           )}
