@@ -42,6 +42,7 @@ import ThirdTheme from './Routes/Dynamic_Vcard_Routes/Third_Button_Design.route.
 import FourthTheme from './Routes/Dynamic_Vcard_Routes/Fourth_Title_Design.route.js';
 import FifthTheme from './Routes/Dynamic_Vcard_Routes/Fifth_Service_Theme.route.js';
 import SixthTheme from './Routes/Dynamic_Vcard_Routes/Sixth_Product_Theme.route.js';
+import SeventhTheme from './Routes/Dynamic_Vcard_Routes/Seventh_Timer_Theme.route.js';
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -110,6 +111,7 @@ app.use('/button_theme',ThirdTheme);
 app.use('/title_theme',FourthTheme);
 app.use('/service_theme',FifthTheme);
 app.use('/product_theme',SixthTheme);
+app.use('/timer_theme',SeventhTheme);
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");

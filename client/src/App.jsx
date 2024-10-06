@@ -172,7 +172,7 @@ const App = () => {
   let [BtnHoverBackColor, setBtnHoverBackColor] = useState("white");
   let [BtnHoverTextColor, setBtnHoverTextColor] = useState("orange");
   let [ServiceThemeUpdateToggle, setServiceThemeUpdateToggle] = useState(false);
-  //Product states
+  //6].Product states
   let [ProductBackColor, setProductBackColor] = useState("yellow");
   let [ProductTextColor, setProductTextColor] = useState("black");
   let [ProductTitleColor, setProductTitleColor] = useState("gray");
@@ -188,6 +188,16 @@ const App = () => {
   let [ProductBtnHoverTextColor, setProductBtnHoverTextColor] =
     useState("gray");
   let [ProductThemeUpdateToggle, setProductThemeUpdateToggle] = useState(false);
+  // 7]Gallery States
+  let[ImageBorderRadius,setImageBorderRadius]=useState([0]);
+  let[GalleryUpdateToggle,setGalleryUpdateToggle]=useState(false);
+   // 8]Timer states
+   let[TimerBackColour,setTimerBackColour]=useState('white');
+   let[TimerTextColour,setTimerTextColour]=useState('#000');
+   let [TimerTitleColor, setTimerTitleColor] = useState("#4c4c4c");
+   let [TimerSubTitleColor, setTimerSubTitleColor] = useState("gray");
+   let [TimerBoxBorderRadius, setTimerBoxBorderRadius] = useState([5]);
+   let[TimerUpdateToggle,setTimerUpdateToggle]=useState(false);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -441,6 +451,16 @@ const App = () => {
             setProductBtnHoverTextColor,
             ProductThemeUpdateToggle,
             setProductThemeUpdateToggle,
+            // 7]Gallery states
+            ImageBorderRadius,setImageBorderRadius,
+            GalleryUpdateToggle,setGalleryUpdateToggle,
+            // 8]Timer states
+            TimerBackColour,setTimerBackColour,
+            TimerTextColour,setTimerTextColour,
+            TimerTitleColor, setTimerTitleColor,
+            TimerSubTitleColor, setTimerSubTitleColor,
+            TimerBoxBorderRadius, setTimerBoxBorderRadius,
+            TimerUpdateToggle,setTimerUpdateToggle,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -458,7 +478,7 @@ const App = () => {
                 element={<ResetPassword />}
               />
 
-              <Route path="/paymentsuccess" element={<f />} />
+              {/* <Route path="/paymentsuccess" element={<f />} /> */}
               <Route path="/terms_condition" element={<Terms_Condition />} />
               <Route path="/privacy_condition" element={<Privacy_Policy />} />
               {/* Client Dashboard Routes */}

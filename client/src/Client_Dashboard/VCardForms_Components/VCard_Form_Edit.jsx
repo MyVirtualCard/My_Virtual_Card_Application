@@ -566,8 +566,10 @@ const VCard_Form_Edit = () => {
               id={!formSliderToggle ? "slideClose" : "slideOpen"}
             >
               <div className="progressing">
-               
-               <FiArrowLeftCircle className="icon" onClick={()=>setShowForm('Basic Detail')}/>
+                <FiArrowLeftCircle
+                  className="icon"
+                  onClick={() => setShowForm("Basic Detail")}
+                />
               </div>
 
               <div
@@ -593,11 +595,11 @@ const VCard_Form_Edit = () => {
                 id={DynamicForm === "Logo_Banner_Design" ? "menu_active" : ""}
               >
                 <i
-                  className="bx bxs-image"
+                  className="bx bxs-palette"
                   style={{ color: "orange" }}
                   id="Logo_Banner_Design"
                 ></i>
-                <small id="Logo_Banner_Design">Images_Design</small>
+                <small id="Logo_Banner_Design">Profile_Design</small>
               </div>
               <div
                 className="menu_item"
@@ -657,13 +659,43 @@ const VCard_Form_Edit = () => {
                 }}
                 id={DynamicForm === "Product_Design" ? "menu_active" : ""}
               >
-                <i className='bx bx-cart-alt' 
-                style={{ color: "skyblue" }}
+                <i
+                  className="bx bx-cart-alt"
+                  style={{ color: "skyblue" }}
                   id="Product_Design"
                 ></i>
-             
 
                 <small id="Product_Design">Product_Design</small>
+              </div>
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"),
+                    setDynamicForm("Gallery_Design");
+                }}
+                id={DynamicForm === "Gallery_Design" ? "menu_active" : ""}
+              >
+                <i
+                  className="bx bx-image"
+                  style={{ color: "darkgreen" }}
+                  id="Gallery_Design"
+                ></i>
+
+                <small id="Gallery_Design">Gallery_Design</small>
+              </div>
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"), setDynamicForm("Timer_Design");
+                }}
+                id={DynamicForm === "Timer_Design" ? "menu_active" : ""}
+              >
+                <i
+                  className="bx bxs-timer"
+                  style={{ color: "violet" }}
+                  id="Timer_Design"
+                ></i>
+                <small id="Timer_Design">Timer_Design</small>
               </div>
             </div>
           )}

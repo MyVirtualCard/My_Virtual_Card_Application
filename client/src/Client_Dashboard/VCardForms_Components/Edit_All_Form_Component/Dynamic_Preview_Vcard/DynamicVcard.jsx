@@ -102,7 +102,8 @@ const DynamicVcard = () => {
     setLogoBottomPosition,
     LogoRightPosition,
     setLogoRightPosition,
-    UserDataPosition, setUserDataPosition,
+    UserDataPosition,
+    setUserDataPosition,
     ImageThemeUpdateToggle,
     setImageThemeUpdateToggle,
     // 3]Btn and Icon
@@ -207,6 +208,24 @@ const DynamicVcard = () => {
     setProductBtnHoverTextColor,
     ProductThemeUpdateToggle,
     setProductThemeUpdateToggle,
+    // 7]GalleryStates
+    ImageBorderRadius,
+    setImageBorderRadius,
+    GalleryUpdateToggle,
+    setGalleryUpdateToggle,
+    // 8]Timer states
+    TimerBackColour,
+    setTimerBackColour,
+    TimerTextColour,
+    setTimerTextColour,
+    TimerTitleColor,
+    setTimerTitleColor,
+    TimerSubTitleColor,
+    setTimerSubTitleColor,
+    TimerBoxBorderRadius,
+    setTimerBoxBorderRadius,
+    TimerUpdateToggle,
+    setTimerUpdateToggle,
   } = useContext(Context);
   let [isHovered, setIsHovered] = useState(false);
   let [BtnisHovered, setBtnIsHovered] = useState(false);
@@ -577,7 +596,6 @@ const DynamicVcard = () => {
             setLogoTopPosition(res.data.data[0].LogoTopPosition);
             setLogoLeftPosition(res.data.data[0].LogoLeftPosition);
             setLogoPositionUnit(res.data.data[0].LogoPositionUnit);
-         
 
             setImageThemeUpdateToggle(true);
           }
@@ -771,6 +789,44 @@ const DynamicVcard = () => {
       setProductThemeUpdateToggle(false);
     }
   }
+  // Fetch Timer Theme
+  async function handleTimerThemeFetch() {
+    setTimerUpdateToggle(true);
+    setVcardPreviewLoader(true);
+    try {
+      await api
+        .get(`/timer_theme/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length == 0) {
+            setVcardPreviewLoader(false);
+            setTimerUpdateToggle(false);
+          } else {
+            setTimerBackColour(res.data.data[0].TimerBackColour);
+            setTimerTitleColor(res.data.data[0].TimerTitleColor);
+            setTimerSubTitleColor(res.data.data[0].TimerSubTitleColor);
+            setTimerTextColour(res.data.data[0].TimerTextColour);
+            setTimerBoxBorderRadius(res.data.data[0].TimerBoxBorderRadius);
+
+            setTimerUpdateToggle(true);
+            setVcardPreviewLoader(false);
+          }
+        })
+        .catch((error) => {
+          // toast.error(error.response.data.message);
+          setVcardPreviewLoader(false);
+          setTimerUpdateToggle(false);
+        });
+    } catch (error) {
+      // toast.error(error.message);
+      setVcardPreviewLoader(false);
+      setTimerUpdateToggle(false);
+    }
+  }
 
   useEffect(() => {
     handleVcardThemeFetch();
@@ -779,6 +835,7 @@ const DynamicVcard = () => {
     handleTitleThemeFetch();
     handleServiceThemeFetch();
     handleProductThemeFetch();
+    handleTimerThemeFetch();
   }, []);
   return (
     <>
@@ -1247,6 +1304,180 @@ font-family:${SubTitleFont};
           }
         }
       }          
+          .gallery {
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 1rem;
+      position: relative;
+
+      .all_gallerys {
+        width: 100%;
+        display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: 1fr 1fr;
+    
+        gap: 0.5rem;
+        place-items: center;
+
+        .gallery_image {
+          width: 100%;
+
+          img {
+            cursor: pointer;
+            width: 100%;
+            height:100%;
+            border-radius: ${ImageBorderRadius}px;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+              rgb(209, 213, 219) 0px 0px 0px 1px inset;
+            border: 1px solid rgb(196, 196, 196);
+            object-fit: cover;
+            transition: all 0.3s ease;
+            &:hover {
+              opacity: 0.7;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+        /* Different spans for larger images */
+
+        .span-1 {
+          grid-row: span 1;
+          grid-column: span 1;
+        }
+
+        .span-2 {
+          grid-row: span 2;
+          grid-column: span 2;
+        }
+
+        .span-3 {
+          grid-row: span 3;
+          grid-column: span 3;
+        }
+        .span-4 {
+          grid-row: span 1;
+          grid-column: span 1;
+        }
+        .span-5 {
+          grid-row: span 2;
+          grid-column: span 2;
+        }
+      }
+    }
+         .time_container {
+      width: 100%;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .time_list_container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        place-items: center;
+        gap: 1rem 1rem;
+        margin: 1rem auto;
+
+        .time_list {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-around;
+          padding: 5px 1rem 5px 1rem;
+          background-color: ${TimerBackColour};
+          width: 100%;
+          height: 80px;
+          max-height: 80px;
+          min-height: 80px;
+          border-radius: ${TimerBoxBorderRadius}px;
+
+          .day {
+            // display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            span {
+              font-size: 0.7rem;
+              font-weight: 550;
+              color: ${TimerTitleColor};
+
+              &::after {
+                content: "";
+                display: block;
+                height: 1px;
+                background-color: $second_text_color;
+                width: 100%;
+              }
+            }
+          }
+          .time {
+            width: 100%;
+            display: flex !important;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 10px;
+            // background-color: #fff;
+
+            .start {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 5px;
+              h6 {
+                font-size: 0.6rem;
+                font-weight: 600;
+                color: ${TimerSubTitleColor};
+              }
+              span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.6rem;
+                color: ${TimerTextColour};
+                font-weight: 550;
+              }
+            }
+            .end {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 5px;
+              h6 {
+                font-size: 0.6rem;
+                font-weight: 500;
+                 color: ${TimerSubTitleColor};
+              }
+              span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                  color: ${TimerTextColour};
+                font-size: 0.6rem;
+                font-weight: 550;
+              }
+            }
+          }
+          //    @media screen and (max-width:600px){
+          //     height: 150px;
+          //    }
+        }
+        @media screen and (max-width: 700px) {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    }
       `}
           </style>
           <div
