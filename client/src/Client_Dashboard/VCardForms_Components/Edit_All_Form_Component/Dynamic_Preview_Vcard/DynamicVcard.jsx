@@ -226,6 +226,29 @@ const DynamicVcard = () => {
     setTimerBoxBorderRadius,
     TimerUpdateToggle,
     setTimerUpdateToggle,
+    // 9]Testimonial states
+    TestimonialBackColor,
+    setTestimonialBackColor,
+    TestimonialTextColor,
+    setTestimonialTextColor,
+    TestimonialTitleColor,
+    setTestimonialTitleColor,
+    TestimonialClientNameColor,
+    setTestimonialClientNameColor,
+    TestimonialBorderRadius,
+    setTestimonialBorderRadius,
+    TestimonialImageBorderRadius,
+    setTestimonialImageBorderRadius,
+    FlexDirection,
+    UserDataFlexDirection,
+    UserDataJustifyContent,
+    setUserDataJustifyContent,
+    UserDataAlignItems,
+    setUserDataAlignItems,
+    setUserDataFlexDirection,
+    setFlexDirection,
+    TestimonialUpdateToggle,
+    setTestimonialUpdateToggle,
   } = useContext(Context);
   let [isHovered, setIsHovered] = useState(false);
   let [BtnisHovered, setBtnIsHovered] = useState(false);
@@ -827,6 +850,52 @@ const DynamicVcard = () => {
       setTimerUpdateToggle(false);
     }
   }
+  //Fetch Testimonial:
+  async function handleTestimonialThemeFetch() {
+    setVcardPreviewLoader(true);
+    try {
+      await api
+        .get(`/testimonial_theme/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length == 0) {
+            setVcardPreviewLoader(false);
+            setTestimonialUpdateToggle(false);
+          } else {
+            setTestimonialBackColor(res.data.data[0].TestimonialBackColor);
+            setTestimonialTextColor(res.data.data[0].TestimonialTextColor);
+            setTestimonialTitleColor(res.data.data[0].TestimonialTitleColor);
+            setTestimonialClientNameColor(res.data.data[0].TestimonialClientNameColor);
+            setTestimonialBorderRadius(
+              res.data.data[0].TestimonialBorderRadius
+            );
+            setTestimonialImageBorderRadius(
+              res.data.data[0].TestimonialImageBorderRadius[0]
+            );
+            setFlexDirection(res.data.data[0].FlexDirection);
+            setUserDataFlexDirection(res.data.data[0].UserDataFlexDirection);
+            setUserDataJustifyContent(res.data.data[0].UserDataJustifyContent);
+            setUserDataAlignItems(res.data.data[0].UserDataAlignItems);
+
+            setTestimonialUpdateToggle(true);
+            setVcardPreviewLoader(false);
+          }
+        })
+        .catch((error) => {
+          // toast.error(error.response.data.message);
+          setVcardPreviewLoader(false);
+          setTestimonialUpdateToggle(false);
+        });
+    } catch (error) {
+      // toast.error(error.message);
+      setVcardPreviewLoader(false);
+      setTestimonialUpdateToggle(false);
+    }
+  }
 
   useEffect(() => {
     handleVcardThemeFetch();
@@ -836,7 +905,9 @@ const DynamicVcard = () => {
     handleServiceThemeFetch();
     handleProductThemeFetch();
     handleTimerThemeFetch();
+    handleTestimonialThemeFetch();
   }, []);
+  console.log(TestimonialImageBorderRadius)
   return (
     <>
       {!VcardPreviewLoader ? (
@@ -1478,6 +1549,177 @@ font-family:${SubTitleFont};
         }
       }
     }
+          .testimonial {
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      position: relative;
+    
+
+      .testimonial_container {
+        margin: 1rem auto;
+        width: 100%;
+        height:auto;
+        min-height: 150px;
+
+        .testimonial_list {
+          margin: 1rem 1rem;
+          width: 100%;
+          height: auto;
+          min-height: 150px;
+          
+          background-color:${TestimonialBackColor};
+          color:${TestimonialTextColor};
+          overflow-y: auto;
+          margin: auto;
+          display: flex;
+          flex-direction: ${FlexDirection};
+          align-items: center;
+          justify-content: flex-start;
+              border-radius: ${TestimonialBorderRadius}px;
+              border-top-left-radius:${[
+                TestimonialBorderRadius.includes(",")
+                  ? TestimonialBorderRadius.split(",")[0]
+                  : "",
+              ]}px ;
+                border-bottom-left-radius:${[
+                  TestimonialBorderRadius.includes(",")
+                    ? TestimonialBorderRadius.split(",")[1]
+                    : "",
+                ]}px ;
+                          border-top-right-radius:${[
+                            TestimonialBorderRadius.includes(",")
+                              ? TestimonialBorderRadius?.split(",")[2]
+                              : "",
+                          ]}px ;
+                                  border-bottom-right-radius:${[
+                                    TestimonialBorderRadius.includes(",")
+                                      ? TestimonialBorderRadius?.split(",")[3]
+                                      : "",
+                                  ]}px ; 
+padding:10px;
+          position: relative;
+
+          .client_feedback {
+            width: 100%;
+            flex: 0.7;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction:column;
+            gap: 10px;
+            padding: 10px;
+            height: 100%;
+       min-height: 100%
+
+            .feedback_title{
+              h4 {
+                font-size: 0.9rem;
+                font-weight: 550;
+                color: ${TestimonialTitleColor} !important;
+              }
+            }
+            .feedback_message{
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+         color:${TestimonialTextColor};
+              small {
+                width: 100%;
+                font-size: 0.8rem;
+                
+                font-weight: 500;
+                overflow-y: scroll;
+                text-align: start !important;
+       color:${TestimonialTextColor} !important;
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+              }
+            }
+
+        
+
+         
+          }
+          .user_detail {
+            display: flex;
+            align-items: ${UserDataAlignItems};
+            flex-direction:  ${UserDataFlexDirection};
+            width: 100%;
+            height: 100%;
+             min-height: 100%;
+            flex: 0.3;
+            justify-content: ${UserDataJustifyContent};
+            gap: 10px;
+
+            // background-color: $first_btn_back_color;
+            border-bottom-left-radius: 6rem;
+            border-top-left-radius: 6rem;
+
+            img {
+              width: 60px;
+              height: 60px;
+              border-radius: ${TestimonialImageBorderRadius}px;
+              border-top-left-radius:${[
+                TestimonialImageBorderRadius.includes(",")
+                  ? TestimonialImageBorderRadius.split(",")[0]
+                  : "",
+              ]}px ;
+                border-bottom-left-radius:${[
+                  TestimonialImageBorderRadius.includes(",")
+                    ? TestimonialImageBorderRadius.split(",")[1]
+                    : "",
+                ]}px ;
+                          border-top-right-radius:${[
+                            TestimonialImageBorderRadius.includes(",")
+                              ? TestimonialImageBorderRadius?.split(",")[2]
+                              : "",
+                          ]}px ;
+                                  border-bottom-right-radius:${[
+                                    TestimonialImageBorderRadius.includes(",")
+                                      ? TestimonialImageBorderRadius?.split(
+                                          ","
+                                        )[3]
+                                      : "",
+                                  ]}px ; 
+              object-fit: cover;
+              object-position: center;
+              border: 1px solid $second_back__color;
+            }
+                        
+            .client_name {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+
+              h4 {
+                font-size: 0.8rem;
+                color: ${TestimonialClientNameColor};
+                font-weight: 550;
+              }
+              small {
+               color:${TestimonialTextColor};
+                font-size: 0.7rem;
+
+                font-weight: 550;
+              }
+            }
+
+          }
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+    }
       `}
           </style>
           <div
@@ -1686,8 +1928,8 @@ font-family:${SubTitleFont};
               <div className="user_details">
                 <div className="user_data">
                   <div className="user_information">
-                    <h2>Senthil Kumar</h2>
-                    <p>KRN Private Hospital</p>
+                    <h2>Jayakumar V</h2>
+                    <p>Manager</p>
                   </div>
 
                   {/* Actions */}
@@ -2582,7 +2824,7 @@ font-family:${SubTitleFont};
             <div className="testimonial" ref={TestimonialRef}>
               <div className="Preview_Title">
                 <h3>Testimonial</h3>
-                {/* Contact */}
+                {/* <span className="material-symbols-outlined">share_reviews</span> */}
               </div>
               <div className="testimonial_container">
                 <Carousel
@@ -2593,14 +2835,21 @@ font-family:${SubTitleFont};
                 >
                   <div className="testimonial_list">
                     <div className="client_feedback">
-                      <h4>Feedback</h4>
-                      <small>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Vel repellendus a ut! Architecto quis error porro
-                        nemo beatae perspiciatis omnis?
-                      </small>
+                      <div
+                        className="feedback_title"
+                        style={{ color: TestimonialTitleColor }}
+                      >
+                        <h4>Feedback</h4>
+                      </div>
+                      <div className="feedback_message">
+                        <small>
+                          Lorem ipsum dolor, sit amet consectetur adipisicing
+                          elit. Vel repellendus a ut! Architecto quis error
+                          porro nemo beatae perspiciatis omnis?
+                        </small>
+                      </div>
                     </div>
-                    <div className="client_detail">
+                    <div className="user_detail">
                       <img
                         src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
                         alt=""
@@ -2614,63 +2863,28 @@ font-family:${SubTitleFont};
                   </div>
                   <div className="testimonial_list">
                     <div className="client_feedback">
-                      <h4>Feedback</h4>
-                      <small>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Vel repellendus a ut! Architecto quis error porro
-                        nemo beatae perspiciatis omnis?
-                      </small>
-                    </div>
-                    <div className="client_detail">
-                      <img
-                        src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
-                        alt=""
-                      />
-
-                      <div className="client_name">
-                        <h4>Jayakumar </h4>
-                        <small>-CEO</small>
+                      <div
+                        className="feedback_title"
+                        style={{ color: TestimonialTitleColor }}
+                      >
+                        <h4>Feedback</h4>
+                      </div>
+                      <div className="feedback_message">
+                        <small>
+                          Lorem ipsum dolor, sit amet consectetur adipisicing
+                          elit. Vel repellendus a ut! Architecto quis error
+                          porro nemo beatae perspiciatis omnis?
+                        </small>
                       </div>
                     </div>
-                  </div>
-                  <div className="testimonial_list">
-                    <div className="client_feedback">
-                      <h4>Feedback</h4>
-                      <small>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Vel repellendus a ut! Architecto quis error porro
-                        nemo beatae perspiciatis omnis?
-                      </small>
-                    </div>
-                    <div className="client_detail">
+                    <div className="user_detail">
                       <img
                         src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
                         alt=""
                       />
 
                       <div className="client_name">
-                        <h4>Dinesh Kumar</h4>
-                        <small>-Member</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="testimonial_list">
-                    <div className="client_feedback">
-                      <h4>Feedback</h4>
-                      <small>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Vel repellendus a ut! Architecto quis error porro
-                        nemo beatae perspiciatis omnis?
-                      </small>
-                    </div>
-                    <div className="client_detail">
-                      <img
-                        src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
-                        alt=""
-                      />
-
-                      <div className="client_name">
-                        <h4>Punitha</h4>
+                        <h4>John Doe</h4>
                         <small>-Member</small>
                       </div>
                     </div>

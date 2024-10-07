@@ -1,18 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./CAB_DRIVERS_PREVIEW.scss";
-
-import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
-
-//service Slider
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-//Product Slider
-import { Slide } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+import "./Dynamic_VCard_PREVIEW.scss";
+import product1 from "../../../assets/AllVCard_Image/Doctor/product_1.png";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 import { BiSolidPhoneCall, BiSolidVideo } from "react-icons/bi";
 import { RiWhatsappFill } from "react-icons/ri";
 import { FaDirections } from "react-icons/fa";
@@ -36,7 +28,10 @@ import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
-const CAB_DRIVERS_PREVIEW = () => {
+import ReactStars from "react-stars";
+import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
+import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
+const Dynamic_VCard_PREVIEW = () => {
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -51,13 +46,25 @@ const CAB_DRIVERS_PREVIEW = () => {
     $svg_wave_back_color: "#fff",
   };
   const [width, setWidth] = useState(window.innerWidth);
+  //Success and error popup state
+  let [successMessage, setSuccessMessage] = useState();
+  let [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  let [errorMessage, setErrorMessage] = useState();
+  let [errorPopupOpen, setErrorPopupOpen] = useState(false);
+  let [InquiryLoader, setInquiryLoader] = useState(false);
+  let [feedbackLoader, setFeedbackLoader] = useState(false);
+  let [appoinmentLoader, setappoinmentLoader] = useState(false);
+  let [commentOpen, setCommentOpen] = useState(false);
+  let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
+  let [FeedbackPopup, setFeedbackPopup] = useState(false);
+  let [FeedbackPopupError, setFeedbackPopupError] = useState(false);
+  let [AppoinmentPopup, setAppoinmentPopup] = useState(false);
+  let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
     userFeedback: "",
     currentRatting: 0,
   });
-  let [feedbackLoader, setFeedbackLoader] = useState(false);
-  let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
 
   const HtmlRenderer = ({ htmlString }) => {
@@ -92,86 +99,6 @@ const CAB_DRIVERS_PREVIEW = () => {
     linkElement.click();
     document.body.removeChild(linkElement);
   }
-  //gallery
-  const buttonStyle = {
-    width: "20px",
-    background: "none",
-    opacity: 1,
-    border: "0px",
-    padding: "0px",
-    fontSize: "2rem",
-    borderRadius: "10px",
-    color: "#ffffff",
-  };
-  const properties = {
-    prevArrow: (
-      <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">keyboard_backspace</span>
-      </button>
-    ),
-    nextArrow: (
-      <button style={{ ...buttonStyle }}>
-        <span className="material-symbols-outlined">east</span>
-      </button>
-    ),
-  };
-  const gallery_buttonStyle = {
-    width: "20px",
-    background: "none",
-    opacity: 1,
-    border: "0px",
-    padding: "0px",
-    fontSize: "2rem",
-    borderRadius: "10px",
-    color: "#ffffff",
-  };
-  const gallery_properties = {
-    prevArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
-        </svg>
-      </button>
-    ),
-    nextArrow: (
-      <button style={{ ...gallery_buttonStyle }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          fill="#fff"
-        >
-          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
-        </svg>
-      </button>
-    ),
-  };
-
-  //Service
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 2000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 1 : 2,
-    slidesToScroll: width < 700 ? 1 : 2,
-  };
-  //Product
-  const product_settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 2 : 2,
-    slidesToScroll: width < 700 ? 2 : 2,
-    rtl: true, // Scroll from left to right
-    arrows: true, // Show navigation arrows
-  };
   //Gallery Functionality
   //openFullImage preview:
   function openFullImage(pic) {
@@ -188,78 +115,7 @@ const CAB_DRIVERS_PREVIEW = () => {
 
     fullImageBox.style.display = "none";
   }
-  //Form Logic :
-  let feedbackFormik = useFormik({
-    initialValues: {
-      userName: "",
-      userFeedback: "",
-      currentRatting: 0,
-    },
 
-    //Validation :
-    validationSchema: Yup.object({
-      userName: Yup.string()
-        .min(3, "Min 3 char required")
-        .max(50, "Name must be 20 character or less")
-        .required("Name is required"),
-      userFeedback: Yup.string()
-        .min(10, "Minimum 10 character required")
-        .max(400, "Feedback must be 100 character or less")
-        .required("Feedback is required"),
-    }),
-    //Form Submit :
-    onSubmit: async (values) => {
-      setFeedbackForm({
-        userName: values.userName,
-        userFeedback: values.userFeedback,
-        currentRatting: values.currentRatting,
-      });
-      feedBackSubmit();
-      setTimeout(() => {
-        feedbackFormik.values.userName = "";
-        feedbackFormik.values.userFeedback = "";
-        feedbackFormik.values.currentRatting = 0;
-      }, 4000);
-    },
-  });
-  //Start Ratting:
-  // let currentRatting=0;
-  function handleRatting(e) {
-    let star = e.target;
-    // console.log(star,star.classList);
-    if (star.classList.contains("star")) {
-      let ratting = parseInt(star.dataset.rating, 10);
-      highlightStar(ratting);
-    }
-  }
-  //Remove Ratting:
-  function removeRatting() {
-    highlightStar(feedbackForm.currentRatting);
-  }
-  //Staring Setted
-  function RattingSetted(e) {
-    let starRating = document.querySelector(".ratting_container");
-    let star = e.target;
-    // console.log(star,star.classList);
-    if (star.classList.contains("star")) {
-      feedbackForm.currentRatting = parseInt(star.dataset.rating, 10);
-      starRating.setAttribute("data-rating", feedbackForm.currentRatting);
-      highlightStar(feedbackForm.currentRatting);
-    }
-  }
-
-  //Highlight star color:
-  function highlightStar(ratting) {
-    let stars = document.querySelectorAll(".star");
-
-    stars.forEach((star, index) => {
-      if (index < ratting) {
-        star.classList.add("highlight");
-      } else {
-        star.classList.remove("highlight");
-      }
-    });
-  }
   //Form Logic :
   let formik = useFormik({
     initialValues: {
@@ -327,24 +183,20 @@ const CAB_DRIVERS_PREVIEW = () => {
   }, []);
 
   //Menu actions
-
   let [activeMenu, setActiveMenu] = useState("Home");
   let HomeRef = useRef(null);
-
   let AboutRef = useRef(null);
   let ServiceRef = useRef(null);
   let ProductRef = useRef(null);
   let PaymentRef = useRef(null);
   let GalleryRef = useRef(null);
   let VideoRef = useRef(null);
-  let AppinmentRef = useRef(null);
   let TimeRef = useRef(null);
   let TestimonialRef = useRef(null);
   let LocationRef = useRef(null);
-
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
-
+  let AppoinmentRef = useRef(null);
   let scrollToSection = (elementRef) => {
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -418,93 +270,47 @@ const CAB_DRIVERS_PREVIEW = () => {
     if (activeMenu === "Inquiry") {
       return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
     }
-  }
-  useEffect(() => {
-    const handleScroll = () => {
-      const section1Top = HomeRef.current?.offsetTop || 0;
-      const section2Top = AboutRef.current?.offsetTop || 0;
-      const section3Top = ServiceRef.current?.offsetTop || 0;
-      const section4Top = ProductRef.current?.offsetTop || 0;
-      const section5Top = PaymentRef.current?.offsetTop || 0;
-      const section6Top = GalleryRef.current?.offsetTop || 0;
-      const section7Top = VideoRef.current?.offsetTop || 0;
-      const section8Top = AppinmentRef.current?.offsetTop || 0;
-      const section9Top = TimeRef.current?.offsetTop || 0;
-      const section10Top = TestimonialRef.current?.offsetTop || 0;
-      const section11Top = LocationRef.current?.offsetTop || 0;
-      const section12Top = FeedbackRef.current?.offsetTop || 0;
-      const section13Top = InquiryRef.current?.offsetTop || 0;
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+  };
+  //Appoinment form
+  let Appoinment_formik = useFormik({
+    initialValues: {
+      Url_Alies: window.location.pathname,
+      FullName: "",
+      MobileNumber: "",
+      Date: "",
+      Time: "",
+    },
 
-      if (scrollPosition >= section1Top && scrollPosition < section2Top) {
-        setActiveMenu("Home");
-      } else if (
-        scrollPosition >= section2Top &&
-        scrollPosition < section3Top
-      ) {
-        setActiveMenu("About");
-      } else if (
-        scrollPosition >= section3Top &&
-        scrollPosition < section4Top
-      ) {
-        setActiveMenu("Service");
-      } else if (
-        scrollPosition >= section4Top &&
-        scrollPosition < section5Top
-      ) {
-        setActiveMenu("Product");
-      } else if (
-        scrollPosition >= section5Top &&
-        scrollPosition < section6Top
-      ) {
-        setActiveMenu("Payment");
-      } else if (
-        scrollPosition >= section6Top &&
-        scrollPosition < section7Top
-      ) {
-        setActiveMenu("Gallery");
-      } else if (
-        scrollPosition >= section7Top &&
-        scrollPosition < section8Top
-      ) {
-        setActiveMenu("Video");
-      } else if (
-        scrollPosition >= section8Top &&
-        scrollPosition < section9Top
-      ) {
-        setActiveMenu("Appoinment");
-      } else if (
-        scrollPosition >= section9Top &&
-        scrollPosition < section10Top
-      ) {
-        setActiveMenu("Time");
-      } else if (
-        scrollPosition >= section10Top &&
-        scrollPosition < section11Top
-      ) {
-        setActiveMenu("Testimonial");
-      } else if (
-        scrollPosition >= section11Top &&
-        scrollPosition < section12Top
-      ) {
-        setActiveMenu("Location");
-      } else if (
-        scrollPosition >= section12Top &&
-        scrollPosition < section13Top
-      ) {
-        setActiveMenu("Feedback");
-      } else if (scrollPosition >= section13Top) {
-        setActiveMenu("Inquiry");
-      }
-    };
+    //Validation :
+    validationSchema: AppoinmentValidateSchema,
+    //Form Submit :
+    onSubmit: async (values) => {
+      setappoinmentLoader(true);
+      await api
+        .post(`/appoinment${window.location.pathname}`, values)
+        .then((res) => {
+          formik.values.FullName = "";
+          formik.values.Time = "";
+          formik.values.MobileNumber = "";
+          formik.values.Date = "";
 
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup event listener on unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+          setAppoinmentPopup(true);
+          setappoinmentLoader(false);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setAppoinmentPopup(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          setappoinmentLoader(false);
+          setAppoinmentPopupError(true);
+          setTimeout(() => {
+            setAppoinmentPopupError(false);
+          }, 3000);
+          setErrorMessage(error.response.data.message);
+        });
+    },
+  });
 
   return (
     <div className="CAB_DRIVERS_PREVIEW_CONTAINER">
@@ -681,39 +487,39 @@ const CAB_DRIVERS_PREVIEW = () => {
 
               {/* Actions */}
               <div className="contacts_btns">
-          {/* Call */}
-          <a href="tel:+919344482370" target="_blank">
-            <BiSolidPhoneCall className="icon" />
+                {/* Call */}
+                <a href="tel:+919344482370" target="_blank">
+                  <BiSolidPhoneCall className="icon" />
 
-            <small>Call</small>
-          </a>
-          {/* Mail */}
-          <a href={`mailto:contact@aristostechindia.com`} target="_blank">
-            <MdOutgoingMail className="icon" />
+                  <small>Call</small>
+                </a>
+                {/* Mail */}
+                <a href={`mailto:contact@aristostechindia.com`} target="_blank">
+                  <MdOutgoingMail className="icon" />
 
-            <small>Mail</small>
-          </a>
-          {/* Whatsup */}
-          <a
-            href={`https://wa.me/+919344482370?text=${encodeURIComponent(
-              `Hi there!`
-            )}`}
-            target="_blank"
-          >
-            <RiWhatsappFill className="icon" />
+                  <small>Mail</small>
+                </a>
+                {/* Whatsup */}
+                <a
+                  href={`https://wa.me/+919344482370?text=${encodeURIComponent(
+                    `Hi there!`
+                  )}`}
+                  target="_blank"
+                >
+                  <RiWhatsappFill className="icon" />
 
-            <small>Whatsapp</small>
-          </a>
-          {/* Direction */}
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
-            target="_blank"
-          >
-            <FaDirections className="icon" />
+                  <small>Whatsapp</small>
+                </a>
+                {/* Direction */}
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
+                  target="_blank"
+                >
+                  <FaDirections className="icon" />
 
-            <small>Direction</small>
-          </a>
-        </div>
+                  <small>Direction</small>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1409,8 +1215,8 @@ const CAB_DRIVERS_PREVIEW = () => {
             <h4>Google Pay</h4>
           </div>
           <div className="quote">
-              <small>Scan with pay any UPI App</small>
-            </div>
+            <small>Scan with pay any UPI App</small>
+          </div>
           <div className="qr_image_box">
             <div className="user_name">
               <h4>
@@ -1423,9 +1229,7 @@ const CAB_DRIVERS_PREVIEW = () => {
                 alt="qrcode"
               />
             </div>
-        
           </div>
-  
         </div>
         {/* Gallery */}
         <div className="gallery" ref={GalleryRef}>
@@ -1506,6 +1310,188 @@ const CAB_DRIVERS_PREVIEW = () => {
             </div>
           </div>
         </div>
+        {/* //Appinment */}
+
+        <div className="Appoinment" ref={AppoinmentRef}>
+          <div className="CAB_DRIVERS_TITLE_PREVIEW">
+            <h3>Appoinment</h3>
+          </div>
+          {/* Success and Error Popup */}
+          <div className="popup_message_container">
+            <div
+              className="popup_success_box"
+              id={AppoinmentPopup ? "successOpen" : "successClose"}
+            >
+              <div className="popup_message">{successMessage}</div>
+              <div
+                className="popup_close"
+                onClick={() => setAppoinmentPopup(false)}
+              >
+                <i className="bx bx-x"></i>
+              </div>
+            </div>
+
+            {AppoinmentPopupError ? (
+              <div className="popup_error_box">
+                <div className="popup_message">{errorMessage}</div>
+                <div
+                  className="popup_close"
+                  onClick={() => setAppoinmentPopupError(false)}
+                >
+                  <i className="bx bx-x"></i>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="appinment_form_container">
+            <form
+              className="appinment_form"
+              onSubmit={Appoinment_formik.handleSubmit}
+            >
+              <div className="form_group">
+                <label
+                  htmlFor="FullName"
+                  className={
+                    Appoinment_formik.errors.FullName ? "labelError" : ""
+                  }
+                >
+                  {Appoinment_formik.errors.FullName
+                    ? Appoinment_formik.errors.FullName
+                    : `FullName`}
+                  <sup style={{ color: "red" }}>*</sup>
+                </label>
+                <input
+                  type="text"
+                  name="FullName"
+                  id="FullName"
+                  placeholder="Enter Your FullName"
+                  value={Appoinment_formik.values.FullName}
+                  onChange={Appoinment_formik.handleChange}
+                  className={
+                    Appoinment_formik.errors.FullName &&
+                    Appoinment_formik.touched.FullName
+                      ? "input_error"
+                      : "input_success"
+                  }
+                  //  className="date-input"
+                />
+              </div>
+              <div className="form_group">
+                <label
+                  htmlFor="MobileNumber"
+                  className={
+                    Appoinment_formik.errors.MobileNumber ? "labelError" : ""
+                  }
+                >
+                  {Appoinment_formik.errors.MobileNumber
+                    ? Appoinment_formik.errors.MobileNumber
+                    : `MobileNumber`}
+                  <sup style={{ color: "red" }}>*</sup>
+                </label>
+                <input
+                  type="tel"
+                  name="MobileNumber"
+                  id="MobileNumber"
+                  placeholder="Enter Your MobileNumber"
+                  value={Appoinment_formik.values.MobileNumber}
+                  onChange={Appoinment_formik.handleChange}
+                  className={
+                    Appoinment_formik.errors.MobileNumber &&
+                    Appoinment_formik.touched.MobileNumber
+                      ? "input_error"
+                      : "input_success"
+                  }
+                />
+              </div>
+              <div className="form_group">
+                <label
+                  htmlFor="Date"
+                  className={Appoinment_formik.errors.Date ? "labelError" : ""}
+                >
+                  {Appoinment_formik.errors.Date
+                    ? Appoinment_formik.errors.Date
+                    : `Date`}
+                  <sup style={{ color: "red" }}>*</sup>
+                </label>
+                <input
+                  type="date"
+                  name="Date"
+                  id="Date"
+                  placeholder="Enter Your date"
+                  value={Appoinment_formik.values.Date}
+                  onChange={Appoinment_formik.handleChange}
+                  className={` date-input
+                                ${
+                                  Appoinment_formik.errors.Date &&
+                                  Appoinment_formik.touched.Date
+                                }
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                />
+              </div>
+              <div className="form_group">
+                <label
+                  htmlFor="Time"
+                  className={Appoinment_formik.errors.Time ? "labelError" : ""}
+                >
+                  {Appoinment_formik.errors.Time
+                    ? Appoinment_formik.errors.Time
+                    : `Time`}
+                  <sup style={{ color: "red" }}>*</sup>
+                </label>
+                <select
+                  name="Time"
+                  id="Time"
+                  placeholder="Enter Your Time"
+                  value={Appoinment_formik.values.Time}
+                  onChange={Appoinment_formik.handleChange}
+                  className={` date-input
+                                ${
+                                  Appoinment_formik.errors.Time &&
+                                  Appoinment_formik.touched.Time
+                                }
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                >
+                  <option value="">Select Your Time</option>
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="9:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="11:00 AM">12:00 AM</option>
+                  <option value="01:00 PM">01:00 PM</option>
+                  <option value="01:00 PM">02:00 PM</option>
+                  <option value="03:00 PM">03:00 PM</option>
+                  <option value="03:00 PM">04:00 PM</option>
+                  <option value="03:00 PM">05:00 PM</option>
+                  <option value="03:00 PM">06:00 PM</option>
+                </select>
+              </div>
+              <div className="form_submit">
+                <button type="submit" className="submit-btn">
+                  {appoinmentLoader ? (
+                    <span className="inquiryloader"></span>
+                  ) : (
+                    <span className="material-symbols-outlined">send</span>
+                  )}
+                  Book Now
+                </button>
+                <button
+                  type="button"
+                  className="submit-btn"
+                  onClick={Appoinment_formik.resetForm}
+                >
+                  <span className="material-symbols-outlined">clear_all</span>
+                  clear
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
         {/* Opentime */}
         <div className="time_container" ref={TimeRef}>
           <div className="CAB_DRIVERS_TITLE_PREVIEW">
@@ -1578,8 +1564,6 @@ const CAB_DRIVERS_PREVIEW = () => {
                     src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
                     alt=""
                   />
-
-               
                 </div>
               </div>
               <div className="testimonial_list">
@@ -1600,8 +1584,6 @@ const CAB_DRIVERS_PREVIEW = () => {
                     src="https://img.freepik.com/premium-vector/avatar-office-worker-cartoon-style-artful-office-mans-avatar-skillfully-blend-design_198565-9434.jpg?w=740"
                     alt=""
                   />
-
-                
                 </div>
               </div>
               <div className="testimonial_list">
@@ -1622,8 +1604,6 @@ const CAB_DRIVERS_PREVIEW = () => {
                     src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
                     alt=""
                   />
-
-                 
                 </div>
               </div>
               <div className="testimonial_list">
@@ -1644,13 +1624,12 @@ const CAB_DRIVERS_PREVIEW = () => {
                     src="https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
                     alt=""
                   />
-
-                 
                 </div>
               </div>
             </Carousel>
           </div>
         </div>
+
         {/* GoogleMap */}
 
         <div className="google_map_container" ref={LocationRef}>
@@ -1672,18 +1651,10 @@ const CAB_DRIVERS_PREVIEW = () => {
             <span className="material-symbols-outlined">reviews</span>
           </div>
           <div className="feedback_container">
-            <form action="" onSubmit={feedbackFormik.handleSubmit}>
+            <form action="">
               <div className="form_group">
-                <label
-                  htmlFor="clientName_Input"
-                  className={`${
-                    feedbackFormik.errors.userName ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.userName &&
-                  feedbackFormik.errors.userName
-                    ? feedbackFormik.errors.userName
-                    : "Your Name"}
+                <label htmlFor="clientName_Input">
+                  Your FullName
                   <span>
                     <sup>*</sup>
                   </span>
@@ -1693,24 +1664,11 @@ const CAB_DRIVERS_PREVIEW = () => {
                   placeholder="Enter Your Name"
                   name="userName"
                   id="userName"
-                  // value={userName}
-                  // onChange={(e)=>setUserName(e.target.value)}
-                  value={feedbackFormik.values.userName}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
                 />
               </div>
               <div className="form_group">
-                <label
-                  htmlFor="clientFeedBack_Input"
-                  className={`${
-                    feedbackFormik.errors.userFeedback ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.userFeedback &&
-                  feedbackFormik.errors.userFeedback
-                    ? feedbackFormik.errors.userFeedback
-                    : "Your FeedBack"}
+                <label htmlFor="clientFeedBack_Input">
+                  Your FeedBack
                   <span>
                     <sup>*</sup>
                   </span>
@@ -1721,24 +1679,11 @@ const CAB_DRIVERS_PREVIEW = () => {
                   cols="30"
                   rows="3"
                   placeholder="Enter your Feedback"
-                  // value={userFeedback}
-                  // onChange={(e)=>setUserFeedback(e.target.value)}
-                  value={feedbackFormik.values.userFeedback}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
                 ></textarea>
               </div>
               <div className="form_group">
-                <label
-                  htmlFor="clientName_Input"
-                  className={`${
-                    feedbackFormik.errors.currentRatting ? "error" : ""
-                  } `}
-                >
-                  {feedbackFormik.touched.currentRatting &&
-                  feedbackFormik.errors.currentRatting
-                    ? feedbackFormik.errors.currentRatting
-                    : "Ratting"}
+                <label htmlFor="clientName_Input">
+                  Ratting
                   <span>
                     <sup>*</sup>
                   </span>
@@ -1748,14 +1693,6 @@ const CAB_DRIVERS_PREVIEW = () => {
                   data-rating="0"
                   name="currentRatting"
                   id="currentRatting"
-                  onMouseOver={handleRatting}
-                  onMouseLeave={removeRatting}
-                  onClick={RattingSetted}
-                  // value={currentRatting}
-                  // onChange={(e)=>setCurrentRatting(e.target.value)}
-                  value={feedbackFormik.values.currentRatting}
-                  onChange={feedbackFormik.handleChange}
-                  onBlur={feedbackFormik.handleBlur}
                 >
                   <span className="ratting_star">
                     <i className="bx bxs-star star" data-rating="1"></i>
@@ -1968,4 +1905,4 @@ const CAB_DRIVERS_PREVIEW = () => {
   );
 };
 
-export default CAB_DRIVERS_PREVIEW;
+export default Dynamic_VCard_PREVIEW;

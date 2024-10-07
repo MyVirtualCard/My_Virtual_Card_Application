@@ -697,6 +697,22 @@ const VCard_Form_Edit = () => {
                 ></i>
                 <small id="Timer_Design">Timer_Design</small>
               </div>
+              <div
+                className="menu_item"
+                onClick={() => {
+                  setShowForm("Dynamic Theme"), setDynamicForm("Testimonial_Design");
+                }}
+                id={DynamicForm === "Testimonial_Design" ? "menu_active" : ""}
+              >
+               
+                <span className="material-symbols-outlined"
+                 style={{ color: "blue" }}
+                  id="Testimonial_Design"
+                >
+share_reviews
+</span>
+                <small id="Timer_Design">Testimonial_Design</small>
+              </div>
             </div>
           )}
 

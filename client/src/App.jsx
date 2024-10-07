@@ -69,6 +69,7 @@ import CAB_DRIVERS_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New
 import TAXI_SERVICE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/New_Version_VCards/TAXI_SERVICE_PREVIEW.jsx";
 import DOCTOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/DOCTOR_LIVE.jsx";
 import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/ADVOCATE_LIVE.jsx";
+import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW.jsx";
 
 //Import All component:
 const App = () => {
@@ -198,6 +199,19 @@ const App = () => {
    let [TimerSubTitleColor, setTimerSubTitleColor] = useState("gray");
    let [TimerBoxBorderRadius, setTimerBoxBorderRadius] = useState([5]);
    let[TimerUpdateToggle,setTimerUpdateToggle]=useState(false);
+  //  9]Testimonial states
+  let[TestimonialBackColor,setTestimonialBackColor]=useState('gray');
+  let[TestimonialTextColor,setTestimonialTextColor]=useState('white');
+  let[TestimonialTitleColor,setTestimonialTitleColor]=useState('yellow');
+  let[TestimonialClientNameColor,setTestimonialClientNameColor]=useState('orange');
+  let [FlexDirection, setFlexDirection] = useState('row');
+  let[UserDataFlexDirection, setUserDataFlexDirection]=useState('column');
+  let[UserDataJustifyContent,setUserDataJustifyContent]=useState('center');
+  let[UserDataAlignItems,setUserDataAlignItems]=useState('center');
+  let[TestimonialBorderRadius,setTestimonialBorderRadius]=useState([0]);
+  let[TestimonialImageBorderRadius,setTestimonialImageBorderRadius]=useState([0]);
+  let[TestimonialUpdateToggle,setTestimonialUpdateToggle]=useState(false);
+
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -461,6 +475,18 @@ const App = () => {
             TimerSubTitleColor, setTimerSubTitleColor,
             TimerBoxBorderRadius, setTimerBoxBorderRadius,
             TimerUpdateToggle,setTimerUpdateToggle,
+            // 9]Testimonial states
+            TestimonialBackColor,setTestimonialBackColor,
+            TestimonialTextColor,setTestimonialTextColor,
+            TestimonialTitleColor,setTestimonialTitleColor,
+            TestimonialClientNameColor,setTestimonialClientNameColor,
+            TestimonialBorderRadius,setTestimonialBorderRadius,
+            FlexDirection, setFlexDirection,
+            UserDataFlexDirection, setUserDataFlexDirection,
+            UserDataJustifyContent,setUserDataJustifyContent,
+            UserDataAlignItems,setUserDataAlignItems,
+            TestimonialImageBorderRadius,setTestimonialImageBorderRadius,
+            TestimonialUpdateToggle,setTestimonialUpdateToggle,
           }}
         >
           <Suspense fallback={<FallBack />}>
@@ -566,6 +592,10 @@ const App = () => {
               <Route
                 path="/Cab_Drivers_Preview"
                 element={<CAB_DRIVERS_PREVIEW />}
+              />
+               <Route
+                path="/Dynamic_Vcard_Preview"
+                element={<Dynamic_VCard_PREVIEW />}
               />
               {/* Live VCards */}
 

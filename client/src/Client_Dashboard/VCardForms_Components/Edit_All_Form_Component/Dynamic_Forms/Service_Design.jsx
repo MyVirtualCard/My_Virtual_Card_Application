@@ -52,54 +52,7 @@ setServiceThemeUpdateToggle
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-     // Fetch Vcard Theme
-     async function handleServiceThemeFetch() {
-      setFormSubmitLoader(true);
-      try {
-        await api
-          .get(`/service_theme/${URL_Alies}`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user.token}`,
-            },
-          })
-          .then((res) => {
-            if (res.data.data.length == 0) {
-              setFormSubmitLoader(false);
-              setUpdateToggle(false);
-            } else {
-              setServiceBackColor(res.data.data[0].ServiceBackColor);
-              setServiceTextColor(res.data.data[0].ServiceTextColor);
-              setServiceTitleColor(res.data.data[0].ServiceTitleColor);
-              setServiceTitleFont(res.data.data[0].ServiceTitleFont);
-              setServiceTitleSize(res.data.data[0].ServiceTitleSize);
-              setServiceTitleUnit(res.data.data[0].ServiceTitleUnit);
-              setServiceFontWeight(res.data.data[0].ServiceFontWeight);
-              setServiceTitleAlign(res.data.data[0].ServiceTitleAlign);
-              setBtnBackColor(res.data.data[0].BtnBackColor);
-              setBtnTextColor(res.data.data[0].BtnTextColor);
-              setBtnHoverBackColor(res.data.data[0].BtnHoverBackColor);
-              setBtnHoverTextColor(res.data.data[0].BtnHoverTextColor)
-            
-              setUpdateToggle(true);
-              setFormSubmitLoader(false);
-            }
-          })
-          .catch((error) => {
-            // toast.error(error.response.data.message);
-            setFormSubmitLoader(false);
-            setUpdateToggle(false);
-          });
-      } catch (error) {
-        toast.error(error.message);
-        setFormSubmitLoader(false);
-        setUpdateToggle(false);
-      }
-    }
-  
-    useEffect(() => {
-      // handleServiceThemeFetch();
-    }, []);
+
     // Create Vcard Theme
     async function handleServiceThemeSubmit(e) {
       e.preventDefault();
