@@ -85,7 +85,7 @@ let Basic_Plans = [
     batches: basic,
     Duration: "Yearly",
     PlanPrice: 599,
-    VCardCount: "08",
+    VCardCount: "",
     Access: [
       {
         id: 1,
@@ -260,11 +260,11 @@ let Standard_Plans = [
 let EnterPrice_Plans = [
   {
     id: 4,
-    PlanName: "Enterprises",
+    PlanName: "EnterPrice",
     batches: enterprice,
     Duration: "Yearly",
-    PlanPrice: 1299,
-    VCardCount: "08",
+    PlanPrice: 1499,
+    VCardCount: "",
     Access: [
       {
         id: 1,
@@ -356,10 +356,15 @@ let EnterPrice_Plans = [
         icon: <i className="bx bxs-check-shield"></i>,
         text: "Payment upi linking",
       },
+      // {
+      //   id: 19,
+      //   icon: <i className="bx bxs-check-shield"></i>,
+      //   text: "Custom Domain (@ Rs.999 - optional)",
+      // },
       {
         id: 19,
         icon: <i className="bx bxs-check-shield"></i>,
-        text: "Custom Domain (@ Rs.999 - optional)",
+        text: "Custom Vcard Design's",
       },
     ],
   },
@@ -922,7 +927,7 @@ const Plan = () => {
                   </div>
                   <div className="card_count">
                     <p>
-                      No of VCard Design's : <span>{data.VCardCount}</span>
+                      Static VCard Design's  <span>{data.VCardCount}</span>
                     </p>
                   </div>
 
@@ -1013,7 +1018,7 @@ const Plan = () => {
                 </div>
               );
             })} */}
-            {/* {EnterPrice_Plans.map((data, index) => {
+            {EnterPrice_Plans.map((data, index) => {
               return (
                 <div
                   key={index}
@@ -1042,7 +1047,7 @@ const Plan = () => {
                   </div>
                   <div className="card_count">
                     <p>
-                      No of VCard Design's : <span>{data.VCardCount}</span>
+                      Dynamic VCard Design <span>{data.VCardCount}</span>
                     </p>
                   </div>
 
@@ -1071,7 +1076,7 @@ const Plan = () => {
                   </div>
                 </div>
               );
-            })} */}
+            })}
           </div>
         </div>
       </div>

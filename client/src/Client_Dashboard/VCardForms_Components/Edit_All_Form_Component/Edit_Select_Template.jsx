@@ -113,37 +113,13 @@ let StandardTemplate = [
   },
 ];
 let EnterpriceTemplate = [
+
   {
     id: 1,
-    image: Gym_Trainer,
-    TemplateName: "Gym Trainer",
-  },
-  {
-    id: 2,
-
-    image: Taxi_Service,
-    TemplateName: "Taxi Service",
-  },
-  {
-    id: 3,
-    image: Fashion_Desinger,
-    TemplateName: "Fashion Designer",
-  },
-  {
-    id: 4,
-    image: Manager,
-    TemplateName: "Manager",
-  },
-  {
-    id: 5,
     image: CorporateCompany,
-    TemplateName: "Corporate Company",
+    TemplateName: "Dynamic VCard",
   },
-  {
-    id: 6,
-    image: BeautyParlor,
-    TemplateName: "Beauty Parlor",
-  },
+  
 ];
 
 const Select_Template = () => {
@@ -365,7 +341,7 @@ const Select_Template = () => {
           ) : (
             ""
           )}
-          {currentPlan === "Enterprises" ? (
+          {currentPlan === "EnterPrice" ? (
             <p>Total VCard Design's - {EnterpriceTemplate.length}</p>
           ) : (
             ""
@@ -522,7 +498,7 @@ const Select_Template = () => {
               ) : (
                 ""
               )}
-              {currentPlan === "Enterprises" ? (
+              {currentPlan === "EnterPrice" ? (
                 <>
                   {EnterpriceTemplate.map((data, index) => {
                     return (

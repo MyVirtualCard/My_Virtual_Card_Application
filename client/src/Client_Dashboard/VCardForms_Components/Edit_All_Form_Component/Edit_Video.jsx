@@ -120,7 +120,7 @@ const Edit_Video = () => {
               setShowForm("Testimonials");
             }, 500);
           }
-          if (currentPlan === "Enterprises" && VideoCount == 10) {
+          if (currentPlan === "EnterPrice" && VideoCount == 8) {
             setTimeout(() => {
               setShowForm("Testimonials");
             }, 500);
@@ -294,7 +294,7 @@ const Edit_Video = () => {
           ) : (
             ""
           )}
-          {currentPlan === "Enterprises" && VideoCount != 10 ? (
+          {currentPlan === "EnterPrice" && VideoCount != 8 ? (
             <button onClick={() => setVideoFormOpen(true)}>
               <i className="bx bx-plus"></i>Add New Video
             </button>
@@ -337,11 +337,11 @@ const Edit_Video = () => {
               ""
             )}
 
-            {currentPlan === "Enterprises" ? (
+            {currentPlan === "EnterPrice" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>
-                  Max Video addOn limit :<strong> {VideoCount} / 10 </strong>
+                  Max Video addOn limit :<strong> {VideoCount} / 8 </strong>
                 </small>
               </>
             ) : (

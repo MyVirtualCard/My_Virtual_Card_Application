@@ -22,7 +22,7 @@ export const PostTermConditionsData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkTermsLength = await TermConditionModel.find({

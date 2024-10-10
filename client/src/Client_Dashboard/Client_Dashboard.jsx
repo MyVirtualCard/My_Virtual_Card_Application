@@ -130,9 +130,7 @@ const Client_Dashboard = () => {
             </div>
           </div>
           <div className="sidemenu_title">
-            <div className="icon">
-              <SiCodesignal />
-            </div>
+   
             <h5 id={sideaNavToggle ? "menu_hide" : ""}>Design Your VCard</h5>
             <div className="hand_icon" id={sideaNavToggle ? "menu_hide" : ""}>
               <FaHandPointDown />

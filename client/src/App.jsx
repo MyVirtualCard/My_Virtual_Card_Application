@@ -211,7 +211,24 @@ const App = () => {
   let[TestimonialBorderRadius,setTestimonialBorderRadius]=useState([0]);
   let[TestimonialImageBorderRadius,setTestimonialImageBorderRadius]=useState([0]);
   let[TestimonialUpdateToggle,setTestimonialUpdateToggle]=useState(false);
-
+// 10]Appoinment Theme
+let[AppoinmentInputDesign,setAppoinmentInputDesign]=useState('Design1');
+let [LabelColor, setLabelColor] = useState("white");
+let [InputBorderColor, setInputBorderColor] = useState("white");
+let [InputBorderOnFocus, setInputBorderOnFocus] = useState("yellow");
+let [PlaceholderColor, setPlaceholderColor] = useState("white");
+let [InputColor, setInputColor] = useState("white");
+let[InputError,setInputError]=useState('red');
+let[AppoinmentUpdateToggle,setAppoinmentUpdateToggle]=useState(false);
+// 10]Feedback Theme
+let[FeedbackInputDesign,setFeedbackInputDesign]=useState('Design3');
+let [FeedbackLabelColor, setFeedbackLabelColor] = useState("white");
+let [FeedbackInputBorderColor, setFeedbackInputBorderColor] = useState("white");
+let [FeedbackInputBorderOnFocus, setFeedbackInputBorderOnFocus] = useState("yellow");
+let [FeedbackPlaceholderColor, setFeedbackPlaceholderColor] = useState("white");
+let [FeedbackInputColor, setFeedbackInputColor] = useState("white");
+let[FeedbackInputError,setFeedbackInputError]=useState('red');
+let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -487,6 +504,32 @@ const App = () => {
             UserDataAlignItems,setUserDataAlignItems,
             TestimonialImageBorderRadius,setTestimonialImageBorderRadius,
             TestimonialUpdateToggle,setTestimonialUpdateToggle,
+            // 10]Appoinment States
+            AppoinmentInputDesign,setAppoinmentInputDesign,
+            LabelColor, setLabelColor,
+            InputBorderColor, setInputBorderColor,
+            InputBorderOnFocus, setInputBorderOnFocus,
+            PlaceholderColor, setPlaceholderColor,
+            InputError,setInputError,
+            InputColor, setInputColor,
+            AppoinmentUpdateToggle,setAppoinmentUpdateToggle,
+            // 11]Feedback states
+            FeedbackInputDesign,
+            setFeedbackInputDesign,
+            FeedbackLabelColor,
+            setFeedbackLabelColor,
+            FeedbackInputBorderColor,
+            setFeedbackInputBorderColor,
+            FeedbackInputBorderOnFocus,
+            setFeedbackInputBorderOnFocus,
+            FeedbackPlaceholderColor,
+            setFeedbackPlaceholderColor,
+            FeedbackInputError,
+            setFeedbackInputError,
+            FeedbackInputColor,
+            setFeedbackInputColor,
+            FeedbackUpdateToggle,
+            setFeedbackUpdateToggle,
           }}
         >
           <Suspense fallback={<FallBack />}>

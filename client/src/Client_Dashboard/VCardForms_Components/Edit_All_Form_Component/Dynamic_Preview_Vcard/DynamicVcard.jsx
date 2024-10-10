@@ -35,6 +35,8 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
+import { FaUserGroup } from "react-icons/fa6";
+import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import { Cursor } from "react-simple-typewriter";
@@ -42,7 +44,9 @@ import { filter } from "lodash";
 import { translate } from "react-range/lib/utils";
 import { color } from "framer-motion";
 import { toast } from "react-toastify";
+import ReactStars from "react-stars";
 import axios from "axios";
+import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
 const DynamicVcard = () => {
   let {
     user,
@@ -249,6 +253,40 @@ const DynamicVcard = () => {
     setFlexDirection,
     TestimonialUpdateToggle,
     setTestimonialUpdateToggle,
+    // 10]Appoinemnt states
+    AppoinmentInputDesign,
+    setAppoinmentInputDesign,
+    LabelColor,
+    setLabelColor,
+    InputBorderColor,
+    setInputBorderColor,
+    InputBorderOnFocus,
+    setInputBorderOnFocus,
+    PlaceholderColor,
+    setPlaceholderColor,
+    InputError,
+    setInputError,
+    InputColor,
+    setInputColor,
+    AppoinmentUpdateToggle,
+    setAppoinmentUpdateToggle,
+    // 11]Feedback states
+    FeedbackInputDesign,
+    setFeedbackInputDesign,
+    FeedbackLabelColor,
+    setFeedbackLabelColor,
+    FeedbackInputBorderColor,
+    setFeedbackInputBorderColor,
+    FeedbackInputBorderOnFocus,
+    setFeedbackInputBorderOnFocus,
+    FeedbackPlaceholderColor,
+    setFeedbackPlaceholderColor,
+    FeedbackInputError,
+    setFeedbackInputError,
+    FeedbackInputColor,
+    setFeedbackInputColor,
+    FeedbackUpdateToggle,
+    setFeedbackUpdateToggle,
   } = useContext(Context);
   let [isHovered, setIsHovered] = useState(false);
   let [BtnisHovered, setBtnIsHovered] = useState(false);
@@ -300,8 +338,6 @@ const DynamicVcard = () => {
         position: `${LogoPosition}`,
         top: `${LogoTopPosition}${LogoPositionUnit}`,
         left: `${LogoLeftPosition}${LogoPositionUnit}`,
-        bottom: `${LogoBottomPosition}${LogoPositionUnit}`,
-        right: `${LogoRightPosition}${LogoPositionUnit}`,
         transform: `translate(-${LogoLeftPosition}${LogoPositionUnit},-${LogoTopPosition}${LogoPositionUnit})`,
         borderRadius: `${LogoBorderRadius}${LogoBorderRadiusUnit}`,
       },
@@ -352,13 +388,25 @@ const DynamicVcard = () => {
   };
 
   const [width, setWidth] = useState(window.innerWidth);
+  //Success and error popup state
+  let [successMessage, setSuccessMessage] = useState();
+  let [successPopupOpen, setSuccessPopupOpen] = useState(false);
+  let [errorMessage, setErrorMessage] = useState();
+  let [errorPopupOpen, setErrorPopupOpen] = useState(false);
+  let [InquiryLoader, setInquiryLoader] = useState(false);
+  let [feedbackLoader, setFeedbackLoader] = useState(false);
+  let [appoinmentLoader, setappoinmentLoader] = useState(false);
+  let [commentOpen, setCommentOpen] = useState(false);
+  let [popupBannerToggle, setPopUpBannerToggle] = useState(false);
+  let [FeedbackPopup, setFeedbackPopup] = useState(false);
+  let [FeedbackPopupError, setFeedbackPopupError] = useState(false);
+  let [AppoinmentPopup, setAppoinmentPopup] = useState(false);
+  let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
   let [feedbackForm, setFeedbackForm] = useState({
     userName: "",
     userFeedback: "",
     currentRatting: 0,
   });
-  let [feedbackLoader, setFeedbackLoader] = useState(false);
-  let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
 
   const HtmlRenderer = ({ htmlString }) => {
@@ -386,7 +434,7 @@ const DynamicVcard = () => {
   let PaymentRef = useRef(null);
   let GalleryRef = useRef(null);
   let VideoRef = useRef(null);
-  let AppinmentRef = useRef(null);
+  let AppoinmentRef = useRef(null);
   let TimeRef = useRef(null);
   let TestimonialRef = useRef(null);
   let LocationRef = useRef(null);
@@ -477,7 +525,7 @@ const DynamicVcard = () => {
       const section5Top = PaymentRef.current?.offsetTop || 0;
       const section6Top = GalleryRef.current?.offsetTop || 0;
       const section7Top = VideoRef.current?.offsetTop || 0;
-      const section8Top = AppinmentRef.current?.offsetTop || 0;
+      const section8Top = Appoinment.current?.offsetTop || 0;
       const section9Top = TimeRef.current?.offsetTop || 0;
       const section10Top = TestimonialRef.current?.offsetTop || 0;
       const section11Top = LocationRef.current?.offsetTop || 0;
@@ -869,7 +917,9 @@ const DynamicVcard = () => {
             setTestimonialBackColor(res.data.data[0].TestimonialBackColor);
             setTestimonialTextColor(res.data.data[0].TestimonialTextColor);
             setTestimonialTitleColor(res.data.data[0].TestimonialTitleColor);
-            setTestimonialClientNameColor(res.data.data[0].TestimonialClientNameColor);
+            setTestimonialClientNameColor(
+              res.data.data[0].TestimonialClientNameColor
+            );
             setTestimonialBorderRadius(
               res.data.data[0].TestimonialBorderRadius
             );
@@ -896,7 +946,45 @@ const DynamicVcard = () => {
       setTestimonialUpdateToggle(false);
     }
   }
+  //Fetch Appoinment:
+  async function handleAppoinmentThemeFetch() {
+    setVcardPreviewLoader(true);
+    try {
+      await api
+        .get(`/appoinment_theme/${URL_Alies}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.data.length == 0) {
+            setVcardPreviewLoader(false);
+            setAppoinmentUpdateToggle(false);
+          } else {
+            setAppoinmentInputDesign(res.data.data[0].AppoinmentInputDesign);
+            setLabelColor(res.data.data[0].LabelColor);
+            setInputBorderColor(res.data.data[0].InputBorderColor);
+            setInputBorderOnFocus(res.data.data[0].InputBorderOnFocus);
+            setPlaceholderColor(res.data.data[0].PlaceholderColor);
+            setInputColor(res.data.data[0].InputColor);
+            setInputError(res.data.data[0].InputError);
 
+            setAppoinmentUpdateToggle(true);
+            setVcardPreviewLoader(false);
+          }
+        })
+        .catch((error) => {
+          // toast.error(error.response.data.message);
+          setVcardPreviewLoader(false);
+          setAppoinmentUpdateToggle(false);
+        });
+    } catch (error) {
+      // toast.error(error.message);
+      setVcardPreviewLoader(false);
+      setAppoinmentUpdateToggle(false);
+    }
+  }
   useEffect(() => {
     handleVcardThemeFetch();
     handleImageThemeFetch();
@@ -906,8 +994,102 @@ const DynamicVcard = () => {
     handleProductThemeFetch();
     handleTimerThemeFetch();
     handleTestimonialThemeFetch();
+    handleAppoinmentThemeFetch();
   }, []);
-  console.log(TestimonialImageBorderRadius)
+  //Appoinment form
+  let Appoinment_formik = useFormik({
+    initialValues: {
+      Url_Alies: window.location.pathname,
+      FullName: "",
+      MobileNumber: "",
+      Date: "",
+      Time: "",
+    },
+
+    //Validation :
+    validationSchema: AppoinmentValidateSchema,
+    //Form Submit :
+    onSubmit: async (values) => {
+      setappoinmentLoader(true);
+      await api
+        .post(`/appoinment${window.location.pathname}`, values)
+        .then((res) => {
+          formik.values.FullName = "";
+          formik.values.Time = "";
+          formik.values.MobileNumber = "";
+          formik.values.Date = "";
+
+          setAppoinmentPopup(true);
+          setappoinmentLoader(false);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setAppoinmentPopup(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          setappoinmentLoader(false);
+          setAppoinmentPopupError(true);
+          setTimeout(() => {
+            setAppoinmentPopupError(false);
+          }, 3000);
+          setErrorMessage(error.response.data.message);
+        });
+    },
+  });
+  //Feedback Form Logic :
+  let feedbackFormik = useFormik({
+    initialValues: {
+      URL_Alies: window.location.pathname,
+      ClientName: "",
+      ClientFeedback: "",
+      ClientRatting: 0,
+    },
+
+    //Validation :
+    validationSchema: Yup.object().shape({
+      ClientName: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(50, "Name must be 20 character or less")
+        .required("Name is required"),
+      ClientFeedback: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(400, "Feedback must be 100 character or less")
+        .required("Feedback is required"),
+      ClientRatting: Yup.number()
+        .required("Rating is required")
+        .min(1, "Rating must be at least 1 star"),
+    }),
+    //Form Submit :
+    onSubmit: async (values) => {
+      setInquiryLoader(true);
+      setFeedbackLoader(true);
+      await api
+        .post(`/feedback${window.location.pathname}`, values)
+        .then((res) => {
+          setInquiryLoader(false);
+          setFeedbackPopup(true);
+          setInquiryLoader(false);
+          setSuccessMessage(res.data.message);
+          feedbackFormik.values.ClientName = "";
+          feedbackFormik.values.ClientFeedback = "";
+          feedbackFormik.values.ClientRatting = 0;
+          setCommentOpen(false);
+          setTimeout(() => {
+            setFeedbackPopup(false);
+          }, 2000);
+          setFeedbackLoader(false);
+        })
+        .catch((error) => {
+          setInquiryLoader(false);
+          setFeedbackPopupError(true);
+          setTimeout(() => {
+            setFeedbackPopupError(false);
+          }, 2000);
+          setErrorMessage(error.response.data.message);
+          setFeedbackLoader(false);
+        });
+    },
+  });
   return (
     <>
       {!VcardPreviewLoader ? (
@@ -915,6 +1097,114 @@ const DynamicVcard = () => {
           <style>
             /* Add your CSS here */
             {`
+                .Image_row_1 {
+      width: 100%;
+      max-height: auto;
+      height: auto;
+      position: relative;
+      z-index: 1;
+      display: flex;
+  flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      .slide_svg {
+        position: absolute;
+        width: 100%;
+        bottom: -6px;
+
+        svg {
+          transform: rotate(0deg);
+          height: 150px;
+        }
+    
+      }
+      .banner_image {
+        width: 100%;
+        max-height: 300px;
+        height: 300px;
+        overflow: hidden;
+        object-fit: cover;
+        object-position: top;
+        position:relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top;
+        }
+        // .overlay {
+        //   position: absolute;
+        //   bottom: 100%;
+        //   left: 0;
+        //   width: 100%;
+        //   height: 100%;
+        //   background: linear-gradient(#cd62e200 0%, ${VCardColour} 100%);
+        // }
+      }
+      .user_logo {
+        position: absolute;
+        bottom: 0%;
+        left: 50%;
+        transform: translate(-50%, -0%);
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        
+
+        img {
+          z-index: 2;
+          width: 100%;
+          height: 100%;
+          border-radius: 0.3rem;
+          // border-top-left-radius: 2.5rem;
+          // border-bottom-right-radius: 2.5rem;
+          object-fit: cover;
+          object-position: center;
+          border: 2px solid rgb(214, 214, 214) !important;
+          filter: drop-shadow(0px 4px 5px #ffffff66);
+          // animation: profileBorder 5s infinite linear;
+          @keyframes profileBorder {
+            0% {
+              border: 3px solid $card_back_colour;
+
+              transform: translateY(0px);
+            }
+            25% {
+              border: 3px solid #ffffff;
+
+              transform: translateY(-5px);
+            }
+            50% {
+              border: 3px solid #ffffff;
+
+              transform: translateY(-10px);
+            }
+            75% {
+              border: 3px solid rgb(255, 255, 255);
+
+              transform: translateY(-5px);
+            }
+            100% {
+              border: 3px solid $card_back_colour;
+
+              transform: translateY(0px);
+            }
+          }
+        }
+      }
+      .svg_image {
+        position: absolute;
+        bottom: -5%;
+        left: 0%;
+        right: 0%;
+        width: 100%;
+        z-index: 1;
+      }
+    }
          .basic_row_2 {
       padding: 1rem;
       width: 100%;
@@ -1720,6 +2010,2270 @@ padding:10px;
         }
       }
     }
+
+
+            .Appoinment {
+              padding: 1rem;
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: flex-start;
+              gap: 1rem;
+              position: relative;
+        
+           
+              .popup_message_container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                position: absolute;
+                top: 10%;
+                left: 20%;
+        
+                .popup_success_box {
+                  // display: 300px;
+                  z-index: 2;
+        
+                  background-color: #fff;
+                  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+                    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+                  border-radius: 5px;
+                  padding: 0.5px 1rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 1rem;
+                  position: relative;
+                  transition: transform 0.5s ease-in-out;
+                  z-index: -1;
+                  .popup_close {
+                    i {
+                      font-size: 1.4rem;
+                      font-weight: 600;
+                      color: rgb(255, 79, 79);
+                      cursor: pointer;
+                      transition: all 0.5s ease;
+                      &:hover {
+                        transform: rotate(90deg);
+                        transition: all 0.5s ease;
+                      }
+                    }
+                  }
+                  .popup_message {
+                    font-size: 0.9rem;
+                    color: #525252;
+                    font-weight: 550;
+                  }
+                }
+                #successOpen {
+                  transform: translateX(0px);
+                  transition: transform 0.5s ease-in-out;
+                }
+                #successClose {
+                  transform: translateX(500px);
+        
+                  transition: transform 0.5s ease-in-out;
+                }
+                .popup_error_box {
+                  display: inline-block;
+                  height: 40px;
+                  background-color: rgb(255, 177, 141) !important;
+                  border-radius: 5px;
+                  padding: 0px 3rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 3rem;
+                  position: relative;
+                  z-index: -1;
+                  .popup_close {
+                    i {
+                      font-size: 1.4rem;
+                      color: rgb(255, 255, 255);
+                      font-weight: 600;
+                      cursor: pointer;
+                      transition: all 0.5s ease;
+                      &:hover {
+                        transform: rotate(90deg);
+                        transition: all 0.5s ease;
+                      }
+                    }
+                  }
+                  .popup_message {
+                    font-size: 0.9rem;
+                    color: #494949;
+                    font-weight: 550;
+                  }
+                }
+              }
+              .appinment_form_container {
+                width: 100%;
+        
+                form {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  justify-content: flex-start;
+                  gap: 15px;
+                  width: 100%;
+        
+              
+                  .form_group{
+
+                    input{
+                      background-color: transparent;
+                      border:${InputBorderColor};
+                      color:${InputColor};
+
+                        &::placeholder{
+                      color:${PlaceholderColor};
+                      font-size:0.8rem;
+                      }
+                    }
+                      label{
+                      font-size:0.7rem !important;
+                      }
+          .labelError {
+              color: ${InputError} !important;
+              font-family: 500;
+              font-size: 0.6rem;
+            }
+
+            .input_error {
+              border: 1px solid red  !important;
+              border-radius: 5px;
+            }
+
+            .error {
+              position: absolute;
+              top: 12%;
+              right: 0%;
+              color: $error_text_color;
+              font-size: 0.7rem;
+              padding: 5px 0px 0px 0px;
+            }
+
+            .desc_error {
+              position: absolute;
+              top: 0%;
+              right: 0%;
+              color: $error_text_color;
+              font-size: 0.7rem;
+              padding: 5px 0px 0px 0px;
+            }
+                    input[type=date]{
+                      width: 100%;
+                      outline:none;
+                       
+                          color:${InputColor};
+                    }
+                    select{
+                      width: 100%;
+                      background-color: transparent;
+                       outline:none;
+                  
+                          color:${InputColor};
+
+                          option{
+                          color:gray;
+                          }
+                    }
+                  }
+                  .Design1 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design1 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: 1px solid ${InputBorderColor};
+                      border-radius: 0.3rem;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+
+                    &::placeholder{
+                      color:${PlaceholderColor};
+                      font-size:0.7rem;
+                      }
+                      &:focus {
+                        border: 1px solid ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; // Change icon color when input is focused
+                      }
+                    }
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: gray;
+                      display: none;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                    .icon {
+                      position: absolute;
+                      top: 20%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                      color: ${InputBorderColor};
+                    }
+                    .iconwithlabel {
+                      position: absolute;
+                      top: 55%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+         color: ${InputBorderColor};
+                    }
+                    .iconwithanimation {
+                        position: absolute;
+                        top: 55%;
+                        left: 2%;
+          
+                        font-size: 1.3rem;
+          
+                        color: ${InputBorderColor};
+                      }
+                  }
+                  .Design2 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design2 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: none;
+                      border-bottom: 1px solid ${InputBorderColor};
+                      position: relative;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+        
+                      &:focus {
+                        border-bottom: 1px solid ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; // Change icon color when input is focused
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: ${LabelColor};
+                      display: none;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                    .icon {
+                      position: absolute;
+                      top: 20%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                      color: ${InputBorderColor};
+                    }
+                    .iconwithlabel {
+                      position: absolute;
+                      top: 55%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                       color: ${InputBorderColor};
+                    }
+                    .iconwithanimation {
+                        position: absolute;
+                        top: 55%;
+                        left: 2%;
+          
+                        font-size: 1.3rem;
+          
+                       color: ${InputBorderColor};
+                      }
+                  }
+                  .Design3 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design3 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: 1px solid ${InputBorderColor};
+                      border-radius: 0.3rem;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+        
+                      &:focus {
+                        border: 1px solid ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; 
+                      }
+                      &:focus + .iconwithlabel {
+                        color: ${InputBorderOnFocus};
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: ${LabelColor};
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                  
+                    .icon {
+                      position: absolute;
+                      top: 55%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                      color: ${InputBorderColor};
+                    }
+                    .icon {
+                        position: absolute;
+                        top: 55%;
+                        left: 2%;
+          
+                        font-size: 1.3rem;
+          
+                        color: ${InputBorderColor};
+                      }
+                  }
+                  .Design4 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design4 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: none;
+                      border-bottom: 1px solid ${InputBorderColor};
+                      position: relative;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+        
+                      &:focus {
+                        border-bottom: 1px solid ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; 
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: ${LabelColor};
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                   
+                    
+                    .icon {
+                        position: absolute;
+                        top: 55%;
+                        left: 2%;
+          
+                        font-size: 1.3rem;
+          
+                      color: ${InputBorderColor};
+                      }
+                  }
+                  .Design5 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design5 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: 1px solid ${InputBorderColor};
+                      border-radius: 0.3rem;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+                      box-shadow: none;
+                      transition: box-shadow 0.3s ease;
+        
+                      &:focus {
+                        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+                      }
+                     
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus};
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: gray;
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                   
+                    .icon {
+                      position: absolute;
+                      top: 55%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                      color: ${InputBorderColor};
+                    }
+                                }
+                  .Design6 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design6 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: none;
+                      border-bottom: 1px solid ${InputBorderColor};
+                      position: relative;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+        
+                      &::placeholder {
+                        transition: opacity 0.4s ease;
+                        opacity: 1;
+                      }
+        
+                      &:focus::placeholder {
+                        opacity: 0;
+                      }
+                      &:focus {
+                        border-bottom: 1px solid ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; 
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus};
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: gray;
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                    
+                 
+                   
+                    .icon {
+                        position: absolute;
+                        top: 55%;
+                        left: 2%;
+          
+                        font-size: 1.3rem;
+          
+                         color: ${InputBorderColor};
+                      }
+                  }
+                  .Design7 {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design7 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: 1px solid ${InputBorderColor};
+                      border-radius: 0.3rem;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+                      box-shadow: none;
+                      transition: box-shadow 0.3s ease;
+        
+                      @keyframes shake {
+                        0%,
+                        100% {
+                          transform: translateX(0);
+                        }
+                        20%,
+                        60% {
+                          transform: translateX(-5px);
+                        }
+                        40%,
+                        80% {
+                          transform: translateX(0px);
+                        }
+                      }
+        
+                      &:focus {
+                        animation: shake 1s ease-in-out;
+                        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus};
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; 
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: ${LabelColor};
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                 
+                   
+                    .icon {
+                        position: absolute;
+                        top: 55%;
+                        left: 2%;
+          
+                        font-size: 1.3rem;
+          
+                                  color: ${InputBorderColor};
+                      }
+                  }
+                  .Design8{
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design8 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: none;
+                      border-bottom: 1px solid ${InputBorderColor};
+                      position: relative;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+        
+                      &::placeholder {
+                        transition: opacity 0.4s ease;
+                        opacity: 1; // Full opacity by default
+                      }
+        
+                      &:focus::placeholder {
+                        opacity: 0; // Fades out the placeholder when focused
+                      }
+        
+                      &:focus {
+                        border-bottom: 1px solid ${InputBorderOnFocus};
+                        animation: bounce 1s ease-in-out;
+                      }
+                      @keyframes bounce {
+                        0%,
+                        20%,
+                        50%,
+                        80%,
+                        100% {
+                          transform: translateY(0);
+                        }
+                        40% {
+                          transform: translateY(-5px);
+                        }
+                        60% {
+                          transform: translateY(-2px);
+                        }
+                      }
+                      &:focus + .icon {
+                        color: ${InputBorderOnFocus}; // Change icon color when input is focused
+                      }
+                      &:focus + .iconwithlabel {
+                         color: ${InputBorderOnFocus};  // Change icon color when input is focused
+                      }
+                    }
+        
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: ${InputBorderColor};
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                  
+                    .icon {
+                      position: absolute;
+                      top: 55%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                        color: ${InputBorderColor};
+                    }
+               
+                  }
+                  .Design9{
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 5px;
+                    width: 100%;
+                    position: relative;
+        
+                    .Design9 {
+                      padding: 0.5rem 2rem;
+                      outline: none;
+                      width: 100%;
+                      border: 1px solid ${InputBorderColor};
+                      border-radius: 0.3rem;
+                      font-size: 0.9rem;
+                      letter-spacing: 1px;
+                      box-shadow: none;
+                      transition: box-shadow 0.3s ease;
+        
+                      @keyframes shake {
+                        0%,
+                        100% {
+                          transform: translateY(0);
+                        }
+                        20%,
+                        60% {
+                          transform: translateY(-3px);
+                        }
+                        40%,
+                        80% {
+                          transform: translateY(0px);
+                        }
+                      }
+                      @keyframes rotate {
+                          from {
+                            transform: rotate(0deg);
+                          }
+                          to {
+                            transform: rotate(360deg);
+                          }
+                        }
+        
+                      &:focus {
+                        animation: shake 1s ease-in-out;
+                        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); // Blue glowing effect on focus
+                      }
+                    
+                      &:focus + .icon {
+                          color: ${InputBorderOnFocus}; // Change icon color when input is focused
+                          animation: rotate 0.5s ease-in-out;
+                        }
+                    }
+                 
+                    label {
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: gray;
+                      display: block;
+        
+                      sup {
+                        color: red;
+                        font-size: 1rem;
+                      }
+                    }
+                    .slideLabel {
+                        position: absolute;
+                        left: 10px;
+                        top: 10px;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                      }
+                 
+                    .icon {
+                      position: absolute;
+                      top: 55%;
+                      left: 2%;
+        
+                      font-size: 1.3rem;
+        
+                      color: ${InputBorderColor};
+                    }
+                   
+                  }
+                  .form_submit {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 2rem;
+                    // margin: 1rem auto;
+                    width: 100%;
+        
+                    button {
+                      display: flex;
+                      align-self: center;
+                      justify-content: center;
+                      gap: 0.5rem;
+                      // width: 100%;
+                      outline: none;
+                      padding: 6px 1rem;
+                      background-color: rgb(122, 122, 122);
+                      color: #f5f5f5;
+                      font-size: 0.8rem;
+                      border-radius: 0.3rem;
+                      font-weight: 500;
+        
+                      transition: all 0.4s ease-in;
+        
+                      span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.9rem;
+                      }
+                      .inquiryloader {
+                        width: 18px;
+                        height: 18px;
+                        border: 2px solid #fff;
+                        border-bottom-color: transparent;
+                        border-radius: 50%;
+                        display: inline-block;
+                        box-sizing: border-box;
+                        animation: rotation 1s linear infinite;
+                      }
+        
+                      @keyframes rotation {
+                        0% {
+                          transform: rotate(0deg);
+                        }
+                        100% {
+                          transform: rotate(360deg);
+                        }
+                      }
+                      &:hover {
+                        background-color: #7e7e7e;
+                        filter: drop-shadow(0px 4px 5px rgba(109, 109, 109, 0.4));
+                      }
+        
+                      &:nth-child(2) {
+                        background-color: royalblue;
+        
+                        &:hover {
+                          background-color: rgb(248, 137, 118);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+         
+            
+                .feedback_row {
+      width: 100%;
+      padding: 0rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0rem;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      .popup_message_container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+
+        .popup_success_box {
+          display: inline-block;
+          width: auto;
+      
+          background-color: rgb(255, 255, 255);
+          box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+            rgb(209, 213, 219) 0px 0px 0px 1px inset;
+          padding: 0.7px 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2rem;
+          position: relative;
+          font-size: 0.7rem;
+          font-weight: 500;
+          transition: all 0.5s ease-in-out;
+          z-index: -1;
+
+          .popup_close {
+            i {
+              font-size: 1.4rem;
+              font-weight: 600;
+              color: rgb(255, 101, 101);
+              cursor: pointer;
+              transition: all 0.5s ease;
+              &:hover {
+                transform: rotate(90deg);
+                transition: all 0.5s ease;
+              }
+            }
+            .icon {
+              font-size: 1.2rem;
+              color: #2cc478;
+            }
+          }
+          .popup_message {
+            font-size: 0.9rem;
+            color: rgb(48, 48, 48);
+            font-weight: 500;
+          }
+        }
+        #successOpen {
+          scale: 1;
+          opacity: 1;
+          transition: all 0.5s ease-in-out;
+        }
+        #successClose {
+          scale: 0;
+          opacity: 0;
+
+          transition: all 0.5s ease-in-out;
+        }
+        .popup_error_box {
+          display: inline-block;
+          height: 40px;
+          background-color: rgb(255, 177, 141) !important;
+          border-radius: 5px;
+          padding: 0px 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 3rem;
+          position: relative;
+          z-index: -1;
+          .popup_close {
+            i {
+              font-size: 1.4rem;
+              color: rgb(255, 255, 255);
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.5s ease;
+              &:hover {
+                transform: rotate(90deg);
+                transition: all 0.5s ease;
+              }
+            }
+          }
+          .popup_message {
+            font-size: 0.9rem;
+            color: #2cc478;
+            font-weight: 550;
+          }
+        }
+      }
+   
+      .Feedback_container_message {
+        width: 100%;
+        height: auto;
+        // padding: 0rem 0.5rem;
+        margin: 0rem auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        .feeback_title {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          gap: 10px;
+          z-index: 800;
+
+          button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            // padding: 0.7rem 1rem;
+            font-size: 0.7rem;
+            color: $first_btn_back_color;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+            border: transparent;
+            font-weight: 600;
+            position: relative;
+            padding-top: 1rem;
+
+            i {
+              font-size: 1.4rem;
+              color: rgb(43, 43, 43);
+            }
+
+            .count {
+              position: absolute;
+              right: -7%;
+              top: 20%;
+
+              font-size: 0.8rem;
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: 600;
+              color: #474747;
+
+              border-radius: 50%;
+            }
+          }
+          .feedBack_loader {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+            margin: 15px auto;
+            position: relative;
+            color: #253bff;
+            left: -100px;
+            box-sizing: border-box;
+            animation: shadowRolling 2s linear infinite;
+          }
+
+          @keyframes shadowRolling {
+            0% {
+              box-shadow: 0px 0 rgba(255, 255, 255, 0),
+                0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0),
+                0px 0 rgba(255, 255, 255, 0);
+            }
+            12% {
+              box-shadow: 100px 0 rgb(76, 247, 176),
+                0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0),
+                0px 0 rgba(255, 255, 255, 0);
+            }
+            25% {
+              box-shadow: 110px 0 rgb(107, 98, 233), 100px 0 rgb(75, 45, 243),
+                0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+            }
+            36% {
+              box-shadow: 120px 0 rgb(94, 236, 255), 110px 0 rgb(226, 253, 72),
+                100px 0 rgb(219, 99, 119), 0px 0 rgba(255, 255, 255, 0);
+            }
+            50% {
+              box-shadow: 130px 0 rgb(240, 135, 49), 120px 0 rgb(56, 163, 74),
+                110px 0 rgb(99, 95, 95), 100px 0 rgb(135, 111, 221);
+            }
+            62% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 white,
+                120px 0 white, 110px 0 white;
+            }
+            75% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0), 130px 0 white, 120px 0 white;
+            }
+            87% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+                130px 0 white;
+            }
+            100% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0);
+            }
+          }
+        }
+        .comment_box {
+          width: 100%;
+          max-height: 300px;
+          height: auto;
+          overflow: scroll;
+
+          margin: 1rem auto;
+          background: transparent;
+    
+          background: transparent;
+
+          border-radius: 5px;
+          position: relative;
+
+          .comment_box_title {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: royalblue;
+            color: #fff;
+            font-weight: 400;
+            display: none;
+          }
+          .message {
+            width: 100%;
+            padding: 10px;
+            border-bottom: 2px solid rgb(238, 237, 237);
+            position: relative;
+            .user_detail {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 1rem;
+
+              .details {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 5px;
+
+                .userName {
+                  p {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    font-size: 1.1rem;
+
+                    color: rgb(22, 22, 22);
+                    letter-spacing: 1px;
+                    font-weight: 550;
+
+                    i {
+                      color: rgb(94, 94, 94);
+                      font-size: 1.4rem;
+                    }
+
+                    &::first-letter {
+                      text-transform: uppercase !important;
+                    }
+                  }
+                }
+                .stars {
+                  .ratting_container1 {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.3rem;
+
+                    span {
+                      i {
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        color: lightgray;
+                        transition: all 0.4s ease-in-out;
+
+                
+                      }
+
+                      .highlight1 {
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                        color: gold;
+                      }
+                    }
+                  }
+
+                  #noRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3),
+                    span:nth-child(4),
+                    span:nth-child(5) {
+                      i {
+                        text-decoration: line-through;
+                        text-decoration-color: #ff2525;
+                      }
+                    }
+                  }
+
+                  #singleRatting {
+                    span:nth-child(1) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #doubleRatting {
+                    span:nth-child(1),
+                    span:nth-child(2) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #ThreeRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #fourRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3),
+                    span:nth-child(4) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #fullRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3),
+                    span:nth-child(4),
+                    span:nth-child(5) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(
+                          0px 4px 5px rgba(165, 165, 165, 0.4)
+                        );
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .comments {
+              margin: 10px auto;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 10px;
+              width: 100%;
+
+              i {
+                color: royalblue;
+                font-size: 1.4rem;
+              }
+              span {
+                font-size: 0.9rem;
+                color: #272727;
+              }
+            }
+
+            .date {
+              position: absolute;
+              right: 2%;
+              top: 15%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              font-size: 0.9rem;
+              color: rgb(68, 68, 68);
+
+              i {
+                color: darkcyan;
+                font-size: 1.1rem;
+              }
+            }
+          }
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+
+      .feedback_container {
+        width: 100%;
+        position: relative;
+
+
+        form {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          margin: auto;
+          padding: 0px 0.5rem 0rem 0.5rem;
+
+
+          .feedback_svg {
+            position: absolute;
+            top: -4%;
+            right: 0%;
+
+            img {
+              width: 100px;
+              object-fit: cover;
+              object-position: center;
+
+              @media (max-width: 600px) {
+                width: 90px;
+              }
+            }
+
+            @media (max-width: 600px) {
+              top: -0%;
+            }
+          }
+          .form_group {
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 95%;
+            position: relative;
+            margin: 0.2rem 0.2rem;
+
+            .error {
+              font-size: 0.6rem;
+              color: $error_text_color !important;
+              -webkit-text-fill-color: ${FeedbackInputError};
+              letter-spacing: 1px;
+      
+              display: flex;
+              align-items: center;
+              font-weight: 550;
+              justify-content: flex-start;
+            }
+            label {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+
+              left: 5%;
+              color: ${FeedbackLabelColor};
+     
+              -webkit-text-fill-color: ${FeedbackLabelColor};
+              font-size: 0.7rem;
+              font-weight: 550;
+
+              border-radius: 4px;
+
+              span {
+                font-size: 1rem;
+                color: $error_text_color !important;
+                -webkit-text-fill-color: ${FeedbackInputError};
+                sup {
+                  color: ${FeedbackInputError} !important;
+                }
+              }
+
+              @media screen and (max-width: 800px) {
+                left: 5%;
+              }
+            }
+
+            input
+             {
+              width: 100%;
+       
+       background-color: transparent;
+    outline: none;
+
+              transition: all 0.3s ease;
+              &::placeholder {
+                font-size: 0.6rem;
+                color: ${FeedbackPlaceholderColor};
+                letter-spacing: 1px;
+                font-weight: 400;
+              }
+              &:focus {
+                background-color: transparent;
+   
+                background-origin: border-box;
+                background-clip: padding-box, border-box;
+                transition: all 0.3s ease;
+              }
+
+              @media screen and (max-width: 800px) {
+                padding: 0.8rem 2rem;
+                width: 100%;
+                background-color: transparent;
+              }
+            }
+
+            .ratting_container {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 0.5rem;
+
+              span {
+                i {
+                  font-size: 1.5rem;
+                  cursor: pointer;
+                  color: rgb(255, 168, 54);
+                  transition: all 0.4s ease-in-out;
+
+        
+                }
+                .highlight {
+                  filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                  color: gold;
+                }
+              }
+            }
+            textarea {
+              width: 100%;
+              padding: 0.7rem 2rem;
+     
+    
+   
+              background-color: transparent;
+        
+
+    
+              outline: none;
+
+              transition: all 0.3s ease;
+              &::placeholder {
+                font-size: 0.6rem;
+                color: ${FeedbackPlaceholderColor};
+                letter-spacing: 1px;
+                font-weight: 400;
+              }
+              &:focus {
+      
+                background-color: transparent;
+    
+
+      
+                transition: all 0.3s ease;
+              }
+
+              @media screen and (max-width: 800px) {
+                padding: 0.8rem 2rem;
+                width: 100%;
+                background-color: transparent;
+              }
+            }
+
+            .icon {
+              position: absolute;
+              left: 1%;
+              top: 63%;
+
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              i {
+                font-size: 1.4rem;
+                color: skyblue;
+              }
+
+              @media screen and (max-width: 800px) {
+                position: absolute;
+                left: 2%;
+                top: 25%;
+              }
+            }
+            .show_pass {
+              position: absolute;
+              right: 2%;
+              top: 25%;
+
+              i {
+                font-size: 1.4rem;
+                color: skyblue;
+                cursor: pointer;
+              }
+
+              @media screen and (max-width: 800px) {
+                position: absolute;
+                right: 2%;
+                top: 25%;
+              }
+            }
+
+            @media screen and (max-width: 900px) {
+              margin: 0.8rem auto;
+            }
+          }
+          .Design1 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design1 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+            &::placeholder{
+              color:${FeedbackPlaceholderColor};
+              font-size:0.7rem;
+              }
+              &:focus {
+                border: 1px solid ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+            }
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: none;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            .icon {
+              position: absolute;
+              top: 20%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackInputBorderColor};
+            }
+            .iconwithlabel {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+ color: ${FeedbackInputBorderColor};
+            }
+            .iconwithanimation {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                color: ${FeedbackInputBorderColor};
+              }
+          }
+          .Design2 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design2 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackLabelColor};
+              display: none;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            .icon {
+              position: absolute;
+              top: 20%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackInputBorderColor};
+            }
+            .iconwithlabel {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+               color: ${FeedbackInputBorderColor};
+            }
+            .iconwithanimation {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+               color: ${FeedbackInputBorderColor};
+              }
+          }
+          .Design3 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design3 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border: 1px solid ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; 
+              }
+              &:focus + .iconwithlabel {
+                color: ${FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+          
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackInputBorderColor};
+            }
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                color: ${FeedbackInputBorderColor};
+              }
+          }
+          .Design4 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design4 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; 
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+           
+            
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+              color: ${FeedbackInputBorderColor};
+              }
+          }
+          .Design5 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design5 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              &:focus {
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+              }
+             
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+           
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackInputBorderColor};
+            }
+                        }
+          .Design6 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design6 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &::placeholder {
+                transition: opacity 0.4s ease;
+                opacity: 1;
+              }
+
+              &:focus::placeholder {
+                opacity: 0;
+              }
+              &:focus {
+                border-bottom: 1px solid ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; 
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            
+         
+           
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                 color: ${FeedbackInputBorderColor};
+              }
+          }
+          .Design7 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design7 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              @keyframes shake {
+                0%,
+                100% {
+                  transform: translateX(0);
+                }
+                20%,
+                60% {
+                  transform: translateX(-5px);
+                }
+                40%,
+                80% {
+                  transform: translateX(0px);
+                }
+              }
+
+              &:focus {
+                animation: shake 1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; 
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+         
+           
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                          color: ${FeedbackInputBorderColor};
+              }
+          }
+          .Design8{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design8 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &::placeholder {
+                transition: opacity 0.4s ease;
+                opacity: 1; // Full opacity by default
+              }
+
+              &:focus::placeholder {
+                opacity: 0; // Fades out the placeholder when focused
+              }
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackInputBorderOnFocus};
+                animation: bounce 1s ease-in-out;
+              }
+              @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                  transform: translateY(0);
+                }
+                40% {
+                  transform: translateY(-5px);
+                }
+                60% {
+                  transform: translateY(-2px);
+                }
+              }
+              &:focus + .icon {
+                color: ${FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+              &:focus + .iconwithlabel {
+                 color: ${FeedbackInputBorderOnFocus};  // Change icon color when input is focused
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackInputBorderColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+          
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+                color: ${FeedbackInputBorderColor};
+            }
+       
+          }
+          .Design9{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design9 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              @keyframes shake {
+                0%,
+                100% {
+                  transform: translateY(0);
+                }
+                20%,
+                60% {
+                  transform: translateY(-3px);
+                }
+                40%,
+                80% {
+                  transform: translateY(0px);
+                }
+              }
+              @keyframes rotate {
+                  from {
+                    transform: rotate(0deg);
+                  }
+                  to {
+                    transform: rotate(360deg);
+                  }
+                }
+
+              &:focus {
+                animation: shake 1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); // Blue glowing effect on focus
+              }
+            
+              &:focus + .icon {
+                  color: ${FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                  animation: rotate 0.5s ease-in-out;
+                }
+            }
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+         
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackInputBorderColor};
+            }
+           
+          }
+          .form_actions {
+            margin: 1rem auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin: 1rem auto;
+
+            button {
+              margin-right: 1rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              background-color: $first_btn_back_color;
+              filter: none;
+              width: auto;
+              padding: 10px 1rem;
+              outline: none;
+              border: transparent;
+
+              font-weight: 500;
+              letter-spacing: 1px;
+              font-size: 0.6rem;
+              border-radius: 5px;
+              cursor: pointer;
+              color: $third_text_color;
+              transition: all 0.4s ease-in;
+
+              span {
+                font-size: 1.2rem;
+              }
+              .form_loader,
+              .form_loader:before,
+              .form_loader:after {
+                border-radius: 50%;
+                width: 1em;
+                height: 1em;
+                animation-fill-mode: both;
+                animation: bblFadInOut 1.8s infinite ease-in-out;
+              }
+              .form_loader {
+                color: #fff;
+                font-size: 7px;
+                position: relative;
+                text-indent: -9999em;
+                transform: translateZ(0);
+                animation-delay: -0.16s;
+              }
+              .form_loader:before,
+              .form_loader:after {
+                content: "";
+                position: absolute;
+                top: 0;
+              }
+              .form_loader:before {
+                left: -3.5em;
+                animation-delay: -0.32s;
+              }
+              .form_loader:after {
+                left: 3.5em;
+              }
+
+              @keyframes bblFadInOut {
+                0%,
+                80%,
+                100% {
+                  box-shadow: 0 2.5em 0 -1.3em;
+                }
+                40% {
+                  box-shadow: 0 2.5em 0 0;
+                }
+              }
+
+              &:hover {
+                background-color: $second_back__color;
+                color: $third_text_color;
+                font-weight: 550;
+                transition: all 0.4s ease-in;
+              }
+            }
+          }
+        }
+      }
+    }
+
+                                
       `}
           </style>
           <div
@@ -1738,6 +4292,7 @@ padding:10px;
                 className={`up_btn ${
                   activeMenu === "Home" ? "hideUpArrow" : ""
                 }`}
+                style={{ backgroundColor: BtnBackColor }}
               >
                 <CiSquareChevUp onClick={HandleMenuUp} className="icon" />
               </div>
@@ -1880,6 +4435,7 @@ padding:10px;
                 className={`down_btn ${
                   activeMenu === "Inquiry" ? "hideDownArrow" : ""
                 }`}
+                style={{ backgroundColor: BtnBackColor }}
               >
                 <CiSquareChevDown onClick={HandleMenuDown} className="down" />
               </div>
@@ -1888,13 +4444,18 @@ padding:10px;
             <div className="Image_row_1" ref={HomeRef}>
               <div className="banner_image" style={styles.Slide1}>
                 <img
-                  src="https://img.freepik.com/premium-photo/laptop-cup-coffee-are-table-with-blue-background_337384-159390.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
+                  src="https://img.freepik.com/premium-vector/two-silhouette-businessman-talking-discussing-contract-working-business-people-group-meeting-concept_48369-15936.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
                   alt="banner"
                   style={styles.Slide1.bannerImg}
                 />
                 <div
                   className="overlay"
                   style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    width: "100%",
+                    height: "50%",
                     background: `linearGradient("#cd62e200 0%", ${VCardColour} 100%)`,
                   }}
                 ></div>
@@ -2708,6 +5269,209 @@ padding:10px;
                 </div>
               </div>
             </div>
+            {/* //Appinment */}
+
+            <div className="Appoinment" ref={AppoinmentRef}>
+              <div className="Preview_Title">
+                <h3>Appoinment</h3>
+              </div>
+              {/* Success and Error Popup */}
+              <div className="popup_message_container">
+                <div
+                  className="popup_success_box"
+                  id={AppoinmentPopup ? "successOpen" : "successClose"}
+                >
+                  <div className="popup_message">{successMessage}</div>
+                  <div
+                    className="popup_close"
+                    onClick={() => setAppoinmentPopup(false)}
+                  >
+                    <i className="bx bx-x"></i>
+                  </div>
+                </div>
+
+                {AppoinmentPopupError ? (
+                  <div className="popup_error_box">
+                    <div className="popup_message">{errorMessage}</div>
+                    <div
+                      className="popup_close"
+                      onClick={() => setAppoinmentPopupError(false)}
+                    >
+                      <i className="bx bx-x"></i>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="appinment_form_container">
+                <form
+                  className="appinment_form"
+                  onSubmit={Appoinment_formik.handleSubmit}
+                >
+                  <div className={`form_group ${AppoinmentInputDesign}`}>
+                    <label
+                      htmlFor="FullName"
+                      className={
+                        Appoinment_formik.errors.FullName ? "labelError" : ""
+                      }
+                      style={{ color: LabelColor }}
+                    >
+                      {Appoinment_formik.errors.FullName
+                        ? Appoinment_formik.errors.FullName
+                        : `FullName`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <input
+                      type="text"
+                      name="FullName"
+                      id="FullName"
+                      placeholder="Enter Your FullName"
+                      value={Appoinment_formik.values.FullName}
+                      onChange={Appoinment_formik.handleChange}
+                      className={`${AppoinmentInputDesign} ${Appoinment_formik.errors.FullName} &&
+                    ${Appoinment_formik.touched.FullName}
+                      ? "input_error"
+                      : "input_success"
+                  `}
+                    />
+                    <div className="icon">
+                      <i className="bx bxs-user"></i>
+                    </div>
+                  </div>
+                  <div className={`form_group ${AppoinmentInputDesign}`}>
+                    <label
+                      htmlFor="MobileNumber"
+                      className={
+                        Appoinment_formik.errors.MobileNumber
+                          ? "labelError"
+                          : ""
+                      }
+                      style={{ color: LabelColor }}
+                    >
+                      {Appoinment_formik.errors.MobileNumber
+                        ? Appoinment_formik.errors.MobileNumber
+                        : `MobileNumber`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <input
+                      type="tel"
+                      name="MobileNumber"
+                      id="MobileNumber"
+                      placeholder="Enter Your MobileNumber"
+                      value={Appoinment_formik.values.MobileNumber}
+                      onChange={Appoinment_formik.handleChange}
+                      className={`${AppoinmentInputDesign}
+                        ${Appoinment_formik.errors.MobileNumber} &&
+                        ${Appoinment_formik.touched.MobileNumber}
+                          ? "input_error"
+                          : "input_success"
+                      `}
+                    />
+                    <div className="icon">
+                      <i className="bx bx-mobile"></i>
+                    </div>
+                  </div>
+                  <div className={`form_group ${AppoinmentInputDesign}`}>
+                    <label
+                      htmlFor="Date"
+                      className={
+                        Appoinment_formik.errors.Date ? "labelError" : ""
+                      }
+                      style={{ color: LabelColor }}
+                    >
+                      {Appoinment_formik.errors.Date
+                        ? Appoinment_formik.errors.Date
+                        : `Date`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <input
+                      type="date"
+                      name="Date"
+                      id="Date"
+                      placeholder="Enter Your date"
+                      value={Appoinment_formik.values.Date}
+                      onChange={Appoinment_formik.handleChange}
+                      className={` ${AppoinmentInputDesign}
+                                ${
+                                  Appoinment_formik.errors.Date &&
+                                  Appoinment_formik.touched.Date
+                                }
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                    />
+                    <div className="icon">
+                      <i className="bx bxs-calendar"></i>
+                    </div>
+                  </div>
+                  <div className={`form_group ${AppoinmentInputDesign}`}>
+                    <label
+                      htmlFor="Time"
+                      className={
+                        Appoinment_formik.errors.Time ? "labelError" : ""
+                      }
+                      style={{ color: LabelColor }}
+                    >
+                      {Appoinment_formik.errors.Time
+                        ? Appoinment_formik.errors.Time
+                        : `Time`}
+                      <sup style={{ color: "red" }}>*</sup>
+                    </label>
+                    <select
+                      name="Time"
+                      id="Time"
+                      placeholder="Enter Your Time"
+                      value={Appoinment_formik.values.Time}
+                      onChange={Appoinment_formik.handleChange}
+                      className={` ${AppoinmentInputDesign}
+                                ${
+                                  Appoinment_formik.errors.Time &&
+                                  Appoinment_formik.touched.Time
+                                }
+                                  ? "input_error"
+                                  : "input_success"
+                              `}
+                    >
+                      <option value="">Select Your Time</option>
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="9:00 AM">10:00 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                      <option value="11:00 AM">12:00 AM</option>
+                      <option value="01:00 PM">01:00 PM</option>
+                      <option value="01:00 PM">02:00 PM</option>
+                      <option value="03:00 PM">03:00 PM</option>
+                      <option value="03:00 PM">04:00 PM</option>
+                      <option value="03:00 PM">05:00 PM</option>
+                      <option value="03:00 PM">06:00 PM</option>
+                    </select>
+                    <div className="icon">
+                      <i className="bx bxs-time-five"></i>
+                    </div>
+                  </div>
+                  <div className="form_submit">
+                    <button type="submit" className="submit-btn">
+                      {appoinmentLoader ? (
+                        <span className="inquiryloader"></span>
+                      ) : (
+                        <span className="material-symbols-outlined">send</span>
+                      )}
+                      Book Now
+                    </button>
+                    <button
+                      type="button"
+                      className="submit-btn"
+                      onClick={Appoinment_formik.resetForm}
+                    >
+                      <span className="material-symbols-outlined">
+                        clear_all
+                      </span>
+                      clear
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
             {/* Gallery */}
             <div className="gallery" ref={GalleryRef}>
               <div className="Preview_Title">
@@ -2905,80 +5669,40 @@ padding:10px;
                 />
               </div>
             </div>
+
             {/* Feedback */}
             <div className="feedback_row" ref={FeedbackRef}>
               <div className="Preview_Title">
                 <h3>Feedback</h3>
-                {/* Contact */}
               </div>
-              <div className="feedback_container">
-                <form action="">
-                  <div className="form_group">
-                    <label htmlFor="clientName_Input">
-                      FullName
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Your Name"
-                      name="userName"
-                      id="userName"
-                    />
+              {/* Success and Error Popup */}
+              <div className="popup_message_container">
+                <div
+                  className="popup_success_box"
+                  id={FeedbackPopup ? "successOpen" : "successClose"}
+                >
+                  <div className="popup_message">{successMessage}</div>
+                  <div
+                    className="popup_close"
+                    onClick={() => setFeedbackPopup(false)}
+                  >
+                    <TiTick className="icon" />
                   </div>
-                  <div className="form_group">
-                    <label htmlFor="clientFeedBack_Input">
-                      Your Feedback
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
-                    <textarea
-                      id="userFeedback"
-                      name="userFeedback"
-                      cols="30"
-                      rows="3"
-                      placeholder="Enter your Feedback"
-                    ></textarea>
-                  </div>
-                  <div className="form_group">
-                    <label htmlFor="clientName_Input">
-                      Ratting
-                      <span>
-                        <sup>*</sup>
-                      </span>
-                    </label>
+                </div>
+
+                {FeedbackPopupError ? (
+                  <div className="popup_error_box">
+                    <div className="popup_message">{errorMessage}</div>
                     <div
-                      className="ratting_container"
-                      data-rating="0"
-                      name="currentRatting"
-                      id="currentRatting"
+                      className="popup_close"
+                      onClick={() => setFeedbackPopupError(false)}
                     >
-                      <span className="ratting_star">
-                        <i className="bx bxs-star star" data-rating="1"></i>
-                      </span>
-                      <span className="ratting_star">
-                        <i className="bx bxs-star star" data-rating="2"></i>
-                      </span>
-                      <span className="ratting_star">
-                        <i className="bx bxs-star star" data-rating="3"></i>
-                      </span>
-                      <span className="ratting_star">
-                        <i className="bx bxs-star star" data-rating="4"></i>
-                      </span>
-                      <span className="ratting_star">
-                        <i className="bx bxs-star star" data-rating="5"></i>
-                      </span>
+                      <i className="bx bx-x"></i>
                     </div>
                   </div>
-                  <div className="form_actions">
-                    <button type="submit">
-                      <span className="material-symbols-outlined">send</span>
-                      Send Feedback
-                    </button>
-                  </div>
-                </form>
+                ) : (
+                  ""
+                )}
               </div>
               {/* //Feedback messages */}
               <div className="Feedback_container_message">
@@ -2996,6 +5720,8 @@ padding:10px;
                         thumbs_up_down
                       </span>
                       See All Feedbacks
+                      <i className="bx bxs-bell-ring bx-tada"></i>
+                      <div className="count">{AllFeedBacks.length}</div>
                     </button>
                   )}
 
@@ -3008,91 +5734,185 @@ padding:10px;
 
                 {commentOpen ? (
                   <div className="comment_box">
-                    {AllFeedBacks.map((data, index) => {
-                      return (
-                        <div className="message" key={index}>
-                          <div className="user_detail">
-                            <div className="profile">
-                              <img src={profile} alt="profile" />
-                            </div>
-                            <div className="details">
-                              <div className="userName">
-                                <p>
-                                  {data.userName}
-                                  <i className="bx bxs-user-check"></i>
-                                </p>
-                              </div>
-                              <div className="stars">
-                                <div
-                                  className="ratting_container1"
-                                  data-rating={data.currentRatting}
-                                  name="currentRatting"
-                                  // id="currentRatting"
-                                  id={
-                                    data.currentRatting == 0
-                                      ? "noRatting"
-                                      : "" || data.currentRatting == 1
-                                      ? "singleRatting"
-                                      : "" || data.currentRatting == 2
-                                      ? "doubleRatting"
-                                      : "" || data.currentRatting == 3
-                                      ? "ThreeRatting"
-                                      : "" || data.currentRatting == 4
-                                      ? "fourRatting"
-                                      : "" || data.currentRatting == 5
-                                      ? "fullRatting"
-                                      : ""
-                                  }
-                                  value={data.currentRatting}
-                                >
-                                  <span className="ratting_star">
-                                    <i
-                                      className="bx bxs-star star1"
-                                      data-rating="1"
-                                    ></i>
-                                  </span>
-                                  <span className="ratting_star">
-                                    <i
-                                      className="bx bxs-star star1"
-                                      data-rating="2"
-                                    ></i>
-                                  </span>
-                                  <span className="ratting_star">
-                                    <i
-                                      className="bx bxs-star star1"
-                                      data-rating="3"
-                                    ></i>
-                                  </span>
-                                  <span className="ratting_star">
-                                    <i
-                                      className="bx bxs-star star1"
-                                      data-rating="4"
-                                    ></i>
-                                  </span>
-                                  <span className="ratting_star">
-                                    <i
-                                      className="bx bxs-star star1"
-                                      data-rating="5"
-                                    ></i>
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                    <div className="comment_box_title">
+                      <h5>Client's All Feedbacks</h5>
+                    </div>
 
-                          <div className="comments">
-                            <i className="bx bx-chat"></i>
-                            <span>{data.userFeedback}</span>
+                    <div className="message">
+                      <div className="user_detail">
+                        <div className="details">
+                          <div className="userName">
+                            <p>
+                              Dinesh Kumar
+                              <i className="bx bxs-user-check"></i>
+                            </p>
+                          </div>
+                          <div className="stars">
+                            <div
+                              className="ratting_container1"
+                              data-rating="1"
+                              name="currentRatting"
+                              // id="currentRatting"
+
+                              value="1"
+                            >
+                              <span className="ratting_star">
+                                <i
+                                  className="bx bxs-star star1"
+                                  data-rating="1"
+                                ></i>
+                              </span>
+                              <span className="ratting_star">
+                                <i
+                                  className="bx bxs-star star1"
+                                  data-rating="2"
+                                ></i>
+                              </span>
+                              <span className="ratting_star">
+                                <i
+                                  className="bx bxs-star star1"
+                                  data-rating="3"
+                                ></i>
+                              </span>
+                              <span className="ratting_star">
+                                <i
+                                  className="bx bxs-star star1"
+                                  data-rating="4"
+                                ></i>
+                              </span>
+                              <span className="ratting_star">
+                                <i
+                                  className="bx bxs-star star1"
+                                  data-rating="5"
+                                ></i>
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      );
-                    })}
+                      </div>
+
+                      <div className="comments">
+                        <i className="bx bx-chat"></i>
+                        <span>Well Design make it quickly..</span>
+                      </div>
+
+                      <div className="date">
+                        <i className="bx bx-calendar"></i>
+                        <p>10-05-2024</p>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   ""
                 )}
               </div>
+              <div className="feedback_container">
+                <form action="" onSubmit={feedbackFormik.handleSubmit}>
+                  <div className={`form_group ${FeedbackInputDesign}`}>
+                    <label
+                      htmlFor="clientName_Input"
+                      className={` ${
+                        feedbackFormik.errors.ClientName ? "error" : ""
+                      } `}
+                    >
+                      {feedbackFormik.touched.ClientName &&
+                      feedbackFormik.errors.ClientName
+                        ? feedbackFormik.errors.ClientName
+                        : "Your Name"}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter Your Name"
+                      name="ClientName"
+                      id="ClientName"
+                      className={`${FeedbackInputDesign}`}
+                      // value={userName}
+                      // onChange={(e)=>setUserName(e.target.value)}
+                      value={feedbackFormik.values.ClientName}
+                      onChange={feedbackFormik.handleChange}
+                      onBlur={feedbackFormik.handleBlur}
+                    />
+                    <div className="icon">
+                    <i className="bx bxs-user"></i>
+
+                    </div>
+                  </div>
+                  <div className={`form_group ${FeedbackInputDesign}`}>
+                    <label
+                      htmlFor="clientFeedBack_Input"
+                      className={`${
+                        feedbackFormik.errors.ClientFeedback ? "error" : ""
+                      } `}
+                    >
+                      {feedbackFormik.touched.ClientFeedback &&
+                      feedbackFormik.errors.ClientFeedback
+                        ? feedbackFormik.errors.ClientFeedback
+                        : "Your FeedBack"}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <textarea
+                      id="ClientFeedback"
+                      name="ClientFeedback"
+                      cols="30"
+                      rows="2"
+                      placeholder="Enter your Feedback"
+                      className={`${FeedbackInputDesign}`}
+                      // value={userFeedback}
+                      // onChange={(e)=>setUserFeedback(e.target.value)}
+                      value={feedbackFormik.values.ClientFeedback}
+                      onChange={feedbackFormik.handleChange}
+                      onBlur={feedbackFormik.handleBlur}
+                    ></textarea>
+                  </div>
+                  <div className={`form_group ${FeedbackInputDesign}`}>
+                    <label
+                      htmlFor="clientName_Input"
+                      className={`${
+                        feedbackFormik.errors.ClientRatting ? "error" : ""
+                      } `}
+                    >
+                      {feedbackFormik.touched.ClientRatting &&
+                      feedbackFormik.errors.ClientRatting
+                        ? feedbackFormik.errors.ClientRatting
+                        : "Ratting"}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+
+                    <ReactStars
+                      count={5}
+                      value={feedbackFormik.values.ClientRatting}
+                      onChange={(newRating) => {
+                        // Directly use Formik's handleChange by creating an event-like object for the rating field
+                        feedbackFormik.handleChange({
+                          target: {
+                            name: "ClientRatting",
+                            value: newRating,
+                          },
+                        });
+                      }}
+                      size={44}
+                      style={{ paddingRight: "15px" }}
+                      half={false}
+                      color2={"#ffd700"}
+                    />
+                  </div>
+                  <div className="form_actions">
+                    <button type="submit">
+                      <span className="material-symbols-outlined">send</span>
+                      Send Feedback
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
+
             {/* Inquries */}
             <div className="Inquries" ref={InquiryRef}>
               <div className="Preview_Title">
@@ -3104,8 +5924,9 @@ padding:10px;
                     <label htmlFor="name">
                       Name <sup style={{ color: "red" }}>*</sup>
                     </label>
-                    <div className="input">
-                      <input type="text" placeholder="Your Name" />
+
+                    <input type="text" placeholder="Your Name" />
+                    <div className="icon">
                       <i className="bx bxs-user-pin"></i>
                     </div>
                   </div>

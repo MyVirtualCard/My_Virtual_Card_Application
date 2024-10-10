@@ -35,7 +35,7 @@ export const PostGoogleMapData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkMapLength = await GoogleMapModel.find({
@@ -47,7 +47,7 @@ export const PostGoogleMapData = async (req, res) => {
             .status(400)
             .json({ message: "GoogleMap  not be there!" });
         } else {
-          if (checkCurrentPlan[0]?.amount === 1299 || checkCurrentPlan[0]?.amount === 899 || checkCurrentPlan[0]?.amount === 599) {
+          if (checkCurrentPlan[0]?.amount === 1499 || checkCurrentPlan[0]?.amount === 899 || checkCurrentPlan[0]?.amount === 599) {
             //Basic Image File limit checked:
             if (checkMapLength.length < 1) {
               // Create a new image instance and save to MongoDB
@@ -161,7 +161,7 @@ export const updateSpecificUserData = async (req, res) => {
       checkCurrentPlan[0].amount === 10 ||
       checkCurrentPlan[0].amount === 599 ||
       checkCurrentPlan[0].amount === 899 ||
-      checkCurrentPlan[0].amount === 1299
+      checkCurrentPlan[0].amount === 1499
     ) {
       try {
         let { id } = req.params;

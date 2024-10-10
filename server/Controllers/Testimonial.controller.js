@@ -43,7 +43,7 @@ export const postTestimonialData = async (req, res) => {
           checkFreePlan[0]?.PlanPrice === 0 ||
           checkCurrentPlan[0]?.amount === 599 ||
           checkCurrentPlan[0]?.amount === 899 ||
-          checkCurrentPlan[0]?.amount === 1299
+          checkCurrentPlan[0]?.amount === 1499
         ) {
           //check images
           let checkTestimonialLength = await TestimonialModel.find({
@@ -55,7 +55,7 @@ export const postTestimonialData = async (req, res) => {
               .status(400)
               .json({ message: "Client Data not be there!" });
           } else {
-            if (checkCurrentPlan[0]?.amount === 1299) {
+            if (checkCurrentPlan[0]?.amount === 1499) {
               //Basic Image File limit checked:
               if (checkTestimonialLength.length < 8) {
                 // Create a new image instance and save to MongoDB

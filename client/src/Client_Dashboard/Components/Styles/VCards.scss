@@ -1,5 +1,5 @@
 .VCards_container {
-  width: 100%;
+  width: 98%;
   height: 100%;
   position: relative;
   // padding: 1rem;
@@ -136,7 +136,7 @@
       .card_title_box {
         display: grid;
         width: 100%;
-        grid-template-columns: 0.5fr 1fr 1.5fr 0.5fr 0.7fr 1fr;
+        grid-template-columns: 0.5fr 1fr 1.5fr 0.7fr 0.5fr 1fr;
         place-items: center;
         // gap: 0px 1rem;
         background-color: gray;
@@ -172,11 +172,11 @@
       .card_detail_box {
         display: grid;
         width: 100%;
-        grid-template-columns: 0.5fr 1fr 1.5fr 0.5fr 0.7fr 1fr;
+        grid-template-columns: 0.5fr 1fr 1.5fr 0.7fr 0.5fr 1fr;
         place-items: center;
         // gap: 0px 1rem;
         background-color: rgb(243, 243, 243);
-        padding: 0.8rem 0px;
+        padding: 0.5rem 0px;
         box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
           rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
         border-bottom-left-radius: 0.5rem;
@@ -236,7 +236,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 2rem;
+          gap: 1.5rem;
           width: 100%;
           .edit,
           .delete,
@@ -248,8 +248,11 @@
             // gap: 3px;
             cursor: pointer;
 
+            small{
+              font-size: 0.7rem;
+            }
             .icon {
-              font-size: 1.5rem;
+              font-size: 1.4rem;
               transition: all 0.4s ease-in-out;
               &:hover {
                 scale: 1.1;

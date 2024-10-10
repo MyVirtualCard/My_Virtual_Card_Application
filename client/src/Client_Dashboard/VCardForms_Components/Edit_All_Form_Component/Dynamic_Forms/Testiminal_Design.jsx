@@ -121,7 +121,7 @@ const Testiminal_Design = () => {
         setFormSubmitLoader(false);
       }
     };
-    console.log(TestimonialUpdateToggle)
+
   return (
     <>
       <div className="testimonial_design_container">

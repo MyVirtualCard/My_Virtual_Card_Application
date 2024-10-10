@@ -46,7 +46,7 @@ export const PostGalleryData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkCurrentImages = await QRCodeModel.find({
@@ -58,7 +58,7 @@ export const PostGalleryData = async (req, res) => {
             .status(400)
             .json({ message: "QRCode Image  not be Inserted!", error: err });
         } else {
-          if (checkCurrentPlan[0]?.amount === 1299) {
+          if (checkCurrentPlan[0]?.amount === 1499) {
             //Basic Image File limit checked:
             if (checkCurrentImages.length < 1) {
               // Create a new image instance and save to MongoDB

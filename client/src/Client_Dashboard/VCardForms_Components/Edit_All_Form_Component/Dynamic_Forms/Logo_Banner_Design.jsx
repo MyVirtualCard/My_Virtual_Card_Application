@@ -46,9 +46,9 @@ const Logo_Banner_Design = () => {
       setLogoBottomPosition("0");
       setLogoTopPosition("0");
     } else {
-      setLogoLeftPosition("50"), setLogoRightPosition("0");
+      setLogoLeftPosition(LogoLeftPosition), setLogoRightPosition("0");
       setLogoBottomPosition("0");
-      setLogoTopPosition("100");
+      setLogoTopPosition(LogoTopPosition);
     }
   }, [LogoPosition == "relative"]);
   let [UpdateToggle, setUpdateToggle] = useState(false);

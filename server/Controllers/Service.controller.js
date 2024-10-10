@@ -78,7 +78,7 @@ export const PostServiceData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkServiceLength = await ServiceModel.find({
@@ -88,25 +88,50 @@ export const PostServiceData = async (req, res) => {
         if (!checkServiceLength || !checkFreePlan) {
           return res.status(400).json({ message: "Service  not be there!" });
         } else {
-          if (checkCurrentPlan[0]?.amount === 1299) {
-            //Basic Image File limit checked:
+          if (checkCurrentPlan[0]?.amount === 1499) {
             if (checkServiceLength.length < 8) {
               const ServiceImage = req.files["ServiceImage"]
-                ? req.files["ServiceImage"][0].path
-                : null;
+                ? req.files["ServiceImage"][0]?.path
+                : "";
+              // Define the folder and the output path for the compressed image
+              const uploadsFolder = path.join(
+                __dirname,
+                "uploads",
+                "Service_Image"
+              );
+              const compressedImagePath = path.join(
+                uploadsFolder,
+                `compressed-${Date.now()}.jpeg`
+              );
+
+              // Ensure that the uploads folder exists
+              if (!fs.existsSync(uploadsFolder)) {
+                fs.mkdirSync(uploadsFolder, { recursive: true });
+              }
+
+              // Use Sharp to compress the image
+              if(req.files["ServiceImage"]){
+                await sharp(ServiceImage)
+                .resize(800) // Resize to a width of 800px, maintaining aspect ratio
+                .jpeg({ quality: 80 }) // Compress image to 80% quality (adjust as needed)
+                .toFile(compressedImagePath); // Save the compressed image
+              };
+      
+        
+
               // Create a new image instance and save to MongoDB
               const newService = new ServiceModel({
                 user: req.user.userName,
                 URL_Alies: req.body.URL_Alies,
                 ServiceName: req.body.ServiceName,
                 ServiceDescription: req.body.ServiceDescription,
+                ServiceType: req.body.ServiceType,
                 ServiceURL: req.body.ServiceURL,
                 ServicePrice:req.body.ServicePrice,
-                ServiceType: req.body.ServiceType,
                 ServiceIcon: req.body.ServiceIcon,
                 ServiceAddress: req.body.ServiceAddress,
                 // ServiceImage: req.body.ServiceImage,
-                ServiceImage: ServiceImage,
+                ServiceImage: compressedImagePath,
               });
 
               await newService
@@ -126,7 +151,7 @@ export const PostServiceData = async (req, res) => {
             } else {
               res.status(400).json({
                 message:
-                  "Max Service limit crossed..Enterprice plan Only accept 8  Service Details! ",
+                  "Max Service limit crossed..Basic plan Only accept 8  Service Details! ",
               });
             }
           }
@@ -372,7 +397,7 @@ export const updateSpecificUserData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         try {
           let { id } = req.params;

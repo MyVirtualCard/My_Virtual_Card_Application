@@ -306,7 +306,7 @@ const Edit_QR_Code = () => {
               ""
             )}
 
-            {currentPlan === "Enterprises" ? (
+            {currentPlan === "EnterPrice" ? (
               <>
                 <i class="bx bx-upload "></i>
                 <small>

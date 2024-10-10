@@ -72,7 +72,7 @@ export const PostProductData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkProductLength = await ProductModel.find({
@@ -84,19 +84,21 @@ export const PostProductData = async (req, res) => {
             .status(400)
             .json({ message: "Product will not be there!", error: err });
         } else {
-          if (checkCurrentPlan[0]?.amount === 1299) {
+          if (checkCurrentPlan[0]?.amount === 1499) {
+            const ProductImage = req.files["ProductImage"]
+            ? req.files["ProductImage"][0]?.path
+            : "";
             //Basic Image File limit checked:
-            if (checkProductLength.length < 10) {
+            if (checkProductLength.length < 8) {
               // Create a new image instance and save to MongoDB
               const newProduct = new ProductModel({
                 user: req.user.userName,
                 URL_Alies: req.body.URL_Alies,
                 ProductName: req.body.ProductName,
                 ProductDescription: req.body.ProductDescription,
-
-                ProductURL: req.body.ProductURL,
                 ProductType: req.body.ProductType,
                 ProductImageLink: req.body.ProductImageLink,
+                ProductURL: req.body.ProductURL,
                 ProductPrice: req.body.ProductPrice,
                 ProductImage: ProductImage,
               });
@@ -109,16 +111,16 @@ export const PostProductData = async (req, res) => {
                     data: newProduct,
                   });
                 })
-                .catch((error) => {
+                .catch((err) => {
+                  console.log(err.message);
                   res.status(400).json({
-                    message: "Failed to save Product to database!",
-                    error: error.message,
+                    message: "Failed to save product to database!",
                   });
                 });
             } else {
               res.status(400).json({
                 message:
-                  "Max Product Upload limit crossed..Only accept 10 Product Details! ",
+                  "Max Product Upload limit crossed..Only accept 8 Product Details! ",
               });
             }
           }
@@ -318,7 +320,7 @@ export const updateSpecificUserData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         try {
           let { id } = req.params;

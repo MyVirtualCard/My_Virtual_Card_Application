@@ -43,7 +43,7 @@ export const PostSocialMediaData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkBussinessHour = await BussinessModel.find({
@@ -55,7 +55,7 @@ export const PostSocialMediaData = async (req, res) => {
             .status(400)
             .json({ message: "Bussiness Hour Data will not be Inserted!" });
         } else {
-          if (checkCurrentPlan[0]?.amount === 1299) {
+          if (checkCurrentPlan[0]?.amount === 1499) {
             //Basic Image File limit checked:
             if (checkBussinessHour.length < 1) {
               // Create a new image instance and save to MongoDB

@@ -45,7 +45,7 @@ export const postBank = async (req, res) => {
     checkFreePlan[0]?.PlanPrice === 0 ||
     checkCurrentPlan[0]?.amount === 599 ||
     checkCurrentPlan[0]?.amount === 899 ||
-    checkCurrentPlan[0]?.amount === 1299
+    checkCurrentPlan[0]?.amount === 1499
   ) {
     let checkBasicDetailLength = await Vcard_URL.findOne({
       URL_Alies: req.params.URL_Alies,

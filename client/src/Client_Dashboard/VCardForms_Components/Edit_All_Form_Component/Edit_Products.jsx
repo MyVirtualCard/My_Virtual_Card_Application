@@ -167,7 +167,7 @@ const Products = () => {
               setShowForm("Payment Details");
             }, 2000);
           }
-          if (currentPlan === "Enterprises" && ProductCount == 10) {
+          if (currentPlan === "EnterPrice" && ProductCount == 8) {
             setTimeout(() => {
               setShowForm("Payment Details");
             }, 2000);
@@ -414,7 +414,7 @@ const Products = () => {
               ) : (
                 ""
               )}
-              {currentPlan === "Enterprises" && ProductCount != 10 ? (
+              {currentPlan === "EnterPrice" && ProductCount != 8 ? (
                 <button
                   onClick={() => {
                     setProductFormOpen(true),
@@ -469,12 +469,12 @@ const Products = () => {
                   ""
                 )}
 
-                {currentPlan === "Enterprises" ? (
+                {currentPlan === "EnterPrice" ? (
                   <>
                     <i class="bx bx-upload "></i>
                     <small>
                       Max Product addOn limit :
-                      <strong> {ProductCount} / 10 </strong>
+                      <strong> {ProductCount} / 8 </strong>
                     </small>
                   </>
                 ) : (

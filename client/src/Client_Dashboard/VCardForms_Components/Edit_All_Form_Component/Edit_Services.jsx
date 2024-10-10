@@ -166,7 +166,7 @@ const Services = () => {
               setShowForm("Products");
             }, 2000);
           }
-          if (currentPlan === "Enterprises" && ServiceCount == 8) {
+          if (currentPlan === "EnterPrice" && ServiceCount == 8) {
             setTimeout(() => {
               setShowForm("Products");
             }, 2000);
@@ -426,7 +426,7 @@ const Services = () => {
               ) : (
                 ""
               )}
-              {currentPlan === "Enterprises" && ServiceCount != 8 ? (
+              {currentPlan === "EnterPrice" && ServiceCount != 8 ? (
                 <button
                   onClick={() => {
                     setServiceFormOpen(true),
@@ -481,7 +481,7 @@ const Services = () => {
                   ""
                 )}
 
-                {currentPlan === "Enterprises" ? (
+                {currentPlan === "EnterPrice" ? (
                   <>
                     <i class="bx bx-upload "></i>
                     <small>

@@ -72,7 +72,7 @@ export const PostGalleryData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         //check images
         let checkCurrentImages = await GalleryModel.find({
@@ -84,9 +84,12 @@ export const PostGalleryData = async (req, res) => {
             .status(400)
             .json({ message: "Image will not be there!", error: err });
         } else {
-          if (checkCurrentPlan[0]?.amount === 1299) {
+          if (checkCurrentPlan[0]?.amount === 1499) {
+            const GalleryImage = req.files["GalleryImage"]
+            ? req.files["GalleryImage"][0]?.path
+            : "";
             //Basic Image File limit checked:
-            if (checkCurrentImages.length < 10) {
+            if (checkCurrentImages.length < 8) {
               // Create a new image instance and save to MongoDB
               const newImage = new GalleryModel({
                 user: req.user.userName,
@@ -111,7 +114,7 @@ export const PostGalleryData = async (req, res) => {
                 });
             } else {
               res.status(400).json({
-                message: "Max Image Upload limit crossed!..Only accept 10 Images ",
+                message: "Max Image Upload limit crossed!..Only accept 8 Images ",
               });
             }
           }
@@ -300,7 +303,7 @@ export const updateSpecificUserData = async (req, res) => {
         checkFreePlan[0]?.PlanPrice === 0 ||
         checkCurrentPlan[0]?.amount === 599 ||
         checkCurrentPlan[0]?.amount === 899 ||
-        checkCurrentPlan[0]?.amount === 1299
+        checkCurrentPlan[0]?.amount === 1499
       ) {
         try {
           let { id } = req.params;
