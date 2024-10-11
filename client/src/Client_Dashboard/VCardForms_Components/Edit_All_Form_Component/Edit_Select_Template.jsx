@@ -115,7 +115,7 @@ let StandardTemplate = [
 let EnterpriceTemplate = [
 
   {
-    id: 1,
+    id: 0,
     image: CorporateCompany,
     TemplateName: "Dynamic VCard",
   },
@@ -342,7 +342,7 @@ const Select_Template = () => {
             ""
           )}
           {currentPlan === "EnterPrice" ? (
-            <p>Total VCard Design's - {EnterpriceTemplate.length}</p>
+            <p>Total Dynamic VCard Design's - {EnterpriceTemplate.length}</p>
           ) : (
             ""
           )}
@@ -524,7 +524,7 @@ const Select_Template = () => {
                         ) : (
                           ""
                         )}
-                        {data.id === 1 && currentTemplate === null ? (
+                        {data.id === 0 && currentTemplate === null ? (
                           <div className="touch_hand">
                             <img src={touch_gif} alt="touch" />
                           </div>

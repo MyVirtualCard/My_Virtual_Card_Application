@@ -70,6 +70,7 @@ import TAXI_SERVICE_PREVIEW from "./Client_Dashboard/All_VCards/Static_VCards/Ne
 import DOCTOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/DOCTOR_LIVE.jsx";
 import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/ADVOCATE_LIVE.jsx";
 import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW.jsx";
+import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_Live.jsx";
 
 //Import All component:
 const App = () => {
@@ -722,6 +723,13 @@ let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
               )}
               {URL_Alies == URL_Alies && currentTemplate === 8 ? (
                 <Route path={`/:URL_Alies`} element={<ADVOCATE_LIVE />} />
+              ) : (
+                ""
+              )}
+
+              {/* Dynamic Vcard */}
+                {URL_Alies == URL_Alies && currentTemplate === 0 ? (
+                <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
               ) : (
                 ""
               )}

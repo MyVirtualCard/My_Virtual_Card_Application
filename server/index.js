@@ -45,6 +45,8 @@ import SixthTheme from './Routes/Dynamic_Vcard_Routes/Sixth_Product_Theme.route.
 import SeventhTheme from './Routes/Dynamic_Vcard_Routes/Seventh_Timer_Theme.route.js';
 import EighthTheme from './Routes/Dynamic_Vcard_Routes/Eight_Testimonial.route.js';
 import NinethTheme from './Routes/Dynamic_Vcard_Routes/Nine_Appoinment.route.js';
+
+import AllStyleTheme from './Routes/Dynamic_Vcard_Routes/AllStyle_Fetch_At_Single_Route.js'
 //Initialize backend App With name app
 const app = express();
 //Creating port number for server running
@@ -61,13 +63,13 @@ app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use("/uploads", express.static("uploads"));
 // Allow requests from your frontend domain
 
-// app.use(cors({
-//   origin: 'https://myvirtualcard.in',
-//   methods: 'GET,POST,PUT,DELETE',
-//   allowedHeaders: 'Content-Type,Authorization',
-// }));
+app.use(cors({
+  origin: 'https://myvirtualcard.in',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+}));
 //Cors Policy work in any domain:
-app.use(cors("*"));
+// app.use(cors("*"));
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
@@ -116,6 +118,7 @@ app.use('/product_theme',SixthTheme);
 app.use('/timer_theme',SeventhTheme);
 app.use('/testimonial_theme',EighthTheme);
 app.use('/appoinment_theme',NinethTheme);
+app.use('/dynamicVCard',AllStyleTheme)
 //Get Request
 app.get("/", (req, res) => {
   res.send("Welcome to Backend API");

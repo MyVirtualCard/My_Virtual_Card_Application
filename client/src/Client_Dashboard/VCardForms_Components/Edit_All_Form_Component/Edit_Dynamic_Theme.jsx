@@ -13,6 +13,7 @@ import Time_Design from "./Dynamic_Forms/Time_Design";
 import Testiminal_Design from "./Dynamic_Forms/Testiminal_Design";
 import Appoinment_Theme from "./Dynamic_Forms/Appoinment_Theme";
 import Feedback_Theme from "./Dynamic_Forms/Feedback_Theme";
+import Dynamic_VCard_PREVIEW from "../../All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW";
 const Edit_Dynamic_Theme = () => {
   let { user, userName, ShowForm, DynamicForm } = useContext(Context);
 
@@ -42,6 +43,7 @@ const Edit_Dynamic_Theme = () => {
           </div>
           <div className="vcard_preview">
             <DynamicVcard />
+        
           </div>
         </div>
       </div>

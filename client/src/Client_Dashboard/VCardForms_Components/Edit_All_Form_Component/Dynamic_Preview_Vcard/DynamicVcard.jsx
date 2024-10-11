@@ -602,6 +602,7 @@ const DynamicVcard = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -1097,6 +1098,177 @@ const DynamicVcard = () => {
           <style>
             /* Add your CSS here */
             {`
+
+  .menu_navbar_box {
+    width: 80px;
+    height: 100vh;
+      background-color:${VCardColour};
+  color:${VCardTextColour};
+    position: fixed;
+    top: 100%;
+    right: 0%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    .up_btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0.1;
+      font-size: 2.5rem;
+      font-weight: bold;
+          background-color: ${VCardTextColour} !important;
+      color: ${BtnBackColour};
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      .icon {
+        @media screen and (max-width: 1650px) {
+          transform: rotate(-90deg);
+          font-size: 1.5rem;
+        }
+      }
+      &:hover {
+               color:${VCardColour};
+        transition: all 0.3s ease-in-out;
+      }
+      @media screen and (max-width: 1650px) {
+        height: 100%;
+        flex: 0.1;
+        display: flex;
+        border-radius: 0px;
+        border-top-left-radius: 0rem;
+        border-bottom-left-radius: 0rem;
+        flex-direction: row !important;
+      }
+    }
+    .hideUpArrow {
+      opacity: 1;
+      cursor: not-allowed;
+    }
+    .all_menus {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 0.8;
+      max-height: 80%;
+      padding: 0.5rem;
+      width: 100%;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        cursor: pointer;
+
+        padding: 5px 10px;
+
+        border-radius: 4px;
+        transition: all 0.5s ease-in-out;
+
+        .icon {
+          font-size: 1.4rem;
+          @media screen and (max-width: 1650px) {
+            font-size: 1rem;
+          }
+        }
+        p {
+          font-size: 0.8rem;
+          font-weight: 550;
+          @media screen and (max-width: 1650px) {
+            font-size: 0.6rem;
+          }
+        }
+        &:hover {
+                color: ${BtnTextColour};
+          background-color: ${BtnBackColour};
+          transition: all 0.5s ease-in-out;
+        }
+      }
+      .menuActive {
+                 color: ${BtnTextColour};
+          background-color: ${BtnBackColour};
+      }
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      @media screen and (max-width: 1650px) {
+        height: 100%;
+        width: 100%;
+        flex: 0.8;
+        display: flex;
+        flex-direction: row !important;
+      }
+    }
+    .down_btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0.1;
+      font-size: 2.5rem;
+      font-weight: bold;
+    background-color: ${VCardTextColour} !important;
+      color: ${BtnBackColour};
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+
+      .down {
+        @media screen and (max-width: 1650px) {
+          transform: rotate(-90deg);
+          font-size: 1.5rem;
+        }
+      }
+      &:hover {
+           color:${VCardColour};
+        transition: all 0.3s ease-in-out;
+      }
+      @media screen and (max-width: 1650px) {
+        height: 100%;
+        flex: 0.1;
+        display: flex;
+        border-radius: 0px;
+        border-top-right-radius: 0rem;
+        border-bottom-right-radius: 0rem;
+        flex-direction: row !important;
+      }
+    }
+    .hideDownArrow {
+      opacity: 1;
+      cursor: not-allowed;
+    }
+
+    @media screen and (max-width: 1650px) {
+      position: sticky;
+      top: 0%;
+      left: 0%;
+      transform: translate(-0%, -0%);
+      z-index: 100;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      max-width: 100%;
+      height: 50px;
+      align-items: center;
+      justify-content: center;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+        rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+        rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    }
+  }
+
                 .Image_row_1 {
       width: 100%;
       max-height: auto;
@@ -4468,9 +4640,7 @@ padding:10px;
                 />
               </div>
               <div className="svg_image">
-                {/* <HtmlRenderer htmlString={SVG_Design} style={{fill:style.$vcard_back_color}}/> */}
-                {/* {SVG_Design} */}
-                {/* <div dangerouslySetInnerHTML={{ __html: SVG_Design }} style={{fill : style.$vcard_back_color}} /> */}
+          
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                   <path
                     fill={Dynamic_Style.$vcard_back_color}

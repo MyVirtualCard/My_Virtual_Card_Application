@@ -12,9 +12,12 @@ const VCard_Loader = () => {
         
   
       </div> */}
-      <div className="site_loader">
+      {/* <div className="site_loader">
         <span className="site_box"></span>
-      </div>
+      </div> */}
+       <div className="vcard_preview_loader">
+          <span class="preview_loader"></span>
+        </div>
     </div>
   );
 };
