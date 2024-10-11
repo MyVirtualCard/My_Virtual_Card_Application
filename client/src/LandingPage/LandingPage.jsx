@@ -1277,7 +1277,7 @@ const LandingPage = () => {
               </div>
               <div className="plan_price">
                 <h2>
-                  ₹ 1299 <small>/Yearly</small>
+                  ₹ 1499 <small>/Yearly</small>
                 </h2>
               </div>
 
