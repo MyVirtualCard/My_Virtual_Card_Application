@@ -63,13 +63,13 @@ app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use("/uploads", express.static("uploads"));
 // Allow requests from your frontend domain
 
-app.use(cors({
-  origin: 'https://myvirtualcard.in',
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-}));
+// app.use(cors({
+//   origin: 'https://myvirtualcard.in',
+//   methods: 'GET,POST,PUT,DELETE',
+//   allowedHeaders: 'Content-Type,Authorization',
+// }));
 //Cors Policy work in any domain:
-// app.use(cors("*"));
+app.use(cors("*"));
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
