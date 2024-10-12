@@ -6,7 +6,7 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 const Gallery_Design = () => {
 let{
-   Url_Alies,
+   URL_Alies,
    user,
    ImageBorderRadius,setImageBorderRadius,
    GalleryUpdateToggle,setGalleryUpdateToggle,

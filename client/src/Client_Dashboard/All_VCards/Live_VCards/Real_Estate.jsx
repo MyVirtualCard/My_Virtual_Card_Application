@@ -265,7 +265,7 @@ const Real_Estate = () => {
   //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       Name: "",
       Email: "",
       MobileNumber: "",
@@ -305,7 +305,7 @@ const Real_Estate = () => {
   //Appoinment form
   let Appoinment_formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       FullName: "",
       MobileNumber: "",
       Date: "",

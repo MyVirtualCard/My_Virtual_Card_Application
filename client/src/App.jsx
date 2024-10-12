@@ -237,15 +237,18 @@ let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
   let local_userName = JSON.parse(localStorage.getItem("userName"));
   let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
   let local_URL_Alies = localStorage.getItem("URL_Alies");
+ 
   useEffect(() => {
+
     if (local_userName) {
       return setUserName(local_userName);
     }
     if (local_mobileNumber) {
       return setMobileNumber(local_mobileNumber);
     }
-    if (local_URL_Alies === "") {
-      setURL_Alies(URL_Alies);
+    if (URL_Alies.length == 0) {
+      setURL_Alies(window.location.pathname.split('/')[1]);
+     
     } else {
       setURL_Alies(local_URL_Alies);
     }
@@ -263,8 +266,9 @@ let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
   useEffect(() => {
     try {
       api
-        .get(`/templateDetail/${local_URL_Alies}`)
+        .get(`/templateDetail/${URL_Alies.length > 0 ? local_URL_Alies : window.location.pathname.split('/')[1]}`)
         .then((res) => {
+        
           if (res.data?.data?.length > 0) {
             setURL_Alies(res.data?.data[0].URL_Alies);
             setCurrentTemplate(res.data?.data[0].currentTemplate);
@@ -278,7 +282,7 @@ let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
       console.log(error);
     }
   }, [navigate]);
-
+  console.log(URL_Alies.length)
   return (
     <>
       <div className="App_container">
@@ -728,7 +732,7 @@ let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
               )}
 
               {/* Dynamic Vcard */}
-                {URL_Alies == URL_Alies && currentTemplate === 0 ? (
+                { currentTemplate === 0 ? (
                 <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
               ) : (
                 ""

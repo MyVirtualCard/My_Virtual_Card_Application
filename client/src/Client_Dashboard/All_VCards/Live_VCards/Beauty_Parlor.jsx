@@ -271,7 +271,7 @@ const Beauty_Parlor = () => {
   //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       Name: "",
       Email: "",
       MobileNumber: "",
@@ -311,7 +311,7 @@ const Beauty_Parlor = () => {
   //Appoinment form
   let Appoinment_formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       FullName: "",
       MobileNumber: "",
       Date: "",

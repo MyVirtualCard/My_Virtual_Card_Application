@@ -1000,7 +1000,7 @@ const DynamicVcard = () => {
   //Appoinment form
   let Appoinment_formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       FullName: "",
       MobileNumber: "",
       Date: "",

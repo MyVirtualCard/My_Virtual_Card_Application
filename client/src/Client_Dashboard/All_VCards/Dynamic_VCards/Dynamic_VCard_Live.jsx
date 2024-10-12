@@ -31,6 +31,7 @@ import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import ReactStars from "react-stars";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { InquiryValidateSchema } from "../../../Helper/InquiryValidate";
 import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
 
@@ -38,6 +39,9 @@ import Context from "../../../Context/GlobalContext";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
 import URLNotFound from "../../404_Error_Page/404";
 const Dynamic_VCard_Live = () => {
+  let navigate=useNavigate();
+  let{URL_Alies,setURL_Alies,setCurrentTemplate}=useContext(Context);
+
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -247,7 +251,7 @@ const Dynamic_VCard_Live = () => {
   //Inquiry Form Logic :
   let formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       Name: "",
       Email: "",
       MobileNumber: "",
@@ -287,7 +291,7 @@ const Dynamic_VCard_Live = () => {
   //Appoinment form
   let Appoinment_formik = useFormik({
     initialValues: {
-      Url_Alies: window.location.pathname,
+      URL_Alies: window.location.pathname,
       FullName: "",
       MobileNumber: "",
       Date: "",
@@ -385,13 +389,30 @@ END:VCARD
     document.body.removeChild(link);
   };
   const currentUrl = window.location.pathname; // Full URL
-
+  useEffect(() => {
+    try {
+      api
+        .get(`/templateDetail${currentUrl}}`)
+        .then((res) => {
+          if (res.data?.data?.length > 0) {
+            setURL_Alies(res.data?.data[0].URL_Alies);
+            setCurrentTemplate(res.data?.data[0].currentTemplate);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [navigate]);
   async function fetchAllData() {
     try {
       await api
         .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
-          console.log(res.data);
+          setURL_Alies(window.location.pathname.split('/')[1])
           setAboutData(res.data.data.AboutDetails);
           setBankData(res.data.data.BankDetails);
           setUPIData(res.data.data.UPIDetails);
@@ -473,6 +494,7 @@ END:VCARD
     }
   }
   useEffect(() => {
+
     fetchAllData();
     // fetchAllStyleData();
   }, []);

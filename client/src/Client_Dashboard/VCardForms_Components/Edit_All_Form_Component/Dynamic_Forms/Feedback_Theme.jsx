@@ -45,6 +45,7 @@ const Feedback_Theme = () => {
       FeedbackPlaceholderColor: FeedbackPlaceholderColor,
       FeedbackInputError: FeedbackInputError,
       FeedbackInputColor: FeedbackInputColor,
+      FeedbackUpdateToggle,setFeedbackUpdateToggle,
     };
     try {
       await api
@@ -55,17 +56,17 @@ const Feedback_Theme = () => {
           },
         })
         .then((res) => {
-          setAppoinmentUpdateToggle(true);
+          setFeedbackUpdateToggle(true);
           toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setAppoinmentUpdateToggle(false);
+          setFeedbackUpdateToggle(false);
           setFormSubmitLoader(false);
           toast.error(error.response.data.message);
         });
     } catch (error) {
-      setAppoinmentUpdateToggle(false);
+      setFeedbackUpdateToggle(false);
       setFormSubmitLoader(false);
     }
   }
