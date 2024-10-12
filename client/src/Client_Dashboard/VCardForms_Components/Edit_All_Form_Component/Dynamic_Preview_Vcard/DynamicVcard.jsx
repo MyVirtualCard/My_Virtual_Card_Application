@@ -602,7 +602,7 @@ const DynamicVcard = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -1091,6 +1091,7 @@ const DynamicVcard = () => {
         });
     },
   });
+
   return (
     <>
       {!VcardPreviewLoader ? (
@@ -2127,27 +2128,23 @@ padding:10px;
             img {
               width: 60px;
               height: 60px;
-              border-radius: ${TestimonialImageBorderRadius}px;
-              border-top-left-radius:${[
-                TestimonialImageBorderRadius.includes(",")
-                  ? TestimonialImageBorderRadius.split(",")[0]
-                  : "",
-              ]}px ;
+              border-radius: ${TestimonialImageBorderRadius[0]}px;
+              border-top-left-radius:${TestimonialImageBorderRadius[0]}
+                  ? ${TestimonialImageBorderRadius[0]}px
+                  : "";
                 border-bottom-left-radius:${[
-                  TestimonialImageBorderRadius.includes(",")
-                    ? TestimonialImageBorderRadius.split(",")[1]
+                  TestimonialImageBorderRadius[1]
+                    ? TestimonialImageBorderRadius[1]
                     : "",
                 ]}px ;
                           border-top-right-radius:${[
-                            TestimonialImageBorderRadius.includes(",")
-                              ? TestimonialImageBorderRadius?.split(",")[2]
+                            TestimonialImageBorderRadius[2]
+                              ? TestimonialImageBorderRadius[2]
                               : "",
                           ]}px ;
                                   border-bottom-right-radius:${[
-                                    TestimonialImageBorderRadius.includes(",")
-                                      ? TestimonialImageBorderRadius?.split(
-                                          ","
-                                        )[3]
+                                    TestimonialImageBorderRadius[3]
+                                      ? TestimonialImageBorderRadius[3]
                                       : "",
                                   ]}px ; 
               object-fit: cover;
@@ -4640,7 +4637,6 @@ padding:10px;
                 />
               </div>
               <div className="svg_image">
-          
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                   <path
                     fill={Dynamic_Style.$vcard_back_color}
@@ -6006,8 +6002,7 @@ padding:10px;
                       onBlur={feedbackFormik.handleBlur}
                     />
                     <div className="icon">
-                    <i className="bx bxs-user"></i>
-
+                      <i className="bx bxs-user"></i>
                     </div>
                   </div>
                   <div className={`form_group ${FeedbackInputDesign}`}>

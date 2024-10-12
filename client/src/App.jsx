@@ -209,8 +209,8 @@ const App = () => {
   let[UserDataFlexDirection, setUserDataFlexDirection]=useState('column');
   let[UserDataJustifyContent,setUserDataJustifyContent]=useState('center');
   let[UserDataAlignItems,setUserDataAlignItems]=useState('center');
-  let[TestimonialBorderRadius,setTestimonialBorderRadius]=useState([0]);
-  let[TestimonialImageBorderRadius,setTestimonialImageBorderRadius]=useState([0]);
+  let[TestimonialBorderRadius,setTestimonialBorderRadius]=useState([0,0,0,0]);
+  let[TestimonialImageBorderRadius,setTestimonialImageBorderRadius]=useState([0,0,0,0]);
   let[TestimonialUpdateToggle,setTestimonialUpdateToggle]=useState(false);
 // 10]Appoinment Theme
 let[AppoinmentInputDesign,setAppoinmentInputDesign]=useState('Design1');

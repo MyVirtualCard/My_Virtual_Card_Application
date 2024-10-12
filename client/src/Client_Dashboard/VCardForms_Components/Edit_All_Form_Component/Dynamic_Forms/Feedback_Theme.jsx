@@ -39,16 +39,16 @@ const Feedback_Theme = () => {
     let data = {
       URL_Alies: URL_Alies,
       FeedbackInputDesign: FeedbackInputDesign,
-      LabelColor: LabelColor,
-      InputBorderColor:InputBorderColor,
-      InputBorderOnFocus: InputBorderOnFocus,
-      PlaceholderColor: PlaceholderColor,
-      InputError: InputError,
-      InputColor: InputColor,
+      FeedbackLabelColor: FeedbackLabelColor,
+      FeedbackInputBorderColor:FeedbackInputBorderColor,
+      FeedbackInputBorderOnFocus: FeedbackInputBorderOnFocus,
+      FeedbackPlaceholderColor: FeedbackPlaceholderColor,
+      FeedbackInputError: FeedbackInputError,
+      FeedbackInputColor: FeedbackInputColor,
     };
     try {
       await api
-        .post(`/appoinment_theme/${URL_Alies}`, data, {
+        .post(`/feedback_theme/${URL_Alies}`, data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -77,16 +77,16 @@ const Feedback_Theme = () => {
     let data = {
       URL_Alies: URL_Alies,
       FeedbackInputDesign: FeedbackInputDesign,
-      LabelColor: LabelColor,
-      InputBorderColor:InputBorderColor,
-      InputBorderOnFocus: InputBorderOnFocus,
-      PlaceholderColor: PlaceholderColor,
-      InputError: InputError,
-      InputColor: InputColor,
+      FeedbackLabelColor: FeedbackLabelColor,
+      FeedbackInputBorderColor:FeedbackInputBorderColor,
+      FeedbackInputBorderOnFocus: FeedbackInputBorderOnFocus,
+      FeedbackPlaceholderColor: FeedbackPlaceholderColor,
+      FeedbackInputError: FeedbackInputError,
+      FeedbackInputColor: FeedbackInputColor,
     };
     try {
       await api
-        .put(`/appoinment_theme/${URL_Alies}`, data, {
+        .put(`/feedback_theme/${URL_Alies}`, data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
