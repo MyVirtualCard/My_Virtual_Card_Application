@@ -28,44 +28,7 @@ const Vcard_Theme = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-  // Fetch Vcard Theme
-  async function handleVcardThemeFetch() {
-    setFormSubmitLoader(true);
-    try {
-      await api
-        .get(`/vcard_theme/${URL_Alies}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.data.length == 0) {
-            setFormSubmitLoader(false);
-            setUpdateToggle(false);
-          } else {
-            setVCardColour(res.data.data[0].VCardColour);
-            setVCardTextColour(res.data.data[0].VCardTextColour);
-            setSVG_Design(res.data.data[0].SVG_Design);
-            setUpdateToggle(true);
-            setFormSubmitLoader(false);
-          }
-        })
-        .catch((error) => {
-          toast.error(error.response.data.message);
-          setFormSubmitLoader(false);
-          setUpdateToggle(false);
-        });
-    } catch (error) {
-      toast.error(error.message);
-      setFormSubmitLoader(false);
-      setUpdateToggle(false);
-    }
-  }
 
-  useEffect(() => {
-    // handleVcardThemeFetch();
-  }, []);
   // Create Vcard Theme
   async function handleVcardThemeSubmit(e) {
     e.preventDefault();
@@ -85,8 +48,8 @@ const Vcard_Theme = () => {
           },
         })
         .then((res) => {
-     
-          toast.success(res.data.data.message);
+   
+          toast.success(res.data.message);
           setVcardThemeUpdateToggle(true)
           setFormSubmitLoader(false);
         })
