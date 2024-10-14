@@ -71,7 +71,10 @@ import DOCTOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCar
 import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/ADVOCATE_LIVE.jsx";
 import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW.jsx";
 import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_Live.jsx";
+import ReactGA from 'react-ga';
 
+const Measurement_Id = "G-YPMRZFE1LG";
+ReactGA.initialize(Measurement_Id);
 //Import All component:
 const App = () => {
   let navigate = useNavigate();
