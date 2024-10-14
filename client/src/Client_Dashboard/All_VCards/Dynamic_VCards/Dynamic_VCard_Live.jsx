@@ -39,8 +39,8 @@ import Context from "../../../Context/GlobalContext";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
 import URLNotFound from "../../404_Error_Page/404";
 const Dynamic_VCard_Live = () => {
-  let navigate=useNavigate();
-  let{URL_Alies,setURL_Alies,setCurrentTemplate}=useContext(Context);
+  let navigate = useNavigate();
+  let { URL_Alies, setURL_Alies, setCurrentTemplate } = useContext(Context);
 
   let style = {
     $first_back__color: "#ffffff",
@@ -362,6 +362,7 @@ const Dynamic_VCard_Live = () => {
   let [TimerTheme, setTimerTheme] = useState([]);
   let [TestimonialTheme, setTestimonialTheme] = useState([]);
   let [AppoinmentTheme, setAppoinmentTheme] = useState([]);
+  let [FeedbackTheme, setFeedbackTheme] = useState([]);
   const handleDownloadVCard = () => {
     const vCardData = `
 BEGIN:VCARD
@@ -412,7 +413,7 @@ END:VCARD
       await api
         .get(`/vcard/allDataAPI${currentUrl}`)
         .then((res) => {
-          setURL_Alies(window.location.pathname.split('/')[1])
+          setURL_Alies(window.location.pathname.split("/")[1]);
           setAboutData(res.data.data.AboutDetails);
           setBankData(res.data.data.BankDetails);
           setUPIData(res.data.data.UPIDetails);
@@ -449,8 +450,9 @@ END:VCARD
           setServiceTheme(res.data.data.FifthServiceTheme);
           setProductTheme(res.data.data.SixthProductTheme);
           setAppoinmentTheme(res.data.data.NinethAppoinmentTheme);
+          setFeedbackTheme(res.data.data.TenthFeedbackTheme);
           setTimerTheme(res.data.data.SeventhTimerTheme);
-          setTestimonialTheme(res.data.data.EighthTestimonialTheme)
+          setTestimonialTheme(res.data.data.EighthTestimonialTheme);
         })
         .catch((error) => {
           console.log(error);
@@ -494,7 +496,6 @@ END:VCARD
     }
   }
   useEffect(() => {
-
     fetchAllData();
     // fetchAllStyleData();
   }, []);
@@ -768,26 +769,26 @@ color:${VcardTheme[0].VCardTextColour} !important;
           left: 0;
           width: 100%;
           height: 50%;
-          background: linear-gradient(#cd62e200 0%, ${
-            VcardTheme[0].VCardColour
-          } 100%);
+          background:${
+            VcardTheme[0].SVG_Design.length < 10
+              ? `linear-gradient(#cd62e200 0%, ${VcardTheme[0].VCardColour} 100%);`
+              : ""
+          }
         }
       }
       .user_logo {
-      width:100%;
-           position: ${ImageTheme[0].LogoPosition};
-        top: ${ImageTheme[0].LogoTopPosition}${ImageTheme[0].LogoPositionUnit};
-        left: ${ImageTheme[0].LogoLeftPosition}${
-          ImageTheme[0].LogoPositionUnit
-        };
+   
+      position: ${ImageTheme[0].LogoPosition};
+      top: ${ImageTheme[0].LogoTopPosition}${ImageTheme[0].LogoPositionUnit};
+      left: ${ImageTheme[0].LogoLeftPosition}${ImageTheme[0].LogoPositionUnit};
         transform: translate(-${ImageTheme[0].LogoLeftPosition}${
           ImageTheme[0].LogoPositionUnit
         }, -${ImageTheme[0].LogoTopPosition}${ImageTheme[0].LogoPositionUnit});
       
        
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
           z-index: 2;
 
 
@@ -1728,7 +1729,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                   flex-direction: column;
                   align-items: flex-start;
                   justify-content: flex-start;
-                  gap: 15px;
+                  gap: 5px;
                   width: 100%;
         
               
@@ -1746,6 +1747,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                     }
                       label{
                       font-size:0.8rem !important;
+                      color:${AppoinmentTheme[0].LabelColor} !important;
                       }
           .labelError {
               color: ${AppoinmentTheme[0].InputError} !important;
@@ -1830,11 +1832,11 @@ color:${VcardTheme[0].VCardTextColour} !important;
                     label {
                       font-size: 0.9rem;
                       font-weight: 500;
-                      color: gray;
+                        color:${AppoinmentTheme[0].LabelColor} !important;
                       display: none;
         
                       sup {
-                        color: red;
+                          color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -1913,7 +1915,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                       display: none;
         
                       sup {
-                        color: red;
+                          color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -1991,7 +1993,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                           color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2064,7 +2066,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                           color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2120,11 +2122,11 @@ color:${VcardTheme[0].VCardTextColour} !important;
                     label {
                       font-size: 0.9rem;
                       font-weight: 500;
-                      color: gray;
+                         color:${AppoinmentTheme[0].LabelColor} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                        color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2192,11 +2194,11 @@ color:${VcardTheme[0].VCardTextColour} !important;
                     label {
                       font-size: 0.9rem;
                       font-weight: 500;
-                      color: gray;
+                         color:${AppoinmentTheme[0].LabelColor} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                           color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2275,7 +2277,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                        color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2369,7 +2371,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                          color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2451,11 +2453,11 @@ color:${VcardTheme[0].VCardTextColour} !important;
                     label {
                       font-size: 0.9rem;
                       font-weight: 500;
-                      color: gray;
+                        color:${AppoinmentTheme[0].LabelColor} !important;
                       display: block;
         
                       sup {
-                        color: red;
+                           color:${AppoinmentTheme[0].InputError} !important;
                         font-size: 1rem;
                       }
                     }
@@ -2483,7 +2485,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
                     align-items: center;
                     justify-content: space-between;
                     gap: 2rem;
-                    // margin: 1rem auto;
+                    margin: 1rem auto;
                     width: 100%;
         
                     button {
@@ -2494,8 +2496,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
                       // width: 100%;
                       outline: none;
                       padding: 6px 1rem;
-                      background-color: rgb(122, 122, 122);
-                      color: #f5f5f5;
+                      background-color: ${ButtonTheme[0].BtnBackColour};
+                      color: ${ButtonTheme[0].BtnTextColour};
                       font-size: 0.8rem;
                       border-radius: 0.3rem;
                       font-weight: 500;
@@ -2528,7 +2530,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
                         }
                       }
                       &:hover {
-                        background-color: #7e7e7e;
+                        background-color: ${ButtonTheme[0].BtnHoverColour};
+                        color:${ButtonTheme[0].BtnHoverTextColour};
                         filter: drop-shadow(0px 4px 5px rgba(109, 109, 109, 0.4));
                       }
         
@@ -2706,24 +2709,31 @@ color:${VcardTheme[0].VCardTextColour} !important;
           align-items: center;
           justify-content: flex-start;
               border-radius: ${TestimonialTheme[0].TestimonialBorderRadius}px;
-              border-top-left-radius:${[
+              border-top-left-radius:${
                 TestimonialTheme[0].TestimonialBorderRadius.includes(",")
                   ? TestimonialTheme[0].TestimonialBorderRadius.split(",")[0]
-                  : "",
-              ]}px ;
+                  : ""}px;
                 border-bottom-left-radius:${[
                   TestimonialTheme[0].TestimonialBorderRadius.includes(",")
                     ? TestimonialTheme[0].TestimonialBorderRadius.split(",")[1]
                     : "",
                 ]}px ;
                           border-top-right-radius:${[
-                            TestimonialTheme[0].TestimonialBorderRadius.includes(",")
-                              ? TestimonialTheme[0].TestimonialBorderRadius?.split(",")[2]
+                            TestimonialTheme[0].TestimonialBorderRadius.includes(
+                              ","
+                            )
+                              ? TestimonialTheme[0].TestimonialBorderRadius?.split(
+                                  ","
+                                )[2]
                               : "",
                           ]}px ;
                                   border-bottom-right-radius:${[
-                                    TestimonialTheme[0].TestimonialBorderRadius.includes(",")
-                                      ? TestimonialTheme[0].TestimonialBorderRadius?.split(",")[3]
+                                    TestimonialTheme[0].TestimonialBorderRadius.includes(
+                                      ","
+                                    )
+                                      ? TestimonialTheme[0].TestimonialBorderRadius?.split(
+                                          ","
+                                        )[3]
                                       : "",
                                   ]}px ; 
 padding:10px;
@@ -2739,9 +2749,10 @@ padding:10px;
             gap: 10px;
             padding: 10px;
             height: 100%;
-       min-height: 100%
+       min-height: 100%;
 
             .feedback_title{
+            color: ${TestimonialTheme[0].TestimonialTitleColor} !important;
               h4 {
                 font-size: 0.9rem;
                 font-weight: 550;
@@ -2790,24 +2801,36 @@ padding:10px;
             img {
               width: 60px;
               height: 60px;
-              border-radius: ${TestimonialTheme[0].TestimonialImageBorderRadius}px;
+              border-radius: ${
+                TestimonialTheme[0].TestimonialImageBorderRadius
+              }px;
               border-top-left-radius:${[
                 TestimonialTheme[0].TestimonialImageBorderRadius.includes(",")
-                  ? TestimonialTheme[0].TestimonialImageBorderRadius.split(",")[0]
+                  ? TestimonialTheme[0].TestimonialImageBorderRadius.split(
+                      ","
+                    )[0]
                   : "",
               ]}px ;
                 border-bottom-left-radius:${[
                   TestimonialTheme[0].TestimonialImageBorderRadius.includes(",")
-                    ? TestimonialTheme[0].TestimonialImageBorderRadius.split(",")[1]
+                    ? TestimonialTheme[0].TestimonialImageBorderRadius.split(
+                        ","
+                      )[1]
                     : "",
                 ]}px ;
                           border-top-right-radius:${[
-                            TestimonialTheme[0].TestimonialImageBorderRadius.includes(",")
-                              ? TestimonialTheme[0].TestimonialImageBorderRadius?.split(",")[2]
+                            TestimonialTheme[0].TestimonialImageBorderRadius.includes(
+                              ","
+                            )
+                              ? TestimonialTheme[0].TestimonialImageBorderRadius?.split(
+                                  ","
+                                )[2]
                               : "",
                           ]}px ;
                                   border-bottom-right-radius:${[
-                                    TestimonialTheme[0].TestimonialImageBorderRadius.includes(",")
+                                    TestimonialTheme[0].TestimonialImageBorderRadius.includes(
+                                      ","
+                                    )
                                       ? TestimonialTheme[0].TestimonialImageBorderRadius?.split(
                                           ","
                                         )[3]
@@ -2846,6 +2869,2311 @@ padding:10px;
       }
     }
 
+
+               .feedback_row {
+      width: 100%;
+      padding: 0rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0rem;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      .popup_message_container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+
+        .popup_success_box {
+          display: inline-block;
+          width: auto;
+      
+          background-color: rgb(255, 255, 255);
+          box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+            rgb(209, 213, 219) 0px 0px 0px 1px inset;
+          padding: 0.7px 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2rem;
+          position: relative;
+          font-size: 0.7rem;
+          font-weight: 500;
+          transition: all 0.5s ease-in-out;
+          z-index: -1;
+
+          .popup_close {
+            i {
+              font-size: 1.4rem;
+              font-weight: 600;
+              color: rgb(255, 101, 101);
+              cursor: pointer;
+              transition: all 0.5s ease;
+              &:hover {
+                transform: rotate(90deg);
+                transition: all 0.5s ease;
+              }
+            }
+            .icon {
+              font-size: 1.2rem;
+              color: #2cc478;
+            }
+          }
+          .popup_message {
+            font-size: 0.9rem;
+            color: rgb(48, 48, 48);
+            font-weight: 500;
+          }
+        }
+        #successOpen {
+          scale: 1;
+          opacity: 1;
+          transition: all 0.5s ease-in-out;
+        }
+        #successClose {
+          scale: 0;
+          opacity: 0;
+
+          transition: all 0.5s ease-in-out;
+        }
+        .popup_error_box {
+          display: inline-block;
+          height: 40px;
+          background-color: rgb(255, 177, 141) !important;
+          border-radius: 5px;
+          padding: 0px 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 3rem;
+          position: relative;
+          z-index: -1;
+          .popup_close {
+            i {
+              font-size: 1.4rem;
+              color: rgb(255, 255, 255);
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.5s ease;
+              &:hover {
+                transform: rotate(90deg);
+                transition: all 0.5s ease;
+              }
+            }
+          }
+          .popup_message {
+            font-size: 0.9rem;
+            color: #2cc478;
+            font-weight: 550;
+          }
+        }
+      }
+   
+      .Feedback_container_message {
+        width: 100%;
+        height: auto;
+        // padding: 0rem 0.5rem;
+        margin: 0rem auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        .feeback_title {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          gap: 10px;
+          z-index: 800;
+
+          button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            // padding: 0.7rem 1rem;
+            font-size: 0.7rem;
+            color: $first_btn_back_color;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+            border: transparent;
+            font-weight: 600;
+            position: relative;
+            padding-top: 1rem;
+
+            i {
+              font-size: 1.4rem;
+              color: rgb(43, 43, 43);
+            }
+
+            .count {
+              position: absolute;
+              right: -7%;
+              top: 20%;
+
+              font-size: 0.8rem;
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: 600;
+              color: #474747;
+
+              border-radius: 50%;
+            }
+          }
+          .feedBack_loader {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: block;
+            margin: 15px auto;
+            position: relative;
+            color: #253bff;
+            left: -100px;
+            box-sizing: border-box;
+            animation: shadowRolling 2s linear infinite;
+          }
+
+          @keyframes shadowRolling {
+            0% {
+              box-shadow: 0px 0 rgba(255, 255, 255, 0),
+                0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0),
+                0px 0 rgba(255, 255, 255, 0);
+            }
+            12% {
+              box-shadow: 100px 0 rgb(76, 247, 176),
+                0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0),
+                0px 0 rgba(255, 255, 255, 0);
+            }
+            25% {
+              box-shadow: 110px 0 rgb(107, 98, 233), 100px 0 rgb(75, 45, 243),
+                0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+            }
+            36% {
+              box-shadow: 120px 0 rgb(94, 236, 255), 110px 0 rgb(226, 253, 72),
+                100px 0 rgb(219, 99, 119), 0px 0 rgba(255, 255, 255, 0);
+            }
+            50% {
+              box-shadow: 130px 0 rgb(240, 135, 49), 120px 0 rgb(56, 163, 74),
+                110px 0 rgb(99, 95, 95), 100px 0 rgb(135, 111, 221);
+            }
+            62% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 white,
+                120px 0 white, 110px 0 white;
+            }
+            75% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0), 130px 0 white, 120px 0 white;
+            }
+            87% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+                130px 0 white;
+            }
+            100% {
+              box-shadow: 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+                200px 0 rgba(255, 255, 255, 0);
+            }
+          }
+        }
+        .comment_box {
+          width: 100%;
+          max-height: 300px;
+          height: auto;
+          overflow: scroll;
+
+          margin: 1rem auto;
+          background: transparent;
+    
+          background: transparent;
+
+          border-radius: 5px;
+          position: relative;
+
+          .comment_box_title {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: royalblue;
+            color: #fff;
+            font-weight: 400;
+            display: none;
+          }
+          .message {
+            width: 100%;
+            padding: 10px;
+            border-bottom: 2px solid rgb(238, 237, 237);
+            position: relative;
+            .user_detail {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 1rem;
+
+              .details {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 5px;
+
+                .userName {
+                  p {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    font-size: 1.1rem;
+
+                    color: rgb(22, 22, 22);
+                    letter-spacing: 1px;
+                    font-weight: 550;
+
+                    i {
+                      color: rgb(94, 94, 94);
+                      font-size: 1.4rem;
+                    }
+
+                    &::first-letter {
+                      text-transform: uppercase !important;
+                    }
+                  }
+                }
+                .stars {
+                  .ratting_container1 {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.3rem;
+
+                    span {
+                      i {
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        color: lightgray;
+                        transition: all 0.4s ease-in-out;
+
+                
+                      }
+
+                      .highlight1 {
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                        color: gold;
+                      }
+                    }
+                  }
+
+                  #noRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3),
+                    span:nth-child(4),
+                    span:nth-child(5) {
+                      i {
+                        text-decoration: line-through;
+                        text-decoration-color: #ff2525;
+                      }
+                    }
+                  }
+
+                  #singleRatting {
+                    span:nth-child(1) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #doubleRatting {
+                    span:nth-child(1),
+                    span:nth-child(2) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #ThreeRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #fourRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3),
+                    span:nth-child(4) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                      }
+                    }
+                  }
+                  #fullRatting {
+                    span:nth-child(1),
+                    span:nth-child(2),
+                    span:nth-child(3),
+                    span:nth-child(4),
+                    span:nth-child(5) {
+                      i {
+                        color: #f7c52a;
+                        filter: drop-shadow(
+                          0px 4px 5px rgba(165, 165, 165, 0.4)
+                        );
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .comments {
+              margin: 10px auto;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 10px;
+              width: 100%;
+
+              i {
+                color: royalblue;
+                font-size: 1.4rem;
+              }
+              span {
+                font-size: 0.9rem;
+                color: #272727;
+              }
+            }
+
+            .date {
+              position: absolute;
+              right: 2%;
+              top: 15%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              font-size: 0.9rem;
+              color: rgb(68, 68, 68);
+
+              i {
+                color: darkcyan;
+                font-size: 1.1rem;
+              }
+            }
+          }
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+
+      .feedback_container {
+        width: 100%;
+        position: relative;
+
+
+        form {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          margin: auto;
+          padding: 0px 0.5rem 0rem 0.5rem;
+
+
+          .feedback_svg {
+            position: absolute;
+            top: -4%;
+            right: 0%;
+
+            img {
+              width: 100px;
+              object-fit: cover;
+              object-position: center;
+
+              @media (max-width: 600px) {
+                width: 90px;
+              }
+            }
+
+            @media (max-width: 600px) {
+              top: -0%;
+            }
+          }
+          .form_group {
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 95%;
+            position: relative;
+            margin: 0.2rem 0.2rem;
+
+            .error {
+              font-size: 0.6rem;
+              color: $error_text_color !important;
+              -webkit-text-fill-color: ${FeedbackTheme[0]?.FeedbackInputError};
+              letter-spacing: 1px;
+      
+              display: flex;
+              align-items: center;
+              font-weight: 550;
+              justify-content: flex-start;
+            }
+            label {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+
+              left: 5%;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+     
+              -webkit-text-fill-color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              font-size: 0.6rem !important;
+              font-weight: 550;
+
+              border-radius: 4px;
+
+              span {
+                font-size: 1rem;
+                color: $error_text_color !important;
+                -webkit-text-fill-color: ${FeedbackTheme[0]?.FeedbackInputError};
+                sup {
+                  color: ${FeedbackTheme[0]?.FeedbackInputError} !important;
+                }
+              }
+
+              @media screen and (max-width: 800px) {
+                left: 5%;
+              }
+            }
+
+            input
+             {
+              width: 100%;
+       
+       background-color: transparent;
+    outline: none;
+color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
+              transition: all 0.3s ease;
+              &::placeholder {
+                font-size: 0.6rem;
+                color: ${FeedbackTheme[0]?.FeedbackPlaceholderColor};
+                letter-spacing: 1px;
+                font-weight: 400;
+              }
+              &:focus {
+                background-color: transparent;
+   
+                background-origin: border-box;
+                background-clip: padding-box, border-box;
+                transition: all 0.3s ease;
+              }
+
+              @media screen and (max-width: 800px) {
+                padding: 0.8rem 2rem;
+                width: 100%;
+                background-color: transparent;
+              }
+            }
+
+            .ratting_container {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 0.5rem;
+
+              span {
+                i {
+                  font-size: 1.5rem;
+                  cursor: pointer;
+                  color: rgb(255, 168, 54);
+                  transition: all 0.4s ease-in-out;
+
+        
+                }
+                .highlight {
+                  filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                  color: gold;
+                }
+              }
+            }
+            textarea {
+              width: 100%;
+              padding: 0.7rem 2rem;
+     
+    
+   
+              background-color: transparent;
+        
+
+    
+              outline: none;
+
+              transition: all 0.3s ease;
+              caret-color : ${FeedbackTheme[0].FeedbackInputColor};
+              &::placeholder {
+                font-size: 0.6rem;
+                color: ${FeedbackTheme[0]?.FeedbackPlaceholderColor};
+                letter-spacing: 1px;
+                font-weight: 400;
+              }
+              &:focus {
+      
+                background-color: transparent;
+    
+
+      
+                transition: all 0.3s ease;
+              }
+
+              @media screen and (max-width: 800px) {
+                padding: 0.8rem 2rem;
+                width: 100%;
+                background-color: transparent;
+              }
+            }
+
+            .icon {
+              position: absolute;
+              left: 1%;
+              top: 63%;
+
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              i {
+                font-size: 1.4rem;
+             
+              }
+
+              @media screen and (max-width: 800px) {
+                position: absolute;
+                left: 2%;
+                top: 25%;
+              }
+            }
+            .show_pass {
+              position: absolute;
+              right: 2%;
+              top: 25%;
+
+              i {
+                font-size: 1.4rem;
+                color: skyblue;
+                cursor: pointer;
+              }
+
+              @media screen and (max-width: 800px) {
+                position: absolute;
+                right: 2%;
+                top: 25%;
+              }
+            }
+
+            @media screen and (max-width: 900px) {
+              margin: 0.8rem auto;
+            }
+          }
+          .Design1 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design1 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+            &::placeholder{
+              color:${FeedbackTheme[0]?.FeedbackPlaceholderColor};
+              font-size:0.7rem;
+              }
+              &:focus {
+                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+            }
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: none;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            .icon {
+              position: absolute;
+              top: 20%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithlabel {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+ color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithanimation {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design2 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design2 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: none;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            .icon {
+              position: absolute;
+              top: 20%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithlabel {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+               color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithanimation {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+               color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design3 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design3 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+              &:focus + .iconwithlabel {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+          
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design4 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design4 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+           
+            
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design5 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design5 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              &:focus {
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+              }
+             
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+           
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+                        }
+          .Design6 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design6 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &::placeholder {
+                transition: opacity 0.4s ease;
+                opacity: 1;
+              }
+
+              &:focus::placeholder {
+                opacity: 0;
+              }
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            
+         
+           
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                 color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design7 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design7 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              @keyframes shake {
+                0%,
+                100% {
+                  transform: translateX(0);
+                }
+                20%,
+                60% {
+                  transform: translateX(-5px);
+                }
+                40%,
+                80% {
+                  transform: translateX(0px);
+                }
+              }
+
+              &:focus {
+                animation: shake 1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+         
+           
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                          color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design8{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design8 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &::placeholder {
+                transition: opacity 0.4s ease;
+                opacity: 1; // Full opacity by default
+              }
+
+              &:focus::placeholder {
+                opacity: 0; // Fades out the placeholder when focused
+              }
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                animation: bounce 1s ease-in-out;
+              }
+              @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                  transform: translateY(0);
+                }
+                40% {
+                  transform: translateY(-5px);
+                }
+                60% {
+                  transform: translateY(-2px);
+                }
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+              &:focus + .iconwithlabel {
+                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};  // Change icon color when input is focused
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+          
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+       
+          }
+          .Design9{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design9 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              @keyframes shake {
+                0%,
+                100% {
+                  transform: translateY(0);
+                }
+                20%,
+                60% {
+                  transform: translateY(-3px);
+                }
+                40%,
+                80% {
+                  transform: translateY(0px);
+                }
+              }
+              @keyframes rotate {
+                  from {
+                    transform: rotate(0deg);
+                  }
+                  to {
+                    transform: rotate(360deg);
+                  }
+                }
+
+              &:focus {
+                animation: shake 1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); // Blue glowing effect on focus
+              }
+            
+              &:focus + .icon {
+                  color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                  animation: rotate 0.5s ease-in-out;
+                }
+            }
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+         
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+           
+          }
+          .form_actions {
+            margin: 1rem auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin: 1rem auto;
+
+            button {
+              margin-right: 1rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+               background-color: ${ButtonTheme[0].BtnBackColour};
+                      color: ${ButtonTheme[0].BtnTextColour};
+              filter: none;
+              width: auto;
+              padding: 10px 1rem;
+              outline: none;
+              border: transparent;
+
+              font-weight: 500;
+              letter-spacing: 1px;
+              font-size: 0.6rem;
+              border-radius: 5px;
+              cursor: pointer;
+              color: $third_text_color;
+              transition: all 0.4s ease-in;
+
+              span {
+                font-size: 1.2rem;
+              }
+              .form_loader,
+              .form_loader:before,
+              .form_loader:after {
+                border-radius: 50%;
+                width: 1em;
+                height: 1em;
+                animation-fill-mode: both;
+                animation: bblFadInOut 1.8s infinite ease-in-out;
+              }
+              .form_loader {
+                color: #fff;
+                font-size: 7px;
+                position: relative;
+                text-indent: -9999em;
+                transform: translateZ(0);
+                animation-delay: -0.16s;
+              }
+              .form_loader:before,
+              .form_loader:after {
+                content: "";
+                position: absolute;
+                top: 0;
+              }
+              .form_loader:before {
+                left: -3.5em;
+                animation-delay: -0.32s;
+              }
+              .form_loader:after {
+                left: 3.5em;
+              }
+
+              @keyframes bblFadInOut {
+                0%,
+                80%,
+                100% {
+                  box-shadow: 0 2.5em 0 -1.3em;
+                }
+                40% {
+                  box-shadow: 0 2.5em 0 0;
+                }
+              }
+
+              &:hover {
+                  background-color: ${ButtonTheme[0].BtnHoverColour};
+                        color:${ButtonTheme[0].BtnHoverTextColour};
+                font-weight: 550;
+                transition: all 0.4s ease-in;
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+
+   .Inquries {
+     
+      width: 100%;
+      padding: 0rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0rem;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+   
+
+      .popup_message_container {
+        // position: relative;
+    position: absolute;
+    right: 3%;
+    top: 5%;
+        .popup_success_box {
+          display: inline-block;
+     
+          background-color: rgb(255, 255, 255);
+          box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+          border-radius: 5px;
+          padding: 0.6px 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 3rem;
+          position: relative;
+          transition: transform 0.5s ease-in-out;
+          z-index: -1;
+          .popup_close {
+        
+    
+            i {
+              font-size: 1.4rem;
+              font-weight: 600;
+              color: rgb(255, 76, 76);
+              cursor: pointer;
+              transition: all 0.5s ease;
+              &:hover {
+                transform: rotate(90deg);
+                transition: all 0.5s ease;
+              }
+            }
+          }
+          .popup_message {
+            font-size: 0.9rem;
+            color: #4b4b4b;
+            font-weight: 550;
+          }
+        }
+        #successOpen{
+          transform: translateX(0px);
+          transition: transform 0.5s ease-in-out;
+        }
+        #successClose{
+          transform: translateX(500px);
+          
+          transition: transform 0.5s ease-in-out;
+        }
+        .popup_error_box {
+          display: inline-block;
+          height: 40px;
+          background-color: rgb(255, 177, 141) !important;
+          border-radius: 5px;
+          padding: 0px 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 3rem;
+          position: relative;
+    z-index: -1;
+ 
+          .popup_close {
+    
+            i {
+              font-size: 1.4rem;
+              color: rgb(255, 255, 255);
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.5s ease;
+              &:hover {
+                transform: rotate(90deg);
+                transition: all 0.5s ease;
+              }
+            }
+          }
+          .popup_message {
+            font-size: 0.9rem;
+            color: #494949;
+            font-weight: 550;
+          }
+        }
+      }
+      .inquiries_container5 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: auto;
+    
+        form {
+          width: 90%;
+          padding: 10px 0px;
+
+          margin: auto;
+          .form_group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            margin: 10px auto;
+
+            label {
+                   font-size: 0.7rem !important;
+              letter-spacing: 1px;
+               color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+     
+              -webkit-text-fill-color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              font-weight: 550;
+            }
+            .input {
+              width: 100%;
+              position: relative;
+              input,
+              textarea {
+                width: 100%;
+                padding: 0.9rem 2.5rem;
+                outline: none;
+                
+            
+                background-color: transparent;
+                color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
+               
+                caret-color: ${FeedbackTheme[0]?.FeedbackInputColor} ;
+
+                &::placeholder {
+                    color: ${FeedbackTheme[0]?.FeedbackPlaceholderColor} !important;
+                  letter-spacing: 1px;
+                  font-size: 0.7rem;
+                }
+              }
+
+              i {
+                position: absolute;
+                left: 2%;
+                font-size: 1.5rem;
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+                top: 30%;
+              }
+            }
+            .labelError{
+              color:  ${FeedbackTheme[0]?.FeedbackInputError} !important;
+              font-weight: 450;
+            }
+       
+
+            .input_error {
+            
+              border-radius: 5px;
+            }
+           
+            .error {
+              position: absolute;
+              top: 12%;
+              right: 0%;
+              color:  ${FeedbackTheme[0]?.FeedbackInputError};
+            
+              font-size: 0.7rem;
+              padding: 5px 0px 0px 0px;
+            }
+    
+            .desc_error {
+              position: absolute;
+              top: 0%;
+              right: 0%;
+          color: ${FeedbackTheme[0]?.FeedbackInputError} !important;
+              font-size: 0.7rem;
+              padding: 5px 0px 0px 0px;
+            }
+          }
+
+          .Design1 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design1 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+            &::placeholder{
+              color:${FeedbackTheme[0]?.FeedbackPlaceholderColor};
+              font-size:0.7rem;
+              }
+              &:focus {
+                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+            }
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: none;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            .icon {
+              position: absolute;
+              top: 20%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithlabel {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+ color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithanimation {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design2 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design2 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: none;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            .icon {
+              position: absolute;
+              top: 20%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithlabel {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+               color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .iconwithanimation {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+               color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design3 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design3 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+              &:focus + .iconwithlabel {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+          
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design4 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design4 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+           
+            
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design5 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design5 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              &:focus {
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+              }
+             
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+           
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+                        }
+          .Design6 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design6 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &::placeholder {
+                transition: opacity 0.4s ease;
+                opacity: 1;
+              }
+
+              &:focus::placeholder {
+                opacity: 0;
+              }
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+            
+         
+           
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                 color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design7 {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design7 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              @keyframes shake {
+                0%,
+                100% {
+                  transform: translateX(0);
+                }
+                20%,
+                60% {
+                  transform: translateX(-5px);
+                }
+                40%,
+                80% {
+                  transform: translateX(0px);
+                }
+              }
+
+              &:focus {
+                animation: shake 1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
+              }
+            }
+
+         
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackLabelColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+         
+           
+            .icon {
+                position: absolute;
+                top: 55%;
+                left: 2%;
+  
+                font-size: 1.3rem;
+  
+                          color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              }
+          }
+          .Design8{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design8 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: none;
+              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              position: relative;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+
+              &::placeholder {
+                transition: opacity 0.4s ease;
+                opacity: 1; // Full opacity by default
+              }
+
+              &:focus::placeholder {
+                opacity: 0; // Fades out the placeholder when focused
+              }
+
+              &:focus {
+                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                animation: bounce 1s ease-in-out;
+              }
+              @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                  transform: translateY(0);
+                }
+                40% {
+                  transform: translateY(-5px);
+                }
+                60% {
+                  transform: translateY(-2px);
+                }
+              }
+              &:focus + .icon {
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+              }
+              &:focus + .iconwithlabel {
+                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};  // Change icon color when input is focused
+              }
+            }
+
+         
+            label {
+               font-size: 0.7rem !important;
+              font-weight: 500;
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+          
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+                color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+       
+          }
+          .Design9{
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            position: relative;
+
+            .Design9 {
+              padding: 0.5rem 2rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-radius: 0.3rem;
+              font-size: 0.9rem;
+              letter-spacing: 1px;
+              box-shadow: none;
+              transition: box-shadow 0.3s ease;
+
+              @keyframes shake {
+                0%,
+                100% {
+                  transform: translateY(0);
+                }
+                20%,
+                60% {
+                  transform: translateY(-3px);
+                }
+                40%,
+                80% {
+                  transform: translateY(0px);
+                }
+              }
+              @keyframes rotate {
+                  from {
+                    transform: rotate(0deg);
+                  }
+                  to {
+                    transform: rotate(360deg);
+                  }
+                }
+
+              &:focus {
+                animation: shake 1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); // Blue glowing effect on focus
+              }
+            
+              &:focus + .icon {
+                  color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                  animation: rotate 0.5s ease-in-out;
+                }
+            }
+         
+            label {
+                 font-size: 0.7rem !important;
+              font-weight: 500;
+              color: gray;
+              display: block;
+
+              sup {
+                color: red;
+                font-size: 1rem;
+              }
+            }
+            .slideLabel {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                transition: all 0.3s ease;
+                pointer-events: none;
+              }
+         
+            .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+            }
+           
+          }
+          
+          .form_actions {
+            // padding: 0px 1rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin: 1rem auto;
+
+            button {
+              width: 100px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              background-color: ${ButtonTheme[0].BtnBackColour};
+                      color: ${ButtonTheme[0].BtnTextColour};
+              
+              padding: 8px 1rem;
+              outline: none;
+              border: transparent;
+
+              font-weight: 450;
+              letter-spacing: 1px;
+              font-size: 0.7rem;
+              border-radius: 5px;
+              cursor: pointer;
+
+              transition: all 0.4s ease-in;
+
+              img {
+                width: 20px;
+                height: 20px;
+              }
+              .form_loader,
+              .form_loader:before,
+              .form_loader:after {
+                border-radius: 50%;
+                width: 1em;
+                height: 1em;
+                animation-fill-mode: both;
+                animation: bblFadInOut 1.8s infinite ease-in-out;
+              }
+              .form_loader {
+                color: #fff;
+                font-size: 7px;
+                position: relative;
+                text-indent: -9999em;
+                transform: translateZ(0);
+                animation-delay: -0.16s;
+              }
+              .form_loader:before,
+              .form_loader:after {
+                content: "";
+                position: absolute;
+                top: 0;
+              }
+              .form_loader:before {
+                left: -3.5em;
+                animation-delay: -0.32s;
+              }
+              .form_loader:after {
+                left: 3.5em;
+              }
+
+              @keyframes bblFadInOut {
+                0%,
+                80%,
+                100% {
+                  box-shadow: 0 2.5em 0 -1.3em;
+                }
+                40% {
+                  box-shadow: 0 2.5em 0 0;
+                }
+              }
+
+              &:hover {
+                   background-color: ${ButtonTheme[0].BtnHoverColour};
+                        color:${ButtonTheme[0].BtnHoverTextColour};
+
+                transition: all 0.4s ease-in;
+                filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.5));
+               
+              }
+            }
+          }
+        }
+      }
+    }
 
 
 
@@ -4514,65 +6842,61 @@ padding:10px;
             )}
 
             {/* Testimonials */}
-{TestimonialData.length > 0 &&
-            ManageContentData[0].Testimonial == true ?  
-            <>
-            <div className="testimonial" ref={TestimonialRef}>
-              <div className="Dynamic_Vcard_Live_Title">
-                <h3>Testimonial</h3>
-                {/* <span className="material-symbols-outlined">share_reviews</span> */}
-              </div>
-              <div className="testimonial_container">
-                <Carousel
-                  showThumbs={false}
-                  showStatus={true}
-                  infiniteLoop
-                  autoPlay
-                >
-                  {TestimonialData.map((data,index)=>{
-                    return(
-                      <div className="testimonial_list" key={index}>
-                      <div className="client_feedback">
-                        <div
-                          className="feedback_title"
-                       
-                        >
-                          <h4>Feedback</h4>
-                        </div>
-                        <div className="feedback_message">
-                        <small>
-                                {data.ClientFeedback ||
-                                  ` Lorem ipsum dolor, sit amet consectetur adipisicing
+            {TestimonialData.length > 0 &&
+            ManageContentData[0].Testimonial == true ? (
+              <>
+                <div className="testimonial" ref={TestimonialRef}>
+                  <div className="Dynamic_Vcard_Live_Title">
+                    <h3>Testimonial</h3>
+                    {/* <span className="material-symbols-outlined">share_reviews</span> */}
+                  </div>
+                  <div className="testimonial_container">
+                    <Carousel
+                      showThumbs={false}
+                      showStatus={true}
+                      infiniteLoop
+                      autoPlay
+                    >
+                      {TestimonialData.map((data, index) => {
+                        return (
+                          <div className="testimonial_list" key={index}>
+                            <div className="client_feedback">
+                              <div className="feedback_title">
+                                <h4>Feedback</h4>
+                              </div>
+                              <div className="feedback_message">
+                                <small>
+                                  {data.ClientFeedback ||
+                                    ` Lorem ipsum dolor, sit amet consectetur adipisicing
                               elit. Vel repellendus a ut! Architecto quis error
                               porro nemo beatae perspiciatis omnis?`}
-                              </small>
-                        </div>
-                      </div>
-                      <div className="user_detail">
-                      <img
+                                </small>
+                              </div>
+                            </div>
+                            <div className="user_detail">
+                              <img
                                 src={
                                   data.ClientImage ||
                                   "https://img.freepik.com/premium-vector/avatar-icon003_750950-54.jpg?w=740"
                                 }
                                 alt="clientImage"
                               />
-  
-                        <div className="client_name">
-                        <h4>{data.ClientName}</h4>
-                        <small>-Member</small>
-                        </div>
-                      </div>
-                    </div>
-                    )
-                  })}
-                 
-              
-                </Carousel>
-              </div>
-            </div>
-            </>
-            : ''}
 
+                              <div className="client_name">
+                                <h4>{data.ClientName}</h4>
+                                <small>-Member</small>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </Carousel>
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
 
             {/* GoogleMap */}
 
@@ -4760,7 +7084,7 @@ padding:10px;
                   </div>
                   <div className="feedback_container">
                     <form action="" onSubmit={feedbackFormik.handleSubmit}>
-                      <div className="form_group">
+                      <div className={`form_group ${FeedbackTheme[0]?.FeedbackInputDesign}`}>
                         <label
                           htmlFor="clientName_Input"
                           className={`${
@@ -4780,14 +7104,18 @@ padding:10px;
                           placeholder="Enter Your Name"
                           name="ClientName"
                           id="ClientName"
+                          className={FeedbackTheme[0]?.FeedbackInputDesign}
                           // value={userName}
                           // onChange={(e)=>setUserName(e.target.value)}
                           value={feedbackFormik.values.ClientName}
                           onChange={feedbackFormik.handleChange}
                           onBlur={feedbackFormik.handleBlur}
                         />
+                        <div className="icon">
+                        <i className='bx bxs-user'></i>
+                        </div>
                       </div>
-                      <div className="form_group">
+                      <div className={`form_group ${FeedbackTheme[0]?.FeedbackInputDesign}`}>
                         <label
                           htmlFor="clientFeedBack_Input"
                           className={`${
@@ -4808,12 +7136,16 @@ padding:10px;
                           cols="30"
                           rows="2"
                           placeholder="Enter your Feedback"
+                          className={FeedbackTheme[0]?.FeedbackInputDesign}
                           // value={userFeedback}
                           // onChange={(e)=>setUserFeedback(e.target.value)}
                           value={feedbackFormik.values.ClientFeedback}
                           onChange={feedbackFormik.handleChange}
                           onBlur={feedbackFormik.handleBlur}
                         ></textarea>
+                        <div className="icon">
+                        <i className='bx bx-message-square-detail'></i>
+                        </div>
                       </div>
                       <div className="form_group">
                         <label
@@ -4844,9 +7176,9 @@ padding:10px;
                             });
                           }}
                           size={44}
-                          style={{ paddingRight: "15px" }}
+                          style={{ paddingRight: "10px" }}
                           half={false}
-                          color2={"#ffd700"}
+                          color2={FeedbackTheme[0]?.FeedbackInputColor ? FeedbackTheme[0].FeedbackInputColor : "#ffd700"}
                         />
                       </div>
                       <div className="form_actions">
@@ -4905,7 +7237,7 @@ padding:10px;
                   </div>
                   <div className="inquiries_container5">
                     <form action="" onSubmit={formik.handleSubmit}>
-                      <div className="form_group">
+                      <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
                         <label
                           htmlFor="name"
                           className={formik.errors.Name ? "labelError" : ""}
@@ -4921,16 +7253,16 @@ padding:10px;
                             id="Name"
                             value={formik.values.Name}
                             onChange={formik.handleChange}
-                            className={
-                              formik.errors.Name && formik.touched.Name
+                            className={`${FeedbackTheme[0].FeedbackInputDesign}
+                              ${formik.errors.Name} && ${formik.touched.Name}
                                 ? "input_error"
                                 : "input_success"
-                            }
+                            `}
                           />
                           <i className="bx bxs-user-pin"></i>
                         </div>
                       </div>
-                      <div className="form_group">
+                      <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
                         <label
                           htmlFor="name"
                           className={formik.errors.Email ? "labelError" : ""}
@@ -4946,16 +7278,16 @@ padding:10px;
                             id="Email"
                             value={formik.values.Email}
                             onChange={formik.handleChange}
-                            className={
-                              formik.errors.Email && formik.touched.Email
+                            className={`${FeedbackTheme[0].FeedbackInputDesign}
+                              ${formik.errors.Email} && ${formik.touched.Email}
                                 ? "input_error"
                                 : "input_success"
-                            }
+                            `}
                           />
                           <i className="bx bxs-envelope"></i>
                         </div>
                       </div>
-                      <div className="form_group">
+                      <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
                         <label
                           htmlFor="name"
                           className={
@@ -4975,17 +7307,17 @@ padding:10px;
                             id="MobileNumber"
                             value={formik.values.MobileNumber}
                             onChange={formik.handleChange}
-                            className={
-                              formik.errors.MobileNumber &&
-                              formik.touched.MobileNumber
+                            className={`${FeedbackTheme[0].FeedbackInputDesign}
+                              ${formik.errors.MobileNumber} &&
+                              ${formik.touched.MobileNumber}
                                 ? "input_error"
                                 : "input_success"
-                            }
+                            `}
                           />
                           <i className="bx bxs-phone-call"></i>
                         </div>
                       </div>
-                      <div className="form_group">
+                      <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
                         <label
                           htmlFor="name"
                           className={formik.errors.Message ? "labelError" : ""}
@@ -5001,15 +7333,16 @@ padding:10px;
                             id="Message"
                             value={formik.values.Message}
                             onChange={formik.handleChange}
-                            className={
-                              formik.errors.Message && formik.touched.Message
+                            className={` ${FeedbackTheme[0].FeedbackInputDesign}
+                              ${formik.errors.Message && formik.touched.Message}
                                 ? "input_error"
                                 : "input_success"
-                            }
+                            `}
                             cols="30"
                             rows="4"
                             placeholder="Enter Your Message Here..."
                           ></textarea>
+                          
                           <i className="bx bxs-message-dots"></i>
                         </div>
                       </div>
@@ -5033,15 +7366,17 @@ padding:10px;
               ""
             )}
             {/* Footer */}
-            <div className="Footer">
-              <div className="footer_container">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <div className="Footer" style={{color:'#000'}}>
+              <div className="dynamic_footer_container">
+                <svg className="dynamic_footer_svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                   <path
-                    fill={style.$second_back__color}
+                    fill='#fff'
                     fillOpacity="1"
                     d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
                   ></path>
                 </svg>
+                
+                <small>Powered By Arsitostech India Pvt Limited</small>
                 <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
               </div>
             </div>

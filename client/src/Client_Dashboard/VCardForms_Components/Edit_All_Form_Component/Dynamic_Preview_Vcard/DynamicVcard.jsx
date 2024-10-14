@@ -287,6 +287,24 @@ const DynamicVcard = () => {
     setFeedbackInputColor,
     FeedbackUpdateToggle,
     setFeedbackUpdateToggle,
+
+    // Inquiry states
+    InquiryInputDesign,
+    setInquiryInputDesign,
+    InquiryLabelColor,
+    setInquiryLabelColor,
+    InquiryInputBorderColor,
+    setInquiryInputBorderColor,
+    InquiryInputBorderOnFocus,
+    setInquiryInputBorderOnFocus,
+    InquiryPlaceholderColor,
+    setInquiryPlaceholderColor,
+    InquiryInputError,
+    setInquiryInputError,
+    InquiryInputColor,
+    setInquiryInputColor,
+    InquiryUpdateToggle,
+    setInquiryUpdateToggle,
   } = useContext(Context);
   let [isHovered, setIsHovered] = useState(false);
   let [BtnisHovered, setBtnIsHovered] = useState(false);
@@ -525,7 +543,7 @@ const DynamicVcard = () => {
       const section5Top = PaymentRef.current?.offsetTop || 0;
       const section6Top = GalleryRef.current?.offsetTop || 0;
       const section7Top = VideoRef.current?.offsetTop || 0;
-      const section8Top = Appoinment.current?.offsetTop || 0;
+      const section8Top = AppoinmentRef.current?.offsetTop || 0;
       const section9Top = TimeRef.current?.offsetTop || 0;
       const section10Top = TestimonialRef.current?.offsetTop || 0;
       const section11Top = LocationRef.current?.offsetTop || 0;
@@ -985,7 +1003,46 @@ const DynamicVcard = () => {
       setVcardPreviewLoader(false);
       setAppoinmentUpdateToggle(false);
     }
-  }
+  };
+    //Fetch Feedback:
+    async function handleFeedbackThemeFetch() {
+      setVcardPreviewLoader(true);
+      try {
+        await api
+          .get(`/feedback_theme/${URL_Alies}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.data.length == 0) {
+              setVcardPreviewLoader(false);
+              setFeedbackUpdateToggle(false);
+            } else {
+              setFeedbackInputDesign(res.data.data[0].FeedbackInputDesign);
+              setFeedbackLabelColor(res.data.data[0].FeedbackLabelColor);
+              setFeedbackInputBorderColor(res.data.data[0].FeedbackInputBorderColor);
+              setFeedbackInputBorderOnFocus(res.data.data[0].FeedbackInputBorderOnFocus);
+              setFeedbackPlaceholderColor(res.data.data[0].FeedbackPlaceholderColor);
+              setFeedbackInputColor(res.data.data[0].FeedbackInputColor);
+              setFeedbackInputError(res.data.data[0].FeedbackInputError);
+  
+              setFeedbackUpdateToggle(true);
+              setVcardPreviewLoader(false);
+            }
+          })
+          .catch((error) => {
+            // toast.error(error.response.data.message);
+            setVcardPreviewLoader(false);
+            setFeedbackUpdateToggle(false);
+          });
+      } catch (error) {
+        // toast.error(error.message);
+        setVcardPreviewLoader(false);
+        setFeedbackUpdateToggle(false);
+      }
+    }
   useEffect(() => {
     handleVcardThemeFetch();
     handleImageThemeFetch();
@@ -996,6 +1053,7 @@ const DynamicVcard = () => {
     handleTimerThemeFetch();
     handleTestimonialThemeFetch();
     handleAppoinmentThemeFetch();
+    handleFeedbackThemeFetch();
   }, []);
   //Appoinment form
   let Appoinment_formik = useFormik({
@@ -3022,8 +3080,8 @@ padding:10px;
                       // width: 100%;
                       outline: none;
                       padding: 6px 1rem;
-                      background-color: rgb(122, 122, 122);
-                      color: #f5f5f5;
+                      background-color: ${BtnBackColor};
+                      color: ${BtnTextColor};
                       font-size: 0.8rem;
                       border-radius: 0.3rem;
                       font-weight: 500;
@@ -3056,7 +3114,8 @@ padding:10px;
                         }
                       }
                       &:hover {
-                        background-color: #7e7e7e;
+                        background-color: ${BtnHoverColour};
+                        color:${BtnHoverTextColor};
                         filter: drop-shadow(0px 4px 5px rgba(109, 109, 109, 0.4));
                       }
         
@@ -3555,7 +3614,7 @@ padding:10px;
               color: ${FeedbackLabelColor};
      
               -webkit-text-fill-color: ${FeedbackLabelColor};
-              font-size: 0.7rem;
+              font-size: 0.6rem !important;
               font-weight: 550;
 
               border-radius: 4px;
@@ -3580,7 +3639,7 @@ padding:10px;
        
        background-color: transparent;
     outline: none;
-
+color:${FeedbackInputColor} !important;
               transition: all 0.3s ease;
               &::placeholder {
                 font-size: 0.6rem;
@@ -3670,7 +3729,7 @@ padding:10px;
               }
               i {
                 font-size: 1.4rem;
-                color: skyblue;
+             
               }
 
               @media screen and (max-width: 800px) {
@@ -4436,11 +4495,829 @@ padding:10px;
                 font-weight: 550;
                 transition: all 0.4s ease-in;
               }
+
             }
           }
         }
       }
     }
+
+
+
+      .Inquries {
+    width: 100%;
+    padding: 0rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+
+    .inquiries_container5 {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: auto;
+
+      form {
+        width: 90%;
+        padding: 10px 0px;
+
+        margin: auto;
+        .form_group {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 10px;
+ 
+
+          label {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            // color: $first_text_color;
+            font-weight: 550;
+          }
+
+          .input {
+            width: 100%;
+            position: relative;
+            background-color:none !important;
+
+            input,
+            textarea {
+              width: 100%;
+              padding: 0.9rem 2.5rem;
+              outline: none;
+   background-color:none !important;
+
+
+              caret-color: ${InquiryInputColor};
+
+              &::placeholder {
+                // color: $first_text_color;
+                letter-spacing: 1px;
+                font-size: 0.7rem;
+              }
+
+              &:focus {
+                border: 1px solid $first_text_color;
+              }
+            }
+
+            i {
+              position: absolute;
+              left: 2%;
+              font-size: 1.5rem;
+              // color: $first_text_color;
+              top: 30%;
+            }
+          }
+        }
+        .Design1 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design1 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            background-color:none !important;
+            border: 1px solid ${InquiryInputBorderColor};
+            border-radius: 0.3rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+
+          &::placeholder{
+            color:${InquiryPlaceholderColor};
+            font-size:0.7rem;
+            }
+            &:focus {
+              border: 1px solid ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; // Change icon color when input is focused
+            }
+          }
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: gray;
+            display: none;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+          .icon {
+            position: absolute;
+            top: 20%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+            color: ${InquiryInputBorderColor};
+          }
+          .iconwithlabel {
+            position: absolute;
+            top: 55%;
+            left: 2%;
+
+            font-size: 1.3rem;
+color: ${InquiryInputBorderColor};
+          }
+          .iconwithanimation {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${InquiryInputBorderColor};
+            }
+        }
+        .Design2 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design2 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid ${InquiryInputBorderColor};
+            position: relative;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+
+            &:focus {
+              border-bottom: 1px solid ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; // Change icon color when input is focused
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: ${InquiryLabelColor};
+            display: none;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+          .icon {
+            position: absolute;
+            top: 20%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+            color: ${InquiryInputBorderColor};
+          }
+          .iconwithlabel {
+            position: absolute;
+            top: 55%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+             color: ${InquiryInputBorderColor};
+          }
+          .iconwithanimation {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+             color: ${InquiryInputBorderColor};
+            }
+        }
+        .Design3 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design3 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: 1px solid ${InquiryInputBorderColor};
+            border-radius: 0.3rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+
+            &:focus {
+              border: 1px solid ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; 
+            }
+            &:focus + .iconwithlabel {
+              color: ${InquiryInputBorderOnFocus};
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: ${InquiryLabelColor};
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+        
+          .icon {
+            position: absolute;
+            top: 55%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+            color: ${InquiryInputBorderColor};
+          }
+          .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+              color: ${InquiryInputBorderColor};
+            }
+        }
+        .Design4 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design4 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid ${InquiryInputBorderColor};
+            position: relative;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+
+            &:focus {
+              border-bottom: 1px solid ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; 
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: ${InquiryLabelColor};
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+         
+          
+          .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+            color: ${InquiryInputBorderColor};
+            }
+        }
+        .Design5 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design5 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: 1px solid ${InquiryInputBorderColor};
+            border-radius: 0.3rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: none;
+            transition: box-shadow 0.3s ease;
+
+            &:focus {
+              box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            }
+           
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus};
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: gray;
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+         
+          .icon {
+            position: absolute;
+            top: 55%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+            color: ${InquiryInputBorderColor};
+          }
+                      }
+        .Design6 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design6 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid ${InquiryInputBorderColor};
+            position: relative;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+
+            &::placeholder {
+              transition: opacity 0.4s ease;
+              opacity: 1;
+            }
+
+            &:focus::placeholder {
+              opacity: 0;
+            }
+            &:focus {
+              border-bottom: 1px solid ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; 
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus};
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: gray;
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+          
+       
+         
+          .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+               color: ${InquiryInputBorderColor};
+            }
+        }
+        .Design7 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design7 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: 1px solid ${InquiryInputBorderColor};
+            border-radius: 0.3rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: none;
+            transition: box-shadow 0.3s ease;
+
+            @keyframes shake {
+              0%,
+              100% {
+                transform: translateX(0);
+              }
+              20%,
+              60% {
+                transform: translateX(-5px);
+              }
+              40%,
+              80% {
+                transform: translateX(0px);
+              }
+            }
+
+            &:focus {
+              animation: shake 1s ease-in-out;
+              box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus};
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; 
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: ${InquiryLabelColor};
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+       
+         
+          .icon {
+              position: absolute;
+              top: 55%;
+              left: 2%;
+
+              font-size: 1.3rem;
+
+                        color: ${InquiryInputBorderColor};
+            }
+        }
+        .Design8{
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design8 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid ${InquiryInputBorderColor};
+            position: relative;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+
+            &::placeholder {
+              transition: opacity 0.4s ease;
+              opacity: 1; // Full opacity by default
+            }
+
+            &:focus::placeholder {
+              opacity: 0; // Fades out the placeholder when focused
+            }
+
+            &:focus {
+              border-bottom: 1px solid ${InquiryInputBorderOnFocus};
+              animation: bounce 1s ease-in-out;
+            }
+            @keyframes bounce {
+              0%,
+              20%,
+              50%,
+              80%,
+              100% {
+                transform: translateY(0);
+              }
+              40% {
+                transform: translateY(-5px);
+              }
+              60% {
+                transform: translateY(-2px);
+              }
+            }
+            &:focus + .icon {
+              color: ${InquiryInputBorderOnFocus}; // Change icon color when input is focused
+            }
+            &:focus + .iconwithlabel {
+               color: ${InquiryInputBorderOnFocus};  // Change icon color when input is focused
+            }
+          }
+
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: ${InquiryInputBorderColor};
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+        
+          .icon {
+            position: absolute;
+            top: 55%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+              color: ${InquiryInputBorderColor};
+          }
+     
+        }
+        .Design9{
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          .Design9 {
+            padding: 0.5rem 2rem;
+            outline: none;
+            width: 100%;
+            border: 1px solid ${InquiryInputBorderColor};
+            border-radius: 0.3rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: none;
+            transition: box-shadow 0.3s ease;
+
+            @keyframes shake {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              20%,
+              60% {
+                transform: translateY(-3px);
+              }
+              40%,
+              80% {
+                transform: translateY(0px);
+              }
+            }
+            @keyframes rotate {
+                from {
+                  transform: rotate(0deg);
+                }
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+
+            &:focus {
+              animation: shake 1s ease-in-out;
+              box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); // Blue glowing effect on focus
+            }
+          
+            &:focus + .icon {
+                color: ${InquiryInputBorderOnFocus}; // Change icon color when input is focused
+                animation: rotate 0.5s ease-in-out;
+              }
+          }
+       
+          label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: gray;
+            display: block;
+
+            sup {
+              color: red;
+              font-size: 1rem;
+            }
+          }
+          .slideLabel {
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              transition: all 0.3s ease;
+              pointer-events: none;
+            }
+       
+          .icon {
+            position: absolute;
+            top: 55%;
+            left: 2%;
+
+            font-size: 1.3rem;
+
+            color: ${InquiryInputBorderColor};
+          }
+         
+        }
+        .form_actions {
+          margin: 1rem auto;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin: 1rem auto;
+
+          button {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: $first_btn_back_color;
+            filter: none;
+            width: auto;
+            padding: 10px 1rem;
+            outline: none;
+            border: transparent;
+
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-size: 0.6rem;
+            border-radius: 5px;
+            cursor: pointer;
+            // color: $third_text_color;
+            transition: all 0.4s ease-in;
+
+            span {
+              font-size: 1.2rem;
+            }
+            .form_loader,
+            .form_loader:before,
+            .form_loader:after {
+              border-radius: 50%;
+              width: 1em;
+              height: 1em;
+              animation-fill-mode: both;
+              animation: bblFadInOut 1.8s infinite ease-in-out;
+            }
+            .form_loader {
+              // color: #fff;
+              font-size: 7px;
+              position: relative;
+              text-indent: -9999em;
+              transform: translateZ(0);
+              animation-delay: -0.16s;
+            }
+            .form_loader:before,
+            .form_loader:after {
+              content: "";
+              position: absolute;
+              top: 0;
+            }
+            .form_loader:before {
+              left: -3.5em;
+              animation-delay: -0.32s;
+            }
+            .form_loader:after {
+              left: 3.5em;
+            }
+
+            @keyframes bblFadInOut {
+              0%,
+              80%,
+              100% {
+                box-shadow: 0 2.5em 0 -1.3em;
+              }
+              40% {
+                box-shadow: 0 2.5em 0 0;
+              }
+            }
+
+            &:hover {
+              background-color: $second_back__color;
+              // color: $third_text_color;
+              font-weight: 550;
+              transition: all 0.4s ease-in;
+            }
+          }
+        }
+      }
+    }
+  }
 
                                 
       `}
@@ -6033,6 +6910,9 @@ padding:10px;
                       onChange={feedbackFormik.handleChange}
                       onBlur={feedbackFormik.handleBlur}
                     ></textarea>
+                    <div className="icon">
+                    <i className='bx bx-message-square-detail'></i>
+                    </div>
                   </div>
                   <div className={`form_group ${FeedbackInputDesign}`}>
                     <label
@@ -6085,35 +6965,35 @@ padding:10px;
               </div>
               <div className="inquiries_container5">
                 <form action="">
-                  <div className="form_group">
+                  <div className={`form_group ${InquiryInputDesign}`}>
                     <label htmlFor="name">
                       Name <sup style={{ color: "red" }}>*</sup>
                     </label>
 
-                    <input type="text" placeholder="Your Name" />
+                    <input type="text" placeholder="Your Name" className={`${InquiryInputDesign}`} style={{backgroundColor:'none'}} />
                     <div className="icon">
                       <i className="bx bxs-user-pin"></i>
                     </div>
                   </div>
-                  <div className="form_group">
+                  <div className={`form_group ${InquiryInputDesign}`}>
                     <label htmlFor="email">
                       Email <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <div className="input">
-                      <input type="email" placeholder="Your Email" />
+                      <input type="email" placeholder="Your Email" className={`${InquiryInputDesign}`}/>
                       <i className="bx bxs-envelope"></i>
                     </div>
                   </div>
-                  <div className="form_group">
+                  <div className={`form_group ${InquiryInputDesign}`}>
                     <label htmlFor="name">
                       Phone <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <div className="input">
-                      <input type="tel" placeholder="Enter Phone Number" />
+                      <input type="tel" placeholder="Enter Phone Number" className={`${InquiryInputDesign}`} />
                       <i className="bx bxs-phone-call"></i>
                     </div>
                   </div>
-                  <div className="form_group">
+                  <div className={`form_group ${InquiryInputDesign}`}>
                     <label htmlFor="name">
                       Message <sup style={{ color: "red" }}>*</sup>
                     </label>
@@ -6124,6 +7004,7 @@ padding:10px;
                         cols="30"
                         rows="2"
                         placeholder="Enter Your Message Here..."
+                        className={`${InquiryInputDesign}`}
                       ></textarea>
                       <i className="bx bxs-message-dots"></i>
                     </div>

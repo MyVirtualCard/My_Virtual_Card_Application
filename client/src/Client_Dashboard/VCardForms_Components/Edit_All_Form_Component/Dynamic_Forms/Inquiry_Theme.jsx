@@ -1,31 +1,31 @@
 import React, { useContext, useState } from "react";
-import "./Feedback_Theme.scss";
+import "./Inquiry_Theme.scss";
 import { Range } from "react-range";
 import { ChromePicker } from "react-color";
 import Context from "../../../../Context/GlobalContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-const Feedback_Theme = () => {
+const Inquiry_Theme = () => {
   let {
     setFormSubmitLoader ,
     URL_Alies,
     user,
-    FeedbackInputDesign,
-    setFeedbackInputDesign,
-    FeedbackLabelColor,
-    setFeedbackLabelColor,
-    FeedbackInputBorderColor,
-    setFeedbackInputBorderColor,
-    FeedbackInputBorderOnFocus,
-    setFeedbackInputBorderOnFocus,
-    FeedbackPlaceholderColor,
-    setFeedbackPlaceholderColor,
-    FeedbackInputError,
-    setFeedbackInputError,
-    FeedbackInputColor,
-    setFeedbackInputColor,
-    FeedbackUpdateToggle,
-    setFeedbackUpdateToggle,
+    InquiryInputDesign,
+    setInquiryInputDesign,
+    InquiryLabelColor,
+    setInquiryLabelColor,
+    InquiryInputBorderColor,
+    setInquiryInputBorderColor,
+    InquiryInputBorderOnFocus,
+    setInquiryInputBorderOnFocus,
+    InquiryPlaceholderColor,
+    setInquiryPlaceholderColor,
+    InquiryInputError,
+    setInquiryInputError,
+    InquiryInputColor,
+    setInquiryInputColor,
+    InquiryUpdateToggle,
+    setInquiryUpdateToggle,
   } = useContext(Context);
   // Server API
   const api = axios.create({
@@ -33,61 +33,61 @@ const Feedback_Theme = () => {
   });
 
   // Create Vcard Theme
-  async function handleFeedbackSubmit(e) {
+  async function handleInquirySubmit(e) {
     e.preventDefault();
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
-      FeedbackInputDesign: FeedbackInputDesign,
-      FeedbackLabelColor: FeedbackLabelColor,
-      FeedbackInputBorderColor:FeedbackInputBorderColor,
-      FeedbackInputBorderOnFocus: FeedbackInputBorderOnFocus,
-      FeedbackPlaceholderColor: FeedbackPlaceholderColor,
-      FeedbackInputError: FeedbackInputError,
-      FeedbackInputColor: FeedbackInputColor,
+      InquiryInputDesign: InquiryInputDesign,
+      InquiryLabelColor: InquiryLabelColor,
+      InquiryInputBorderColor:InquiryInputBorderColor,
+      InquiryInputBorderOnFocus: InquiryInputBorderOnFocus,
+      InquiryPlaceholderColor: InquiryPlaceholderColor,
+      InquiryInputError: InquiryInputError,
+      InquiryInputColor: InquiryInputColor,
    
     };
     try {
       await api
-        .post(`/feedback_theme/${URL_Alies}`, data, {
+        .post(`/inquiry_theme/${URL_Alies}`, data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         })
         .then((res) => {
-          setFeedbackUpdateToggle(true);
+          setInquiryUpdateToggle(true);
           toast.success(res.data.message);
           setFormSubmitLoader(false);
         })
         .catch((error) => {
-          setFeedbackUpdateToggle(false);
+          setInquiryUpdateToggle(false);
           setFormSubmitLoader(false);
           toast.error(error.response.data.message);
         });
     } catch (error) {
-      setFeedbackUpdateToggle(false);
+      setInquiryUpdateToggle(false);
       setFormSubmitLoader(false);
     }
   }
 
   // Update Vcard Theme
-  async function handleFeedbackThemeUpdate(e) {
+  async function handleInquiryThemeUpdate(e) {
     e.preventDefault();
     setFormSubmitLoader(true);
     let data = {
       URL_Alies: URL_Alies,
-      FeedbackInputDesign: FeedbackInputDesign,
-      FeedbackLabelColor: FeedbackLabelColor,
-      FeedbackInputBorderColor:FeedbackInputBorderColor,
-      FeedbackInputBorderOnFocus: FeedbackInputBorderOnFocus,
-      FeedbackPlaceholderColor: FeedbackPlaceholderColor,
-      FeedbackInputError: FeedbackInputError,
-      FeedbackInputColor: FeedbackInputColor,
+      InquiryInputDesign: InquiryInputDesign,
+      InquiryLabelColor: InquiryLabelColor,
+      InquiryInputBorderColor:InquiryInputBorderColor,
+      InquiryInputBorderOnFocus: InquiryInputBorderOnFocus,
+      InquiryPlaceholderColor: InquiryPlaceholderColor,
+      InquiryInputError: InquiryInputError,
+      InquiryInputColor: InquiryInputColor,
     };
     try {
       await api
-        .put(`/feedback_theme/${URL_Alies}`, data, {
+        .put(`/inquiry_theme/${URL_Alies}`, data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
@@ -107,16 +107,16 @@ const Feedback_Theme = () => {
   }
 
   return (
-    <div className="feedback_theme_container">
-      <div className="feedback_title">
+    <div className="inquiry_theme_container">
+      <div className="inquiry_title">
         <h4>Form Input Theme Design</h4>
       </div>
       <form
         action=""
         onSubmit={
-          FeedbackUpdateToggle
-            ? handleFeedbackThemeUpdate
-            : handleFeedbackSubmit
+          InquiryUpdateToggle
+            ? handleInquiryThemeUpdate
+            : handleInquirySubmit
         }
       >
         <div className="First_colour">
@@ -126,12 +126,12 @@ const Feedback_Theme = () => {
 
           <ChromePicker
             className="colourPicker"
-            color={FeedbackLabelColor}
-            onChange={(e) => setFeedbackLabelColor(e.hex)}
+            color={InquiryLabelColor}
+            onChange={(e) => setInquiryLabelColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{FeedbackLabelColor}</strong>
+            You Picked - &nbsp;<strong>{InquiryLabelColor}</strong>
           </h2>
         </div>
 
@@ -142,11 +142,11 @@ const Feedback_Theme = () => {
 
           <ChromePicker
             className="colourPicker"
-            color={FeedbackInputBorderColor}
-            onChange={(e) => setFeedbackInputBorderColor(e.hex)}
+            color={InquiryInputBorderColor}
+            onChange={(e) => setInquiryInputBorderColor(e.hex)}
           />
           <h2>
-            You Picked - &nbsp;<strong>{FeedbackInputBorderColor}</strong>
+            You Picked - &nbsp;<strong>{InquiryInputBorderColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
@@ -156,12 +156,12 @@ const Feedback_Theme = () => {
 
           <ChromePicker
             className="colourPicker"
-            color={FeedbackPlaceholderColor}
-            onChange={(e) => setFeedbackPlaceholderColor(e.hex)}
+            color={InquiryPlaceholderColor}
+            onChange={(e) => setInquiryPlaceholderColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{FeedbackPlaceholderColor}</strong>
+            You Picked - &nbsp;<strong>{InquiryPlaceholderColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
@@ -171,12 +171,12 @@ const Feedback_Theme = () => {
 
           <ChromePicker
             className="colourPicker"
-            color={FeedbackInputColor}
-            onChange={(e) => setFeedbackInputColor(e.hex)}
+            color={InquiryInputColor}
+            onChange={(e) => setInquiryInputColor(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{FeedbackInputColor}</strong>
+            You Picked - &nbsp;<strong>{InquiryInputColor}</strong>
           </h2>
         </div>
         <div className="First_colour">
@@ -186,12 +186,12 @@ const Feedback_Theme = () => {
 
           <ChromePicker
             className="colourPicker"
-            color={FeedbackInputBorderOnFocus}
-            onChange={(e) => setFeedbackInputBorderOnFocus(e.hex)}
+            color={InquiryInputBorderOnFocus}
+            onChange={(e) => setInquiryInputBorderOnFocus(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{FeedbackInputBorderOnFocus}</strong>
+            You Picked - &nbsp;<strong>{InquiryInputBorderOnFocus}</strong>
           </h2>
         </div>
         <div className="First_colour">
@@ -201,12 +201,12 @@ const Feedback_Theme = () => {
 
           <ChromePicker
             className="colourPicker"
-            color={FeedbackInputError}
-            onChange={(e) => setFeedbackInputError(e.hex)}
+            color={InquiryInputError}
+            onChange={(e) => setInquiryInputError(e.hex)}
           />
 
           <h2>
-            You Picked - &nbsp;<strong>{FeedbackInputError}</strong>
+            You Picked - &nbsp;<strong>{InquiryInputError}</strong>
           </h2>
         </div>
         <div className="form_group radio_group">
@@ -216,9 +216,9 @@ const Feedback_Theme = () => {
                 type="radio"
                 name="Design1"
                 id="Design1"
-                value={FeedbackInputDesign}
-                checked={FeedbackInputDesign === "Design1"}
-                onChange={(e) => setFeedbackInputDesign("Design1")}
+                value={InquiryInputDesign}
+                checked={InquiryInputDesign === "Design1"}
+                onChange={(e) => setInquiryInputDesign("Design1")}
               />
               <label htmlFor="Design1">Design-1</label>
             </div>
@@ -242,9 +242,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design2"
                   id="Design2"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design2"}
-                  onChange={(e) => setFeedbackInputDesign("Design2")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design2"}
+                  onChange={(e) => setInquiryInputDesign("Design2")}
                 />
                 <label htmlFor="Design2">Design-2</label>
               </div>
@@ -270,9 +270,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design3"
                   id="Design3"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design3"}
-                  onChange={(e) => setFeedbackInputDesign("Design3")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design3"}
+                  onChange={(e) => setInquiryInputDesign("Design3")}
                 />
                 <label htmlFor="Design3">Design-3</label>
               </div>
@@ -301,9 +301,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design4"
                   id="Design4"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design4"}
-                  onChange={(e) => setFeedbackInputDesign("Design4")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design4"}
+                  onChange={(e) => setInquiryInputDesign("Design4")}
                 />
                 <label htmlFor="Design3">Design-4</label>
               </div>
@@ -332,9 +332,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design5"
                   id="Design5"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design5"}
-                  onChange={(e) => setFeedbackInputDesign("Design5")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design5"}
+                  onChange={(e) => setInquiryInputDesign("Design5")}
                 />
                 <label htmlFor="Design5">Design-5</label>
               </div>
@@ -363,9 +363,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design6"
                   id="Design6"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design6"}
-                  onChange={(e) => setFeedbackInputDesign("Design6")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design6"}
+                  onChange={(e) => setInquiryInputDesign("Design6")}
                 />
                 <label htmlFor="Design6">Design-6</label>
               </div>
@@ -394,9 +394,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design7"
                   id="Design7"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design7"}
-                  onChange={(e) => setFeedbackInputDesign("Design7")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design7"}
+                  onChange={(e) => setInquiryInputDesign("Design7")}
                 />
                 <label htmlFor="Design7">Design-7</label>
               </div>
@@ -425,9 +425,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design8"
                   id="Design8"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design8"}
-                  onChange={(e) => setFeedbackInputDesign("Design8")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design8"}
+                  onChange={(e) => setInquiryInputDesign("Design8")}
                 />
                 <label htmlFor="Design6">Design-8</label>
               </div>
@@ -456,9 +456,9 @@ const Feedback_Theme = () => {
                   type="radio"
                   name="Design9"
                   id="Design9"
-                  value={FeedbackInputDesign}
-                  checked={FeedbackInputDesign === "Design9"}
-                  onChange={(e) => setFeedbackInputDesign("Design9")}
+                  value={InquiryInputDesign}
+                  checked={InquiryInputDesign === "Design9"}
+                  onChange={(e) => setInquiryInputDesign("Design9")}
                 />
                 <label htmlFor="Design9">Design-9</label>
               </div>
@@ -480,7 +480,7 @@ const Feedback_Theme = () => {
           </div>
         </div>
         <div className="form_actions">
-          {FeedbackUpdateToggle ? (
+          {InquiryUpdateToggle ? (
             <button type="submit">Update</button>
           ) : (
             <button type="submit">Save</button>
@@ -491,4 +491,4 @@ const Feedback_Theme = () => {
   );
 };
 
-export default Feedback_Theme;
+export default Inquiry_Theme;

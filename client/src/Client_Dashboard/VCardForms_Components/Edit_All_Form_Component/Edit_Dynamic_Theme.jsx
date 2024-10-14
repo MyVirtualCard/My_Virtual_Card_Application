@@ -14,6 +14,7 @@ import Testiminal_Design from "./Dynamic_Forms/Testiminal_Design";
 import Appoinment_Theme from "./Dynamic_Forms/Appoinment_Theme";
 import Feedback_Theme from "./Dynamic_Forms/Feedback_Theme";
 import Dynamic_VCard_PREVIEW from "../../All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW";
+import Inquiry_Theme from "./Dynamic_Forms/Inquiry_Theme";
 const Edit_Dynamic_Theme = () => {
   let { user, userName, ShowForm, DynamicForm } = useContext(Context);
 
@@ -40,6 +41,7 @@ const Edit_Dynamic_Theme = () => {
             {DynamicForm == "Testimonial_Design" ? <Testiminal_Design /> : ""}
             {DynamicForm == "Appoinment_Design" ? <Appoinment_Theme /> : ""}
             {DynamicForm == "Feedback_Design" ? <Feedback_Theme /> : ""}
+            {DynamicForm == "Inquiry_Design" ? <Inquiry_Theme /> : ""}
           </div>
           <div className="vcard_preview">
             <DynamicVcard />

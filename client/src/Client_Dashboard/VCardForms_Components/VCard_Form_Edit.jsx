@@ -736,6 +736,23 @@ const VCard_Form_Edit = () => {
                   </span>
                   <small id="Feedback_Design">Feedback_Design</small>
                 </div>
+                <div
+                  className="menu_item"
+                  onClick={() => {
+                    setShowForm("Dynamic Theme"),
+                      setDynamicForm("Inquiry_Design");
+                  }}
+                  id={DynamicForm === "Inquiry_Design" ? "menu_active" : ""}
+
+                  style={{display:'none'}}
+                >
+                  
+                  <i className='bx bx-support'
+                    style={{ color: "tomato" }}
+                    id="Inquiry_Design"
+                  ></i>
+                  <small id="Inquiry_Design">Inquiry_Design</small>
+                </div>
               </div>
             )}
 

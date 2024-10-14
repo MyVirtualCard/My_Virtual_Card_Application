@@ -221,7 +221,7 @@ let [PlaceholderColor, setPlaceholderColor] = useState("white");
 let [InputColor, setInputColor] = useState("white");
 let[InputError,setInputError]=useState('red');
 let[AppoinmentUpdateToggle,setAppoinmentUpdateToggle]=useState(false);
-// 10]Feedback Theme
+// 11]Feedback Theme
 let[FeedbackInputDesign,setFeedbackInputDesign]=useState('Design3');
 let [FeedbackLabelColor, setFeedbackLabelColor] = useState("white");
 let [FeedbackInputBorderColor, setFeedbackInputBorderColor] = useState("white");
@@ -230,6 +230,15 @@ let [FeedbackPlaceholderColor, setFeedbackPlaceholderColor] = useState("white");
 let [FeedbackInputColor, setFeedbackInputColor] = useState("white");
 let[FeedbackInputError,setFeedbackInputError]=useState('red');
 let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
+// 12]Inquiry Theme
+let[InquiryInputDesign,setInquiryInputDesign]=useState('Design3');
+let [InquiryLabelColor, setInquiryLabelColor] = useState("white");
+let [InquiryInputBorderColor, setInquiryInputBorderColor] = useState("white");
+let [InquiryInputBorderOnFocus, setInquiryInputBorderOnFocus] = useState("yellow");
+let [InquiryPlaceholderColor, setInquiryPlaceholderColor] = useState("white");
+let [InquiryInputColor, setInquiryInputColor] = useState("white");
+let[InquiryInputError,setInquiryInputError]=useState('red');
+let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -535,6 +544,23 @@ let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
             setFeedbackInputColor,
             FeedbackUpdateToggle,
             setFeedbackUpdateToggle,
+            //12]Inquiry States
+            InquiryInputDesign,
+            setInquiryInputDesign,
+            InquiryLabelColor,
+            setInquiryLabelColor,
+            InquiryInputBorderColor,
+            setInquiryInputBorderColor,
+            InquiryInputBorderOnFocus,
+            setInquiryInputBorderOnFocus,
+            InquiryPlaceholderColor,
+            setInquiryPlaceholderColor,
+            InquiryInputError,
+            setInquiryInputError,
+            InquiryInputColor,
+            setInquiryInputColor,
+            InquiryUpdateToggle,
+            setInquiryUpdateToggle,
           }}
         >
           <Suspense fallback={<FallBack />}>

@@ -10,6 +10,7 @@ import ProductThemeModel from "../../Model/Dynamic_Vcard_Models/Sixth_Product_Th
 import Dynamic_Timer_Theme_Model from "../../Model/Dynamic_Vcard_Models/Seventh_Timer_Theme.model.js";
 import TestimonialThemeModel from "../../Model/Dynamic_Vcard_Models/Eight_Testimonial.model.js";
 import AppoinmentThemeModel from "../../Model/Dynamic_Vcard_Models/Nine_Appoinment.model.js";
+import FeedbackThemeModel from "../../Model/Dynamic_Vcard_Models/Tenth_Feedback.model.js";
 router.get("/style/:URL_Alies", async (req, res) => {
   try {
     let URL_Alies = req.params.URL_Alies;
@@ -100,6 +101,18 @@ router.get("/style/:URL_Alies", async (req, res) => {
     } else {
       result["NinethAppoinmentTheme"] = NinethAppoinmentTheme;
     }
+
+    let TenthFeedbackTheme = await FeedbackThemeModel.find({
+      URL_Alies: URL_Alies,
+    });
+
+    if (!TenthFeedbackTheme) {
+      res.status(400).json({ message: "Feedback Theme Data Not Found" });
+    } else {
+      result["TenthFeedbackTheme"] = TenthFeedbackTheme;
+    }
+
+
     res.status(200).json({ data: result });
   } catch (error) {
     res.status(400).json({ error: error.message });

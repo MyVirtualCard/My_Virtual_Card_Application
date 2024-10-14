@@ -930,7 +930,12 @@ const Plan = () => {
                       Static VCard Design's  <span>{data.VCardCount}</span>
                     </p>
                   </div>
-
+                  <div className="card_useCase">
+                    <strong>UseCase</strong>
+                    <p>
+                      U should select only static Vcard Design's quickly and U can't change your vcard Color combination default vcard design's only u can access...
+                    </p>
+                  </div>
                   <div className="plan_action">
                     <div
                       onClick={() => {
@@ -1047,7 +1052,13 @@ const Plan = () => {
                   </div>
                   <div className="card_count">
                     <p>
-                      Dynamic VCard Design <span>{data.VCardCount}</span>
+                      Dynamic VCard Design's <span>{data.VCardCount}</span>
+                    </p>
+                  </div>
+                  <div className="card_useCase">
+                    <strong>UseCase</strong>
+                    <p>
+                      U can create your own design quickly and change your vcard Color combination at anytime and lot of feautures are included...
                     </p>
                   </div>
 

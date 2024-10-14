@@ -1,7 +1,7 @@
-$root_nav_back_color: #e4e4e4;
-$root_text_color: #444444;
-$sidemenu_back_color:#49C087;
-$content_back_color:#e4e4e4;
+$root_nav_back_color: #f2fdff;
+$root_text_color: #3a3a3a;
+$sidemenu_back_color:#9effd2;
+$content_back_color:#c7f7ff;
 $sidemenu_back_color:royalblue;
 $sidemenu_hover_text_color:#ffffffff;
 .client_Dashboard_container {
@@ -314,7 +314,6 @@ transition: all 0.2s ease-in-out;
     background-color: $content_back_color;
     position: relative;
     // padding: 1rem;
-    overflow: hidden;
 //Loader
 .form_submit_loader{
   position: absolute;
