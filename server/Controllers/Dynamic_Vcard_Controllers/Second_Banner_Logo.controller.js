@@ -47,6 +47,7 @@ export const CreateImageThemeData = async (req, res) => {
             LogoPosition: req.body.LogoPosition,
             LogoTopPosition: req.body.LogoTopPosition,
             LogoLeftPosition: req.body.LogoLeftPosition,
+            LogoImageAnimation:req.body.LogoImageAnimation,
             LogoPositionUnit: req.body.LogoPositionUnit,
           });
 

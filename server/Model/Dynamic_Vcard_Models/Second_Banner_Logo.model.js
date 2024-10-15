@@ -55,6 +55,10 @@ let Dynamic_Logo_Banner_Schema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    LogoImageAnimation:{
+      type: String,
+      required: false,
+    },
     LogoPositionUnit: {
       type: String,
       required: false,

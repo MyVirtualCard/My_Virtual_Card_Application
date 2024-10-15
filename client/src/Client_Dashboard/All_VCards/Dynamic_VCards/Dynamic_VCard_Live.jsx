@@ -835,6 +835,154 @@ color:${VcardTheme[0].VCardTextColour} !important;
             }
           }
         }
+
+           .Animation-1 {
+            width: 100px;
+            height: 100px;
+           border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+
+            animation: logoAnime1 3s linear infinite;
+
+            @keyframes logoAnime1 {
+              0% {
+                transform: translateY(0px);
+              }
+              50% {
+                transform: translateY(10px);
+              }
+              100% {
+                transform: translateY(0px);
+              }
+            }
+          }
+
+    .Animation-2 {
+            width: 100px;
+            height: 100px;
+          border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+             filter: grayscale(10);
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime2 5s linear infinite;
+
+            @keyframes logoAnime2 {
+              0% {
+                transform: translateY(0px);
+                  filter: grayscale(0);
+                
+              }
+              25% {
+                transform: translateY(10px);
+            filter: grayscale(10);
+                filter: drop-shadow(0px 14px 15px rgba(0, 0, 0, 0.4));
+              }
+              100% {
+                transform: translateY(0px);
+                  filter: grayscale(0);
+              }
+            }
+          }
+
+   .Animation-3 {
+            width: 100px;
+            height: 100px;
+             border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime3 6s linear infinite;
+
+            @keyframes logoAnime3 {
+              0% {
+                scale: 1;
+                border-radius: 0px;
+              }
+              50% {
+                scale: 1;
+                border-radius: 50%;
+              }
+              100% {
+                scale: 1;
+                border-radius: 0px;
+              }
+            }
+          }
+
+  .Animation-4 {
+            width: 100px;
+            height: 100px;
+           border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid transparent;
+            animation: logoAnime4 6s linear infinite;
+
+            @keyframes logoAnime4 {
+              0% {
+                border-color: brown;
+              }
+              25% {
+                border-color: #fff;
+              }
+              50% {
+                border-color: green;
+              }
+              75% {
+                border-color: yellow;
+              }
+              100% {
+                border-color: royalblue;
+              }
+            }
+          }
+
+
+             .Animation-5 {
+            width: 100px;
+            height: 100px;
+            border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid transparent;
+            animation: logoAnime5 6s linear infinite;
+
+            @keyframes logoAnime5 {
+              0% {
+                transform: scale(1);
+              }
+              50% {
+                transform: scale(1.05);
+              }
+              100% {
+                transform: scale(1);
+              }
+            }
+          }
+
+            .Animation-6 {
+            width: 100px;
+            height: 100px;
+            border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+
+            &:hover {
+              animation: logoAnime6 6s linear infinite;
+            }
+
+            @keyframes logoAnime6 {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(-10px);
+              }
+            }
+          }
+
+
         }
         .svg_image {
                  position: absolute;
@@ -8596,6 +8744,7 @@ z-index: 1;
                           data.Profile
                         }`}
                         alt="user_logo"
+                        className={`${ImageTheme.length > 0 ? ImageTheme[0].LogoImageAnimation : ''}`}
                       />
                     ) : (
                       ""
@@ -8607,6 +8756,7 @@ z-index: 1;
                           "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
                         }
                         alt="user_logo"
+                        className={`${ImageTheme.length > 0 ? ImageTheme[0].LogoImageAnimation : ''}`}
                       />
                     ) : (
                       ""

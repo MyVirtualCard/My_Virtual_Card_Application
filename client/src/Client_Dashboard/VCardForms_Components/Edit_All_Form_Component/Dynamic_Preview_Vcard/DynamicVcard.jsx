@@ -108,6 +108,7 @@ const DynamicVcard = () => {
     setLogoRightPosition,
     UserDataPosition,
     setUserDataPosition,
+    LogoImageAnimation,setLogoImageAnimation,
     ImageThemeUpdateToggle,
     setImageThemeUpdateToggle,
     // 3]Btn and Icon
@@ -686,6 +687,7 @@ const DynamicVcard = () => {
             setLogoTopPosition(res.data.data[0].LogoTopPosition);
             setLogoLeftPosition(res.data.data[0].LogoLeftPosition);
             setLogoPositionUnit(res.data.data[0].LogoPositionUnit);
+            setLogoImageAnimation(res.data.data[0].LogoImageAnimation)
 
             setImageThemeUpdateToggle(true);
           }
@@ -1374,10 +1376,10 @@ const DynamicVcard = () => {
         // }
       }
       .user_logo {
-        position: absolute;
-        bottom: 0%;
-        left: 50%;
-        transform: translate(-50%, -0%);
+        position: ${LogoPosition};
+          top:${LogoTopPosition}${LogoPositionUnit};
+        left: ${LogoLeftPosition}${LogoPositionUnit};
+        transform:translate(-${LogoLeftPosition}${LogoPositionUnit},-${LogoTopPosition}${LogoPositionUnit});
         width: 100px;
         height: 100px;
         display: flex;
@@ -1387,46 +1389,170 @@ const DynamicVcard = () => {
         
 
         img {
-          z-index: 2;
-          width: 100%;
-          height: 100%;
-          border-radius: 0.3rem;
-          // border-top-left-radius: 2.5rem;
-          // border-bottom-right-radius: 2.5rem;
-          object-fit: cover;
-          object-position: center;
-          border: 2px solid rgb(214, 214, 214) !important;
+            height: ${LogoHeight}${LogoHeightUnit};
+        min-height: ${LogoHeight}${LogoHeightUnit};
+        width:${LogoWidth}${LogoWidthUnit};
+        object-fit: "cover",
+        object-postition: "top",
+         border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+     
+          
           filter: drop-shadow(0px 4px 5px #ffffff66);
-          // animation: profileBorder 5s infinite linear;
-          @keyframes profileBorder {
-            0% {
-              border: 3px solid $card_back_colour;
+   
+      
+        }
+            .Animation-1 {
+            width: 100px;
+            height: 100px;
+           border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
 
-              transform: translateY(0px);
-            }
-            25% {
-              border: 3px solid #ffffff;
+            animation: logoAnime1 3s linear infinite;
 
-              transform: translateY(-5px);
-            }
-            50% {
-              border: 3px solid #ffffff;
-
-              transform: translateY(-10px);
-            }
-            75% {
-              border: 3px solid rgb(255, 255, 255);
-
-              transform: translateY(-5px);
-            }
-            100% {
-              border: 3px solid $card_back_colour;
-
-              transform: translateY(0px);
+            @keyframes logoAnime1 {
+              0% {
+                transform: translateY(0px);
+              }
+              50% {
+                transform: translateY(10px);
+              }
+              100% {
+                transform: translateY(0px);
+              }
             }
           }
-        }
+
+    .Animation-2 {
+            width: 100px;
+            height: 100px;
+          border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+             filter: grayscale(10);
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime2 5s linear infinite;
+
+            @keyframes logoAnime2 {
+              0% {
+                transform: translateY(0px);
+                  filter: grayscale(0);
+                
+              }
+              25% {
+                transform: translateY(10px);
+            filter: grayscale(10);
+                filter: drop-shadow(0px 14px 15px rgba(0, 0, 0, 0.4));
+              }
+              100% {
+                transform: translateY(0px);
+                  filter: grayscale(0);
+              }
+            }
+          }
+
+   .Animation-3 {
+            width: 100px;
+            height: 100px;
+             border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime3 6s linear infinite;
+
+            @keyframes logoAnime3 {
+              0% {
+                scale: 1;
+                border-radius: 0px;
+              }
+              50% {
+                scale: 1;
+                border-radius: 50%;
+              }
+              100% {
+                scale: 1;
+                border-radius: 0px;
+              }
+            }
+          }
+
+  .Animation-4 {
+            width: 100px;
+            height: 100px;
+           border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid transparent;
+            animation: logoAnime4 6s linear infinite;
+
+            @keyframes logoAnime4 {
+              0% {
+                border-color: brown;
+              }
+              25% {
+                border-color: #fff;
+              }
+              50% {
+                border-color: green;
+              }
+              75% {
+                border-color: yellow;
+              }
+              100% {
+                border-color: royalblue;
+              }
+            }
+          }
+
+
+             .Animation-5 {
+            width: 100px;
+            height: 100px;
+            border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid transparent;
+            animation: logoAnime5 6s linear infinite;
+
+            @keyframes logoAnime5 {
+              0% {
+                transform: scale(1);
+              }
+              50% {
+                transform: scale(1.05);
+              }
+              100% {
+                transform: scale(1);
+              }
+            }
+          }
+
+            .Animation-6 {
+            width: 100px;
+            height: 100px;
+            border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
+            object-fit: cover;
+            object-position: top;
+
+            &:hover {
+              animation: logoAnime6 6s linear infinite;
+            }
+
+            @keyframes logoAnime6 {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(-10px);
+              }
+            }
+          }
+
       }
+       
+   
+      
+       
+     
       .svg_image {
         position: absolute;
         bottom: -5%;
@@ -5506,11 +5632,13 @@ color: ${InquiryInputBorderColor};
                   }}
                 ></div>
               </div>
-              <div className="user_logo" style={styles.Slide1.logoImg}>
+              <div className={`user_logo ${LogoImageAnimation}`} >
                 <img
+
                   src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid"
                   alt="user_logo"
-                  style={styles.Slide1.logoImg}
+               
+                  className={`${LogoImageAnimation}`}
                 />
               </div>
               <div className="svg_image">

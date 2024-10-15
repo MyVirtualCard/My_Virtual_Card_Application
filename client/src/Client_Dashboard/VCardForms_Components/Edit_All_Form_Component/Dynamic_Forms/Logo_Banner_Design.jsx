@@ -37,6 +37,7 @@ const Logo_Banner_Design = () => {
     setLogoBottomPosition,
     LogoRightPosition,
     setLogoRightPosition,
+    LogoImageAnimation,setLogoImageAnimation,
     ImageThemeUpdateToggle,setImageThemeUpdateToggle,
   } = useContext(Context);
 
@@ -74,7 +75,9 @@ const Logo_Banner_Design = () => {
       LogoPosition:LogoPosition,
       LogoTopPosition:LogoTopPosition,
       LogoLeftPosition:LogoLeftPosition,
+      LogoImageAnimation:LogoImageAnimation,
       LogoPositionUnit:LogoPositionUnit,
+
     };
     try {
       await api
@@ -118,6 +121,7 @@ const Logo_Banner_Design = () => {
       LogoPosition:LogoPosition,
       LogoTopPosition:LogoTopPosition,
       LogoLeftPosition:LogoLeftPosition,
+      LogoImageAnimation:LogoImageAnimation,
       LogoPositionUnit:LogoPositionUnit,
     };
     try {
@@ -237,6 +241,138 @@ const Logo_Banner_Design = () => {
               />
             )}
           />
+        </div>
+        <div className="form_group radio_group">
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <div className="radio">
+                <input
+                  type="radio"
+                  name="Animation-1"
+                  id="Animation-1"
+                  value={LogoImageAnimation}
+                  checked={LogoImageAnimation === "Animation-1"}
+                  onChange={(e) => setLogoImageAnimation("Animation-1")}
+                />
+                <label htmlFor="Design1">Animation-1</label>
+              </div>
+              <div className="logo_design Animation-1 ">
+               
+               <img className="Animation-1" src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid-rr-similar" alt="logo" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <div className="radio">
+                <input
+                  type="radio"
+                  name="Animation-2"
+                  id="Animation-2"
+                  value={LogoImageAnimation}
+                  checked={LogoImageAnimation === "Animation-2"}
+                  onChange={(e) => setLogoImageAnimation("Animation-2")}
+                />
+                <label htmlFor="Design1">Animation-2</label>
+              </div>
+              <div className="logo_design Animation-2 ">
+               
+               <img className="Animation-2" src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid-rr-similar" alt="logo" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <div className="radio">
+                <input
+                  type="radio"
+                  name="Animation-3"
+                  id="Animation-3"
+                  value={LogoImageAnimation}
+                  checked={LogoImageAnimation === "Animation-3"}
+                  onChange={(e) => setLogoImageAnimation("Animation-3")}
+                />
+                <label htmlFor="Design1">Animation-3</label>
+              </div>
+              <div className="logo_design Animation-3 ">
+               
+               <img className="Animation-3" src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid-rr-similar" alt="logo" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <div className="radio">
+                <input
+                  type="radio"
+                  name="Animation-4"
+                  id="Animation-4"
+                  value={LogoImageAnimation}
+                  checked={LogoImageAnimation === "Animation-4"}
+                  onChange={(e) => setLogoImageAnimation("Animation-4")}
+                />
+                <label htmlFor="Design1">Animation-4</label>
+              </div>
+              <div className="logo_design Animation-4 ">
+               
+               <img className="Animation-4" src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid-rr-similar" alt="logo" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <div className="radio">
+                <input
+                  type="radio"
+                  name="Animation-5"
+                  id="Animation-5"
+                  value={LogoImageAnimation}
+                  checked={LogoImageAnimation === "Animation-5"}
+                  onChange={(e) => setLogoImageAnimation("Animation-5")}
+                />
+                <label htmlFor="Design1">Animation-5</label>
+              </div>
+              <div className="logo_design Animation-5 ">
+               
+               <img className="Animation-5" src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid-rr-similar" alt="logo" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="form_group radio_group">
+          <div className="radio_inputs">
+            <div className="radio_input">
+              <div className="radio">
+                <input
+                  type="radio"
+                  name="Animation-6"
+                  id="Animation-6"
+                  value={LogoImageAnimation}
+                  checked={LogoImageAnimation === "Animation-6"}
+                  onChange={(e) => setLogoImageAnimation("Animation-6")}
+                />
+                <label htmlFor="Design1">Animation-6</label>
+              </div>
+              <div className="logo_design Animation-6 ">
+               
+               <img className="Animation-6" src="https://img.freepik.com/premium-photo/professional-palette-stylish-office-desk-showcase_941561-25808.jpg?uid=R79330344&ga=GA1.2.111147909.1717157513&semt=ais_hybrid-rr-similar" alt="logo" />
+                
+              </div>
+            </div>
+          </div>
         </div>
         <div className="form_group">
           <label className="form_label" htmlFor="BannerHeight">

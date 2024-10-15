@@ -132,6 +132,7 @@ const App = () => {
   let [LogoLeftPosition, setLogoLeftPosition] = useState("50");
   let [LogoBottomPosition, setLogoBottomPosition] = useState("0");
   let [LogoRightPosition, setLogoRightPosition] = useState("0");
+  let[LogoImageAnimation,setLogoImageAnimation]=useState('Animation-1');
 
   let [ImageThemeUpdateToggle, setImageThemeUpdateToggle] = useState(false);
   //3]Button/icon states
@@ -415,6 +416,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
             setLogoRightPosition,
             UserDataPosition,
             setUserDataPosition,
+            LogoImageAnimation,setLogoImageAnimation,
             ImageThemeUpdateToggle,
             setImageThemeUpdateToggle,
             // 3]Dynamic Button and Icon states
