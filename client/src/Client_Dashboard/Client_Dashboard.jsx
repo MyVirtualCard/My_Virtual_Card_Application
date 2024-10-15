@@ -31,6 +31,7 @@ import Context from "../Context/GlobalContext";
 import axios from "axios";
 import VCard_URL_Form from "./Components/VCard_URL_Form";
 import VCard_Form_Edit from "./VCardForms_Components/VCard_Form_Edit";
+import {Helmet} from 'react-helmet';
 const Client_Dashboard = () => {
   let navigate = useNavigate();
   let {
@@ -106,6 +107,9 @@ const Client_Dashboard = () => {
   return (
     <>
       <div className="client_Dashboard_container">
+        <Helmet>
+          <title>MyVirtualCard-Client Dashboard</title>
+        </Helmet>
         {/* SideNav */}
         <div
           className={`client_dashboard_sidenav ${

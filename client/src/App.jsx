@@ -73,8 +73,6 @@ import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/
 import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_Live.jsx";
 import ReactGA from 'react-ga';
 
-const Measurement_Id = "G-YPMRZFE1LG";
-ReactGA.initialize(Measurement_Id);
 //Import All component:
 const App = () => {
   let navigate = useNavigate();
@@ -294,6 +292,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
       console.log(error);
     }
   }, [navigate]);
+  // Pixel Integration  
   useEffect(() => {
     // Facebook Pixel script
     !(function (f, b, e, v, n, t, s) {

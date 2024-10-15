@@ -50,6 +50,7 @@ import { CiLogin } from "react-icons/ci";
 import { GrUserNew } from "react-icons/gr";
 import { TbBrand4Chan } from "react-icons/tb";
 import Context from "../Context/GlobalContext";
+import {Helmet} from 'react-helmet';
 const LandingPageNew = () => {
   let { user, userName } = useContext(Context);
   const scrollContainerRef = useRef(null);
@@ -436,6 +437,9 @@ const LandingPageNew = () => {
   return (
     <>
       <div className="landingpage_container">
+        <Helmet>
+          <title>MyVirtualCard – Your Professional Business vcard</title>
+        </Helmet>
         {/* Up Arrow icon */}
         <div className="up" onClick={() => scrollToSection(HomeRef)}>
           <small>Bring me Top</small>
