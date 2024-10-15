@@ -446,7 +446,7 @@ const DynamicVcard = () => {
   //Menu actions
   let [activeMenu, setActiveMenu] = useState("Home");
   let HomeRef = useRef(null);
-
+let ContactRef=useRef(null);
   let AboutRef = useRef(null);
   let ServiceRef = useRef(null);
   let ProductRef = useRef(null);
@@ -461,13 +461,74 @@ const DynamicVcard = () => {
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
 
+  useEffect(()=>{
+    if(DynamicForm == 'Vcard_Theme'){
+      HomeRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Contact_Icons'){
+      ContactRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Logo_Banner_Design'){
+      HomeRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Title_Design'){
+      AboutRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Service_Design'){
+      ServiceRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Product_Design'){
+      ProductRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Appoinment_Design'){
+      AppoinmentRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Gallery_Design'){
+      GalleryRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Timer_Design'){
+      TimeRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Testimonial_Design'){
+      TestimonialRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Feedback_Design'){
+      FeedbackRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Inquiry_Design'){
+      InquiryRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+  },[DynamicForm])
   let scrollToSection = (elementRef) => {
+    if(DynamicForm == 'Vcard_Theme'){
+      HomeRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
+    if(DynamicForm == 'Contact_Icons'){
+      ContactRef.current.scrollIntoView({behavior: 'smooth', block: 'start', inline:
+        'nearest'});
+    };
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   function HandleMenuDown() {
-    if (activeMenu === "Home") {
+    if (activeMenu === "Home" && DynamicForm == 'Vcard_Theme') {
       return scrollToSection(AboutRef), setActiveMenu("About");
+    }
+    if (activeMenu === "Contact" && DynamicForm == 'Contact_Icons') {
+      return scrollToSection(ContactRef), setActiveMenu("Contact");
     }
     if (activeMenu === "About") {
       return scrollToSection(ServiceRef), setActiveMenu("Service");
@@ -1173,7 +1234,7 @@ const DynamicVcard = () => {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-
+display:none !important;
     .up_btn {
       width: 100%;
       display: flex;
@@ -1392,8 +1453,8 @@ const DynamicVcard = () => {
             height: ${LogoHeight}${LogoHeightUnit};
         min-height: ${LogoHeight}${LogoHeightUnit};
         width:${LogoWidth}${LogoWidthUnit};
-        object-fit: "cover",
-        object-postition: "top",
+        object-fit: cover;
+        object-postition: top;
          border-radius: ${LogoBorderRadius}${LogoBorderRadiusUnit};
      
           
@@ -5656,7 +5717,7 @@ color: ${InquiryInputBorderColor};
               </div>
             </div>
             {/* basic Details */}
-            <div className="basic_row_2">
+            <div className="basic_row_2" ref={ContactRef}>
               <div className="user_details">
                 <div className="user_data">
                   <div className="user_information">
