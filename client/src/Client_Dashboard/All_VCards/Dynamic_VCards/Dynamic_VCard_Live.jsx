@@ -567,8 +567,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
       flex: 0.08;
       font-size: 2.5rem;
       font-weight: bold;
-      background-color: ${VcardTheme[0].VCardTextColour};
-      color: ${ButtonTheme[0].BtnBackColour};
+      background-color: ${ButtonTheme[0].BtnBackColour};
+      color: ${ButtonTheme[0].BtnTextColour};
       cursor: pointer;
       overflow: hidden;
       transition: all 0.3s ease-in-out;
@@ -663,8 +663,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
            flex: 0.08;
       font-size: 2.5rem;
       font-weight: bold;
-      background-color: ${VcardTheme[0].VCardTextColour};
-      color: ${ButtonTheme[0].BtnBackColour};
+         background-color: ${ButtonTheme[0].BtnBackColour};
+      color: ${ButtonTheme[0].BtnTextColour};
       cursor: pointer;
       overflow: hidden;
       transition: all 0.3s ease-in-out;
@@ -986,12 +986,12 @@ color:${VcardTheme[0].VCardTextColour} !important;
         }
         .svg_image {
                  position: absolute;
-        bottom: ${ImageTheme[0].LogoPosition == "absolute" ? "-4%" : "14%"};
+        bottom: ${ImageTheme[0].LogoPosition == "absolute" ? "-4%" : ""};
         left: 0%;
         right: 0%;
         width: 100%;
         z-index: 1;
-      
+      display:${ImageTheme[0].LogoPosition == "absolute" ? "block" : "none"};
 
        
         }
@@ -1040,15 +1040,15 @@ color:${VcardTheme[0].VCardTextColour} !important;
 
             h2 {
               font-size: 1.2rem;
-              font-weight: 500;
+              font-weight: 600;
               letter-spacing: 1px;
-              color: $first_text_color;
+              color: ${VcardTheme[0].VCardTextColour};
             }
 
             p {
               font-size: 0.9rem;
               font-weight: 500;
-              color: $first_text_color;
+               color: ${VcardTheme[0].VCardTextColour};
               display: flex;
               align-items: center;
               justify-content: flex-start;
@@ -1095,7 +1095,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
               }
               small {
                 font-size: 0.7rem;
-                font-weight: 500;
+                font-weight: 600;
               }
 
               &:hover {

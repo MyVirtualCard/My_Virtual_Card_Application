@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "./LandingPage.scss";
-import brand_logo from "../assets/Landing_Page/view/BrandLogo2.png";
-import { Link, useNavigate, NavLink } from "react-router-dom";
-import { FaRocketchat } from "react-icons/fa";
-import { CiSaveUp1 } from "react-icons/ci";
-import slide1_banner from "../assets/Landing_Page/view/slide1_banner.png";
+import Brand_Logo from "../assets/Landing_Page/view/BrandLogo2.png";
+import Brand_Logo1 from "../assets/Landing_Page/view/BrandLogo.png";
+import backImage from "../assets/Landing_Page/back_image.png";
+import slide1banner from "../assets/Landing_Page/view/slide1_right_image.png";
+
 import vcard1 from "../assets/Landing_Page/VCard_Designs/GYM.png";
 import vcard2 from "../assets/Landing_Page/VCard_Designs/FASHION.png";
 import vcard3 from "../assets/Landing_Page/VCard_Designs/MANAGER.png";
@@ -15,7 +15,7 @@ import vcard7 from "../assets/Landing_Page/VCard_Designs/DOCTOR.png";
 import vcard8 from "../assets/Landing_Page/VCard_Designs/CAB.png";
 import vcard9 from "../assets/Landing_Page/VCard_Designs/ADVOCATE.png";
 import vcard10 from "../assets/Landing_Page/VCard_Designs/EDUCATION.png";
-
+// import vcard8 from "../assets/Landing_Page/VCard_Designs/Boutique_Shop_Mobile.png";
 import view1 from "../assets/Landing_Page/view/1.svg";
 import view2 from "../assets/Landing_Page/view/2.svg";
 import view3 from "../assets/Landing_Page/view/3.svg";
@@ -24,203 +24,40 @@ import number1 from "../assets/Landing_Page/view/number1.png";
 import number2 from "../assets/Landing_Page/view/number2.png";
 import number3 from "../assets/Landing_Page/view/number3.png";
 import nfc from "../assets/Landing_Page/view/4.png";
-// import Lottie from "react-lottie";
-// import anime1 from "../assets/Landing_Page/view/Animation - 1717142280104.json";
-import { toast } from "react-toastify";
-import { motion as m } from "framer-motion";
-import offerImage from "../assets/Landing_Page/Offer/6.png";
-import Context from "../Context/GlobalContext";
+import { IoIosColorPalette } from "react-icons/io";
+import { VscOpenPreview } from "react-icons/vsc";
+import { BsFillRocketTakeoffFill } from "react-icons/bs";
+import { IoIosCreate } from "react-icons/io";
+import { HiLightBulb } from "react-icons/hi";
+import { FaRupeeSign } from "react-icons/fa";
+import { MdHomeRepairService } from "react-icons/md";
+import { RiDashboardFill } from "react-icons/ri";
+import { CiSaveUp1 } from "react-icons/ci";
+//Image right Slider
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 import {
-  topNavAnime,
-  left_slide_1Anime,
-  right_slide_1Anime,
-  title_slide_2Anime,
-  vcard_slide_2Anime,
-  title_slide_3Anime,
-  box_slide_3Anime,
-  title_slide_4Anime,
-  left_cardShow_slide_4Anime,
-  right_cardShow_slide_4Anime,
-  title_slide_5Anime,
-  numberBox_slide_5Anime,
-  left_nfc_slide_5Anime,
-  right_nfc_slide_5Anime,
-  plan_title_slide_6Anime,
-  plan_box_slide_5Anime,
-  plan_content_slide_5Anime,
-  title_slide_7Anime,
-  qn_slide_7Anime,
-  form_left_slide_8Anime,
-} from "./framer_Motion_Anime_Object";
-// import Context from "../UseContext/Context";
-let plan_service_list = [
-  {
-    id: 1,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Basic Information",
-  },
-  {
-    id: 2,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Social Media",
-  },
-  {
-    id: 3,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Contact Details",
-  },
-  {
-    id: 4,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Services",
-  },
-  {
-    id: 5,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Products",
-  },
-  {
-    id: 6,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Appoinment",
-  },
-  {
-    id: 7,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Add to Contact",
-  },
-  {
-    id: 8,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Blog",
-  },
-  {
-    id: 9,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Gallery",
-  },
-  {
-    id: 10,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Testimonials",
-  },
-  {
-    id: 11,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Feedback Form",
-  },
-  {
-    id: 12,
-    icon: <i className="bx bxs-check-shield"></i>,
-    text: "Inquiry Form",
-  },
-  {
-    id: 13,
-    icon: <i className="bx bxs-shield-x"></i>,
-    text: "Dynamic Styling",
-  },
-  {
-    id: 14,
-    icon: <i className="bx bxs-shield-x"></i>,
-    text: "IFrame",
-  },
-  {
-    id: 15,
-    icon: <i className="bx bxs-shield-x"></i>,
-    text: "Custom QRCode",
-  },
-];
-
-let questions = [
-  {
-    id: 1,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "1. What is a digital vCard?",
-    answer:
-      "A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.",
-  },
-  {
-    id: 2,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "2. How does the NFC feature work with digital vCards?",
-    answer:
-      "The NFC (Near Field Communication) feature allows you to share your digital vCard with others by simply tapping your NFC-enabled device against theirs. This instantaneously transfers your contact information without the need for manual input or scanning QR codes.",
-  },
-  {
-    id: 3,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "3. What devices are compatible with the NFC feature?",
-    answer:
-      "Most modern smartphones and tablets are equipped with NFC technology, including Android and iOS devices. Ensure that your device’s NFC functionality is enabled to take advantage of this feature.",
-  },
-  {
-    id: 4,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "4. Can I customize my digital vCard?",
-    answer:
-      "Yes, you can customize your digital vCard with your preferred design, including adding your company logo, choosing colors, and selecting fonts. You can also include additional information such as social media profiles and website links.",
-  },
-  {
-    id: 5,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "5. Is there a limit to the number of vCards I can create?",
-    answer:
-      "No, there are no limits to the number of digital vCards you can create. You can generate multiple vCards for different purposes, such as personal, professional, or specific events.",
-  },
-  {
-    id: 6,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "6. How do I share my digital vCard with others?",
-    answer: `You can share your digital vCard in multiple ways:
-    •Via NFC: Simply tap your device against another NFC-enabled device to transfer your vCard.
-    •QR Code: Display a QR code containing your vCard information for others to scan.
-    •Email: Send your digital vCard as an email attachment.
-    •Messaging Apps: Share your vCard through messaging apps like WhatsApp or Telegram.`,
-  },
-  {
-    id: 7,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "7. Can I update my digital vCard after creation?",
-    answer:
-      "Yes, you can update your digital vCard at any time. Changes you make to your contact information or design preferences will be reflected in the shared vCards.",
-  },
-  {
-    id: 8,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question:
-      "8. Is there a fee for using the NFC-enabled digital vCard service?",
-    answer:
-      "Our basic NFC-enabled digital vCard service is free to use. However, we may offer premium features or advanced customization options that come with a subscription fee.",
-  },
-  {
-    id: 9,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question: "9. Is the NFC transfer secure?",
-    answer:
-      "Yes, the NFC transfer of digital vCards is secure and encrypted, ensuring that your contact information remains protected during the sharing process.",
-  },
-  {
-    id: 10,
-    plus: <i className="bx bx-plus"></i>,
-    minus: <i className="bx bx-minus"></i>,
-    question:
-      "10. What if I encounter issues with NFC sharing or using digital vCards?",
-    answer:
-      "If you experience any difficulties with NFC sharing or using digital vCards, please refer to our comprehensive user guide or contact our customer support team for assistance. We’re here to help resolve any issues you may encounter.",
-  },
-];
+  FaInstagram,
+  FaLinkedin,
+  FaRocketchat,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { FaHandPointRight } from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
+import { FaFacebookF } from "react-icons/fa";
+import { CiLogin } from "react-icons/ci";
+import { GrUserNew } from "react-icons/gr";
+import { TbBrand4Chan } from "react-icons/tb";
+import { WiStars } from "react-icons/wi";
+import Context from "../Context/GlobalContext";
+import {Helmet} from 'react-helmet';
+import { Dynamic_VCards_images,VCards_images } from "./Vcard_Images/Vcard_Images";
+import { LiaThemeco } from "react-icons/lia";
+import { GiPayMoney } from "react-icons/gi";
 const LandingPage = () => {
-  let{user,userName}=useContext(Context)
-  let navigate = useNavigate();
+  let { user } = useContext(Context);
   const scrollContainerRef = useRef(null);
   let [TrialExpand, setTrialExpand] = useState(false);
   let [planExpand, setPlanExpand] = useState(false);
@@ -228,13 +65,316 @@ const LandingPage = () => {
   let [PremiumPlanExpand, setPremiumPlanExpand] = useState(false);
   let [showAnswer, setShowAnswer] = useState(false);
   let [ImageToggle, setImageToggle] = useState(true);
+  let [sideNavToggle, setSideNavToggle] = useState(false);
+  let HomeRef = useRef(null);
+  let TemplateRef = useRef(null);
+  let FeatureRef = useRef(null);
+  let NFCRef = useRef(null);
+  let PricingRef = useRef(null);
+  let FAQRef = useRef(null);
+  let ContactRef = useRef(null);
+  let OurServiceRef = useRef(null);
+  let scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
+ 
+  const [width, setWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setImageToggle(!ImageToggle);
-    }, 5000);
-  });
+   //VCard Slider
+   const vcard_settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 2,
+    slidesToScroll: width < 700 ? 1 : 2,
+    ltr: true, // Scroll from left to right
+    arrows: false, // Show navigation arrows
+  };
 
+  // Template List
+  let TemplateList = [
+    {
+      Id: 1,
+      TemplateCount: 1,
+      VCard_Name: "CORPORATE_MANAGER",
+      VCard_Image: vcard3,
+      VCard_Link: "https://myvirtualcard.in/Manager_Preview",
+    },
+
+    {
+      Id: 2,
+      TemplateCount: 2,
+      VCard_Name: "FASHION_DESIGNER",
+      VCard_Image: vcard2,
+      VCard_Link: "https://myvirtualcard.in/fashion_Designer_Preview",
+    },
+    {
+      Id: 3,
+      TemplateCount: 3,
+      VCard_Name: "GYM_TRAINER",
+      VCard_Image: vcard1,
+      VCard_Link: "https://myvirtualcard.in/Gym_Trainer_Preview",
+    },
+    {
+      Id: 4,
+      TemplateCount: 4,
+      VCard_Name: "TAXI_SERVICE",
+      VCard_Image: vcard4,
+      VCard_Link: "https://myvirtualcard.in/Taxi_Service_Preview",
+    },
+    {
+      Id: 5,
+      TemplateCount: 5,
+      VCard_Name: "BUSSINESS_CONSULTANT",
+      VCard_Image: vcard5,
+      VCard_Link: "https://myvirtualcard.in/Corporate_Company_Preview",
+    },
+    {
+      Id: 6,
+      TemplateCount: 6,
+      VCard_Name: "BEAUTY_PARLOR",
+      VCard_Image: vcard6,
+      VCard_Link: "https://myvirtualcard.in/Beauty_Parlor_Preview",
+    },
+    {
+      Id: 7,
+      TemplateCount: 7,
+      VCard_Name: "DOCTOR",
+      VCard_Image: vcard7,
+      VCard_Link: "https://myvirtualcard.in/Doctor_Preview",
+    },
+
+    {
+      Id: 8,
+      TemplateCount: 8,
+      VCard_Name: "CAB DRIVER",
+      VCard_Image: vcard8,
+      VCard_Link: "https://myvirtualcard.in/Cab_Drivers_Preview",
+    },
+    {
+      Id: 9,
+      TemplateCount: 9,
+      VCard_Name: "ADVOCATE OFFICER",
+      VCard_Image: vcard9,
+      VCard_Link: "https://myvirtualcard.in/Advocate_Preview",
+    },
+    {
+      Id: 10,
+      TemplateCount: 10,
+      VCard_Name: "EDUCATION INSTITUTE",
+      VCard_Image: vcard10,
+      VCard_Link: "https://myvirtualcard.in/Education_Preview",
+    },
+  ];
+  //PLan list
+  let plan_service_list = [
+    {
+      id: 1,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Basic Information",
+    },
+    {
+      id: 2,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Social Media",
+    },
+    {
+      id: 3,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Contact Details",
+    },
+    {
+      id: 4,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Services",
+    },
+    {
+      id: 5,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Products",
+    },
+    {
+      id: 6,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Appoinment",
+    },
+    {
+      id: 7,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Add to Contact",
+    },
+    {
+      id: 8,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Blog",
+    },
+    {
+      id: 9,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Gallery",
+    },
+    {
+      id: 10,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Testimonials",
+    },
+    {
+      id: 11,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Feedback Form",
+    },
+    {
+      id: 12,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Inquiry Form",
+    },
+    {
+      id: 13,
+      icon: <i className="bx bxs-shield-x"></i>,
+      text: "Dynamic Styling",
+    },
+    {
+      id: 14,
+      icon: <i className="bx bxs-shield-x"></i>,
+      text: "IFrame",
+    },
+    {
+      id: 15,
+      icon: <i className="bx bxs-shield-x"></i>,
+      text: "Custom QRCode",
+    },
+  ];
+
+  let questions = [
+    {
+      id: 1,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "1. What is a digital vCard?",
+      answer:
+        "A digital vCard, or virtual business card, is a modern alternative to traditional paper business cards. It contains essential contact information such as name, job title, company name, phone number, email address, and more, all stored in a digital format.",
+    },
+    {
+      id: 2,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "2. How does the NFC feature work with digital vCards?",
+      answer:
+        "The NFC (Near Field Communication) feature allows you to share your digital vCard with others by simply tapping your NFC-enabled device against theirs. This instantaneously transfers your contact information without the need for manual input or scanning QR codes.",
+    },
+    {
+      id: 3,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "3. What devices are compatible with the NFC feature?",
+      answer:
+        "Most modern smartphones and tablets are equipped with NFC technology, including Android and iOS devices. Ensure that your device’s NFC functionality is enabled to take advantage of this feature.",
+    },
+    {
+      id: 4,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "4. Can I customize my digital vCard?",
+      answer:
+        "Yes, you can customize your digital vCard with your preferred design, including adding your company logo, choosing colors, and selecting fonts. You can also include additional information such as social media profiles and website links.",
+    },
+    {
+      id: 5,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "5. Is there a limit to the number of vCards I can create?",
+      answer:
+        "No, there are no limits to the number of digital vCards you can create. You can generate multiple vCards for different purposes, such as personal, professional, or specific events.",
+    },
+    {
+      id: 6,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "6. How do I share my digital vCard with others?",
+      answer: `You can share your digital vCard in multiple ways:
+      •Via NFC: Simply tap your device against another NFC-enabled device to transfer your vCard.
+      •QR Code: Display a QR code containing your vCard information for others to scan.
+      •Email: Send your digital vCard as an email attachment.
+      •Messaging Apps: Share your vCard through messaging apps like WhatsApp or Telegram.`,
+    },
+    {
+      id: 7,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "7. Can I update my digital vCard after creation?",
+      answer:
+        "Yes, you can update your digital vCard at any time. Changes you make to your contact information or design preferences will be reflected in the shared vCards.",
+    },
+    {
+      id: 8,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question:
+        "8. Is there a fee for using the NFC-enabled digital vCard service?",
+      answer:
+        "Our basic NFC-enabled digital vCard service is free to use. However, we may offer premium features or advanced customization options that come with a subscription fee.",
+    },
+    {
+      id: 9,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question: "9. Is the NFC transfer secure?",
+      answer:
+        "Yes, the NFC transfer of digital vCards is secure and encrypted, ensuring that your contact information remains protected during the sharing process.",
+    },
+    {
+      id: 10,
+      plus: <i className="bx bx-plus"></i>,
+      minus: <i className="bx bx-minus"></i>,
+      question:
+        "10. What if I encounter issues with NFC sharing or using digital vCards?",
+      answer:
+        "If you experience any difficulties with NFC sharing or using digital vCards, please refer to our comprehensive user guide or contact our customer support team for assistance. We’re here to help resolve any issues you may encounter.",
+    },
+  ];
+  let [selectedQn, setSelectedQn] = useState(null);
+  let [multiQnToggle, setMultiQnToggle] = useState(false);
+  let [multiSelected, setMultiSelected] = useState([]);
+
+  function handleSingleSelection(getCurrentId) {
+    setSelectedQn(getCurrentId === selectedQn ? null : getCurrentId);
+  }
+
+  function handleMultipleSelection(getCurrentId) {
+    let copyMultiple = [...multiSelected];
+
+    let findIndexOfCurrentId = copyMultiple.indexOf(getCurrentId);
+    if (findIndexOfCurrentId === -1) {
+      copyMultiple.push(getCurrentId);
+    } else {
+      copyMultiple.splice(findIndexOfCurrentId, 1);
+    }
+    setMultiSelected(copyMultiple);
+  }
+
+  function handleMultipleToggle() {
+    setMultiQnToggle(!multiQnToggle);
+    if (multiQnToggle === false) {
+      toast.success("Multi Selection Activated!");
+    } else {
+      toast.success("Single Selection Activated!");
+    }
+  }
+  const sendMessageOnWhatsApp = () => {
+    const phoneNumber = "9344482370"; // Replace with actual phone number (international format without +)
+    const message = "Hello! I have a query."; // Replace with your message
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    // Redirecting to WhatsApp
+    window.open(whatsappUrl, "_blank");
+  };
   // Offer timer
 
   let [Days, setDays] = useState("00");
@@ -245,7 +385,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("September 10, 2024 00:00:00").getTime();
+    const countdownDate = new Date("October 30, 2024 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -292,1191 +432,1098 @@ const LandingPage = () => {
       clearInterval(interval.current);
     };
   }, []);
-  let [sideNavToggle, setSideNavToggle] = useState(false);
-  let HomeRef = useRef(null);
-  let TemplateRef = useRef(null);
-  let FeatureRef = useRef(null);
-  let NFCRef = useRef(null);
-  let PricingRef = useRef(null);
-  let FAQRef = useRef(null);
-  let ContactRef = useRef(null);
-
-  let scrollToSection = (elementRef) => {
-    window.scrollTo({
-      top: elementRef.current.offsetTop,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    let scrollAmount = 0.5;
-    const scrollStep = 0.08; // Adjust the speed of the scroll
-    const delay = 3; // Adjust the delay for the scrolling effect
-
-    const scrollHorizontally = () => {
-      scrollAmount += scrollStep;
-      if (scrollContainer) {
-        scrollContainer.scrollLeft = scrollAmount;
-        if (
-          scrollAmount >=
-          scrollContainer.scrollWidth - scrollContainer.clientWidth
-        ) {
-          scrollAmount = 0; // Reset the scroll amount if it reaches the end
-        }
-      }
-    };
-
-    const intervalId = setInterval(scrollHorizontally, delay);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  let [selectedQn, setSelectedQn] = useState(null);
-  let [multiQnToggle, setMultiQnToggle] = useState(false);
-  let [multiSelected, setMultiSelected] = useState([]);
-
-  function handleSingleSelection(getCurrentId) {
-    setSelectedQn(getCurrentId === selectedQn ? null : getCurrentId);
-  }
-
-  function handleMultipleSelection(getCurrentId) {
-    let copyMultiple = [...multiSelected];
-
-    let findIndexOfCurrentId = copyMultiple.indexOf(getCurrentId);
-    if (findIndexOfCurrentId === -1) {
-      copyMultiple.push(getCurrentId);
-    } else {
-      copyMultiple.splice(findIndexOfCurrentId, 1);
-    }
-    setMultiSelected(copyMultiple);
-  }
-
-  function handleMultipleToggle() {
-    setMultiQnToggle(!multiQnToggle);
-    if (multiQnToggle === false) {
-      toast.success("Multi Selection Activated!");
-    } else {
-      toast.success("Single Selection Activated!");
-    }
-  }
-  // const defaultOptions = {
-  //   loop: true,
-  //   autoplay: true,
-  //   animationData: anime1,
-  //   rendererSettings: {
-  //     preserveAspectRatio: "xMidYMid slice",
-  //   },
-  // };
-
-
   return (
     <>
-      <m.div className="home_container">
-        {/* whatsup_icons */}
-        <m.div className="whatsup">
-          <a href="https://wa.me/9344482370" target="_blank">
-            <img
-              width="48"
-              height="48"
-              src="https://img.icons8.com/color/48/whatsapp--v1.png"
-              alt="whatsapp--v1"
-            />
-          </a>
-        </m.div>
+      <div className="landingpage_container">
+        <Helmet>
+          <title>MyVirtualCard – Your Professional Business vcard</title>
+        </Helmet>
         {/* Up Arrow icon */}
         <div className="up" onClick={() => scrollToSection(HomeRef)}>
-          {/* <small>Bring me Top</small> */}
-          <i className="bx bx-chevrons-up"></i>
+          <small>Bring me Top</small>
+          <CiSaveUp1 className="up_icon" />
         </div>
-        <m.div className="slide_1_page" ref={HomeRef}>
-          <ul className="slide_1_background">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            {/* <li></li>
-            <li></li> */}
-            {/* <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li> */}
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-
-          <m.header>
-            <m.div className="top_nav">
-              <m.div
-                className="left"
-                variants={topNavAnime}
-                initial="hide"
-                animate="show"
-              >
-                <img src={brand_logo} alt="logo" />
-              </m.div>
-              <m.div
-                className="right"
-                variants={topNavAnime}
-                initial="righthide"
-                animate="rightshow"
-              >
-                <m.div
-                  className="nav_list"
-                  id={sideNavToggle ? "sideNavOpen" : "sideNavClose"}
-                >
-                  <m.ul>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(HomeRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Home{" "}
-                      </NavLink>
-                    </m.li>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(TemplateRef), setSideNavToggle(false);
-                        }}
-                      >
-                        {" "}
-                        Templates
-                      </NavLink>
-                    </m.li>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(FeatureRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Feature{" "}
-                      </NavLink>
-                    </m.li>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(NFCRef), setSideNavToggle(false);
-                        }}
-                      >
-                        NFC
-                      </NavLink>
-                    </m.li>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(PricingRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Pricing{" "}
-                      </NavLink>
-                    </m.li>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(FAQRef), setSideNavToggle(false);
-                        }}
-                      >
-                        FAQs{" "}
-                      </NavLink>
-                    </m.li>
-                    <m.li variants={topNavAnime}>
-                      <NavLink
-                        onClick={() => {
-                          scrollToSection(ContactRef), setSideNavToggle(false);
-                        }}
-                      >
-                        Contact
-                      </NavLink>
-                    </m.li>
-                  </m.ul>
-                </m.div>
-                <m.div className="actions" variants={topNavAnime}>
-                  {user === null ? (
-                    <Link to="/login">
-                      <button>Login</button>
-                    </Link>
-                  ) : (
-                    <Link to={`/${userName}/uadmin/VCards`}>
-                      <button>
-                        <i className="bx bxs-dashboard"></i>
-                        {userName}
-                      </button>
-                    </Link>
-                    
-                  )}
-
-                  <div
-                    className="menu"
-                    onClick={() => setSideNavToggle(!sideNavToggle)}
-                  >
-                    {sideNavToggle ? (
-                      <i className="bx bx-menu-alt-right"></i>
-                    ) : (
-                      <i className="bx bx-menu-alt-left"></i>
-                    )}
-                  </div>
-                </m.div>
-              </m.div>
-            </m.div>
-          </m.header>
-          <m.div className="slide_1">
-            <div className="slide1_back">
-              {/* <img src={slide1_back} alt="" /> */}
+        {/* Navbars */}
+        <div className="Navbar1">
+          <div className="left">
+            <div className="offer">
+              <small>
+                <strong>50% </strong>- Offer Still Active <FaHandPointRight />
+              </small>
             </div>
-            <m.div
-              className="left"
-              variants={left_slide_1Anime}
-              initial="hide"
-              animate="show"
-            >
-              <m.div className="landingpage_title" variants={left_slide_1Anime}>
-                <h3>Design Your Digital Identity</h3>
-                <h4>Introducing Custom vCards</h4>
-              </m.div>
-              <m.div className="sub_title" variants={left_slide_1Anime}>
-                <m.p>
-                  Customize Your Digital Identity Effortlessly with My Virtual
-                  Card!
-                </m.p>
-              </m.div>
-              <m.div className="summary" variants={left_slide_1Anime}>
-                {/* <m.p>
-                  Experience the future of digital ID cards by AristosTech India
-                  Pvt Ltd.
-                </m.p> */}
-                {/* <m.p>
-                  We aren't compromising the quality of product but We can
-                  provide budget friendly price because client happiness only we
-                  are focusing!
-                </m.p> */}
-              </m.div>
-
-              <m.div className="register_actions">
-                <m.div className="start" variants={left_slide_1Anime}>
-                  {user === null ? (
-                    <Link to="/register">
-                      <button>
-                        Get Started<i className="bx bxs-user-plus bx-tada"></i>
-                      </button>
-                    </Link>
-                  ) : (
-                    ""
-                  )}
-                </m.div>
-                <m.div className="enquiry" variants={left_slide_1Anime}>
-                  <a href="https://wa.me/9344482370" target="_blank">
-                    <button>
-                      Inquiries<FaRocketchat/>
-                    </button>
-                  </a>
-                </m.div>
-              </m.div>
-              {/* //Timer_Box */}
-
-              <m.div className="offer_container" variants={left_slide_1Anime}>
-                {/* OfferImage */}
-                <div className="offer_image">
-                  <img src={offerImage} alt="offer" />
-                </div>
-                <m.div className="offer_box">
-                  <div className="spark">
-                    {/* <Lottie
-                      options={defaultOptions}
-                      style={{
-                        height: 150,
-                        width: 150,
-                        position: "absolute",
-                        top: -50,
+            <div className="box">
+              <div className="time_box">
+                <h4>{Days}</h4>
+                <small>Day</small>
+              </div>
+              {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              <div className="time_box">
+                <h4>{Hours}</h4>
+                <small>Hours</small>
+              </div>
+              {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              <div className="time_box">
+                <h4>{Minutes}</h4>
+                <small>Minutes</small>
+              </div>
+              {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              <div className="time_box">
+                <h4>{Seconds}</h4>
+                <small>Seconds</small>
+              </div>
+            </div>
+          </div>
+          <div className="right">
+            <div className="address">
+              <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+              <small>
+                <strong>Mobile Number : </strong>&nbsp;+91 9344482370
+              </small>
+            </div>
+            <div className="socialmedias">
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaFacebookF />
+                </a>
+              </div>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaInstagram />
+                </a>
+              </div>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaTwitter />
+                </a>
+              </div>
+              <div className="link">
+                <a href="#" className="btn btn-primary">
+                  <FaLinkedin />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="Navbar2">
+          <div className="top_navbar">
+            <div className="left">
+              <img src={Brand_Logo} alt="logo" />
+            </div>
+            <div className="middle">
+              <div
+                className="nav_list"
+                id={sideNavToggle ? "sideNavOpen" : "sideNavClose"}
+              >
+                <ul>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(HomeRef), setSideNavToggle(false);
                       }}
-                    /> */}
-                  </div>
-                  <m.div className="box">
-                    <m.div className="time_box">
-                      <h4>{Days}</h4>
-                      <small>Day</small>
-                    </m.div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                    <div className="time_box">
-                      <h4>{Hours}</h4>
-                      <small>Hours</small>
-                    </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                    <div className="time_box">
-                      <h4>{Minutes}</h4>
-                      <small>Minutes</small>
-                    </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                    <div className="time_box">
-                      <h4>{Seconds}</h4>
-                      <small>Seconds</small>
-                    </div>
-                  </m.div>
+                    >
+                      Home{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(TemplateRef), setSideNavToggle(false);
+                      }}
+                    >
+                      {" "}
+                      Templates
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(FeatureRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Feature{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(NFCRef), setSideNavToggle(false);
+                      }}
+                    >
+                      NFC
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(PricingRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Pricing{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(FAQRef), setSideNavToggle(false);
+                      }}
+                    >
+                      FAQs{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(OurServiceRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Service
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="right">
+              <div className="actions">
+                {user === null ? (
+                  <Link to="/register" className="register">
+                    Register <GrUserNew />
+                  </Link>
+                ) : (
+                  ""
+                )}
+                {user === null ? (
+                  <Link to="/login" className="login">
+                    Login <CiLogin />
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/${user.userName}/uadmin/VCards`}
+                    className="login"
+                  >
+                    {user.userName} <RiDashboardFill />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* All Slide Content */}
+        <div className="content">
+          {/* Slide1 */}
+          <div className="slide1" ref={HomeRef}>
+            <ul className="slide_1_background">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
 
-                  <div className="offer">
-                    <div className="discount">
-                      <strong>
-                        {Hours && Minutes && Days && Minutes !== "00"
-                          ? "50% Offer!"
-                          : "Plan Expired!"}
-                      </strong>
-                    </div>
-                    {Hours && Minutes && Days && Minutes !== "00" ? (
-                      <div className="prices">
-                        <div className="old">
-                          <h5>₹ 1200</h5>
-                        </div>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+           
+            <div className="back_image">
+              <img src={backImage} alt="image" />
+            </div>
 
-                        <div className="new">
-                          <h5>₹ 599</h5>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="prices">
-                        <div className="old">
-                          <h5
-                            style={{ textDecoration: "none", color: "#4c3ce0" }}
-                          >
-                            ₹ 1200
-                          </h5>
-                        </div>
+            <div className="left">
+              <div className="landingpage_title">
+                <h3>
+                  Design Your <span>Digital Identity</span>
+                </h3>
+                <h4>Introducing Custom vCards</h4>
+                <p>
+                  Customize Your Digital Identity Effortlessly with My Virtual
+                  Card!. People are online Now, So convert your Business Card
+                  Digitally to share on their mobiles and Wishing your customers
+                  encourage them to connect with you.
+                </p>
+              </div>
+              <div className="price">
+                <p>
+                  Starting From <strong>₹599</strong>
+                </p>
+              </div>
+              <div className="actions">
+                {user === null ? (
+                  <Link to="/register">
+                    Create Your VCard Now <TbBrand4Chan className="icon" />
+                  </Link>
+                ) : (
+                  <Link to={`/${user.userName}/uadmin/VCards`}>
+                    Build Your VCard Now <TbBrand4Chan className="icon" />
+                  </Link>
+                )}
+              </div>
+            </div>
 
-                        <div className="new">
-                          <h5
-                            style={{
-                              textDecoration: "line-through",
-                              color: "red",
-                            }}
-                          >
-                            ₹ 599
-                          </h5>
-                        </div>
-                      </div>
-                    )}
-                    <div className="actions">
-                      {Hours && Minutes && Days && Minutes !== "00" ? (
-                        <Link to="/register">
-                          <button>
-                            GRAB OFFER!<i className="bx bxs-offer"></i>
-                          </button>
-                        </Link>
-                      ) : (
-                        <a href="https://wa.me/9344482370" target="_blank">
-                          <button>To Get Offer!</button>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </m.div>
-              </m.div>
-            </m.div>
-            <m.div
-              className="right"
-              variants={right_slide_1Anime}
-              initial="hide"
-              animate="show"
-            >
-              <div className="right_title">
-                <h3>Design Your Digital Identity</h3>
+            <div className="right">
+              <div className="landingpage_title2">
+                <h3>
+                  Design Your <span>Digital Identity</span>
+                </h3>
                 <h4>Introducing Custom vCards</h4>
               </div>
+              <img src={slide1banner} alt="banner" />
+            </div>
+          </div>
+          {/* Slide2 */}
 
-              <img src={slide1_banner} alt="banner" />
+          <div className="slide2" ref={TemplateRef}>
+            <div className="slide2_title">
+              <h2>Explore Our Range of Static VCard Templates!</h2>
+              <p>
+                <strong>Simplify Your Digital Networking:</strong> Get Started
+                with Our vCard Templates
+              </p>
 
-              <m.div className="extra_designs">
-                <m.div className="design1" variants={right_slide_1Anime}>
-                  {/* <img
-                    src={rocket}
-                    alt="rocket"
-                  /> */}
-                  {/* <i className="bx bx-rocket"></i> */}
-                </m.div>
-                <m.div
-                  className="design2"
-                  variants={right_slide_1Anime}
-                ></m.div>
-                <m.div className="design3" variants={right_slide_1Anime}>
-                  {/* <Lottie
-                    options={defaultOptions}
-                    style={{
-                      height: 150,
-                      width: 150,
-                      position: "absolute",
-                      top: -50,
+              <div className="sample_title">
+                <div className="icon">
+                  <IoIosColorPalette />
+                </div>
+                <p>Sample VCard Designs</p>
+              </div>
+            </div>
+            <div className="template_container">
+              {TemplateList.map((data, index) => {
+                return (
+                  <div className="template" key={index}>
+                    <div className="template_title">
+                      <h4>TEMPLATE-{data.TemplateCount}</h4>
+                      <p>{data.VCard_Name}</p>
+                    </div>
+                    <div className="template_image">
+                      <img src={data.VCard_Image} alt="card1" />
+                      <Link
+                        className="preview_btn"
+                        onClick={() => {
+                          scrollToSection(PricingRef);
+                        }}
+                      >
+                        View Plan
+                      </Link>
+                    </div>
+                    <div className="template_actions">
+                      <Link
+                        to={data.VCard_Link}
+                        target="_blank"
+                        className="activate_btn"
+                      >
+                        Preview Demo
+                        <div className="icon">
+                          <VscOpenPreview />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="slide2_title">
+              <h2>Explore Our Range of Dynamic vCard Templates!</h2>
+              <p>
+                <strong>Simplify Your Digital Networking:</strong> Get Started
+                with Our vCard Templates
+              </p>
+
+              <div className="sample_title">
+                <div className="icon">
+                  <LiaThemeco />
+                </div>
+                <p>Sample VCard Theme's</p>
+              </div>
+            </div>
+            <div className="slider_5_nfc_container">
+              <div className="content_box">
+                <div className="left" >
+                  <div className="header">
+                    <h3>
+                    Features of Dynamic Vcard <span>Template</span>
+                    </h3>
+                  </div>
+                <div className="features_container">
+                  <div className="feauture">
+                    <div className="icon">
+                      <WiStars/>
+                    </div>
+                    <p>Advanced premium Features has been initiated on this Dynamic VCard Template.</p>
+                  </div>
+                  <div className="feauture">
+                    <div className="icon">
+                      <WiStars/>
+                    </div>
+                    <p>You can change your vcard theme color dynamically at any time no any other restriction for color changes it's fully unlimited to change over Vcard Theme.</p>
+                  </div>
+                  <div className="feauture">
+                    <div className="icon">
+                      <WiStars/>
+                    </div>
+                    <p>This Plan has been increased your memory storage to store your details more and secure.</p>
+                  </div>
+                  <div className="feauture">
+                    <div className="icon">
+                      <WiStars/>
+                    </div>
+                    <p>Our Dynamic VCard Template is fully responsive and compatible with all devices.</p>
+
+                  </div>
+
+                  <div className="feauture">
+                    <div className="icon">
+                      <WiStars/>
+                    </div>
+                    <p>
+                      You can change your Banner and Logo Image Width and Height..Especially Logo has 6 types of pre-default animation provided u have been choose your prefered one at any time.
+                    </p>
+
+                  </div>
+                  <div className="feauture">
+                  
+                   <button
+                    onClick={() => {
+                      scrollToSection(PricingRef);
                     }}
-                  /> */}
-                  <div className="count">10</div>
-                  <div className="content">VCard Templates</div>
-                </m.div>
-                <m.div
-                  className="design4"
-                  variants={right_slide_1Anime}
-                ></m.div>
-              </m.div>
-            </m.div>
-          </m.div>
-        </m.div>
+                   >
+                  
+                    View Plan
+                    <GiPayMoney style={{fontSize:'1.4rem'}}/>
+                   </button>
 
-        {/* Slide2 */}
-        <m.div className="slide_2_page" ref={TemplateRef}>
-          <m.div
-            className="title"
-            variants={title_slide_2Anime}
-            initial="hide"
-            animate="show"
-          >
-            <m.h2 variants={title_slide_2Anime}>
-              Explore Our Range of vCard Templates!
-            </m.h2>
-            <m.p variants={title_slide_2Anime}>
-              <strong>Simplify Your Digital Networking:</strong> Get Started
-              with Our vCard Templates
-            </m.p>
-          </m.div>
-
-          <m.div
-            className="slide_2_container"
-            ref={scrollContainerRef}
-            style={{
-              whiteSpace: "nowrap",
-
-              width: "100%",
-            }}
-            variants={vcard_slide_2Anime}
-            initial="hide"
-            animate="show"
-          >
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard1} alt="vcard" />
-            </m.div>
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard2} alt="vcard" />
-            </m.div>
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard3} alt="vcard" />
-            </m.div>
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard4} alt="vcard" />
-            </m.div>
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard5} alt="vcard" />
-            </m.div>
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard6} alt="vcard" />
-            </m.div>
-            <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard7} alt="vcard" />
-            </m.div>
-            {/* <m.div className="vcard" variants={vcard_slide_2Anime}>
-              <m.img src={vcard8} alt="vcard" />
-            </m.div> */}
-          </m.div>
-        </m.div>
-        {/* Slide_3 */}
-        <m.div className="slide_3_page" ref={FeatureRef}>
-          <m.div
-            className="slide_3_title"
-            variants={title_slide_3Anime}
-            initial="hide"
-            animate="show"
-          >
-            <m.div className="heading" variants={title_slide_3Anime}>
-              <m.h2>
+                  </div>
+                </div>
+                </div>
+                <div className="right_image">
+              <Slider {...vcard_settings}>
+                {Dynamic_VCards_images.map((data, index) => {
+                  return <img src={data} alt="image" key={index} />;
+                })}
+              </Slider>
+            </div>
+              </div>
+            </div>
+          </div>
+   
+          {/* Slide3 */}
+          <div className="slide3" ref={FeatureRef}>
+            <div className="slide3_title">
+              <h2>
+                {" "}
+                <BsFillRocketTakeoffFill className="icon" />
                 Premium Features by <span>VCard</span>
-              </m.h2>
-            </m.div>
-            <m.div className="description" variants={title_slide_3Anime}>
-              <m.p>
+              </h2>
+              <p>
                 Discover Innovation, Integration, and Inspiration with Our
                 Premium Features
-              </m.p>
-            </m.div>
-          </m.div>
-          <m.div
-            className="slide_3_container_box"
-            variants={box_slide_3Anime}
-            initial="hide"
-            animate="show"
-          >
-            <m.div className="box" variants={box_slide_3Anime}>
-              <div className="icon">
-                <img
-                  width="67"
-                  height="67"
-                  src="https://img.icons8.com/external-others-inmotus-design/67/external-Call-colored-others-inmotus-design-2.png"
-                  alt="external-Call-colored-others-inmotus-design-2"
-                />
-              </div>
-              <div className="content">
-                <h5>Click to Call Feature</h5>
-                <p>
-                  Connect Effortlessly - Your Clients Reach You with Just a Tap!
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box" variants={box_slide_3Anime}>
-              <div className="icon">
-                <img
-                  width="100"
-                  height="100"
-                  src="https://img.icons8.com/stickers/100/forward-arrow.png"
-                  alt="forward-arrow"
-                />
-              </div>
-              <div className="content">
-                <h5>Share Your vCard Seamlessly</h5>
-                <p>
-                  Effortlessly ShareYour Business Information via SMS, Email,
-                  and More.
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box" variants={box_slide_3Anime}>
-              <div className="icon">
-                <img
-                  width="48"
-                  height="48"
-                  src="https://img.icons8.com/color/48/qr-code--v1.png"
-                  alt="qr-code--v1"
-                />
-              </div>
-              <div className="content">
-                <h5>Scan and Share Your vCard</h5>
-                <p>
-                  Scan to Access, Share to Connect: Simplify Networking with QR
-                  Codes
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box" variants={box_slide_3Anime}>
-              <div className="icon">
-                <img
-                  width="48"
-                  height="48"
-                  src="https://img.icons8.com/color/48/dynamic-links.png"
-                  alt="dynamic-links"
-                />
-              </div>
-              <div className="content">
-                <h5>Social Media Links</h5>
-                <p>
-                  Your clients can connect with you on social media, and sharing
-                  your social link can also increase your business.
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box" variants={box_slide_3Anime}>
-              <div className="icon">
-                <img
-                  width="50"
-                  height="50"
-                  src="https://img.icons8.com/isometric/50/web-design.png"
-                  alt="web-design"
-                />
-              </div>
-              <div className="content">
-                <h5>Wide Range of Templates</h5>
-                <p>
-                  You can choose from a wide range of templates for your VCards
-                  and share them with your clients.
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box" variants={box_slide_3Anime}>
-              <div className="icon">
-                <img
-                  width="94"
-                  height="94"
-                  src="https://img.icons8.com/3d-fluency/94/price-tag-usd.png"
-                  alt="price-tag-usd"
-                />
-              </div>
-              <div className="content">
-                <h5>Afforadable Pricing</h5>
-                <p>
-                  We offer a variety of pricing plans for you to choose from,
-                  depending on your needs.
-                </p>
-              </div>
-            </m.div>
-          </m.div>
-        </m.div>
-        {/* slide_4 */}
-        <m.div className="slide_4_page">
-          <m.div
-            className="slide_4_title"
-            variants={title_slide_4Anime}
-            initial="hide"
-            animate="show"
-          >
-            <m.h2 variants={title_slide_4Anime}>
-              Create your perfect <span>VCards with us!</span>
-            </m.h2>
-          </m.div>
-          <m.div className="slide_4_container">
-            <m.div
-              className="row_1"
-              variants={left_cardShow_slide_4Anime}
+              </p>
+            </div>
+            <div
+              className="slide_3_container_box"
               initial="hide"
               animate="show"
             >
-              <m.div className="left" variants={left_cardShow_slide_4Anime}>
-                <img src={view1} alt="view" />
-              </m.div>
-              <m.div className="right" variants={right_cardShow_slide_4Anime}>
-                <h3>Your Style, Your Statement: Design Your vCard</h3>
-                <p>
-                  Empower your digital presence with ‘Your Identity, Your
-                  Influence, Your Digital Signature.’ Elevate your online
-                  persona with our customizable vCard solution, showcasing your
-                  brand, contact details, and expertise.
-                </p>
-              </m.div>
-            </m.div>
-            <m.div
-              className="row_2"
-              variants={left_cardShow_slide_4Anime}
-              initial="hide"
-              animate="show"
-            >
-              <m.div className="right" variants={left_cardShow_slide_4Anime}>
-                <h3>Unleash Your Digital Presence with Custom vCards</h3>
-                <p>
-                  Transform your first impression with our bespoke vCard
-                  templates, designed to leave a lasting impact. Explore a
-                  variety of personalized designs to confidently display your
-                  professional identity, all while reflecting your distinct
-                  style.
-                </p>
-              </m.div>
-              <m.div className="left" variants={right_cardShow_slide_4Anime}>
-                <m.img src={view2} alt="view" />
-              </m.div>
-            </m.div>
-            <m.div
-              className="row_3"
-              variants={right_cardShow_slide_4Anime}
-              initial="hide"
-              animate="show"
-            >
-              <m.div className="left" variants={left_cardShow_slide_4Anime}>
-                <img src={view3} alt="view" />
-              </m.div>
-              <m.div className="right" variants={right_cardShow_slide_4Anime}>
-                <h3>
-                  Refine Your Digital Persona with Our Customizable vCard
-                  Templates
-                </h3>
-                <p>
-                  Step into the limelight with our meticulously curated
-                  collection of vCard templates, tailored to elevate your
-                  digital identity. Select from a diverse range of designs that
-                  enable you to showcase your unique personality while upholding
-                  a polished and professional appearance.
-                </p>
-              </m.div>
-            </m.div>
-          </m.div>
-        </m.div>
-        {/* Slider_5 */}
-        <m.div className="slide_5_page" ref={NFCRef}>
-          <m.div
-            className="slide_5_title"
-            variants={title_slide_5Anime}
-            initial="hide"
-            animate="show"
-          >
-            <h2>
-              Making a vCard is easy with <span>My Virtual Card</span>
-            </h2>
-          </m.div>
-          <m.div
-            className="slide_5_box_container"
-            variants={numberBox_slide_5Anime}
-            initial="hide"
-            animate="show"
-          >
-            <m.div className="box_1" variants={numberBox_slide_5Anime}>
-              <div className="icon">
-                <img src={number1} alt="view" />
-              </div>
-              <div className="content">
-                <h3>Select Your Virtual Card Template</h3>
-                <p>
-                  Start with My Virtual Card's user-friendly maker. Enter your
-                  details for tailored designs or use keywords for a perfect
-                  fit.
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box_1" variants={numberBox_slide_5Anime}>
-              <div className="icon">
-                <img src={number2} alt="view" />
-              </div>
-              <div className="content">
-                <h3>Select Your Virtual Card Template</h3>
-                <p>
-                  Start with My Virtual Card's user-friendly maker. Enter your
-                  details for tailored designs or use keywords for a perfect
-                  fit.
-                </p>
-              </div>
-            </m.div>
-            <m.div className="box_1" variants={numberBox_slide_5Anime}>
-              <div className="icon">
-                <img src={number3} alt="view" />
-              </div>
-              <div className="content">
-                <h3>Select Your Virtual Card Template</h3>
-                <p>
-                  Start with My Virtual Card's user-friendly maker. Enter your
-                  details for tailored designs or use keywords for a perfect
-                  fit.
-                </p>
-              </div>
-            </m.div>
-          </m.div>
-          <m.div className="slider_5_nfc_container">
-            <m.div className="content_box">
-              <m.div
-                className="left"
-                variants={left_nfc_slide_5Anime}
-                initial="hide"
-                animate="show"
-              >
-                <m.div className="header" variants={left_nfc_slide_5Anime}>
-                  <h3>
-                    Tap Into Convenience: <span>NFC Cards</span>
-                  </h3>
-                </m.div>
-                <m.div className="sub_head" variants={left_nfc_slide_5Anime}>
-                  <strong>Tap, Connect, Go:</strong> NFC Cards for Modern
-                  Solutions
-                </m.div>
-                <m.div className="description" variants={left_nfc_slide_5Anime}>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/phone-ringing.png"
+                    alt="phone-ringing"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Click to Call Feature</h5>
                   <p>
-                    Tap into the potential of NFC technology with our Vcards!
-                    Share contact details seamlessly. Just tap, connect, and
-                    exchange info effortlessly. Say goodbye to traditional
-                    business cards and embrace the future of networking.
+                    Connect Effortlessly - Your Clients Reach You with Just a
+                    Tap!
                   </p>
-                </m.div>
-              </m.div>
-              <m.div
-                className="right"
-                variants={right_nfc_slide_5Anime}
-                initial="hide"
-                animate="show"
-              >
-                <m.img src={nfc} alt="nfc" />
-              </m.div>
-            </m.div>
-          </m.div>
-        </m.div>
-        {/* Plan */}
-
-        <m.div className="slide_6_page" ref={PricingRef}>
-          <m.div className="plan_heading" initial="hide" animate="show">
-            <m.h2 variants={plan_title_slide_6Anime}>
-              Select the <span>Perfect Plan</span> for You
-            </m.h2>
-            <m.p variants={plan_title_slide_6Anime}>
-              <strong>Your Plan, Your Way:</strong> Choose What Works Best
-            </m.p>
-          </m.div>
-
-          <m.div
-            className="plan_container_box"
-            variants={plan_box_slide_5Anime}
-            initial="hide"
-            animate="show"
-          >
-            {/* plan demo*/}
-            <m.div
-              className="plan"
-              variants={plan_box_slide_5Anime}
-              id={TrialExpand ? "expand" : "default"}
-            >
-              <m.div
-                className="down_arrow"
-                onClick={() => setTrialExpand(!TrialExpand)}
-              >
-                <i className="bx bxs-chevron-down bx-tada"></i>
-              </m.div>
-              <m.div className="plan_title">
-                <h3>FREE PLAN</h3>
-              </m.div>
-              <m.div className="plan_price">
-                <h2>
-                  ₹ 0 <small>30/day</small>
-                </h2>
-              </m.div>
-
-              <m.div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
-              </m.div>
-              <m.div className="card_count">
-                <p>
-                  Total VCard Provides : <span>01</span>
-                </p>
-              </m.div>
-              <m.div
-                className="plan_addon_service"
-                variants={plan_content_slide_5Anime}
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <m.div
-                      className="list"
-                      variants={plan_content_slide_5Anime}
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </m.div>
-                  );
-                })}
-              </m.div>
-            </m.div>
-            {/* plan1 */}
-            <m.div
-              className="plan"
-              variants={plan_box_slide_5Anime}
-              id={planExpand ? "expand" : "default"}
-            >
-              <m.div
-                className="down_arrow"
-                onClick={() => setPlanExpand(!planExpand)}
-              >
-                <i className="bx bxs-chevron-down bx-tada"></i>
-              </m.div>
-              <m.div className="plan_title">
-                <h3>BASIC PLAN</h3>
-              </m.div>
-              <m.div className="plan_price">
-                <h2>
-                  ₹ 599 <small>/Yearly</small>
-                </h2>
-              </m.div>
-
-              <m.div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
-              </m.div>
-              <m.div className="card_count">
-                <p>
-                  No of VCard Design's Provided : <span>03</span>
-                </p>
-              </m.div>
-              <m.div
-                className="plan_addon_service"
-                variants={plan_content_slide_5Anime}
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <m.div
-                      className="list"
-                      variants={plan_content_slide_5Anime}
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </m.div>
-                  );
-                })}
-              </m.div>
-            </m.div>
-            {/* plan2 */}
-            <m.div
-              className="plan"
-              variants={plan_box_slide_5Anime}
-              id={standardPlanExpand ? "expand" : "default"}
-            >
-              <div
-                className="down_arrow"
-                onClick={() => setStandardPlanExpand(!standardPlanExpand)}
-              >
-                <i className="bx bxs-chevron-down bx-tada"></i>
+                </div>
               </div>
-              <div className="plan_title">
-                <h3>STANDARD PLAN</h3>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/share.png"
+                    alt="share"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Share Your vCard Seamlessly</h5>
+                  <p>
+                    Effortlessly ShareYour Business Information via SMS, Email,
+                    and More.
+                  </p>
+                </div>
               </div>
-              <div className="plan_price">
-                <h2>
-                  ₹ 899 <small>/Yearly</small>
-                </h2>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/search.png"
+                    alt="search"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Scan and Share Your vCard</h5>
+                  <p>
+                    Scan to Access, Share to Connect: Simplify Networking with
+                    QR Codes
+                  </p>
+                </div>
               </div>
-
-              <div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/external-link-squared.png"
+                    alt="external-link-squared"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Social Media Links</h5>
+                  <p>
+                    Your clients can connect with you on social media, and
+                    sharing your social link can also increase your business.
+                  </p>
+                </div>
               </div>
-              <div className="card_count">
-                <p>
-                  No of VCard Design's Provided : <span>06</span>
-                </p>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/web.png"
+                    alt="web"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Wide Range of Templates</h5>
+                  <p>
+                    You can choose from a wide range of templates for your
+                    VCards and share them with your clients.
+                  </p>
+                </div>
               </div>
-              <m.div
-                className="plan_addon_service"
-                variants={plan_content_slide_5Anime}
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <m.div
-                      className="list"
-                      variants={plan_content_slide_5Anime}
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </m.div>
-                  );
-                })}
-              </m.div>
-            </m.div>
-            {/* plan3 */}
-            <m.div
-              className="plan"
-              variants={plan_box_slide_5Anime}
-              id={PremiumPlanExpand ? "expand" : "default"}
-            >
-              <div
-                className="down_arrow"
-                onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
-              >
-                <i className="bx bxs-chevron-down bx-tada"></i>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/low-price.png"
+                    alt="low-price"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Afforadable Pricing</h5>
+                  <p>
+                    We offer a variety of pricing plans for you to choose from,
+                    depending on your needs.
+                  </p>
+                </div>
               </div>
-              <div className="plan_title">
-                <h3>PREMIUM PLAN</h3>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="128"
+                    height="128"
+                    src="https://img.icons8.com/cute-clipart/128/edit.png"
+                    alt="edit"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Easy To Update</h5>
+                  <p>
+                    You can update your details as and when you want to change
+                    unlimited times.
+                  </p>
+                </div>
               </div>
-              <div className="plan_price">
-                <h2>
-                  ₹ 1499 <small>/Yearly</small>
-                </h2>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/survey.png"
+                    alt="survey"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Review & Ratting</h5>
+                  <p>
+                    Anyone can give feedback about your organization and rate
+                    out of 5 stars and others can see on the cards.
+                  </p>
+                </div>
               </div>
-
-              <div className="plan_action">
-                <Link to="/register">
-                  <button>Choose Plan</button>
-                </Link>
+              <div className="box">
+                <div className="icon">
+                  <img
+                    width="64"
+                    height="64"
+                    src="https://img.icons8.com/cute-clipart/64/form.png"
+                    alt="form"
+                  />
+                </div>
+                <div className="content">
+                  <h5>Enquiry Form</h5>
+                  <p>
+                    Our Card can help to capture leads with enquiry form. You
+                    will Chekout your dashboard notification for each enquiry.
+                  </p>
+                </div>
               </div>
-              <div className="card_count">
-                <p>
-                  No of VCard Design's Provided : <span>08</span>
-                </p>
-              </div>
-              <m.div
-                className="plan_addon_service"
-                variants={plan_content_slide_5Anime}
-                initial="hide"
-                animate="show"
-              >
-                {plan_service_list.map((data, index) => {
-                  return (
-                    <m.div
-                      className="list"
-                      variants={plan_content_slide_5Anime}
-                      key={index}
-                    >
-                      <div className="icon">{data.icon}</div>
-                      <div className="text">
-                        <p>{data.text}</p>
-                      </div>
-                    </m.div>
-                  );
-                })}
-              </m.div>
-            </m.div>
-          </m.div>
-        </m.div>
-
-        {/* Questions */}
-        <m.div
-          className="slide_7_page"
-          initial="hide"
-          animate="show"
-          ref={FAQRef}
-        >
-          <m.div className="slide_7_title">
-            <m.h2 variants={title_slide_7Anime}>
-              Frequently Asked <span>Questions</span>
-            </m.h2>
-          </m.div>
-          <m.div className="sub_heading" variants={title_slide_7Anime}>
-            <p>Got Questions? We’ve Got Answers!</p>
-          </m.div>
-          <div className="selection_actions">
-            <button className="multi" onClick={handleMultipleToggle}>
-              {multiQnToggle
-                ? "Enable Single Selection"
-                : "Enable Multi Selection"}
-            </button>
+            </div>
           </div>
-          <m.div
-            className="qn_container_box"
-            variants={qn_slide_7Anime}
-            initial="hide"
-            whileTap="show"
-          >
-            {/* qn */}
-            {questions.map((data, index) => {
-              return (
-                <m.div
-                  className="question_box"
-                  variants={qn_slide_7Anime}
-                  id={
-                    selectedQn === data.id
-                      ? "showAnswer"
-                      : "hideAnswer" && multiSelected !== data.id
-                      ? "showMultipleAnswer"
-                      : "hideMultipleAnswer"
-                  }
-                  key={index}
-                >
-                  <m.div className="question">
-                    <h5>{data.question}</h5>
-                    {selectedQn != data.id ? (
-                      <div
-                        className="plus"
-                        onClick={
-                          multiQnToggle
-                            ? () => {
-                                handleMultipleSelection(data.id);
-                              }
-                            : () => handleSingleSelection(data.id)
-                        }
-                      >
-                        {data.plus}
-                      </div>
-                    ) : (
-                      <div
-                        className="minus"
-                        onClick={
-                          multiQnToggle
-                            ? () => {
-                                handleMultipleSelection(data.id);
-                              }
-                            : () => handleSingleSelection(data.id)
-                        }
-                      >
-                        {data.minus}
-                      </div>
-                    )}
-                  </m.div>
-                  <m.div className="answer">
-                    {multiQnToggle
-                      ? multiSelected.indexOf(data.id) !== -1 && (
-                          <small>{data.answer}</small>
-                        )
-                      : selectedQn === data.id && <small>{data.answer}</small>}
-                    {/* {selectedQn === data.id || multiSelected.indexOf(data.id) !== -1 ? <small>{data.answer}</small> : ""} */}
-                  </m.div>
-                </m.div>
-              );
-            })}
-          </m.div>
-        </m.div>
-
-        {/* get_intouch */}
-        <m.div className="slide_8_page" ref={ContactRef}>
-          <m.div className="getin_touch_container_box">
-            <m.div
-              className="left"
-              variants={form_left_slide_8Anime}
+          {/* Slide4`` */}
+          <div className="slide4" ref={NFCRef}>
+            <div className="slide4_title">
+              <h2>
+                {" "}
+                <IoIosCreate className="icon" />
+                Create your perfect VCards with us!
+              </h2>
+              <p>
+                Develop Your Brand Profit and Increase customer trafic by our
+                VCard Designs..
+              </p>
+            </div>
+            <div
+              className="slide_4_container_box"
               initial="hide"
               animate="show"
             >
-              <m.div className="title" variants={form_left_slide_8Anime}>
-                <h4>Get In Touch !</h4>
-              </m.div>
-              <m.div className="list" variants={form_left_slide_8Anime}>
-                <i className="bx bx-current-location"></i>
-                <m.p variants={form_left_slide_8Anime}>
-                  {" "}
-                  First Floor No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar,
-                  Chennai, India, Tamil Nadu 600017
-                </m.p>
-              </m.div>
-              <m.div className="list" variants={form_left_slide_8Anime}>
-                <i className="bx bx-mail-send"></i>
-                <p>contact@aristostechindia.com</p>
-              </m.div>
-              <m.div className="list" variants={form_left_slide_8Anime}>
-                <i className="bx bxs-phone-call"></i>
-                <p>+91 9344482370</p>
-              </m.div>
-            </m.div>
-            <m.div className="right" variants={form_left_slide_8Anime}>
-              <m.div className="form_box" variants={form_left_slide_8Anime}>
-                <m.form action="" variants={form_left_slide_8Anime}>
-                  <div className="form_group double">
-                    <input type="text" placeholder="Enter Your Name" />
+              <div className="box">
+                <div className="image">
+                  <img src={view1} alt="view" />
+                </div>
+                <div className="content">
+                  <h5>Your Style, Your Statement: Design Your vCard</h5>
+                  <p>
+                    Empower your digital presence with ‘Your Identity, Your
+                    Influence, Your Digital Signature.’ Elevate your online
+                    persona with our customizable vCard solution, showcasing
+                    your brand, contact details, and expertise.
+                  </p>
+                </div>
+              </div>
+              <div className="box">
+                <div className="image">
+                  <img src={view2} alt="view" />
+                </div>
+                <div className="content">
+                  <h5>Your Style, Your Statement: Design Your vCard</h5>
+                  <p>
+                    Empower your digital presence with ‘Your Identity, Your
+                    Influence, Your Digital Signature.’ Elevate your online
+                    persona with our customizable vCard solution, showcasing
+                    your brand, contact details, and expertise.
+                  </p>
+                </div>
+              </div>
+              <div className="box">
+                <div className="image">
+                  <img src={view3} alt="view" />
+                </div>
+                <div className="content">
+                  <h5>Your Style, Your Statement: Design Your vCard</h5>
+                  <p>
+                    Empower your digital presence with ‘Your Identity, Your
+                    Influence, Your Digital Signature.’ Elevate your online
+                    persona with our customizable vCard solution, showcasing
+                    your brand, contact details, and expertise.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Slider_5 */}
+          <div className="slide_5_page">
+            <div className="slide_5_title" initial="hide" animate="show">
+              <h2>
+                Making a vCard is easy with <span>My Virtual Card</span>
+              </h2>
+            </div>
+            <div
+              className="slide_5_box_container"
+              initial="hide"
+              animate="show"
+            >
+              <div className="box_1">
+                <div className="icon">
+                  <img src={number1} alt="view" />
+                </div>
+                <div className="content">
+                  <h3>Create your Card</h3>
+                  <p>
+                    Create your digital visiting card via MyVirtualCard, which
+                    takes just a 2 minutes
+                  </p>
+                </div>
+              </div>
+              <div className="box_1">
+                <div className="icon">
+                  <img src={number2} alt="view" />
+                </div>
+                <div className="content">
+                  <h3>Add Your Product/Services</h3>
+                  <p>
+                    Open Your Dasboard And List The Your Featured
+                    Product/Services
+                  </p>
+                </div>
+              </div>
+              <div className="box_1">
+                <div className="icon">
+                  <img src={number3} alt="view" />
+                </div>
+                <div className="content">
+                  <h3>Share With Your Customer With One Click</h3>
+                  <p>
+                    Engage With Your Customers Through <br />
+                    MyVirtualCard.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="slider_5_nfc_container">
+              <div className="content_box">
+                <div className="left" initial="hide" animate="show">
+                  <div className="header">
+                    <h3>
+                      Tap Into Convenience: <span>NFC Cards</span>
+                    </h3>
                   </div>
-                  <div className="form_group">
-                    <input type="email" placeholder="Enter Your Email" />
+                  <div className="sub_head">
+                    <strong>Tap, Connect, Go:</strong> NFC Cards for Modern
+                    Solutions
                   </div>
-                  <div className="form_group subject">
-                    <input type="email" placeholder="Enter Subject" />
+                  <div className="description">
+                    <p>
+                      Tap into the potential of NFC technology with our Vcards!
+                      Share contact details seamlessly. Just tap, connect, and
+                      exchange info effortlessly. Say goodbye to traditional
+                      business cards and embrace the future of networking.
+                    </p>
                   </div>
-                  <div className="message">
-                    <textarea
-                      name="message"
-                      id=""
-                      cols="30"
-                      rows="5"
-                      placeholder="Enter Your Message"
-                    ></textarea>
+                </div>
+                <div className="right" initial="hide" animate="show">
+                  <img src={nfc} alt="nfc" />
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Slide6 */}
+          <div className="slide_6_page" ref={PricingRef}>
+            <div className="plan_heading" initial="hide" animate="show">
+              <h1>
+                <FaRupeeSign className="icon" />
+                MyVirtualCard Pricing
+              </h1>
+              <h2>
+                Select the <span>Perfect Plan</span> for You
+              </h2>
+              {/* <p>
+                <strong>Your Plan, Your Way:</strong> Choose What Works Best
+              </p> */}
+            </div>
+
+            <div className="plan_container_box" initial="hide" animate="show">
+              {/* plan demo*/}
+              {/* <div className="plan" id={TrialExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setTrialExpand(!TrialExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>FREE PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 0 <small>30/day</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    Total VCard Provides : <span>01</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div> */}
+              {/* plan1 */}
+              <div className="plan" id={planExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setPlanExpand(!planExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>BASIC PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <div className="actual">
+                    <h2>
+                      Actual Price <strong>₹ 999 <small>/Yearly</small></strong>
+                    </h2>
                   </div>
 
-                  <div className="form_submit">
-                    <button>Send Message</button>
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                     Offer Price <strong>₹ 599 <small>/Yearly</small></strong>
+                    </h2>
                   </div>
-                </m.form>
-              </m.div>
-            </m.div>
-          </m.div>
-        </m.div>
-        {/* Footer */}
-        <div className="footer">
-          <div className="company">
-            <p>Group of AristosTech India Pvt Ltd</p>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  {/* <p>
+                    No of VCard Design's Provided : <span>08</span>
+                  </p> */}
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* plan2 */}
+              {/* <div
+                className="plan"
+                id={standardPlanExpand ? "expand" : "default"}
+              >
+                <div
+                  className="down_arrow"
+                  onClick={() => setStandardPlanExpand(!standardPlanExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>STANDARD PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 899 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>06</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div> */}
+              {/* plan3 */}
+              {/* <div
+                className="plan"
+                id={PremiumPlanExpand ? "expand" : "default"}
+              >
+                <div
+                  className="down_arrow"
+                  onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>PREMIUM PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 1299 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>08</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div> */}
+            </div>
           </div>
-          <div className="aggrement">
-            <Link to="/terms_condition">
-              <p>Terms & Condition</p>
-            </Link>
-            <Link to="/privacy_condition">
-              <p>Privacy Policy</p>
-            </Link>
+
+          {/* OurService */}
+          <div className="Our_Service_Slide" ref={OurServiceRef}>
+            <div className="slide1_1_title">
+              <div className="sample_title">
+                <div className="icon">
+                  <MdHomeRepairService />
+                </div>
+                <p>Our Services</p>
+              </div>
+              <h2>
+                We Offers Web Designing , Full Stack Application , ECommerse
+                Site & Digital Vcard At Affordable Price
+              </h2>
+            </div>
+            <div
+              className="slide_1_1_container_box"
+              initial="hide"
+              animate="show"
+            >
+              <div className="box">
+                <div className="content">
+                  <h5>Web Design & Development</h5>
+                  <p>
+                    We help you build an intercative & mobile responsive webiste
+                    for your business. it helps to get more visitors and
+                    promotes your business 24/7
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
+              </div>
+              <div className="box">
+                <div className="content">
+                  <h5>Backend Application With Authenitications </h5>
+                  <p>
+                    We help you build an secure data Collection & mobile
+                    responsive webiste for your business. it helps to get more
+                    visitors and promotes your business 24/7
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
+              </div>
+              <div className="box">
+                <div className="content">
+                  <h5>Digital VCard Site</h5>
+                  <p>
+                    Our digital visiting card helpes to share your business
+                    products and details with your customers and business
+                    friends. Pricing starts from ₹599
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Questions */}
+          <div
+            className="slide_7_page"
+            initial="hide"
+            animate="show"
+            ref={FAQRef}
+          >
+            <div className="slide_7_title">
+              <h2>
+                Frequently Asked <span>Questions</span>
+              </h2>
+            </div>
+            <div className="sub_heading">
+              <p>Got Questions? We’ve Got Answers!</p>
+            </div>
+            <div className="selection_actions">
+              <button className="multi" onClick={handleMultipleToggle}>
+                {multiQnToggle
+                  ? "Enable Single Selection"
+                  : "Enable Multi Selection"}
+              </button>
+            </div>
+            <div className="qn_container_box" initial="hide" >
+              {/* qn */}
+              {questions.map((data, index) => {
+                return (
+                  <div
+                    className="question_box"
+                    id={
+                      selectedQn === data.id
+                        ? "showAnswer"
+                        : "hideAnswer" && multiSelected !== data.id
+                        ? "showMultipleAnswer"
+                        : "hideMultipleAnswer"
+                    }
+                    key={index}
+                  >
+                    <div className="question">
+                      <h5>{data.question}</h5>
+                      {selectedQn != data.id ? (
+                        <div
+                          className="plus"
+                          onClick={
+                            multiQnToggle
+                              ? () => {
+                                  handleMultipleSelection(data.id);
+                                }
+                              : () => handleSingleSelection(data.id)
+                          }
+                        >
+                          {data.plus}
+                        </div>
+                      ) : (
+                        <div
+                          className="minus"
+                          onClick={
+                            multiQnToggle
+                              ? () => {
+                                  handleMultipleSelection(data.id);
+                                }
+                              : () => handleSingleSelection(data.id)
+                          }
+                        >
+                          {data.minus}
+                        </div>
+                      )}
+                    </div>
+                    <div className="answer">
+                      {multiQnToggle
+                        ? multiSelected.indexOf(data.id) !== -1 && (
+                            <small>{data.answer}</small>
+                          )
+                        : selectedQn === data.id && (
+                            <small>{data.answer}</small>
+                          )}
+                      {/* {selectedQn === data.id || multiSelected.indexOf(data.id) !== -1 ? <small>{data.answer}</small> : ""} */}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {/* Footer */}
+
+          <div className="footer">
+            <div className="company">
+              <p>
+                Group Of Aristostech India Pvt Limited &copy;Copyright 2024 -
+                All Rights Reserved.
+              </p>
+              {/* <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+
+              <small>
+                <strong>Call</strong> : +91 9344482370 &nbsp;{" "}
+                <strong>Mail</strong> :contact@aristostechindia.com
+              </small> */}
+            </div>
+            <div className="aggrement">
+              <Link to="/terms_condition">
+                <p>Terms & Condition</p>
+              </Link>
+              <Link to="/privacy_condition">
+                <p>Privacy Policy</p>
+              </Link>
+            </div>
           </div>
         </div>
-      </m.div>
+      </div>
     </>
   );
 };

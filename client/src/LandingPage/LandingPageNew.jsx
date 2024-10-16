@@ -2,12 +2,9 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import "./LandingPageNew.scss";
 import Brand_Logo from "../assets/Landing_Page/view/BrandLogo2.png";
 import Brand_Logo1 from "../assets/Landing_Page/view/BrandLogo.png";
-import backImage from "../assets/Landing_Page/back_image1.png";
-import slide1banner from "../assets/Landing_Page/view/slide1_banner2.png";
-import slide2banner from "../assets/Landing_Page/view/slide1_banner1.png";
-import slide3banner from "../assets/Landing_Page/view/slide1_banner3.png";
-import slide4banner from "../assets/Landing_Page/view/slide1_banner4.png";
-import slide5banner from "../assets/Landing_Page/view/slide1_banner5.png";
+import backImage from "../assets/Landing_Page/back_image.png";
+import slide1banner from "../assets/Landing_Page/view/slide1_right_image.png";
+
 import vcard1 from "../assets/Landing_Page/VCard_Designs/GYM.png";
 import vcard2 from "../assets/Landing_Page/VCard_Designs/FASHION.png";
 import vcard3 from "../assets/Landing_Page/VCard_Designs/MANAGER.png";
@@ -43,14 +40,26 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from "react-icons/fa";
-import { FaHandPointRight } from "react-icons/fa";
+
 import { Link, NavLink } from "react-router-dom";
+//Image right Slider
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import {
+  Dynamic_VCards_images,
+  VCards_images,
+} from "./Vcard_Images/Vcard_Images";
+import { LiaThemeco } from "react-icons/lia";
+import { GiPayMoney } from "react-icons/gi";
+import { FaHandPointRight } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { CiLogin } from "react-icons/ci";
 import { GrUserNew } from "react-icons/gr";
 import { TbBrand4Chan } from "react-icons/tb";
+import { WiStars } from "react-icons/wi";
 import Context from "../Context/GlobalContext";
-import {Helmet} from 'react-helmet';
+import { Helmet } from "react-helmet";
 const LandingPageNew = () => {
   let { user, userName } = useContext(Context);
   const scrollContainerRef = useRef(null);
@@ -75,29 +84,25 @@ const LandingPageNew = () => {
       behavior: "smooth",
     });
   };
+  const [width, setWidth] = useState(window.innerWidth);
+
+  //VCard Slider
+  const vcard_settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 2,
+    slidesToScroll: width < 700 ? 1 : 2,
+    ltr: true, // Scroll from left to right
+    arrows: false, // Show navigation arrows
+  };
   useEffect(() => {
     setTimeout(() => {
       setImageToggle(!ImageToggle);
     }, 5000);
   });
-  let vcardImages = [
-    slide1banner,
-    slide2banner,
-    slide3banner,
-    slide4banner,
-    slide5banner,
-  ];
-  let [currentIndex, setCurrentIndex] = useState(0);
-  useEffect(() => {
-    if (currentIndex < vcardImages.length) {
-      setTimeout(() => {
-        return setCurrentIndex((pre) => pre + 1);
-      }, 5000);
-    }
-    if (currentIndex >= vcardImages.length) {
-      return setCurrentIndex(0);
-    }
-  }, [currentIndex]);
   // Template List
   let TemplateList = [
     {
@@ -174,66 +179,66 @@ const LandingPageNew = () => {
     },
   ];
   //PLan list
-  let plan_service_list = [
+  let static_plan_service_list = [
+    {
+      id: 0,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Different Kind Of Static VCard Template Design's",
+    },
     {
       id: 1,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Basic Information",
+      text: "Basic Information about Your Company and your professional",
     },
     {
       id: 2,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Social Media",
+      text: "Add all your social media link by one click user can connect easily ",
     },
     {
       id: 3,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Contact Details",
+      text: "All your Contact Details to showcase like Location , MobileNumber,Mail and Website Link. ",
     },
     {
       id: 4,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Services",
+      text: "Share Your all services u has allowed to insert max 5-service's to add on this package.",
     },
     {
       id: 5,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Products",
+      text: "Share Your all products u has allowed to insert max 5-product's and price aswell.",
     },
     {
       id: 6,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Appoinment",
+      text: "Once user have direct meetup Appoinment shedule by one click ",
     },
     {
       id: 7,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Add to Contact",
-    },
-    {
-      id: 8,
-      icon: <i className="bx bxs-check-shield"></i>,
-      text: "Blog",
+      text: "Add to Contact by saving your contact detail quickly",
     },
     {
       id: 9,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Gallery",
+      text: "Post Your gallery u have allowed to insert max 5-Images",
     },
     {
       id: 10,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Testimonials",
+      text: "Client feedback to showcase by Testimonial view",
     },
     {
       id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Feedback Form",
+      text: "User have any feedback about your company just one click by Feedback Form ",
     },
     {
       id: 12,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Inquiry Form",
+      text: "User have any Inquiry about your company just one click by Inquiry Form ",
     },
     {
       id: 13,
@@ -241,17 +246,83 @@ const LandingPageNew = () => {
       text: "Dynamic Styling",
     },
     {
-      id: 14,
-      icon: <i className="bx bxs-shield-x"></i>,
-      text: "IFrame",
-    },
-    {
       id: 15,
       icon: <i className="bx bxs-shield-x"></i>,
       text: "Custom QRCode",
     },
   ];
-
+  let dynamic_plan_service_list = [
+    {
+      id: 0,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Dynamic VCard Template Design",
+    },
+    {
+      id: 1,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Basic Information about Your Company and your professional",
+    },
+    {
+      id: 2,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Add all your social media link by one click user can connect easily ",
+    },
+    {
+      id: 3,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "All your Contact Details to showcase like Location , MobileNumber,Mail and Website Link. ",
+    },
+    {
+      id: 4,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Share Your all services u has allowed to insert max 8-service's to add on this package.",
+    },
+    {
+      id: 5,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Share Your all products u has allowed to insert max 8-product's and price aswell.",
+    },
+    {
+      id: 6,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Once user have direct meetup Appoinment shedule by one click ",
+    },
+    {
+      id: 7,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Add to Contact by saving your contact detail quickly",
+    },
+    {
+      id: 9,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Post Your gallery u have allowed to insert max 8-Images",
+    },
+    {
+      id: 10,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Client feedback to showcase by Testimonial view",
+    },
+    {
+      id: 11,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "User have any feedback about your company just one click by Feedback Form ",
+    },
+    {
+      id: 12,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "User have any Inquiry about your company just one click by Inquiry Form ",
+    },
+    {
+      id: 13,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Dynamic Styling change your Vcard Design at anytime",
+    },
+    {
+      id: 15,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "QRCode Scan and Navigate your Website",
+    },
+  ];
   let questions = [
     {
       id: 1,
@@ -671,10 +742,10 @@ const LandingPageNew = () => {
                 </h3>
                 <h4>Introducing Custom vCards</h4>
               </div>
-              <img src={vcardImages[currentIndex]} alt="banner" />
+              <img src={slide1banner} alt="banner" />
             </div>
           </div>
-          {/* Slide2 */}
+          {/* Static Vcard Container */}
 
           <div className="slide2" ref={TemplateRef}>
             <div className="slide2_title">
@@ -727,73 +798,384 @@ const LandingPageNew = () => {
               })}
             </div>
           </div>
-          {/* Slide1.1 */}
-          {/* <div className="slide1_1">
-            <div className="slide1_1_title">
+
+          {/* Plan Container */}
+          <div className="slide_6_page" ref={PricingRef}>
+            <div className="plan_heading" initial="hide" animate="show">
+              <h1>
+                <FaRupeeSign className="icon" />
+                MyVirtualCard Pricing
+              </h1>
+              <h2>
+                Select the <span>Perfect Plan</span> for You
+              </h2>
+              {/* <p>
+                <strong>Your Plan, Your Way:</strong> Choose What Works Best
+              </p> */}
+            </div>
+
+            <div className="plan_container_box" initial="hide" animate="show">
+              {/* plan demo*/}
+              {/* <div className="plan" id={TrialExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setTrialExpand(!TrialExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>FREE PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 0 <small>30/day</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    Total VCard Provides : <span>01</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {static_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div> */}
+              {/* plan1 */}
+              <div className="plan" id={planExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setPlanExpand(!planExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>BASIC PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <div className="actual">
+                    <h2>
+                      Actual Price{" "}
+                      <strong>
+                        ₹ 999 <small>/Yearly</small>
+                      </strong>
+                    </h2>
+                  </div>
+
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                      Offer Price{" "}
+                      <strong>
+                        ₹ 599 <small>/Yearly</small>
+                      </strong>
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  {/* <p>
+                    No of VCard Design's Provided : <span>08</span>
+                  </p> */}
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {static_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="plan2" id={planExpand ? "expand" : "default"}>
+                <div
+                  className="down_arrow"
+                  onClick={() => setPlanExpand(!planExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>ENTERPRICE PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <div className="actual">
+                    <h2>
+                      Actual Price{" "}
+                      <strong>
+                        ₹ 2499 <small>/Yearly</small>
+                      </strong>
+                    </h2>
+                  </div>
+
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                      Offer Price{" "}
+                      <strong>
+                        ₹ 1499 <small>/Yearly</small>
+                      </strong>
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  {/* <p>
+                    No of VCard Design's Provided : <span>08</span>
+                  </p> */}
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {dynamic_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* plan2 */}
+              {/* <div
+                className="plan"
+                id={standardPlanExpand ? "expand" : "default"}
+              >
+                <div
+                  className="down_arrow"
+                  onClick={() => setStandardPlanExpand(!standardPlanExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>STANDARD PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 899 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>06</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {static_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div> */}
+              {/* plan3 */}
+              {/* <div
+                className="plan"
+                id={PremiumPlanExpand ? "expand" : "default"}
+              >
+                <div
+                  className="down_arrow"
+                  onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
+                >
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>PREMIUM PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <h2>
+                    ₹ 1299 <small>/Yearly</small>
+                  </h2>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Choose Plan</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  <p>
+                    No of VCard Design's Provided : <span>08</span>
+                  </p>
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {static_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">{data.icon}</div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div> */}
+            </div>
+          </div>
+          {/* Dynamic Vcard Container */}
+
+          <div className="slide2" ref={TemplateRef}>
+            <div className="slide2_title">
+              <h2>Explore Our Range of Dynamic vCard Template!</h2>
+              <p>
+                <strong>Simplify Your Digital Networking:</strong> Get Started
+                with Our VCard Template
+              </p>
+
               <div className="sample_title">
                 <div className="icon">
-                  <HiLightBulb />
+                  <LiaThemeco />
                 </div>
-                <p>How it Works.?</p>
-              </div>
-              <h2>How MyVirtualCard Helps Your Business</h2>
-            </div>
-            <div
-              className="slide_1_1_container_box"
-              initial="hide"
-              animate="show"
-            >
-              <div className="box">
-                <div className="image">
-                  <img
-                    width="100"
-                    height="100"
-                    src="https://img.icons8.com/bubbles/100/touchscreen-smartphone.png"
-                    alt="touchscreen-smartphone"
-                  />
-                </div>
-                <div className="content">
-                  <h5>Create your Card</h5>
-                  <p>
-                    Create your digital visiting card via MyVirtualCard, which
-                    takes just a 2 minutes
-                  </p>
-                </div>
-              </div>
-              <div className="box">
-                <div className="image">
-                  <img
-                    width="100"
-                    height="100"
-                    src="https://img.icons8.com/bubbles/100/package-delivery-logistics.png"
-                    alt="package-delivery-logistics"
-                  />
-                </div>
-                <div className="content">
-                  <h5>Add Your Product/Services</h5>
-                  <p>
-                    Open Your Dasboard And List The Your Featured
-                    Product/Services
-                  </p>
-                </div>
-              </div>
-              <div className="box">
-                <div className="image">
-                  <img
-                    width="100"
-                    height="100"
-                    src="https://img.icons8.com/bubbles/100/share.png"
-                    alt="share"
-                  />
-                </div>
-                <div className="content">
-                  <h5>Share With Your Customer With One Click</h5>
-                  <p>Engage With Your Customers Through Miki Vcard</p>
-                </div>
+                <p>Sample VCard Theme's</p>
               </div>
             </div>
-          </div> */}
+            <div className="slider_5_nfc_container">
+              <div className="content_box">
+                <div className="left">
+                  <div className="header">
+                    <h3>
+                      Features of Dynamic Vcard <span>Template</span>
+                    </h3>
+                  </div>
+                  <div className="features_container">
+                    <div className="feauture">
+                      <div className="icon">
+                        <WiStars />
+                      </div>
+                      <p>
+                        Advanced premium Features has been initiated on this
+                        Dynamic VCard Template.
+                      </p>
+                    </div>
+                    <div className="feauture">
+                      <div className="icon">
+                        <WiStars />
+                      </div>
+                      <p>
+                        You can change your vcard theme color dynamically at any
+                        time no any other restriction for color changes it's
+                        fully unlimited to change over Vcard Theme.
+                      </p>
+                    </div>
+                    <div className="feauture">
+                      <div className="icon">
+                        <WiStars />
+                      </div>
+                      <p>
+                        This Plan has been increased your memory storage to
+                        store your details more and secure.
+                      </p>
+                    </div>
+                    <div className="feauture">
+                      <div className="icon">
+                        <WiStars />
+                      </div>
+                      <p>
+                        Our Dynamic VCard Template is fully responsive and
+                        compatible with all devices.
+                      </p>
+                    </div>
 
+                    <div className="feauture">
+                      <div className="icon">
+                        <WiStars />
+                      </div>
+                      <p>
+                        You can change your Banner and Logo Image Width and
+                        Height..Especially Logo has 6 types of pre-default
+                        animation provided u have been choose your prefered one
+                        at any time.
+                      </p>
+                    </div>
+                    <div className="feauture">
+                      {user === null ? (
+                        <Link to="/register">
+                          Let's Build{" "}
+                          <TbBrand4Chan className="icon" />
+                        </Link>
+                      ) : (
+                        <Link to={`/${user.userName}/uadmin/VCards`}>
+                          Edit Now <TbBrand4Chan className="icon" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="right_image">
+                  <Slider {...vcard_settings}>
+                    {Dynamic_VCards_images.map((data, index) => {
+                      return <img src={data} alt="image" key={index} />;
+                    })}
+                  </Slider>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* Slide3 */}
           <div className="slide3" ref={FeatureRef}>
             <div className="slide3_title">
@@ -968,7 +1350,7 @@ const LandingPageNew = () => {
             </div>
           </div>
           {/* Slide4`` */}
-          <div className="slide4" ref={NFCRef}>
+   <div className="slide4" ref={NFCRef}>
             <div className="slide4_title">
               <h2>
                 {" "}
@@ -1103,219 +1485,6 @@ const LandingPageNew = () => {
                   <img src={nfc} alt="nfc" />
                 </div>
               </div>
-            </div>
-          </div>
-          {/* Slide6 */}
-          <div className="slide_6_page" ref={PricingRef}>
-            <div className="plan_heading" initial="hide" animate="show">
-              <h1>
-                <FaRupeeSign className="icon" />
-                MyVirtualCard Pricing
-              </h1>
-              <h2>
-                Select the <span>Perfect Plan</span> for You
-              </h2>
-              {/* <p>
-                <strong>Your Plan, Your Way:</strong> Choose What Works Best
-              </p> */}
-            </div>
-
-            <div className="plan_container_box" initial="hide" animate="show">
-              {/* plan demo*/}
-              {/* <div className="plan" id={TrialExpand ? "expand" : "default"}>
-                <div
-                  className="down_arrow"
-                  onClick={() => setTrialExpand(!TrialExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>FREE PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ 0 <small>30/day</small>
-                  </h2>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  <p>
-                    Total VCard Provides : <span>01</span>
-                  </p>
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div> */}
-              {/* plan1 */}
-              <div className="plan" id={planExpand ? "expand" : "default"}>
-                <div
-                  className="down_arrow"
-                  onClick={() => setPlanExpand(!planExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>BASIC PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <div className="actual">
-                    <h2>
-                      Actual Price <strong>₹ 999 <small>/Yearly</small></strong>
-                    </h2>
-                  </div>
-
-                  <span>|</span>
-                  <div className="offer">
-                    <h2>
-                     Offer Price <strong>₹ 599 <small>/Yearly</small></strong>
-                    </h2>
-                  </div>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  {/* <p>
-                    No of VCard Design's Provided : <span>08</span>
-                  </p> */}
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              {/* plan2 */}
-              {/* <div
-                className="plan"
-                id={standardPlanExpand ? "expand" : "default"}
-              >
-                <div
-                  className="down_arrow"
-                  onClick={() => setStandardPlanExpand(!standardPlanExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>STANDARD PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ 899 <small>/Yearly</small>
-                  </h2>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCard Design's Provided : <span>06</span>
-                  </p>
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div> */}
-              {/* plan3 */}
-              {/* <div
-                className="plan"
-                id={PremiumPlanExpand ? "expand" : "default"}
-              >
-                <div
-                  className="down_arrow"
-                  onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>PREMIUM PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ 1299 <small>/Yearly</small>
-                  </h2>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCard Design's Provided : <span>08</span>
-                  </p>
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div> */}
             </div>
           </div>
 
