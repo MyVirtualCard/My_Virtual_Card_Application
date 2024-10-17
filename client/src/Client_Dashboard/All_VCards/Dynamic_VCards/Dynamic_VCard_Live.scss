@@ -370,6 +370,7 @@ z-index: 1;
   // }
 
   .Dynamic_Vcard_Live_box {
+    margin-top: 0.5rem !important;
     // width: 450px;
     // max-width: 450px;
     // margin-top: 0.5rem;
@@ -3337,7 +3338,7 @@ z-index: 1;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      margin-top: 0rem;
+      margin-top: 0rem !important;
     }
   }
   // &::-webkit-scrollbar {
