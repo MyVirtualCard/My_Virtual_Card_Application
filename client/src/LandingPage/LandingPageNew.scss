@@ -2217,7 +2217,7 @@ color: #fff;
           // border: 3px solid rgb(127, 157, 253);
           overflow-y: hidden;
           position: relative;
-          height: 750px;
+          height: 700px;
           border-radius: 0.3rem;
           // border: 1px solid rgb(70, 69, 69);
           box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -2285,11 +2285,19 @@ color: #fff;
                   text-decoration: none !important;
             
                 }
-                strong{
+                p{
                   font-size: 1.2rem;
                   font-weight: 600;
-                  text-decoration: line-through;
+                 
                   color: tomato;
+strong{
+text-decoration: line-through;
+font-size: 1.2rem;
+font-weight: 600;
+}
+                  small{
+                   text-decoration: none !important;
+                  }
                
                 }
               }
@@ -2373,7 +2381,7 @@ color: #fff;
             flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
-            gap: 15px;
+            gap: 10px;
 
             .list {
               width: 100%;
@@ -2501,11 +2509,19 @@ color: #fff;
                            text-decoration: none !important;
                      
                          }
-                         strong{
+                         p{
                            font-size: 1.2rem;
                            font-weight: 600;
-                           text-decoration: line-through;
+                          
                            color: tomato;
+strong{
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+                           small{
+                            text-decoration: none !important;
+                           }
                         
                          }
                        }
@@ -2589,7 +2605,7 @@ color: #fff;
                      flex-direction: column;
                      align-items: flex-start;
                      justify-content: flex-start;
-                     gap: 15px;
+                     gap: 10px;
          
                      .list {
                        width: 100%;
@@ -3145,7 +3161,7 @@ color: #fff;
   transition: height 0.5s ease;
 }
 #default {
-  height: auto;
+  height: 600px;
   transition: height 0.5s ease;
 }
 //Slide 1 background anime

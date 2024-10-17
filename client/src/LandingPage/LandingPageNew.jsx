@@ -183,73 +183,54 @@ const LandingPageNew = () => {
     {
       id: 0,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Different Kind Of Static VCard Template Design's",
+      text: "Wide Range Of Static VCard Template's",
     },
     {
       id: 1,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Basic Information about Your Company and your professional",
+      text: "Basic Information about Your Company",
     },
     {
       id: 2,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Add all your social media link by one click user can connect easily ",
+      text: "Add all your social media link by one click ",
     },
     {
       id: 3,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "All your Contact Details to showcase like Location , MobileNumber,Mail and Website Link. ",
+      text: "Add all your Contact Details ",
     },
     {
       id: 4,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Share Your all services u has allowed to insert max 5-service's to add on this package.",
+      text: "Share all your  products and services",
     },
     {
       id: 5,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Share Your all products u has allowed to insert max 5-product's and price aswell.",
-    },
-    {
-      id: 6,
-      icon: <i className="bx bxs-check-shield"></i>,
-      text: "Once user have direct meetup Appoinment shedule by one click ",
+      text: "Appoinment shedule by one click ",
     },
     {
       id: 7,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Add to Contact by saving your contact detail quickly",
+      text: "Add to Contact Button",
     },
     {
       id: 9,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Post Your gallery u have allowed to insert max 5-Images",
+      text: "Post your images by gallery ",
     },
     {
       id: 10,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Client feedback to showcase by Testimonial view",
+      text: "Client review's by Testimonial view",
     },
     {
       id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "User have any feedback about your company just one click by Feedback Form ",
+      text: "User Feedback and Inquiry Form ",
     },
-    {
-      id: 12,
-      icon: <i className="bx bxs-check-shield"></i>,
-      text: "User have any Inquiry about your company just one click by Inquiry Form ",
-    },
-    {
-      id: 13,
-      icon: <i className="bx bxs-shield-x"></i>,
-      text: "Dynamic Styling",
-    },
-    {
-      id: 15,
-      icon: <i className="bx bxs-shield-x"></i>,
-      text: "Custom QRCode",
-    },
+
   ];
   let dynamic_plan_service_list = [
     {
@@ -260,67 +241,57 @@ const LandingPageNew = () => {
     {
       id: 1,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Basic Information about Your Company and your professional",
+      text: "Basic Information about Your Company",
     },
     {
       id: 2,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Add all your social media link by one click user can connect easily ",
+      text: "Add all your social media link by one click ",
     },
     {
       id: 3,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "All your Contact Details to showcase like Location , MobileNumber,Mail and Website Link. ",
+      text: "Add all your Contact Details ",
     },
     {
       id: 4,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Share Your all services u has allowed to insert max 8-service's to add on this package.",
+      text: "Share all your  products and services",
     },
     {
       id: 5,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Share Your all products u has allowed to insert max 8-product's and price aswell.",
-    },
-    {
-      id: 6,
-      icon: <i className="bx bxs-check-shield"></i>,
-      text: "Once user have direct meetup Appoinment shedule by one click ",
+      text: "Appoinment shedule by one click ",
     },
     {
       id: 7,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Add to Contact by saving your contact detail quickly",
+      text: "Add to Contact Button",
     },
     {
       id: 9,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Post Your gallery u have allowed to insert max 8-Images",
+      text: "Post your images by gallery ",
     },
     {
       id: 10,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Client feedback to showcase by Testimonial view",
+      text: "Client review's by Testimonial view",
     },
     {
       id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "User have any feedback about your company just one click by Feedback Form ",
-    },
-    {
-      id: 12,
-      icon: <i className="bx bxs-check-shield"></i>,
-      text: "User have any Inquiry about your company just one click by Inquiry Form ",
+      text: "User Feedback and Inquiry Form ",
     },
     {
       id: 13,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "Dynamic Styling change your Vcard Design at anytime",
+      text: "Dynamic Styling change your Vcard Design",
     },
     {
       id: 15,
       icon: <i className="bx bxs-check-shield"></i>,
-      text: "QRCode Scan and Navigate your Website",
+      text: "QRCode Scan and Share your Website",
     },
   ];
   let questions = [
@@ -876,9 +847,9 @@ const LandingPageNew = () => {
                   <div className="actual">
                     <h2>
                       Actual Price{" "}
-                      <strong>
-                        ₹ 999 <small>/Yearly</small>
-                      </strong>
+                      <p>
+                        <strong>₹ 999</strong> <small>/Yearly</small>
+                      </p>
                     </h2>
                   </div>
 
@@ -887,7 +858,7 @@ const LandingPageNew = () => {
                     <h2>
                       Offer Price{" "}
                       <strong>
-                        ₹ 599 <small>/Yearly</small>
+                        ₹ 499 <small>/Yearly</small>
                       </strong>
                     </h2>
                   </div>
@@ -935,9 +906,9 @@ const LandingPageNew = () => {
                   <div className="actual">
                     <h2>
                       Actual Price{" "}
-                      <strong>
-                        ₹ 2499 <small>/Yearly</small>
-                      </strong>
+                      <p>
+                        <strong>₹ 1,999</strong> <small>/Yearly</small>
+                      </p>
                     </h2>
                   </div>
 
@@ -946,7 +917,7 @@ const LandingPageNew = () => {
                     <h2>
                       Offer Price{" "}
                       <strong>
-                        ₹ 1499 <small>/Yearly</small>
+                        ₹ 1,499 <small>/Yearly</small>
                       </strong>
                     </h2>
                   </div>
