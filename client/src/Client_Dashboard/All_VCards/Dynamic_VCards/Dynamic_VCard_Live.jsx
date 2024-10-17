@@ -793,7 +793,7 @@ background-color:${VcardTheme[0].VCardColour};
 color:${VcardTheme[0].VCardTextColour} !important;
     width: 450px;
     max-width: 450px;
-    margin-top: 0.5rem;
+    margin-top: 0.5rem !important;
     height: auto;
     overflow-x: hidden;
     margin: auto;
