@@ -14,6 +14,7 @@ const Vcard_Theme = () => {
     setSVG_Design,
     setFormSubmitLoader,
     VcardThemeUpdateToggle,setVcardThemeUpdateToggle,
+    DesktopViewBackColor,setDesktopViewBackColor,
     URL_Alies,
     user,
   } = useContext(Context);
@@ -37,6 +38,7 @@ const Vcard_Theme = () => {
       URL_Alies: URL_Alies,
       VCardColour: VCardColour,
       VCardTextColour: VCardTextColour,
+      DesktopViewBackColor:DesktopViewBackColor,
       SVG_Design: SVG_Design,
     };
     try {
@@ -73,6 +75,7 @@ const Vcard_Theme = () => {
     let data = {
       URL_Alies: URL_Alies,
       VCardColour: VCardColour,
+      DesktopViewBackColor:DesktopViewBackColor,
       VCardTextColour: VCardTextColour,
       SVG_Design: SVG_Design,
     };
@@ -154,6 +157,37 @@ const Vcard_Theme = () => {
                 <HtmlRenderer htmlString={SVG_Design} />
               </div>
             </div>
+          </div>
+          <div className="First_colour">
+            <div className="theme_title">
+              <h5>Vcard Background Colour</h5>
+            </div>
+
+            <ChromePicker
+              className="colourPicker"
+              color={DesktopViewBackColor}
+              onChange={(e) => setDesktopViewBackColor(e.hex)}
+            />
+            {/* <input type="color" value={VCardColour} onChange={(e)=>setVCardColour(e.target.value)} name="VCardColour" id="VCardColour"/> */}
+
+            <h2>
+              You Picked - &nbsp;<strong>{VCardColour}</strong>
+            </h2>
+          </div>
+          <div className="First_colour">
+            <div className="theme_title">
+              <h5>Preview Laptop Background Colour</h5>
+            </div>
+
+           <div className="lap_background" style={{backgroundColor:DesktopViewBackColor}}>
+             <div className="vcardback" style={{backgroundColor:VCardColour}}>
+
+             </div>
+           </div>
+
+            <h2>
+              You Picked - &nbsp;<strong>{VCardColour}</strong>
+            </h2>
           </div>
           <div className="form_actions">
             {VcardThemeUpdateToggle ? (

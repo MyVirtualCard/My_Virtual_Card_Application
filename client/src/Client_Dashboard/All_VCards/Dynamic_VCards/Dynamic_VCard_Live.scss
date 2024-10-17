@@ -121,7 +121,7 @@ $error_text_color: tomato;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(90deg, $root_backgound 50%, $root_backgound 50%);
+
 
   //   Gallery full image
 
@@ -3340,29 +3340,29 @@ z-index: 1;
       margin-top: 0rem;
     }
   }
-  &::-webkit-scrollbar {
-    width: 6px !important;
-    height: 4px !important;
+  // &::-webkit-scrollbar {
+  //   width: 6px !important;
+  //   height: 4px !important;
 
-    background-color: $root_backgound;
-    // z-index: 100;
+  //   background-color: $root_backgound;
+  //   // z-index: 100;
 
-    @media screen and (max-width:650px){
-      display: none !important;
-    }
-  }
-  &::-webkit-scrollbar-thumb {
-    width: 6px !important;
-    height: 4px !important;
-    border-radius: 10px;
-    z-index: 10;
-    cursor: pointer;
-    background-color: #fff !important;
+  //   @media screen and (max-width:650px){
+  //     display: none !important;
+  //   }
+  // }
+  // &::-webkit-scrollbar-thumb {
+  //   width: 6px !important;
+  //   height: 4px !important;
+  //   border-radius: 10px;
+  //   z-index: 10;
+  //   cursor: pointer;
+  //   background-color: #fff !important;
 
-    &:hover {
-      background-color: rgb(36, 231, 222);
-    }
-  }
+  //   &:hover {
+  //     background-color: rgb(36, 231, 222);
+  //   }
+  // }
 }
 .vcard_preview_loader {
   width: 100%;

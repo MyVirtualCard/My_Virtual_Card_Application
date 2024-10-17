@@ -116,6 +116,7 @@ const App = () => {
   // 1]Vcard theme states
   let [VCardColour, setVCardColour] = useState("#fff");
   let [VCardTextColour, setVCardTextColour] = useState("#000");
+  let[ DesktopViewBackColor,setDesktopViewBackColor]=useState('#B7B7B7');
   let [SVG_Design, setSVG_Design] = useState("");
   let [VcardThemeUpdateToggle, setVcardThemeUpdateToggle] = useState(false);
   // 2]Banner and Logo
@@ -384,6 +385,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
             setVCardTextColour,
             SVG_Design,
             setSVG_Design,
+            DesktopViewBackColor,setDesktopViewBackColor,
             VcardThemeUpdateToggle,
             setVcardThemeUpdateToggle,
             //2] Dynamic Banner and Logo states

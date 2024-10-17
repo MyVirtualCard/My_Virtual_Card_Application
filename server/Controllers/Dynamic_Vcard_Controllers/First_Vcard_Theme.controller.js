@@ -38,6 +38,7 @@ export const CreateVcardThemeData = async (req, res) => {
             user: req.user.userName,
             URL_Alies: req.params.URL_Alies,
             VCardColour: req.body.VCardColour,
+            DesktopViewBackColor:req.body.DesktopViewBackColor,
             VCardTextColour: req.body.VCardTextColour,
             SVG_Design: req.body.SVG_Design,
           });

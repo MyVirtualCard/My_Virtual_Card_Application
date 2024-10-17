@@ -19,6 +19,10 @@ let  Vcard_Theme_Schema=new mongoose.Schema({
         type:String,
         required:false
       },
+      DesktopViewBackColor:{
+        type:String,
+        required:false 
+      },
       SVG_Design:{
         type:String,
         required:false

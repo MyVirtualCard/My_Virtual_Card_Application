@@ -484,27 +484,8 @@ END:VCARD
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
 
-  async function fetchAllStyleData() {
-    try {
-      await api
-        .get(`/dynamicVCard/style${currentUrl}`)
-        .then((res) => {
-          console.log(res.data.data);
-          setVcardTheme(res.data.data.FirstVcardTheme);
-          setButtonTheme(res.data.data.ThirdButtonTheme);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setSiteLoader(false);
-    }
-  }
   useEffect(() => {
     fetchAllData();
-    // fetchAllStyleData();
   }, []);
 
   const [copied, setCopied] = useState(false);
@@ -582,6 +563,7 @@ END:VCARD
       // Open the WhatsApp link (this works on mobile and desktop)
       window.open(whatsappUrl, "_blank");
     };
+    
   // Show loading spinner or message while loading
   if (SiteLoader) {
     return <VCard_Loader />;
@@ -594,7 +576,7 @@ END:VCARD
       <style>
         {`
 .Dynamic_Vcard_Live_Container{
-
+  background-color:${VcardTheme[0].DesktopViewBackColor} !important;
 color:${VcardTheme[0].VCardTextColour} !important;
 
 
@@ -5585,7 +5567,8 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
     width: 6px !important;
     height: 4px !important;
 
-    background-color: ${VcardTheme[0].VCardColour};
+    background-color:${VcardTheme[0].DesktopViewBackColor} !important;
+    display:none !important;
     // z-index: 100;
 
     @media screen and (max-width:650px){
@@ -8585,9 +8568,7 @@ z-index: 1;
     width: 6px !important;
     height: 4px !important;
 
-    background-color: $root_backgound;
-    // z-index: 100;
-
+     background-color:${VcardTheme[0].DesktopViewBackColor} !important;
     @media screen and (max-width:650px){
       display: none !important;
     }
@@ -10335,8 +10316,8 @@ z-index: 1;
                     {/* Contact */}
                   </div>
 
-                  <div className="google_map">
-                    <HtmlRenderer htmlString={GoogleMapData[0].GoogleIframe} />
+                  <div className="google_map" dangerouslySetInnerHTML={{__html :GoogleMapData[0].GoogleIframe}}>
+                    
                   </div>
                 </div>
               </>
@@ -10837,7 +10818,7 @@ z-index: 1;
       </label>
       <div className="whatsup_input">
       <PhoneInput
-          country={"us"} // Default country
+          country={"in"} // Default country
           value={phoneNumber}
           onChange={(phone) => setPhoneNumber(phone)}
           enableSearch={true} // Search country by name

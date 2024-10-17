@@ -74,6 +74,7 @@ const DynamicVcard = () => {
     setVCardColour,
     VCardTextColour,
     setVCardTextColour,
+    DesktopViewBackColor,setDesktopViewBackColor,
     SVG_Design,
     setSVG_Design,
     VcardThemeUpdateToggle,
@@ -704,6 +705,7 @@ let ContactRef=useRef(null);
           } else {
             setVCardColour(res.data.data[0].VCardColour);
             setVCardTextColour(res.data.data[0].VCardTextColour);
+            setDesktopViewBackColor(res.data.data[0].DesktopViewBackColor)
             setSVG_Design(res.data.data[0].SVG_Design);
             setVcardThemeUpdateToggle(true);
           }
