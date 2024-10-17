@@ -16,7 +16,7 @@ const User_Inquries = () => {
     setShowForm,
  
   } = useContext(Context);
-  console.log(URL_Alies)
+
    let[   AllFeedback,
     setAllFeedback]=useState([])
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);

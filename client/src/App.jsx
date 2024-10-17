@@ -72,6 +72,7 @@ import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VC
 import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW.jsx";
 import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_Live.jsx";
 import ReactGA from 'react-ga';
+import New_LandingPage from "./LandingPage/New_LandingPage.jsx";
 
 //Import All component:
 const App = () => {
@@ -594,6 +595,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
               {/* Landing Page */}
               <Route path="/old" element={<LandingPage />} />
               <Route path="/" element={<LandingPageNew />} />
+              <Route path="/new" element={<New_LandingPage />} />
               {/* Authentication */}
               <Route path="/register" element={<Register />} />
               {/* <Route path="/register" element={<Register />} /> */}

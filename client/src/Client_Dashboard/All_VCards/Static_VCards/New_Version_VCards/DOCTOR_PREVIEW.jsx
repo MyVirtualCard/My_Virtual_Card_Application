@@ -7,6 +7,7 @@ import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+
 //Product Slider
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -15,7 +16,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { BiSolidPhoneCall, BiSolidVideo } from "react-icons/bi";
 import { RiWhatsappFill } from "react-icons/ri";
-import { FaDirections } from "react-icons/fa";
+import { FaDirections, FaDownload, FaShare } from "react-icons/fa";
 import { MdOutgoingMail, MdSchedule } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
 import { IoHome, IoMail } from "react-icons/io5";
@@ -34,8 +35,16 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
+
+
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
+import { toast, ToastContainer, Zoom } from "react-toastify";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useLocation } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import Context from "../../../../Context/GlobalContext";
 const DOCTOR_PREVIEW = () => {
   let {
@@ -46,9 +55,75 @@ const DOCTOR_PREVIEW = () => {
     SVG_Design,
     setSVG_Design,
   } = useContext(Context);
+  // Using useLocation to get the current path
+  const location = useLocation();
 
+  // Full URL or just the pathname for the QR code
+  const currentPath = window.location.origin + location.pathname;
+
+  // Create a reference to the QRCode element
+  const qrRef = useRef(null);
+
+  // Function to download the SVG
+  const downloadQRCode = () => {
+    const svg = qrRef.current.querySelector("svg");
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "qrcode.svg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+  // Function to share the QR code as an SVG
+  const shareQRCodeAsSVG = () => {
+    const svgElement = qrRef.current.querySelector("svg");
+
+    // Serialize the SVG content into a string
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+
+    // Create a Blob from the SVG string
+    const blob = new Blob([svgData], { type: "image/svg+xml" });
+
+    const file = new File([blob], "qrcode.svg", { type: "image/svg+xml" });
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "QR Code",
+          text: "Here is the QR code for the path: " + currentPath,
+          files: [file], // Sharing the SVG file
+        })
+        .then(() => console.log("Sharing successful"))
+        .catch((err) => console.log("Sharing failed", err));
+    } else {
+      alert("Sharing is not supported on this browser.");
+    }
+  };
+    // State to store the phone number
+    const [phoneNumber, setPhoneNumber] = useState("");
+
+    // Generate the WhatsApp URL and share the profile
+    const handleShareWhatsApp = () => {
+      if (!phoneNumber) {
+        alert("Please enter a valid phone number");
+        return;
+      }
+  
+      // WhatsApp API URL
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
+        `Hello! Check out this profile: ${window.location.pathname}. You can view it here: ${window.location.origin + location.pathname}`
+      )}`;
+  
+      // Open the WhatsApp link (this works on mobile and desktop)
+      window.open(whatsappUrl, "_blank");
+    };
   let style = {
-    $first_back__color:VCardColour,
+    $first_back__color: VCardColour,
     $second_back__color: "#6b6b6b",
     $third_back__color: "#303030",
     //Root Background
@@ -73,6 +148,12 @@ const DOCTOR_PREVIEW = () => {
 
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
+  };
+  const [copied, setCopied] = useState(false);
+  const handleCopyURL = () => {
+    setCopied(true);
+    toast.success("Link Copied!");
+    setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
   };
   //create a new vCard
   var vCard = vCardsJS();
@@ -102,7 +183,7 @@ const DOCTOR_PREVIEW = () => {
     document.body.appendChild(linkElement);
     linkElement.click();
     document.body.removeChild(linkElement);
-  };
+  }
   //Gallery Functionality
   //openFullImage preview:
   function openFullImage(pic) {
@@ -249,13 +330,13 @@ const DOCTOR_PREVIEW = () => {
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       innerHeight = window.innerHeight; // Height of the viewport
       setScrollY(window.scrollY); // Number of pixels scrolled vertically
       totalHeight = innerHeight + scrollY; // Total height scrolled + viewport height
     });
-  },[])
+  }, []);
 
   //Menu actions
 
@@ -268,7 +349,7 @@ const DOCTOR_PREVIEW = () => {
   let PaymentRef = useRef(null);
   let GalleryRef = useRef(null);
   let VideoRef = useRef(null);
-  let AppinmentRef=useRef(null);
+  let AppinmentRef = useRef(null);
   let TimeRef = useRef(null);
   let TestimonialRef = useRef(null);
   let LocationRef = useRef(null);
@@ -277,7 +358,6 @@ const DOCTOR_PREVIEW = () => {
   let InquiryRef = useRef(null);
 
   let scrollToSection = (elementRef) => {
-    
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -350,7 +430,7 @@ const DOCTOR_PREVIEW = () => {
     if (activeMenu === "Inquiry") {
       return scrollToSection(FeedbackRef), setActiveMenu("Feedback");
     }
-  };
+  }
   useEffect(() => {
     const handleScroll = () => {
       const section1Top = HomeRef.current?.offsetTop || 0;
@@ -367,59 +447,92 @@ const DOCTOR_PREVIEW = () => {
       const section12Top = FeedbackRef.current?.offsetTop || 0;
       const section13Top = InquiryRef.current?.offsetTop || 0;
       const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
+
       if (scrollPosition >= section1Top && scrollPosition < section2Top) {
-        setActiveMenu('Home');
-      } 
-      else if (scrollPosition >= section2Top && scrollPosition < section3Top) {
-        setActiveMenu('About');
-      } 
-      else if (scrollPosition >= section3Top && scrollPosition < section4Top) {
-        setActiveMenu('Service');
-      } 
-      else if (scrollPosition >= section4Top && scrollPosition < section5Top) {
-        setActiveMenu('Product');
-      } 
-      else if (scrollPosition >= section5Top && scrollPosition < section6Top) {
-        setActiveMenu('Payment');
-      } 
-      else if (scrollPosition >= section6Top && scrollPosition < section7Top) {
-        setActiveMenu('Gallery');
-      } 
-      else if (scrollPosition >= section7Top && scrollPosition < section8Top) {
-        setActiveMenu('Video');
-      } 
-      else if (scrollPosition >= section8Top && scrollPosition < section9Top) {
-        setActiveMenu('Appoinment');
-      } 
-      else if (scrollPosition >= section9Top && scrollPosition < section10Top) {
-        setActiveMenu('Time');
-      } 
-      else if (scrollPosition >= section10Top && scrollPosition < section11Top) {
-        setActiveMenu('Testimonial');
-      } 
-      else if (scrollPosition >= section11Top && scrollPosition < section12Top) {
-        setActiveMenu('Location');
-      } 
-      else if (scrollPosition >= section12Top && scrollPosition < section13Top) {
-        setActiveMenu('Feedback');
-      } 
-      else if (scrollPosition >= section13Top) {
-        setActiveMenu('Inquiry');
+        setActiveMenu("Home");
+      } else if (
+        scrollPosition >= section2Top &&
+        scrollPosition < section3Top
+      ) {
+        setActiveMenu("About");
+      } else if (
+        scrollPosition >= section3Top &&
+        scrollPosition < section4Top
+      ) {
+        setActiveMenu("Service");
+      } else if (
+        scrollPosition >= section4Top &&
+        scrollPosition < section5Top
+      ) {
+        setActiveMenu("Product");
+      } else if (
+        scrollPosition >= section5Top &&
+        scrollPosition < section6Top
+      ) {
+        setActiveMenu("Payment");
+      } else if (
+        scrollPosition >= section6Top &&
+        scrollPosition < section7Top
+      ) {
+        setActiveMenu("Gallery");
+      } else if (
+        scrollPosition >= section7Top &&
+        scrollPosition < section8Top
+      ) {
+        setActiveMenu("Video");
+      } else if (
+        scrollPosition >= section8Top &&
+        scrollPosition < section9Top
+      ) {
+        setActiveMenu("Appoinment");
+      } else if (
+        scrollPosition >= section9Top &&
+        scrollPosition < section10Top
+      ) {
+        setActiveMenu("Time");
+      } else if (
+        scrollPosition >= section10Top &&
+        scrollPosition < section11Top
+      ) {
+        setActiveMenu("Testimonial");
+      } else if (
+        scrollPosition >= section11Top &&
+        scrollPosition < section12Top
+      ) {
+        setActiveMenu("Location");
+      } else if (
+        scrollPosition >= section12Top &&
+        scrollPosition < section13Top
+      ) {
+        setActiveMenu("Feedback");
+      } else if (scrollPosition >= section13Top) {
+        setActiveMenu("Inquiry");
       }
-      
     };
 
-    window.addEventListener('scroll', handleScroll);
-    
+    window.addEventListener("scroll", handleScroll);
+
     // Cleanup event listener on unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
     <div className="DOCTOR_PREVIEW_CONTAINER">
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Zoom}
+      />
       {/* Gallery Full IMAGE */}
       <div
         className="full_image"
@@ -556,7 +669,10 @@ const DOCTOR_PREVIEW = () => {
           <CiSquareChevDown onClick={HandleMenuDown} className="down" />
         </div>
       </div>
-      <div className="DOCTOR_PREVIEW_CARD" style={{backgroundColor:style.$first_back__color}}>
+      <div
+        className="DOCTOR_PREVIEW_CARD"
+        style={{ backgroundColor: style.$first_back__color }}
+      >
         {/* Banner and logo */}
         <div className="Image_row_1" ref={HomeRef}>
           <div className="banner_image">
@@ -593,39 +709,39 @@ const DOCTOR_PREVIEW = () => {
 
               {/* Actions */}
               <div className="contacts_btns">
-          {/* Call */}
-          <a href="tel:+919344482370" target="_blank">
-            <BiSolidPhoneCall className="icon" />
+                {/* Call */}
+                <a href="tel:+919344482370" target="_blank">
+                  <BiSolidPhoneCall className="icon" />
 
-            <small>Call</small>
-          </a>
-          {/* Mail */}
-          <a href={`mailto:contact@aristostechindia.com`} target="_blank">
-            <MdOutgoingMail className="icon" />
+                  <small>Call</small>
+                </a>
+                {/* Mail */}
+                <a href={`mailto:contact@aristostechindia.com`} target="_blank">
+                  <MdOutgoingMail className="icon" />
 
-            <small>Mail</small>
-          </a>
-          {/* Whatsup */}
-          <a
-            href={`https://wa.me/+919344482370?text=${encodeURIComponent(
-              `Hi there!`
-            )}`}
-            target="_blank"
-          >
-            <RiWhatsappFill className="icon" />
+                  <small>Mail</small>
+                </a>
+                {/* Whatsup */}
+                <a
+                  href={`https://wa.me/+919344482370?text=${encodeURIComponent(
+                    `Hi there!`
+                  )}`}
+                  target="_blank"
+                >
+                  <RiWhatsappFill className="icon" />
 
-            <small>Whatsapp</small>
-          </a>
-          {/* Direction */}
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
-            target="_blank"
-          >
-            <FaDirections className="icon" />
+                  <small>Whatsapp</small>
+                </a>
+                {/* Direction */}
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query="No. 113, Ankur Plaza, GN Chetty Rd, T. Nagar, Chennai, India, Tamil Nadu 600017`}
+                  target="_blank"
+                >
+                  <FaDirections className="icon" />
 
-            <small>Direction</small>
-          </a>
-        </div>
+                  <small>Direction</small>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1132,7 +1248,7 @@ const DOCTOR_PREVIEW = () => {
           <div className="All_Products">
             {/* Product */}
             <div className="Product">
-            <div className="product_title">
+              <div className="product_title">
                 <h5> MyVirtual Card</h5>
               </div>
               <div className="product_image">
@@ -1149,7 +1265,7 @@ const DOCTOR_PREVIEW = () => {
                   </a>
                 </div>
               </div>
-            
+
               <div className="product_description">
                 <p>
                   Customize Your Digital Identity Effortlessly with My Virtual
@@ -1174,7 +1290,7 @@ const DOCTOR_PREVIEW = () => {
             </div>
             {/* Product */}
             <div className="Product">
-            <div className="product_title">
+              <div className="product_title">
                 <h5> My Orders</h5>
               </div>
               <div className="product_image">
@@ -1194,7 +1310,7 @@ const DOCTOR_PREVIEW = () => {
                   </a>
                 </div>
               </div>
-             
+
               <div className="product_description">
                 <p>
                   It was popularised in the 1960s with the release of Letraset
@@ -1375,7 +1491,6 @@ const DOCTOR_PREVIEW = () => {
                 onClick={(e) => openFullImage(e.target.src)}
               />
             </div>
-    
           </div>
         </div>
         {/* Videos */}
@@ -1466,7 +1581,7 @@ const DOCTOR_PREVIEW = () => {
             >
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1487,7 +1602,7 @@ const DOCTOR_PREVIEW = () => {
               </div>
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1529,7 +1644,7 @@ const DOCTOR_PREVIEW = () => {
               </div>
               <div className="testimonial_list">
                 <div className="client_feedback">
-                <h4>Feedback</h4>
+                  <h4>Feedback</h4>
                   <small>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Vel repellendus a ut! Architecto quis error porro nemo
@@ -1848,11 +1963,65 @@ const DOCTOR_PREVIEW = () => {
             </form>
           </div>
         </div>
+        {/* Share */}
+        <div className="share">
+          <div className="DOCTOR_TITLE_PREVIEW">
+            <h3>Share</h3>
+          </div>
+          <div className="input">
+            <input
+              type="text"
+              value={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}${
+                window.location.pathname
+              }`}
+            />
+            <div className="icon">
+              <CopyToClipboard
+                text={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/${
+                  window.location.pathname
+                }`}
+                onCopy={handleCopyURL}
+              >
+                <i className="bx bx-copy"></i>
+              </CopyToClipboard>
+            </div>
+          </div>
+          <div className="qr_code" ref={qrRef}>
+            <QRCodeSVG value={currentPath} size={156} level={"H"} />
+            <div className="qr_actions">
+            <button onClick={shareQRCodeAsSVG}>Share <FaShare/> </button>
+              <button onClick={downloadQRCode}>Download <FaDownload/></button>
+           
+            </div>
+          </div>
+          <div className="share_input">
+          <label>
+          Share profile to any whatsapp number:
+
+      </label>
+      <div className="whatsup_input">
+      <PhoneInput
+          country={"us"} // Default country
+          value={phoneNumber}
+          onChange={(phone) => setPhoneNumber(phone)}
+          enableSearch={true} // Search country by name
+          className='mobileNumber_input'
+        />
+              <button onClick={handleShareWhatsApp}><i className='bx bxl-whatsapp' ></i>Share</button>
+      </div>
+
+          </div>
+        </div>
         {/* Footer */}
         <div className="Footer">
           <div className="footer_container">
-        
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path  fill={style.$svg_wave_back_color} fill-opacity="1" d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill={style.$svg_wave_back_color}
+                fill-opacity="1"
+                d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+              ></path>
+            </svg>
             <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
           </div>
         </div>

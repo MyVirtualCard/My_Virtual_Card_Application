@@ -6,7 +6,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { BiSolidPhoneCall, BiSolidVideo } from "react-icons/bi";
 import { RiWhatsappFill } from "react-icons/ri";
-import { FaDirections } from "react-icons/fa";
+import { FaDirections, FaDownload, FaShare } from "react-icons/fa";
 import { MdOutgoingMail, MdSchedule } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
 import { IoHome, IoMail } from "react-icons/io5";
@@ -38,6 +38,12 @@ import { AppoinmentValidateSchema } from "../../../Helper/AppoinmentValidate";
 import Context from "../../../Context/GlobalContext";
 import VCard_Loader from "../../../VCard_Loader/VCard_Loader";
 import URLNotFound from "../../404_Error_Page/404";
+import { toast, ToastContainer, Zoom } from "react-toastify";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useLocation } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 const Dynamic_VCard_Live = () => {
   let navigate = useNavigate();
   let { URL_Alies, setURL_Alies, setCurrentTemplate } = useContext(Context);
@@ -113,6 +119,7 @@ const Dynamic_VCard_Live = () => {
   let LocationRef = useRef(null);
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
+  let shareRef=useRef(null);
   let AppoinmentRef = useRef(null);
   let scrollToSection = (elementRef) => {
     console.log(elementRef);
@@ -500,10 +507,85 @@ END:VCARD
     // fetchAllStyleData();
   }, []);
 
+  const [copied, setCopied] = useState(false);
+  const handleCopyURL = () => {
+    setCopied(true);
+    toast.success("Link Copied!");
+    setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+  };
+  // Using useLocation to get the current path
+  const location = useLocation();
+
+  // Full URL or just the pathname for the QR code
+  const currentPath = window.location.origin + location.pathname;
+
+  // Create a reference to the QRCode element
+  const qrRef = useRef(null);
+
+  // Function to download the SVG
+  const downloadQRCode = () => {
+    const svg = qrRef.current.querySelector("svg");
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "qrcode.svg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+  // Function to share the QR code as an SVG
+  const shareQRCodeAsSVG = () => {
+    const svgElement = qrRef.current.querySelector("svg");
+
+    // Serialize the SVG content into a string
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+
+    // Create a Blob from the SVG string
+    const blob = new Blob([svgData], { type: "image/svg+xml" });
+
+    const file = new File([blob], "qrcode.svg", { type: "image/svg+xml" });
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "QR Code",
+          text: "Here is the QR code for the path: " + currentPath,
+          files: [file], // Sharing the SVG file
+        })
+        .then(() => console.log("Sharing successful"))
+        .catch((err) => console.log("Sharing failed", err));
+    } else {
+      alert("Sharing is not supported on this browser.");
+    }
+  };
+    // State to store the phone number
+    const [phoneNumber, setPhoneNumber] = useState("");
+
+    // Generate the WhatsApp URL and share the profile
+    const handleShareWhatsApp = () => {
+      if (!phoneNumber) {
+        alert("Please enter a valid phone number");
+        return;
+      }
+    // Format the message
+    const message = `Hello! Check out my profile: ${VCard_URL_Data[0].FirstName}. You can view it here: ${window.location.origin + location.pathname}`;
+    
+    // Properly encode the text for the URL
+    const encodedMessage = encodeURIComponent(message);
+      // WhatsApp API URL
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+  
+      // Open the WhatsApp link (this works on mobile and desktop)
+      window.open(whatsappUrl, "_blank");
+    };
   // Show loading spinner or message while loading
   if (SiteLoader) {
     return <VCard_Loader />;
-  }
+  };
 
   return (
     <>
@@ -5326,11 +5408,202 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
     }
 
 
+        .share{
+          width: 100%;
+          padding: 0rem 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: center;
+          justify-content: center;
+          padding-bottom: 4rem;
+          color:${VcardTheme[0].VCardTextColour} !important;
+  
+    
+          .input{
+            width: 100%;
+            position: relative;
+            
+    
+            input{
+              padding: 0.6rem 1rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid ${VcardTheme[0].VCardTextColour};
+              background-color: transparent;
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: ${VcardTheme[0].VCardTextColour};
+              position: relative;
+            }
+    
+            .icon{
+              position: absolute;
+              right: 4%;
+              top: 15%;
+              font-size: 1.5rem;
+              cursor: pointer;
+              
+    
+              &:hover{
+                color: royalblue;
+              }
+            }
+          }
+    .qr_code{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    
+      .qr_actions{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        gap: 10px;
+        margin: 1rem auto;
+    
+        button{
+          padding: 0.5rem 2rem;
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          background-color: ${ButtonTheme[0].BtnBackColour};
+          color: ${ButtonTheme[0].BtnTextColour};
+          border-radius: 0.3rem;
+    
+          &:hover{
+              background-color: ${ButtonTheme[0].BtnHoverColour};
+          color: ${ButtonTheme[0].BtnHoverTextColour};
+          }
+        }
+    
+      }
+    }
+    .share_input{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      position: relative;
+ 
+    label{
+      font-size: 0.8rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-weight: 500;
+    }
+      .whatsup_input{
+        width: 100%;
+        position: relative;
+    
+   
+        .country-list {
+          position: absolute;
+          top: -215px;
+        background-color: ${ButtonTheme[0].BtnBackColour};
+
+          color:${ButtonTheme[0].BtnTextColour};
+
+           overflow-y: scroll;
+           border-radius:10px;
+
+           &::-webkit-scrollbar{
+        display: none;
+      }
+        }
+        .mobileNumber_input{
+          width: 100%;
+          display: flex;
+          background-color: transparent;
+          .form-control {
+            width: 100% !important;
+            padding: 0.5rem 4rem !important;
+        background-color: transparent;
+           color: ${VcardTheme[0].VCardTextColour};
+            input{
+              padding: 0.5rem 4rem !important;
+              }
+          }
+    
+          .form-control {
+            width: 100% !important;
+            padding: 0.6rem 1rem;
+      
+          
+          }
+      
+        }
+    
+        button{
+          position: absolute;
+          top: 0%;
+          right: 0%;
+          font-size: 0.7rem;
+       
+          padding: 0.45rem 1rem;
+             background-color: ${ButtonTheme[0].BtnBackColour};
+
+          color:${ButtonTheme[0].BtnTextColour};
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+    
+          .bxl-whatsapp{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+          }
+
+          &:hover{
+                    background-color: ${ButtonTheme[0].BtnHoverColour};
+          color: ${ButtonTheme[0].BtnHoverTextColour};
+          }
+        }
+      }
+    
+    }
+        }
+
+
 
     
       }
 
+  &::-webkit-scrollbar {
+    width: 6px !important;
+    height: 4px !important;
 
+    background-color: ${VcardTheme[0].VCardColour};
+    // z-index: 100;
+
+    @media screen and (max-width:650px){
+      display: none !important;
+    }
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 6px !important;
+    height: 4px !important;
+    border-radius: 1px !important;
+    z-index: 10;
+    cursor: pointer;
+       background-color: ${VcardTheme[0].VCardTextColour};
+
+    &:hover {
+      background-color: rgb(36, 231, 222);
+    }
+  }
 
 }
 
@@ -8096,280 +8369,157 @@ z-index: 1;
         }
       }
 
-//     }
-    //Inquries
-    // .Inquries {
-     
-    //   width: 100%;
-    //   padding: 0rem 1rem;
-    //   display: flex;
-    //   flex-direction: column;
-    //   gap: 0rem;
-    //   align-items: center;
-    //   justify-content: center;
-    //   position: relative;
-
-   
-
-    //   .popup_message_container {
-    //     // position: relative;
-    // position: absolute;
-    // right: 3%;
-    // top: 5%;
-    //     .popup_success_box {
-    //       display: inline-block;
-     
-    //       background-color: rgb(255, 255, 255);
-    //       box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
-    //       border-radius: 5px;
-    //       padding: 0.6px 1rem;
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: center;
-    //       gap: 3rem;
-    //       position: relative;
-    //       transition: transform 0.5s ease-in-out;
-    //       z-index: -1;
-    //       .popup_close {
-        
+        .share{
+          width: 100%;
+          padding: 0rem 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: center;
+          justify-content: center;
+          padding-bottom: 4rem;
+  
     
-    //         i {
-    //           font-size: 1.4rem;
-    //           font-weight: 600;
-    //           color: rgb(255, 76, 76);
-    //           cursor: pointer;
-    //           transition: all 0.5s ease;
-    //           &:hover {
-    //             transform: rotate(90deg);
-    //             transition: all 0.5s ease;
-    //           }
-    //         }
-    //       }
-    //       .popup_message {
-    //         font-size: 0.9rem;
-    //         color: #4b4b4b;
-    //         font-weight: 550;
-    //       }
-    //     }
-    //     #successOpen{
-    //       transform: translateX(0px);
-    //       transition: transform 0.5s ease-in-out;
-    //     }
-    //     #successClose{
-    //       transform: translateX(500px);
+          .input{
+            width: 100%;
+            position: relative;
+            
+    
+            input{
+              padding: 0.6rem 1rem;
+              outline: none;
+              width: 100%;
+              border: 1px solid gray;
+              background-color: transparent;
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: gray;
+              position: relative;
+            }
+    
+            .icon{
+              position: absolute;
+              right: 4%;
+              top: 15%;
+              font-size: 1.5rem;
+              cursor: pointer;
+    
+              &:hover{
+                color: royalblue;
+              }
+            }
+          }
+    .qr_code{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    
+      .qr_actions{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        gap: 10px;
+        margin: 1rem auto;
+    
+        button{
+          padding: 0.5rem 2rem;
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          background-color: #6ebe4b;
+          color: #fff;
+          border-radius: 0.3rem;
+    
+          &:hover{
+            background-color: gray;
+          }
+        }
+    
+      }
+    }
+    .share_input{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      position: relative;
+    
+    label{
+      font-size: 0.7rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-weight: 600;
+    }
+      .whatsup_input{
+        width: 100%;
+        position: relative;
+    
+    
+        .country-list {
+          position: absolute;
+          top: -230px;
+      
           
-    //       transition: transform 0.5s ease-in-out;
-    //     }
-    //     .popup_error_box {
-    //       display: inline-block;
-    //       height: 40px;
-    //       background-color: rgb(255, 177, 141) !important;
-    //       border-radius: 5px;
-    //       padding: 0px 3rem;
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: center;
-    //       gap: 3rem;
-    //       position: relative;
-    // z-index: -1;
- 
-    //       .popup_close {
+      
+        }
+        .mobileNumber_input{
+          width: 100%;
+          display: flex;
+        
+          .form-control {
+            width: 100% !important;
+            padding: 0.5rem 4rem !important;
+      
+            input{
+              padding: 0.5rem 4rem !important;
+              }
+          }
     
-    //         i {
-    //           font-size: 1.4rem;
-    //           color: rgb(255, 255, 255);
-    //           font-weight: 600;
-    //           cursor: pointer;
-    //           transition: all 0.5s ease;
-    //           &:hover {
-    //             transform: rotate(90deg);
-    //             transition: all 0.5s ease;
-    //           }
-    //         }
-    //       }
-    //       .popup_message {
-    //         font-size: 0.9rem;
-    //         color: #494949;
-    //         font-weight: 550;
-    //       }
-    //     }
-    //   }
-    //   .inquiries_container5 {
-    //     width: 100%;
-    //     display: flex;
-    //     align-items: center;
-    //     flex-direction: column;
-    //     justify-content: flex-start;
-    //     margin: auto;
+          .form-control {
+            width: 100% !important;
+            padding: 0.6rem 1rem;
+      
+          
+          }
+      
+        }
     
-    //     form {
-    //       width: 90%;
-    //       padding: 10px 0px;
-
-    //       margin: auto;
-    //       .form_group {
-    //         width: 100%;
-    //         display: flex;
-    //         flex-direction: column;
-    //         align-items: flex-start;
-    //         justify-content: center;
-    //         gap: 10px;
-    //         margin-bottom: 10px;
-    //         margin: 10px auto;
-
-    //         label {
-    //           font-size: 0.7rem;
-    //           letter-spacing: 1px;
-    //           color: #ffffff;
-    //           font-weight: 550;
-    //         }
-    //         .input {
-    //           width: 100%;
-    //           position: relative;
-    //           input,
-    //           textarea {
-    //             width: 100%;
-    //             padding: 0.9rem 2.5rem;
-    //             outline: none;
-    //             border: transparent;
-    //             border-radius: 5px;
-    //             background-color: transparent;
-    //             color: #ffffff;
-    //             border: 1px solid rgb(252, 252, 252);
-    //             caret-color: rgb(255, 255, 255);
-
-    //             &::placeholder {
-    //               color: rgb(224, 223, 223);
-    //               letter-spacing: 1px;
-    //               font-size: 0.7rem;
-    //             }
-    //           }
-
-    //           i {
-    //             position: absolute;
-    //             left: 2%;
-    //             font-size: 1.5rem;
-    //             color: #f5f5f5;
-    //             top: 30%;
-    //           }
-    //         }
-    //         .labelError{
-    //           color: $error_text_color;
-    //           font-weight: 450;
-    //         }
-       
-
-    //         .input_error {
-    //           border: 1px solid $error_text_color !important;
-    //           border-radius: 5px;
-    //         }
-           
-    //         .error {
-    //           position: absolute;
-    //           top: 12%;
-    //           right: 0%;
-    //           color: $error_text_color;
-    //           font-size: 0.7rem;
-    //           padding: 5px 0px 0px 0px;
-    //         }
+        button{
+          position: absolute;
+          top: 0%;
+          right: 0%;
+          font-size: 0.7rem;
+          background-color: #10b856;
+          padding: 0.45rem 1rem;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
     
-    //         .desc_error {
-    //           position: absolute;
-    //           top: 0%;
-    //           right: 0%;
-    //           color: $error_text_color;
-    //           font-size: 0.7rem;
-    //           padding: 5px 0px 0px 0px;
-    //         }
-    //       }
-    //       .form_actions {
-    //         padding: 0px 1rem;
-    //         width: 100%;
-    //         display: flex;
-    //         align-items: center;
-    //         justify-content: flex-end;
-    //         margin: 1rem auto;
+          .bxl-whatsapp{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+          }
+        }
+      }
+    
+    }
+        }
 
-    //         button {
-    //           width: 100px;
-    //           display: flex;
-    //           align-items: center;
-    //           justify-content: center;
-    //           gap: 10px;
-    //           background-color: $first_btn_back_color;
-    //           color: $third_text_color;
-              
-    //           padding: 8px 1rem;
-    //           outline: none;
-    //           border: transparent;
 
-    //           font-weight: 450;
-    //           letter-spacing: 1px;
-    //           font-size: 0.7rem;
-    //           border-radius: 5px;
-    //           cursor: pointer;
-
-    //           transition: all 0.4s ease-in;
-
-    //           img {
-    //             width: 20px;
-    //             height: 20px;
-    //           }
-    //           .form_loader,
-    //           .form_loader:before,
-    //           .form_loader:after {
-    //             border-radius: 50%;
-    //             width: 1em;
-    //             height: 1em;
-    //             animation-fill-mode: both;
-    //             animation: bblFadInOut 1.8s infinite ease-in-out;
-    //           }
-    //           .form_loader {
-    //             color: #fff;
-    //             font-size: 7px;
-    //             position: relative;
-    //             text-indent: -9999em;
-    //             transform: translateZ(0);
-    //             animation-delay: -0.16s;
-    //           }
-    //           .form_loader:before,
-    //           .form_loader:after {
-    //             content: "";
-    //             position: absolute;
-    //             top: 0;
-    //           }
-    //           .form_loader:before {
-    //             left: -3.5em;
-    //             animation-delay: -0.32s;
-    //           }
-    //           .form_loader:after {
-    //             left: 3.5em;
-    //           }
-
-    //           @keyframes bblFadInOut {
-    //             0%,
-    //             80%,
-    //             100% {
-    //               box-shadow: 0 2.5em 0 -1.3em;
-    //             }
-    //             40% {
-    //               box-shadow: 0 2.5em 0 0;
-    //             }
-    //           }
-
-    //           &:hover {
-    //             background-color: #ffffff;
-
-    //             transition: all 0.4s ease-in;
-    //             filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.5));
-    //             color: #272727;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-    // Footer
     .Footer {
       position: relative;
       bottom: 0%;
@@ -10648,6 +10798,58 @@ z-index: 1;
             ) : (
               ""
             )}
+
+        {/* Share */}
+        <div className="share" ref={shareRef}>
+          <div className="Dynamic_Vcard_Live_Title">
+            <h3>Share</h3>
+          </div>
+          <div className="input">
+            <input
+              type="text"
+              value={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}${
+                window.location.pathname
+              }`}
+            />
+            <div className="icon">
+              <CopyToClipboard
+                text={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/${
+                  window.location.pathname
+                }`}
+                onCopy={handleCopyURL}
+              >
+                <i className="bx bx-copy"></i>
+              </CopyToClipboard>
+            </div>
+          </div>
+          <div className="qr_code" ref={qrRef}>
+            <QRCodeSVG value={currentPath} size={156} level={"H"} />
+            <div className="qr_actions">
+            <button onClick={shareQRCodeAsSVG}>Share <FaShare/> </button>
+              <button onClick={downloadQRCode}>Download <FaDownload/></button>
+           
+            </div>
+          </div>
+          <div className="share_input">
+          <label>
+          Share profile to any whatsapp number:
+
+      </label>
+      <div className="whatsup_input">
+      <PhoneInput
+          country={"us"} // Default country
+          value={phoneNumber}
+          onChange={(phone) => setPhoneNumber(phone)}
+          enableSearch={true} // Search country by name
+          className='mobileNumber_input'
+        />
+              <button onClick={handleShareWhatsApp}><i className='bx bxl-whatsapp' ></i>Share</button>
+      </div>
+
+          </div>
+        </div>
+
+
             {/* Footer */}
             <div className="Footer" style={{color:'#000'}}>
               <div className="dynamic_footer_container">

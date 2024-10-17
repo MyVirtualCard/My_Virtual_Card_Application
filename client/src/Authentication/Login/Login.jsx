@@ -111,11 +111,14 @@ const Login = () => {
 
           let userData = JSON.parse(localStorage.getItem("datas"));
 
-          setTimeout(() => {
+        let navigationTimeout =  setTimeout(() => {
             setUser(userData)
             // handleSpeak(userData.userName);
             navigate(`/${userData.userName}/uadmin/VCards`);
           }, 2000);
+          return () => {
+            clearTimeout(navigationTimeout);
+          };
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -141,10 +144,14 @@ const Login = () => {
           setResetPassToken(res.data.data.split("/")[1]);
           toast.success(res.data.message);
           setEmail("");
-          setTimeout(() => {
+          setRegisterLoader(false);
+        let navigationTimeout=  setTimeout(() => {
             navigate(`/reset_password/${resetPassId}/${resetPassToken}`);
           }, 2500);
-          setRegisterLoader(false);
+          return () => {
+            clearTimeout(navigationTimeout);
+          };
+        
         })
         .catch((error) => {
           console.log(error)

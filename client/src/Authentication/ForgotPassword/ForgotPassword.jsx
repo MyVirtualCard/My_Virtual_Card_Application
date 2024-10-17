@@ -2,16 +2,16 @@ import React, { useContext, useState } from "react";
 import "./ForgotPassword.scss";
 import image from "../../../assets/SVG/Forgot/forgot_svg2.png";
 import site_logo from "../../../assets/Authentication_image/BrandLogo.png";
-import { Link, useNavigate,useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
-import { ToastContainer, toast,Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import Context from "../../UseContext/Context";
 import { FaHome } from "react-icons/fa";
 
 const ForgotPassword = () => {
   let navigate = useNavigate();
-  let {id,token}=useParams();
+  let { id, token } = useParams();
   let [loginLoader, setLoginLoader] = useState(false);
   let [resetPasswordOpen, setResetPasswordOpen] = useState(false);
   // let navigate = useNavigate();
@@ -50,10 +50,9 @@ const ForgotPassword = () => {
       await api
         .post("/auth/forgot_password", values)
         .then((res) => {
-       
           toast.success(res.data.message);
-          setEmail('')
-          setResetPasswordOpen(true)
+          setEmail("");
+          setResetPasswordOpen(true);
           navigate(res.data.data);
           setLoginLoader(false);
         })
@@ -66,7 +65,7 @@ const ForgotPassword = () => {
   });
   let resetformik = useFormik({
     initialValues: {
-      password: ""
+      password: "",
     },
     validateOnChange: false,
     validateOnBlur: false,
@@ -78,28 +77,30 @@ const ForgotPassword = () => {
         .post(`/auth/reset_password/${id}/${token}`, values)
         .then((res) => {
           toast.success(res.data.message);
-          setLoginLoader(false)
-          setTimeout(() => {
-            setAuthToggle(true)
+          setLoginLoader(false);
+          let navigationTimeout = setTimeout(() => {
+            setAuthToggle(true);
             navigate(`/register`);
           }, 2000);
+          return () => {
+            clearTimeout(navigationTimeout);
+          };
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
           toast.error(error.response.data.message);
-          setLoginLoader(false)
+          setLoginLoader(false);
         });
     },
   });
   return (
     <>
       <div className="forgot_container">
+        {/* Home page button */}
 
-     {/* Home page button */}
-
-     <div className="home_page">
+        <div className="home_page">
           <Link to="/">
-           <FaHome/>
+            <FaHome />
           </Link>
         </div>
         <div className="right">
@@ -170,74 +171,73 @@ const ForgotPassword = () => {
           </div>
         ) : (
           <div className="left">
-          <div className="box_container">
-            <div className="site_logo">
-              <img src={site_logo} alt="logo" />
-            </div>
-            <div className="right_form">
-              <div className="form_title">
-                <h4>Reset Your Password!</h4>
-                {/* <p>Please enter login details below</p> */}
+            <div className="box_container">
+              <div className="site_logo">
+                <img src={site_logo} alt="logo" />
               </div>
+              <div className="right_form">
+                <div className="form_title">
+                  <h4>Reset Your Password!</h4>
+                  {/* <p>Please enter login details below</p> */}
+                </div>
 
-              <form action="" onSubmit={resetformik.handleSubmit}>
+                <form action="" onSubmit={resetformik.handleSubmit}>
                   {/* Password`` */}
                   <div className="form_group">
-                  <label htmlFor="password">
-                    New Password{" "}
-                    <span>
-                      <sup>*</sup>
-                    </span>
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Enter Strong Password"
-                    name="password"
-                    id="password"
-                    {...resetformik.getFieldProps("password")}
-                  />
-                  <div className="icon">
-                    <i className="bx bxs-lock"></i>
+                    <label htmlFor="password">
+                      New Password{" "}
+                      <span>
+                        <sup>*</sup>
+                      </span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Enter Strong Password"
+                      name="password"
+                      id="password"
+                      {...resetformik.getFieldProps("password")}
+                    />
+                    <div className="icon">
+                      <i className="bx bxs-lock"></i>
+                    </div>
+
+                    <div className="show_pass" onClick={handleShow}>
+                      {!show ? (
+                        <i className="bx bx-low-vision"></i>
+                      ) : (
+                        <i className="bx bxs-show"></i>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="show_pass" onClick={handleShow}>
-                    {!show ? (
-                      <i className="bx bx-low-vision"></i>
-                    ) : (
-                      <i className="bx bxs-show"></i>
-                    )}
+                  <div className="form_submit">
+                    <button type="submit">
+                      {loginLoader ? (
+                        <div className="loader"></div>
+                      ) : (
+                        <>
+                          Update
+                          <div className="rocket">
+                            <i className="bx bx-log-in bx-flashing"></i>
+                          </div>
+                        </>
+                      )}
+                    </button>
                   </div>
-                </div>
-             
-                <div className="form_submit">
-                  <button type="submit">
-                    {loginLoader ? (
-                      <div className="loader"></div>
-                    ) : (
-                      <>
-                       Update
-                        <div className="rocket">
-                          <i className="bx bx-log-in bx-flashing"></i>
-                        </div>
-                      </>
-                    )}
-                  </button>
-                </div>
 
-                
-                <div className="or">
-                  <p>or Continue</p>
-                </div>
-              </form>
+                  <div className="or">
+                    <p>or Continue</p>
+                  </div>
+                </form>
 
-              <div className="signup_link">
-                <p>
-                  Cancel reset Password ? <Link to="/register">Exit</Link>
-                </p>
+                <div className="signup_link">
+                  <p>
+                    Cancel reset Password ? <Link to="/register">Exit</Link>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         )}
       </div>
     </>
