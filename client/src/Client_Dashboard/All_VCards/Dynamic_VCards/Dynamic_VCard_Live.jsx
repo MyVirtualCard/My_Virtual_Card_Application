@@ -10312,7 +10312,7 @@ z-index: 1;
               <>
                 <div className="google_map_container">
                   <div className="Dynamic_Vcard_Live_Title">
-                    <h3>Live Location</h3>
+                    <h3>Location</h3>
                     {/* Contact */}
                   </div>
 
