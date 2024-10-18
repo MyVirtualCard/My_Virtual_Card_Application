@@ -7150,7 +7150,7 @@ color: ${InquiryInputBorderColor};
             </div>
 
             {/* Inquries */}
-            <div className="Inquries" ref={InquiryRef}>
+            {/* <div className="Inquries" ref={InquiryRef}>
               <div className="Preview_Title">
                 <h3>Inquries</h3>
               </div>
@@ -7208,7 +7208,7 @@ color: ${InquiryInputBorderColor};
                   </div>
                 </form>
               </div>
-            </div>
+            </div> */}
             {/* Footer */}
             <div className="Footer">
               <div className="footer_container">

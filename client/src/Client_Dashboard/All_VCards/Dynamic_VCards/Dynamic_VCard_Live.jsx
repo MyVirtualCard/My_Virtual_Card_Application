@@ -43,6 +43,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useLocation } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import PhoneInput from "react-phone-input-2";
+import { LuView } from "react-icons/lu";
+
 import "react-phone-input-2/lib/style.css";
 const Dynamic_VCard_Live = () => {
   let navigate = useNavigate();
@@ -119,13 +121,13 @@ const Dynamic_VCard_Live = () => {
   let LocationRef = useRef(null);
   let FeedbackRef = useRef(null);
   let InquiryRef = useRef(null);
-  let shareRef=useRef(null);
+  let shareRef = useRef(null);
   let AppoinmentRef = useRef(null);
   let scrollToSection = (elementRef) => {
     console.log(elementRef);
     elementRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  let [Views, setViews] = useState(0);
   function HandleMenuDown() {
     if (activeMenu === "Home") {
       return scrollToSection(AboutRef), setActiveMenu("About");
@@ -449,7 +451,6 @@ END:VCARD
       await api
         .get(`/dynamicVCard/style${currentUrl}`)
         .then((res) => {
-          console.log(res.data.data);
           setVcardTheme(res.data.data.FirstVcardTheme);
           setButtonTheme(res.data.data.ThirdButtonTheme);
           setTitleTheme(res.data.data.FourthTitleTheme);
@@ -483,13 +484,42 @@ END:VCARD
   const HtmlRenderer = ({ htmlString }) => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
-
+  async function ViewCount() {
+    try {
+      await api
+        .post(`/views${window.location.pathname}`, {
+          URL_Alies: URL_Alies,
+          pageUrl: window.location.pathname,
+        })
+        .then((res) => {
+          setViews(res.data.viewCount);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     fetchAllData();
+    let viewsCount = setTimeout(() => {
+      ViewCount();
+    }, 2000);
+    // Cleanup function to clear the timeout when the component unmounts or after 2 seconds
+    return () => {
+      clearTimeout(viewsCount);
+      console.log("Timeout cleared");
+    };
   }, []);
 
   const [copied, setCopied] = useState(false);
   const handleCopyURL = () => {
+    setCopied(true);
+    toast.success("Link Copied!");
+    setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+  };
+  const handleCopyMobileNumber = () => {
     setCopied(true);
     toast.success("Link Copied!");
     setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
@@ -543,38 +573,49 @@ END:VCARD
       alert("Sharing is not supported on this browser.");
     }
   };
-    // State to store the phone number
-    const [phoneNumber, setPhoneNumber] = useState("");
+  // State to store the phone number
+  const [phoneNumber, setPhoneNumber] = useState("");
 
-    // Generate the WhatsApp URL and share the profile
-    const handleShareWhatsApp = () => {
-      if (!phoneNumber) {
-        alert("Please enter a valid phone number");
-        return;
-      }
+  // Generate the WhatsApp URL and share the profile
+  const handleShareWhatsApp = () => {
+    if (!phoneNumber) {
+      alert("Please enter a valid phone number");
+      return;
+    }
     // Format the message
-    const message = `Hello! Check out my profile: ${VCard_URL_Data[0].FirstName}. You can view it here: ${window.location.origin + location.pathname}`;
-    
+    const message = `Hello! Check out my profile: ${
+      VCard_URL_Data[0].FirstName
+    }. You can view it here: ${window.location.origin + location.pathname}`;
+
     // Properly encode the text for the URL
     const encodedMessage = encodeURIComponent(message);
-      // WhatsApp API URL
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
-  
-      // Open the WhatsApp link (this works on mobile and desktop)
-      window.open(whatsappUrl, "_blank");
-    };
-    
+    // WhatsApp API URL
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+    // Open the WhatsApp link (this works on mobile and desktop)
+    window.open(whatsappUrl, "_blank");
+  };
+
   // Show loading spinner or message while loading
   if (SiteLoader) {
     return <VCard_Loader />;
-  };
+  }
 
   return (
     <>
-    {VcardTheme.length>0 && ButtonTheme.length>0 && TitleTheme.length>0&& ImageTheme.length>0 && ServiceTheme.length>0 && ProductTheme.length>0 && AppoinmentTheme.length>0 && FeedbackTheme.length>0 && TimerTheme.length>0 && TestimonialTheme.length>0 ?  
-    <>
-      <style>
-        {`
+      {VcardTheme.length > 0 &&
+      ButtonTheme.length > 0 &&
+      TitleTheme.length > 0 &&
+      ImageTheme.length > 0 &&
+      ServiceTheme.length > 0 &&
+      ProductTheme.length > 0 &&
+      AppoinmentTheme.length > 0 &&
+      FeedbackTheme.length > 0 &&
+      TimerTheme.length > 0 &&
+      TestimonialTheme.length > 0 ? (
+        <>
+          <style>
+            {`
 .Dynamic_Vcard_Live_Container{
   background-color:${VcardTheme[0].DesktopViewBackColor} !important;
 color:${VcardTheme[0].VCardTextColour} !important;
@@ -812,7 +853,41 @@ color:${VcardTheme[0].VCardTextColour} !important;
       max-height: auto;
       height: auto;
       position: relative;
+
+
+         .views_count{
+        position: absolute;
+        top: -0%;
+        left: 1%;
+     
+        z-index: 10;
+    color: ${ButtonTheme[0].BtnTextColour};
     
+
+        p{
+          letter-spacing: 1px;
+          margin: 0.5rem auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 5px;
+          font-size: 0.8rem;
+
+          .icon{
+            font-size: 1.1rem;
+          }
+        }
+
+        &::before{
+          content: '';
+          position: absolute;
+          background-color: ${ButtonTheme[0].BtnBackColour};
+          width: 350px;
+          height: 250px;
+          z-index: -1;
+          transform: rotate(60deg) translateY(30px) translateX(-290px);
+        }
+      }
       .banner_image {
         width: 100%;
          height: ${ImageTheme[0].BannerHeight[0]}px;
@@ -848,8 +923,10 @@ color:${VcardTheme[0].VCardTextColour} !important;
       top: ${ImageTheme[0].LogoTopPosition}${ImageTheme[0].LogoPositionUnit};
       left: ${ImageTheme[0].LogoLeftPosition}${ImageTheme[0].LogoPositionUnit};
         transform: translate(-${ImageTheme[0].LogoLeftPosition}${
-          ImageTheme[0].LogoPositionUnit
-        }, -${ImageTheme[0].LogoTopPosition}${ImageTheme[0].LogoPositionUnit});
+              ImageTheme[0].LogoPositionUnit
+            }, -${ImageTheme[0].LogoTopPosition}${
+              ImageTheme[0].LogoPositionUnit
+            });
       
        
         // display: flex;
@@ -863,8 +940,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
           width: ${ImageTheme[0].LogoWidth}${ImageTheme[0].LogoWidthUnit};
           height: ${ImageTheme[0].LogoHeight}${ImageTheme[0].LogoHeightUnit};
           border-radius: ${ImageTheme[0].LogoBorderRadius}${
-          ImageTheme[0].LogoBorderRadiusUnit
-        };
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
      
           object-fit: cover; /* Ensures image covers the area */
           object-position: top; /* Ensures head portion is not cropped */
@@ -903,7 +980,9 @@ color:${VcardTheme[0].VCardTextColour} !important;
            .Animation-1 {
             width: 100px;
             height: 100px;
-           border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+           border-radius: ${ImageTheme[0].LogoBorderRadius}${
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
             object-fit: cover;
             object-position: top;
 
@@ -925,7 +1004,9 @@ color:${VcardTheme[0].VCardTextColour} !important;
     .Animation-2 {
             width: 100px;
             height: 100px;
-          border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+          border-radius: ${ImageTheme[0].LogoBorderRadius}${
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
              filter: grayscale(10);
             object-fit: cover;
             object-position: top;
@@ -952,7 +1033,9 @@ color:${VcardTheme[0].VCardTextColour} !important;
    .Animation-3 {
             width: 100px;
             height: 100px;
-             border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+             border-radius: ${ImageTheme[0].LogoBorderRadius}${
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
             object-fit: cover;
             object-position: top;
             animation: logoAnime3 6s linear infinite;
@@ -976,7 +1059,9 @@ color:${VcardTheme[0].VCardTextColour} !important;
   .Animation-4 {
             width: 100px;
             height: 100px;
-           border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+           border-radius: ${ImageTheme[0].LogoBorderRadius}${
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
             object-fit: cover;
             object-position: top;
             border: 3px solid transparent;
@@ -1005,7 +1090,9 @@ color:${VcardTheme[0].VCardTextColour} !important;
              .Animation-5 {
             width: 100px;
             height: 100px;
-            border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            border-radius: ${ImageTheme[0].LogoBorderRadius}${
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
             object-fit: cover;
             object-position: top;
             border: 3px solid transparent;
@@ -1027,7 +1114,9 @@ color:${VcardTheme[0].VCardTextColour} !important;
             .Animation-6 {
             width: 100px;
             height: 100px;
-            border-radius: ${ImageTheme[0].LogoBorderRadius}${ImageTheme[0].LogoBorderRadiusUnit};
+            border-radius: ${ImageTheme[0].LogoBorderRadius}${
+              ImageTheme[0].LogoBorderRadiusUnit
+            };
             object-fit: cover;
             object-position: top;
 
@@ -1151,8 +1240,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
                  background-color: ${ButtonTheme[0].BtnBackColour};
               color: ${ButtonTheme[0].BtnTextColour};
               border-radius: ${ButtonTheme[0].ContactBtnBorderRadius}${
-          ButtonTheme[0].ContactBtnUnit
-        };
+              ButtonTheme[0].ContactBtnUnit
+            };
               transition: all 0.4s linear;
               .icon {
                 font-size: 1rem;
@@ -1209,8 +1298,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
           font-size: 1.2rem;
           padding: 5px;
                border-radius: ${ButtonTheme[0].IconBorderRadius}${
-          ButtonTheme[0].IconUnit
-        };
+              ButtonTheme[0].IconUnit
+            };
           background-color: ${ButtonTheme[0].BtnBackColour};
           color: ${ButtonTheme[0].BtnTextColour};
         }
@@ -1245,8 +1334,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
                    background-color: ${ButtonTheme[0].BtnBackColour};
               color: ${ButtonTheme[0].BtnTextColour};
               border-radius: ${ButtonTheme[0].ContactBtnBorderRadius}${
-          ButtonTheme[0].ContactBtnUnit
-        };
+              ButtonTheme[0].ContactBtnUnit
+            };
           font-weight: 550;
           font-size: 0.8rem;
           border-radius: 3px;
@@ -1368,8 +1457,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
 
             h5 {
               font-size: ${ServiceTheme[0].ServiceTitleSize}${
-          ServiceTheme[0].ServiceTitleUnit
-        };
+              ServiceTheme[0].ServiceTitleUnit
+            };
               font-weight: ${ServiceTheme[0].ServiceFontWeight};
               color:${ServiceTheme[0].ServiceTitleColor};
               font-family:${ServiceTheme[0].ServiceTitleFont};
@@ -1515,8 +1604,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
 
             h5 {
               font-size: ${ProductTheme[0].ProductTitleSize}${
-          ProductTheme[0].ProductTitleUnit
-        };
+              ProductTheme[0].ProductTitleUnit
+            };
               font-weight: ${ProductTheme[0].ProductFontWeight};
               color:${ProductTheme[0].ProductTitleColor};
               font-family:${ProductTheme[0].ProductTitleFont};
@@ -2926,7 +3015,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
               border-top-left-radius:${
                 TestimonialTheme[0].TestimonialBorderRadius.includes(",")
                   ? TestimonialTheme[0].TestimonialBorderRadius.split(",")[0]
-                  : ""}px;
+                  : ""
+              }px;
                 border-bottom-left-radius:${[
                   TestimonialTheme[0].TestimonialBorderRadius.includes(",")
                     ? TestimonialTheme[0].TestimonialBorderRadius.split(",")[1]
@@ -3573,7 +3663,9 @@ padding:10px;
               span {
                 font-size: 1rem;
                 color: $error_text_color !important;
-                -webkit-text-fill-color: ${FeedbackTheme[0]?.FeedbackInputError};
+                -webkit-text-fill-color: ${
+                  FeedbackTheme[0]?.FeedbackInputError
+                };
                 sup {
                   color: ${FeedbackTheme[0]?.FeedbackInputError} !important;
                 }
@@ -3735,10 +3827,14 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               font-size:0.7rem;
               }
               &:focus {
-                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
-                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                color: ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                }; // Change icon color when input is focused
               }
             }
          
@@ -3801,16 +3897,22 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
 
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
-                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                color: ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                }; // Change icon color when input is focused
               }
             }
 
@@ -3880,7 +3982,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               letter-spacing: 1px;
 
               &:focus {
-                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
@@ -3943,13 +4047,17 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
 
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
@@ -4063,7 +4171,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
@@ -4077,7 +4187,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
                 opacity: 0;
               }
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
@@ -4211,7 +4323,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
@@ -4226,7 +4340,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               }
 
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
                 animation: bounce 1s ease-in-out;
               }
               @keyframes bounce {
@@ -4245,10 +4361,14 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
                 }
               }
               &:focus + .icon {
-                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                color: ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                }; // Change icon color when input is focused
               }
               &:focus + .iconwithlabel {
-                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};  // Change icon color when input is focused
+                 color: ${
+                   FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                 };  // Change icon color when input is focused
               }
             }
 
@@ -4332,7 +4452,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               }
             
               &:focus + .icon {
-                  color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                  color: ${
+                    FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                  }; // Change icon color when input is focused
                   animation: rotate 0.5s ease-in-out;
                 }
             }
@@ -4599,7 +4721,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
                 caret-color: ${FeedbackTheme[0]?.FeedbackInputColor} ;
 
                 &::placeholder {
-                    color: ${FeedbackTheme[0]?.FeedbackPlaceholderColor} !important;
+                    color: ${
+                      FeedbackTheme[0]?.FeedbackPlaceholderColor
+                    } !important;
                   letter-spacing: 1px;
                   font-size: 0.7rem;
                 }
@@ -4667,10 +4791,14 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               font-size:0.7rem;
               }
               &:focus {
-                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
-                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                color: ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                }; // Change icon color when input is focused
               }
             }
          
@@ -4733,16 +4861,22 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
 
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
-                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                color: ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                }; // Change icon color when input is focused
               }
             }
 
@@ -4812,7 +4946,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               letter-spacing: 1px;
 
               &:focus {
-                border: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
@@ -4875,13 +5011,17 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
 
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
@@ -4995,7 +5135,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
@@ -5009,7 +5151,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
                 opacity: 0;
               }
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
               }
               &:focus + .icon {
                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; 
@@ -5143,7 +5287,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               outline: none;
               width: 100%;
               border: none;
-              border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderColor};
+              border-bottom: 1px solid ${
+                FeedbackTheme[0]?.FeedbackInputBorderColor
+              };
               position: relative;
               font-size: 0.9rem;
               letter-spacing: 1px;
@@ -5158,7 +5304,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               }
 
               &:focus {
-                border-bottom: 1px solid ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};
+                border-bottom: 1px solid ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                };
                 animation: bounce 1s ease-in-out;
               }
               @keyframes bounce {
@@ -5177,10 +5325,14 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
                 }
               }
               &:focus + .icon {
-                color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                color: ${
+                  FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                }; // Change icon color when input is focused
               }
               &:focus + .iconwithlabel {
-                 color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus};  // Change icon color when input is focused
+                 color: ${
+                   FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                 };  // Change icon color when input is focused
               }
             }
 
@@ -5264,7 +5416,9 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
               }
             
               &:focus + .icon {
-                  color: ${FeedbackTheme[0]?.FeedbackInputBorderOnFocus}; // Change icon color when input is focused
+                  color: ${
+                    FeedbackTheme[0]?.FeedbackInputBorderOnFocus
+                  }; // Change icon color when input is focused
                   animation: rotate 0.5s ease-in-out;
                 }
             }
@@ -5598,14 +5752,12 @@ color:${FeedbackTheme[0]?.FeedbackInputColor} !important;
 
       
         `}
-      </style>
-    </>
-    
-    : 
-    <>
-<style>
-  {
-    `
+          </style>
+        </>
+      ) : (
+        <>
+          <style>
+            {`
     .Dynamic_Vcard_Live_Container {
   width: 100vw;
   min-height: 100vh;
@@ -5885,6 +6037,8 @@ z-index: 1;
       max-height: 300px;
       height: 300px;
       position: relative;
+
+      
       .slide_svg {
         position: absolute;
         width: 100%;
@@ -5901,6 +6055,39 @@ z-index: 1;
           width: 100%;
           height: 100%;
           background: linear-gradient(#cd62e200 0%, $vcard_back_color 100%);
+        }
+      }
+             .views_count{
+        position: absolute;
+        top: -0%;
+        left: 1%;
+     
+        z-index: 10;
+        color: #fff;
+    
+
+        p{
+          letter-spacing: 1px;
+          margin: 0.5rem auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 5px;
+          font-size: 0.8rem;
+
+          .icon{
+            font-size: 1.1rem;
+          }
+        }
+
+        &::before{
+          content: '';
+          position: absolute;
+          background-color: royalblue;
+          width: 350px;
+          height: 250px;
+          z-index: -1;
+          transform: rotate(60deg) translateY(30px) translateX(-290px);
         }
       }
       .banner_image {
@@ -8586,11 +8773,10 @@ z-index: 1;
     }
   }
 }
-    `
-  }
-</style>
-    </>
-    }
+    `}
+          </style>
+        </>
+      )}
 
       {VCard_URL_Data.length > 0 ? (
         <div className="Dynamic_Vcard_Live_Container">
@@ -8842,6 +9028,13 @@ z-index: 1;
             {VCard_URL_Data.map((data, index) => {
               return (
                 <div className="Image_row_1" ref={HomeRef} key={index}>
+                  <div className="views_count">
+                    <p>
+                      <LuView className="icon"/>
+                      Views:
+                      <strong>{Views}</strong>
+                    </p>
+                  </div>
                   <div className="banner_image">
                     {data.BannerType == "Paste_ImageAddress" ? (
                       <>
@@ -8875,7 +9068,11 @@ z-index: 1;
                           data.Profile
                         }`}
                         alt="user_logo"
-                        className={`${ImageTheme.length > 0 ? ImageTheme[0].LogoImageAnimation : ''}`}
+                        className={`${
+                          ImageTheme.length > 0
+                            ? ImageTheme[0].LogoImageAnimation
+                            : ""
+                        }`}
                       />
                     ) : (
                       ""
@@ -8887,34 +9084,43 @@ z-index: 1;
                           "https://img.freepik.com/premium-photo/asian-man-wearing-trendy-fashion-clothes_148840-7198.jpg?w=900"
                         }
                         alt="user_logo"
-                        className={`${ImageTheme.length > 0 ? ImageTheme[0].LogoImageAnimation : ''}`}
+                        className={`${
+                          ImageTheme.length > 0
+                            ? ImageTheme[0].LogoImageAnimation
+                            : ""
+                        }`}
                       />
                     ) : (
                       ""
                     )}
                   </div>
-                  {VcardTheme.length > 0 ? 
-                     <div className="svg_image">
-                     <svg
-                       xmlns="http://www.w3.org/2000/svg"
-                       viewBox="0 0 1440 320"
-                     >
-                       <path
-                         fill={VcardTheme.length>0 ? VcardTheme[0].VCardColour : '#fff'}
-                         fill-opacity="1"
-                         d={
-                           VcardTheme[0].SVG_Design != "" ||
-                           VcardTheme[0].SVG_Design.length != 0
-                             ? VcardTheme[0].SVG_Design.split("=")[5].split(
-                                 '"'
-                               )[1]
-                             : ""
-                         }
-                       ></path>
-                     </svg>
-                   </div>
-                  : ''}
-               
+                  {VcardTheme.length > 0 ? (
+                    <div className="svg_image">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1440 320"
+                      >
+                        <path
+                          fill={
+                            VcardTheme.length > 0
+                              ? VcardTheme[0].VCardColour
+                              : "#fff"
+                          }
+                          fill-opacity="1"
+                          d={
+                            VcardTheme[0].SVG_Design != "" ||
+                            VcardTheme[0].SVG_Design.length != 0
+                              ? VcardTheme[0].SVG_Design.split("=")[5].split(
+                                  '"'
+                                )[1]
+                              : ""
+                          }
+                        ></path>
+                      </svg>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               );
             })}
@@ -9643,7 +9849,12 @@ z-index: 1;
                               <div className="detail_message">
                                 <strong>:</strong>
                                 <p>{`+91-${data.paytm}`}</p>
-                                <RiFileCopyLine className="icon" />
+                                <CopyToClipboard
+                                  text={data.paytm}
+                                  onCopy={handleCopyMobileNumber}
+                                >
+                                  <i className="bx bx-copy icon"></i>
+                                </CopyToClipboard>
                               </div>
                             </div>
                             {data.phonepay != "" ? (
@@ -9654,7 +9865,12 @@ z-index: 1;
                                 <div className="detail_message">
                                   <strong>:</strong>
                                   <p>{`+91-${data.phonepay}`}</p>
-                                  <RiFileCopyLine className="icon" />
+                                  <CopyToClipboard
+                                    text={data.phonepay}
+                                    onCopy={handleCopyMobileNumber}
+                                  >
+                                    <i className="bx bx-copy icon"></i>
+                                  </CopyToClipboard>
                                 </div>
                               </div>
                             ) : (
@@ -9668,7 +9884,12 @@ z-index: 1;
                               <div className="detail_message">
                                 <strong>:</strong>
                                 <p>{`+91-${data.gpay}`}</p>
-                                <RiFileCopyLine className="icon" />
+                                <CopyToClipboard
+                                  text={data.gpay}
+                                  onCopy={handleCopyMobileNumber}
+                                >
+                                  <i className="bx bx-copy icon"></i>
+                                </CopyToClipboard>
                               </div>
                             </div>
                           </div>
@@ -9721,7 +9942,12 @@ z-index: 1;
                               <div className="detail_message">
                                 <strong>:</strong>
                                 <p>{data.IFSCCode}</p>
-                                <RiFileCopyLine className="icon" />
+                                <CopyToClipboard
+                                  text={data.IFSCCode}
+                                  onCopy={handleCopyMobileNumber}
+                                >
+                                  <i className="bx bx-copy icon"></i>
+                                </CopyToClipboard>
                               </div>
                             </div>
                             <div className="detail">
@@ -9731,7 +9957,12 @@ z-index: 1;
                               <div className="detail_message">
                                 <strong>:</strong>
                                 <p>{data.AccountNumber}</p>
-                                <RiFileCopyLine className="icon" />
+                                <CopyToClipboard
+                                  text={data.AccountNumber}
+                                  onCopy={handleCopyMobileNumber}
+                                >
+                                  <i className="bx bx-copy icon"></i>
+                                </CopyToClipboard>
                               </div>
                             </div>
                           </div>
@@ -9870,138 +10101,138 @@ z-index: 1;
               ServiceData.length > 0) ||
             ProductData.length > 0 ? (
               <>
-              {AppoinmentTheme.length>0 ? 
-               <div className="Appoinment" ref={AppoinmentRef}>
-               <div className="Dynamic_Vcard_Live_Title">
-                 <h3>Appoinment</h3>
-               </div>
-               {/* Success and Error Popup */}
-               <div className="popup_message_container">
-                 <div
-                   className="popup_success_box"
-                   id={AppoinmentPopup ? "successOpen" : "successClose"}
-                 >
-                   <div className="popup_message">{successMessage}</div>
-                   <div
-                     className="popup_close"
-                     onClick={() => setAppoinmentPopup(false)}
-                   >
-                     <i className="bx bx-x"></i>
-                   </div>
-                 </div>
+                {AppoinmentTheme.length > 0 ? (
+                  <div className="Appoinment" ref={AppoinmentRef}>
+                    <div className="Dynamic_Vcard_Live_Title">
+                      <h3>Appoinment</h3>
+                    </div>
+                    {/* Success and Error Popup */}
+                    <div className="popup_message_container">
+                      <div
+                        className="popup_success_box"
+                        id={AppoinmentPopup ? "successOpen" : "successClose"}
+                      >
+                        <div className="popup_message">{successMessage}</div>
+                        <div
+                          className="popup_close"
+                          onClick={() => setAppoinmentPopup(false)}
+                        >
+                          <i className="bx bx-x"></i>
+                        </div>
+                      </div>
 
-                 {AppoinmentPopupError ? (
-                   <div className="popup_error_box">
-                     <div className="popup_message">{errorMessage}</div>
-                     <div
-                       className="popup_close"
-                       onClick={() => setAppoinmentPopupError(false)}
-                     >
-                       <i className="bx bx-x"></i>
-                     </div>
-                   </div>
-                 ) : (
-                   ""
-                 )}
-               </div>
-               <div className="appinment_form_container">
-                 <form
-                   className="appinment_form"
-                   onSubmit={Appoinment_formik.handleSubmit}
-                 >
-                   <div
-                     className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
-                   >
-                     <label
-                       htmlFor="FullName"
-                       className={
-                         Appoinment_formik.errors.FullName
-                           ? "labelError"
-                           : ""
-                       }
-                     >
-                       {Appoinment_formik.errors.FullName
-                         ? Appoinment_formik.errors.FullName
-                         : `FullName`}
-                       <sup style={{ color: "red" }}>*</sup>
-                     </label>
-                     <input
-                       type="text"
-                       name="FullName"
-                       id="FullName"
-                       placeholder="Enter Your FullName"
-                       value={Appoinment_formik.values.FullName}
-                       onChange={Appoinment_formik.handleChange}
-                       className={`${AppoinmentTheme[0].AppoinmentInputDesign}
+                      {AppoinmentPopupError ? (
+                        <div className="popup_error_box">
+                          <div className="popup_message">{errorMessage}</div>
+                          <div
+                            className="popup_close"
+                            onClick={() => setAppoinmentPopupError(false)}
+                          >
+                            <i className="bx bx-x"></i>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="appinment_form_container">
+                      <form
+                        className="appinment_form"
+                        onSubmit={Appoinment_formik.handleSubmit}
+                      >
+                        <div
+                          className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
+                        >
+                          <label
+                            htmlFor="FullName"
+                            className={
+                              Appoinment_formik.errors.FullName
+                                ? "labelError"
+                                : ""
+                            }
+                          >
+                            {Appoinment_formik.errors.FullName
+                              ? Appoinment_formik.errors.FullName
+                              : `FullName`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <input
+                            type="text"
+                            name="FullName"
+                            id="FullName"
+                            placeholder="Enter Your FullName"
+                            value={Appoinment_formik.values.FullName}
+                            onChange={Appoinment_formik.handleChange}
+                            className={`${AppoinmentTheme[0].AppoinmentInputDesign}
                          ${Appoinment_formik.errors.FullName} &&
                          ${Appoinment_formik.touched.FullName}
                            ? "input_error"
                            : "input_success"
                        `}
-                       //  className="date-input"
-                     />
-                     <div className="icon">
-                       <i className="bx bxs-user"></i>
-                     </div>
-                   </div>
-                   <div
-                     className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
-                   >
-                     <label
-                       htmlFor="MobileNumber"
-                       className={
-                         Appoinment_formik.errors.MobileNumber
-                           ? "labelError"
-                           : ""
-                       }
-                     >
-                       {Appoinment_formik.errors.MobileNumber
-                         ? Appoinment_formik.errors.MobileNumber
-                         : `MobileNumber`}
-                       <sup style={{ color: "red" }}>*</sup>
-                     </label>
-                     <input
-                       type="tel"
-                       name="MobileNumber"
-                       id="MobileNumber"
-                       placeholder="Enter Your MobileNumber"
-                       value={Appoinment_formik.values.MobileNumber}
-                       onChange={Appoinment_formik.handleChange}
-                       className={`${AppoinmentTheme[0].AppoinmentInputDesign}
+                            //  className="date-input"
+                          />
+                          <div className="icon">
+                            <i className="bx bxs-user"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
+                        >
+                          <label
+                            htmlFor="MobileNumber"
+                            className={
+                              Appoinment_formik.errors.MobileNumber
+                                ? "labelError"
+                                : ""
+                            }
+                          >
+                            {Appoinment_formik.errors.MobileNumber
+                              ? Appoinment_formik.errors.MobileNumber
+                              : `MobileNumber`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <input
+                            type="tel"
+                            name="MobileNumber"
+                            id="MobileNumber"
+                            placeholder="Enter Your MobileNumber"
+                            value={Appoinment_formik.values.MobileNumber}
+                            onChange={Appoinment_formik.handleChange}
+                            className={`${AppoinmentTheme[0].AppoinmentInputDesign}
                          ${Appoinment_formik.errors.MobileNumber} &&
                          ${Appoinment_formik.touched.MobileNumber}
                            ? "input_error"
                            : "input_success"
                        `}
-                     />
-                     <div className="icon">
-                       <i className="bx bx-mobile"></i>
-                     </div>
-                   </div>
-                   <div
-                     className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
-                   >
-                     <label
-                       htmlFor="Date"
-                       className={
-                         Appoinment_formik.errors.Date ? "labelError" : ""
-                       }
-                     >
-                       {Appoinment_formik.errors.Date
-                         ? Appoinment_formik.errors.Date
-                         : `Date`}
-                       <sup style={{ color: "red" }}>*</sup>
-                     </label>
-                     <input
-                       type="date"
-                       name="Date"
-                       id="Date"
-                       placeholder="Enter Your date"
-                       value={Appoinment_formik.values.Date}
-                       onChange={Appoinment_formik.handleChange}
-                       className={` date-input ${
-                         AppoinmentTheme[0].AppoinmentInputDesign
-                       }
+                          />
+                          <div className="icon">
+                            <i className="bx bx-mobile"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
+                        >
+                          <label
+                            htmlFor="Date"
+                            className={
+                              Appoinment_formik.errors.Date ? "labelError" : ""
+                            }
+                          >
+                            {Appoinment_formik.errors.Date
+                              ? Appoinment_formik.errors.Date
+                              : `Date`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <input
+                            type="date"
+                            name="Date"
+                            id="Date"
+                            placeholder="Enter Your date"
+                            value={Appoinment_formik.values.Date}
+                            onChange={Appoinment_formik.handleChange}
+                            className={` date-input ${
+                              AppoinmentTheme[0].AppoinmentInputDesign
+                            }
                              ${
                                Appoinment_formik.errors.Date &&
                                Appoinment_formik.touched.Date
@@ -10009,34 +10240,34 @@ z-index: 1;
                                ? "input_error"
                                : "input_success"
                            `}
-                     />
-                     <div className="icon">
-                       <i className="bx bxs-calendar"></i>
-                     </div>
-                   </div>
-                   <div
-                     className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
-                   >
-                     <label
-                       htmlFor="Time"
-                       className={
-                         Appoinment_formik.errors.Time ? "labelError" : ""
-                       }
-                     >
-                       {Appoinment_formik.errors.Time
-                         ? Appoinment_formik.errors.Time
-                         : `Time`}
-                       <sup style={{ color: "red" }}>*</sup>
-                     </label>
-                     <select
-                       name="Time"
-                       id="Time"
-                       placeholder="Enter Your Time"
-                       value={Appoinment_formik.values.Time}
-                       onChange={Appoinment_formik.handleChange}
-                       className={` date-input ${
-                         AppoinmentTheme[0].AppoinmentInputDesign
-                       }
+                          />
+                          <div className="icon">
+                            <i className="bx bxs-calendar"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${AppoinmentTheme[0].AppoinmentInputDesign}`}
+                        >
+                          <label
+                            htmlFor="Time"
+                            className={
+                              Appoinment_formik.errors.Time ? "labelError" : ""
+                            }
+                          >
+                            {Appoinment_formik.errors.Time
+                              ? Appoinment_formik.errors.Time
+                              : `Time`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <select
+                            name="Time"
+                            id="Time"
+                            placeholder="Enter Your Time"
+                            value={Appoinment_formik.values.Time}
+                            onChange={Appoinment_formik.handleChange}
+                            className={` date-input ${
+                              AppoinmentTheme[0].AppoinmentInputDesign
+                            }
                              ${
                                Appoinment_formik.errors.Time &&
                                Appoinment_formik.touched.Time
@@ -10044,50 +10275,51 @@ z-index: 1;
                                ? "input_error"
                                : "input_success"
                            `}
-                     >
-                       <option value="">Select Your Time</option>
-                       <option value="9:00 AM">9:00 AM</option>
-                       <option value="9:00 AM">10:00 AM</option>
-                       <option value="11:00 AM">11:00 AM</option>
-                       <option value="11:00 AM">12:00 AM</option>
-                       <option value="01:00 PM">01:00 PM</option>
-                       <option value="01:00 PM">02:00 PM</option>
-                       <option value="03:00 PM">03:00 PM</option>
-                       <option value="03:00 PM">04:00 PM</option>
-                       <option value="03:00 PM">05:00 PM</option>
-                       <option value="03:00 PM">06:00 PM</option>
-                     </select>
-                     <div className="icon">
-                       <i className="bx bxs-time-five"></i>
-                     </div>
-                   </div>
-                   <div className="form_submit">
-                     <button type="submit" className="submit-btn">
-                       {appoinmentLoader ? (
-                         <span className="inquiryloader"></span>
-                       ) : (
-                         <span className="material-symbols-outlined">
-                           send
-                         </span>
-                       )}
-                       Book Now
-                     </button>
-                     <button
-                       type="button"
-                       className="submit-btn"
-                       onClick={Appoinment_formik.resetForm}
-                     >
-                       <span className="material-symbols-outlined">
-                         clear_all
-                       </span>
-                       clear
-                     </button>
-                   </div>
-                 </form>
-               </div>
-             </div>
-              : ''}
-               
+                          >
+                            <option value="">Select Your Time</option>
+                            <option value="9:00 AM">9:00 AM</option>
+                            <option value="9:00 AM">10:00 AM</option>
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="11:00 AM">12:00 AM</option>
+                            <option value="01:00 PM">01:00 PM</option>
+                            <option value="01:00 PM">02:00 PM</option>
+                            <option value="03:00 PM">03:00 PM</option>
+                            <option value="03:00 PM">04:00 PM</option>
+                            <option value="03:00 PM">05:00 PM</option>
+                            <option value="03:00 PM">06:00 PM</option>
+                          </select>
+                          <div className="icon">
+                            <i className="bx bxs-time-five"></i>
+                          </div>
+                        </div>
+                        <div className="form_submit">
+                          <button type="submit" className="submit-btn">
+                            {appoinmentLoader ? (
+                              <span className="inquiryloader"></span>
+                            ) : (
+                              <span className="material-symbols-outlined">
+                                send
+                              </span>
+                            )}
+                            Book Now
+                          </button>
+                          <button
+                            type="button"
+                            className="submit-btn"
+                            onClick={Appoinment_formik.resetForm}
+                          >
+                            <span className="material-symbols-outlined">
+                              clear_all
+                            </span>
+                            clear
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
@@ -10316,9 +10548,12 @@ z-index: 1;
                     {/* Contact */}
                   </div>
 
-                  <div className="google_map" dangerouslySetInnerHTML={{__html :GoogleMapData[0].GoogleIframe}}>
-                    
-                  </div>
+                  <div
+                    className="google_map"
+                    dangerouslySetInnerHTML={{
+                      __html: GoogleMapData[0].GoogleIframe,
+                    }}
+                  ></div>
                 </div>
               </>
             ) : (
@@ -10330,278 +10565,289 @@ z-index: 1;
             SocialMediaData.length > 0 &&
             ManageContentData[0].FeedbackForm == true ? (
               <>
-              {FeedbackTheme.length>0 ? 
-                 <div className="feedback_row" ref={FeedbackRef}>
-                 <div className="Dynamic_Vcard_Live_Title">
-                   <h3>Feedback</h3>
-                 </div>
-                 {/* Success and Error Popup */}
-                 <div className="popup_message_container">
-                   <div
-                     className="popup_success_box"
-                     id={FeedbackPopup ? "successOpen" : "successClose"}
-                   >
-                     <div className="popup_message">{successMessage}</div>
-                     <div
-                       className="popup_close"
-                       onClick={() => setFeedbackPopup(false)}
-                     >
-                       <TiTick className="icon" />
-                     </div>
-                   </div>
+                {FeedbackTheme.length > 0 ? (
+                  <div className="feedback_row" ref={FeedbackRef}>
+                    <div className="Dynamic_Vcard_Live_Title">
+                      <h3>Feedback</h3>
+                    </div>
+                    {/* Success and Error Popup */}
+                    <div className="popup_message_container">
+                      <div
+                        className="popup_success_box"
+                        id={FeedbackPopup ? "successOpen" : "successClose"}
+                      >
+                        <div className="popup_message">{successMessage}</div>
+                        <div
+                          className="popup_close"
+                          onClick={() => setFeedbackPopup(false)}
+                        >
+                          <TiTick className="icon" />
+                        </div>
+                      </div>
 
-                   {FeedbackPopupError ? (
-                     <div className="popup_error_box">
-                       <div className="popup_message">{errorMessage}</div>
-                       <div
-                         className="popup_close"
-                         onClick={() => setFeedbackPopupError(false)}
-                       >
-                         <i className="bx bx-x"></i>
-                       </div>
-                     </div>
-                   ) : (
-                     ""
-                   )}
-                 </div>
-                 {/* //Feedback messages */}
-                 <div className="Feedback_container_message">
-                   <div className="feeback_title">
-                     {commentOpen ? (
-                       <button onClick={() => setCommentOpen(false)}>
-                         <span className="material-symbols-outlined">
-                           thumbs_up_down
-                         </span>
-                         Hide All Feedbacks
-                       </button>
-                     ) : (
-                       <button onClick={() => setCommentOpen(true)}>
-                         <span className="material-symbols-outlined">
-                           thumbs_up_down
-                         </span>
-                         See All Feedbacks
-                         <i className="bx bxs-bell-ring bx-tada"></i>
-                         <div className="count">{AllFeedBacks.length}</div>
-                       </button>
-                     )}
+                      {FeedbackPopupError ? (
+                        <div className="popup_error_box">
+                          <div className="popup_message">{errorMessage}</div>
+                          <div
+                            className="popup_close"
+                            onClick={() => setFeedbackPopupError(false)}
+                          >
+                            <i className="bx bx-x"></i>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    {/* //Feedback messages */}
+                    <div className="Feedback_container_message">
+                      <div className="feeback_title">
+                        {commentOpen ? (
+                          <button onClick={() => setCommentOpen(false)}>
+                            <span className="material-symbols-outlined">
+                              thumbs_up_down
+                            </span>
+                            Hide All Feedbacks
+                          </button>
+                        ) : (
+                          <button onClick={() => setCommentOpen(true)}>
+                            <span className="material-symbols-outlined">
+                              thumbs_up_down
+                            </span>
+                            See All Feedbacks
+                            <i className="bx bxs-bell-ring bx-tada"></i>
+                            <div className="count">{AllFeedBacks.length}</div>
+                          </button>
+                        )}
 
-                     {feedbackLoader ? (
-                       <span className="feedBack_loader"></span>
-                     ) : (
-                       ""
-                     )}
-                   </div>
+                        {feedbackLoader ? (
+                          <span className="feedBack_loader"></span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
 
-                   {commentOpen ? (
-                     <div className="comment_box">
-                       <div className="comment_box_title">
-                         <h5>Client's All Feedbacks</h5>
-                       </div>
-                       {AllFeedBacks.map((data, index) => {
-                         return (
-                           <div className="message" key={index}>
-                             <div className="user_detail">
-                               <div className="details">
-                                 <div className="userName">
-                                   <p>
-                                     {data.ClientName}
-                                     <i className="bx bxs-user-check"></i>
-                                   </p>
-                                 </div>
-                                 <div className="stars">
-                                   <div
-                                     className="ratting_container1"
-                                     data-rating={data.ClientRatting}
-                                     name="currentRatting"
-                                     // id="currentRatting"
-                                     id={
-                                       data.ClientRatting == 0
-                                         ? "noRatting"
-                                         : "" || data.ClientRatting == 1
-                                         ? "singleRatting"
-                                         : "" || data.ClientRatting == 2
-                                         ? "doubleRatting"
-                                         : "" || data.ClientRatting == 3
-                                         ? "ThreeRatting"
-                                         : "" || data.ClientRatting == 4
-                                         ? "fourRatting"
-                                         : "" || data.ClientRatting == 5
-                                         ? "fullRatting"
-                                         : ""
-                                     }
-                                     value={data.ClientRatting}
-                                   >
-                                     <span className="ratting_star">
-                                       <i
-                                         className="bx bxs-star star1"
-                                         data-rating="1"
-                                       ></i>
-                                     </span>
-                                     <span className="ratting_star">
-                                       <i
-                                         className="bx bxs-star star1"
-                                         data-rating="2"
-                                       ></i>
-                                     </span>
-                                     <span className="ratting_star">
-                                       <i
-                                         className="bx bxs-star star1"
-                                         data-rating="3"
-                                       ></i>
-                                     </span>
-                                     <span className="ratting_star">
-                                       <i
-                                         className="bx bxs-star star1"
-                                         data-rating="4"
-                                       ></i>
-                                     </span>
-                                     <span className="ratting_star">
-                                       <i
-                                         className="bx bxs-star star1"
-                                         data-rating="5"
-                                       ></i>
-                                     </span>
-                                   </div>
-                                 </div>
-                               </div>
-                             </div>
+                      {commentOpen ? (
+                        <div className="comment_box">
+                          <div className="comment_box_title">
+                            <h5>Client's All Feedbacks</h5>
+                          </div>
+                          {AllFeedBacks.map((data, index) => {
+                            return (
+                              <div className="message" key={index}>
+                                <div className="user_detail">
+                                  <div className="details">
+                                    <div className="userName">
+                                      <p>
+                                        {data.ClientName}
+                                        <i className="bx bxs-user-check"></i>
+                                      </p>
+                                    </div>
+                                    <div className="stars">
+                                      <div
+                                        className="ratting_container1"
+                                        data-rating={data.ClientRatting}
+                                        name="currentRatting"
+                                        // id="currentRatting"
+                                        id={
+                                          data.ClientRatting == 0
+                                            ? "noRatting"
+                                            : "" || data.ClientRatting == 1
+                                            ? "singleRatting"
+                                            : "" || data.ClientRatting == 2
+                                            ? "doubleRatting"
+                                            : "" || data.ClientRatting == 3
+                                            ? "ThreeRatting"
+                                            : "" || data.ClientRatting == 4
+                                            ? "fourRatting"
+                                            : "" || data.ClientRatting == 5
+                                            ? "fullRatting"
+                                            : ""
+                                        }
+                                        value={data.ClientRatting}
+                                      >
+                                        <span className="ratting_star">
+                                          <i
+                                            className="bx bxs-star star1"
+                                            data-rating="1"
+                                          ></i>
+                                        </span>
+                                        <span className="ratting_star">
+                                          <i
+                                            className="bx bxs-star star1"
+                                            data-rating="2"
+                                          ></i>
+                                        </span>
+                                        <span className="ratting_star">
+                                          <i
+                                            className="bx bxs-star star1"
+                                            data-rating="3"
+                                          ></i>
+                                        </span>
+                                        <span className="ratting_star">
+                                          <i
+                                            className="bx bxs-star star1"
+                                            data-rating="4"
+                                          ></i>
+                                        </span>
+                                        <span className="ratting_star">
+                                          <i
+                                            className="bx bxs-star star1"
+                                            data-rating="5"
+                                          ></i>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
 
-                             <div className="comments">
-                               <i className="bx bx-chat"></i>
-                               <span>{data.ClientFeedback}</span>
-                             </div>
+                                <div className="comments">
+                                  <i className="bx bx-chat"></i>
+                                  <span>{data.ClientFeedback}</span>
+                                </div>
 
-                             <div className="date">
-                               <i className="bx bx-calendar"></i>
-                               <p>
-                                 {" "}
-                                 {data.createdAt
-                                   .slice(0, 10)
-                                   .split("-")
-                                   .reverse()
-                                   .join("-")}
-                               </p>
-                             </div>
-                           </div>
-                         );
-                       })}
-                     </div>
-                   ) : (
-                     ""
-                   )}
-                 </div>
-                 <div className="feedback_container">
-                   <form action="" onSubmit={feedbackFormik.handleSubmit}>
-                     <div className={`form_group ${FeedbackTheme[0]?.FeedbackInputDesign}`}>
-                       <label
-                         htmlFor="clientName_Input"
-                         className={`${
-                           feedbackFormik.errors.ClientName ? "error" : ""
-                         } `}
-                       >
-                         {feedbackFormik.touched.ClientName &&
-                         feedbackFormik.errors.ClientName
-                           ? feedbackFormik.errors.ClientName
-                           : "Your Name"}
-                         <span>
-                           <sup>*</sup>
-                         </span>
-                       </label>
-                       <input
-                         type="text"
-                         placeholder="Enter Your Name"
-                         name="ClientName"
-                         id="ClientName"
-                         className={FeedbackTheme[0]?.FeedbackInputDesign}
-                         // value={userName}
-                         // onChange={(e)=>setUserName(e.target.value)}
-                         value={feedbackFormik.values.ClientName}
-                         onChange={feedbackFormik.handleChange}
-                         onBlur={feedbackFormik.handleBlur}
-                       />
-                       <div className="icon">
-                       <i className='bx bxs-user'></i>
-                       </div>
-                     </div>
-                     <div className={`form_group ${FeedbackTheme[0]?.FeedbackInputDesign}`}>
-                       <label
-                         htmlFor="clientFeedBack_Input"
-                         className={`${
-                           feedbackFormik.errors.ClientFeedback ? "error" : ""
-                         } `}
-                       >
-                         {feedbackFormik.touched.ClientFeedback &&
-                         feedbackFormik.errors.ClientFeedback
-                           ? feedbackFormik.errors.ClientFeedback
-                           : "Your FeedBack"}
-                         <span>
-                           <sup>*</sup>
-                         </span>
-                       </label>
-                       <textarea
-                         id="ClientFeedback"
-                         name="ClientFeedback"
-                         cols="30"
-                         rows="2"
-                         placeholder="Enter your Feedback"
-                         className={FeedbackTheme[0]?.FeedbackInputDesign}
-                         // value={userFeedback}
-                         // onChange={(e)=>setUserFeedback(e.target.value)}
-                         value={feedbackFormik.values.ClientFeedback}
-                         onChange={feedbackFormik.handleChange}
-                         onBlur={feedbackFormik.handleBlur}
-                       ></textarea>
-                       <div className="icon">
-                       <i className='bx bx-message-square-detail'></i>
-                       </div>
-                     </div>
-                     <div className="form_group">
-                       <label
-                         htmlFor="clientName_Input"
-                         className={`${
-                           feedbackFormik.errors.ClientRatting ? "error" : ""
-                         } `}
-                       >
-                         {feedbackFormik.touched.ClientRatting &&
-                         feedbackFormik.errors.ClientRatting
-                           ? feedbackFormik.errors.ClientRatting
-                           : "Ratting"}
-                         <span>
-                           <sup>*</sup>
-                         </span>
-                       </label>
+                                <div className="date">
+                                  <i className="bx bx-calendar"></i>
+                                  <p>
+                                    {" "}
+                                    {data.createdAt
+                                      .slice(0, 10)
+                                      .split("-")
+                                      .reverse()
+                                      .join("-")}
+                                  </p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="feedback_container">
+                      <form action="" onSubmit={feedbackFormik.handleSubmit}>
+                        <div
+                          className={`form_group ${FeedbackTheme[0]?.FeedbackInputDesign}`}
+                        >
+                          <label
+                            htmlFor="clientName_Input"
+                            className={`${
+                              feedbackFormik.errors.ClientName ? "error" : ""
+                            } `}
+                          >
+                            {feedbackFormik.touched.ClientName &&
+                            feedbackFormik.errors.ClientName
+                              ? feedbackFormik.errors.ClientName
+                              : "Your Name"}
+                            <span>
+                              <sup>*</sup>
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Your Name"
+                            name="ClientName"
+                            id="ClientName"
+                            className={FeedbackTheme[0]?.FeedbackInputDesign}
+                            // value={userName}
+                            // onChange={(e)=>setUserName(e.target.value)}
+                            value={feedbackFormik.values.ClientName}
+                            onChange={feedbackFormik.handleChange}
+                            onBlur={feedbackFormik.handleBlur}
+                          />
+                          <div className="icon">
+                            <i className="bx bxs-user"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${FeedbackTheme[0]?.FeedbackInputDesign}`}
+                        >
+                          <label
+                            htmlFor="clientFeedBack_Input"
+                            className={`${
+                              feedbackFormik.errors.ClientFeedback
+                                ? "error"
+                                : ""
+                            } `}
+                          >
+                            {feedbackFormik.touched.ClientFeedback &&
+                            feedbackFormik.errors.ClientFeedback
+                              ? feedbackFormik.errors.ClientFeedback
+                              : "Your FeedBack"}
+                            <span>
+                              <sup>*</sup>
+                            </span>
+                          </label>
+                          <textarea
+                            id="ClientFeedback"
+                            name="ClientFeedback"
+                            cols="30"
+                            rows="2"
+                            placeholder="Enter your Feedback"
+                            className={FeedbackTheme[0]?.FeedbackInputDesign}
+                            // value={userFeedback}
+                            // onChange={(e)=>setUserFeedback(e.target.value)}
+                            value={feedbackFormik.values.ClientFeedback}
+                            onChange={feedbackFormik.handleChange}
+                            onBlur={feedbackFormik.handleBlur}
+                          ></textarea>
+                          <div className="icon">
+                            <i className="bx bx-message-square-detail"></i>
+                          </div>
+                        </div>
+                        <div className="form_group">
+                          <label
+                            htmlFor="clientName_Input"
+                            className={`${
+                              feedbackFormik.errors.ClientRatting ? "error" : ""
+                            } `}
+                          >
+                            {feedbackFormik.touched.ClientRatting &&
+                            feedbackFormik.errors.ClientRatting
+                              ? feedbackFormik.errors.ClientRatting
+                              : "Ratting"}
+                            <span>
+                              <sup>*</sup>
+                            </span>
+                          </label>
 
-                       <ReactStars
-                         count={5}
-                         value={feedbackFormik.values.ClientRatting}
-                         onChange={(newRating) => {
-                           // Directly use Formik's handleChange by creating an event-like object for the rating field
-                           feedbackFormik.handleChange({
-                             target: {
-                               name: "ClientRatting",
-                               value: newRating,
-                             },
-                           });
-                         }}
-                         size={44}
-                         style={{ paddingRight: "10px" }}
-                         half={false}
-                         color2={FeedbackTheme[0]?.FeedbackInputColor ? FeedbackTheme[0].FeedbackInputColor : "#ffd700"}
-                       />
-                     </div>
-                     <div className="form_actions">
-                       <button type="submit">
-                         <span className="material-symbols-outlined">
-                           send
-                         </span>
-                         Send Feedback
-                       </button>
-                     </div>
-                   </form>
-                 </div>
-               </div>
-              : ''}
-             
+                          <ReactStars
+                            count={5}
+                            value={feedbackFormik.values.ClientRatting}
+                            onChange={(newRating) => {
+                              // Directly use Formik's handleChange by creating an event-like object for the rating field
+                              feedbackFormik.handleChange({
+                                target: {
+                                  name: "ClientRatting",
+                                  value: newRating,
+                                },
+                              });
+                            }}
+                            size={44}
+                            style={{ paddingRight: "10px" }}
+                            half={false}
+                            color2={
+                              FeedbackTheme[0]?.FeedbackInputColor
+                                ? FeedbackTheme[0].FeedbackInputColor
+                                : "#ffd700"
+                            }
+                          />
+                        </div>
+                        <div className="form_actions">
+                          <button type="submit">
+                            <span className="material-symbols-outlined">
+                              send
+                            </span>
+                            Send Feedback
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               " "
@@ -10612,236 +10858,254 @@ z-index: 1;
             SocialMediaData.length > 0 &&
             ManageContentData[0].InquiryForm == true ? (
               <>
-              {FeedbackTheme.length>0 ? 
-              
-              <div className="Inquries" ref={InquiryRef}>
-              <div className="Dynamic_Vcard_Live_Title">
-                <h3>Inquries</h3>
-              </div>
-              {/* Success and Error Popup */}
-              <div className="popup_message_container">
-                <div
-                  className="popup_success_box"
-                  id={successPopupOpen ? "successOpen" : "successClose"}
-                >
-                  <div className="popup_message">{successMessage}</div>
-                  <div
-                    className="popup_close"
-                    onClick={() => setSuccessPopupOpen(false)}
-                  >
-                    <i className="bx bx-x"></i>
-                  </div>
-                </div>
-
-                {errorPopupOpen ? (
-                  <div className="popup_error_box">
-                    <div className="popup_message">{errorMessage}</div>
-                    <div
-                      className="popup_close"
-                      onClick={() => setErrorPopupOpen(false)}
-                    >
-                      <i className="bx bx-x"></i>
+                {FeedbackTheme.length > 0 ? (
+                  <div className="Inquries" ref={InquiryRef}>
+                    <div className="Dynamic_Vcard_Live_Title">
+                      <h3>Inquries</h3>
                     </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="inquiries_container5">
-                <form action="" onSubmit={formik.handleSubmit}>
-                  <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
-                    <label
-                      htmlFor="name"
-                      className={formik.errors.Name ? "labelError" : ""}
-                    >
-                      {formik.errors.Name ? formik.errors.Name : `Name`}
-                      <sup style={{ color: "red" }}>*</sup>
-                    </label>
-                    <div className="input">
-                      <input
-                        type="text"
-                        placeholder="Your Name"
-                        name="Name"
-                        id="Name"
-                        value={formik.values.Name}
-                        onChange={formik.handleChange}
-                        className={`${FeedbackTheme[0].FeedbackInputDesign}
+                    {/* Success and Error Popup */}
+                    <div className="popup_message_container">
+                      <div
+                        className="popup_success_box"
+                        id={successPopupOpen ? "successOpen" : "successClose"}
+                      >
+                        <div className="popup_message">{successMessage}</div>
+                        <div
+                          className="popup_close"
+                          onClick={() => setSuccessPopupOpen(false)}
+                        >
+                          <i className="bx bx-x"></i>
+                        </div>
+                      </div>
+
+                      {errorPopupOpen ? (
+                        <div className="popup_error_box">
+                          <div className="popup_message">{errorMessage}</div>
+                          <div
+                            className="popup_close"
+                            onClick={() => setErrorPopupOpen(false)}
+                          >
+                            <i className="bx bx-x"></i>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="inquiries_container5">
+                      <form action="" onSubmit={formik.handleSubmit}>
+                        <div
+                          className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}
+                        >
+                          <label
+                            htmlFor="name"
+                            className={formik.errors.Name ? "labelError" : ""}
+                          >
+                            {formik.errors.Name ? formik.errors.Name : `Name`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <div className="input">
+                            <input
+                              type="text"
+                              placeholder="Your Name"
+                              name="Name"
+                              id="Name"
+                              value={formik.values.Name}
+                              onChange={formik.handleChange}
+                              className={`${FeedbackTheme[0].FeedbackInputDesign}
                           ${formik.errors.Name} && ${formik.touched.Name}
                             ? "input_error"
                             : "input_success"
                         `}
-                      />
-                      <i className="bx bxs-user-pin"></i>
-                    </div>
-                  </div>
-                  <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
-                    <label
-                      htmlFor="name"
-                      className={formik.errors.Email ? "labelError" : ""}
-                    >
-                      {formik.errors.Email ? formik.errors.Email : `Email`}
-                      <sup style={{ color: "red" }}>*</sup>
-                    </label>
-                    <div className="input">
-                      <input
-                        type="email"
-                        placeholder="Your Email"
-                        name="Email"
-                        id="Email"
-                        value={formik.values.Email}
-                        onChange={formik.handleChange}
-                        className={`${FeedbackTheme[0].FeedbackInputDesign}
+                            />
+                            <i className="bx bxs-user-pin"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}
+                        >
+                          <label
+                            htmlFor="name"
+                            className={formik.errors.Email ? "labelError" : ""}
+                          >
+                            {formik.errors.Email
+                              ? formik.errors.Email
+                              : `Email`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <div className="input">
+                            <input
+                              type="email"
+                              placeholder="Your Email"
+                              name="Email"
+                              id="Email"
+                              value={formik.values.Email}
+                              onChange={formik.handleChange}
+                              className={`${FeedbackTheme[0].FeedbackInputDesign}
                           ${formik.errors.Email} && ${formik.touched.Email}
                             ? "input_error"
                             : "input_success"
                         `}
-                      />
-                      <i className="bx bxs-envelope"></i>
-                    </div>
-                  </div>
-                  <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
-                    <label
-                      htmlFor="name"
-                      className={
-                        formik.errors.MobileNumber ? "labelError" : ""
-                      }
-                    >
-                      {formik.errors.MobileNumber
-                        ? formik.errors.MobileNumber
-                        : `MobileNumber`}
-                      {/* <sup style={{ color: "red" }}>*</sup> */}
-                    </label>
-                    <div className="input">
-                      <input
-                        type="tel"
-                        placeholder="Enter Mobile Number"
-                        name="MobileNumber"
-                        id="MobileNumber"
-                        value={formik.values.MobileNumber}
-                        onChange={formik.handleChange}
-                        className={`${FeedbackTheme[0].FeedbackInputDesign}
+                            />
+                            <i className="bx bxs-envelope"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}
+                        >
+                          <label
+                            htmlFor="name"
+                            className={
+                              formik.errors.MobileNumber ? "labelError" : ""
+                            }
+                          >
+                            {formik.errors.MobileNumber
+                              ? formik.errors.MobileNumber
+                              : `MobileNumber`}
+                            {/* <sup style={{ color: "red" }}>*</sup> */}
+                          </label>
+                          <div className="input">
+                            <input
+                              type="tel"
+                              placeholder="Enter Mobile Number"
+                              name="MobileNumber"
+                              id="MobileNumber"
+                              value={formik.values.MobileNumber}
+                              onChange={formik.handleChange}
+                              className={`${FeedbackTheme[0].FeedbackInputDesign}
                           ${formik.errors.MobileNumber} &&
                           ${formik.touched.MobileNumber}
                             ? "input_error"
                             : "input_success"
                         `}
-                      />
-                      <i className="bx bxs-phone-call"></i>
-                    </div>
-                  </div>
-                  <div className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}>
-                    <label
-                      htmlFor="name"
-                      className={formik.errors.Message ? "labelError" : ""}
-                    >
-                      {formik.errors.Message
-                        ? formik.errors.Message
-                        : `Message`}
-                      <sup style={{ color: "red" }}>*</sup>
-                    </label>
-                    <div className="input">
-                      <textarea
-                        name="Message"
-                        id="Message"
-                        value={formik.values.Message}
-                        onChange={formik.handleChange}
-                        className={` ${FeedbackTheme[0].FeedbackInputDesign}
+                            />
+                            <i className="bx bxs-phone-call"></i>
+                          </div>
+                        </div>
+                        <div
+                          className={`form_group ${FeedbackTheme[0].FeedbackInputDesign}`}
+                        >
+                          <label
+                            htmlFor="name"
+                            className={
+                              formik.errors.Message ? "labelError" : ""
+                            }
+                          >
+                            {formik.errors.Message
+                              ? formik.errors.Message
+                              : `Message`}
+                            <sup style={{ color: "red" }}>*</sup>
+                          </label>
+                          <div className="input">
+                            <textarea
+                              name="Message"
+                              id="Message"
+                              value={formik.values.Message}
+                              onChange={formik.handleChange}
+                              className={` ${
+                                FeedbackTheme[0].FeedbackInputDesign
+                              }
                           ${formik.errors.Message && formik.touched.Message}
                             ? "input_error"
                             : "input_success"
                         `}
-                        cols="30"
-                        rows="4"
-                        placeholder="Enter Your Message Here..."
-                      ></textarea>
-                      
-                      <i className="bx bxs-message-dots"></i>
+                              cols="30"
+                              rows="4"
+                              placeholder="Enter Your Message Here..."
+                            ></textarea>
+
+                            <i className="bx bxs-message-dots"></i>
+                          </div>
+                        </div>
+                        <div className="form_actions">
+                          <button type="submit">
+                            {InquiryLoader ? (
+                              <span className="inquiryloader"></span>
+                            ) : (
+                              <span className="material-symbols-outlined">
+                                send
+                              </span>
+                            )}
+                            Submit
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
-                  <div className="form_actions">
-                    <button type="submit">
-                      {InquiryLoader ? (
-                        <span className="inquiryloader"></span>
-                      ) : (
-                        <span className="material-symbols-outlined">
-                          send
-                        </span>
-                      )}
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-              : ''}
-              
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
             )}
 
-        {/* Share */}
-        <div className="share" ref={shareRef}>
-          <div className="Dynamic_Vcard_Live_Title">
-            <h3>Share</h3>
-          </div>
-          <div className="input">
-            <input
-              type="text"
-              value={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}${
-                window.location.pathname
-              }`}
-            />
-            <div className="icon">
-              <CopyToClipboard
-                text={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/${
-                  window.location.pathname
-                }`}
-                onCopy={handleCopyURL}
-              >
-                <i className="bx bx-copy"></i>
-              </CopyToClipboard>
+            {/* Share */}
+            <div className="share" ref={shareRef}>
+              <div className="Dynamic_Vcard_Live_Title">
+                <h3>Share</h3>
+              </div>
+              <div className="input">
+                <input
+                  type="text"
+                  value={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}${
+                    window.location.pathname
+                  }`}
+                />
+                <div className="icon">
+                  <CopyToClipboard
+                    text={`${import.meta.env.VITE_CLIENT_DOMAIN_URL}/${
+                      window.location.pathname
+                    }`}
+                    onCopy={handleCopyURL}
+                  >
+                    <i className="bx bx-copy"></i>
+                  </CopyToClipboard>
+                </div>
+              </div>
+              <div className="qr_code" ref={qrRef}>
+                <QRCodeSVG value={currentPath} size={156} level={"H"} />
+                <div className="qr_actions">
+                  <button onClick={shareQRCodeAsSVG}>
+                    Share <FaShare />{" "}
+                  </button>
+                  <button onClick={downloadQRCode}>
+                    Download <FaDownload />
+                  </button>
+                </div>
+              </div>
+              <div className="share_input">
+                <label>Share profile to any whatsapp number:</label>
+                <div className="whatsup_input">
+                  <PhoneInput
+                    country={"in"} // Default country
+                    value={phoneNumber}
+                    onChange={(phone) => setPhoneNumber(phone)}
+                    enableSearch={true} // Search country by name
+                    className="mobileNumber_input"
+                  />
+                  <button onClick={handleShareWhatsApp}>
+                    <i className="bx bxl-whatsapp"></i>Share
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="qr_code" ref={qrRef}>
-            <QRCodeSVG value={currentPath} size={156} level={"H"} />
-            <div className="qr_actions">
-            <button onClick={shareQRCodeAsSVG}>Share <FaShare/> </button>
-              <button onClick={downloadQRCode}>Download <FaDownload/></button>
-           
-            </div>
-          </div>
-          <div className="share_input">
-          <label>
-          Share profile to any whatsapp number:
-
-      </label>
-      <div className="whatsup_input">
-      <PhoneInput
-          country={"in"} // Default country
-          value={phoneNumber}
-          onChange={(phone) => setPhoneNumber(phone)}
-          enableSearch={true} // Search country by name
-          className='mobileNumber_input'
-        />
-              <button onClick={handleShareWhatsApp}><i className='bx bxl-whatsapp' ></i>Share</button>
-      </div>
-
-          </div>
-        </div>
-
 
             {/* Footer */}
-            <div className="Footer" style={{color:'#000'}}>
+            <div className="Footer" style={{ color: "#000" }}>
               <div className="dynamic_footer_container">
-                <svg className="dynamic_footer_svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <svg
+                  className="dynamic_footer_svg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 1440 320"
+                >
                   <path
-                    fill='#fff'
+                    fill="#fff"
                     fillOpacity="1"
                     d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
                   ></path>
                 </svg>
-                
+
                 <small>Powered By Arsitostech India Pvt Limited</small>
                 <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
               </div>

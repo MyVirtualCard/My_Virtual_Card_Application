@@ -35,6 +35,7 @@ import GoogleMapRoute from "./Routes/GoogleMap.route.js";
 import ManageContentRoute from "./Routes/ManageContent.route.js";
 import InquiryRoute from "./Routes/Inquiry.route.js";
 import AppoinmentRoute from "./Routes/Appoinment.route.js";
+import ViewsRouter from './Routes/Views.router.js'
 // Import Dynmaic Routes;
 import FirstTheme from './Routes/Dynamic_Vcard_Routes/First_Vcard_Theme.route.js';
 import SecondTheme from './Routes/Dynamic_Vcard_Routes/Second_Banner_Logo.route.js';
@@ -108,6 +109,7 @@ app.use("/feedback", FeedbackRoute);
 app.use("/manageContent", ManageContentRoute);
 app.use("/inquiry", InquiryRoute);
 app.use("/appoinment", AppoinmentRoute);
+app.use("/views", ViewsRouter);
 //Dynamic Middlewares
 app.use('/vcard_theme',FirstTheme);
 app.use('/image_theme',SecondTheme);
