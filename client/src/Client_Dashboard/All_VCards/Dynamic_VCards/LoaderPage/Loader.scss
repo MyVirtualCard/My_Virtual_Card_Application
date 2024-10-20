@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Amita:wght@400;700&display=swap');
+.dynamic_vcard_loader{
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+   background:linear-gradient(120deg ,#ffffff , #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    svg{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loading-text{
+        width: 100%;
+        font-weight: bold;
+        color: gray;
+        transform: translate(.4rem);
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        font-family: "Amita", serif;
+  font-weight: 700;
+  font-style: normal;
+        letter-spacing: 1px;
+    }
+}
+
+
+

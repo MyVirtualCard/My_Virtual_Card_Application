@@ -71,8 +71,9 @@ import DOCTOR_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCar
 import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/ADVOCATE_LIVE.jsx";
 import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW.jsx";
 import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_Live.jsx";
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga";
 import New_LandingPage from "./LandingPage/New_LandingPage.jsx";
+import Super_Admin from "./SuperAdmin/Super_Admin.jsx";
 
 //Import All component:
 const App = () => {
@@ -116,7 +117,7 @@ const App = () => {
   // 1]Vcard theme states
   let [VCardColour, setVCardColour] = useState("#fff");
   let [VCardTextColour, setVCardTextColour] = useState("#000");
-  let[ DesktopViewBackColor,setDesktopViewBackColor]=useState('#B7B7B7');
+  let [DesktopViewBackColor, setDesktopViewBackColor] = useState("#B7B7B7");
   let [SVG_Design, setSVG_Design] = useState("");
   let [VcardThemeUpdateToggle, setVcardThemeUpdateToggle] = useState(false);
   // 2]Banner and Logo
@@ -134,7 +135,7 @@ const App = () => {
   let [LogoLeftPosition, setLogoLeftPosition] = useState("50");
   let [LogoBottomPosition, setLogoBottomPosition] = useState("0");
   let [LogoRightPosition, setLogoRightPosition] = useState("0");
-  let[LogoImageAnimation,setLogoImageAnimation]=useState('Animation-1');
+  let [LogoImageAnimation, setLogoImageAnimation] = useState("Animation-1");
 
   let [ImageThemeUpdateToggle, setImageThemeUpdateToggle] = useState(false);
   //3]Button/icon states
@@ -195,54 +196,62 @@ const App = () => {
     useState("gray");
   let [ProductThemeUpdateToggle, setProductThemeUpdateToggle] = useState(false);
   // 7]Gallery States
-  let[ImageBorderRadius,setImageBorderRadius]=useState([0]);
-  let[GalleryUpdateToggle,setGalleryUpdateToggle]=useState(false);
-   // 8]Timer states
-   let[TimerBackColour,setTimerBackColour]=useState('white');
-   let[TimerTextColour,setTimerTextColour]=useState('#000');
-   let [TimerTitleColor, setTimerTitleColor] = useState("#4c4c4c");
-   let [TimerSubTitleColor, setTimerSubTitleColor] = useState("gray");
-   let [TimerBoxBorderRadius, setTimerBoxBorderRadius] = useState([5]);
-   let[TimerUpdateToggle,setTimerUpdateToggle]=useState(false);
+  let [ImageBorderRadius, setImageBorderRadius] = useState([0]);
+  let [GalleryUpdateToggle, setGalleryUpdateToggle] = useState(false);
+  // 8]Timer states
+  let [TimerBackColour, setTimerBackColour] = useState("white");
+  let [TimerTextColour, setTimerTextColour] = useState("#000");
+  let [TimerTitleColor, setTimerTitleColor] = useState("#4c4c4c");
+  let [TimerSubTitleColor, setTimerSubTitleColor] = useState("gray");
+  let [TimerBoxBorderRadius, setTimerBoxBorderRadius] = useState([5]);
+  let [TimerUpdateToggle, setTimerUpdateToggle] = useState(false);
   //  9]Testimonial states
-  let[TestimonialBackColor,setTestimonialBackColor]=useState('gray');
-  let[TestimonialTextColor,setTestimonialTextColor]=useState('white');
-  let[TestimonialTitleColor,setTestimonialTitleColor]=useState('yellow');
-  let[TestimonialClientNameColor,setTestimonialClientNameColor]=useState('orange');
-  let [FlexDirection, setFlexDirection] = useState('row');
-  let[UserDataFlexDirection, setUserDataFlexDirection]=useState('column');
-  let[UserDataJustifyContent,setUserDataJustifyContent]=useState('center');
-  let[UserDataAlignItems,setUserDataAlignItems]=useState('center');
-  let[TestimonialBorderRadius,setTestimonialBorderRadius]=useState([0,0,0,0]);
-  let[TestimonialImageBorderRadius,setTestimonialImageBorderRadius]=useState([0,0,0,0]);
-  let[TestimonialUpdateToggle,setTestimonialUpdateToggle]=useState(false);
-// 10]Appoinment Theme
-let[AppoinmentInputDesign,setAppoinmentInputDesign]=useState('Design1');
-let [LabelColor, setLabelColor] = useState("white");
-let [InputBorderColor, setInputBorderColor] = useState("white");
-let [InputBorderOnFocus, setInputBorderOnFocus] = useState("yellow");
-let [PlaceholderColor, setPlaceholderColor] = useState("white");
-let [InputColor, setInputColor] = useState("white");
-let[InputError,setInputError]=useState('red');
-let[AppoinmentUpdateToggle,setAppoinmentUpdateToggle]=useState(false);
-// 11]Feedback Theme
-let[FeedbackInputDesign,setFeedbackInputDesign]=useState('Design3');
-let [FeedbackLabelColor, setFeedbackLabelColor] = useState("white");
-let [FeedbackInputBorderColor, setFeedbackInputBorderColor] = useState("white");
-let [FeedbackInputBorderOnFocus, setFeedbackInputBorderOnFocus] = useState("yellow");
-let [FeedbackPlaceholderColor, setFeedbackPlaceholderColor] = useState("white");
-let [FeedbackInputColor, setFeedbackInputColor] = useState("white");
-let[FeedbackInputError,setFeedbackInputError]=useState('red');
-let[FeedbackUpdateToggle,setFeedbackUpdateToggle]=useState(false);
-// 12]Inquiry Theme
-let[InquiryInputDesign,setInquiryInputDesign]=useState('Design3');
-let [InquiryLabelColor, setInquiryLabelColor] = useState("white");
-let [InquiryInputBorderColor, setInquiryInputBorderColor] = useState("white");
-let [InquiryInputBorderOnFocus, setInquiryInputBorderOnFocus] = useState("yellow");
-let [InquiryPlaceholderColor, setInquiryPlaceholderColor] = useState("white");
-let [InquiryInputColor, setInquiryInputColor] = useState("white");
-let[InquiryInputError,setInquiryInputError]=useState('red');
-let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
+  let [TestimonialBackColor, setTestimonialBackColor] = useState("gray");
+  let [TestimonialTextColor, setTestimonialTextColor] = useState("white");
+  let [TestimonialTitleColor, setTestimonialTitleColor] = useState("yellow");
+  let [TestimonialClientNameColor, setTestimonialClientNameColor] =
+    useState("orange");
+  let [FlexDirection, setFlexDirection] = useState("row");
+  let [UserDataFlexDirection, setUserDataFlexDirection] = useState("column");
+  let [UserDataJustifyContent, setUserDataJustifyContent] = useState("center");
+  let [UserDataAlignItems, setUserDataAlignItems] = useState("center");
+  let [TestimonialBorderRadius, setTestimonialBorderRadius] = useState([
+    0, 0, 0, 0,
+  ]);
+  let [TestimonialImageBorderRadius, setTestimonialImageBorderRadius] =
+    useState([0, 0, 0, 0]);
+  let [TestimonialUpdateToggle, setTestimonialUpdateToggle] = useState(false);
+  // 10]Appoinment Theme
+  let [AppoinmentInputDesign, setAppoinmentInputDesign] = useState("Design1");
+  let [LabelColor, setLabelColor] = useState("white");
+  let [InputBorderColor, setInputBorderColor] = useState("white");
+  let [InputBorderOnFocus, setInputBorderOnFocus] = useState("yellow");
+  let [PlaceholderColor, setPlaceholderColor] = useState("white");
+  let [InputColor, setInputColor] = useState("white");
+  let [InputError, setInputError] = useState("red");
+  let [AppoinmentUpdateToggle, setAppoinmentUpdateToggle] = useState(false);
+  // 11]Feedback Theme
+  let [FeedbackInputDesign, setFeedbackInputDesign] = useState("Design3");
+  let [FeedbackLabelColor, setFeedbackLabelColor] = useState("white");
+  let [FeedbackInputBorderColor, setFeedbackInputBorderColor] =
+    useState("white");
+  let [FeedbackInputBorderOnFocus, setFeedbackInputBorderOnFocus] =
+    useState("yellow");
+  let [FeedbackPlaceholderColor, setFeedbackPlaceholderColor] =
+    useState("white");
+  let [FeedbackInputColor, setFeedbackInputColor] = useState("white");
+  let [FeedbackInputError, setFeedbackInputError] = useState("red");
+  let [FeedbackUpdateToggle, setFeedbackUpdateToggle] = useState(false);
+  // 12]Inquiry Theme
+  let [InquiryInputDesign, setInquiryInputDesign] = useState("Design3");
+  let [InquiryLabelColor, setInquiryLabelColor] = useState("white");
+  let [InquiryInputBorderColor, setInquiryInputBorderColor] = useState("white");
+  let [InquiryInputBorderOnFocus, setInquiryInputBorderOnFocus] =
+    useState("yellow");
+  let [InquiryPlaceholderColor, setInquiryPlaceholderColor] = useState("white");
+  let [InquiryInputColor, setInquiryInputColor] = useState("white");
+  let [InquiryInputError, setInquiryInputError] = useState("red");
+  let [InquiryUpdateToggle, setInquiryUpdateToggle] = useState(false);
   // Server API
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
@@ -250,9 +259,8 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
   let local_userName = JSON.parse(localStorage.getItem("userName"));
   let local_mobileNumber = JSON.parse(localStorage.getItem("mobileNumber"));
   let local_URL_Alies = localStorage.getItem("URL_Alies");
- 
-  useEffect(() => {
 
+  useEffect(() => {
     if (local_userName) {
       return setUserName(local_userName);
     }
@@ -260,8 +268,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
       return setMobileNumber(local_mobileNumber);
     }
     if (URL_Alies.length == 0) {
-      setURL_Alies(window.location.pathname.split('/')[1]);
-     
+      setURL_Alies(window.location.pathname.split("/")[1]);
     } else {
       setURL_Alies(local_URL_Alies);
     }
@@ -279,9 +286,14 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
   useEffect(() => {
     try {
       api
-        .get(`/templateDetail/${URL_Alies.length > 0 ? local_URL_Alies : window.location.pathname.split('/')[1]}`)
+        .get(
+          `/templateDetail/${
+            URL_Alies.length > 0
+              ? local_URL_Alies
+              : window.location.pathname.split("/")[1]
+          }`
+        )
         .then((res) => {
-        
           if (res.data?.data?.length > 0) {
             setURL_Alies(res.data?.data[0].URL_Alies);
             setCurrentTemplate(res.data?.data[0].currentTemplate);
@@ -295,29 +307,36 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
       console.log(error);
     }
   }, [navigate]);
-  // Pixel Integration  
+  // Pixel Integration
   useEffect(() => {
     // Facebook Pixel script
     !(function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
       n = f.fbq = function () {
-        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        n.callMethod
+          ? n.callMethod.apply(n, arguments)
+          : n.queue.push(arguments);
       };
       if (!f._fbq) f._fbq = n;
       n.push = n;
       n.loaded = !0;
-      n.version = '2.0';
+      n.version = "2.0";
       n.queue = [];
       t = b.createElement(e);
       t.async = !0;
       t.src = v;
       s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s);
-    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    })(
+      window,
+      document,
+      "script",
+      "https://connect.facebook.net/en_US/fbevents.js"
+    );
 
     // Initialize Pixel
-    window.fbq('init', '430826446693118');
-    window.fbq('track', 'PageView');
+    window.fbq("init", "430826446693118");
+    window.fbq("track", "PageView");
   }, []);
   return (
     <>
@@ -385,7 +404,8 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
             setVCardTextColour,
             SVG_Design,
             setSVG_Design,
-            DesktopViewBackColor,setDesktopViewBackColor,
+            DesktopViewBackColor,
+            setDesktopViewBackColor,
             VcardThemeUpdateToggle,
             setVcardThemeUpdateToggle,
             //2] Dynamic Banner and Logo states
@@ -419,7 +439,8 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
             setLogoRightPosition,
             UserDataPosition,
             setUserDataPosition,
-            LogoImageAnimation,setLogoImageAnimation,
+            LogoImageAnimation,
+            setLogoImageAnimation,
             ImageThemeUpdateToggle,
             setImageThemeUpdateToggle,
             // 3]Dynamic Button and Icon states
@@ -526,36 +547,63 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
             ProductThemeUpdateToggle,
             setProductThemeUpdateToggle,
             // 7]Gallery states
-            ImageBorderRadius,setImageBorderRadius,
-            GalleryUpdateToggle,setGalleryUpdateToggle,
+            ImageBorderRadius,
+            setImageBorderRadius,
+            GalleryUpdateToggle,
+            setGalleryUpdateToggle,
             // 8]Timer states
-            TimerBackColour,setTimerBackColour,
-            TimerTextColour,setTimerTextColour,
-            TimerTitleColor, setTimerTitleColor,
-            TimerSubTitleColor, setTimerSubTitleColor,
-            TimerBoxBorderRadius, setTimerBoxBorderRadius,
-            TimerUpdateToggle,setTimerUpdateToggle,
+            TimerBackColour,
+            setTimerBackColour,
+            TimerTextColour,
+            setTimerTextColour,
+            TimerTitleColor,
+            setTimerTitleColor,
+            TimerSubTitleColor,
+            setTimerSubTitleColor,
+            TimerBoxBorderRadius,
+            setTimerBoxBorderRadius,
+            TimerUpdateToggle,
+            setTimerUpdateToggle,
             // 9]Testimonial states
-            TestimonialBackColor,setTestimonialBackColor,
-            TestimonialTextColor,setTestimonialTextColor,
-            TestimonialTitleColor,setTestimonialTitleColor,
-            TestimonialClientNameColor,setTestimonialClientNameColor,
-            TestimonialBorderRadius,setTestimonialBorderRadius,
-            FlexDirection, setFlexDirection,
-            UserDataFlexDirection, setUserDataFlexDirection,
-            UserDataJustifyContent,setUserDataJustifyContent,
-            UserDataAlignItems,setUserDataAlignItems,
-            TestimonialImageBorderRadius,setTestimonialImageBorderRadius,
-            TestimonialUpdateToggle,setTestimonialUpdateToggle,
+            TestimonialBackColor,
+            setTestimonialBackColor,
+            TestimonialTextColor,
+            setTestimonialTextColor,
+            TestimonialTitleColor,
+            setTestimonialTitleColor,
+            TestimonialClientNameColor,
+            setTestimonialClientNameColor,
+            TestimonialBorderRadius,
+            setTestimonialBorderRadius,
+            FlexDirection,
+            setFlexDirection,
+            UserDataFlexDirection,
+            setUserDataFlexDirection,
+            UserDataJustifyContent,
+            setUserDataJustifyContent,
+            UserDataAlignItems,
+            setUserDataAlignItems,
+            TestimonialImageBorderRadius,
+            setTestimonialImageBorderRadius,
+            TestimonialUpdateToggle,
+            setTestimonialUpdateToggle,
             // 10]Appoinment States
-            AppoinmentInputDesign,setAppoinmentInputDesign,
-            LabelColor, setLabelColor,
-            InputBorderColor, setInputBorderColor,
-            InputBorderOnFocus, setInputBorderOnFocus,
-            PlaceholderColor, setPlaceholderColor,
-            InputError,setInputError,
-            InputColor, setInputColor,
-            AppoinmentUpdateToggle,setAppoinmentUpdateToggle,
+            AppoinmentInputDesign,
+            setAppoinmentInputDesign,
+            LabelColor,
+            setLabelColor,
+            InputBorderColor,
+            setInputBorderColor,
+            InputBorderOnFocus,
+            setInputBorderOnFocus,
+            PlaceholderColor,
+            setPlaceholderColor,
+            InputError,
+            setInputError,
+            InputColor,
+            setInputColor,
+            AppoinmentUpdateToggle,
+            setAppoinmentUpdateToggle,
             // 11]Feedback states
             FeedbackInputDesign,
             setFeedbackInputDesign,
@@ -649,7 +697,11 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
                   element={<VCard_Form_Edit />}
                 />
               </Route>
-
+              {/* SuperAdmin */}
+              <Route
+                path={`/${userName}/sadmin`}
+                element={<Super_Admin />}
+              ></Route>
               {/* Static VCard */}
               <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
               <Route path="/Taxi_Service" element={<Taxi_Service_Demo />} />
@@ -697,7 +749,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
                 path="/Cab_Drivers_Preview"
                 element={<CAB_DRIVERS_PREVIEW />}
               />
-               <Route
+              <Route
                 path="/Dynamic_Vcard_Preview"
                 element={<Dynamic_VCard_PREVIEW />}
               />
@@ -788,7 +840,7 @@ let[InquiryUpdateToggle,setInquiryUpdateToggle]=useState(false);
               )}
 
               {/* Dynamic Vcard */}
-                { currentTemplate === 0 ? (
+              {currentTemplate === 0 ? (
                 <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
               ) : (
                 ""

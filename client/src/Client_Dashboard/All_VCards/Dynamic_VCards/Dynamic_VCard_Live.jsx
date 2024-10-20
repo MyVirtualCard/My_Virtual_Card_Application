@@ -46,6 +46,7 @@ import PhoneInput from "react-phone-input-2";
 import { LuView } from "react-icons/lu";
 
 import "react-phone-input-2/lib/style.css";
+import Loader from "./LoaderPage/Loader";
 const Dynamic_VCard_Live = () => {
   let navigate = useNavigate();
   let { URL_Alies, setURL_Alies, setCurrentTemplate } = useContext(Context);
@@ -598,7 +599,7 @@ END:VCARD
 
   // Show loading spinner or message while loading
   if (SiteLoader) {
-    return <VCard_Loader />;
+    return <Loader />;
   }
 
   return (
@@ -857,8 +858,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
 
          .views_count{
         position: absolute;
-        top: -0%;
-        left: 1%;
+        top: -3%;
+        left: 0%;
      
         z-index: 10;
     color: ${ButtonTheme[0].BtnTextColour};
@@ -871,22 +872,16 @@ color:${VcardTheme[0].VCardTextColour} !important;
           align-items: center;
           justify-content: flex-start;
           gap: 5px;
-          font-size: 0.8rem;
-
+          font-size: 0.7rem;
+    background-color: ${ButtonTheme[0].BtnBackColour};
+    // border-bottom-right-radius:0.5rem;
+    padding:0.4rem 0.7rem;
           .icon{
-            font-size: 1.1rem;
+            font-size: 1rem;
           }
         }
 
-        &::before{
-          content: '';
-          position: absolute;
-          background-color: ${ButtonTheme[0].BtnBackColour};
-          width: 350px;
-          height: 250px;
-          z-index: -1;
-          transform: rotate(60deg) translateY(30px) translateX(-290px);
-        }
+      
       }
       .banner_image {
         width: 100%;
@@ -8782,9 +8777,9 @@ z-index: 1;
         <div className="Dynamic_Vcard_Live_Container">
           {/* Gallery Full IMAGE */}
           <div
-            className="full_image"
+            className="dynamic_full_image"
             id="fullImageBox"
-            style={{ position: "absolute", top: scrollY }}
+            style={{top: scrollY }}
           >
             <div className="close_Full_Image_gallery">
               <RiCloseLargeLine className="icon" onClick={closeFullImage} />
