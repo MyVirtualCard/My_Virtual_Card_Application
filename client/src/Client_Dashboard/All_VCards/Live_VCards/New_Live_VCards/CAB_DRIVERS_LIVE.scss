@@ -14,7 +14,7 @@ $first_back__color: #797979;
 $second_back__color: #E8ECD6;
 $third_back__color: #303030;
 //Root Background
-$root_backgound: #bcfde8, #88ffd7;
+$root_backgound: #f5f5f5, #fff6f6;
 $root_text_size: 0.9rem;
 $root_font_weight: 500;
 //Vcard background
@@ -61,7 +61,7 @@ $error_text_color: rgb(255, 230, 10);
 
 $NavMenu_back_color: #B75A48;
 $NavMenu_second_back_color: #E8ECD6;
-$NavBtn_back_color: rgb(238, 238, 238);
+$NavBtn_back_color: rgb(124, 124, 124);
 $NavMenu_first_text_color: #ffffff;
 $NavMenu_second_text_color: rgb(255, 255, 255);
 //Title for each list
@@ -168,7 +168,7 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
     margin: auto;
     width: 100%;
     height: 800px;
-    background: linear-gradient($vcard_back_color, $vcard_back_color);
+    background: linear-gradient(#fff, #fff);
 
     // display: none;
 
@@ -176,8 +176,8 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
       position: absolute;
       width: 100%;
       left: 90%;
-      top: 5%;
-
+      top: 10%;
+z-index: 11;
       .icon {
         display: flex;
         align-items: center;
@@ -201,11 +201,11 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      //   width: 700px;
-      //   height: 450px;
-      filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.5));
+        width: 90%;
+        height: 90%;
+      filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.5)) brightness(102%);
       border-radius: 5px;
-      z-index: 1000;
+      z-index: 10;
       object-fit: cover;
 
       @media (max-width: 600px) {
@@ -238,7 +238,7 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
       background-color: $NavBtn_back_color;
       border-top-left-radius: 0rem;
       border-top-right-radius: 0rem;
-      color: $vcard_back_color;
+      color: $NavMenu_first_text_color;
       cursor: pointer;
       overflow: hidden;
       transition: all 0.3s ease-in-out;
@@ -339,7 +339,7 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
       background-color: $NavBtn_back_color;
       border-bottom-left-radius: 0rem;
       border-bottom-right-radius: 0rem;
-      color: $vcard_back_color;
+      color: $NavMenu_first_text_color;
       cursor: pointer;
       overflow: hidden;
       transition: all 0.3s ease-in-out;
@@ -556,15 +556,15 @@ $NavMenu_second_text_color: rgb(255, 255, 255);
 
             h2 {
               font-size: 1.2rem;
-              font-weight: 500;
+              font-weight: 600;
               letter-spacing: 1px;
               color: $first_text_color;
             }
 
             p {
-              font-size: 0.9rem;
+              font-size: 1rem;
               font-weight: 500;
-              color: $first_text_color;
+              color:rgb(255, 255, 98);
               display: flex;
               align-items: center;
               justify-content: center;

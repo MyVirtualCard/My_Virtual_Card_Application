@@ -747,7 +747,7 @@ END:VCARD
                     )}
                   </div>
                   <div className="svg_image">
-                    <svg
+                    {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 1440 320"
                     >
@@ -756,7 +756,9 @@ END:VCARD
                         fill-opacity="1"
                         d="M0,160L30,176C60,192,120,224,180,218.7C240,213,300,171,360,160C420,149,480,171,540,197.3C600,224,660,256,720,256C780,256,840,224,900,197.3C960,171,1020,149,1080,122.7C1140,96,1200,64,1260,53.3C1320,43,1380,53,1410,58.7L1440,64L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
                       ></path>
-                    </svg>
+                    </svg> */}
+                 
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#B75A48" fill-opacity="1" d="M0,0L48,37.3C96,75,192,149,288,176C384,203,480,181,576,154.7C672,128,768,96,864,117.3C960,139,1056,213,1152,213.3C1248,213,1344,139,1392,101.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
                   </div>
                 </div>
               );
@@ -772,7 +774,7 @@ END:VCARD
                         return (
                           <div className="user_information" key={index}>
                             <h2>
-                              {data.FirstName || "John"} &nbsp;
+                              {data.FirstName || "John"}
                               {data.LastName || " Wick"}
                             </h2>
                             <p>{data.Profession || "Corporate Company"}</p>
@@ -949,6 +951,9 @@ END:VCARD
                     <div className="about_row_4" ref={AboutRef} key={index}>
                       <div className="CAB_DRIVERS_TITLE_LIVE">
                         <h3>About Us</h3>
+                        <span className="material-symbols-outlined">
+identity_platform
+</span>
                       </div>
 
                       <div className="about_details">
@@ -1733,6 +1738,9 @@ END:VCARD
                 <div className="Appoinment" ref={AppoinmentRef}>
                   <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Appoinment</h3>
+                    <span className="material-symbols-outlined">
+groups
+</span>
                   </div>
                   {/* Success and Error Popup */}
                   <div className="popup_message_container">
