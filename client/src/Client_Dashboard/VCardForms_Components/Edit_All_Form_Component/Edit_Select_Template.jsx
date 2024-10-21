@@ -73,11 +73,11 @@ let BasicTemplate = [
   //   image: Education,
   //   TemplateName: "Education Institute",
   // },
-  // {
-  //   id: 10,
-  //   image: CabDriver,
-  //   TemplateName: "Cab Driver",
-  // },
+  {
+    id: 9,
+    image: CabDriver,
+    TemplateName: "Cab Driver",
+  },
 ];
 let StandardTemplate = [
   {

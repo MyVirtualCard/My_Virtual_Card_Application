@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Corporate_Company.scss";
-import banner from "../../../../assets/AllVCard_Image/VCard3/Banner.jpg";
-import axios from "axios";
-import { InquiryValidateSchema } from "../../../../Helper/InquiryValidate";
-import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
+import "./CAB_DRIVERS_LIVE.scss";
+
+import product1 from "../../../../assets/AllVCard_Image/Doctor/product_1.png";
+
 //service Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+//Product Slider
+import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import { Carousel } from "react-responsive-carousel";
@@ -32,14 +34,18 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineRateReview } from "react-icons/md";
 import { VscFeedback } from "react-icons/vsc";
 import { TbMessageChatbotFilled } from "react-icons/tb";
+
 import { FaUserGroup } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
+import axios from "axios";
+import { InquiryValidateSchema } from "../../../../Helper/InquiryValidate";
+import { AppoinmentValidateSchema } from "../../../../Helper/AppoinmentValidate";
 import VCard_Loader from "../../../../VCard_Loader/VCard_Loader";
 import ReactStars from "react-stars";
 import URLNotFound from "../../../404_Error_Page/404";
-const Corporate_Company = () => {
+const CAB_DRIVERS_LIVE = () => {
   let style = {
     $first_back__color: "#ffffff",
     $second_back__color: "#6b6b6b",
@@ -51,7 +57,7 @@ const Corporate_Company = () => {
 
     //SVG Wave backgound
 
-    $svg_wave_back_color: "#ffffff",
+    $svg_wave_back_color: "#fff",
   };
   const [width, setWidth] = useState(window.innerWidth);
   //Success and error popup state
@@ -70,7 +76,14 @@ const Corporate_Company = () => {
   let [AppoinmentPopupError, setAppoinmentPopupError] = useState(false);
   //create a new vCard
   var vCard = vCardsJS();
+  let [feedbackForm, setFeedbackForm] = useState({
+    userName: "",
+    userFeedback: "",
+    currentRatting: 0,
+  });
 
+  //create a new vCard
+  var vCard = vCardsJS();
   //Gallery Functionality
   //openFullImage preview:
   function openFullImage(pic) {
@@ -407,7 +420,6 @@ END:VCARD
         });
     } catch (error) {
       console.log(error);
- 
     } finally {
       setSiteLoader(false);
     }
@@ -437,7 +449,7 @@ END:VCARD
   return (
     <>
       {VCard_URL_Data.length > 0 ? (
-        <div className="Corporate_Company_container">
+        <div className="CAB_DRIVERS_LIVE_CONTAINER">
           {/* Gallery Full IMAGE */}
           <div
             className="full_image"
@@ -447,7 +459,7 @@ END:VCARD
             <div className="close_Full_Image_gallery">
               <RiCloseLargeLine className="icon" onClick={closeFullImage} />
             </div>
-            <img src={banner} alt="gallery" id="fullImage" />
+            <img src="" alt="gallery" id="fullImage" />
           </div>
           {/* Menu Navbar */}
           {VCard_URL_Data.length > 0 ? (
@@ -680,9 +692,8 @@ END:VCARD
           ) : (
             ""
           )}
-
-          <div className="Corporate_Company_box">
-            {/* VcardUrl and logo */}
+          <div className="CAB_DRIVERS_LIVE_CARD">
+            {/* Banner and logo */}
             {VCard_URL_Data.map((data, index) => {
               return (
                 <div className="Image_row_1" ref={HomeRef} key={index}>
@@ -734,6 +745,18 @@ END:VCARD
                     ) : (
                       ""
                     )}
+                  </div>
+                  <div className="svg_image">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 1440 320"
+                    >
+                      <path
+                        fill="#B75A48"
+                        fill-opacity="1"
+                        d="M0,160L30,176C60,192,120,224,180,218.7C240,213,300,171,360,160C420,149,480,171,540,197.3C600,224,660,256,720,256C780,256,840,224,900,197.3C960,171,1020,149,1080,122.7C1140,96,1200,64,1260,53.3C1320,43,1380,53,1410,58.7L1440,64L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
+                      ></path>
+                    </svg>
                   </div>
                 </div>
               );
@@ -924,7 +947,7 @@ END:VCARD
                 {AboutData.map((data, index) => {
                   return (
                     <div className="about_row_4" ref={AboutRef} key={index}>
-                      <div className="Corporate_Company_title">
+                      <div className="CAB_DRIVERS_TITLE_LIVE">
                         <h3>About Us</h3>
                       </div>
 
@@ -1239,11 +1262,14 @@ END:VCARD
                           ""
                         )}
                       </div>
-                      <div className="Corporate_Company__demo_title">
+                      <div
+                        className="CAB_DRIVERS_SUB_TITLE_LIVE {
+"
+                      >
                         <h3>Our Specialities</h3>
                       </div>
                       <div className="specialities">
-                        <p>
+                        <p style={{ color: "#fff" }}>
                           <HtmlRenderer htmlString={data.Specialities || ""} />
                         </p>
                       </div>
@@ -1254,13 +1280,15 @@ END:VCARD
             ) : (
               ""
             )}
-
             {/* Our Services */}
             {ServiceData.length > 0 && ManageContentData[0].Service == true ? (
               <>
                 <div className="our_services" ref={ServiceRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Our Services</h3>
+                    <span className="material-symbols-outlined">
+                      design_services
+                    </span>
                   </div>
                   <div className="All_Services">
                     {/* Service */}
@@ -1278,17 +1306,17 @@ END:VCARD
                             </p>
                           </div>
                           {data.ServiceURL != "" ? (
-                              <div className="service_link">
-                                <a
-                                  href={data.ServiceURL ? data.ServiceURL : ""}
-                                  target="_blank"
-                                >
-                                  For More Details <TbUnlink />
-                                </a>
-                              </div>
-                            ) : (
-                              ""
-                            )}
+                            <div className="service_link">
+                              <a
+                                href={data.ServiceURL ? data.ServiceURL : ""}
+                                target="_blank"
+                              >
+                                For More Details <TbUnlink />
+                              </a>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                           <div className="service_image">
                             {data.ServiceType == "Icon_Tag" ? (
                               <>
@@ -1358,8 +1386,11 @@ END:VCARD
             {ProductData.length > 0 && ManageContentData[0].Product == true ? (
               <>
                 <div className="our_products" ref={ProductRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Our Products</h3>
+                    <span className="material-symbols-outlined">
+                      shopping_cart
+                    </span>
                   </div>
                   <div className="All_Products">
                     {/* Product */}
@@ -1425,7 +1456,7 @@ END:VCARD
                               />
                             </p>
                           </div>
-                          {data.ProductURL != '' ? (
+                          {data.ProductURL != "" ? (
                             <div className="product_link">
                               <a href={data.ProductURL} target="_blank">
                                 For More Details <TbUnlink />
@@ -1448,8 +1479,9 @@ END:VCARD
             {UPIData.length > 0 || BankData.length > 0 ? (
               <>
                 <div className="Payment" ref={PaymentRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>For Payment</h3>
+                    <span className="material-symbols-outlined">payments</span>
                   </div>
                   {UPIData.length > 0 ? (
                     <>
@@ -1605,19 +1637,24 @@ END:VCARD
             ) : (
               ""
             )}
-
             {/* Gallery */}
             {GalleryData.length > 0 && ManageContentData[0].Gallery == true ? (
               <>
                 <div className="gallery" ref={GalleryRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Gallery</h3>
+                    <span className="material-symbols-outlined">
+                      gallery_thumbnail
+                    </span>
                   </div>
 
                   <div className="all_gallerys">
                     {GalleryData.map((data, index) => {
                       return (
-                        <div className="gallery_image" key={index}>
+                        <div
+                          className={`gallery_image span-${index + 1}`}
+                          key={index}
+                        >
                           {data.GalleryType == "ImageUpload" ? (
                             <img
                               src={`${
@@ -1652,11 +1689,15 @@ END:VCARD
             )}
 
             {/* Videos */}
+
             {VideoData.length > 0 ? (
               <>
                 <div className="video" ref={VideoRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Videos</h3>
+                    <span className="material-symbols-outlined">
+                      video_library
+                    </span>
                   </div>
 
                   <div className="videos_container">
@@ -1666,7 +1707,9 @@ END:VCARD
                           <iframe
                             width="560"
                             height="315"
-                            src={`https://www.youtube.com/embed/${data.Video.split('/')[3]}`}
+                            src={`https://www.youtube.com/embed/${
+                              data.Video.split("/")[3]
+                            }`}
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -1682,14 +1725,13 @@ END:VCARD
             ) : (
               ""
             )}
-            {/* //Appinment */}
             {(VCard_URL_Data.length > 0 &&
               ManageContentData[0].Appoinment == true &&
               ServiceData.length > 0) ||
             ProductData.length > 0 ? (
               <>
                 <div className="Appoinment" ref={AppoinmentRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Appoinment</h3>
                   </div>
                   {/* Success and Error Popup */}
@@ -1888,9 +1930,9 @@ END:VCARD
             ManageContentData[0].BussinessHour == true ? (
               <>
                 <div className="time_container" ref={TimeRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Open&Close Time</h3>
-                    {/* Contact */}
+                    <span className="material-symbols-outlined">schedule</span>
                   </div>
                   <div className="time_list_container">
                     {BussinessHourData[0].Monday.from.length > 0 &&
@@ -2038,15 +2080,16 @@ END:VCARD
             ) : (
               ""
             )}
-
             {/* Testimonials */}
             {TestimonialData.length > 0 &&
             ManageContentData[0].Testimonial == true ? (
               <>
                 <div className="testimonial" ref={TestimonialRef}>
-                  <div className="Corporate_Company_title">
+                  <div className="CAB_DRIVERS_TITLE_LIVE">
                     <h3>Testimonial</h3>
-                    {/* Contact */}
+                    <span className="material-symbols-outlined">
+                      share_reviews
+                    </span>
                   </div>
                   <div className="testimonial_container">
                     <Carousel
@@ -2059,6 +2102,11 @@ END:VCARD
                         return (
                           <div className="testimonial_list" key={index}>
                             <div className="client_feedback">
+                              <h4>Feedback</h4>
+                              <div className="client_name">
+                                <h4>{data.ClientName}</h4>
+                                <small>-Member</small>
+                              </div>
                               <small>
                                 {data.ClientFeedback ||
                                   ` Lorem ipsum dolor, sit amet consectetur adipisicing
@@ -2074,11 +2122,6 @@ END:VCARD
                                 }
                                 alt="clientImage"
                               />
-
-                              <div className="client_name">
-                                <h4>{data.ClientName}</h4>
-                                <small>-Member</small>
-                              </div>
                             </div>
                           </div>
                         );
@@ -2092,15 +2135,14 @@ END:VCARD
             )}
 
             {/* GoogleMap */}
-
             {GoogleMapData.length > 0 &&
             ManageContentData[0].GoogleMap == true ? (
               <>
                 <div className="google_map_container">
-                  <div className="Corporate_Company_title">
-                    <h3>Live Location</h3>
-                    {/* Contact */}
-                  </div>
+                <div className="CAB_DRIVERS_TITLE_LIVE">
+                <h3>Live Location</h3>
+                <span className="material-symbols-outlined">map</span>
+              </div>
 
                   <div
                     className="google_map"
@@ -2120,9 +2162,10 @@ END:VCARD
             ManageContentData[0].FeedbackForm == true ? (
               <>
                 <div className="feedback_row" ref={FeedbackRef}>
-                  <div className="Corporate_Company_title">
-                    <h3>Feedback</h3>
-                  </div>
+                <div className="CAB_DRIVERS_TITLE_LIVE">
+                <h3>Feedback</h3>
+                <span className="material-symbols-outlined">reviews</span>
+              </div>
                   {/* Success and Error Popup */}
                   <div className="popup_message_container">
                     <div
@@ -2192,7 +2235,7 @@ END:VCARD
                                 <div className="details">
                                   <div className="userName">
                                     <p>
-                                      {data.ClientName}
+                                     {index+1}] {data.ClientName}
                                       <i className="bx bxs-user-check"></i>
                                     </p>
                                   </div>
@@ -2366,6 +2409,7 @@ END:VCARD
                           size={44}
                           style={{ paddingRight: "15px" }}
                           half={false}
+                          color1={"#fff"}
                           color2={"#ffd700"}
                         />
                       </div>
@@ -2385,15 +2429,17 @@ END:VCARD
               " "
             )}
             {/* Inquries */}
+         
             {VCard_URL_Data.length > 0 &&
             BasicData.length > 0 &&
             SocialMediaData.length > 0 &&
             ManageContentData[0].InquiryForm == true ? (
               <>
                 <div className="Inquries" ref={InquiryRef}>
-                  <div className="Corporate_Company_title">
-                    <h3>Inquries</h3>
-                  </div>
+                <div className="CAB_DRIVERS_TITLE_LIVE">
+                <h3>Inquries</h3>
+                <span className="material-symbols-outlined">forum</span>
+              </div>
                   {/* Success and Error Popup */}
                   <div className="popup_message_container">
                     <div
@@ -2405,7 +2451,7 @@ END:VCARD
                         className="popup_close"
                         onClick={() => setSuccessPopupOpen(false)}
                       >
-                        <i className="bx bx-x"></i>
+                          <TiTick className="icon" />
                       </div>
                     </div>
 
@@ -2554,12 +2600,12 @@ END:VCARD
             )}
             {/* Footer */}
             <div className="Footer">
-              <div className="footer_container">
+              <div className="cab_footer_container">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                   <path
-                    fill={style.$second_back__color}
-                    fillOpacity="1"
-                    d="M0,96L24,90.7C48,85,96,75,144,58.7C192,43,240,21,288,48C336,75,384,149,432,176C480,203,528,181,576,170.7C624,160,672,160,720,154.7C768,149,816,139,864,117.3C912,96,960,64,1008,48C1056,32,1104,32,1152,53.3C1200,75,1248,117,1296,138.7C1344,160,1392,160,1416,160L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
+                    fill={style.$svg_wave_back_color}
+                    fill-opacity="1"
+                    d="M0,192L34.3,170.7C68.6,149,137,107,206,101.3C274.3,96,343,128,411,144C480,160,549,160,617,138.7C685.7,117,754,75,823,74.7C891.4,75,960,117,1029,133.3C1097.1,149,1166,139,1234,122.7C1302.9,107,1371,85,1406,74.7L1440,64L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
                   ></path>
                 </svg>
                 <p>All Copyright Reserved &copy; 2024 myvirtualcard.in</p>
@@ -2568,13 +2614,10 @@ END:VCARD
           </div>
         </div>
       ) : (
-       
-          <URLNotFound />
-    
-      
+        <URLNotFound />
       )}
     </>
   );
 };
 
-export default Corporate_Company;
+export default CAB_DRIVERS_LIVE;

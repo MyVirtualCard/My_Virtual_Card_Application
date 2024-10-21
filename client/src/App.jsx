@@ -76,6 +76,7 @@ import New_LandingPage from "./LandingPage/New_LandingPage.jsx";
 import Super_Admin from "./SuperAdmin/Super_Admin.jsx";
 import Users from "./SuperAdmin/Components/Users.jsx";
 import Vcards from "./SuperAdmin/Components/Vcards.jsx";
+import CAB_DRIVERS_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/CAB_DRIVERS_LIVE.jsx";
 
 //Import All component:
 const App = () => {
@@ -701,14 +702,8 @@ const App = () => {
               </Route>
               {/* SuperAdmin */}
               <Route path={`/sadmin`} element={<Super_Admin />}>
-                <Route
-                  path={`/sadmin/users`}
-                  element={<Users />}
-                />
-                  <Route
-                  path={`/sadmin/vcards`}
-                  element={<Vcards />}
-                />
+                <Route path={`/sadmin/users`} element={<Users />} />
+                <Route path={`/sadmin/vcards`} element={<Vcards />} />
               </Route>
               {/* Static VCard */}
               <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
@@ -846,7 +841,11 @@ const App = () => {
               ) : (
                 ""
               )}
-
+              {URL_Alies == URL_Alies && currentTemplate === 9 ? (
+                <Route path={`/:URL_Alies`} element={<CAB_DRIVERS_LIVE />} />
+              ) : (
+                ""
+              )}
               {/* Dynamic Vcard */}
               {currentTemplate === 0 ? (
                 <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
