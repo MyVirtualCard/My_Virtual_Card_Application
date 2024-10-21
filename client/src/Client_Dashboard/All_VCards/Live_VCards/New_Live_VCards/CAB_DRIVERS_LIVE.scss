@@ -3214,7 +3214,7 @@ z-index: 11;
         }
       }
     }
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 650px) {
       width: 100vw !important;
       min-width: 100vw;
       height: auto;
@@ -3222,7 +3222,7 @@ z-index: 11;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      margin-top: 0rem;
+      padding-bottom: 3.75rem;
     }
   }
   &::-webkit-scrollbar {
