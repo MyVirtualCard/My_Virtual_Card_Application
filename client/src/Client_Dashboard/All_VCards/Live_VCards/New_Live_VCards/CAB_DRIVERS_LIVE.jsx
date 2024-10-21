@@ -1354,7 +1354,7 @@ identity_platform
                             )}
                           </div>
                           <div className="service_action">
-                            {data.ServicePrice != "" ? (
+                            {data.ServicePrice != null && data.ServicePrice !=0 ? (
                               <div className="service_price">
                                 <h5>Price : &nbsp;</h5>
                                 <p>₹{data.ServicePrice}</p>
@@ -1428,7 +1428,7 @@ identity_platform
                             )}
                           </div>
                           <div className="product_action">
-                            {data.ProductPrice != null ? (
+                            { data.ProductPrice != 0 ? (
                               <div className="product_price">
                                 <h5>Price : &nbsp;</h5>
                                 <p>₹{data.ProductPrice}</p>
