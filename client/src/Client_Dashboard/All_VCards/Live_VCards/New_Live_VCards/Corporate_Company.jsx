@@ -82,6 +82,7 @@ const Corporate_Company = () => {
   }
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
+  let totalHeight;
   useEffect(() => {
     window.addEventListener("scroll", () => {
       innerHeight = window.innerHeight; // Height of the viewport
@@ -2101,9 +2102,12 @@ END:VCARD
                     {/* Contact */}
                   </div>
 
-                  <div className="google_map">
-                    <HtmlRenderer htmlString={GoogleMapData[0].GoogleIframe} />
-                  </div>
+                  <div
+                    className="google_map"
+                    dangerouslySetInnerHTML={{
+                      __html: GoogleMapData[0].GoogleIframe,
+                    }}
+                  ></div>
                 </div>
               </>
             ) : (

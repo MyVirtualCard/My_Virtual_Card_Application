@@ -25,6 +25,8 @@ import Context from "../Context/GlobalContext";
 import axios from "axios";
 
 import {Helmet} from 'react-helmet';
+import Users from "./Components/Users";
+import Vcards from "./Components/Vcards";
 
 const Super_Admin = () => {
   let navigate = useNavigate();
@@ -127,19 +129,13 @@ const Super_Admin = () => {
               {sideaNavToggle ? <CiMenuBurger /> : <CiMenuFries />}
             </div>
           </div>
-          <div className="sidemenu_title">
-   
-            <h5 id={sideaNavToggle ? "menu_hide" : ""}>Design Your VCard</h5>
-            <div className="hand_icon" id={sideaNavToggle ? "menu_hide" : ""}>
-              <FaHandPointDown />
-            </div>
-          </div>
+      
           <div className="sidenav_menu">
             <div className="menu ver">
               <NavLink
-                to={`/${userName}/uadmin/dashboard`}
+                to={`/sadmin/users`}
                 className={
-                  window.location.pathname === `/${userName}/uadmin/dashboard`
+                  window.location.pathname === `/sadmin/users`
                     ? `activeMenu`
                     : ""
                 }
@@ -149,19 +145,15 @@ const Super_Admin = () => {
                 </div>
 
                 <p className="menuName" id={sideaNavToggle ? "menu_hide" : ""}>
-                  Dashboard
+                  Users
                 </p>
               </NavLink>
             </div>
             <div className="menu">
               <NavLink
-                to={`/${userName}/uadmin/VCards`}
+                to={`/sadmin/vcards`}
                 className={
-                  window.location.pathname === `/${userName}/uadmin/VCards` ||
-                  window.location.pathname ===
-                    `/${userName}/uadmin/vcard_form_edit/${localStorage.getItem('URL_Alies')}` ||
-                  window.location.pathname ===
-                    `/${userName}/uadmin/create_new_vcard`
+                  window.location.pathname === `/sadmin/vcards`
                     ? "activeMenu"
                     : ""
                 }
@@ -171,46 +163,11 @@ const Super_Admin = () => {
                 </div>
 
                 <p className="menuName" id={sideaNavToggle ? "menu_hide" : ""}>
-                  All VCards
+                  Created VCards
                 </p>
               </NavLink>
             </div>
-            <div className="menu">
-              <NavLink
-                to={`/${userName}/uadmin/Inquries`}
-                className={
-                  window.location.pathname === `/${userName}/uadmin/Inquries`
-                    ? "activeMenu"
-                    : ""
-                }
-              >
-                <div className="menu_icon">
-                  <PiSealWarningFill />
-                </div>
-
-                <p className="menuName" id={sideaNavToggle ? "menu_hide" : ""}>
-                  Inquiries
-                </p>
-              </NavLink>
-            </div>
-            <div className="menu">
-              <NavLink
-                to={`/${userName}/uadmin/Appoinments`}
-                className={
-                  window.location.pathname === `/${userName}/uadmin/Appoinments`
-                    ? "activeMenu"
-                    : ""
-                }
-              >
-                <div className="menu_icon">
-                  <FaCalendarCheck />
-                </div>
-
-                <p className="menuName" id={sideaNavToggle ? "menu_hide" : ""}>
-                  Appoinments
-                </p>
-              </NavLink>
-            </div>
+     
           </div>
         </div>
         {/* Content */}
@@ -407,7 +364,16 @@ const Super_Admin = () => {
             className="content_box"
             onClick={() => setProfileCardToggle(false)}
           >
-        
+             {window.location.pathname === `/sadmin/users` ? (
+              <Users />
+            ) : (
+              ""
+            )}
+             {window.location.pathname === `/sadmin/vcards` ? (
+              <Vcards />
+            ) : (
+              ""
+            )}
           </div>
         </div>
 

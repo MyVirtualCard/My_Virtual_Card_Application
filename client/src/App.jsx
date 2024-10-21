@@ -74,6 +74,8 @@ import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dyn
 import ReactGA from "react-ga";
 import New_LandingPage from "./LandingPage/New_LandingPage.jsx";
 import Super_Admin from "./SuperAdmin/Super_Admin.jsx";
+import Users from "./SuperAdmin/Components/Users.jsx";
+import Vcards from "./SuperAdmin/Components/Vcards.jsx";
 
 //Import All component:
 const App = () => {
@@ -698,10 +700,16 @@ const App = () => {
                 />
               </Route>
               {/* SuperAdmin */}
-              <Route
-                path={`/${userName}/sadmin`}
-                element={<Super_Admin />}
-              ></Route>
+              <Route path={`/sadmin`} element={<Super_Admin />}>
+                <Route
+                  path={`/sadmin/users`}
+                  element={<Users />}
+                />
+                  <Route
+                  path={`/sadmin/vcards`}
+                  element={<Vcards />}
+                />
+              </Route>
               {/* Static VCard */}
               <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
               <Route path="/Taxi_Service" element={<Taxi_Service_Demo />} />

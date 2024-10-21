@@ -13,7 +13,7 @@ $first_back__color: #797979;
 $second_back__color: #525252;
 $third_back__color: #303030;
 //Root Background
-$root_backgound: #a68eff, #886dff;
+$root_backgound: #a1a1a1, #acacac;
 $root_text_size: 0.9rem;
 $root_font_weight: 500;
 //Vcard background
@@ -265,7 +265,7 @@ z-index: 1;
 
         padding: 5px 10px;
 
-        border-radius: 10px;
+        border-radius: 4px;
         transition: 1ll 0.5s ease-in-out;
 
         .icon {
@@ -398,14 +398,14 @@ z-index: 1;
           transform: rotate(0deg);
           height: 150px;
         }
-        .overlay {
-          position: relative;
-          top: -3px;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(#cd62e200 0%, $vcard_back_color 100%);
-        }
+        // .overlay {
+        //   position: relative;
+        //   top: -3px;
+        //   left: 0;
+        //   width: 100%;
+        //   height: 100%;
+        //   background: linear-gradient(#cd62e200 0%, $vcard_back_color 100%);
+        // }
       }
       .banner_image {
         width: 100%;
@@ -426,7 +426,7 @@ z-index: 1;
           bottom: -3px;
           left: 0;
           width: 100%;
-          height: 50%;
+          height: 20%;
           background: linear-gradient(#cd62e200 0%, $vcard_back_color 100%);
         }
       }
@@ -445,13 +445,13 @@ z-index: 1;
           z-index: 2;
           width: 100%;
           height: 100%;
-          border-radius: 1rem;
+          border-radius: 0.5rem;
           // border-top-left-radius: 2.5rem;
           object-fit: cover; /* Ensures image covers the area */
           object-position: top; /* Ensures head portion is not cropped */
-          border: 3px solid $card_back_colour;
+          border: 2px solid $card_back_colour;
           box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
-          animation: profileBorder 5s infinite linear;
+          // animation: profileBorder 5s infinite linear;
           @keyframes profileBorder {
             0% {
               border: 3px solid $card_back_colour;
@@ -3179,7 +3179,7 @@ z-index: 1;
   &::-webkit-scrollbar {
     width: 6px !important;
     height: 4px !important;
-
+    display: none !important;
     background-color: $root_backgound;
     // z-index: 100;
 
@@ -3193,6 +3193,7 @@ z-index: 1;
     border-radius: 10px;
     z-index: 10;
     cursor: pointer;
+    display: none;
     background-color: #fff !important;
 
     &:hover {

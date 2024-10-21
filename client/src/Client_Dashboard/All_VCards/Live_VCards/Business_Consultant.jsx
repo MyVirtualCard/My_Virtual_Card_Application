@@ -521,9 +521,9 @@ const Business_Consultant = () => {
                       {data.BannerType == "ImageUpload" ? (
                         <img
                           src={`
-                                ${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/${data.Banner}
+                                ${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                            data.Banner
+                          }
                                
 
                                 `}
@@ -538,9 +538,9 @@ const Business_Consultant = () => {
                       {data.ProfileType == "ImageUpload" ? (
                         <img
                           src={`
-                                 ${
-                                   import.meta.env.VITE_APP_BACKEND_API_URL
-                                 }/${data.Profile}
+                                 ${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                            data.Profile
+                          }
                                 
  
                                  `}
@@ -858,9 +858,7 @@ const Business_Consultant = () => {
                                   <div className="service_image">
                                     <img
                                       src={`
-                                ${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/${
+                                ${import.meta.env.VITE_APP_BACKEND_API_URL}/${
                                         data.ServiceImage
                                       }
                                
@@ -965,9 +963,7 @@ const Business_Consultant = () => {
                                   // />
                                   <img
                                     src={`
-                            ${
-                              import.meta.env.VITE_APP_BACKEND_API_URL
-                            }/${
+                            ${import.meta.env.VITE_APP_BACKEND_API_URL}/${
                                       data.GalleryImage
                                     }
                                 `}
@@ -1023,9 +1019,7 @@ const Business_Consultant = () => {
                                 {data.ProductType == "ImageUpload" ? (
                                   <img
                                     src={`
-                                 ${
-                                   import.meta.env.VITE_APP_BACKEND_API_URL
-                                 }/${
+                                 ${import.meta.env.VITE_APP_BACKEND_API_URL}/${
                                       data.ProductImage
                                     }
                                 
@@ -1577,13 +1571,12 @@ const Business_Consultant = () => {
                     <h3>Live Location</h3>
                   </div>
 
-                  {GoogleMapData.map((data, index) => {
-                    return (
-                      <div className="google_map" key={index}>
-                        <HtmlRenderer htmlString={data.GoogleIframe} />
-                      </div>
-                    );
-                  })}
+                  <div
+                    className="google_map"
+                    dangerouslySetInnerHTML={{
+                      __html: GoogleMapData[0].GoogleIframe,
+                    }}
+                  ></div>
                 </div>
               </>
             ) : (

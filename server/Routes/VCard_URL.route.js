@@ -21,7 +21,7 @@ const uploadFields = BasicUpload.fields([// One profile image
 ]);
 //Get all basicDetails:
 
-router.get("/", verifyToken, getAllVCardURLData);
+router.get("/", getAllVCardURLData);
 router.get("/:userName", verifyToken, getVCardURLData);
 router.post(
   "/",

@@ -141,8 +141,12 @@ export const ReadRegisteredUserSpecificData = async (req, res) => {
 };
 export const GetUserData = async (req, res) => {
   let UserData = await User.find({});
-
-  res.json({ message: "Fetched", UserData });
+if(UserData){
+  res.status(200).json({ message: "Fetched", UserData });
+}
+else{
+  res.status(400).json({ message: "Failed" });
+}
 };
 //Update data to mongodb -- > Upate Specific Registered User Data  :
 export const UpdateRegisteredUserSpecificData = async (req, res) => {
