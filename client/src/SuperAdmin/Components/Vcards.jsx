@@ -186,25 +186,26 @@ const Vcards = () => {
         <div className="row_2">
           <div className="card_box">
             <div className="card_title_box">
-           
+            <div className="title">
+                <h4>NO</h4>
+              </div>
               <div className="title">
                 <h4>PROFILE</h4>
               </div>
               <div className="title">
-                <h4>ID</h4>
+                <h4>VCARD_NAME</h4>
               </div>
               <div className="title">
                 <h4>USERNAME</h4>
               </div>
               <div className="title">
-                <h4>EMAIL</h4>
+                <h4>PROFESSION</h4>
               </div>
+            
               <div className="title">
-                <h4>MOBILE NUMBER</h4>
+                <h4>URL_ALIES</h4>
               </div>
-              <div className="title">
-                <h4>VERIFIED</h4>
-              </div>
+             
               <div className="title">
                 <h4>ACTIONS</h4>
               </div>
@@ -214,16 +215,31 @@ const Vcards = () => {
                 {AllVcard.map((data, index) => {
                   return (
                     <div className="card_detail_box" key={index}>
-                   
-                      <div className="detail">
+                     <div className="detail">
                       
-                        {data.profile !=null ? (
+                      <p className="count_no">{index+1}]</p>
+                      </div>
+                   <div className="detail">
+                        {data.ProfileType == "Paste_ImageAddress" ? (
+                          <img
+                            src={
+                              data.ProfileAddress.length > 0 &&
+                              data.ProfileAddress != undefined
+                                ? data.ProfileAddress
+                                : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
+                            }
+                            alt="profile"
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {data.ProfileType == "ImageUpload" ? (
                           <>
                             {data.Profile ? (
                               <img
                                 src={`${
                                   import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/${data.profile}`}
+                                }/${data.Profile}`}
                                 alt="profile"
                               />
                             ) : (
@@ -239,41 +255,58 @@ const Vcards = () => {
                       </div>
                       <div className="detail">
                       
-                      <p>Id : {data._id}</p>
+                      <p>{data.VCardName}</p>
                       </div>
                       <div className="detail">
-                       <p>{data.firstName}</p>
-                      </div>
-                      <div className="detail">
-                        {data.email != null ? (
-                          <small className="note">
-                         {data.email}
-                          </small>
-                        ) : (
-                     
-                        ''
-                        )}
-                      </div>
-                      <div className="detail">
-                        <small>
-                          {data.mobileNumber != null
-                            ?'+91'+" " + data.mobileNumber 
-                            : ""}
-                        </small>
+                       <p>{data.FirstName} {data.LastName}</p>
                       </div>
                       <div className="detail">
                         <p>
-                          {data.verified == 'false' ? 'No' : 'Yes'}
+                          {data.Profession}
                         </p>
                       </div>
+                      <div className="detail">
+                     
+                       
+                           {data.URL_Alies.length > 0 ? (
+                              <>
+                                <a
+                                  href={`${
+                                    import.meta.env.VITE_CLIENT_DOMAIN_URL
+                                  }/${data.URL_Alies}`}
+                                  target="_blank"
+                                >
+                                  {import.meta.env.VITE_CLIENT_DOMAIN_URL}/
+                                  {data.URL_Alies}
+                                </a>
+                                <CopyToClipboard
+                                  text={`${
+                                    import.meta.env.VITE_CLIENT_DOMAIN_URL
+                                  }/${data.URL_Alies}`}
+                                  onCopy={handleCopyURL}
+                                >
+                                  <i className="bx bx-copy"></i>
+                                </CopyToClipboard>
+                              </>
+                            ) : (
+                              <small className="note2">
+                                Live link not available!..Less VCard Details
+                                Added
+                              </small>
+                            )}
+                      
+                       
+                      </div>
+                   
+                     
                       <div className="detail_actions">
                        
                         <div
                           className="delete"
                           onClick={() => {
                          
-                            setID(data._id);
-                            setVcardDeleteToggle(true);
+                            // setID(data._id);
+                            // setVcardDeleteToggle(true);
                           }}
                         >
                           <div className="icon">

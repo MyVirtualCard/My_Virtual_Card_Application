@@ -136,7 +136,7 @@
       .card_title_box {
         display: grid;
         width: 100%;
-        grid-template-columns:0.5fr 1.5fr 0.6fr 1.5fr 0.7fr 0.5fr 1fr;
+        grid-template-columns:0.5fr 0.5fr 1.5fr 0.6fr 1.5fr 1.5fr  1fr;
         place-items: center;
         // gap: 0px 1rem;
         background-color: gray;
@@ -161,18 +161,18 @@
         }
         @media screen and (max-width: 1200px) {
           width: 200vw;
-          grid-template-columns:2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+          grid-template-columns:1fr 2fr 2fr 2fr 2fr 2fr 2fr ;
         }
         @media screen and (max-width: 700px) {
           width: 250vw;
-          grid-template-columns:2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+          grid-template-columns:1fr 2fr 2fr 2fr 2fr 2fr 2fr ;
         }
       }
       // Detail
       .card_detail_box {
         display: grid;
         width: 100%;
-        grid-template-columns:0.5fr 1.5fr 0.6fr 1.5fr 0.7fr 0.5fr 1fr;
+        grid-template-columns:0.5fr 0.5fr 1.5fr 0.6fr 1.5fr 1.5fr  1fr;
         place-items: center;
     height: 80px;
         background-color: rgb(243, 243, 243);
@@ -188,7 +188,7 @@
           img {
             width: 60px;
             height: 60px;
-            border-radius: 50%;
+            border-radius: 0.5rem;
             object-fit: cover;
             object-position: center;
             border: 1px solid rgb(235, 235, 235);
@@ -200,9 +200,14 @@
             font-weight: 550;
             color: rgb(70, 70, 70);
           }
+          .count_no{
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+          }
           i {
             font-size: 1.4rem;
-            color: rgb(70, 70, 70);
+            color: rgb(0, 141, 118);
             cursor: pointer;
           }
           a {
@@ -247,7 +252,7 @@
             flex-direction: column;
             justify-content: center;
             // gap: 3px;
-            cursor: pointer;
+            cursor: not-allowed;
 
             small{
               font-size: 0.7rem;
@@ -346,11 +351,11 @@
         }
         @media screen and (max-width: 1200px) {
           width: 200vw;
-          grid-template-columns:2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+          grid-template-columns:1fr 2fr 2fr 2fr 2fr 2fr 2fr ;
         }
         @media screen and (max-width: 700px) {
           width: 250vw;
-          grid-template-columns:2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+          grid-template-columns:1fr 2fr 2fr 2fr 2fr 2fr 2fr ;
         }
       }
       .card_detail_box_empty {

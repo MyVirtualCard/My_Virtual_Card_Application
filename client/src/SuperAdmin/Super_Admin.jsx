@@ -3,6 +3,7 @@ import "./Super_Admin.scss";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import BrandLogo from "../assets/Client_Dashboard/BrandLogo.png";
+import logo from "../assets/Fallback/Triangle_logo.png";
 import hand from "../assets/Client_Dashboard/hand.png";
 import { IoMdSettings } from "react-icons/io";
 import { IoMdNotifications } from "react-icons/io";
@@ -12,7 +13,7 @@ import { SiCodesignal } from "react-icons/si";
 import { MdSpaceDashboard } from "react-icons/md";
 import { CgWebsite } from "react-icons/cg";
 import { MdOutlineSupportAgent } from "react-icons/md";
-import { FaS, FaUserGroup } from "react-icons/fa6";
+import { FaS, FaUserGroup, FaUsers } from "react-icons/fa6";
 import { GiCometSpark } from "react-icons/gi";
 import { FaCalendarCheck } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
@@ -24,7 +25,7 @@ import { toast } from "react-toastify";
 import Context from "../Context/GlobalContext";
 import axios from "axios";
 
-import {Helmet} from 'react-helmet';
+import { Helmet } from "react-helmet";
 import Users from "./Components/Users";
 import Vcards from "./Components/Vcards";
 
@@ -70,7 +71,6 @@ const Super_Admin = () => {
       );
       const data = response.data.data;
       setRegisteredData(data);
-      
     } catch (error) {
       console.log(error);
     }
@@ -129,19 +129,19 @@ const Super_Admin = () => {
               {sideaNavToggle ? <CiMenuBurger /> : <CiMenuFries />}
             </div>
           </div>
-      
-          <div className="sidenav_menu">
+
+          <div className="sadmin_sidenav_menu">
             <div className="menu ver">
               <NavLink
                 to={`/sadmin/users`}
                 className={
-                  window.location.pathname === `/sadmin/users`
+                  window.location.pathname === `/sadmin/users` || window.location.pathname === `/sadmin`
                     ? `activeMenu`
                     : ""
                 }
               >
                 <div className="menu_icon">
-                  <FaChartPie />
+                  <FaUsers />
                 </div>
 
                 <p className="menuName" id={sideaNavToggle ? "menu_hide" : ""}>
@@ -167,7 +167,6 @@ const Super_Admin = () => {
                 </p>
               </NavLink>
             </div>
-     
           </div>
         </div>
         {/* Content */}
@@ -191,7 +190,6 @@ const Super_Admin = () => {
             {VCardCount.length > 0 ? (
               <>
                 {VCardCount.map((data, index) => {
-               
                   return (
                     <>
                       <div className="profile_img" key={index}>
@@ -211,11 +209,9 @@ const Super_Admin = () => {
                           )}
                           {data.ProfileType == "ImageUpload" ? (
                             <img
-                            src={`${
-                              import.meta.env.VITE_APP_BACKEND_API_URL
-                            }/${
-                              data.Profile
-                            }`}
+                              src={`${
+                                import.meta.env.VITE_APP_BACKEND_API_URL
+                              }/${data.Profile}`}
                               alt="profile"
                             />
                           ) : (
@@ -232,9 +228,9 @@ const Super_Admin = () => {
                 <div className="profile_img">
                   {registeredData?.profile ? (
                     <img
-                      src={`${
-                        import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/${registeredData?.profile}`}
+                      src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                        registeredData?.profile
+                      }`}
                       alt="logo"
                     />
                   ) : (
@@ -249,10 +245,10 @@ const Super_Admin = () => {
 
             <div className="profile_content">
               <div className="name">
-                <h5>{registeredData?.firstName || "John Wick"}</h5>
+                <h5>Aristostech India Pvt Ltd</h5>
               </div>
               <div className="email">
-                <small>{registeredData?.email || "johnwick@gmail.com"}</small>
+                <small>aristostechteam@gmail.com</small>
               </div>
             </div>
             <div className="SignOut">
@@ -260,9 +256,9 @@ const Super_Admin = () => {
                 Get Back Soon! <img src={hand} alt="hand" />
               </p>
 
-              <Link onClick={handleSignOut}>
+              <Link to={'/'}>
                 <CgLogOut />
-                SignOut
+                Back To Home
               </Link>
             </div>
           </div>
@@ -277,7 +273,7 @@ const Super_Admin = () => {
             </div>
             {/* //TopNavBar */}
             <div className="topNav_right">
-              <NavLink to={`/${userName}/uadmin/setting`} className="setting">
+              {/* <NavLink to={`/${userName}/uadmin/setting`} className="setting">
                 <IoMdSettings />
               </NavLink>
               <NavLink
@@ -285,78 +281,20 @@ const Super_Admin = () => {
                 className="notification"
               >
                 <IoMdNotifications />
-              </NavLink>
+              </NavLink> */}
               <div className="user_name">
-                <h3>{registeredData.firstName || "John Wick"}</h3>
+                <h3>Super Admin</h3>
               </div>
-              {VCardCount.length > 0 ? (
-                <>
-                  {VCardCount.map((data, index) => {
 
-               
-                    return (
-                      <>
-                        <div
-                          className="profile_logo"
-                          onClick={() =>
-                            setProfileCardToggle(!ProfileCardToggle)
-                          }
-                          key={index}
-                        >
-                          <div key={index}>
-                            {data.ProfileType == "Paste_ImageAddress" ? (
-                              <img
-                                src={
-                                  data.ProfileAddress.length > 0 &&
-                                  data.ProfileAddress != undefined
-                                    ? data.ProfileAddress
-                                    : "https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                                }
-                                alt="profile"
-                                key={index}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {data.ProfileType == "ImageUpload" ? (
-                             <img
-                             src={`${
-                               import.meta.env.VITE_APP_BACKEND_API_URL
-                             }/${
-                               data.Profile
-                             }`}
-                               alt="profile"
-                               key={index}
-                             />
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                </>
-              ) : (
-                <div
-                  className="profile_logo"
-                  onClick={() => setProfileCardToggle(!ProfileCardToggle)}
-                >
-                  {registeredData?.profile ? (
-                    <img
-                      src={`${
-                        import.meta.env.VITE_APP_BACKEND_API_URL
-                      }/${registeredData?.profile}`}
-                      alt="logo"
-                    />
-                  ) : (
-                    <img
-                      src="https://img.freepik.com/premium-photo/cartoon-character-with-phone-that-says-he-is-holding-phone_706452-5625.jpg?w=826"
-                      alt="logo"
-                    />
-                  )}
-                </div>
-              )}
+              <div
+                className="profile_logo"
+                onClick={() => setProfileCardToggle(!ProfileCardToggle)}
+              >
+                <img
+                  src={logo}
+                  alt="logo"
+                />
+              </div>
             </div>
           </div>
           {/* //Content Box */}
@@ -364,19 +302,10 @@ const Super_Admin = () => {
             className="content_box"
             onClick={() => setProfileCardToggle(false)}
           >
-             {window.location.pathname === `/sadmin/users` ? (
-              <Users />
-            ) : (
-              ""
-            )}
-             {window.location.pathname === `/sadmin/vcards` ? (
-              <Vcards />
-            ) : (
-              ""
-            )}
+            {window.location.pathname === `/sadmin/users` || window.location.pathname === `/sadmin` ? <Users /> : ""}
+            {window.location.pathname === `/sadmin/vcards` ? <Vcards /> : ""}
           </div>
         </div>
-
       </div>
     </>
   );

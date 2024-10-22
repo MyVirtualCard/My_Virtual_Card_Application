@@ -42,8 +42,8 @@ const Users = () => {
     setVCardCount,
   } = useContext(Context);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
-  let[AllUser,setAllUser]=useState([]);
-  let[ID,setID]=useState();
+  let [AllUser, setAllUser] = useState([]);
+  let [ID, setID] = useState();
   let [ExpireAt, setExpireAt] = useState(null);
   let [Info, setInfo] = useState(false);
   const [key, setKey] = useState(0);
@@ -62,12 +62,9 @@ const Users = () => {
     api
       .get(`/api/user/register`)
       .then((res) => {
- 
-          console.log(res.data.UserData
-          )
-          setFormSubmitLoader(false);
-          setAllUser(res.data.UserData);
-      
+        console.log(res.data.UserData);
+        setFormSubmitLoader(false);
+        setAllUser(res.data.UserData);
       })
       .catch((error) => {
         setFormSubmitLoader(false);
@@ -83,7 +80,6 @@ const Users = () => {
           },
         })
         .then((res) => {
-
           if (res.data.data.length > 0) {
             setCurrentPlanActive(res.data.data.length);
             setStatus(res.data?.data[0]?.status);
@@ -129,9 +125,7 @@ const Users = () => {
     }
   }
   useEffect(() => {
-
     razorpayFetchData();
-
   }, []);
   useEffect(() => {
     // Set up the interval to increment the count every second
@@ -165,7 +159,7 @@ const Users = () => {
               <div className="delete">
                 <button
                   onClick={() => {
-                    handleUserDelete(ID)
+                    handleUserDelete(ID);
                   }}
                 >
                   Yes
@@ -182,12 +176,14 @@ const Users = () => {
         <div className="vcard_title">
           <h4>All Users</h4>
         </div>
-   
+
         {/* Card Box */}
         <div className="row_2">
           <div className="card_box">
             <div className="card_title_box">
-           
+            <div className="title">
+                <h4>NO</h4>
+              </div>
               <div className="title">
                 <h4>PROFILE</h4>
               </div>
@@ -215,66 +211,54 @@ const Users = () => {
                 {AllUser.map((data, index) => {
                   return (
                     <div className="card_detail_box" key={index}>
-                   
-                      <div className="detail">
+                       <div className="detail">
                       
-                        {data.profile !=null ? (
-                          <>
-                            {data.Profile ? (
-                              <img
-                                src={`${
-                                  import.meta.env.VITE_APP_BACKEND_API_URL
-                                }/${data.profile}`}
-                                alt="profile"
-                              />
-                            ) : (
-                              <img
-                                src="https://img.freepik.com/premium-photo/social-media-smiling-boy-icon-illustration-happy-user-art_762678-33823.jpg?w=740"
-                                alt="profile"
-                              />
-                            )}
-                          </>
+                      <p className="count_no">{index+1}]</p>
+                      </div>
+                      <div className="detail">
+                        {data.profile != null ? (
+                          <img
+                            src={`${import.meta.env.VITE_APP_BACKEND_API_URL}/${
+                              data.profile
+                            }`}
+                            alt="profile"
+                          />
+                        ) : (
+                          <img
+                            src="https://img.freepik.com/premium-vector/man-with-red-circle-around-his-neck_1256222-3753.jpg?uid=R79330344&ga=GA1.1.111147909.1717157513&semt=ais_hybrid"
+                            alt="profile"
+                          />
+                        )}
+                      </div>
+                      <div className="detail">
+                        <p>Id : {data._id}</p>
+                      </div>
+                      <div className="detail">
+                        <p>{data.firstName}</p>
+                      </div>
+                      <div className="detail">
+                        {data.email != null ? (
+                          <small className="note">{data.email}</small>
                         ) : (
                           ""
                         )}
                       </div>
                       <div className="detail">
-                      
-                      <p>Id : {data._id}</p>
-                      </div>
-                      <div className="detail">
-                       <p>{data.firstName}</p>
-                      </div>
-                      <div className="detail">
-                        {data.email != null ? (
-                          <small className="note">
-                         {data.email}
-                          </small>
-                        ) : (
-                     
-                        ''
-                        )}
-                      </div>
-                      <div className="detail">
                         <small>
                           {data.mobileNumber != null
-                            ?'+91'+" " + data.mobileNumber 
+                            ? "+91" + " " + data.mobileNumber
                             : ""}
                         </small>
                       </div>
                       <div className="detail">
-                        <p>
-                          {data.verified == 'false' ? 'No' : 'Yes'}
-                        </p>
+                        <p>{data.verified == "false" ? "No" : "Yes"}</p>
                       </div>
                       <div className="detail_actions">
-                       
                         <div
                           className="delete"
                           onClick={() => {
-                         
-                            setID(data._id);
-                            setVcardDeleteToggle(true);
+                            // setID(data._id);
+                            // setVcardDeleteToggle(true);
                           }}
                         >
                           <div className="icon">
