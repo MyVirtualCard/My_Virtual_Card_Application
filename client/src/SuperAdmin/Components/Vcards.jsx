@@ -129,7 +129,7 @@ const Vcards = () => {
   }
   useEffect(() => {
 
-    razorpayFetchData();
+    // razorpayFetchData();
 
   }, []);
   useEffect(() => {

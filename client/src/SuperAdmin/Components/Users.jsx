@@ -125,7 +125,7 @@ const Users = () => {
     }
   }
   useEffect(() => {
-    razorpayFetchData();
+    // razorpayFetchData();
   }, []);
   useEffect(() => {
     // Set up the interval to increment the count every second
