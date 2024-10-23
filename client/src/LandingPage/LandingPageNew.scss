@@ -945,7 +945,7 @@ z-index: 1;
     .slide2 {
       width: 100%;
       height: auto;
-      padding: 1rem;
+      padding: 1rem 1rem 0rem 1rem;
       margin: auto;
 
       .slide2_title {
@@ -1271,7 +1271,7 @@ z-index: 1;
           position: relative;
           width: 100%;
          
-          margin:1rem auto;
+          margin:1rem auto 0rem auto;
    
           .left {
             display: flex;
@@ -1392,8 +1392,7 @@ z-index: 1;
             justify-content: center;
             place-items: end;
             height: 100%;
-       
-       
+      
       
         // width: 14%;
         flex: 0.4;
@@ -1403,7 +1402,7 @@ z-index: 1;
           
             .slick-slider{
           
-              width:480px;
+              width:370px;
             
             margin:  auto;
             }
@@ -1457,7 +1456,7 @@ z-index: 1;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        width: 80%;
+        width: 95%;
         gap: 1rem;
 
         margin: auto;
@@ -1543,7 +1542,7 @@ z-index: 1;
       }
       .slide_3_container_box {
         position: relative;
-        width: 80%;
+        width: 95%;
 
         height: auto;
         display: grid;
@@ -1643,7 +1642,7 @@ z-index: 1;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        width: 80%;
+        width: 95%;
         gap: 1rem;
 
         margin: auto;
@@ -1744,7 +1743,7 @@ z-index: 1;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         gap: 2rem;
-        padding: 2rem;
+        padding: 1rem;
         margin: 10px auto;
         z-index: 700;
         place-items: start;
@@ -1757,10 +1756,10 @@ z-index: 1;
           justify-content: flex-start;
           gap: 0.5rem;
           height: auto;
-          background: linear-gradient(0deg, #007a87, #01324e);
+          background: linear-gradient(0deg, #007a87, #00758a);
 
           box-shadow: 0px 2px 3px rgb(170, 170, 170);
-            border-radius:1rem;
+            border-radius:0rem;
           padding: 10px;
           margin: auto;
 
@@ -2133,7 +2132,7 @@ color: #fff;
       height: auto;
       // background-color: #523ab3;
       background: linear-gradient(180deg, #007a87, #012235);
-      padding: 2rem 0px;
+      padding: 1rem 0px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -2674,12 +2673,13 @@ strong{
       position: relative;
       width: 100%;
       height: auto;
-      padding: 2rem 0px;
+      padding: 0rem 0px;
       // background: linear-gradient(280deg, #ffffff, #ffffff);
       background-image: url("https://easy.razorpay.com/federated-bundles/onboarding/build/browser/static/src/App/Onboarding/images/background-frame.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
+  
       .slide_7_title {
         width: 100%;
         display: flex;
@@ -2715,7 +2715,7 @@ strong{
 
       .selection_actions {
         width: 95%;
-        margin: 2rem auto;
+        margin: 0rem auto;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -2730,6 +2730,7 @@ strong{
           font-size: 0.8rem;
           cursor: pointer;
           transition: all 0.5s ease;
+          display: none;
           &:hover {
             background-color: #3f3f3f;
             color: #ffffff;
@@ -2746,13 +2747,12 @@ strong{
       .qn_container_box {
         width: 95%;
 
-        margin: 1rem auto;
+        margin: 0rem auto;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         place-items: start;
-        grid-column-gap: 2rem;
-        grid-row-gap: 2rem;
-        padding-bottom: 2rem;
+     gap: 1rem ;
+    
 
         .question_box {
           box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -2762,7 +2762,7 @@ strong{
           // width: 300px;
           width: 100%;
           min-height: 50px;
-          height: 100px;
+          height: auto;
 
           display: flex;
           flex-direction: column;
@@ -2798,7 +2798,7 @@ strong{
             }
           }
           .answer {
-            padding: 4px 7px;
+            padding: 10px 7px;
 
             small {
               font-size: 0.8rem;
