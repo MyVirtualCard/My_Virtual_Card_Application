@@ -317,6 +317,9 @@ const Login = () => {
                       <Link to="/register">
                         Create New Account ? <span>Sign Up</span>
                       </Link>
+                      <Link to="/admin_login">
+                        For Admin Login ? <span>Click Here</span>
+                      </Link>
                     </div>
                   </form>
                 </>

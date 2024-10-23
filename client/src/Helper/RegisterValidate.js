@@ -38,3 +38,15 @@ export let LoginValidateSchema=Yup.object({
 
 }
 );
+
+export let SAdminLoginValidateSchema=Yup.object({
+  email: Yup.string().email('Invalid Email!').required('Email is required!'),
+  // mobileNumber: Yup.string().required('Mobile Number is required!'),
+  password: Yup.string().min(5).required('Password is required!').min(8)
+  .matches(RegExp('(.*[a-z].*)'), 'Lowercase letter required!')
+  .matches(RegExp('(.*[A-Z].*)'), 'One uppercase letter required!')
+  .matches(RegExp('(.*\\d.*)'), 'One Number must Required!')
+  .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), 'Special char required! eg:#,*,$'),
+
+}
+);

@@ -77,6 +77,7 @@ import Super_Admin from "./SuperAdmin/Super_Admin.jsx";
 import Users from "./SuperAdmin/Components/Users.jsx";
 import Vcards from "./SuperAdmin/Components/Vcards.jsx";
 import CAB_DRIVERS_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/CAB_DRIVERS_LIVE.jsx";
+import SAdmin_Login from "./Authentication/Sadmin_Login/SAdmin_Login.jsx";
 
 //Import All component:
 const App = () => {
@@ -653,6 +654,7 @@ const App = () => {
               <Route path="/register" element={<Register />} />
               {/* <Route path="/register" element={<Register />} /> */}
               <Route path="/login" element={<Login />} />
+              <Route path="/admin_login" element={<SAdmin_Login />} />
               <Route path="/verify_OTP" element={<VerifyOTP />} />
               <Route
                 path="/reset_password/:id/:token"

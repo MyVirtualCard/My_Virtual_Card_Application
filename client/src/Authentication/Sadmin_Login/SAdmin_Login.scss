@@ -528,13 +528,13 @@ flex: 0.5;
     display: flex;
   
     align-items: flex-end;
-    justify-content:space-between;
+    justify-content: flex-start;
 
     
 
     a {
       text-decoration: none;
-      width: 100%;
+      // width: 100%;
       font-size: 0.8rem;
       color: rgb(34, 34, 34);
       display: flex;
@@ -542,7 +542,7 @@ flex: 0.5;
       text-align: center;
       gap: 10px;
       font-weight: 550;
-      justify-content:space-between;
+      justify-content: flex-start;
   
 
   
