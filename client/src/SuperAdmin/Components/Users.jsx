@@ -205,7 +205,9 @@ const Users = () => {
               <>
                 {AllUser.map((data, index) => {
                   return (
-                    <div className="card_detail_box" key={index}>
+                    <>
+               
+    <div className="card_detail_box" key={index}>
                       <div className="detail">
                         <p className="count_no">{index + 1}]</p>
                       </div>
@@ -255,9 +257,9 @@ const Users = () => {
                         </p>
                       </div>
                       <div className="detail">
-                        {AllPaymentUser[index]?.user ? 
+                  
                            <p className="plan">{AllPaymentUser[index]?.user === data.userName? AllPaymentUser[index].currentPlan : 'No Plan'}</p>
-                        : 'No Plan'}
+                 
                      
                       </div>
                       <div className="detail_actions">
@@ -321,6 +323,8 @@ const Users = () => {
                         </div> */}
                       </div>
                     </div>
+                    </>
+                
                   );
                 })}
               </>
