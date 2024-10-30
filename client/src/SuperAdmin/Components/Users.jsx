@@ -255,8 +255,8 @@ const Users = () => {
                         </p>
                       </div>
                       <div className="detail">
-                        {AllPaymentUser[index].user ? 
-                           <p className="plan">{AllPaymentUser[index].user === data.userName? AllPaymentUser[index].currentPlan : 'No Plan'}</p>
+                        {AllPaymentUser[index]?.user ? 
+                           <p className="plan">{AllPaymentUser[index]?.user === data.userName? AllPaymentUser[index].currentPlan : 'No Plan'}</p>
                         : 'No Plan'}
                      
                       </div>
