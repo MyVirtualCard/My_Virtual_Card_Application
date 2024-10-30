@@ -255,7 +255,7 @@ const Users = () => {
                         </p>
                       </div>
                       <div className="detail">
-                        <p className="plan">{AllPaymentUser[index].user == AllUser[index].userName? AllPaymentUser[index].currentPlan : 'No Plan'}</p>
+                        <p className="plan">{AllPaymentUser[index].user === data.userName? AllPaymentUser[index].currentPlan : 'No Plan'}</p>
                       </div>
                       <div className="detail_actions">
                         <div
