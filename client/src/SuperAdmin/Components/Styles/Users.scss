@@ -129,15 +129,15 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
+      // align-items: flex-start;
+      // justify-content: flex-start;
       background-color: #fff;
       border-radius: 0.5rem;
       .card_title_box {
         display: grid;
         width: 100%;
-        grid-template-columns:0.5fr 0.5fr 1.5fr 0.6fr 1.5fr 1fr 0.5fr 1fr;
-        place-items: center;
+        grid-template-columns:0.5fr 0.5fr 1.5fr 1.5fr 1.5fr 0.5fr 1fr 1fr 1fr;
+        // place-items: center;
         // gap: 0px 1rem;
         background-color: gray;
         box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
@@ -172,7 +172,7 @@
       .card_detail_box {
         display: grid;
         width: 100%;
-        grid-template-columns:0.5fr 0.5fr 1.5fr 0.6fr 1.5fr 1fr 0.5fr 1fr;
+        grid-template-columns:0.5fr 0.5fr 1.5fr 1.5fr 1.5fr 0.5fr 1fr 1fr 1fr;
         place-items: center;
     height: 80px;
         background-color: rgb(243, 243, 243);
@@ -224,6 +224,12 @@
             font-weight: 550;
             color: royalblue;
             background-color: transparent;
+          }
+          .plan{
+            background-color: rgb(0, 250, 146);
+            padding: 0.5rem 1rem;
+            font-weight: 550;
+            border-radius: 5px;
           }
           .note2 {
             font-size: 0.7rem;

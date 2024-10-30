@@ -786,51 +786,7 @@ const LandingPageNew = () => {
             </div>
 
             <div className="plan_container_box" initial="hide" animate="show">
-              {/* plan demo*/}
-              {/* <div className="plan" id={TrialExpand ? "expand" : "default"}>
-                <div
-                  className="down_arrow"
-                  onClick={() => setTrialExpand(!TrialExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>FREE PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ 0 <small>30/day</small>
-                  </h2>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  <p>
-                    Total VCard Provides : <span>01</span>
-                  </p>
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {static_plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div> */}
+             
               {/* plan1 */}
               <div className="plan" id={planExpand ? "expand" : "default"}>
                 <div
@@ -950,102 +906,7 @@ const LandingPageNew = () => {
                   })}
                 </div>
               </div>
-              {/* plan2 */}
-              {/* <div
-                className="plan"
-                id={standardPlanExpand ? "expand" : "default"}
-              >
-                <div
-                  className="down_arrow"
-                  onClick={() => setStandardPlanExpand(!standardPlanExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>STANDARD PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ 899 <small>/Yearly</small>
-                  </h2>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCard Design's Provided : <span>06</span>
-                  </p>
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {static_plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div> */}
-              {/* plan3 */}
-              {/* <div
-                className="plan"
-                id={PremiumPlanExpand ? "expand" : "default"}
-              >
-                <div
-                  className="down_arrow"
-                  onClick={() => setPremiumPlanExpand(!PremiumPlanExpand)}
-                >
-                  <FaHandPointRight />
-                  Show more
-                </div>
-                <div className="plan_title">
-                  <h3>PREMIUM PLAN</h3>
-                </div>
-                <div className="plan_price">
-                  <h2>
-                    ₹ 1299 <small>/Yearly</small>
-                  </h2>
-                </div>
-
-                <div className="plan_action">
-                  <Link to="/register">
-                    <button>Choose Plan</button>
-                  </Link>
-                </div>
-                <div className="card_count">
-                  <p>
-                    No of VCard Design's Provided : <span>08</span>
-                  </p>
-                </div>
-                <div
-                  className="plan_addon_service"
-                  initial="hide"
-                  animate="show"
-                >
-                  {static_plan_service_list.map((data, index) => {
-                    return (
-                      <div className="list" key={index}>
-                        <div className="icon">{data.icon}</div>
-                        <div className="text">
-                          <p>{data.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div> */}
+             
             </div>
           </div>
           {/* Dynamic Vcard Container */}

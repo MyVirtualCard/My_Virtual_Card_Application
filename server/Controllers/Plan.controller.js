@@ -51,7 +51,8 @@ export const GetPlanData = async (req, res) => {
 // //Read or get Specific User all Data  :
 export const readSpecificUserAllData = async (req, res) => {
   try {
-    let getSpecificData = await currentPlan.find({ user: req.user.userName });
+   
+    let getSpecificData = await currentPlan.findOne({user:req.user.userName} );
 
     if (!getSpecificData) {
       res.status(400).json({ message: " Data Not Found!" });
@@ -71,8 +72,8 @@ export const readSpecificUserAllData = async (req, res) => {
 // //Read or get Specific User all Data  :
 export const getSpecificIdData = async (req, res) => {
   try {
-    let { id } = req.params;
-    let getSpecificData = await currentPlan.findById(id);
+    let { user } = req.params;
+    let getSpecificData = await currentPlan.findOne({"userName":'kodi'});
 
     if (!getSpecificData) {
       res.status(400).json({ message: "Data Not Found" });

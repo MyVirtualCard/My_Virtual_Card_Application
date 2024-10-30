@@ -41,6 +41,7 @@ const SAdmin_Login = () => {
     resetPassId,
     setResetPassId,
   } = useContext(Context);
+
   useEffect(() => {
     inputRefFocus.current.focus();
   }, []);

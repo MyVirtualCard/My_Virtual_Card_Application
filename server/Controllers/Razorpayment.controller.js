@@ -101,3 +101,30 @@ export const readSpecificUserAllData = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const readUserAllData = async (req, res) => {
+  try {
+    let getSpecificData = await Payment.find({});
+    if (getSpecificData[0].status === "created") {
+      // Runs every minute
+      cron.schedule("* * * * *", async () => {
+        const now = new Date();
+        const threeMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+
+        const result = await Payment.deleteMany({
+          status: "created",
+          createdAt: { $lt: threeMinutesAgo },
+        });
+
+        // console.log(`Deleted ${result.deletedCount} unpaid orders`);
+      });
+    }
+    res.status(201).json({
+      message: " Data Fetched!",
+      length: getSpecificData.length,
+      data: getSpecificData,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

@@ -10,9 +10,9 @@ router.get('/:URL_Alies',verifyToken,GetPlanData);
 
 router.post('/',verifyToken,PostPlanData);
  //Read Specific user all Data:
- router.get("/specificAll/:userName", verifyToken, readSpecificUserAllData);
+ router.get("/specificAll/:userName",verifyToken, readSpecificUserAllData);
  //Read Specific user all Data:
- router.get("/specific/:id", verifyToken, getSpecificIdData);
+ router.get("/specific/:userName", getSpecificIdData);
 //Update Specific user Single Data:
 router.put("/update/:id", verifyToken, updateSpecificUserData);
 //Delete Specific user all Data in Basic Detail:

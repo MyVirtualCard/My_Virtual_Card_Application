@@ -322,6 +322,7 @@ const CORPORATE_PREVIEW = () => {
   let totalHeight;
   let [scrollY, setScrollY] = useState(0);
   let innerHeight;
+  
   useEffect(() => {
     window.addEventListener("scroll", () => {
       innerHeight = window.innerHeight; // Height of the viewport

@@ -19,7 +19,7 @@ import User_Notification from "./Client_Dashboard/Components/User_Notification";
 import { ToastContainer, toast, Bounce, Slide, Zoom } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import LandingPage from "./LandingPage/LandingPage";
+
 import Register from "./Authentication/Register/Register";
 import Login from "./Authentication/Login/Login";
 import VerifyOTP from "./Authentication/VerifyOTP/VerifyOTP";
@@ -72,13 +72,13 @@ import ADVOCATE_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VC
 import Dynamic_VCard_PREVIEW from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_PREVIEW.jsx";
 import Dynamic_VCard_Live from "./Client_Dashboard/All_VCards/Dynamic_VCards/Dynamic_VCard_Live.jsx";
 import ReactGA from "react-ga";
-import New_LandingPage from "./LandingPage/New_LandingPage.jsx";
 import Super_Admin from "./SuperAdmin/Super_Admin.jsx";
 import Users from "./SuperAdmin/Components/Users.jsx";
 import Vcards from "./SuperAdmin/Components/Vcards.jsx";
 import CAB_DRIVERS_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/CAB_DRIVERS_LIVE.jsx";
 import SAdmin_Login from "./Authentication/Sadmin_Login/SAdmin_Login.jsx";
-
+import Skeleton,{SkeletonTheme} from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 //Import All component:
 const App = () => {
   let navigate = useNavigate();
@@ -645,122 +645,126 @@ const App = () => {
           }}
         >
           <Suspense fallback={<FallBack />}>
-            <Routes>
-              {/* Landing Page */}
-              <Route path="/old" element={<LandingPage />} />
-              <Route path="/" element={<LandingPageNew />} />
-              <Route path="/new" element={<New_LandingPage />} />
-              {/* Authentication */}
-              <Route path="/register" element={<Register />} />
-              {/* <Route path="/register" element={<Register />} /> */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/admin_login" element={<SAdmin_Login />} />
-              <Route path="/verify_OTP" element={<VerifyOTP />} />
-              <Route
-                path="/reset_password/:id/:token"
-                element={<ResetPassword />}
-              />
+            <SkeletonTheme baseColor="#fff" highlightColor="#525252">
+              <Routes>
+                {/* Landing Page */}
 
-              {/* <Route path="/paymentsuccess" element={<f />} /> */}
-              <Route path="/terms_condition" element={<Terms_Condition />} />
-              <Route path="/privacy_condition" element={<Privacy_Policy />} />
-              {/* Client Dashboard Routes */}
-              <Route
-                path={`/${userName}/uadmin`}
-                element={<Client_Dashboard />}
-              >
-                <Route
-                  path={`/${userName}/uadmin/create_new_vcard`}
-                  element={<VCard_URL_Form />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/dashboard`}
-                  element={<User_Dashboard />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/VCards`}
-                  element={<User_VCards />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/Inquries`}
-                  element={<User_Inquries />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/Appoinments`}
-                  element={<User_Appoinments />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/setting`}
-                  element={<User_Setting />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/notification`}
-                  element={<User_Notification />}
-                />
-                <Route
-                  path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
-                  element={<VCard_Form_Edit />}
-                />
-              </Route>
-              {/* SuperAdmin */}
-              <Route path={`/sadmin`} element={<Super_Admin />}>
-                <Route path={`/sadmin/users`} element={<Users />} />
-                <Route path={`/sadmin/vcards`} element={<Vcards />} />
-              </Route>
-              {/* Static VCard */}
-              <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
-              <Route path="/Taxi_Service" element={<Taxi_Service_Demo />} />
-              <Route
-                path="/Fashion_Designer"
-                element={<Fashion_Designer_Demo />}
-              />
-              <Route path="/Manager" element={<Manager_Demo />} />
-              <Route
-                path="/Business_Consultant"
-                element={<Business_Consultant_Demo />}
-              />
-              <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
-              <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
-              <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
-              {/* //New Designs */}
-              <Route
-                path="/Gym_Trainer_Preview"
-                element={<GYM_TRAINER_DEMO />}
-              />
-              <Route
-                path="/Taxi_Service_Preview"
-                element={<TAXI_SERVICE_PREVIEW />}
-              />
-              <Route
-                path="/Fashion_Designer_Preview"
-                element={<FASHION_DESIGNER_PREVIEW />}
-              />
-              <Route path="/Manager_Preview" element={<MANAGER_PREVIEW />} />
-              <Route
-                path="/Beauty_Parlor_Preview"
-                element={<BEAUTY_PARLOR_PREVIEW />}
-              />
-              <Route
-                path="/Corporate_Company_Preview"
-                element={<CORPORATE_PREVIEW />}
-              />
-              <Route path="/Doctor_Preview" element={<DOCTOR_PREVIEW />} />
-              <Route path="/Advocate_Preview" element={<ADVOCATE_PREVIEW />} />
-              <Route
-                path="/Education_Preview"
-                element={<EDUCATION_PREVIEW />}
-              />
-              <Route
-                path="/Cab_Drivers_Preview"
-                element={<CAB_DRIVERS_PREVIEW />}
-              />
-              <Route
-                path="/Dynamic_Vcard_Preview"
-                element={<Dynamic_VCard_PREVIEW />}
-              />
-              {/* Live VCards */}
+                <Route path="/" element={<LandingPageNew />} />
 
-              {/* {URL_Alies == URL_Alies && currentTemplate === 1 ? (
+                {/* Authentication */}
+                <Route path="/register" element={<Register />} />
+                {/* <Route path="/register" element={<Register />} /> */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/admin_login" element={<SAdmin_Login />} />
+                <Route path="/verify_OTP" element={<VerifyOTP />} />
+                <Route
+                  path="/reset_password/:id/:token"
+                  element={<ResetPassword />}
+                />
+
+                {/* <Route path="/paymentsuccess" element={<f />} /> */}
+                <Route path="/terms_condition" element={<Terms_Condition />} />
+                <Route path="/privacy_condition" element={<Privacy_Policy />} />
+                {/* Client Dashboard Routes */}
+                <Route
+                  path={`/${userName}/uadmin`}
+                  element={<Client_Dashboard />}
+                >
+                  <Route
+                    path={`/${userName}/uadmin/create_new_vcard`}
+                    element={<VCard_URL_Form />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/dashboard`}
+                    element={<User_Dashboard />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/VCards`}
+                    element={<User_VCards />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/Inquries`}
+                    element={<User_Inquries />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/Appoinments`}
+                    element={<User_Appoinments />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/setting`}
+                    element={<User_Setting />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/notification`}
+                    element={<User_Notification />}
+                  />
+                  <Route
+                    path={`/${userName}/uadmin/vcard_form_edit/:URL_Alies`}
+                    element={<VCard_Form_Edit />}
+                  />
+                </Route>
+                {/* SuperAdmin */}
+                <Route path={`/sadmin`} element={<Super_Admin />}>
+                  <Route path={`/sadmin/users`} element={<Users />} />
+                  <Route path={`/sadmin/vcards`} element={<Vcards />} />
+                </Route>
+                {/* Static VCard */}
+                <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />
+                <Route path="/Taxi_Service" element={<Taxi_Service_Demo />} />
+                <Route
+                  path="/Fashion_Designer"
+                  element={<Fashion_Designer_Demo />}
+                />
+                <Route path="/Manager" element={<Manager_Demo />} />
+                <Route
+                  path="/Business_Consultant"
+                  element={<Business_Consultant_Demo />}
+                />
+                <Route path="/Real_Estate" element={<Real_Estate_Demo />} />
+                <Route path="/Beauty_Parlor" element={<Beauty_Parlor_Demo />} />
+                <Route path="/Boutique_Shop" element={<Boutique_Demo />} />
+                {/* //New Designs */}
+                <Route
+                  path="/Gym_Trainer_Preview"
+                  element={<GYM_TRAINER_DEMO />}
+                />
+                <Route
+                  path="/Taxi_Service_Preview"
+                  element={<TAXI_SERVICE_PREVIEW />}
+                />
+                <Route
+                  path="/Fashion_Designer_Preview"
+                  element={<FASHION_DESIGNER_PREVIEW />}
+                />
+                <Route path="/Manager_Preview" element={<MANAGER_PREVIEW />} />
+                <Route
+                  path="/Beauty_Parlor_Preview"
+                  element={<BEAUTY_PARLOR_PREVIEW />}
+                />
+                <Route
+                  path="/Corporate_Company_Preview"
+                  element={<CORPORATE_PREVIEW />}
+                />
+                <Route path="/Doctor_Preview" element={<DOCTOR_PREVIEW />} />
+                <Route
+                  path="/Advocate_Preview"
+                  element={<ADVOCATE_PREVIEW />}
+                />
+                <Route
+                  path="/Education_Preview"
+                  element={<EDUCATION_PREVIEW />}
+                />
+                <Route
+                  path="/Cab_Drivers_Preview"
+                  element={<CAB_DRIVERS_PREVIEW />}
+                />
+                <Route
+                  path="/Dynamic_Vcard_Preview"
+                  element={<Dynamic_VCard_PREVIEW />}
+                />
+                {/* Live VCards */}
+
+                {/* {URL_Alies == URL_Alies && currentTemplate === 1 ? (
                 <Route path={`/:URL_Alies`} element={<Gym_Trainer />} />
               ) : (
                 ""
@@ -800,62 +804,69 @@ const App = () => {
               ) : (
                 ""
               )} */}
-              {URL_Alies == URL_Alies && currentTemplate === 1 ? (
-                <Route path={`/:URL_Alies`} element={<Corporate_Company />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 2 ? (
-                <Route path={`/:URL_Alies`} element={<GYM_TRAINER_LIVE />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 3 ? (
-                <Route path={`/:URL_Alies`} element={<TAXI_DRIVER_LIVE />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 4 ? (
-                <Route
-                  path={`/:URL_Alies`}
-                  element={<FASHION_DESIGNER_LIVE />}
-                />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 5 ? (
-                <Route path={`/:URL_Alies`} element={<MANAGER_LIVE />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 6 ? (
-                <Route path={`/:URL_Alies`} element={<BEAUTY_PARLOR_LIVE />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 7 ? (
-                <Route path={`/:URL_Alies`} element={<DOCTOR_LIVE />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 8 ? (
-                <Route path={`/:URL_Alies`} element={<ADVOCATE_LIVE />} />
-              ) : (
-                ""
-              )}
-              {URL_Alies == URL_Alies && currentTemplate === 9 ? (
-                <Route path={`/:URL_Alies`} element={<CAB_DRIVERS_LIVE />} />
-              ) : (
-                ""
-              )}
-              {/* Dynamic Vcard */}
-              {currentTemplate === 0 ? (
-                <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
-              ) : (
-                ""
-              )}
-              {/* <Route path="*" element={<Page_Not_Found_Error_Page />} /> */}
-            </Routes>
+                {URL_Alies == URL_Alies && currentTemplate === 1 ? (
+                  <Route path={`/:URL_Alies`} element={<Corporate_Company />} />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 2 ? (
+                  <Route path={`/:URL_Alies`} element={<GYM_TRAINER_LIVE />} />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 3 ? (
+                  <Route path={`/:URL_Alies`} element={<TAXI_DRIVER_LIVE />} />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 4 ? (
+                  <Route
+                    path={`/:URL_Alies`}
+                    element={<FASHION_DESIGNER_LIVE />}
+                  />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 5 ? (
+                  <Route path={`/:URL_Alies`} element={<MANAGER_LIVE />} />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 6 ? (
+                  <Route
+                    path={`/:URL_Alies`}
+                    element={<BEAUTY_PARLOR_LIVE />}
+                  />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 7 ? (
+                  <Route path={`/:URL_Alies`} element={<DOCTOR_LIVE />} />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 8 ? (
+                  <Route path={`/:URL_Alies`} element={<ADVOCATE_LIVE />} />
+                ) : (
+                  ""
+                )}
+                {URL_Alies == URL_Alies && currentTemplate === 9 ? (
+                  <Route path={`/:URL_Alies`} element={<CAB_DRIVERS_LIVE />} />
+                ) : (
+                  ""
+                )}
+                {/* Dynamic Vcard */}
+                {currentTemplate === 0 ? (
+                  <Route
+                    path={`/:URL_Alies`}
+                    element={<Dynamic_VCard_Live />}
+                  />
+                ) : (
+                  ""
+                )}
+                {/* <Route path="*" element={<Page_Not_Found_Error_Page />} /> */}
+              </Routes>
+            </SkeletonTheme>
           </Suspense>
         </Context.Provider>
       </div>

@@ -26,7 +26,6 @@ const Users = () => {
     activePlan,
     setCurrentPlanActive,
     setPlanActive,
-    userName,
     user,
     setUser,
     FormSubmitLoader,
@@ -43,6 +42,7 @@ const Users = () => {
   } = useContext(Context);
   let [VcardDeleteToggle, setVcardDeleteToggle] = useState(false);
   let [AllUser, setAllUser] = useState([]);
+  let [AllPaymentUser, setAllPaymentUser] = useState([]);
   let [ID, setID] = useState();
   let [ExpireAt, setExpireAt] = useState(null);
   let [Info, setInfo] = useState(false);
@@ -57,54 +57,43 @@ const Users = () => {
   const api = axios.create({
     baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
   });
-  useEffect(() => {
-    setFormSubmitLoader(true);
-    api
-      .get(`/api/user/register`)
-      .then((res) => {
-        console.log(res.data.UserData);
-        setFormSubmitLoader(false);
-        setAllUser(res.data.UserData);
-      })
-      .catch((error) => {
-        setFormSubmitLoader(false);
-      });
-  }, [key]);
-  async function razorpayFetchData() {
+
+  let fetchUser = async () => {
     try {
-      await api
-        .get(`/razorpay/specificUser/${userName}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
+      setFormSubmitLoader(true);
+      api
+        .get(`/api/user/register`)
         .then((res) => {
-          if (res.data.data.length > 0) {
-            setCurrentPlanActive(res.data.data.length);
-            setStatus(res.data?.data[0]?.status);
-            setCurrentPlan(res.data.data[0]?.currentPlan);
-            setExpireAt(res.data.data[0]?.expireAt);
-            setShowForm("VCard Templates");
-          } else {
-            setShowForm("Choose Your Plan");
-            setStatus(null);
-            // toast.error('Choose Your Plan First!')
-          }
+          console.log(res.data.UserData);
+          setFormSubmitLoader(false);
+          setAllUser(res.data.UserData);
         })
         .catch((error) => {
-          console.log(error);
-
-          //    setErrorPopupOpen(true);
-          //    setErrorMessage(error.response.data.message);
-          //  setTimeout(()=>{
-          //   setErrorPopupOpen(false);
-          //  },5000)
+          setFormSubmitLoader(false);
         });
     } catch (error) {
-      toast.error(error.message);
+      console.log(error);
     }
-  }
+  };
+  let fetchPlan = async () => {
+    try {
+      setFormSubmitLoader(true);
+      api
+        .get(`/razorpay/AllData`)
+        .then((res) => {
+   
+          setAllPaymentUser(res.data.data);
+          setFormSubmitLoader(false);
+ 
+        })
+        .catch((error) => {
+          setFormSubmitLoader(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   async function handleUserDelete(id) {
     // e.preventDefault();
     setFormSubmitLoader(true);
@@ -125,8 +114,10 @@ const Users = () => {
     }
   }
   useEffect(() => {
-    // razorpayFetchData();
-  }, []);
+    fetchUser();
+
+    fetchPlan();
+  }, [key]);
   useEffect(() => {
     // Set up the interval to increment the count every second
     const interval = setInterval(() => {
@@ -181,15 +172,13 @@ const Users = () => {
         <div className="row_2">
           <div className="card_box">
             <div className="card_title_box">
-            <div className="title">
+              <div className="title">
                 <h4>NO</h4>
               </div>
               <div className="title">
                 <h4>PROFILE</h4>
               </div>
-              <div className="title">
-                <h4>ID</h4>
-              </div>
+
               <div className="title">
                 <h4>USERNAME</h4>
               </div>
@@ -203,6 +192,12 @@ const Users = () => {
                 <h4>VERIFIED</h4>
               </div>
               <div className="title">
+                <h4>CREATED AT</h4>
+              </div>
+              <div className="title">
+                <h4>PLAN</h4>
+              </div>
+              <div className="title">
                 <h4>ACTIONS</h4>
               </div>
             </div>
@@ -211,9 +206,8 @@ const Users = () => {
                 {AllUser.map((data, index) => {
                   return (
                     <div className="card_detail_box" key={index}>
-                       <div className="detail">
-                      
-                      <p className="count_no">{index+1}]</p>
+                      <div className="detail">
+                        <p className="count_no">{index + 1}]</p>
                       </div>
                       <div className="detail">
                         {data.profile != null ? (
@@ -230,9 +224,7 @@ const Users = () => {
                           />
                         )}
                       </div>
-                      <div className="detail">
-                        <p>Id : {data._id}</p>
-                      </div>
+
                       <div className="detail">
                         <p>{data.firstName}</p>
                       </div>
@@ -252,6 +244,18 @@ const Users = () => {
                       </div>
                       <div className="detail">
                         <p>{data.verified == "false" ? "No" : "Yes"}</p>
+                      </div>
+                      <div className="detail">
+                        <p>
+                          {data.createdAt
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join("-")}
+                        </p>
+                      </div>
+                      <div className="detail">
+                        <p className="plan">{AllPaymentUser[index]? AllPaymentUser[index].currentPlan : 'No Plan'}</p>
                       </div>
                       <div className="detail_actions">
                         <div
