@@ -270,7 +270,7 @@ export const ResendOTP = async (req, res) => {
 export const ForgotPassword = async (req, res) => {
   let { email } = req.body;
   try {
-    if (!req.body.email) {
+    if (!email) {
       res.status(401).json({ message: "Enter Your Email!" });
     } else {
       let checkUser = await User.findOne({ email: email });

@@ -47,8 +47,6 @@ import { LuView } from "react-icons/lu";
 
 import "react-phone-input-2/lib/style.css";
 import Loader from "./LoaderPage/Loader";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 const Dynamic_VCard_Live = () => {
   let navigate = useNavigate();
   let { URL_Alies, setURL_Alies, setCurrentTemplate } = useContext(Context);
@@ -9044,7 +9042,7 @@ z-index: 1;
                         />
                       </>
                     ) : (
-                      <Skeleton count={5}/>
+                      ''
                     )}
                     {data.BannerType == "ImageUpload" ? (
                       <img
@@ -9054,7 +9052,7 @@ z-index: 1;
                         alt="banner"
                       />
                     ) : (
-                      <Skeleton count={5}/>
+                ''
                     )}
                     <div className="overlay"></div>
                   </div>
