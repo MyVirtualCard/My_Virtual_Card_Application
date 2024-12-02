@@ -262,7 +262,7 @@ const Edit_Video = () => {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
   };
 
-  console.log(formik.values.Video.split('/')[3])
+
 
   return (
     <>

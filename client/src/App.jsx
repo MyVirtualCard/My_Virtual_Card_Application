@@ -77,8 +77,9 @@ import Users from "./SuperAdmin/Components/Users.jsx";
 import Vcards from "./SuperAdmin/Components/Vcards.jsx";
 import CAB_DRIVERS_LIVE from "./Client_Dashboard/All_VCards/Live_VCards/New_Live_VCards/CAB_DRIVERS_LIVE.jsx";
 import SAdmin_Login from "./Authentication/Sadmin_Login/SAdmin_Login.jsx";
-import Skeleton,{SkeletonTheme} from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import ProtectedRoute from "./SuperAdmin/ProtectedRoute.jsx";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 //Import All component:
 const App = () => {
   let navigate = useNavigate();
@@ -271,7 +272,7 @@ const App = () => {
     if (local_mobileNumber) {
       return setMobileNumber(local_mobileNumber);
     }
-    if (URL_Alies.length == 0) {
+    if (URL_Alies ==  null) {
       setURL_Alies(window.location.pathname.split("/")[1]);
     } else {
       setURL_Alies(local_URL_Alies);
@@ -704,9 +705,30 @@ const App = () => {
                   />
                 </Route>
                 {/* SuperAdmin */}
-                <Route path={`/sadmin`} element={<Super_Admin />}>
-                  <Route path={`/sadmin/users`} element={<Users />} />
-                  <Route path={`/sadmin/vcards`} element={<Vcards />} />
+                <Route
+                  path={`/sadmin`}
+                  element={
+                    <ProtectedRoute>
+                      <Super_Admin />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route
+                    path={`/sadmin/users`}
+                    element={
+                      <ProtectedRoute>
+                        <Users />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={`/sadmin/vcards`}
+                    element={
+                      <ProtectedRoute>
+                        <Vcards />
+                      </ProtectedRoute>
+                    }
+                  />
                 </Route>
                 {/* Static VCard */}
                 <Route path="/Gym_Trainer" element={<Gym_Trainer_Demo />} />

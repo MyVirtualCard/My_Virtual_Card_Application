@@ -109,6 +109,7 @@ const SAdmin_Login = () => {
         Login_formik.values.password === "SuperAdmin@001"
       ) {
         toast.success("Login Successfully!");
+        localStorage.setItem('sadmin',true)
         setRegisterLoader(false);
         setTimeout(() => {
           navigate("/sadmin/users");
