@@ -22,6 +22,7 @@ app.use(cors({
   origin: 'https://myvirtualcard.in',
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization',
+  credentials:true
 }));
 // app.use(cors('*'));
 //Razorpay Instantiate:
