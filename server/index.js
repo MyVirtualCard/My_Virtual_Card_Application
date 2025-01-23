@@ -18,8 +18,8 @@ app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
-app.use(cors({ origin: process.env.VITE_CLIENT_DOMAIN_URL, credentials: true }));
-
+// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://myvirtualcard.in", credentials: true }));
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
