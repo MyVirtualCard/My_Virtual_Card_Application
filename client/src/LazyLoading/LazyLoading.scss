@@ -1,0 +1,26 @@
+.lazy_loading_container{
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+z-index: 5;
+    
+p{
+    font-size: 1rem;
+    font-weight: 550;
+    color: #474747;
+    z-index: 10;
+    letter-spacing: 1px;
+}
+      img{
+        z-index: 10;
+      mix-blend-mode: multiply;
+      width: 80px;
+
+      }
+}

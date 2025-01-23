@@ -1,0 +1,741 @@
+.payment_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+
+  .payment_container_title {
+    display: block;
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 550;
+    }
+  }
+  .payments_box {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    // gap: 4rem;
+    flex: 1;
+    margin: 1rem auto;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    // padding: 1rem;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+      rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    background-color: rgba(244, 255, 251, 0.747);
+
+    //Left
+    .left_upi_app {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 10px;
+      flex: 0.45;
+      height: 100%;
+      padding: 1rem;
+
+      .upi_app_title {
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        h5 {
+          font-size: 0.9rem;
+          font-weight: 550;
+        }
+      }
+      .delete_bank_details {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        i {
+          font-size: 1.5rem;
+          color: tomato;
+          font-weight: 550;
+          cursor: pointer;
+        }
+      }
+      // Form
+      .Form1 {
+        display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+        width: 100%;
+
+        .form_group {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          label {
+            font-size: 0.8rem;
+            font-weight: 550 !important;
+            color: rgb(70, 70, 70) !important;
+            width: 100%;
+            sup {
+              color: red;
+              font-weight: bold;
+              margin-left: 3px;
+              font-size: 0.8rem;
+            }
+
+            img {
+              width: 70px;
+              height: 70px;
+            }
+          }
+
+          input[type="text"],
+          input[type="email"],
+          input[type="tel"] {
+            padding: 8px 1rem;
+            width: 100%;
+            outline: none;
+            border: 1px solid #b9b9b9;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: rgb(77, 77, 77);
+            letter-spacing: 1px;
+            color: rgb(68, 68, 68);
+            &::placeholder {
+              font-size: 0.8rem;
+              color: gray;
+            }
+            &:focus {
+              border: 1px solid #6a99ff;
+            }
+          }
+          .input_error {
+            border: 1px solid red !important;
+            border-radius: 5px;
+          }
+          .input_success {
+            border: 1px solid #b9b9b9 !important;
+            border-radius: 5px;
+          }
+          .error {
+            position: absolute;
+            top: 0%;
+            right: 0%;
+            color: red;
+            font-size: 0.7rem;
+            padding: 5px 0px 0px 0px;
+          }
+          .desc_error {
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+            color: red;
+            font-size: 0.7rem;
+            padding: 5px 0px 0px 0px;
+          }
+          .type_error {
+            position: absolute;
+            top: 18%;
+            left: 60%;
+            color: red;
+            font-size: 0.7rem;
+            padding: 5px 0px 0px 0px;
+          }
+          .first,
+          .second {
+            label {
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: rgb(105, 104, 104);
+              width: 100%;
+              sup {
+                color: red;
+                font-weight: bold;
+                margin-left: 3px;
+              }
+
+              img {
+                width: 90px;
+                height: 90px;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 50%;
+                border: 2px solid skyblue;
+              }
+            }
+          }
+          input[type="file"] {
+            display: block;
+            border: none;
+            width: 100%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-weight: 550;
+            outline: none;
+            color: #03796f;
+            cursor: pointer;
+          }
+        }
+        .QRCODE {
+          .image_upload_type {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            width: 100%;
+
+            .logo_type {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+
+              select {
+                outline: none;
+                font-size: 0.8rem;
+                font-weight: 500;
+                color: royalblue;
+                border: 1px solid gray;
+                border-radius: 5px;
+                padding: 5px 0.6rem;
+                width: 100%;
+                outline: none;
+                border: 1px solid rgb(185, 185, 185);
+                border-radius: 5px;
+                color: rgb(87, 87, 87);
+                font-weight: 500;
+                position: relative;
+                cursor: pointer;
+
+                option {
+                  font-weight: 500;
+                  color: rgb(83, 83, 83);
+                }
+              }
+            }
+            .banner_type {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+
+              select {
+                outline: none;
+                font-size: 0.8rem;
+                font-weight: 500;
+                color: royalblue;
+                border: 1px solid gray;
+                border-radius: 5px;
+                padding: 8px 1rem;
+                width: 100%;
+                outline: none;
+                border: 1px solid rgb(185, 185, 185);
+                border-radius: 5px;
+                color: rgb(87, 87, 87);
+                font-weight: 500;
+                position: relative;
+                cursor: pointer;
+
+                option {
+                  font-weight: 500;
+                  color: rgb(83, 83, 83);
+                }
+              }
+            }
+          }
+          .first {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            position: relative;
+
+            margin: 1rem 0px;
+
+            label {
+              font-size: 0.8rem;
+              font-weight: 500;
+              color: rgb(34, 34, 34) !important;
+              position: relative;
+
+              width: 50%;
+              sup {
+                color: red;
+                font-weight: bold;
+                margin-left: 3px;
+              }
+
+              .QRCodeImage {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                place-items: center;
+                width: 120px;
+                height: 120px;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 0.3rem;
+                filter: brightness(100%);
+                border: 1px solid rgb(255, 255, 255);
+
+                position: relative;
+              }
+              span {
+                position: absolute;
+                left: 74%;
+                top: 0%;
+                color: red;
+                font-size: 1.2rem;
+                cursor: pointer;
+
+                &:hover {
+                  filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.4));
+                }
+              }
+              i {
+                position: absolute;
+                font-size: 1.5rem;
+                color: #6571fe;
+                left: 40%;
+                top: -10%;
+              }
+            }
+            .details {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: flex-start;
+              gap: 10px;
+
+              p {
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: rgb(31, 31, 31);
+                strong {
+                  color: rgb(255, 71, 71);
+                }
+              }
+              small {
+                font-size: 0.7rem;
+                color: gray;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+        .Specialities {
+          grid-column: 1/-1;
+
+          width: 100%;
+        }
+        .actions {
+          display: flex;
+          align-self: center !important;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          // height: 50px;
+
+          p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            height: 100%;
+          }
+          .on {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.9rem;
+            color: royalblue;
+            cursor: pointer;
+          }
+          .off {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.9rem;
+            color: #6c757d;
+            cursor: pointer;
+          }
+        }
+
+        .form_submit_actions {
+          display: flex;
+          grid-column: 1/-1;
+          height: 100%;
+          width: 100%;
+          align-items: flex-start;
+          justify-content: flex-end;
+          gap: 10px;
+
+          button {
+            outline: none;
+            border: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            // width: 150px;
+            padding: 7px 1rem;
+            border-radius: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+
+            span {
+              font-size: 1.2rem;
+            }
+          }
+          .save {
+            background-color: royalblue;
+            color: #fff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+
+            &:hover {
+              background-color: rgb(105, 141, 248);
+              box-shadow: 0px 4px 4px rgb(124, 124, 124);
+              transition: all 0.3s ease;
+
+              span {
+                transform: rotate(360deg);
+                transition: transform 0.5s ease-in-out;
+              }
+            }
+          }
+          .clear {
+            background-color: tomato;
+            color: #fff;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: rgb(207, 83, 245);
+              box-shadow: 0px 4px 4px rgb(124, 124, 124);
+              transition: all 0.3s ease;
+            }
+          }
+          .discard {
+            background-color: rgb(138, 138, 138);
+            color: #ffffff;
+            transition: all 0.3s ease;
+            &:hover {
+              box-shadow: 0px 4px 4px rgb(165, 165, 165);
+              background-color: rgb(92, 92, 92);
+              transition: all 0.3s ease;
+            }
+          }
+          @media screen and (max-width: 700px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+          }
+        }
+        @media screen and (max-width: 700px) {
+          grid-template-columns: 1fr;
+          place-items: center;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        flex: 1;
+      }
+    }
+    .border {
+      content: "";
+      height: 100%;
+      flex: 0.0015;
+      background-color: rgb(221, 221, 221);
+    }
+    //Right
+    .right_bank {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 10px;
+      flex: 0.55;
+      height: 100%;
+      padding: 1rem;
+
+      .bank_title {
+        display: block;
+
+        h5 {
+          font-size: 0.9rem;
+          font-weight: 550;
+        }
+      }
+      .delete_bank_details {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        i {
+          font-size: 1.5rem;
+          color: tomato;
+          font-weight: 550;
+          cursor: pointer;
+        }
+      }
+      // Form
+      .Form2 {
+        display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+        width: 100%;
+
+        .form_group {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 5px;
+          width: 100%;
+          position: relative;
+
+          label {
+            font-size: 0.8rem;
+            font-weight: 550 !important;
+            color: rgb(70, 70, 70) !important;
+            width: 100%;
+            sup {
+              color: red;
+              font-weight: bold;
+              margin-left: 3px;
+              font-size: 0.8rem;
+            }
+
+            img {
+              width: 70px;
+              height: 70px;
+            }
+          }
+
+          input[type="text"],
+          input[type="email"],
+          input[type="tel"] {
+            padding: 8px 1rem;
+            width: 100%;
+            outline: none;
+            border: 1px solid #b9b9b9;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: rgb(77, 77, 77);
+            letter-spacing: 1px;
+            color: rgb(68, 68, 68);
+            &::placeholder {
+              font-size: 0.8rem;
+              color: gray;
+            }
+            &:focus {
+              border: 1px solid #6a99ff;
+            }
+          }
+
+          .input_error {
+            // border: 1px solid red !important;
+            border-radius: 5px;
+          }
+          .input_success {
+            border: 1px solid #b9b9b9 !important;
+            border-radius: 5px;
+          }
+          .error {
+            position: absolute;
+            top: 0%;
+            right: 0%;
+            color: red;
+            font-size: 0.7rem;
+            padding: 5px 0px 0px 0px;
+          }
+          .desc_error {
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+            color: red;
+            font-size: 0.7rem;
+            padding: 5px 0px 0px 0px;
+          }
+          .type_error {
+            position: absolute;
+            top: 18%;
+            left: 60%;
+            color: red;
+            font-size: 0.7rem;
+            padding: 5px 0px 0px 0px;
+          }
+
+          select {
+            outline: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: royalblue;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 8px 0.6rem;
+            width: 100%;
+            outline: none;
+            border: 1px solid rgb(185, 185, 185);
+            border-radius: 5px;
+            color: rgb(107, 107, 107);
+            font-weight: 500;
+            position: relative;
+            cursor: pointer;
+
+            option {
+              font-weight: 500;
+              color: rgb(83, 83, 83);
+            }
+          }
+        }
+
+        .actions {
+          display: flex;
+          align-self: center !important;
+          justify-content: center;
+          gap: 5px;
+          width: 100%;
+          // height: 50px;
+
+          p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            height: 100%;
+          }
+          .on {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.9rem;
+            color: royalblue;
+            cursor: pointer;
+          }
+          .off {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.9rem;
+            color: #6c757d;
+            cursor: pointer;
+          }
+        }
+
+        .form_submit_actions {
+          display: flex;
+          grid-column: 1/-1;
+          height: 100%;
+          width: 100%;
+          align-items: flex-end;
+          justify-content: flex-end;
+          gap: 10px;
+          margin: 1rem 0px;
+
+          button {
+            outline: none;
+            border: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            // width: 150px;
+            padding: 7px 1rem;
+            border-radius: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+
+            span {
+              font-size: 1.2rem;
+            }
+          }
+          .save {
+            background-color: royalblue;
+            color: #fff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+
+            &:hover {
+              background-color: rgb(105, 141, 248);
+              box-shadow: 0px 4px 4px rgb(124, 124, 124);
+              transition: all 0.3s ease;
+
+              span {
+                transform: rotate(360deg);
+                transition: transform 0.5s ease-in-out;
+              }
+            }
+          }
+          .clear {
+            background-color: tomato;
+            color: #fff;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: rgb(207, 83, 245);
+              box-shadow: 0px 4px 4px rgb(124, 124, 124);
+              transition: all 0.3s ease;
+            }
+          }
+          .discard {
+            background-color: rgb(138, 138, 138);
+            color: #ffffff;
+            transition: all 0.3s ease;
+            &:hover {
+              box-shadow: 0px 4px 4px rgb(165, 165, 165);
+              background-color: rgb(92, 92, 92);
+              transition: all 0.3s ease;
+            }
+          }
+
+          @media screen and (max-width: 700px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+          }
+        }
+        @media screen and (max-width: 700px) {
+          grid-template-columns: 1fr;
+          place-items: center;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        flex: 1;
+      }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    @media screen and (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+
+      flex: 1;
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+.VCard_Loader_container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    position: relative;
+    justify-content: center;
+  
+    // background-image: url('../../assets/LandingPage_image/aristostech_company_background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+    // background-color: #D8EFEF;
+    // background-color: #017281;
+    background: linear-gradient(170deg,#ffffff,#ffffff);
+  
+    .loadingbackground {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      right: 0%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(280deg, #D8EFEF, #D8EFEF);
+      z-index: -1;
+  
+      .aris_back {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+    }
+    .logo{
+        .aris_logo {
+            width: 70px;
+            // height: 60px;
+            z-index: 1;
+            transform-origin: center;
+            // animation: aris_logo_rotate 3s infinite linear;
+        filter: brightness(100%);
+            @keyframes aris_logo_rotate {
+              0% {
+                transform: rotate(0deg);
+              }
+              50% {
+                transform: rotate(180deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+          }
+    }
+    .slogan{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0px;
+      position: relative;
+        small{
+            font-size: 0.8rem;
+            font-weight: 550;
+            color: rgb(51, 51, 51);
+            font-family: "Exo 2", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            
+        }
+
+              
+    }
+
+    .site_box {
+      width: 8px;
+      height: 40px;
+      border-radius: 4px;
+      display: block;
+      margin: 20px auto;
+      position: relative;
+      background: currentColor;
+      color: #3d3d3d;
+      box-sizing: border-box;
+      animation: animloader 0.3s 0.3s linear infinite alternate;
+    }
+    
+    .site_box::after, .site_box::before {
+      content: '';
+      width: 8px;
+      height: 40px;
+      border-radius: 4px;
+      background: currentColor;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 20px;
+      box-sizing: border-box;
+      animation: animloader 0.3s  0.45s  linear infinite alternate;
+    }
+    .site_box::before {
+      left: -20px;
+      animation-delay: 0s;
+    }
+    
+    @keyframes animloader {
+      0%   { height: 48px} 
+      100% { height: 4px}
+    }
+  
+    .logoLoader {
+      z-index: 1;
+    }
+
+    .vcard_preview_loader {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+      .preview_loader {
+        height: 5px;
+        width: 5px;
+        color: #706dff;
+        box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+          -10px -10px 0 5px;
+        animation: loader-38 6s infinite;
+      }
+    
+      @keyframes loader-38 {
+        0% {
+          box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+            -10px -10px 0 5px;
+        }
+        8.33% {
+          box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px -10px 0 5px,
+            10px -10px 0 5px;
+        }
+        16.66% {
+          box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+            10px 10px 0 5px;
+        }
+        24.99% {
+          box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+            -10px 10px 0 5px;
+        }
+        33.32% {
+          box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+            -10px -10px 0 5px;
+        }
+        41.65% {
+          box-shadow: 10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+            10px -10px 0 5px;
+        }
+        49.98% {
+          box-shadow: 10px 10px 0 5px, 10px 10px 0 5px, 10px 10px 0 5px,
+            10px 10px 0 5px;
+        }
+        58.31% {
+          box-shadow: -10px 10px 0 5px, -10px 10px 0 5px, 10px 10px 0 5px,
+            -10px 10px 0 5px;
+        }
+        66.64% {
+          box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, 10px 10px 0 5px,
+            -10px 10px 0 5px;
+        }
+        74.97% {
+          box-shadow: -10px -10px 0 5px, 10px -10px 0 5px, 10px 10px 0 5px,
+            -10px 10px 0 5px;
+        }
+        83.3% {
+          box-shadow: -10px -10px 0 5px, 10px 10px 0 5px, 10px 10px 0 5px,
+            -10px 10px 0 5px;
+        }
+        91.63% {
+          box-shadow: -10px -10px 0 5px, -10px 10px 0 5px, -10px 10px 0 5px,
+            -10px 10px 0 5px;
+        }
+        100% {
+          box-shadow: -10px -10px 0 5px, -10px -10px 0 5px, -10px -10px 0 5px,
+            -10px -10px 0 5px;
+        }
+      }
+    }
+  }

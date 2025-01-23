@@ -1,0 +1,382 @@
+.VCards_container {
+    width: 98%;
+    height: 100%;
+    position: relative;
+    // padding: 1rem;
+    .Vcard_delete_popupBox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      z-index: 1000;
+      .popup_title {
+        padding: 10px;
+        font-size: 0.8rem;
+        font-weight: 550;
+        width: 100%;
+      }
+      .popup_actions {
+        width: 100%;
+        margin: 1rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+  
+        .delete {
+          button {
+            padding: 6px 1rem;
+            outline: none;
+            border: transparent;
+            background-color: tomato;
+            color: white;
+            font-weight: 550;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+  
+            &:hover {
+              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+              scale: 1.05;
+              transition: all 0.5s ease;
+            }
+          }
+        }
+        .cancel {
+          button {
+            padding: 6px 1rem;
+            outline: none;
+            border: transparent;
+            background-color: rgb(44, 138, 117);
+            color: white;
+            font-weight: 550;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            &:hover {
+              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+              scale: 1.05;
+              transition: all 0.5s ease;
+            }
+          }
+        }
+      }
+    }
+    .vcard_title {
+      width: 100%;
+  
+      h4 {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+    }
+    .vcard_action {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0.5;
+      padding-right: 1rem;
+      flex: 1;
+  
+      a {
+        text-decoration: none;
+  
+        button {
+          padding: 10px 10px;
+          outline: none;
+          border: transparent;
+          background-color: #6571ff;
+          color: white;
+          // width: 200px;
+          font-size: 0.8rem;
+          border-radius: 5px;
+          transition: all 0.4s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+  
+          i {
+            font-size: 1.2rem;
+            font-weight: 600;
+          }
+          &:hover {
+            background-color: #818cfc;
+            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            transition: all 0.4s ease;
+          }
+        }
+      }
+    }
+  
+    // Card box
+  
+    .row_2 {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      margin: 1rem auto;
+      .card_box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        .card_title_box {
+          display: grid;
+          width: 100%;
+          grid-template-columns: 0.5fr 1fr 1.5fr 0.7fr 0.5fr 1fr;
+          place-items: center;
+          // gap: 0px 1rem;
+          background-color: gray;
+          box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+            rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+          padding: 0.8rem 0px;
+          overflow-x: scroll;
+          border-top-left-radius: 0.5rem;
+          border-top-right-radius: 0.5rem;
+          .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            h4 {
+              font-size: 0.8rem;
+              font-weight: 550;
+              color: #fff;
+            }
+          }
+          &::-webkit-scrollbar {
+            display: none;
+          }
+          @media screen and (max-width: 1200px) {
+            width: 200vw;
+            grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
+          }
+          @media screen and (max-width: 700px) {
+            width: 250vw;
+            grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
+          }
+        }
+        // Detail
+        .card_detail_box {
+          display: grid;
+          width: 100%;
+          grid-template-columns: 0.5fr 1fr 1.5fr 0.7fr 0.5fr 1fr;
+          place-items: center;
+          // gap: 0px 1rem;
+          background-color: rgb(243, 243, 243);
+          padding: 0.5rem 0px;
+          box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+            rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+          border-bottom-left-radius: 0.5rem;
+          border-bottom-right-radius: 0.5rem;
+          .detail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            img {
+              width: 60px;
+              height: 60px;
+              border-radius: 0.3rem;
+              object-fit: cover;
+              object-position: center;
+              border: 1px solid rgb(235, 235, 235);
+              box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
+            }
+  
+            p {
+              font-size: 0.9rem;
+              font-weight: 550;
+            }
+            i {
+              font-size: 1.4rem;
+              color: rgb(70, 70, 70);
+              cursor: pointer;
+            }
+            a {
+              text-decoration: none;
+              font-size: 0.8rem;
+              font-weight: 550;
+              color: royalblue;
+            }
+            small {
+              font-size: 0.8rem;
+              padding: 5px 10px;
+              background-color: rgb(93, 250, 132);
+              border-radius: 5px;
+              color: #5e5e5e;
+              font-weight: 600;
+            }
+            .note {
+              font-size: 0.8rem;
+              font-weight: 550;
+              color: #a15afd;
+              background-color: transparent;
+            }
+            .note2 {
+              font-size: 0.7rem;
+              font-weight: 550;
+              color: #ff8349;
+              background-color: transparent;
+            }
+          }
+          .detail_actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            .edit,
+            .delete,
+            .info {
+              display: flex;
+              align-items: center;
+              flex-direction: column;
+              justify-content: center;
+              // gap: 3px;
+              cursor: pointer;
+  
+              small{
+                font-size: 0.7rem;
+              }
+              .icon {
+                font-size: 1.4rem;
+                transition: all 0.4s ease-in-out;
+                &:hover {
+                  scale: 1.1;
+                  filter: drop-shadow(0px 4px 5px rgba(44, 44, 44, 0.4));
+                  transition: all 0.4s ease-in-out;
+                }
+              }
+              &:nth-child(1) {
+                .icon {
+                  color: gray;
+                }
+                small {
+                  color: gray;
+                }
+              }
+              &:nth-child(2) {
+                .icon {
+                  color: tomato;
+                }
+                small {
+                  color: tomato;
+                }
+              }
+              &:nth-child(3) {
+                .icon {
+                  color: rgb(255, 142, 49);
+                }
+                small {
+                  color: rgb(255, 142, 49);
+                }
+              }
+            }
+            .info {
+              position: relative;
+  
+              .info_message_box {
+                width: 250px;
+                height: 100px;
+                position: absolute;
+                top: 160%;
+                right: 20%;
+                background-color: rgb(255, 255, 255);
+                box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+                  rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1rem;
+                padding: 10px;
+                opacity: 0;
+                .info_title {
+                }
+                .info_message {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 100%;
+                  p {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    font-size: 0.7rem;
+                    font-weight: 550;
+                    color: darkcyan;
+  
+                    strong {
+                      color: gray;
+                      padding-left: 5px;
+                    }
+                  }
+                }
+              }
+  
+           
+            }
+            .edit{
+              position: relative;
+  
+              .touch_hand{
+                position: absolute;
+                bottom: -0%;
+                right: -85%;
+  
+                img{
+                  width: 30px;
+                  height: 30px;
+                  mix-blend-mode: multiply;
+                  
+                }
+              }
+            }
+            #show{
+              opacity: 1;
+            }
+          }
+          @media screen and (max-width: 1200px) {
+            width: 200vw;
+            grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
+          }
+          @media screen and (max-width: 700px) {
+            width: 250vw;
+            grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
+          }
+        }
+        .card_detail_box_empty {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+  
+          small {
+            font-size: 0.9rem;
+            font-weight: 550;
+            color: rgb(255, 151, 82);
+          }
+        }
+        @media screen and (max-width: 1200px) {
+          width: 200vw;
+          overflow-x: scroll;
+        }
+      }
+    }
+  }
+  

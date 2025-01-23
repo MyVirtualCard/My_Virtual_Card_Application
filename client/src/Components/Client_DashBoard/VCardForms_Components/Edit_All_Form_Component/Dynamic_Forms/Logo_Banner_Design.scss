@@ -1,0 +1,341 @@
+.logo_banner_design_container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 1rem;
+
+  form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem 10px;
+    width: 100%;
+    // height: 100%;
+
+    .form_group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 15px;
+      width: 100%;
+
+      .form_label {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .current {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+
+        p {
+          font-size: 0.8rem;
+          font-weight: 550;
+        }
+      }
+      .input_container {
+        width: 100%;
+        position: relative;
+
+        input {
+          width: 100%;
+          padding: 0.5rem 0.5rem;
+          outline: none;
+          border: 1px solid gray;
+          border-radius: 5px;
+          font-size: 1rem;
+          font-weight: 550;
+          color: rgb(65, 65, 65);
+
+          &:focus {
+            border: 1px solid royalblue;
+          }
+        }
+        select {
+          position: absolute;
+          right: 0%;
+          top: 0%;
+          padding: 0.5rem 0rem;
+          border: 1px solid gray;
+          border-left: none;
+          border-bottom: none;
+          border-radius: 5px;
+          outline: none;
+          font-size: 0.9rem;
+          color: rgb(5, 112, 103);
+          option {
+            font-size: 0.9rem;
+          }
+        }
+        #LogoPosition {
+          position: relative;
+          width: 100%;
+          border: 1px solid gray;
+          font-size: 1rem;
+          color: rgb(65, 65, 65);
+        }
+      }
+    }
+    .radio_group {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 10px;
+      padding-top: 10px;
+
+      .form_label {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .radio_input {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+        flex-direction: column;
+
+        .radio {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          gap: 10px;
+
+          label {
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 1px;
+          }
+
+          input[type="radio"] {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+        }
+        .Animation-1 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime1 3s linear infinite;
+
+            @keyframes logoAnime1 {
+              0% {
+                transform: translateY(0px);
+              }
+              50% {
+                transform: translateY(10px);
+              }
+              100% {
+                transform: translateY(0px);
+              }
+            }
+          }
+        }
+        .Animation-2 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 100px;
+            // filter: grayscale(10);
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime2 5s linear infinite;
+
+            @keyframes logoAnime2 {
+              0% {
+                transform: translateY(0px);
+                filter: grayscale(0);
+              }
+              25% {
+                transform: translateY(10px);
+                filter: grayscale(10);
+                
+              }
+              100% {
+                filter: grayscale(0);
+                transform: translateY(0px);
+              }
+            }
+          }
+        }
+        .Animation-3 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            animation: logoAnime3 6s linear infinite;
+
+            @keyframes logoAnime3 {
+              0% {
+                scale: 1;
+                border-radius: 0px;
+              }
+              50% {
+                scale: 1;
+                border-radius: 50%;
+              }
+              100% {
+                scale: 1;
+                border-radius: 0px;
+              }
+            }
+          }
+        }
+        .Animation-4 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid transparent;
+            animation: logoAnime4 6s linear infinite;
+
+            @keyframes logoAnime4 {
+              0% {
+                border-color: brown;
+              }
+              25% {
+                border-color: #fff;
+              }
+              50% {
+                border-color: green;
+              }
+              75% {
+                border-color: yellow;
+              }
+              100% {
+                border-color: royalblue;
+              }
+            }
+          }
+        }
+        .Animation-5 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid transparent;
+            animation: logoAnime5 6s linear infinite;
+
+            @keyframes logoAnime5 {
+              0% {
+                transform: scale(1);
+              }
+              50% {
+                transform: scale(1.05);
+              }
+              100% {
+                transform: scale(1);
+              }
+            }
+          }
+        }
+        .Animation-6 {
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            object-position: top;
+
+            &:hover {
+              animation: logoAnime6 6s linear infinite;
+            }
+
+            @keyframes logoAnime6 {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(-10px);
+              }
+            }
+          }
+        }
+      }
+    }
+    .form_actions {
+      grid-column: 1/-1;
+      padding: 1rem 0px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        background-color: royalblue;
+        padding: 0.4rem 2rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 550;
+        color: #fff;
+
+        &:hover {
+          background-color: gray;
+        }
+      }
+    }
+
+    @media screen and (min-width: 1000px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}

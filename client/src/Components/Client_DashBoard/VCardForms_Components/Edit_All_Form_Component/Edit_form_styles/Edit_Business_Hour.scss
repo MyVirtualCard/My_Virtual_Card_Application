@@ -1,0 +1,153 @@
+.business_hour_container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 1rem;
+    .title {
+      padding-top: 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+    
+        h4 {
+          font-size: 0.9rem;
+          font-weight: 550;
+          color: #383838;
+        }
+        .note {
+            small {
+              font-size: 0.8rem;
+              color: rgb(136, 136, 136);
+      
+              span:nth-child(1) {
+                color: red;
+                font-weight: bold;
+                padding-right: 10px;
+              }
+              span:nth-child(2) {
+                color: rgb(40, 139, 102);
+                font-weight: bold;
+              }
+              span:nth-child(3) {
+                color: rgb(98, 101, 245);
+                font-weight: 550;
+                padding-right: 5px;
+              }
+            }
+          }
+      }
+    .business_box{
+        display: grid;
+        grid-template-columns: repeat(auto-fit , minmax(350px,1fr));
+ gap: 1rem;
+        place-items: center;
+        margin: 2rem auto;
+      
+
+       .cs-form{
+        display: flex;
+        flex: 1;
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 10px;
+border-left: 4px solid rgb(144, 151, 255);
+border-radius: 3px;
+padding-left: 10px;
+
+        h5{
+            font-size: 0.8rem;
+            font-weight: 550;
+            flex: 0.4;
+            display: flex;
+            color: rgb(83, 83, 83);
+
+        }
+
+        .times{
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 10px;
+          width: 90%;
+          .to{
+            display: flex;
+            flex: 0.1;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            p{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              vertical-align: middle;
+           font-size: 0.8rem;
+           font-weight: 500;
+           color: rgb(51, 51, 51);
+            }
+        }
+
+        input{
+            flex: 0.9;
+            width: 90%;
+            border: 1px solid rgb(255, 255, 255);
+            background-color: #ffffff;
+            // box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+            box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+            outline: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.8rem 1rem;
+            font-weight: 500;
+           
+
+        }
+        }
+
+    
+       } 
+       .form_submit_actions {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        // grid-column: 1/-1;
+        justify-content: center;
+        gap: 1rem;
+
+        .save {
+          button {
+            outline: none;
+            padding: 8px 1rem;
+            border: transparent;
+            background-color: #6571ff;
+            border-radius: 5px;
+            color: #fff;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: #8992fc;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+        .discard {
+          button {
+            outline: none;
+            padding: 8px 1rem;
+            border: transparent;
+            background-color: #727272;
+            border-radius: 5px;
+            color: #fff;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: #9c9c9c;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+      }
+    }
+}

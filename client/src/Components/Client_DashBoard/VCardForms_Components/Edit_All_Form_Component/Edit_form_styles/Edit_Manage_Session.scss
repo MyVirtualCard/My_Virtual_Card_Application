@@ -1,0 +1,141 @@
+.manage_container{
+    width: 100%;
+    position: relative;
+    padding: 1rem;
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+  
+      h6 {
+        font-weight: 550;
+      }
+      .note {
+        small {
+          font-size: 0.8rem;
+          color: rgb(136, 136, 136);
+  
+          span:nth-child(1) {
+            color: red;
+            font-weight: bold;
+            padding-right: 10px;
+          }
+          span:nth-child(2) {
+            color: rgb(115, 105, 207);
+            font-weight: bold;
+          }
+          span:nth-child(3) {
+            color: rgb(55, 138, 62);
+            font-weight: 550;
+          }
+        }
+      }
+    }
+
+    .all_session_box{
+        width: 100%;
+        display: grid;
+        // grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+        grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+        place-items: center;
+        margin: 2rem auto;
+       
+        // padding: 1rem;
+      
+
+        .session{
+            display: flex;
+            width: 100%;
+          align-items: center;
+          justify-content: flex-start;
+
+    height: 40px;
+.checkbox{
+    height: 100%;
+    display: flex;
+    flex: 0.01;
+
+    align-items: center;
+    justify-content: flex-start;
+
+
+    .on{
+        font-size: 2.3rem;
+        cursor: pointer;
+        color: #6571FF;
+    }
+    .off{
+      font-size: 2.3rem;
+      cursor: pointer;
+      color: #7c7c7c;
+  }
+}
+
+.session_name{
+    display: flex;
+    flex: 0.99;
+    // align-items: center;
+    // vertical-align: middle;
+    // justify-content: flex-start;
+
+    height: 100%;
+
+    p{
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align:start;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: rgb(80, 80, 80);
+    }
+}
+        }
+        @media screen and (max-width:700px){
+          grid-template-columns: 1fr 1fr;
+        }
+    }
+    .submit_actions {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: flex-end;
+        gap: 1rem;
+
+        .save {
+          button {
+            outline: none;
+            padding: 8px 1rem;
+            border: transparent;
+            background-color: #6571ff;
+            border-radius: 5px;
+            color: #fff;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: #8992fc;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+        .discard {
+          button {
+            outline: none;
+            padding: 8px 1rem;
+            border: transparent;
+            background-color: #727272;
+            border-radius: 5px;
+            color: #fff;
+            transition: all 0.3s ease;
+            &:hover {
+              background-color: #9c9c9c;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+      }
+}
