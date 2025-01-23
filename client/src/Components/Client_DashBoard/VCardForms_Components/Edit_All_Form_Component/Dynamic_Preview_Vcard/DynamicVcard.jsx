@@ -39,7 +39,7 @@ import { TiTick } from "react-icons/ti";
 import * as Yup from "yup";
 import vCardsJS from "vcards-js";
 import { Cursor } from "react-simple-typewriter";
-import { filter } from "lodash";
+// import { filter } from "lodash";
 import { translate } from "react-range/lib/utils";
 import { color } from "framer-motion";
 import { toast } from "react-toastify";
