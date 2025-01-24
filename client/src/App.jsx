@@ -60,7 +60,11 @@ const App = () => {
     setCurrentPlan,
     setShowForm
   } = useContext(AppContext);
-
+  //Server API
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_APP_BACKEND_API_URL,
+  });
+  let local_URL_Alies = localStorage.getItem("URL_Alies");
   useEffect(() => {
     const timer = setTimeout(() => {
       setShouldLoad(true); // Update state after 5 seconds
@@ -83,17 +87,39 @@ const App = () => {
       setURL_Alies(local_URL_Alies);
     }
   }, [navigate]);
+  // useEffect(() => {
+  //   let local_URL_Alies = localStorage.getItem("URL_Alies");
+  //   try {
+  //     axios
+  //       .get(
+  //         backendUrl +
+  //           `/templateDetail/${
+  //             URL_Alies.length > 0
+  //               ? local_URL_Alies
+  //               : window.location.pathname.split("/")[1]
+  //           }`
+  //       )
+  //       .then((res) => {
+  //         if (res.data?.data?.length > 0) {
+  //           setURL_Alies(res.data?.data[0].URL_Alies);
+  //           setCurrentTemplate(res.data?.data[0].currentTemplate);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         toast.error(error.response.data.message);
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [navigate]);
   useEffect(() => {
-    let local_URL_Alies = localStorage.getItem("URL_Alies");
     try {
-      axios
+      api
         .get(
-          backendUrl +
-            `/templateDetail/${
-              URL_Alies.length > 0
-                ? local_URL_Alies
-                : window.location.pathname.split("/")[1]
-            }`
+          `/templateDetail/${
+            window.location.pathname.split("/")[1]
+          }`
         )
         .then((res) => {
           if (res.data?.data?.length > 0) {
@@ -109,7 +135,6 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
-
   return (
     <>
       <ToastContainer

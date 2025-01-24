@@ -24,7 +24,13 @@ app.use(cors({
   allowedHeaders: 'Content-Type,Authorization',
   credentials:true
 }));
-// app.use(cors('*'));
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+//   methods: 'GET,POST,PUT,DELETE',
+//   allowedHeaders: 'Content-Type,Authorization',
+//   credentials:true
+// }));
+
 //Razorpay Instantiate:
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,

@@ -20,9 +20,6 @@ import Youtube_Video_Model from "../Models/Youtube_Video.model.js";
 import BussinessModel from "../Models/BussinessHour.model.js";
 import GoogleMapModel from "../Models/GoogleMap.model.js";
 import ManageContentModel from "../Models/ManageContent.model.js";
-import { UserAuth } from "../Middleware/User.js";
-// import InquiryModel from "../Models/";
-// import AppoinmentModel from "../Models/App";
 router.get("/allDataAPI/:URL_Alies", async (req, res) => {
   try {
     let URL_Alies = req.params.URL_Alies;
@@ -187,15 +184,15 @@ router.get("/allDataAPI/:URL_Alies", async (req, res) => {
     }
 
     //VCard Template
-    // let VCardTemplateDetails_data = await Current_VCardTemplate.find({
-    //   URL_Alies: URL_Alies,
-    // });
+    let VCardTemplateDetails_data = await Current_VCardTemplate.find({
+      URL_Alies: URL_Alies,
+    });
 
-    // if (!VCardTemplateDetails_data) {
-    //   res.status(400).json({ message: "VCard_Template Data Not Found" });
-    // } else {
-    //   result["VCardTemplateDetails"] = VCardTemplateDetails_data;
-    // }
+    if (!VCardTemplateDetails_data) {
+      res.status(400).json({ message: "VCard_Template Data Not Found" });
+    } else {
+      result["VCardTemplateDetails"] = VCardTemplateDetails_data;
+    }
 
     // let QRCodeDetails_data = await QRCodeModel.find({    URL_Alies: URL_Alies});
 

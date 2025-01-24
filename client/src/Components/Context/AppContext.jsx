@@ -17,7 +17,6 @@ export const AppContextProvider = (props) => {
   let [FormSubmitLoader, setFormSubmitLoader] = useState(false);
   let [ClientData, setClientData] = useState([]);
   let [URL_Alies, setURL_Alies] = useState("demo-url");
-  console.log(ResellerUserName)
   //CurrentVCard templateActive
   let [currentTemplate, setCurrentTemplate] = useState(null);
   let [ShowForm, setShowForm] = useState("Choose Your Plan");
