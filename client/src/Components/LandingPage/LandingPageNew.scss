@@ -70,6 +70,11 @@
       bottom: 5%;
       left: 50%;
       z-index: 1;
+
+      @media screen and (max-width:776px){
+        left: 5%;
+        bottom: 1%;
+      }
     }
     .navbar {
       width: 100%;
@@ -1752,6 +1757,10 @@
               }
             }
           }
+
+          @media screen and (max-width:776px){
+display: none;
+          }
         }
 
         @media screen and (max-width: 700px) {
@@ -1920,7 +1929,7 @@
               position: relative;
 
               .icon {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 color: #3b3b3b;
               }
               &::after,
@@ -1992,8 +2001,9 @@
               }
 
               @media screen and (max-width: 776px) {
-                font-size: 0.8rem;
-                padding: 0.7rem 1rem;
+                font-size: 0.7rem;
+                gap: 5px;
+                padding: 0.7rem 0.5rem;
               }
             }
             .reseller {
@@ -2014,7 +2024,7 @@
               position: relative;
 
               .icon {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 color: #3b3b3b;
               }
               &::after,
@@ -2082,13 +2092,16 @@
               }
 
               @media screen and (max-width: 776px) {
-                font-size: 0.8rem;
-                padding: 0.7rem 1rem;
+                font-size: 0.7rem;
+                gap: 5px;
+                padding: 0.7rem 0.5rem;
               }
             }
             @media screen and (max-width: 776px) {
+       width: 100%;
               justify-content: flex-start;
-              margin: 1rem 0px;
+              margin: 0rem 1rem;
+              gap: 1rem;
             }
           }
           @media screen and (max-width: 776px) {
@@ -2129,11 +2142,11 @@
                 font-weight: 600;
 
                 @media screen and (max-width: 776px) {
-                  font-size: 1.3rem;
+                  font-size: 1.7rem;
                 }
               }
               @media screen and (max-width: 776px) {
-                font-size: 1.4rem;
+                font-size: 1.7rem;
               }
             }
             h3 {
@@ -2142,7 +2155,7 @@
               font-weight: 500;
 
               @media screen and (max-width: 776px) {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
                 display: block;
               }
             }
@@ -2170,7 +2183,12 @@
               object-fit: cover;
               animation: Jump 5s linear infinite;
 
-      
+              @media screen and (max-width: 767px) {
+                width: 250px;
+                display: block;
+                padding: 10px;
+                animation: Jump 7s linear infinite;
+              }
             }
             @keyframes Jump {
               0% {
@@ -2221,8 +2239,8 @@
               }
 
               @media screen and (max-width: 776px) {
-                left: 53%;
-                top: -45%;
+                left: 63%;
+                top: -50%;
               }
             }
           }
@@ -2337,7 +2355,7 @@
           font-weight: 550;
           @media screen and (max-width: 776px) {
             width: 100%;
-            text-align: center;
+            text-align: start;
             font-size: 1.3rem;
           }
         }
@@ -2362,10 +2380,10 @@
 
         .sample_title {
           display: flex;
-          align-items: center;
-          justify-content: center;
+          align-items: flex-start;
+          justify-content: flex-start;
           gap: 0.3rem;
-
+width: 100%;
           .icon {
             display: flex;
             align-items: center;
@@ -2383,7 +2401,7 @@
             color: #3b3b3b;
 
             @media screen and (max-width: 776px) {
-              width: 100%;
+          
               text-align: start;
               display: flex;
               flex-direction: row;
@@ -2393,13 +2411,14 @@
             }
           }
           @media screen and (max-width: 776px) {
-            width: 100%;
+       
             text-align: start;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
             font-size: 1.2rem;
+        
           }
         }
         @media screen and (max-width: 776px) {
@@ -3060,7 +3079,7 @@
               margin: auto;
             }
             @media screen and (max-width: 776px) {
-              width: 95%;
+              width: 90%;
               height: auto;
             }
           }
@@ -3327,7 +3346,7 @@
               margin: auto;
             }
             @media screen and (max-width: 776px) {
-              width: 95%;
+              width: 90%;
               height: auto;
             }
           }
@@ -3596,7 +3615,7 @@
               margin: auto;
             }
             @media screen and (max-width: 776px) {
-              width: 95%;
+              width: 90%;
               height: auto;
             }
           }
@@ -3613,6 +3632,7 @@
             grid-row-gap: 1.5rem;
             grid-column-gap: 0.5rem;
             width: 100%;
+            padding: 1rem 0px;
           }
         }
 
@@ -3782,7 +3802,7 @@
               font-weight: 550;
               @media screen and (max-width: 776px) {
                 width: 100%;
-                text-align: center;
+                text-align: start;
                 font-size: 1.4rem;
               }
             }
@@ -3800,7 +3820,7 @@
 
               @media screen and (max-width: 776px) {
                 width: 100%;
-                text-align: center;
+                text-align: start;
                 font-size: 1rem;
               }
             }
@@ -4218,6 +4238,25 @@
                 text-align: center;
               }
             }
+            @media screen and (max-width: 776px) {
+              width: 90%;
+              height: auto;
+              margin: auto !important;
+     
+             
+              
+            }
+          }
+          @media screen and (max-width: 776px) {
+            width: 100%;
+            padding: 1rem 0.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem 0.5rem;
+            place-content: center;
+           
+          
+            
           }
         }
         @media screen and (max-width: 776px) {

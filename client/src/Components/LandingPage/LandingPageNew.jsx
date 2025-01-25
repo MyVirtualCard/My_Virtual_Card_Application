@@ -598,8 +598,8 @@ const LandingPage = () => {
           >
             <Lottie
               options={Session1MouseScroll}
-              height={window.innerWidth < 700 ? "30px" : "80px"}
-              width={window.innerWidth < 700 ? "30px" : "80px"}
+              height={window.innerWidth < 700 ? "50px" : "80px"}
+              width={window.innerWidth < 700 ? "50px" : "80px"}
               className="lottie"
             />
           </div>
@@ -1689,8 +1689,8 @@ const LandingPage = () => {
                   <div className="message">
                     <Lottie
                       options={MessageIconoptions}
-                      height={window.innerWidth < 700 ? "30px" : "30px"}
-                      width={window.innerWidth < 700 ? "30px" : "30px"}
+                      height={window.innerWidth < 700 ? "25px" : "30px"}
+                      width={window.innerWidth < 700 ? "25px" : "30px"}
                       className="lottie"
                     />
                     <small
