@@ -19,8 +19,8 @@ const LazyLoading = () => {
         <p>Loading...</p>
         <Lottie
           options={options}
-          height={window.innerWidth < 900 ? "200px" : "200px"}
-          width={window.innerWidth < 900 ? "200px" : "200px"}
+          height={window.innerWidth < 900 ? "180px" : "200px"}
+          width={window.innerWidth < 900 ? "180px" : "200px"}
           className="lottie"
         />
       </div>
