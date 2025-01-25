@@ -54,6 +54,7 @@ import {
   Session3ArrowOption2,
 } from "./constants";
 import {
+  free_plan_service_list,
   static_plan_service_list,
   dynamic_plan_service_list,
 } from "./constants";
@@ -92,6 +93,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import LoginAnimation from "../../assets/Lotte_Animation/login.json";
 import { AppContext } from "../Context/AppContext.jsx";
+import vcardImage from '../../assets/Landing_Page/slide1_right_image.png'
 const LandingPage = () => {
   let navigate = useNavigate();
   let {
@@ -102,14 +104,7 @@ const LandingPage = () => {
     backendUrl,
     getResellerAuthStatus,
   } = useContext(AppContext);
-  let Robots = [
-    RoboAnime5,
-    RoboAnime,
-    RoboAnime3,
-    RoboAnime4,
-    RoboAnime1,
-    // RoboAnime2,
-  ];
+
   let BackImages = [BackgroundAnime2];
   let Messages = [
     {
@@ -172,24 +167,7 @@ const LandingPage = () => {
         : Password.setAttribute("type", "Password");
     }
   };
-  // /robot toggle:
-  useEffect(() => {
-    if (CurrentRoboIndex >= 0) {
-      if (CurrentRoboIndex < Robots.length) {
-        const timer = setTimeout(() => {
-          return setCurrentRoboIndex(CurrentRoboIndex + 1);
-        }, 5000);
 
-        // Cleanup the timer
-        return () => {
-          clearTimeout(timer);
-        };
-      }
-    }
-    if (CurrentRoboIndex === 5) {
-      return setCurrentRoboIndex(0);
-    }
-  }, [CurrentRoboIndex]);
   // Back Image Toggle
   useEffect(() => {
     if (CurrentBackImageIndex >= 0) {
@@ -226,14 +204,7 @@ const LandingPage = () => {
       return setIndex(0);
     }
   }, [index]);
-  const options = {
-    loop: true,
-    autoplay: true,
-    animationData: Robots[CurrentRoboIndex],
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+
   const SocialIconoptions = {
     loop: true,
     autoplay: true,
@@ -276,7 +247,7 @@ const LandingPage = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("Jan 30, 2025 00:00:00").getTime();
+    const countdownDate = new Date("Feb 30, 2025 00:00:00").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -1713,12 +1684,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className="robots">
-                  <Lottie
-                    options={options}
-                    height={window.innerWidth < 900 ? "60%" : "100%"}
-                    width={window.innerWidth < 900 ? "60%" : "90%"}
-                    className="lottie"
-                  />
+                <img src={vcardImage} alt="" />
 
                   <div className="message">
                     <Lottie
@@ -1811,17 +1777,106 @@ const LandingPage = () => {
         {/* Subscribe Template */}
         <section className="Session_3" ref={PriceRef}>
           <div className="session3_back_banner_image">
-            <Lottie
+            {/* <Lottie
               options={Session3BackImageOption}
               height={"100%"}
               width={"100%"}
-            />
+            /> */}
           </div>
 
           <div className="session3_content_row">
             <div className="left">
+            <div className="plan_heading">
+                <h1>
+                  <div className="icon">
+                    <Lottie
+                      options={Session3PriceOption}
+                      height={window.innerWidth < 700 ? "30px" : "50px"}
+                      width={window.innerWidth < 700 ? "30px" : "50px"}
+                      className="lottie"
+                    />
+                  </div>
+                  MyVirtualCard Pricing
+                </h1>
+                <h2>
+                  Select the <span>Perfect Plan</span> for You
+                  <Lottie
+                    options={Session3ArrowOption}
+                    height={window.innerWidth < 700 ? "30px" : "60px"}
+                    width={window.innerWidth < 700 ? "30px" : "60px"}
+                    className="lottie"
+                  />
+                </h2>
+                {/* <p>
+                <strong>Your Plan, Your Way:</strong> Choose What Works Best
+              </p> */}
+              </div>
               <div className="plan_container_box" initial="hide" animate="show">
-                {/* plan1 */}
+                   {/* Free plan */}
+                   <div className="freeplan_box">
+                  <div className="down_arrow">
+                    <FaHandPointRight />
+                    Show more
+                  </div>
+                  <div className="plan_title">
+                    <h3>FREE PLAN</h3>
+                  </div>
+                  <div className="plan_price">
+                    <div className="actual">
+                      <h2>
+                        Actual Price{" "}
+                        <p>
+                          <strong>₹ 99</strong> <small>/Monthly</small>
+                        </p>
+                      </h2>
+                    </div>
+
+                    <span>|</span>
+                    <div className="offer">
+                      <h2>
+                        Offer Price{" "}
+                        <strong>
+                          ₹ 0 <small>/Monthly</small>
+                        </strong>
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="plan_action">
+                    <Link to="/register">
+                      <button>Subscribe</button>
+                    </Link>
+                  </div>
+                  <div className="card_count">
+                    {/* <p>
+                   No of VCard Design's Provided : <span>08</span>
+                 </p> */}
+                  </div>
+                  <div
+                    className="plan_addon_service"
+                    initial="hide"
+                    animate="show"
+                  >
+                    {free_plan_service_list.map((data, index) => {
+                      return (
+                        <div className="list" key={index}>
+                          <div className="icon">
+                            <Lottie
+                              options={Session3ArrowOption2}
+                              height={window.innerWidth < 700 ? "30px" : "30px"}
+                              width={window.innerWidth < 700 ? "30px" : "30px"}
+                              className="lottie"
+                            />
+                          </div>
+                          <div className="text">
+                            <p>{data.text}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* Basic plan1 */}
                 <div className="plan">
                   <div className="down_arrow">
                     <FaHandPointRight />
@@ -1885,6 +1940,7 @@ const LandingPage = () => {
                     })}
                   </div>
                 </div>
+                {/* EnterPrice Plan */}
                 <div className="plan2">
                   <div className="down_arrow">
                     <FaHandPointRight />
@@ -1950,41 +2006,7 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
-            <div className="right">
-              <div className="plan_heading">
-                <h1>
-                  <div className="icon">
-                    <Lottie
-                      options={Session3PriceOption}
-                      height={window.innerWidth < 700 ? "30px" : "50px"}
-                      width={window.innerWidth < 700 ? "30px" : "50px"}
-                      className="lottie"
-                    />
-                  </div>
-                  MyVirtualCard Pricing
-                </h1>
-                <h2>
-                  Select the <span>Perfect Plan</span> for You
-                  <Lottie
-                    options={Session3ArrowOption}
-                    height={window.innerWidth < 700 ? "30px" : "60px"}
-                    width={window.innerWidth < 700 ? "30px" : "60px"}
-                    className="lottie"
-                  />
-                </h2>
-                {/* <p>
-                <strong>Your Plan, Your Way:</strong> Choose What Works Best
-              </p> */}
-              </div>
-              <div className="robot">
-                <Lottie
-                  options={Session3LeftRobo}
-                  height={window.innerWidth < 900 ? "40px" : "70%"}
-                  width={window.innerWidth < 900 ? "40px" : "60%"}
-                  className="lottie"
-                />
-              </div>
-            </div>
+          
           </div>
         </section>
         {/* Dynamic Template */}
@@ -2137,12 +2159,12 @@ const LandingPage = () => {
             </div>
             <div className="right">
               <div className="robots">
-                <Lottie
+                {/* <Lottie
                   options={Session5Robot}
                   height={window.innerWidth < 900 ? "60%" : "80%"}
                   width={window.innerWidth < 900 ? "60%" : "100%"}
                   className="lottie"
-                />
+                /> */}
 
                 {/* <div className="message">
                   <Lottie
@@ -2290,7 +2312,7 @@ const LandingPage = () => {
               <div className="robots">
                 <Lottie
                   options={ServiceRobot}
-                  height={window.innerWidth < 900 ? "60%" : "80%"}
+                  height={window.innerWidth < 900 ? "60%" : "90%"}
                   width={window.innerWidth < 900 ? "60%" : "100%"}
                   className="lottie"
                 />
@@ -2300,11 +2322,11 @@ const LandingPage = () => {
         </section>
         <section className="Session_8" ref={FAQRef}>
           <div className="session3_back_banner_image">
-            <Lottie
+            {/* <Lottie
               options={Session3BackImageOption}
               height={"100%"}
               width={"100%"}
-            />
+            /> */}
           </div>
           <div className="slide_8_title">
             <h2>

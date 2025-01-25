@@ -12,7 +12,7 @@ export const Session1MouseScroll = {
 };
 //...................................................
 // Session2
-import Session2BackImage from '../../../assets/Lotte_Animation/Gradient_Back6.json';
+import Session2BackImage from '../../../assets/Lotte_Animation/Back_Anime2.json';
 import Session2BackImage2 from '../../../assets/Lotte_Animation/Gradient_Back7.json';
 import Session2Robo from '../../../assets/Lotte_Animation/Robot-12.json';
 import MobileView from '../../../assets/Lotte_Animation/Mobile3.json';
@@ -183,6 +183,64 @@ export const Session3ArrowOption2 = {
   },
 };
   //PLan list
+  export let free_plan_service_list = [
+    {
+      id: 0,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Demo Purpose Single Static Vcard Template.",
+    },
+    {
+      id: 1,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Basic Information about Your Company.",
+    },
+    {
+      id: 2,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Add all your social media link by one click. ",
+    },
+    {
+      id: 3,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Add all your Contact Details. ",
+    },
+    {
+      id: 4,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Share your products and services with restrictions.",
+    },
+    {
+      id: 5,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Appoinment shedule by one click. ",
+    },
+    {
+      id: 7,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Add to Contact Button.",
+    },
+    {
+      id: 9,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Post your images by gallery. ",
+    },
+    {
+      id: 10,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Client review's by Testimonial view.",
+    },
+    {
+      id: 11,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Upload Your Service Video max 2 .",
+    },
+    {
+      id: 12,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "User Feedback and Inquiry Form.",
+    },
+
+  ];
  export let static_plan_service_list = [
     {
       id: 0,
@@ -231,6 +289,11 @@ export const Session3ArrowOption2 = {
     },
     {
       id: 11,
+      icon: <i className="bx bxs-check-shield"></i>,
+      text: "Upload Your Product Video .",
+    },
+    {
+      id: 12,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "User Feedback and Inquiry Form.",
     },
@@ -285,6 +348,11 @@ export const Session3ArrowOption2 = {
     {
       id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
+      text: "Upload Your Video's.",
+    },
+    {
+      id: 12,
+      icon: <i className="bx bxs-check-shield"></i>,
       text: "User Feedback and Inquiry Form.",
     },
     {
@@ -293,7 +361,7 @@ export const Session3ArrowOption2 = {
       text: "Dynamic Styling change your Vcard Design.",
     },
     {
-      id: 15,
+      id: 14,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "QRCode Scan and Share your Website.",
     },
@@ -473,12 +541,12 @@ export const Session3ArrowOption2 = {
 
   //Session7
 
-  import ServiceBackAnime from '../../../assets/Lotte_Animation/Gradient_Back8.json';
-  import ServiceRobotAnime from '../../../assets/Lotte_Animation/Robot-1.json';
-  import Service1 from '../../../assets/Lotte_Animation/React.json'
+  import ServiceBackAnime from '../../../assets/Lotte_Animation/Gradient_Back6.json';
+  import ServiceRobotAnime from '../../../assets/Lotte_Animation/Service-1.json';
+  import Service1 from '../../../assets/Lotte_Animation/Service.json'
   import Service2 from '../../../assets/Lotte_Animation/Backend.json'
   import Service3 from '../../../assets/Lotte_Animation/Service-3.json'
-  import Service4 from '../../../assets/Lotte_Animation/Service-4.json'
+  import Service4 from '../../../assets/Lotte_Animation/Service-2.json'
   export const ServiceBack= {
     loop: true,
     autoplay: true,

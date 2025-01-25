@@ -1,7 +1,7 @@
 import React, { Suspense, useContext, useEffect, useState } from "react";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToastContainer, Bounce } from "react-toastify";
+import { ToastContainer,toast, Bounce } from "react-toastify";
 import Cookies from "js-cookie";
 import "react-toastify/dist/ReactToastify.css";
 import loadable from "@loadable/component";
