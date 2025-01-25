@@ -9,6 +9,11 @@
   initial-value: 0deg;
   inherits: false;
 }
+@property --angle3 {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 .landingpage_container {
   width: 100vw;
   height: 100vh;
@@ -2821,7 +2826,7 @@ width: 100%;
             background: #008b62;
 
             // border: 3px solid rgb(127, 157, 253);
-            overflow-y: hidden;
+            // overflow-y: hidden;
             position: relative;
             height: 90%;
             border-radius: 0.3rem;
@@ -3043,13 +3048,13 @@ width: 100%;
               transform: translate(-50%, -50%);
               border-radius: 0.3rem;
 
-              background-image: conic-gradient(
-                from var(--angle),
-                transparent 70%,
-                rgb(0, 255, 255)
-              );
-              z-index: -1;
-              animation: 3s spin linear infinite;
+              // background-image: conic-gradient(
+              //   from var(--angle3),
+              //   transparent 70%,
+              //   rgb(100, 255, 178)
+              // );
+              z-index:-1;
+              // animation: 3s spin3 linear infinite;
 
               @media screen and (max-width: 776px) {
                 animation: none;
@@ -3063,12 +3068,12 @@ width: 100%;
               filter: blur(1.2rem);
               opacity: 1;
             }
-            @keyframes spin {
+            @keyframes spin3 {
               from {
-                --angle: 0deg;
+                --angle3: 0deg;
               }
               to {
-                --angle: 360deg;
+                --angle3: -360deg;
               }
             }
             &::-webkit-scrollbar {
@@ -3088,7 +3093,7 @@ width: 100%;
             background: #0d5683;
 
             // border: 3px solid rgb(127, 157, 253);
-            overflow-y: hidden;
+            // overflow-y: hidden;
             position: relative;
             height: 90%;
             border-radius: 0.3rem;
@@ -3312,8 +3317,8 @@ width: 100%;
 
               background-image: conic-gradient(
                 from var(--angle),
-                transparent 70%,
-                rgb(0, 255, 255)
+                transparent 80%,
+                #e0e0e0
               );
               z-index: -1;
               animation: 3s spin linear infinite;
@@ -3332,10 +3337,10 @@ width: 100%;
             }
             @keyframes spin {
               from {
-                --angle: 0deg;
+                --angle: -0deg;
               }
               to {
-                --angle: 360deg;
+                --angle: 60deg;
               }
             }
             &::-webkit-scrollbar {
@@ -3357,7 +3362,7 @@ width: 100%;
 
             background: #57498b;
             // border: 3px solid rgb(127, 157, 253);
-             overflow-y: hidden;
+            //  overflow-y: hidden;
             position: relative;
             height: 90%;
             border-radius: 0.3rem;
@@ -3581,7 +3586,7 @@ width: 100%;
               background-image: conic-gradient(
                 from var(--angle2),
                 transparent 70%,
-                rgb(90, 255, 255)
+                rgb(255, 241, 119)
               );
               z-index: -1;
               animation: 3s spin2 linear infinite;
@@ -3600,10 +3605,10 @@ width: 100%;
             }
             @keyframes spin2 {
               from {
-                --angle2: 0deg;
+                --angle2: 360deg;
               }
               to {
-                --angle2: 360deg;
+                --angle2: -0deg;
               }
             }
 
@@ -5124,6 +5129,10 @@ width: 100%;
         // gap: 1rem;
         // padding: 1rem;
         border-radius: 0rem;
+        border-top-left-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+        border-left: 4px solid rgb(162, 190, 250);
+        border-right: 4px solid rgb(162, 190, 250);
         transition: height 1s ease-in-out;
         cursor: pointer;
         .question {
