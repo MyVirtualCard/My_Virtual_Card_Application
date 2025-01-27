@@ -31,6 +31,7 @@ import Users from "./Components/Reseller_Dashboard/Pages/Users";
 import SuperAdmin from "./Components/SuperAdmin_Dashboard/SuperAdmin";
 import Clients from "./Components/SuperAdmin_Dashboard/Pages/Clients";
 import Corporate_Company from "./Components/Client_DashBoard/All_VCards/Live_VCards/New_Live_VCards/Corporate_Company";
+import LandingPageOld from "./Components/LandingPage/LandingPageOld";
 
 const LazyComponent = loadable(() => import("./LazyLoading/LazyLoading"));
 let LandingPage = React.lazy(() =>
@@ -183,7 +184,8 @@ const App = () => {
       />
       <Suspense fallback={<LazyComponent />}>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/new" element={<LandingPage />} />
+          <Route path="/" element={<LandingPageOld />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Reseller_OTP" element={<ResellerOTP />} />

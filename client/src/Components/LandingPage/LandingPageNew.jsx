@@ -20,9 +20,9 @@ import RoboAnime4 from "../../assets/Lotte_Animation/Robot-7.json";
 import RoboAnime5 from "../../assets/Lotte_Animation/Robot-8.json";
 import RoboAnime6 from "../../assets/Lotte_Animation/Robot-9.json";
 import ArrowAnime from "../../assets/Lotte_Animation/Arrow2.json";
-import ArrowAnime1 from "../../assets/Lotte_Animation/Arrow1.json";
+import ArrowAnime1 from "../../assets/Lotte_Animation/Arrow.json";
 import BackgroundAnime from "../../assets/Lotte_Animation/Gradient_Back.json";
-import BackgroundAnime2 from "../../assets/Lotte_Animation/Gradient_Back4.json";
+import BackgroundAnime2 from "../../assets/Lotte_Animation/Gradient_Back9.json";
 
 import MessageIcon from "../../assets/Lotte_Animation/MessageIcon.json";
 import { BsFillTelephoneInboundFill } from "react-icons/bs";
@@ -583,6 +583,20 @@ const LandingPage = () => {
       <div className="landingpage_container" ref={scrollContainerRef}>
         {/* Home */}
         <section className="Session_1" ref={HomeRef}>
+        <ul className="slide_1_background">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
           <div className="back_banner_image">
             <Lottie
               options={back_image_options}
@@ -1504,8 +1518,8 @@ const LandingPage = () => {
                     <strong>50% </strong>- Offer's Going On{" "}
                     <Lottie
                       options={arrow_options1}
-                      height={"40px"}
-                      width={"40px"}
+                      height={"20px"}
+                      width={"50px"}
                       className="lottie"
                     />
                   </small>
