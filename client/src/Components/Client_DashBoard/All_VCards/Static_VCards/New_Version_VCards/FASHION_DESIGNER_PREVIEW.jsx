@@ -524,7 +524,7 @@ const FASHION_DESIGNER_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Punitha Thirupathi</h2>
+                <h2>Lily</h2>
                 <p>Fashion Designer</p>
               </div>
 

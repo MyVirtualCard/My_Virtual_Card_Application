@@ -653,7 +653,7 @@ const ADVOCATE_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Krishna Kumar</h2>
+                <h2>William</h2>
                 <p>Senior Advocate Officer</p>
               </div>
 

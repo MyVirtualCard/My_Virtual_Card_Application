@@ -542,7 +542,7 @@ const BEAUTY_PARLOR_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Rohini</h2>
+                <h2>Hermoine</h2>
                 <p>
                  Moon Beauty Parlor
                 </p>

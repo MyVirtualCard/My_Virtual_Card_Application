@@ -523,7 +523,7 @@ const TAXI_SERVICE_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>HariKrishna - CEO</h2>
+                <h2>Benjamin - CEO</h2>
                 <p>HSR Taxi Service's</p>
               </div>
 

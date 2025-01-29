@@ -703,7 +703,7 @@ const DOCTOR_PREVIEW = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Senthil Kumar</h2>
+                <h2>George</h2>
                 <p>KRN Private Hospital</p>
               </div>
 

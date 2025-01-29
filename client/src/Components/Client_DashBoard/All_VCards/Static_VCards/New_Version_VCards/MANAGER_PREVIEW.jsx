@@ -526,7 +526,7 @@ const MANAGER_PREVIEW = () => {
               <div className="user_details">
                 <div className="user_data">
                   <div className="user_information">
-                    <h2>VijayKumar.Mr</h2>
+                    <h2>Michael</h2>
                     <p>
                       <Typewriter
                         words={["Corporate CEO", "Manager", "Organizer"]}

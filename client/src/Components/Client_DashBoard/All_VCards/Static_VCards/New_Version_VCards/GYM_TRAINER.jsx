@@ -520,7 +520,7 @@ const GYM_TRAINER_DEMO = () => {
           <div className="user_details">
             <div className="user_data">
               <div className="user_information">
-                <h2>Karthick</h2>
+                <h2>Alexander</h2>
                 <p>GYM TRAINER</p>
               </div>
 

@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { VscOpenPreview } from "react-icons/vsc";
 import { Session1MouseScroll } from "./constants";
-import SocialIconBack from "../../assets/Lotte_Animation/Logo_Back2.json";
+import SocialIconBack from "../../assets/Lotte_Animation/Logo_Back.json";
 import RoboAnime from "../../assets/Lotte_Animation/Robot-1.json";
 import RoboAnime1 from "../../assets/Lotte_Animation/Robot-5.json";
 import RoboAnime2 from "../../assets/Lotte_Animation/Robot-6.json";
@@ -617,21 +617,7 @@ const LandingPage = () => {
               className="lottie"
             />
           </div>
-          <div className="navbar">
-            <Navbar
-              HomeRef={HomeRef}
-              StaticVcardRef={StaticVcardRef}
-              PriceRef={PriceRef}
-              DynamicVcardRef={DynamicVcardRef}
-              FeatureRef={FeatureRef}
-              NFCRef={NFCRef}
-              FAQRef={FAQRef}
-              ServiceRef={ServiceRef}
-              scrollToElement={scrollToElement}
-              ActiveMenu={ActiveMenu}
-              setActiveMenu={setActiveMenu}
-            />
-          </div>
+    
 
           <div className="content_column">
             {ResellerToggle ? (
@@ -1510,7 +1496,7 @@ const LandingPage = () => {
             ) : (
               ""
             )}
-
+{/* //Nav1 */}
             <div className={`row_1 ${ResellerToggle ? "hide" : "show"}`}>
               <div className="left">
                 <div className="offer">
@@ -1546,7 +1532,14 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="social_medias">
+              <div className="right">
+              <div className="address">
+              <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+              <small>
+                <strong>Mobile Number : </strong>&nbsp;+91 9344482370
+              </small>
+            </div>
+            <div className="social_medias">
                 <a href="#">
                   <i className="bx bxl-facebook"></i>
                   {/* <div className="note">
@@ -1555,8 +1548,8 @@ const LandingPage = () => {
                   <div className="back_anime">
                     <Lottie
                       options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "40px" : "50px"}
-                      width={window.innerWidth < 900 ? "40px" : "50px"}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
                       className="lottie"
                     />
                   </div>
@@ -1569,8 +1562,8 @@ const LandingPage = () => {
                   <div className="back_anime">
                     <Lottie
                       options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "40px" : "50px"}
-                      width={window.innerWidth < 900 ? "40px" : "50px"}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
                       className="lottie"
                     />
                   </div>
@@ -1583,8 +1576,8 @@ const LandingPage = () => {
                   <div className="back_anime">
                     <Lottie
                       options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "40px" : "50px"}
-                      width={window.innerWidth < 900 ? "40px" : "50px"}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
                       className="lottie"
                     />
                   </div>
@@ -1597,8 +1590,8 @@ const LandingPage = () => {
                   <div className="back_anime">
                     <Lottie
                       options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "40px" : "50px"}
-                      width={window.innerWidth < 900 ? "40px" : "50px"}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
                       className="lottie"
                     />
                   </div>
@@ -1611,14 +1604,32 @@ const LandingPage = () => {
                   <div className="back_anime">
                     <Lottie
                       options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "40px" : "50px"}
-                      width={window.innerWidth < 900 ? "40px" : "50px"}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
                       className="lottie"
                     />
                   </div>
                 </a>
               </div>
+              </div>
+         
             </div>
+            {/* Nav2 */}
+            <div className="navbar">
+            <Navbar
+              HomeRef={HomeRef}
+              StaticVcardRef={StaticVcardRef}
+              PriceRef={PriceRef}
+              DynamicVcardRef={DynamicVcardRef}
+              FeatureRef={FeatureRef}
+              NFCRef={NFCRef}
+              FAQRef={FAQRef}
+              ServiceRef={ServiceRef}
+              scrollToElement={scrollToElement}
+              ActiveMenu={ActiveMenu}
+              setActiveMenu={setActiveMenu}
+            />
+          </div>
             <div className={`Content_row ${ResellerToggle ? "hide" : "show"}`}>
               <div className="left_side">
                 <h1>

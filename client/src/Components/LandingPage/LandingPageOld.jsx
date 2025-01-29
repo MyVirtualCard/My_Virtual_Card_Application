@@ -584,38 +584,20 @@ const LandingPageOld = () => {
                   <li>
                     <NavLink
                       onClick={() => {
+                        scrollToSection(PricingRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Pricing{" "}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={() => {
                         scrollToSection(TemplateRef), setSideNavToggle(false);
                       }}
                     >
                       {" "}
                       Templates
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      onClick={() => {
-                        scrollToSection(FeatureRef), setSideNavToggle(false);
-                      }}
-                    >
-                      Feature{" "}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      onClick={() => {
-                        scrollToSection(NFCRef), setSideNavToggle(false);
-                      }}
-                    >
-                      NFC
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      onClick={() => {
-                        scrollToSection(PricingRef), setSideNavToggle(false);
-                      }}
-                    >
-                      Pricing{" "}
                     </NavLink>
                   </li>
                   <li>
@@ -636,6 +618,27 @@ const LandingPageOld = () => {
                       Service
                     </NavLink>
                   </li>
+                  {/* <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(FeatureRef), setSideNavToggle(false);
+                      }}
+                    >
+                      Feature{" "}
+                    </NavLink>
+                  </li> */}
+                  {/* <li>
+                    <NavLink
+                      onClick={() => {
+                        scrollToSection(NFCRef), setSideNavToggle(false);
+                      }}
+                    >
+                      NFC
+                    </NavLink>
+                  </li> */}
+              
+               
+                
                 </ul>
               </div>
             </div>
@@ -729,6 +732,223 @@ const LandingPageOld = () => {
               <img src={slide1banner} alt="banner" />
             </div>
           </div>
+             {/* Plan Container */}
+       
+             <section className="Session_3" ref={PricingRef}>
+        
+
+        <div className="session3_content_row">
+          <div className="left">
+          <div className="plan_heading" initial="hide" animate="show">
+            <h1>
+              <FaRupeeSign className="icon" />
+              MyVirtualCard Pricing
+            </h1>
+            <h2>
+              Select the <span>Perfect Plan</span> for You
+            </h2>
+            {/* <p>
+              <strong>Your Plan, Your Way:</strong> Choose What Works Best
+            </p> */}
+          </div>
+            <div className="plan_container_box" initial="hide" animate="show">
+                 {/* Free plan */}
+                 <div className="freeplan_box">
+                <div className="down_arrow">
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>FREE PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <div className="actual">
+                    <h2>
+                      Actual Price{" "}
+                      <p>
+                        <strong>₹ 99</strong> <small>/Monthly</small>
+                      </p>
+                    </h2>
+                  </div>
+
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                      Offer Price{" "}
+                      <strong>
+                        ₹ 0 <small>/Monthly</small>
+                      </strong>
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Subscribe</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  {/* <p>
+                 No of VCard Design's Provided : <span>08</span>
+               </p> */}
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {free_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">
+                          <Lottie
+                            options={Session3ArrowOption2}
+                            height={window.innerWidth < 700 ? "30px" : "30px"}
+                            width={window.innerWidth < 700 ? "30px" : "30px"}
+                            className="lottie"
+                          />
+                        </div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Basic plan1 */}
+              <div className="plan">
+                <div className="down_arrow">
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>BASIC PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <div className="actual">
+                    <h2>
+                      Actual Price{" "}
+                      <p>
+                        <strong>₹ 999</strong> <small>/Yearly</small>
+                      </p>
+                    </h2>
+                  </div>
+
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                      Offer Price{" "}
+                      <strong>
+                        ₹ 499 <small>/Yearly</small>
+                      </strong>
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Subscribe</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  {/* <p>
+                 No of VCard Design's Provided : <span>08</span>
+               </p> */}
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {static_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">
+                          <Lottie
+                            options={Session3ArrowOption2}
+                            height={window.innerWidth < 700 ? "30px" : "30px"}
+                            width={window.innerWidth < 700 ? "30px" : "30px"}
+                            className="lottie"
+                          />
+                        </div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* EnterPrice Plan */}
+              <div className="plan2">
+                <div className="down_arrow">
+                  <FaHandPointRight />
+                  Show more
+                </div>
+                <div className="plan_title">
+                  <h3>ENTERPRICE PLAN</h3>
+                </div>
+                <div className="plan_price">
+                  <div className="actual">
+                    <h2>
+                      Actual Price{" "}
+                      <p>
+                        <strong>₹ 1,999</strong> <small>/Yearly</small>
+                      </p>
+                    </h2>
+                  </div>
+
+                  <span>|</span>
+                  <div className="offer">
+                    <h2>
+                      Offer Price{" "}
+                      <strong>
+                        ₹ 1,499 <small>/Yearly</small>
+                      </strong>
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="plan_action">
+                  <Link to="/register">
+                    <button>Subscribe</button>
+                  </Link>
+                </div>
+                <div className="card_count">
+                  {/* <p>
+                 No of VCard Design's Provided : <span>08</span>
+               </p> */}
+                </div>
+                <div
+                  className="plan_addon_service"
+                  initial="hide"
+                  animate="show"
+                >
+                  {dynamic_plan_service_list.map((data, index) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="icon">
+                          <Lottie
+                            options={Session3ArrowOption2}
+                            height={window.innerWidth < 700 ? "30px" : "30px"}
+                            width={window.innerWidth < 700 ? "30px" : "30px"}
+                            className="lottie"
+                          />
+                        </div>
+                        <div className="text">
+                          <p>{data.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
           {/* Static Vcard Container */}
 
           <div className="slide2" ref={TemplateRef}>
@@ -783,223 +1003,7 @@ const LandingPageOld = () => {
             </div>
           </div>
 
-          {/* Plan Container */}
        
-          <section className="Session_3" ref={PricingRef}>
-        
-
-          <div className="session3_content_row">
-            <div className="left">
-            <div className="plan_heading" initial="hide" animate="show">
-              <h1>
-                <FaRupeeSign className="icon" />
-                MyVirtualCard Pricing
-              </h1>
-              <h2>
-                Select the <span>Perfect Plan</span> for You
-              </h2>
-              {/* <p>
-                <strong>Your Plan, Your Way:</strong> Choose What Works Best
-              </p> */}
-            </div>
-              <div className="plan_container_box" initial="hide" animate="show">
-                   {/* Free plan */}
-                   <div className="freeplan_box">
-                  <div className="down_arrow">
-                    <FaHandPointRight />
-                    Show more
-                  </div>
-                  <div className="plan_title">
-                    <h3>FREE PLAN</h3>
-                  </div>
-                  <div className="plan_price">
-                    <div className="actual">
-                      <h2>
-                        Actual Price{" "}
-                        <p>
-                          <strong>₹ 99</strong> <small>/Monthly</small>
-                        </p>
-                      </h2>
-                    </div>
-
-                    <span>|</span>
-                    <div className="offer">
-                      <h2>
-                        Offer Price{" "}
-                        <strong>
-                          ₹ 0 <small>/Monthly</small>
-                        </strong>
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="plan_action">
-                    <Link to="/register">
-                      <button>Subscribe</button>
-                    </Link>
-                  </div>
-                  <div className="card_count">
-                    {/* <p>
-                   No of VCard Design's Provided : <span>08</span>
-                 </p> */}
-                  </div>
-                  <div
-                    className="plan_addon_service"
-                    initial="hide"
-                    animate="show"
-                  >
-                    {free_plan_service_list.map((data, index) => {
-                      return (
-                        <div className="list" key={index}>
-                          <div className="icon">
-                            <Lottie
-                              options={Session3ArrowOption2}
-                              height={window.innerWidth < 700 ? "30px" : "30px"}
-                              width={window.innerWidth < 700 ? "30px" : "30px"}
-                              className="lottie"
-                            />
-                          </div>
-                          <div className="text">
-                            <p>{data.text}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                {/* Basic plan1 */}
-                <div className="plan">
-                  <div className="down_arrow">
-                    <FaHandPointRight />
-                    Show more
-                  </div>
-                  <div className="plan_title">
-                    <h3>BASIC PLAN</h3>
-                  </div>
-                  <div className="plan_price">
-                    <div className="actual">
-                      <h2>
-                        Actual Price{" "}
-                        <p>
-                          <strong>₹ 999</strong> <small>/Yearly</small>
-                        </p>
-                      </h2>
-                    </div>
-
-                    <span>|</span>
-                    <div className="offer">
-                      <h2>
-                        Offer Price{" "}
-                        <strong>
-                          ₹ 499 <small>/Yearly</small>
-                        </strong>
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="plan_action">
-                    <Link to="/register">
-                      <button>Subscribe</button>
-                    </Link>
-                  </div>
-                  <div className="card_count">
-                    {/* <p>
-                   No of VCard Design's Provided : <span>08</span>
-                 </p> */}
-                  </div>
-                  <div
-                    className="plan_addon_service"
-                    initial="hide"
-                    animate="show"
-                  >
-                    {static_plan_service_list.map((data, index) => {
-                      return (
-                        <div className="list" key={index}>
-                          <div className="icon">
-                            <Lottie
-                              options={Session3ArrowOption2}
-                              height={window.innerWidth < 700 ? "30px" : "30px"}
-                              width={window.innerWidth < 700 ? "30px" : "30px"}
-                              className="lottie"
-                            />
-                          </div>
-                          <div className="text">
-                            <p>{data.text}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                {/* EnterPrice Plan */}
-                <div className="plan2">
-                  <div className="down_arrow">
-                    <FaHandPointRight />
-                    Show more
-                  </div>
-                  <div className="plan_title">
-                    <h3>ENTERPRICE PLAN</h3>
-                  </div>
-                  <div className="plan_price">
-                    <div className="actual">
-                      <h2>
-                        Actual Price{" "}
-                        <p>
-                          <strong>₹ 1,999</strong> <small>/Yearly</small>
-                        </p>
-                      </h2>
-                    </div>
-
-                    <span>|</span>
-                    <div className="offer">
-                      <h2>
-                        Offer Price{" "}
-                        <strong>
-                          ₹ 1,499 <small>/Yearly</small>
-                        </strong>
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="plan_action">
-                    <Link to="/register">
-                      <button>Subscribe</button>
-                    </Link>
-                  </div>
-                  <div className="card_count">
-                    {/* <p>
-                   No of VCard Design's Provided : <span>08</span>
-                 </p> */}
-                  </div>
-                  <div
-                    className="plan_addon_service"
-                    initial="hide"
-                    animate="show"
-                  >
-                    {dynamic_plan_service_list.map((data, index) => {
-                      return (
-                        <div className="list" key={index}>
-                          <div className="icon">
-                            <Lottie
-                              options={Session3ArrowOption2}
-                              height={window.innerWidth < 700 ? "30px" : "30px"}
-                              width={window.innerWidth < 700 ? "30px" : "30px"}
-                              className="lottie"
-                            />
-                          </div>
-                          <div className="text">
-                            <p>{data.text}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          
-          </div>
-        </section>
   
                   {/* Dynamic Template */}
         <section className="Session_4" ref={DynamicVcardRef}>
@@ -1100,7 +1104,7 @@ const LandingPageOld = () => {
           </div>
         </section>
           {/* Slide3 */}
-          <div className="slide3" ref={FeatureRef}>
+          {/* <div className="slide3" ref={FeatureRef}>
             <div className="slide3_title">
               <h2>
                 {" "}
@@ -1271,9 +1275,9 @@ const LandingPageOld = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Slide4`` */}
-   <div className="slide4" ref={NFCRef}>
+   {/* <div className="slide4" ref={NFCRef}>
             <div className="slide4_title">
               <h2>
                 {" "}
@@ -1333,7 +1337,7 @@ const LandingPageOld = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Slider_5 */}
           <div className="slide_5_page">
             <div className="slide_5_title" initial="hide" animate="show">
@@ -1383,7 +1387,7 @@ const LandingPageOld = () => {
                 </div>
               </div>
             </div>
-            <div className="slider_5_nfc_container">
+            {/* <div className="slider_5_nfc_container">
               <div className="content_box">
                 <div className="left" initial="hide" animate="show">
                   <div className="header">
@@ -1408,93 +1412,10 @@ const LandingPageOld = () => {
                   <img src={nfc} alt="nfc" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          {/* OurService */}
-          <div className="Our_Service_Slide" ref={OurServiceRef}>
-            <div className="slide1_1_title">
-              <div className="sample_title">
-                <div className="icon">
-                  <MdHomeRepairService />
-                </div>
-                <p>Our Services</p>
-              </div>
-              <h2>
-                We Offers Web Designing , Full Stack Application , ECommerse
-                Site & Digital Vcard At Affordable Price
-              </h2>
-            </div>
-            <div
-              className="slide_1_1_container_box"
-              initial="hide"
-              animate="show"
-            >
-              <div className="box">
-                <div className="content">
-                  <h5>Web Design & Development</h5>
-                  <p>
-                    We help you build an intercative & mobile responsive webiste
-                    for your business. it helps to get more visitors and
-                    promotes your business 24/7
-                  </p>
-                </div>
-                <div className="actions">
-                  <Link
-                    onClick={sendMessageOnWhatsApp}
-                    className="activate_btn"
-                  >
-                    Book Your Website Now
-                    <div className="icon">
-                      <FaRocketchat />
-                    </div>
-                  </Link>
-                </div>
-              </div>
-              <div className="box">
-                <div className="content">
-                  <h5>Backend Application With Authenitications </h5>
-                  <p>
-                    We help you build an secure data Collection & mobile
-                    responsive webiste for your business. it helps to get more
-                    visitors and promotes your business 24/7
-                  </p>
-                </div>
-                <div className="actions">
-                  <Link
-                    onClick={sendMessageOnWhatsApp}
-                    className="activate_btn"
-                  >
-                    Book Your Website Now
-                    <div className="icon">
-                      <FaRocketchat />
-                    </div>
-                  </Link>
-                </div>
-              </div>
-              <div className="box">
-                <div className="content">
-                  <h5>Digital VCard Site</h5>
-                  <p>
-                    Our digital visiting card helpes to share your business
-                    products and details with your customers and business
-                    friends. Pricing starts from ₹599
-                  </p>
-                </div>
-                <div className="actions">
-                  <Link
-                    onClick={sendMessageOnWhatsApp}
-                    className="activate_btn"
-                  >
-                    Book Your Website Now
-                    <div className="icon">
-                      <FaRocketchat />
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+      
           {/* Questions */}
           <div
             className="slide_7_page"
@@ -1575,6 +1496,90 @@ const LandingPageOld = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+              {/* OurService */}
+              <div className="Our_Service_Slide" ref={OurServiceRef}>
+            <div className="slide1_1_title">
+              <div className="sample_title">
+                <div className="icon">
+                  <MdHomeRepairService />
+                </div>
+                <p>Our Services</p>
+              </div>
+              <h2>
+                We Offers Web Designing , Full Stack Application , ECommerse
+                Site & Digital Vcard At Affordable Price
+              </h2>
+            </div>
+            <div
+              className="slide_1_1_container_box"
+              initial="hide"
+              animate="show"
+            >
+              <div className="box">
+                <div className="content">
+                  <h5>Web Design & Development</h5>
+                  <p>
+                    We help you build an intercative & mobile responsive webiste
+                    for your business. it helps to get more visitors and
+                    promotes your business 24/7
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
+              </div>
+              <div className="box">
+                <div className="content">
+                  <h5>Backend Application With Authenitications </h5>
+                  <p>
+                    We help you build an secure data Collection & mobile
+                    responsive webiste for your business. it helps to get more
+                    visitors and promotes your business 24/7
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
+              </div>
+              <div className="box">
+                <div className="content">
+                  <h5>Digital VCard Site</h5>
+                  <p>
+                    Our digital visiting card helpes to share your business
+                    products and details with your customers and business
+                    friends. Pricing starts from ₹599
+                  </p>
+                </div>
+                <div className="actions">
+                  <Link
+                    onClick={sendMessageOnWhatsApp}
+                    className="activate_btn"
+                  >
+                    Book Your Website Now
+                    <div className="icon">
+                      <FaRocketchat />
+                    </div>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
           {/* Footer */}

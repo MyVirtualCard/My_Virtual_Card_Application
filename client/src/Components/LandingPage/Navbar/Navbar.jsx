@@ -81,18 +81,6 @@ const Navbar = ({
             <li>
               <Link
                 onClick={() => {
-                  scrollToElement(StaticVcardRef),
-                    setActiveMenu("Session_2"),
-                    setOpenSideMenu(false);
-                }}
-                className={ActiveMenu == "Session_2" ? "activeMenu" : ""}
-              >
-                <p>Static-VCard's</p>
-              </Link>
-            </li>
-            <li>
-              <Link
-                onClick={() => {
                   scrollToElement(PriceRef),
                     setActiveMenu("Session_3"),
                     setOpenSideMenu(false);
@@ -102,6 +90,19 @@ const Navbar = ({
                 <p>Subscribe</p>
               </Link>
             </li>
+            <li>
+              <Link
+                onClick={() => {
+                  scrollToElement(StaticVcardRef),
+                    setActiveMenu("Session_2"),
+                    setOpenSideMenu(false);
+                }}
+                className={ActiveMenu == "Session_2" ? "activeMenu" : ""}
+              >
+                <p>Static-VCard's</p>
+              </Link>
+            </li>
+        
             <li>
               <Link
                 onClick={() => {
