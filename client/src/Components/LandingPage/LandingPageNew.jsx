@@ -1632,6 +1632,7 @@ const LandingPage = () => {
             />
           </div>
             <div className={`Content_row ${ResellerToggle ? "hide" : "show"}`}>
+              <div className="row1">
               <div className="left_side">
                 <h1>
                   Design Your <span>Digital Identity</span>
@@ -1730,7 +1731,127 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
+              </div>
+           
+              <div className={`mobile_show_nav ${ResellerToggle ? "hide" : "show"}`}>
+              <div className="left">
+                <div className="offer">
+                  <small>
+                    <strong>50% </strong>- Offer's Going On{" "}
+                    <Lottie
+                      options={arrow_options1}
+                      height={"20px"}
+                      width={"50px"}
+                      className="lottie"
+                    />
+                  </small>
+                </div>
+                <div className="box">
+                  <div className="time_box">
+                    <h4>{Days}</h4>
+                    <small>Day</small>
+                  </div>
+                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                  <div className="time_box">
+                    <h4>{Hours}</h4>
+                    <small>Hours</small>
+                  </div>
+                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                  <div className="time_box">
+                    <h4>{Minutes}</h4>
+                    <small>Minutes</small>
+                  </div>
+                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                  <div className="time_box">
+                    <h4>{Seconds}</h4>
+                    <small>Seconds</small>
+                  </div>
+                </div>
+              </div>
+              <div className="right">
+              <div className="address">
+              <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+              <small>
+                <strong>Mobile Number : </strong>&nbsp;+91 9344482370
+              </small>
             </div>
+            <div className="social_medias">
+                <a href="#">
+                  <i className="bx bxl-facebook"></i>
+                  {/* <div className="note">
+                  <p>Facebook</p>
+                </div> */}
+                  <div className="back_anime">
+                    <Lottie
+                      options={SocialIconoptions}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
+                      className="lottie"
+                    />
+                  </div>
+                </a>
+                <a href="#">
+                  <i className="bx bxl-instagram-alt"></i>
+                  {/* <div className="note">
+                  <p>Instagram</p>
+                </div> */}
+                  <div className="back_anime">
+                    <Lottie
+                      options={SocialIconoptions}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
+                      className="lottie"
+                    />
+                  </div>
+                </a>
+                <a href="#">
+                  <i className="bx bxl-whatsapp"></i>
+                  {/* <div className="note">
+                  <p>Whatsup</p>
+                </div> */}
+                  <div className="back_anime">
+                    <Lottie
+                      options={SocialIconoptions}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
+                      className="lottie"
+                    />
+                  </div>
+                </a>
+                <a href="#">
+                  <i className="bx bxl-twitter"></i>
+                  {/* <div className="note">
+                  <p>Twiter</p>
+                </div> */}
+                  <div className="back_anime">
+                    <Lottie
+                      options={SocialIconoptions}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
+                      className="lottie"
+                    />
+                  </div>
+                </a>
+                <a href="#">
+                  <i className="bx bxl-linkedin"></i>
+                  {/* <div className="note">
+                  <p>LinkedIn</p>
+                </div> */}
+                  <div className="back_anime">
+                    <Lottie
+                      options={SocialIconoptions}
+                      height={window.innerWidth < 900 ? "30px" : "40px"}
+                      width={window.innerWidth < 900 ? "30px" : "40px"}
+                      className="lottie"
+                    />
+                  </div>
+                </a>
+              </div>
+              </div>
+         
+            </div>
+            </div>
+          
           </div>
         </section>
         {/* Static Template */}
