@@ -184,8 +184,8 @@ const App = () => {
       />
       <Suspense fallback={<LazyComponent />}>
         <Routes>
-          <Route path="/new" element={<LandingPage />} />
-          <Route path="/" element={<LandingPageOld />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/old" element={<LandingPageOld />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Reseller_OTP" element={<ResellerOTP />} />

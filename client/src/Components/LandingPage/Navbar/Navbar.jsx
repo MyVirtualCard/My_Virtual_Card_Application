@@ -87,7 +87,7 @@ const Navbar = ({
                 }}
                 className={ActiveMenu == "Session_3" ? "activeMenu" : ""}
               >
-                <p>Subscribe</p>
+                <p>Subscription</p>
               </Link>
             </li>
             <li>
@@ -127,7 +127,7 @@ const Navbar = ({
                 <p>Feature</p>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={() => {
                   scrollToElement(NFCRef),
@@ -137,6 +137,19 @@ const Navbar = ({
                 className={ActiveMenu == "Session_6" ? "activeMenu" : ""}
               >
                 <p>NFC</p>
+              </Link>
+            </li> */}
+         
+            <li>
+              <Link
+                onClick={() => {
+                  scrollToElement(FAQRef),
+                    setActiveMenu("Session_7"),
+                    setOpenSideMenu(false);
+                }}
+                className={ActiveMenu == "Session_7" ? "activeMenu" : ""}
+              >
+                <p>FAQS</p>
               </Link>
             </li>
             <li>
@@ -148,19 +161,7 @@ const Navbar = ({
                 }}
                 className={ActiveMenu == "Session_8" ? "activeMenu" : ""}
               >
-                <p>Service</p>
-              </Link>
-            </li>
-            <li>
-              <Link
-                onClick={() => {
-                  scrollToElement(FAQRef),
-                    setActiveMenu("Session_7"),
-                    setOpenSideMenu(false);
-                }}
-                className={ActiveMenu == "Session_7" ? "activeMenu" : ""}
-              >
-                <p>FAQS</p>
+                <p>Services</p>
               </Link>
             </li>
           </ul>

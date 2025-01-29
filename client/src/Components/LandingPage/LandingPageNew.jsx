@@ -93,7 +93,8 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import LoginAnimation from "../../assets/Lotte_Animation/login.json";
 import { AppContext } from "../Context/AppContext.jsx";
-import vcardImage from '../../assets/Landing_Page/slide1_right_image.png'
+import vcardImage from '../../assets/Landing_Page/1.png'
+import vcardImage2 from '../../assets/Landing_Page/2.png'
 const LandingPage = () => {
   let navigate = useNavigate();
   let {
@@ -1709,8 +1710,9 @@ const LandingPage = () => {
                 </div>
 
                 <div className="robots">
+                <img src={vcardImage2} alt="" />
                 <img src={vcardImage} alt="" />
-
+              
                   <div className="message">
                     <Lottie
                       options={MessageIconoptions}
@@ -1772,14 +1774,14 @@ const LandingPage = () => {
                     </div>
                     <div className="template_image">
                       <img src={data.VCard_Image} alt="card1" />
-                      <Link
+                      <p
                         className="preview_btn"
                         onClick={() => {
-                          scrollToSection(PricingRef);
+                          scrollToElement(PriceRef);
                         }}
                       >
                         View Plan
-                      </Link>
+                      </p>
                     </div>
                     <div className="template_actions">
                       <Link
@@ -2182,42 +2184,17 @@ const LandingPage = () => {
                 })}
               </div>
             </div>
-            <div className="right">
-              <div className="robots">
-                {/* <Lottie
-                  options={Session5Robot}
-                  height={window.innerWidth < 900 ? "60%" : "80%"}
-                  width={window.innerWidth < 900 ? "60%" : "100%"}
-                  className="lottie"
-                /> */}
-
-                {/* <div className="message">
-                  <Lottie
-                    options={MessageIconoptions}
-                    height={window.innerWidth < 700 ? "30px" : "30px"}
-                    width={window.innerWidth < 700 ? "30px" : "30px"}
-                    className="lottie"
-                  />
-                  <small
-                    className={
-                      CurrentBackImageIndex === 1 ? "color2" : "color1"
-                    }
-                  >
-                    {Messages[index]?.message}
-                  </small>
-                </div> */}
-              </div>
-            </div>
+            
           </div>
         </section>
         {/* NFC */}
-        <section className="Session_6" ref={NFCRef}>
-          <div className="slide_5_title" initial="hide" animate="show">
+        {/* <section className="Session_6" ref={NFCRef}> */}
+          {/* <div className="slide_5_title" initial="hide" animate="show">
             <h2>
               Making a vCard is easy with <span>My Virtual Card</span>
             </h2>
-          </div>
-          <div className="slide_5_box_container" initial="hide" animate="show">
+          </div> */}
+          {/* <div className="slide_5_box_container" initial="hide" animate="show">
             <div className="box_1">
               <div className="icon">
                 <img src={number1} alt="view" />
@@ -2253,8 +2230,8 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-          </div>
-          <div className="slider_5_nfc_container">
+          </div> */}
+          {/* <div className="slider_5_nfc_container">
             <div className="back_image">
               <div className="session5_back_banner_image">
                 <Lottie options={nfcBack} height={"100%"} width={"100%"} />
@@ -2284,67 +2261,9 @@ const LandingPage = () => {
                 <img src={nfc} alt="nfc" />
               </div>
             </div>
-          </div>
-        </section>
-        {/* Service */}
-        <section className="Session_7" ref={ServiceRef}>
-          <div className="session3_back_banner_image">
-            <Lottie options={ServiceBack} height={"100%"} width={"100%"} />
-          </div>
-          <div className="slide7_title">
-            <h2>
-              <div className="icon">
-                <Lottie
-                  options={Session5Icon}
-                  height={window.innerWidth < 700 ? "70px" : "80px"}
-                  width={window.innerWidth < 700 ? "70px" : "80px"}
-                  className="lottie"
-                />
-              </div>
-              Our Services
-            </h2>
-            <p>
-              We Offers Web Designing , Full Stack Application , ECommerse Site
-              & Digital Vcard At Affordable Price
-            </p>
-          </div>
-          <div className="session7_content_row">
-            <div className="left">
-              <div className="feature_container">
-                {Service_list.map((data, index) => {
-                  return (
-                    <div className="list" key={index}>
-                      <div className="icon">
-                        <Lottie
-                          options={data.icon}
-                          height={window.innerWidth < 700 ? "50px" : "70px"}
-                          width={window.innerWidth < 700 ? "50px" : "70px"}
-                          className="lottie"
-                        />
-                      </div>
-                      <div className="title">
-                        <h4>{data.title}</h4>
-                      </div>
-                      <div className="content">
-                        <p>{data.content}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="right">
-              <div className="robots">
-                <Lottie
-                  options={ServiceRobot}
-                  height={window.innerWidth < 900 ? "60%" : "90%"}
-                  width={window.innerWidth < 900 ? "60%" : "100%"}
-                  className="lottie"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+          </div> */}
+        {/* </section> */}
+        {/* Faq */}
         <section className="Session_8" ref={FAQRef}>
           <div className="session3_back_banner_image">
             {/* <Lottie
@@ -2418,6 +2337,66 @@ const LandingPage = () => {
             })}
           </div>
         </section>
+        {/* Service */}
+        <section className="Session_7" ref={ServiceRef}>
+          <div className="session3_back_banner_image">
+            <Lottie options={ServiceBack} height={"100%"} width={"100%"} />
+          </div>
+          <div className="slide7_title">
+            <h2>
+              <div className="icon">
+                <Lottie
+                  options={Session5Icon}
+                  height={window.innerWidth < 700 ? "70px" : "80px"}
+                  width={window.innerWidth < 700 ? "70px" : "80px"}
+                  className="lottie"
+                />
+              </div>
+              Our Services
+            </h2>
+            <p>
+              We Offers Web Designing , Full Stack Application , ECommerse Site
+              & Digital Vcard At Affordable Price
+            </p>
+          </div>
+          <div className="session7_content_row">
+            <div className="left">
+              <div className="feature_container">
+                {Service_list.map((data, index) => {
+                  return (
+                    <div className="list" key={index}>
+                      <div className="icon">
+                        <Lottie
+                          options={data.icon}
+                          height={window.innerWidth < 700 ? "50px" : "70px"}
+                          width={window.innerWidth < 700 ? "50px" : "70px"}
+                          className="lottie"
+                        />
+                      </div>
+                      <div className="title">
+                        <h4>{data.title}</h4>
+                      </div>
+                      <div className="content">
+                        <p>{data.content}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="right">
+              <div className="robots">
+                <Lottie
+                  options={ServiceRobot}
+                  height={window.innerWidth < 900 ? "60%" : "90%"}
+                  width={window.innerWidth < 900 ? "60%" : "100%"}
+                  className="lottie"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      
         {/* Footer */}
         <div className="footer">
           <Footer />
