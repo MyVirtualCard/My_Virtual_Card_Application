@@ -604,15 +604,12 @@ END:VCARD
   };
   const backgroundImageStyle = {
     backgroundImage: `url(${VcardTheme[0]?.WebsiteBackImageAddress})`,
-    width: '100vw',
-    maxHeight: '100vh',
-    height: 'auto',
-    position:'absolute !important' ,
-    top:0,
-    left:0,
-
-    
-
+    width: "100vw",
+    maxHeight: "100vh",
+    height: "auto",
+    position: "absolute !important",
+    top: 0,
+    left: 0,
   };
   // Show loading spinner or message while loading
   if (SiteLoader) {
@@ -889,7 +886,8 @@ color:${VcardTheme[0].VCardTextColour} !important;
           gap: 5px;
           font-size: 0.7rem;
     background-color: ${ButtonTheme[0].BtnBackColour};
-    // border-bottom-right-radius:0.5rem;
+    border-bottom-right-radius:1rem;
+
     padding:0.4rem 0.7rem;
           .icon{
             font-size: 1rem;
@@ -947,8 +945,12 @@ color:${VcardTheme[0].VCardTextColour} !important;
 
         img {
          
-          width: ${ImageTheme[0]?.LogoWidth}${ImageTheme[0]?.LogoWidthUnit.toLowerCase()} !important;
-          height: ${ImageTheme[0]?.LogoHeight}${ImageTheme[0]?.LogoHeightUnit.toLowerCase()} !important;
+          width: ${
+            ImageTheme[0]?.LogoWidth
+          }${ImageTheme[0]?.LogoWidthUnit.toLowerCase()} !important;
+          height: ${
+            ImageTheme[0]?.LogoHeight
+          }${ImageTheme[0]?.LogoHeightUnit.toLowerCase()} !important;
           border-radius: ${ImageTheme[0].LogoBorderRadius}${
               ImageTheme[0].LogoBorderRadiusUnit
             } !important;
@@ -1775,7 +1777,15 @@ color:${VcardTheme[0].VCardTextColour} !important;
               font-size: 0.8rem;
               font-weight: 500;
             }
-
+  .bussiness{
+                font-size: 0.8rem;
+              font-weight: 500;
+              background-color: ${ButtonTheme[0].BtnBackColour};
+              color: ${ButtonTheme[0].BtnTextColour};
+              border-radius: ${ButtonTheme[0].ContactBtnBorderRadius}${
+              ButtonTheme[0].ContactBtnUnit
+            };
+              }
             .icon {
               font-size: 1.2rem;
               cursor: pointer;
@@ -1856,6 +1866,15 @@ color:${VcardTheme[0].VCardTextColour} !important;
               font-size: 0.8rem;
               font-weight: 500;
             }
+                .bussiness{
+                font-size: 0.8rem;
+              font-weight: 500;
+              background-color: ${ButtonTheme[0].BtnBackColour};
+              color: ${ButtonTheme[0].BtnTextColour};
+              border-radius: ${ButtonTheme[0].ContactBtnBorderRadius}${
+              ButtonTheme[0].ContactBtnUnit
+            };
+              }
             .icon {
               font-size: 1.2rem;
               cursor: pointer;
@@ -6086,7 +6105,7 @@ z-index: 1;
           font-size: 0.8rem;
 
           .icon{
-            font-size: 1.1rem;
+            font-size: 1rem;
           }
         }
 
@@ -6273,7 +6292,7 @@ z-index: 1;
               align-items: center;
               justify-content: flex-start;
               gap: 0rem;
-              // animation: professionAnime 15s infinite linear;
+             
 
               img {
                 width: 40px;
@@ -6296,7 +6315,7 @@ z-index: 1;
             gap: 10px;
             width: 100%;
             flex-wrap: wrap;
-  color:#fff  !important;
+             color:#fff  !important;
             a {
               text-decoration: none;
               display: flex;
@@ -6410,7 +6429,6 @@ z-index: 1;
       }
     }
 
-   
     .about_row_4 {
       padding: 1rem;
       width: 100%;
@@ -6469,7 +6487,9 @@ z-index: 1;
               justify-content: flex-start;
               font-size: 0.8rem;
               font-weight: 500;
+     
             }
+       
             .social_medias {
               display: flex;
 
@@ -6480,18 +6500,16 @@ z-index: 1;
               width: 100%;
               margin-left: 5px;
 
-              // height: 100%;
-
               a {
                 text-decoration: none;
-                color: $third_text_color;
+                color: ${third_text_color};
                 display: flex;
                 align-items: center;
                 justify-content: center;
 
-                // border-radius: 0.3rem;
+               
                 position: relative;
-                // background-color: $card_back_colour;
+        
                 transition: all 0.3s ease-in-out;
 
                 i {
@@ -6517,7 +6535,7 @@ z-index: 1;
                     left: 50%;
                     transform: translate(-50%, -50%);
                     width: 35px;
-                    // height: 120px;
+                 
 
                     z-index: 1;
                     transition: all 0.3s ease-in-out;
@@ -7152,6 +7170,13 @@ z-index: 1;
               font-size: 0.8rem;
               font-weight: 500;
             }
+            .bussiness{
+                font-size: 0.8rem;
+              font-weight: 500;
+              background-color: ${ButtonTheme[0].BtnBackColour} !important;
+              color: ${ButtonTheme[0].BtnTextColour};
+              border-radius: ${ButtonTheme[0].ContactBtnBorderRadius}${ButtonTheme[0].ContactBtnUnit};
+              }
             .icon {
               font-size: 1.2rem;
               cursor: pointer;
@@ -9047,7 +9072,8 @@ z-index: 1;
                 <div className="Image_row_1" ref={HomeRef} key={index}>
                   <div className="views_count">
                     <p>
-                      <LuView className="icon" />
+                      {/* <LuView className="icon" /> */}
+                      <img width="24" height="24" src="https://img.icons8.com/arcade/64/group.png" alt="group"/>
                       Views:
                       <strong>{Views}</strong>
                     </p>
@@ -9325,6 +9351,9 @@ z-index: 1;
             {AboutData.length > 0 ? (
               <>
                 {AboutData.map((data, index) => {
+                  console.log(data.Bussiness.map((data,index)=>{
+                    return data + ','
+                  }));
                   return (
                     <div className="about_row_4" ref={AboutRef} key={index}>
                       <div className="Dynamic_Vcard_Live_Title">
@@ -9335,38 +9364,49 @@ z-index: 1;
                         <div className="detail">
                           <div className="detail_title">
                             <h5>Company Name</h5>
+                            <strong>:</strong>
                           </div>
                           <div className="detail_message">
-                            <strong>:</strong>
+                          
                             <p>{data.CompanyName || " "}</p>
                           </div>
                         </div>
                         <div className="detail">
                           <div className="detail_title">
                             <h5>Category</h5>
+                            <strong>:</strong>
                           </div>
                           <div className="detail_message">
-                            <strong>:</strong>
+                      
                             <p>{data.Category || ""}</p>
                           </div>
                         </div>
                         <div className="detail">
                           <div className="detail_title">
                             <h5>Year of Est..</h5>
+                            <strong>:</strong>
                           </div>
                           <div className="detail_message">
-                            <strong>:</strong>
+                           
                             <p>{data.Year || " "}</p>
                           </div>
                         </div>
 
                         <div className="detail">
-                          <div className="detail_title">
+                          <div className="detail_title_bussiness">
                             <h5>Nature Of Business</h5>
-                          </div>
-                          <div className="detail_message">
                             <strong>:</strong>
-                            <p>{data.Bussiness}</p>
+                          </div>
+                          <div className="detail_message_bussiness">
+                        
+                            {data.Bussiness.map((data,index)=>{
+                              return(
+                                <p className="bussiness" key={index}
+                                style={{backgroundColor: ButtonTheme[0].BtnBackColour , borderRadius:'2px',padding:'5px',width:'max-content',color: ButtonTheme[0].BtnTextColour}}
+                                >{data + '  '}</p>
+                              )
+                            })}
+                         
                           </div>
                         </div>
                         {SocialMediaData.length > 0 ? (
@@ -9374,9 +9414,10 @@ z-index: 1;
                             <div className="detail">
                               <div className="detail_title">
                                 <h5>SocialMedia's</h5>
+                                <strong>:</strong>
                               </div>
                               <div className="detail_message">
-                                <strong>:</strong>
+                               
                                 {/* SocialMedia */}
                                 {SocialMediaData.map((data, index) => {
                                   return (
@@ -9947,15 +9988,7 @@ z-index: 1;
                                 <p>{data.BankName}</p>
                               </div>
                             </div>
-                            <div className="detail">
-                              <div className="detail_title">
-                                <h5>Account Type</h5>
-                              </div>
-                              <div className="detail_message">
-                                <strong>:</strong>
-                                <p>{data.AccountType}</p>
-                              </div>
-                            </div>
+                      
                             <div className="detail">
                               <div className="detail_title">
                                 <h5>IFSC code</h5>

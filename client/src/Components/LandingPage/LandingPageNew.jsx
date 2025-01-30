@@ -1776,7 +1776,7 @@ const LandingPage = () => {
               </small>
             </div>
             <div className="social_medias">
-                <a href="#">
+                <a href="https://www.facebook.com/myvirtualcard.in">
                   <i className="bx bxl-facebook"></i>
                   {/* <div className="note">
                   <p>Facebook</p>
