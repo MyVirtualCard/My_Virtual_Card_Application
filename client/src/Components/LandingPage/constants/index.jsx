@@ -471,60 +471,62 @@ export const Session3ArrowOption2 = {
   export let Feature_list = [
     {
       id: 1,
-      icon: CallIcon,
+      icon: <i className='bx bx-phone-call'></i>,
       title:"Click to Call Feature",
       content: "Connect Effortlessly - Your Clients Reach You with Just a Tap!",
     },
     {
       id: 2,
-      icon: ShareIcon,
+      icon: <i className='bx bx-share-alt' ></i>,
       title:"Share Your vCard Seamlessly",
       content: "Effortlessly ShareYour Business Information via SMS, Email, and More.",
     },
     {
       id: 3,
-      icon: ScanIcon,
+      icon: <i className='bx bx-qr-scan' ></i>,
       title:"Scan and Share Your vCard",
       content: "Scan to Access, Share to Connect: Simplify Networking with QR Codes",
     },
     {
       id: 4,
-      icon: SocialMediaIcon,
+      icon: <i className='bx bxl-whatsapp' ></i>,
       title:"Social Media Links",
       content: "Your clients can connect with you on social media, and sharing your social link can also increase your business.",
-    },
+    }
+  ];
+  export let Feature_list2 = [
+   
     {
-      id: 5,
-      icon: TemplateIcon,
+      id: 1,
+      icon: <i className='bx bx-notepad'></i>,
       title:"Wide Range of Templates",
       content: "You can choose from a wide range of templates for your VCards and share them with your clients.",
     },
     {
-      id: 6,
-      icon: PriceIcon,
+      id: 2,
+      icon: <i className='bx bx-purchase-tag' ></i>,
       title:"Afforadable Pricing",
       content: "We offer a variety of pricing plans for you to choose from, depending on your needs.",
     },
     {
-      id: 7,
-      icon: UpdateIcon,
+      id: 3,
+      icon: <i className='bx bx-cloud-upload'></i>,
       title:"Easy To Update",
       content: "You can update your details as and when you want to change unlimited times.",
     },
     {
-      id: 8,
-      icon: StarIcon,
+      id: 4,
+      icon:<i className='bx bx-slideshow' ></i>,
       title:"Review & Ratting",
       content: "Anyone can give feedback about your organization and rate out of 5 stars and others can see on the cards.",
     },
     {
-      id: 9,
-      icon: EnquiryIcon,
+      id: 5,
+      icon: <i className='bx bx-notepad' ></i>,
       title:"Enquiry Form",
       content: "Our Card can help to capture leads with enquiry form. You will Chekout your dashboard notification for each enquiry.",
     },
   ];
-
   //.........................................
   //session6
   import nfcbackImage from '../../../assets/Lotte_Animation/Back_Anime4.json';

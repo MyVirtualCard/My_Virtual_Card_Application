@@ -126,20 +126,16 @@ $error_text_color: tomato;
   //   Gallery full image
 
   .dynamic_full_image {
-    // top: 50%;
-    // left: 50%;
 
-    // right: 50%;
-    // transform: translate(-50%,-50%);
+
+
     display: none;
     z-index: 500;
 position: absolute;
-left: 0%;
 top: 0%;
-right: 0%;
-    margin: auto;
-    width: 100vw;
-    height: 800px;
+left: 0%;
+    width: 100%;
+    height: 100vh;
     background: linear-gradient($vcard_back_color, $vcard_back_color);
 z-index: 1;
     // display: none;
@@ -176,11 +172,11 @@ z-index: 1;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-        width: auto;
-        height: auto;
+        width: max-content;
+        height: max-content;
       filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.5));
       // border-radius: 5px;
-      z-index: 1000;
+      z-index: 2;
       object-fit: cover;
       z-index: 1;
 

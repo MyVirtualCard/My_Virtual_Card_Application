@@ -1487,6 +1487,10 @@ color:${VcardTheme[0].VCardTextColour} !important;
             font-size: $root_text_size;
             font-weight: $root_font_weight;
             color: ${ServiceTheme[0].ServiceTextColor} !important;
+
+            span{
+                        color: ${ServiceTheme[0].ServiceTextColor} !important;
+            }
           }
           .service_link {
             width: 100%;
@@ -1633,7 +1637,11 @@ color:${VcardTheme[0].VCardTextColour} !important;
             gap: 10px;
             font-size: $root_text_size;
             font-weight: $root_font_weight;
-                 color:${ProductTheme[0].ProductTextColor} !important;
+            color:${ProductTheme[0].ProductTextColor} !important;
+
+          span{
+          color:${ProductTheme[0].ProductTextColor} !important;
+            }
     
           }
           .product_link {
@@ -9073,7 +9081,12 @@ z-index: 1;
                   <div className="views_count">
                     <p>
                       {/* <LuView className="icon" /> */}
-                      <img width="24" height="24" src="https://img.icons8.com/arcade/64/group.png" alt="group"/>
+                      <img
+                        width="24"
+                        height="24"
+                        src="https://img.icons8.com/arcade/64/group.png"
+                        alt="group"
+                      />
                       Views:
                       <strong>{Views}</strong>
                     </p>
@@ -9351,9 +9364,11 @@ z-index: 1;
             {AboutData.length > 0 ? (
               <>
                 {AboutData.map((data, index) => {
-                  console.log(data.Bussiness.map((data,index)=>{
-                    return data + ','
-                  }));
+                  console.log(
+                    data.Bussiness.map((data, index) => {
+                      return data + ",";
+                    })
+                  );
                   return (
                     <div className="about_row_4" ref={AboutRef} key={index}>
                       <div className="Dynamic_Vcard_Live_Title">
@@ -9367,7 +9382,6 @@ z-index: 1;
                             <strong>:</strong>
                           </div>
                           <div className="detail_message">
-                          
                             <p>{data.CompanyName || " "}</p>
                           </div>
                         </div>
@@ -9377,7 +9391,6 @@ z-index: 1;
                             <strong>:</strong>
                           </div>
                           <div className="detail_message">
-                      
                             <p>{data.Category || ""}</p>
                           </div>
                         </div>
@@ -9387,7 +9400,6 @@ z-index: 1;
                             <strong>:</strong>
                           </div>
                           <div className="detail_message">
-                           
                             <p>{data.Year || " "}</p>
                           </div>
                         </div>
@@ -9398,15 +9410,24 @@ z-index: 1;
                             <strong>:</strong>
                           </div>
                           <div className="detail_message_bussiness">
-                        
-                            {data.Bussiness.map((data,index)=>{
-                              return(
-                                <p className="bussiness" key={index}
-                                style={{backgroundColor: ButtonTheme[0].BtnBackColour , borderRadius:'2px',padding:'5px',width:'max-content',color: ButtonTheme[0].BtnTextColour}}
-                                >{data + '  '}</p>
-                              )
+                            {data.Bussiness.map((data, index) => {
+                              return (
+                                <p
+                                  className="bussiness"
+                                  key={index}
+                                  style={{
+                                    backgroundColor:
+                                      ButtonTheme[0].BtnBackColour,
+                                    borderRadius: "2px",
+                                    padding: "5px",
+                                    width: "max-content",
+                                    color: ButtonTheme[0].BtnTextColour,
+                                  }}
+                                >
+                                  {data + "  "}
+                                </p>
+                              );
                             })}
-                         
                           </div>
                         </div>
                         {SocialMediaData.length > 0 ? (
@@ -9417,7 +9438,6 @@ z-index: 1;
                                 <strong>:</strong>
                               </div>
                               <div className="detail_message">
-                               
                                 {/* SocialMedia */}
                                 {SocialMediaData.map((data, index) => {
                                   return (
@@ -9988,7 +10008,7 @@ z-index: 1;
                                 <p>{data.BankName}</p>
                               </div>
                             </div>
-                      
+
                             <div className="detail">
                               <div className="detail_title">
                                 <h5>IFSC code</h5>

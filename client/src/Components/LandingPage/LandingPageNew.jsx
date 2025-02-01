@@ -67,7 +67,7 @@ import { Dynamic_VCards_images } from "./Vcard_Images/Vcard_Images";
 
 // Session5
 import { Session5Icon, Session5Robot } from "./constants";
-import { Feature_list } from "./constants";
+import { Feature_list, Feature_list2 } from "./constants";
 
 // Session6
 import number1 from "../../assets/Landing_Page/number1.png";
@@ -93,8 +93,12 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import LoginAnimation from "../../assets/Lotte_Animation/login.json";
 import { AppContext } from "../Context/AppContext.jsx";
-import vcardImage from '../../assets/Landing_Page/1.png'
-import vcardImage2 from '../../assets/Landing_Page/2.png'
+import vcardImage from "../../assets/Landing_Page/1.png";
+import vcardImage2 from "../../assets/Landing_Page/2.png";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/autoplay";
+import { Autoplay } from "swiper/modules";
 const LandingPage = () => {
   let navigate = useNavigate();
   let {
@@ -327,10 +331,10 @@ const LandingPage = () => {
     speed: 500,
     autoplay: true, // Enable autoplay
     autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 2 : 2,
-    slidesToScroll: width < 700 ? 2 : 2,
+    slidesToShow: width < 700 ? 2 : 3,
+    slidesToScroll: width < 700 ? 2 : 3,
     rtl: true, // Scroll from left to right
-    arrows: false, // Show navigation arrows
+    arrows: true, // Show navigation arrows
   };
   let [ActiveMenu, setActiveMenu] = useState("Session_1");
   let scrollContainerRef = useRef(null);
@@ -579,25 +583,31 @@ const LandingPage = () => {
         });
     },
   });
+  //HandleLeftMove
+
+  let [LeftMove, setLeftMove] = useState(false);
+  function handleLeftMove() {
+    setLeftMove(true);
+  }
+
   return (
     <>
       <div className="landingpage_container" ref={scrollContainerRef}>
         {/* Home */}
         <section className="Session_1" ref={HomeRef}>
-        <ul className="slide_1_background">
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
+          <ul className="slide_1_background">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
           <div className="back_banner_image">
             <Lottie
               options={back_image_options}
@@ -618,7 +628,6 @@ const LandingPage = () => {
               className="lottie"
             />
           </div>
-    
 
           <div className="content_column">
             {ResellerToggle ? (
@@ -1497,7 +1506,7 @@ const LandingPage = () => {
             ) : (
               ""
             )}
-{/* //Nav1 */}
+            {/* //Nav1 */}
             <div className={`row_1 ${ResellerToggle ? "hide" : "show"}`}>
               <div className="left">
                 <div className="offer">
@@ -1534,391 +1543,331 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="right">
-              <div className="address">
-              <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
-              <small>
-                <strong>Mobile Number : </strong>&nbsp;+91 9344482370
-              </small>
-            </div>
-            <div className="social_medias">
-                <a href="#">
-                  <i className="bx bxl-facebook"></i>
-                  {/* <div className="note">
+                <div className="address">
+                  <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+                  <small>
+                    <strong>Mobile Number : </strong>&nbsp;+91 9344482370
+                  </small>
+                </div>
+                <div className="social_medias">
+                  <a href="#">
+                    <i className="bx bxl-facebook"></i>
+                    {/* <div className="note">
                   <p>Facebook</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-instagram-alt"></i>
-                  {/* <div className="note">
+                    <div className="back_anime">
+                      <Lottie
+                        options={SocialIconoptions}
+                        height={window.innerWidth < 900 ? "30px" : "40px"}
+                        width={window.innerWidth < 900 ? "30px" : "40px"}
+                        className="lottie"
+                      />
+                    </div>
+                  </a>
+                  <a href="#">
+                    <i className="bx bxl-instagram-alt"></i>
+                    {/* <div className="note">
                   <p>Instagram</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-whatsapp"></i>
-                  {/* <div className="note">
+                    <div className="back_anime">
+                      <Lottie
+                        options={SocialIconoptions}
+                        height={window.innerWidth < 900 ? "30px" : "40px"}
+                        width={window.innerWidth < 900 ? "30px" : "40px"}
+                        className="lottie"
+                      />
+                    </div>
+                  </a>
+                  <a href="#">
+                    <i className="bx bxl-whatsapp"></i>
+                    {/* <div className="note">
                   <p>Whatsup</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-twitter"></i>
-                  {/* <div className="note">
+                    <div className="back_anime">
+                      <Lottie
+                        options={SocialIconoptions}
+                        height={window.innerWidth < 900 ? "30px" : "40px"}
+                        width={window.innerWidth < 900 ? "30px" : "40px"}
+                        className="lottie"
+                      />
+                    </div>
+                  </a>
+                  <a href="#">
+                    <i className="bx bxl-twitter"></i>
+                    {/* <div className="note">
                   <p>Twiter</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-linkedin"></i>
-                  {/* <div className="note">
+                    <div className="back_anime">
+                      <Lottie
+                        options={SocialIconoptions}
+                        height={window.innerWidth < 900 ? "30px" : "40px"}
+                        width={window.innerWidth < 900 ? "30px" : "40px"}
+                        className="lottie"
+                      />
+                    </div>
+                  </a>
+                  <a href="#">
+                    <i className="bx bxl-linkedin"></i>
+                    {/* <div className="note">
                   <p>LinkedIn</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
+                    <div className="back_anime">
+                      <Lottie
+                        options={SocialIconoptions}
+                        height={window.innerWidth < 900 ? "30px" : "40px"}
+                        width={window.innerWidth < 900 ? "30px" : "40px"}
+                        className="lottie"
+                      />
+                    </div>
+                  </a>
+                </div>
               </div>
-              </div>
-         
             </div>
             {/* Nav2 */}
             <div className="navbar">
-            <Navbar
-              HomeRef={HomeRef}
-              StaticVcardRef={StaticVcardRef}
-              PriceRef={PriceRef}
-              DynamicVcardRef={DynamicVcardRef}
-              FeatureRef={FeatureRef}
-              NFCRef={NFCRef}
-              FAQRef={FAQRef}
-              ServiceRef={ServiceRef}
-              scrollToElement={scrollToElement}
-              ActiveMenu={ActiveMenu}
-              setActiveMenu={setActiveMenu}
-            />
-          </div>
+              <Navbar
+                HomeRef={HomeRef}
+                StaticVcardRef={StaticVcardRef}
+                PriceRef={PriceRef}
+                DynamicVcardRef={DynamicVcardRef}
+                FeatureRef={FeatureRef}
+                NFCRef={NFCRef}
+                FAQRef={FAQRef}
+                ServiceRef={ServiceRef}
+                scrollToElement={scrollToElement}
+                ActiveMenu={ActiveMenu}
+                setActiveMenu={setActiveMenu}
+              />
+            </div>
             <div className={`Content_row ${ResellerToggle ? "hide" : "show"}`}>
               <div className="row1">
-              <div className="left_side">
-                <h1>
-                  Design Your <span>Digital Identity</span>
-                </h1>
-                <h3>Introducing Custom vCards</h3>
-                <div className="summary">
-                  <div className="list">
-                    <div className="arrow">
-                      <Lottie
-                        options={arrow_options}
-                        height={"40px"}
-                        width={"40px"}
-                        className="lottie"
-                      />
-                    </div>
-                    <div className="note">
-                      <p>
-                        Customize Your Digital Identity Effortlessly with My
-                        VirtualCard!.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="list">
-                    <div className="arrow">
-                      <Lottie
-                        options={arrow_options}
-                        height={"40px"}
-                        width={"40px"}
-                        className="lottie"
-                      />
-                    </div>
-                    <div className="note">
-                      <p>
-                        People are online Now, So convert your Business Card
-                        Digitally to share on their mobiles and Wishing your
-                        customers encourage them to connect with you.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="price">
-                  <p>
-                    Starting From <strong>₹599</strong>
-                  </p>
-                </div>
-                <div className="actions">
-                  {UserName == undefined ? (
-                    <Link to="/register" className="register">
-                      Create Your VCard Now <TbBrand4Chan className="icon" />
-                    </Link>
-                  ) : (
-                    <Link to={`${UserName}/uadmin/Vcards`} className="register">
-                    Update Your Vcard <i className='bx bxs-edit-alt' style={{fontSize:'1rem'}}></i>
-                  </Link>
-                  )}
-
-                  {ResellerUserName == undefined ? (
-                    <Link
-                      className="reseller"
-                      onClick={() => setResellerToggle(true)}
-                    >
-                      For Re-Seller Account <MdGroups2 className="icon" />
-                    </Link>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-              <div className="right_side">
-                <div className="right_title">
+                <div className="left_side">
                   <h1>
                     Design Your <span>Digital Identity</span>
                   </h1>
                   <h3>Introducing Custom vCards</h3>
-                </div>
+                  <div className="summary">
+                    <div className="list">
+                      <div className="arrow">
+                        <Lottie
+                          options={arrow_options}
+                          height={"40px"}
+                          width={"40px"}
+                          className="lottie"
+                        />
+                      </div>
+                      <div className="note">
+                        <p>
+                          Customize Your Digital Identity Effortlessly with My
+                          VirtualCard!.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="list">
+                      <div className="arrow">
+                        <Lottie
+                          options={arrow_options}
+                          height={"40px"}
+                          width={"40px"}
+                          className="lottie"
+                        />
+                      </div>
+                      <div className="note">
+                        <p>
+                          People are online Now, So convert your Business Card
+                          Digitally to share on their mobiles and Wishing your
+                          customers encourage them to connect with you.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="robots">
-                <img src={vcardImage2} alt="" />
-                <img src={vcardImage} alt="" />
-              
-                  <div className="message">
-                    <Lottie
-                      options={MessageIconoptions}
-                      height={window.innerWidth < 700 ? "25px" : "30px"}
-                      width={window.innerWidth < 700 ? "25px" : "30px"}
-                      className="lottie"
-                    />
-                    <small
-                      className={
-                        CurrentBackImageIndex === 1 ? "color2" : "color1"
-                      }
-                    >
-                      {Messages[index]?.message}
+                  <div className="price">
+                    <p>
+                      Starting From <strong>₹599</strong>
+                    </p>
+                  </div>
+                  <div className="actions">
+                    {UserName == undefined ? (
+                      <Link to="/register" className="register">
+                        Create Your VCard Now <TbBrand4Chan className="icon" />
+                      </Link>
+                    ) : (
+                      <Link
+                        to={`${UserName}/uadmin/Vcards`}
+                        className="register"
+                      >
+                        Update Your Vcard{" "}
+                        <i
+                          className="bx bxs-edit-alt"
+                          style={{ fontSize: "1rem" }}
+                        ></i>
+                      </Link>
+                    )}
+
+                    {ResellerUserName == undefined ? (
+                      <Link
+                        className="reseller"
+                        onClick={() => setResellerToggle(true)}
+                      >
+                        For Re-Seller Account <MdGroups2 className="icon" />
+                      </Link>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="right_side">
+                  <div className="right_title">
+                    <h1>
+                      Design Your <span>Digital Identity</span>
+                    </h1>
+                    <h3>Introducing Custom vCards</h3>
+                  </div>
+
+                  <div className="robots">
+                    <img src={vcardImage2} alt="" />
+                    <img src={vcardImage} alt="" />
+
+                    <div className="message">
+                      <Lottie
+                        options={MessageIconoptions}
+                        height={window.innerWidth < 700 ? "25px" : "30px"}
+                        width={window.innerWidth < 700 ? "25px" : "30px"}
+                        className="lottie"
+                      />
+                      <small
+                        className={
+                          CurrentBackImageIndex === 1 ? "color2" : "color1"
+                        }
+                      >
+                        {Messages[index]?.message}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className={`mobile_show_nav ${
+                  ResellerToggle ? "hide" : "show"
+                }`}
+              >
+                <div className="left">
+                  <div className="offer">
+                    <small>
+                      <strong>50% </strong>- Offer's Going On{" "}
+                      <Lottie
+                        options={arrow_options1}
+                        height={"20px"}
+                        width={"50px"}
+                        className="lottie"
+                      />
                     </small>
                   </div>
-                </div>
-              </div>
-              </div>
-           
-              <div className={`mobile_show_nav ${ResellerToggle ? "hide" : "show"}`}>
-              <div className="left">
-                <div className="offer">
-                  <small>
-                    <strong>50% </strong>- Offer's Going On{" "}
-                    <Lottie
-                      options={arrow_options1}
-                      height={"20px"}
-                      width={"50px"}
-                      className="lottie"
-                    />
-                  </small>
-                </div>
-                <div className="box">
-                  <div className="time_box">
-                    <h4>{Days}</h4>
-                    <small>Day</small>
-                  </div>
-                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                  <div className="time_box">
-                    <h4>{Hours}</h4>
-                    <small>Hours</small>
-                  </div>
-                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                  <div className="time_box">
-                    <h4>{Minutes}</h4>
-                    <small>Minutes</small>
-                  </div>
-                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
-                  <div className="time_box">
-                    <h4>{Seconds}</h4>
-                    <small>Seconds</small>
+                  <div className="box">
+                    <div className="time_box">
+                      <h4>{Days}</h4>
+                      <small>Day</small>
+                    </div>
+                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                    <div className="time_box">
+                      <h4>{Hours}</h4>
+                      <small>Hours</small>
+                    </div>
+                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                    <div className="time_box">
+                      <h4>{Minutes}</h4>
+                      <small>Minutes</small>
+                    </div>
+                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                    <div className="time_box">
+                      <h4>{Seconds}</h4>
+                      <small>Seconds</small>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="right">
-              <div className="address">
-              <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
-              <small>
-                <strong>Mobile Number : </strong>&nbsp;+91 9344482370
-              </small>
-            </div>
-            <div className="social_medias">
-                <a href="https://www.facebook.com/myvirtualcard.in">
-                  <i className="bx bxl-facebook"></i>
-                  {/* <div className="note">
+                <div className="right">
+                  <div className="address">
+                    <p>T. Nagar, Chennai, Tamil Nadu 600017</p>
+                    <small>
+                      <strong>Mobile Number : </strong>&nbsp;+91 9344482370
+                    </small>
+                  </div>
+                  <div className="social_medias">
+                    <a href="https://www.facebook.com/myvirtualcard.in">
+                      <i className="bx bxl-facebook"></i>
+                      {/* <div className="note">
                   <p>Facebook</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-instagram-alt"></i>
-                  {/* <div className="note">
+                      <div className="back_anime">
+                        <Lottie
+                          options={SocialIconoptions}
+                          height={window.innerWidth < 900 ? "30px" : "40px"}
+                          width={window.innerWidth < 900 ? "30px" : "40px"}
+                          className="lottie"
+                        />
+                      </div>
+                    </a>
+                    <a href="#">
+                      <i className="bx bxl-instagram-alt"></i>
+                      {/* <div className="note">
                   <p>Instagram</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-whatsapp"></i>
-                  {/* <div className="note">
+                      <div className="back_anime">
+                        <Lottie
+                          options={SocialIconoptions}
+                          height={window.innerWidth < 900 ? "30px" : "40px"}
+                          width={window.innerWidth < 900 ? "30px" : "40px"}
+                          className="lottie"
+                        />
+                      </div>
+                    </a>
+                    <a href="#">
+                      <i className="bx bxl-whatsapp"></i>
+                      {/* <div className="note">
                   <p>Whatsup</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-twitter"></i>
-                  {/* <div className="note">
+                      <div className="back_anime">
+                        <Lottie
+                          options={SocialIconoptions}
+                          height={window.innerWidth < 900 ? "30px" : "40px"}
+                          width={window.innerWidth < 900 ? "30px" : "40px"}
+                          className="lottie"
+                        />
+                      </div>
+                    </a>
+                    <a href="#">
+                      <i className="bx bxl-twitter"></i>
+                      {/* <div className="note">
                   <p>Twiter</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
-                  </div>
-                </a>
-                <a href="#">
-                  <i className="bx bxl-linkedin"></i>
-                  {/* <div className="note">
+                      <div className="back_anime">
+                        <Lottie
+                          options={SocialIconoptions}
+                          height={window.innerWidth < 900 ? "30px" : "40px"}
+                          width={window.innerWidth < 900 ? "30px" : "40px"}
+                          className="lottie"
+                        />
+                      </div>
+                    </a>
+                    <a href="#">
+                      <i className="bx bxl-linkedin"></i>
+                      {/* <div className="note">
                   <p>LinkedIn</p>
                 </div> */}
-                  <div className="back_anime">
-                    <Lottie
-                      options={SocialIconoptions}
-                      height={window.innerWidth < 900 ? "30px" : "40px"}
-                      width={window.innerWidth < 900 ? "30px" : "40px"}
-                      className="lottie"
-                    />
+                      <div className="back_anime">
+                        <Lottie
+                          options={SocialIconoptions}
+                          height={window.innerWidth < 900 ? "30px" : "40px"}
+                          width={window.innerWidth < 900 ? "30px" : "40px"}
+                          className="lottie"
+                        />
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </div>
-              </div>
-         
-            </div>
-            </div>
-          
-          </div>
-        </section>
-        {/* Static Template */}
-        <section className="Session_2" ref={StaticVcardRef}>
-          <div className="session2_back_banner_image">
-            <Lottie
-              options={Session2BackOptions}
-              height={"100%"}
-              width={"100%"}
-            />
-          </div>
-
-          <div className="right_side">
-            <div className="slide2_title">
-              <h2>Explore Our Range of Static VCard Templates!</h2>
-              <p>
-                <strong>Simplify Your Digital Networking:</strong> Get Started
-                with Our vCard Templates
-              </p>
-
-              <div className="sample_title">
-                <p>Sample VCard Designs</p>
-                <div className="icon">
-                  <Lottie
-                    options={Session2LeftMobileOption}
-                    height={window.innerWidth < 700 ? "40px" : "60px"}
-                    width={window.innerWidth < 700 ? "40px" : "60px"}
-                    className="lottie"
-                  />
                 </div>
               </div>
-            </div>
-
-            <div className="template_container">
-              {StaticTemplateList.map((data, index) => {
-                return (
-                  <div className="template" key={index}>
-                    <div className="template_title">
-                      <h4>TEMPLATE-{data.TemplateCount}</h4>
-                      <p>{data.VCard_Name}</p>
-                    </div>
-                    <div className="template_image">
-                      <img src={data.VCard_Image} alt="card1" />
-                      <p
-                        className="preview_btn"
-                        onClick={() => {
-                          scrollToElement(PriceRef);
-                        }}
-                      >
-                        View Plan
-                      </p>
-                    </div>
-                    <div className="template_actions">
-                      <Link
-                        to={data.VCard_Link}
-                        target="_blank"
-                        className="activate_btn"
-                      >
-                        Preview Demo
-                        <div className="icon">
-                          <VscOpenPreview />
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </div>
         </section>
@@ -1934,7 +1883,7 @@ const LandingPage = () => {
 
           <div className="session3_content_row">
             <div className="left">
-            <div className="plan_heading">
+              <div className="plan_heading">
                 <h1>
                   <div className="icon">
                     <Lottie
@@ -1960,8 +1909,8 @@ const LandingPage = () => {
               </p> */}
               </div>
               <div className="plan_container_box" initial="hide" animate="show">
-                   {/* Free plan */}
-                   <div className="freeplan_box">
+                {/* Free plan */}
+                <div className="freeplan_box">
                   <div className="down_arrow">
                     <FaHandPointRight />
                     Show more
@@ -2154,9 +2103,77 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
-          
           </div>
         </section>
+        {/* Static Template */}
+        <section className="Session_2" ref={StaticVcardRef}>
+          <div className="session2_back_banner_image">
+            <Lottie
+              options={Session2BackOptions}
+              height={"100%"}
+              width={"100%"}
+            />
+          </div>
+
+          <div className="right_side">
+            <div className="slide2_title">
+              <h2>Explore Our Range of Static VCard Templates!</h2>
+              <p>
+                <strong>Simplify Your Digital Networking:</strong> Get Started
+                with Our vCard Templates
+              </p>
+
+              <div className="sample_title">
+                <p>Sample VCard Designs</p>
+                <div className="icon">
+                  <Lottie
+                    options={Session2LeftMobileOption}
+                    height={window.innerWidth < 700 ? "40px" : "60px"}
+                    width={window.innerWidth < 700 ? "40px" : "60px"}
+                    className="lottie"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="template_container">
+              {StaticTemplateList.map((data, index) => {
+                return (
+                  <div className="template" key={index}>
+                    <div className="template_title">
+                      <h4>TEMPLATE-{data.TemplateCount}</h4>
+                      <p>{data.VCard_Name}</p>
+                    </div>
+                    <div className="template_image">
+                      <img src={data.VCard_Image} alt="card1" />
+                      <p
+                        className="preview_btn"
+                        onClick={() => {
+                          scrollToElement(PriceRef);
+                        }}
+                      >
+                        View Plan
+                      </p>
+                    </div>
+                    <div className="template_actions">
+                      <Link
+                        to={data.VCard_Link}
+                        target="_blank"
+                        className="activate_btn"
+                      >
+                        Preview Demo
+                        <div className="icon">
+                          <VscOpenPreview />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* Dynamic Template */}
         <section className="Session_4" ref={DynamicVcardRef}>
           <div className="slider_5_nfc_container">
@@ -2202,26 +2219,7 @@ const LandingPage = () => {
                     </div>
                     <p>
                       You can change your vcard theme color dynamically at any
-                      time no any other restriction for color changes it's fully
-                      unlimited to change over Vcard Theme.
-                    </p>
-                  </div>
-                  <div className="feauture">
-                    <div className="icon">
-                      <WiStars />
-                    </div>
-                    <p>
-                      This Plan has been increased your memory storage to store
-                      your details more and secure.
-                    </p>
-                  </div>
-                  <div className="feauture">
-                    <div className="icon">
-                      <WiStars />
-                    </div>
-                    <p>
-                      Our Dynamic VCard Template is fully responsive and
-                      compatible with all devices.
+                      time.
                     </p>
                   </div>
 
@@ -2230,10 +2228,8 @@ const LandingPage = () => {
                       <WiStars />
                     </div>
                     <p>
-                      You can change your Banner and Logo Image Width and
-                      Height..Especially Logo has 6 types of pre-default
-                      animation provided u have been choose your prefered one at
-                      any time.
+                      Our Dynamic VCard Template is fully responsive and
+                      compactable with all devices.
                     </p>
                   </div>
                   <div className="feauture">
@@ -2255,16 +2251,16 @@ const LandingPage = () => {
         </section>
         {/* Feautures */}
         <section className="Session_5" ref={FeatureRef}>
-          <div className="session3_back_banner_image">
-            <Lottie
-              options={Session3BackImageOption}
-              height={"100%"}
-              width={"100%"}
-            />
-          </div>
-
           <div className="session5_content_row">
             <div className="left">
+              {/* <div className="action_hand_container">
+                <div className="left_arrow" onClick={handleLeftMove}>
+                  <i className="bx bxs-left-arrow"></i>
+                </div>
+                <div className="right-arrow">
+                  <i className="bx bxs-right-arrow"></i>
+                </div>
+              </div> */}
               <div className="slide5_title">
                 <h2>
                   <div className="icon">
@@ -2282,40 +2278,102 @@ const LandingPage = () => {
                   Premium Features
                 </p>
               </div>
-              <div className="feature_container">
-                {Feature_list.map((data, index) => {
-                  return (
-                    <div className="list" key={index}>
-                      <div className="icon">
-                        <Lottie
-                          options={data.icon}
-                          height={window.innerWidth < 700 ? "50px" : "50px"}
-                          width={window.innerWidth < 700 ? "50px" : "50px"}
-                          className="lottie"
-                        />
-                      </div>
-                      <div className="title">
-                        <h4>{data.title}</h4>
-                      </div>
-                      <div className="content">
-                        <p>{data.content}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+              <div
+                className="feature_container"
+                id={LeftMove === true ? "decrease" : ""}
+              >
+                <Swiper
+                  spaceBetween={20}
+                  slidesPerView={3}
+               
+                  loop={true}
+                  autoplay={{ delay: 0, disableOnInteraction: false }}
+                  speed={6000} // Smooth transition speed
+                  grabCursor={true}
+                  allowTouchMove={true} // Disables manual dragging for continuous effect
+                  modules={[Autoplay]}
+                >
+                  {Feature_list.map((data, index) => {
+                    return (
+                      <>
+                        <SwiperSlide>
+                          <div className="list" key={index}>
+                            <div className="icon">{data.icon}</div>
+                            <div className="title">
+                              <h4>{data.title}</h4>
+                            </div>
+                            <div className="content">
+                              <p>{data.content}</p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      </>
+                    );
+                  })}
+                </Swiper>
+              </div>
+              <div
+                className="feature_container"
+                id={LeftMove === true ? "decrease" : ""}
+              >
+                <Swiper
+                  spaceBetween={20}
+                  slidesPerView={3}
+                  loop={true}
+                  autoplay={{ delay: 0, disableOnInteraction: false }}
+                  speed={6000} // Smooth transition speed
+                  grabCursor={true}
+                  allowTouchMove={true} // Disables manual dragging for continuous effect
+                  modules={[Autoplay]}
+                  ltr={false}
+                >
+                  {Feature_list2.map((data, index) => {
+                    return (
+                      <>
+                        <SwiperSlide>
+                          <div className="list" key={index}>
+                            <div className="icon">{data.icon}</div>
+                            <div className="title">
+                              <h4>{data.title}</h4>
+                            </div>
+                            <div className="content">
+                              <p>{data.content}</p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      </>
+                    );
+                  })}
+                </Swiper>
               </div>
             </div>
-            
+            <div className="right">
+              <div className="right_content">
+                Get up to 70% more conversions with MyVirtualcard
+              </div>
+              <div className="actions">
+                <Link className="account" to={"/register"}>
+                  Create Account
+                </Link>
+                <a
+                  href={`tel:+919344482370`}
+                  target="_blank"
+                  className="contact"
+                >
+                  Contact Sales
+                </a>
+              </div>
+            </div>
           </div>
         </section>
         {/* NFC */}
         {/* <section className="Session_6" ref={NFCRef}> */}
-          {/* <div className="slide_5_title" initial="hide" animate="show">
+        {/* <div className="slide_5_title" initial="hide" animate="show">
             <h2>
               Making a vCard is easy with <span>My Virtual Card</span>
             </h2>
           </div> */}
-          {/* <div className="slide_5_box_container" initial="hide" animate="show">
+        {/* <div className="slide_5_box_container" initial="hide" animate="show">
             <div className="box_1">
               <div className="icon">
                 <img src={number1} alt="view" />
@@ -2352,7 +2410,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div> */}
-          {/* <div className="slider_5_nfc_container">
+        {/* <div className="slider_5_nfc_container">
             <div className="back_image">
               <div className="session5_back_banner_image">
                 <Lottie options={nfcBack} height={"100%"} width={"100%"} />
@@ -2461,7 +2519,7 @@ const LandingPage = () => {
         {/* Service */}
         <section className="Session_7" ref={ServiceRef}>
           <div className="session3_back_banner_image">
-            <Lottie options={ServiceBack} height={"100%"} width={"100%"} />
+            {/* <Lottie options={ServiceBack} height={"100%"} width={"100%"} /> */}
           </div>
           <div className="slide7_title">
             <h2>
@@ -2517,7 +2575,7 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-      
+
         {/* Footer */}
         <div className="footer">
           <Footer />

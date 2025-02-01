@@ -1910,7 +1910,7 @@ font-family:${SubTitleFont};
           align-items: flex-start;
           justify-content: flex-start;
           gap: 10px;
-          color:${ServiceTextColor};
+          color:${ServiceTextColor} !important;
 
           .service_title {
             display: flex;
@@ -1935,7 +1935,7 @@ font-family:${SubTitleFont};
             gap: 10px;
             font-size: $root_text_size;
             font-weight: $root_font_weight;
-            // color: $service_text_color;
+          color:${ServiceTextColor} !important;
           }
           .service_link {
             width: 100%;
