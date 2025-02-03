@@ -609,11 +609,15 @@ const LandingPage = () => {
             <li></li>
           </ul>
           <div className="back_banner_image">
-            <Lottie
-              options={back_image_options}
-              height={"100%"}
-              width={"100%"}
-            />
+            {width > 776 ? (
+              <Lottie
+                options={back_image_options}
+                height={"100%"}
+                width={"100%"}
+              />
+            ) : (
+              ""
+            )}
           </div>
           <div
             className="mouseScrollIcon"
@@ -2181,7 +2185,6 @@ const LandingPage = () => {
               <div className="left">
                 <div className="slide2_title">
                   <h2>Explore Our Range of Dynamic vCard Template!</h2>
-                 
 
                   <div className="sample_title">
                     <div className="icon">
@@ -2281,7 +2284,7 @@ const LandingPage = () => {
               >
                 <Swiper
                   spaceBetween={20}
-                  slidesPerView={ width < 776 ? 1 : 2}
+                  slidesPerView={width < 776 ? 1 : 2}
                   loop={true}
                   autoplay={{ delay: 0, disableOnInteraction: false }}
                   speed={6000} // Smooth transition speed
@@ -2314,14 +2317,13 @@ const LandingPage = () => {
               >
                 <Swiper
                   spaceBetween={20}
-                  slidesPerView={ width < 776 ? 1: 2}
+                  slidesPerView={width < 776 ? 1 : 2}
                   loop={true}
                   autoplay={{ delay: 0, disableOnInteraction: false }}
                   speed={6000} // Smooth transition speed
                   grabCursor={true}
                   allowTouchMove={true} // Disables manual dragging for continuous effect
                   modules={[Autoplay]}
-                
                 >
                   {Feature_list2.map((data, index) => {
                     return (
