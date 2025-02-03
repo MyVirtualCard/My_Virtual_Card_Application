@@ -167,6 +167,8 @@ const App = () => {
       window.fbq("init", "430826446693118");
       window.fbq("track", "PageView");
     }, []);
+
+    
   return (
     <>
       <ToastContainer

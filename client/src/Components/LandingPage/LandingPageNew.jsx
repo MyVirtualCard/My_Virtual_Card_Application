@@ -7,7 +7,7 @@ import { TbBrand4Chan } from "react-icons/tb";
 import Lottie from "react-lottie";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { debounce } from "lodash";
 import Slider from "react-slick";
 import { VscOpenPreview } from "react-icons/vsc";
 import { Session1MouseScroll } from "./constants";
@@ -589,7 +589,14 @@ const LandingPage = () => {
   function handleLeftMove() {
     setLeftMove(true);
   }
-
+  const handleScroll = debounce(() => {
+    console.log("Scrolling...");
+  }, 100);
+  
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <>
       <div className="landingpage_container" ref={scrollContainerRef}>
