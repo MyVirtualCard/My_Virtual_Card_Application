@@ -4091,7 +4091,7 @@
             align-items: flex-start;
             justify-content: flex-start;
             width: 100%;
-            gap: 1rem;
+           
 
             h2 {
               font-size: 1.8rem;
@@ -4173,7 +4173,7 @@
           }
           .header {
             h3 {
-              font-size: 1.9rem;
+              font-size: 1.6rem;
               font-weight: 550;
               color: #2c6b56;
               @media screen and (max-width: 600px) {
@@ -4290,7 +4290,7 @@
           margin: auto;
 
           .slick-slider {
-            width: 600px;
+            width: 400px;
 
             margin: auto;
 
@@ -4460,12 +4460,12 @@
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          gap: 1rem;
+          gap: 0rem;
           padding: 1rem 1rem;
           place-items: start !important;
           width: 100%;
           height: max-content;
-          overflow-x: hidden !important;
+          // overflow-x: hidden !important;
           // overflow-y: hidden;
    
 
@@ -4476,9 +4476,9 @@
             align-items: flex-start;
             justify-content: center;
        
-            min-width: 300px;
+            // min-width: 300px;
             width: auto;
-            height: 200px;
+            height: max-content;
 
             // border: 1px solid rgb(235, 235, 235);
             // box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
@@ -4500,6 +4500,10 @@
                 background-color: #0065FF;
                 padding: 5px;
                 transition: border-radius 0.4s ease-in-out;
+
+                @media screen and (max-width:776px){
+                  font-size: 2rem;
+                }
               }
             }
             .title {
@@ -4542,9 +4546,10 @@
               }
             }
             @media screen and (max-width: 776px) {
-              width: 90%;
+             
+              width: 100%;
               height: auto;
-              margin: auto !important;
+           
             }
           }
           &::-webkit-scrollbar {
@@ -4552,11 +4557,12 @@
           }
           @media screen and (max-width: 776px) {
             width: 100%;
-            padding: 1rem 0.5rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0rem;
             place-content: center;
+            padding: 0px 1rem;
           }
         }
         #decrease{
@@ -4630,7 +4636,12 @@
         }
         @media screen and (max-width: 776px) {
           width: 100%;
+          display: flex;
+          flex-direction: column;
           height: auto;
+          margin: auto;
+       
+        
         }
       }
       .right {
@@ -4643,13 +4654,25 @@
         gap: 2rem;
     
         .right_content{
-          width: 80%;
+          width: 90%;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
 
           font-size: 2rem;
+
+          @media screen and (max-width: 776px) {
+            width: 100%;
+           font-size: 1.3rem;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           margin: auto;
+           text-align: center;
+         
+          
+          }
         }
         .actions{
           width: 80%;
@@ -4671,7 +4694,18 @@
               
             }
 
-
+            @media screen and (max-width: 776px) {
+            
+              padding: 10px 1.5rem;
+              background-color: #00F0D2;
+              font-size: 0.9rem;
+              font-weight: 400;
+              border-radius: 2rem;
+              letter-spacing: 1px;
+            
+           
+            
+            }
           
           }
 
@@ -4690,11 +4724,30 @@
               color: #fff;
 
             }
+
+            @media screen and (max-width: 776px) {
+            
+              padding: 10px 1.5rem;
+              font-size: 0.9rem;
+              font-weight: 400;
+              border-radius: 2rem;
+              letter-spacing: 1px;
+            
+           
+            
+            }
           }
-     
+          @media screen and (max-width: 776px) {
+            width: 100%;
+            padding: 1rem 0.5rem;
+          
+         
+          
+          }
         }
         @media screen and (max-width: 776px) {
-          display: none;
+          
+          width: 100%;
         }
       }
       @media screen and (max-width: 776px) {

@@ -331,8 +331,8 @@ const LandingPage = () => {
     speed: 500,
     autoplay: true, // Enable autoplay
     autoplaySpeed: 3000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
-    slidesToShow: width < 700 ? 2 : 3,
-    slidesToScroll: width < 700 ? 2 : 3,
+    slidesToShow: width < 700 ? 2 : 2,
+    slidesToScroll: width < 700 ? 2 : 2,
     rtl: true, // Scroll from left to right
     arrows: true, // Show navigation arrows
   };
@@ -2181,17 +2181,14 @@ const LandingPage = () => {
               <div className="left">
                 <div className="slide2_title">
                   <h2>Explore Our Range of Dynamic vCard Template!</h2>
-                  <p>
-                    <strong>Simplify Your Digital Networking:</strong> Get
-                    Started with Our VCard Template
-                  </p>
+                 
 
                   <div className="sample_title">
                     <div className="icon">
                       <Lottie
                         options={Session2LeftMobileOption}
-                        height={window.innerWidth < 700 ? "30px" : "60px"}
-                        width={window.innerWidth < 700 ? "30px" : "60px"}
+                        height={window.innerWidth < 700 ? "30px" : "40px"}
+                        width={window.innerWidth < 700 ? "30px" : "40px"}
                         className="lottie"
                       />
                     </div>
@@ -2284,8 +2281,7 @@ const LandingPage = () => {
               >
                 <Swiper
                   spaceBetween={20}
-                  slidesPerView={3}
-               
+                  slidesPerView={ width < 776 ? 1 : 2}
                   loop={true}
                   autoplay={{ delay: 0, disableOnInteraction: false }}
                   speed={6000} // Smooth transition speed
@@ -2318,14 +2314,14 @@ const LandingPage = () => {
               >
                 <Swiper
                   spaceBetween={20}
-                  slidesPerView={3}
+                  slidesPerView={ width < 776 ? 1: 2}
                   loop={true}
                   autoplay={{ delay: 0, disableOnInteraction: false }}
                   speed={6000} // Smooth transition speed
                   grabCursor={true}
                   allowTouchMove={true} // Disables manual dragging for continuous effect
                   modules={[Autoplay]}
-                  ltr={false}
+                
                 >
                   {Feature_list2.map((data, index) => {
                     return (
@@ -2349,7 +2345,7 @@ const LandingPage = () => {
             </div>
             <div className="right">
               <div className="right_content">
-                Get up to 70% more conversions with MyVirtualcard
+                Get up to 70% more conversions Your Bussiness with MyVirtualCard
               </div>
               <div className="actions">
                 <Link className="account" to={"/register"}>
@@ -2360,7 +2356,7 @@ const LandingPage = () => {
                   target="_blank"
                   className="contact"
                 >
-                  Contact Sales
+                  Contact Us
                 </a>
               </div>
             </div>
