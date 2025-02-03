@@ -18,7 +18,8 @@ import dimage5 from '../../../assets/Vcard_Images/mobile_view/d5.png';
 import dimage6 from '../../../assets/Vcard_Images/mobile_view/d6.png';
 import dimage7 from '../../../assets/Vcard_Images/mobile_view/d7.png';
 import dimage8 from '../../../assets/Vcard_Images/mobile_view/d8.png';
-
+import dimage9 from '../../../assets/Vcard_Images/mobile_view/d9.png';
+import dimage10 from '../../../assets/Vcard_Images/mobile_view/d10.png';
 
 export  let VCards_images=[image1,image2,image3,image4,image5,image6,image7,image8,image9,image10];
-export let Dynamic_VCards_images=[dimage1,dimage2,dimage3,dimage4,dimage5,dimage6,dimage7,dimage8];
+export let Dynamic_VCards_images=[dimage1,dimage2,dimage3,dimage4,dimage5,dimage6,dimage7,dimage8,dimage9,dimage10];

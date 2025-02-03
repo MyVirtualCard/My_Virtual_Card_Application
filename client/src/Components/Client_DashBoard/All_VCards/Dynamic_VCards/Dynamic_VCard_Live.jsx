@@ -957,7 +957,7 @@ color:${VcardTheme[0].VCardTextColour} !important;
      
           object-fit: cover; /* Ensures image covers the area */
           object-position: top; /* Ensures head portion is not cropped */
-          border: 2px solid ${VcardTheme[0].VCardColour} !important;
+          // border: 2px solid ${VcardTheme[0].VCardColour} !important;
           box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
           animation: profileBorder 5s infinite linear;
           @keyframes profileBorder {

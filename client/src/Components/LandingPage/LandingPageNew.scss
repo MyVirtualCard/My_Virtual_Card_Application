@@ -16,7 +16,7 @@
 }
 .landingpage_container {
   width: 100vw;
-  height: 100vh;
+  height: auto;
 
   overflow-x: hidden;
   overflow-y: hidden;
@@ -4281,14 +4281,13 @@
         .right_image {
           display: flex;
           align-items: flex-start;
-          justify-content: center;
-          place-items: center;
+          justify-content: flex-start;
+  
 
           // width: 14%;
           flex: 0.4;
 
-          margin: auto;
-
+      
           .slick-slider {
             width: 400px;
 
