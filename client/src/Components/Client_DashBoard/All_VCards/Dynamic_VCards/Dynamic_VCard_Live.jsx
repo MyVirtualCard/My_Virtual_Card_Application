@@ -899,15 +899,15 @@ color:${VcardTheme[0].VCardTextColour} !important;
       .banner_image {
         width: 100%;
          height: ${ImageTheme[0].BannerHeight[0]}px;
-        max-height: ${ImageTheme[0].BannerHeight[0]}px ;
+        max-height: ${ImageTheme[0].BannerHeight[0]}px;
         overflow: hidden;
         object-fit: cover;
         object-position: center;
 
         img {
-          filter: brightness(${ImageTheme[0].BannerBrightness}%) !imporant;
-        height: ${ImageTheme[0].BannerHeight[0]}px !imporant;
-        max-height: ${ImageTheme[0].BannerHeight[0]}px !imporant;
+          filter: brightness(${ImageTheme[0].BannerBrightness}%);
+        height: ${ImageTheme[0].BannerHeight[0]}px;
+        max-height: ${ImageTheme[0].BannerHeight[0]}px;
           width: 100%;
           object-fit: cover; /* Ensures image covers the area */
           object-position: top; /* Ensures head portion is not cropped */
