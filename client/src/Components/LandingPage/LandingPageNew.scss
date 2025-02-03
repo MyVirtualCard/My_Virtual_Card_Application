@@ -21,6 +21,7 @@
   overflow-x: hidden;
   overflow-y: hidden;
   position: relative;
+  scroll-behavior: smooth;
 
   section {
     scroll-snap-align: start;
