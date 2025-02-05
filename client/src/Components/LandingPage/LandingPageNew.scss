@@ -1916,6 +1916,10 @@ z-index: 2;
                     align-items: flex-start;
                     justify-content: flex-start;
                   }
+
+                  i{
+                    font-size: 2rem;
+                  }
                 }
                 .note {
                   width: 100%;
@@ -2392,6 +2396,10 @@ z-index: 2;
                 strong {
                   color: yellow;
                 }
+              }
+
+              i{
+                font-size: 2rem;
               }
               @media screen and (max-width: 700px) {
                 display: flex;

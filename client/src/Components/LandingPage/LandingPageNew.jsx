@@ -1660,12 +1660,7 @@ const LandingPage = () => {
                   <div className="summary">
                     <div className="list">
                       <div className="arrow">
-                        <Lottie
-                          options={arrow_options}
-                          height={"40px"}
-                          width={"40px"}
-                          className="lottie"
-                        />
+                      <i className='bx bx-chevrons-right'></i>
                       </div>
                       <div className="note">
                         <p>
@@ -1676,12 +1671,7 @@ const LandingPage = () => {
                     </div>
                     <div className="list">
                       <div className="arrow">
-                        <Lottie
-                          options={arrow_options}
-                          height={"40px"}
-                          width={"40px"}
-                          className="lottie"
-                        />
+                      <i className='bx bx-chevrons-right'></i>
                       </div>
                       <div className="note">
                         <p>
@@ -1768,12 +1758,7 @@ const LandingPage = () => {
                   <div className="offer">
                     <small>
                       <strong>50% </strong>- Offer's Going On{" "}
-                      <Lottie
-                        options={arrow_options1}
-                        height={"20px"}
-                        width={"50px"}
-                        className="lottie"
-                      />
+                      <i className='bx bxs-down-arrow'></i>
                     </small>
                   </div>
                   <div className="box">

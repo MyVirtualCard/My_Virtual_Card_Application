@@ -2,7 +2,7 @@ import React from "react";
 import "./LazyLoading.scss";
 import lazy_loader from "../assets/Loaders/Lazy_loader.svg";
 import Lottie from "react-lottie";
-import LoaderAnime from "../assets/Lotte_Animation/Loader2.json";
+import LoaderAnime from "../assets/Lotte_Animation/Loader6.json";
 const LazyLoading = () => {
   const options = {
     loop: true,
@@ -19,8 +19,8 @@ const LazyLoading = () => {
         <p>Loading...</p>
         <Lottie
           options={options}
-          height={window.innerWidth < 900 ? "180px" : "200px"}
-          width={window.innerWidth < 900 ? "180px" : "200px"}
+          height={window.innerWidth < 900 ? "150px" : "180px"}
+          width={window.innerWidth < 900 ? "150px" : "180px"}
           className="lottie"
         />
       </div>
