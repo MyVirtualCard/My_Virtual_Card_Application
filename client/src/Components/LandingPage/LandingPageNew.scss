@@ -21,7 +21,8 @@
   overflow-x: hidden;
   overflow-y: scroll;
   position: relative;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
 
   section {
     scroll-snap-align: start;
@@ -53,11 +54,11 @@
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      z-index: -1;
-      scale: 1;
+      z-index: -2;
+      scale: 1.5;
       width: 100%;
       height: 100%;
-      opacity: 0.5;
+      opacity: 0.4;
       background: linear-gradient(130deg, #01181b 40%, #018f94);
 
       @media screen and (max-width: 700px) {
@@ -2288,8 +2289,7 @@ z-index: 2;
                 width: max-content;
                 height: 60%;
                 object-fit: cover;
-                filter: brightness(102%)
-                  drop-shadow(0px 4px 5px rgba(255, 255, 255, 0.4));
+                filter: drop-shadow(0px 4px 5px rgba(0, 184, 197, 0.4));
 
                 animation: Jump 5s linear infinite;
 
@@ -3138,34 +3138,9 @@ z-index: 2;
     // overflow: hidden;
     // background-color: #1c1524;
     background: linear-gradient(90deg, #EBEFF3 10%, #EBEFF3 90%);
+    padding: 1rem;
 
-    .session3_back_banner_image {
-      position: absolute;
-      top: 0%;
-      left: 0%;
-      bottom: 0%;
-      opacity: 1;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      z-index: -1;
-      scale: 1;
-      width: 100%;
-      height: 100%;
 
-      // transform: rotate(180deg);
-      @media screen and (max-width: 700px) {
-        transform: rotate(0deg);
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 300%;
-        height: 100%;
-
-        scale: 1.5;
-        margin: auto;
-      }
-    }
 
     .session3_content_row {
       display: flex;
@@ -3174,6 +3149,7 @@ z-index: 2;
       align-items: flex-start;
       flex-direction: row-reverse;
       justify-content: flex-start;
+    
       // z-index: 1;
 
       .left {
@@ -3187,7 +3163,7 @@ z-index: 2;
         // z-index: 1;
 
         .plan_heading {
-          padding: 0rem 1rem;
+          padding:  1rem;
           display: flex;
           align-items: flex-start;
           flex-direction: column-reverse;
@@ -3211,6 +3187,7 @@ z-index: 2;
 
               font-size: 2.5rem;
               border-radius: 5px;
+              color: #007780;
             }
 
             @media screen and (max-width: 776px) {
@@ -3230,11 +3207,14 @@ z-index: 2;
             svg {
               transform: rotate(90deg);
             }
+            i{
+           color: #007780;;
+            }
             @media screen and (max-width: 600px) {
               font-size: 1.7rem;
             }
             span {
-              color: hsl(184, 100%, 25%);
+              color: #007780;
               font-weight: 500;
             }
             @media screen and (max-width: 776px) {
@@ -3267,13 +3247,14 @@ z-index: 2;
           width: 100%;
           height: 100%;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 1rem;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 0.5rem;
           z-index: 1;
           place-items: center;
-          padding: 1rem 0px;
+          padding: 1rem 1rem;
+         
           .freeplan_box {
-            width: 350px;
+            width: 400px;
             background: #008b62;
 
             // border: 3px solid rgb(127, 157, 253);
@@ -3540,7 +3521,7 @@ z-index: 2;
             }
           }
           .plan {
-            width: 350px;
+            width: 400px;
             background: #0d5683;
 
             // border: 3px solid rgb(127, 157, 253);
@@ -3809,7 +3790,7 @@ z-index: 2;
           }
 
           .plan2 {
-            width: 350px;
+            width: 400px;
             margin: 0rem 1rem;
 
             background: #57498b;
@@ -4573,10 +4554,10 @@ z-index: 2;
               transition: all 0.4s ease-in-out;
 
               i {
-                font-size: 2.4rem;
-                border-radius: 0.5rem;
+                font-size: 2.2rem;
+                border-radius: 0.2rem;
                 color: #fff;
-                background-color: #0065FF;
+                background-color: #027e8f;
                 padding: 5px;
                 transition: border-radius 0.4s ease-in-out;
 
@@ -5550,7 +5531,7 @@ z-index: 2;
     z-index: 1;
     overflow: hidden;
     background-color: #ffffff;
-    padding: 2rem;
+    padding: 1rem;
     color: #2c2c2c;
 
     .session3_back_banner_image {
@@ -5620,7 +5601,7 @@ z-index: 2;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       place-items: start;
-      gap: 1rem 2rem;
+      gap: 1rem 1rem;
 
       .question_box {
         box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -5630,7 +5611,7 @@ z-index: 2;
         // width: 300px;
         width: 100%;
 
-        height: 130px;
+   
 
         display: flex;
         flex-direction: column;
@@ -5656,10 +5637,10 @@ z-index: 2;
 
           h5 {
             width: 100%;
-            height: 100px;
+            height: auto;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             padding: 1rem;
             margin: auto;
             font-size: 0.9rem;
@@ -5668,7 +5649,7 @@ z-index: 2;
             transition: all 1s ease-in-out;
           }
           #heightLess {
-            height: 0px;
+            height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -5729,7 +5710,7 @@ z-index: 2;
         }
       }
       #hideAnswer {
-        height: 100px;
+        height: 50px;
         transition: height 1s ease-in-out;
       }
 

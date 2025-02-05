@@ -1875,17 +1875,15 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        {/* Subscribe Template */}
+        {/* Plan */}
         <section className="Session_3" ref={PriceRef}>
           <div className="session3_content_row">
             <div className="left">
               <div className="plan_heading">
-                <h1>
-                  MyVirtualCard Pricing
-                </h1>
+             
                 <h2>
-                  Select the <span>Perfect Plan</span> for You
-                  <i className='bx bxs-chevrons-down' ></i>
+                  Select the <span>Perfect Plan</span>
+                  <i className='bx bxs-hand-down'></i>
                 </h2>
             
               </div>
@@ -2065,17 +2063,7 @@ const LandingPage = () => {
         </section>
     
         <section className="Session_2" ref={StaticVcardRef}>
-          {width > 776 ? (
-            <div className="session2_back_banner_image">
-              <Lottie
-                options={Session2BackOptions}
-                height={"100%"}
-                width={"100%"}
-              />
-            </div>
-          ) : (
-            ""
-          )}
+         
 
           <div className="right_side">
             <div className="slide2_title">
@@ -2132,7 +2120,7 @@ const LandingPage = () => {
         </section>
 
         {/* Dynamic Template */}
-        <section className="Session_4" ref={DynamicVcardRef}>
+        {/* <section className="Session_4" ref={DynamicVcardRef}>
           <div className="slider_5_nfc_container">
             <div className="content_box">
               <div className="left">
@@ -2196,7 +2184,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* Feautures */}
         <section className="Session_5" ref={FeatureRef}>
           <div className="session5_content_row">
@@ -2402,7 +2390,7 @@ const LandingPage = () => {
           </div>
         </section>
         {/* Service */}
-        <section className="Session_7" ref={ServiceRef}>
+        {/* <section className="Session_7" ref={ServiceRef}>
         
           <div className="slide7_title">
             <h2>
@@ -2452,7 +2440,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Footer */}
         <div className="footer">
