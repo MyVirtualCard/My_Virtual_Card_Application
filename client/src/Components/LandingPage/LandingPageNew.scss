@@ -16,19 +16,19 @@
 }
 .landingpage_container {
   width: 100vw;
-  height: auto;
+  height: 100vh;
 
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
   position: relative;
-  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
 
   section {
     scroll-snap-align: start;
     width: 100vh;
     height: 100vh;
     @media screen and (max-width: 776px) {
-      scroll-snap-align: none;
+      // scroll-snap-align: none;
     }
   }
   .Session_1 {
