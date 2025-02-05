@@ -4,8 +4,7 @@
 
 html,
 body {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
 }
 
 .material-icons {
