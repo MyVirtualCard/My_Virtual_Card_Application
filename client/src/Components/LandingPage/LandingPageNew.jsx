@@ -1969,12 +1969,7 @@ const LandingPage = () => {
                       return (
                         <div className="list" key={index}>
                           <div className="icon">
-                            <Lottie
-                              options={Session3ArrowOption2}
-                              height={window.innerWidth < 700 ? "30px" : "30px"}
-                              width={window.innerWidth < 700 ? "30px" : "30px"}
-                              className="lottie"
-                            />
+                          <i className='bx bx-chevrons-right'></i>
                           </div>
                           <div className="text">
                             <p>{data.text}</p>
@@ -2033,12 +2028,7 @@ const LandingPage = () => {
                       return (
                         <div className="list" key={index}>
                           <div className="icon">
-                            <Lottie
-                              options={Session3ArrowOption2}
-                              height={window.innerWidth < 700 ? "30px" : "30px"}
-                              width={window.innerWidth < 700 ? "30px" : "30px"}
-                              className="lottie"
-                            />
+                          <i className='bx bx-chevrons-right'></i>
                           </div>
                           <div className="text">
                             <p>{data.text}</p>
@@ -2097,12 +2087,7 @@ const LandingPage = () => {
                       return (
                         <div className="list" key={index}>
                           <div className="icon">
-                            <Lottie
-                              options={Session3ArrowOption2}
-                              height={window.innerWidth < 700 ? "30px" : "30px"}
-                              width={window.innerWidth < 700 ? "30px" : "30px"}
-                              className="lottie"
-                            />
+                          <i className='bx bx-chevrons-right'></i>
                           </div>
                           <div className="text">
                             <p>{data.text}</p>
@@ -2141,12 +2126,7 @@ const LandingPage = () => {
               <div className="sample_title">
                 <p>Sample VCard Designs</p>
                 <div className="icon">
-                  <Lottie
-                    options={Session2LeftMobileOption}
-                    height={window.innerWidth < 700 ? "40px" : "60px"}
-                    width={window.innerWidth < 700 ? "40px" : "60px"}
-                    className="lottie"
-                  />
+                <i className='bx bx-palette' ></i>
                 </div>
               </div>
             </div>
@@ -2199,12 +2179,7 @@ const LandingPage = () => {
 
                   <div className="sample_title">
                     <div className="icon">
-                      <Lottie
-                        options={Session2LeftMobileOption}
-                        height={window.innerWidth < 700 ? "30px" : "40px"}
-                        width={window.innerWidth < 700 ? "30px" : "40px"}
-                        className="lottie"
-                      />
+                    <i className='bx bx-devices' ></i>
                     </div>
                     <p>Sample VCard Theme's</p>
                   </div>
@@ -2274,14 +2249,7 @@ const LandingPage = () => {
               </div> */}
               <div className="slide5_title">
                 <h2>
-                  <div className="icon">
-                    <Lottie
-                      options={Session5Icon}
-                      height={window.innerWidth < 700 ? "50px" : "80px"}
-                      width={window.innerWidth < 700 ? "50px" : "80px"}
-                      className="lottie"
-                    />
-                  </div>
+                
                   Premium Features by VCard
                 </h2>
                 <p>

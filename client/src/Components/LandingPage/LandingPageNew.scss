@@ -2693,7 +2693,7 @@ z-index: 2;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0px;
-    z-index: 1;
+    z-index: 3;
     overflow: hidden;
     // background-color: #e1fff6;
     background-color: #fff;
@@ -2707,7 +2707,7 @@ z-index: 2;
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      z-index: -1;
+      z-index: -2;
       scale: 1;
       width: 100%;
       height: 100%;
@@ -2739,6 +2739,7 @@ z-index: 2;
       flex: 1;
       position: relative;
       padding: 1rem;
+      z-index: 1;
 
       .slide2_title {
         display: flex;
@@ -2779,7 +2780,7 @@ z-index: 2;
 
         .sample_title {
           display: flex;
-          align-items: flex-start;
+          align-items:center;
           justify-content: flex-start;
           gap: 0.3rem;
           width: 100%;
@@ -2792,6 +2793,14 @@ z-index: 2;
             font-size: 2rem;
             color: white;
             border-radius: 0.5rem;
+
+            i{
+              padding: 5px;
+
+              font-size: 2.5rem;
+              color: rgb(87, 87, 87);
+              border-radius: 0.5rem;
+            }
           }
 
           p {
@@ -3220,7 +3229,7 @@ z-index: 2;
             // border: 3px solid rgb(127, 157, 253);
             // overflow-y: hidden;
             position: relative;
-            height: 90%;
+            height: 100%;
             border-radius: 0.3rem;
             // border: 1px solid rgb(70, 69, 69);
             box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -3486,7 +3495,7 @@ z-index: 2;
             // border: 3px solid rgb(127, 157, 253);
             // overflow-y: hidden;
             position: relative;
-            height: 90%;
+            height: 100%;
             border-radius: 0.3rem;
             // border: 1px solid rgb(70, 69, 69);
             box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -3755,7 +3764,7 @@ z-index: 2;
             // border: 3px solid rgb(127, 157, 253);
             //  overflow-y: hidden;
             position: relative;
-            height: 90%;
+            height: 100%;
             border-radius: 0.3rem;
             // border: 1px solid rgb(70, 69, 69);
             box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -4139,6 +4148,14 @@ z-index: 2;
                 font-size: 2rem;
                 color: white;
                 border-radius: 0.5rem;
+
+                i{
+                  padding: 5px;
+    
+                  font-size: 2.5rem;
+                  color: rgb(34, 34, 34);
+                  border-radius: 0.5rem;
+                }
               }
 
               p {
@@ -5679,7 +5696,8 @@ z-index: 2;
   }
   @media screen and (max-width: 776px) {
   
-    scroll-snap-type: y mandatory;
+    scroll-snap-type:none;
+    scroll-behavior: smooth;
   }
   &::-webkit-scrollbar {
     display: none;
