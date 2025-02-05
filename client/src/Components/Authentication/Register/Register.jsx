@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import "./Register.scss";
 import brand_logo from "../../../assets/Brand_Logo/BrandLogo2.png";
+import brand_logo2 from "../../../assets/Brand_Logo/brand_logo.png";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -157,8 +158,10 @@ const Register = () => {
         id={AuthToggle ? "login_back" : "register_back"}
       >
         <div className="auth_back">
-       
-            <img src={backImage} alt="" />
+       <Link to={'/'}>
+       <img src={backImage} alt="" />
+       </Link>
+           
         </div>
         {/* Terms_Condition */}
         {OpenTermsCondition ? (
@@ -530,11 +533,19 @@ const Register = () => {
         </div>
 
         <div className="brand_logo">
-          <img src={brand_logo} alt="brand_logo" />
+          {width > 776 ? 
+           <img src={brand_logo} alt="brand_logo" />
+          : 
+          <img src={brand_logo2} alt="brand_logo" />
+          }
+         
         </div>
         <div className="register_box_container">
         <div className="logo_for_small_device">
-          <img src={brand_logo} alt="brand_logo" />
+          <Link to={'/'}>
+          <img src={brand_logo2} alt="brand_logo" />
+          </Link>
+      
           </div>
           <div className="left_side">
             <div className="title">

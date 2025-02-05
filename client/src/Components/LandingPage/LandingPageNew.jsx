@@ -336,6 +336,28 @@ const LandingPage = () => {
     rtl: true, // Scroll from left to right
     arrows: true, // Show navigation arrows
   };
+  const future_settings = {
+    dots: false,
+    infinite: true,
+    speed: 1500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 5000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 3,
+    slidesToScroll: width < 700 ? 1 : 3,
+    rtl: true, // Scroll from left to right
+    arrows: true, // Show navigation arrows
+  };
+  const future_settings2 = {
+    dots: false,
+    infinite: true,
+    speed: 1500,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 5000, // Delay between each slide in milliseconds (e.g., 3000ms = 3 seconds)
+    slidesToShow: width < 700 ? 1 : 3,
+    slidesToScroll: width < 700 ? 1 : 3,
+    rtl: false, // Scroll from left to right
+    arrows: true, // Show navigation arrows
+  };
   let [ActiveMenu, setActiveMenu] = useState("Session_1");
   let scrollContainerRef = useRef(null);
   let HomeRef = useRef(null);
@@ -1333,6 +1355,12 @@ const LandingPage = () => {
                     <>
                       {!ForgotPassToggle ? (
                         <>
+                          <div
+                      className="close"
+                      onClick={() => setResellerLoginToggle(false)}
+                    >
+                      <i className="bx bx-x"></i>
+                    </div>
                           {/* Login Form */}
                           <form
                             action=""
@@ -1536,17 +1564,17 @@ const LandingPage = () => {
                     <h4>{Days}</h4>
                     <small>Day</small>
                   </div>
-                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              
                   <div className="time_box">
                     <h4>{Hours}</h4>
                     <small>Hours</small>
                   </div>
-                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+               
                   <div className="time_box">
                     <h4>{Minutes}</h4>
                     <small>Minutes</small>
                   </div>
-                  {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+              
                   <div className="time_box">
                     <h4>{Seconds}</h4>
                     <small>Seconds</small>
@@ -1563,9 +1591,7 @@ const LandingPage = () => {
                 <div className="social_medias">
                   <a href="#">
                     <i className="bx bxl-facebook"></i>
-                    {/* <div className="note">
-                  <p>Facebook</p>
-                </div> */}
+                
                     <div className="back_anime">
                       <Lottie
                         options={SocialIconoptions}
@@ -1577,9 +1603,7 @@ const LandingPage = () => {
                   </a>
                   <a href="#">
                     <i className="bx bxl-instagram-alt"></i>
-                    {/* <div className="note">
-                  <p>Instagram</p>
-                </div> */}
+                
                     <div className="back_anime">
                       <Lottie
                         options={SocialIconoptions}
@@ -1591,9 +1615,7 @@ const LandingPage = () => {
                   </a>
                   <a href="#">
                     <i className="bx bxl-whatsapp"></i>
-                    {/* <div className="note">
-                  <p>Whatsup</p>
-                </div> */}
+              
                     <div className="back_anime">
                       <Lottie
                         options={SocialIconoptions}
@@ -1605,9 +1627,7 @@ const LandingPage = () => {
                   </a>
                   <a href="#">
                     <i className="bx bxl-twitter"></i>
-                    {/* <div className="note">
-                  <p>Twiter</p>
-                </div> */}
+              
                     <div className="back_anime">
                       <Lottie
                         options={SocialIconoptions}
@@ -1619,9 +1639,7 @@ const LandingPage = () => {
                   </a>
                   <a href="#">
                     <i className="bx bxl-linkedin"></i>
-                    {/* <div className="note">
-                  <p>LinkedIn</p>
-                </div> */}
+                 
                     <div className="back_anime">
                       <Lottie
                         options={SocialIconoptions}
@@ -1766,17 +1784,17 @@ const LandingPage = () => {
                       <h4>{Days}</h4>
                       <small>Day</small>
                     </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+            
                     <div className="time_box">
                       <h4>{Hours}</h4>
                       <small>Hours</small>
                     </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+           
                     <div className="time_box">
                       <h4>{Minutes}</h4>
                       <small>Minutes</small>
                     </div>
-                    {/* <i className="bx bxs-chevrons-right bx-flashing"></i> */}
+                 
                     <div className="time_box">
                       <h4>{Seconds}</h4>
                       <small>Seconds</small>
@@ -1793,9 +1811,7 @@ const LandingPage = () => {
                   <div className="social_medias">
                     <a href="https://www.facebook.com/myvirtualcard.in">
                       <i className="bx bxl-facebook"></i>
-                      {/* <div className="note">
-                  <p>Facebook</p>
-                </div> */}
+                 
                       <div className="back_anime">
                         <Lottie
                           options={SocialIconoptions}
@@ -1807,9 +1823,7 @@ const LandingPage = () => {
                     </a>
                     <a href="#">
                       <i className="bx bxl-instagram-alt"></i>
-                      {/* <div className="note">
-                  <p>Instagram</p>
-                </div> */}
+                   
                       <div className="back_anime">
                         <Lottie
                           options={SocialIconoptions}
@@ -1821,9 +1835,7 @@ const LandingPage = () => {
                     </a>
                     <a href="#">
                       <i className="bx bxl-whatsapp"></i>
-                      {/* <div className="note">
-                  <p>Whatsup</p>
-                </div> */}
+                
                       <div className="back_anime">
                         <Lottie
                           options={SocialIconoptions}
@@ -1835,9 +1847,7 @@ const LandingPage = () => {
                     </a>
                     <a href="#">
                       <i className="bx bxl-twitter"></i>
-                      {/* <div className="note">
-                  <p>Twiter</p>
-                </div> */}
+                
                       <div className="back_anime">
                         <Lottie
                           options={SocialIconoptions}
@@ -1849,9 +1859,7 @@ const LandingPage = () => {
                     </a>
                     <a href="#">
                       <i className="bx bxl-linkedin"></i>
-                      {/* <div className="note">
-                  <p>LinkedIn</p>
-                </div> */}
+                 
                       <div className="back_anime">
                         <Lottie
                           options={SocialIconoptions}
@@ -1869,31 +1877,20 @@ const LandingPage = () => {
         </section>
         {/* Subscribe Template */}
         <section className="Session_3" ref={PriceRef}>
-          <div className="session3_back_banner_image">
-            {/* <Lottie
-              options={Session3BackImageOption}
-              height={"100%"}
-              width={"100%"}
-            /> */}
-          </div>
-
           <div className="session3_content_row">
             <div className="left">
               <div className="plan_heading">
                 <h1>
-                
                   MyVirtualCard Pricing
                 </h1>
                 <h2>
                   Select the <span>Perfect Plan</span> for You
                   <i className='bx bxs-chevrons-down' ></i>
                 </h2>
-                {/* <p>
-                <strong>Your Plan, Your Way:</strong> Choose What Works Best
-              </p> */}
+            
               </div>
               <div className="plan_container_box" initial="hide" animate="show">
-                {/* Free plan */}
+              
                 <div className="freeplan_box">
                   <div className="down_arrow">
                     <FaHandPointRight />
@@ -1929,9 +1926,7 @@ const LandingPage = () => {
                     </Link>
                   </div>
                   <div className="card_count">
-                    {/* <p>
-                   No of VCard Design's Provided : <span>08</span>
-                 </p> */}
+                
                   </div>
                   <div
                     className="plan_addon_service"
@@ -1952,7 +1947,7 @@ const LandingPage = () => {
                     })}
                   </div>
                 </div>
-                {/* Basic plan1 */}
+            
                 <div className="plan">
                   <div className="down_arrow">
                     <FaHandPointRight />
@@ -1987,11 +1982,7 @@ const LandingPage = () => {
                       <button>Subscribe</button>
                     </Link>
                   </div>
-                  <div className="card_count">
-                    {/* <p>
-                   No of VCard Design's Provided : <span>08</span>
-                 </p> */}
-                  </div>
+              
                   <div
                     className="plan_addon_service"
                     initial="hide"
@@ -2011,7 +2002,7 @@ const LandingPage = () => {
                     })}
                   </div>
                 </div>
-                {/* EnterPrice Plan */}
+           
                 <div className="plan2">
                   <div className="down_arrow">
                     <FaHandPointRight />
@@ -2047,9 +2038,7 @@ const LandingPage = () => {
                     </Link>
                   </div>
                   <div className="card_count">
-                    {/* <p>
-                   No of VCard Design's Provided : <span>08</span>
-                 </p> */}
+              
                   </div>
                   <div
                     className="plan_addon_service"
@@ -2074,7 +2063,7 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        {/* Static Template */}
+    
         <section className="Session_2" ref={StaticVcardRef}>
           {width > 776 ? (
             <div className="session2_back_banner_image">
@@ -2212,14 +2201,7 @@ const LandingPage = () => {
         <section className="Session_5" ref={FeatureRef}>
           <div className="session5_content_row">
             <div className="left">
-              {/* <div className="action_hand_container">
-                <div className="left_arrow" onClick={handleLeftMove}>
-                  <i className="bx bxs-left-arrow"></i>
-                </div>
-                <div className="right-arrow">
-                  <i className="bx bxs-right-arrow"></i>
-                </div>
-              </div> */}
+           
               <div className="slide5_title">
                 <h2>
                 
@@ -2234,20 +2216,11 @@ const LandingPage = () => {
                 className="feature_container"
                 id={LeftMove === true ? "decrease" : ""}
               >
-                <Swiper
-                  spaceBetween={20}
-                  slidesPerView={width < 776 ? 1 : 2}
-                  loop={true}
-                  autoplay={{ delay: 0, disableOnInteraction: false }}
-                  speed={6000} // Smooth transition speed
-                  grabCursor={true}
-                  allowTouchMove={true} // Disables manual dragging for continuous effect
-                  modules={[Autoplay]}
-                >
-                  {Feature_list.map((data, index) => {
+                 <Slider {...future_settings}>
+                 {Feature_list.map((data, index) => {
                     return (
                       <>
-                        <SwiperSlide>
+                    
                           <div className="list" key={index}>
                             <div className="icon">{data.icon}</div>
                             <div className="title">
@@ -2257,30 +2230,24 @@ const LandingPage = () => {
                               <p>{data.content}</p>
                             </div>
                           </div>
-                        </SwiperSlide>
+                       
                       </>
                     );
                   })}
-                </Swiper>
+                 </Slider>
+                
+               
               </div>
               <div
                 className="feature_container"
                 id={LeftMove === true ? "decrease" : ""}
               >
-                <Swiper
-                  spaceBetween={20}
-                  slidesPerView={width < 776 ? 1 : 2}
-                  loop={true}
-                  autoplay={{ delay: 0, disableOnInteraction: false }}
-                  speed={6000} // Smooth transition speed
-                  grabCursor={true}
-                  allowTouchMove={true} // Disables manual dragging for continuous effect
-                  modules={[Autoplay]}
-                >
+                <Slider {...future_settings2}>
+
                   {Feature_list2.map((data, index) => {
                     return (
                       <>
-                        <SwiperSlide>
+                      
                           <div className="list" key={index}>
                             <div className="icon">{data.icon}</div>
                             <div className="title">
@@ -2290,11 +2257,11 @@ const LandingPage = () => {
                               <p>{data.content}</p>
                             </div>
                           </div>
-                        </SwiperSlide>
+                     
                       </>
                     );
                   })}
-                </Swiper>
+           </Slider>
               </div>
             </div>
             <div className="right">
@@ -2394,13 +2361,7 @@ const LandingPage = () => {
         {/* </section> */}
         {/* Faq */}
         <section className="Session_8" ref={FAQRef}>
-          <div className="session3_back_banner_image">
-            {/* <Lottie
-              options={Session3BackImageOption}
-              height={"100%"}
-              width={"100%"}
-            /> */}
-          </div>
+         
           <div className="slide_8_title">
             <h2>
               Frequently Asked <span>Questions</span>
@@ -2410,7 +2371,7 @@ const LandingPage = () => {
             <p>Got Questions? We’ve Got Answers!</p>
           </div>
           <div className="qn_container_box">
-            {/* qn */}
+         
             {questions.map((data, index) => {
               return (
                 <div
@@ -2427,33 +2388,7 @@ const LandingPage = () => {
                     >
                       {data.question}
                     </h5>
-                    {/* {selectedQn != data.id ? (
-                        <div
-                          className="plus"
-                          onClick={
-                            multiQnToggle
-                              ? () => {
-                                  handleMultipleSelection(data.id);
-                                }
-                              : () => handleSingleSelection(data.id)
-                          }
-                        >
-                          {data.plus}
-                        </div>
-                      ) : (
-                        <div
-                          className="minus"
-                          onClick={
-                            multiQnToggle
-                              ? () => {
-                                  handleMultipleSelection(data.id);
-                                }
-                              : () => handleSingleSelection(data.id)
-                          }
-                        >
-                          {data.minus}
-                        </div>
-                      )} */}
+                   
                   </div>
                   <div
                     className="answer"
@@ -2468,9 +2403,7 @@ const LandingPage = () => {
         </section>
         {/* Service */}
         <section className="Session_7" ref={ServiceRef}>
-          <div className="session3_back_banner_image">
-            {/* <Lottie options={ServiceBack} height={"100%"} width={"100%"} /> */}
-          </div>
+        
           <div className="slide7_title">
             <h2>
               <div className="icon">

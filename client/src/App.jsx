@@ -1,7 +1,7 @@
 import React, { Suspense, useContext, useEffect, useState } from "react";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToastContainer,toast, Bounce } from "react-toastify";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import Cookies from "js-cookie";
 import "react-toastify/dist/ReactToastify.css";
 import loadable from "@loadable/component";
@@ -32,15 +32,10 @@ import SuperAdmin from "./Components/SuperAdmin_Dashboard/SuperAdmin";
 import Clients from "./Components/SuperAdmin_Dashboard/Pages/Clients";
 import Corporate_Company from "./Components/Client_DashBoard/All_VCards/Live_VCards/New_Live_VCards/Corporate_Company";
 import LandingPageOld from "./Components/LandingPage/LandingPageOld";
-
-const LazyComponent = loadable(() => import("./LazyLoading/LazyLoading"));
-let LandingPage = React.lazy(() =>
-  import("./Components/LandingPage/LandingPageNew")
-);
-let Register = React.lazy(() =>
-  import("./Components/Authentication/Register/Register")
-);
-let Login = React.lazy(() => import("./Components/Authentication/Login/Login"));
+import LandingPage from "./Components/LandingPage/LandingPageNew";
+const LazyComponent = () => import("./LazyLoading/LazyLoading");
+import Register from "./Components/Authentication/Register/Register";
+import Login from "./Components/Authentication/Login/Login";
 const App = () => {
   let navigate = useNavigate();
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -59,7 +54,7 @@ const App = () => {
     setCurrentPlanActive,
     setStatus,
     setCurrentPlan,
-    setShowForm
+    setShowForm,
   } = useContext(AppContext);
   //Server API
   const api = axios.create({
@@ -117,11 +112,7 @@ const App = () => {
   useEffect(() => {
     try {
       api
-        .get(
-          `/templateDetail/${
-            window.location.pathname.split("/")[1]
-          }`
-        )
+        .get(`/templateDetail/${window.location.pathname.split("/")[1]}`)
         .then((res) => {
           if (res.data?.data?.length > 0) {
             setURL_Alies(res.data?.data[0].URL_Alies);
@@ -136,39 +127,38 @@ const App = () => {
       console.log(error);
     }
   }, [navigate]);
-    // Pixel Integration
-    useEffect(() => {
-      // Facebook Pixel script
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod
-            ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js"
-      );
-  
-      // Initialize Pixel
-      window.fbq("init", "430826446693118");
-      window.fbq("track", "PageView");
-    }, []);
+  // Pixel Integration
+  useEffect(() => {
+    // Facebook Pixel script
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod
+          ? n.callMethod.apply(n, arguments)
+          : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = "2.0";
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(
+      window,
+      document,
+      "script",
+      "https://connect.facebook.net/en_US/fbevents.js"
+    );
 
-    
+    // Initialize Pixel
+    window.fbq("init", "430826446693118");
+    window.fbq("track", "PageView");
+  }, []);
+
   return (
     <>
       <ToastContainer
@@ -184,107 +174,103 @@ const App = () => {
         theme="light"
         transition={Bounce}
       />
-      <Suspense fallback={<LazyComponent />}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/old" element={<LandingPageOld />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/Reseller_OTP" element={<ResellerOTP />} />
-          {/* //Client Dashboard */}
+
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/old" element={<LandingPageOld />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/Reseller_OTP" element={<ResellerOTP />} />
+        {/* //Client Dashboard */}
+        <Route
+          path={`/${UserName}/uadmin`}
+          element={
+            <ProtectedRoute>
+              <ClientDashboard />
+            </ProtectedRoute>
+          }
+        >
           <Route
-            path={`/${UserName}/uadmin`}
+            path={"create_new_vcard"}
             element={
               <ProtectedRoute>
-                <ClientDashboard />
+                <VCard_URL_Form />
               </ProtectedRoute>
             }
-          >
-            <Route
-              path={"create_new_vcard"}
-              element={
-                <ProtectedRoute>
-                  <VCard_URL_Form />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={`VCards`}
-              element={
-                <ProtectedRoute>
-                  <User_VCards />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"vcard_form_edit/:URL_Alies"}
-              element={
-                <ProtectedRoute>
-                  <VCard_Form_Edit />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-          {/* //New Designs */}
-          <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
-          <Route
-            path="/Taxi_Service_Preview"
-            element={<TAXI_SERVICE_PREVIEW />}
           />
           <Route
-            path="/Fashion_Designer_Preview"
-            element={<FASHION_DESIGNER_PREVIEW />}
+            path={`VCards`}
+            element={
+              <ProtectedRoute>
+                <User_VCards />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/Manager_Preview" element={<MANAGER_PREVIEW />} />
           <Route
-            path="/Beauty_Parlor_Preview"
-            element={<BEAUTY_PARLOR_PREVIEW />}
+            path={"vcard_form_edit/:URL_Alies"}
+            element={
+              <ProtectedRoute>
+                <VCard_Form_Edit />
+              </ProtectedRoute>
+            }
           />
-          <Route
-            path="/Corporate_Company_Preview"
-            element={<CORPORATE_PREVIEW />}
-          />
-          <Route path="/Doctor_Preview" element={<DOCTOR_PREVIEW />} />
-          <Route path="/Advocate_Preview" element={<ADVOCATE_PREVIEW />} />
-          <Route path="/Education_Preview" element={<EDUCATION_PREVIEW />} />
-          <Route
-            path="/Cab_Drivers_Preview"
-            element={<CAB_DRIVERS_PREVIEW />}
-          />
+        </Route>
+        {/* //New Designs */}
+        <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
+        <Route
+          path="/Taxi_Service_Preview"
+          element={<TAXI_SERVICE_PREVIEW />}
+        />
+        <Route
+          path="/Fashion_Designer_Preview"
+          element={<FASHION_DESIGNER_PREVIEW />}
+        />
+        <Route path="/Manager_Preview" element={<MANAGER_PREVIEW />} />
+        <Route
+          path="/Beauty_Parlor_Preview"
+          element={<BEAUTY_PARLOR_PREVIEW />}
+        />
+        <Route
+          path="/Corporate_Company_Preview"
+          element={<CORPORATE_PREVIEW />}
+        />
+        <Route path="/Doctor_Preview" element={<DOCTOR_PREVIEW />} />
+        <Route path="/Advocate_Preview" element={<ADVOCATE_PREVIEW />} />
+        <Route path="/Education_Preview" element={<EDUCATION_PREVIEW />} />
+        <Route path="/Cab_Drivers_Preview" element={<CAB_DRIVERS_PREVIEW />} />
 
-          {/* Live Static Vcard */}
-          {URL_Alies == URL_Alies && currentTemplate === 5 ? (
-            <Route path={`/:URL_Alies`} element={<Corporate_Company />} />
-          ) : (
-            ""
-          )}
-          {URL_Alies == URL_Alies && currentTemplate === 9 ? (
-            <Route path={`/:URL_Alies`} element={<CAB_DRIVERS_LIVE />} />
-          ) : (
-            ""
-          )}
+        {/* Live Static Vcard */}
+        {URL_Alies == URL_Alies && currentTemplate === 5 ? (
+          <Route path={`/:URL_Alies`} element={<Corporate_Company />} />
+        ) : (
+          ""
+        )}
+        {URL_Alies == URL_Alies && currentTemplate === 9 ? (
+          <Route path={`/:URL_Alies`} element={<CAB_DRIVERS_LIVE />} />
+        ) : (
+          ""
+        )}
 
-          {/* Dunamic Vcard */}
-          {/* Dynamic Vcard */}
-          {currentTemplate === 0 ? (
-            <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
-          ) : (
-            ""
-          )}
+        {/* Dunamic Vcard */}
+        {/* Dynamic Vcard */}
+        {currentTemplate === 0 ? (
+          <Route path={`/:URL_Alies`} element={<Dynamic_VCard_Live />} />
+        ) : (
+          ""
+        )}
 
-          {/* Reseller Dashboard */}
-          <Route
-            path={`/${ResellerUserName}/re-seller`}
-            element={<ResellerDashboard />}
-          >
-            <Route path="users" element={<Users />} />
-          </Route>
-          {/* Super Admin Dashboard */}
-          <Route path={`/super-admin`} element={<SuperAdmin />}>
-            <Route path="clients" element={<Clients />} />
-          </Route>
-        </Routes>
-      </Suspense>
+        {/* Reseller Dashboard */}
+        <Route
+          path={`/${ResellerUserName}/re-seller`}
+          element={<ResellerDashboard />}
+        >
+          <Route path="users" element={<Users />} />
+        </Route>
+        {/* Super Admin Dashboard */}
+        <Route path={`/super-admin`} element={<SuperAdmin />}>
+          <Route path="clients" element={<Clients />} />
+        </Route>
+      </Routes>
     </>
   );
 };

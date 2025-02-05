@@ -185,32 +185,32 @@ export const Session3ArrowOption2 = {
   //PLan list
   export let free_plan_service_list = [
     {
-      id: 0,
+      id: 1,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Demo Purpose Single Static Vcard Template.",
     },
     {
-      id: 1,
+      id: 2,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Basic Information about Your Company.",
     },
     {
-      id: 2,
+      id: 3,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Add all your social media link by one click. ",
     },
     {
-      id: 3,
+      id: 4,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Add all your Contact Details. ",
     },
     {
-      id: 4,
+      id: 5,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Share your products and services with restrictions.",
     },
     {
-      id: 5,
+      id: 6,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Appoinment shedule by one click. ",
     },
@@ -220,22 +220,22 @@ export const Session3ArrowOption2 = {
       text: "Add to Contact Button.",
     },
     {
-      id: 9,
+      id: 8,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Post your images by gallery. ",
     },
     {
-      id: 10,
+      id: 9,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Client review's by Testimonial view.",
     },
     {
-      id: 11,
+      id: 10,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Upload Your Service Video max 2 .",
     },
     {
-      id: 12,
+      id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "User Feedback and Inquiry Form.",
     },
@@ -243,32 +243,32 @@ export const Session3ArrowOption2 = {
   ];
  export let static_plan_service_list = [
     {
-      id: 0,
+      id: 1,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Wide Range Of Static VCard Template's.",
     },
     {
-      id: 1,
+      id: 2,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Basic Information about Your Company.",
     },
     {
-      id: 2,
+      id: 3,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Add all your social media link by one click. ",
     },
     {
-      id: 3,
+      id: 4,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Add all your Contact Details. ",
     },
     {
-      id: 4,
+      id: 5,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Share all your  products and services.",
     },
     {
-      id: 5,
+      id: 6,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Appoinment shedule by one click. ",
     },
@@ -278,22 +278,22 @@ export const Session3ArrowOption2 = {
       text: "Add to Contact Button.",
     },
     {
-      id: 9,
+      id: 8,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Post your images by gallery. ",
     },
     {
-      id: 10,
+      id: 9,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Client review's by Testimonial view.",
     },
     {
-      id: 11,
+      id: 10,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Upload Your Product Video .",
     },
     {
-      id: 12,
+      id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "User Feedback and Inquiry Form.",
     },
@@ -301,32 +301,32 @@ export const Session3ArrowOption2 = {
   ];
  export let dynamic_plan_service_list = [
     {
-      id: 0,
+      id: 1,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Dynamic VCard Template Design.",
     },
     {
-      id: 1,
+      id: 2,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Basic Information about Your Company.",
     },
     {
-      id: 2,
+      id: 3,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Add all your social media link by one click. ",
     },
     {
-      id: 3,
+      id: 4,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Add all your Contact Details. ",
     },
     {
-      id: 4,
+      id: 5,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Share all your  products and services.",
     },
     {
-      id: 5,
+      id: 6,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Appoinment shedule by one click. ",
     },
@@ -336,32 +336,32 @@ export const Session3ArrowOption2 = {
       text: "Add to Contact Button.",
     },
     {
-      id: 9,
+      id: 8,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Post your images by gallery. ",
     },
     {
-      id: 10,
+      id: 9,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Client review's by Testimonial view.",
     },
     {
-      id: 11,
+      id: 10,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Upload Your Video's.",
     },
     {
-      id: 12,
+      id: 11,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "User Feedback and Inquiry Form.",
     },
     {
-      id: 13,
+      id: 12,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "Dynamic Styling change your Vcard Design.",
     },
     {
-      id: 14,
+      id: 13,
       icon: <i className="bx bxs-check-shield"></i>,
       text: "QRCode Scan and Share your Website.",
     },
@@ -497,31 +497,31 @@ export const Session3ArrowOption2 = {
   export let Feature_list2 = [
    
     {
-      id: 1,
+      id: 5,
       icon: <i className='bx bx-notepad'></i>,
       title:"Wide Range of Templates",
       content: "You can choose from a wide range of templates for your VCards and share them with your clients.",
     },
     {
-      id: 2,
+      id: 6,
       icon: <i className='bx bx-purchase-tag' ></i>,
       title:"Afforadable Pricing",
       content: "We offer a variety of pricing plans for you to choose from, depending on your needs.",
     },
     {
-      id: 3,
+      id: 7,
       icon: <i className='bx bx-cloud-upload'></i>,
       title:"Easy To Update",
       content: "You can update your details as and when you want to change unlimited times.",
     },
     {
-      id: 4,
+      id: 8,
       icon:<i className='bx bx-slideshow' ></i>,
       title:"Review & Ratting",
       content: "Anyone can give feedback about your organization and rate out of 5 stars and others can see on the cards.",
     },
     {
-      id: 5,
+      id: 9,
       icon: <i className='bx bx-notepad' ></i>,
       title:"Enquiry Form",
       content: "Our Card can help to capture leads with enquiry form. You will Chekout your dashboard notification for each enquiry.",
@@ -671,42 +671,42 @@ export const Session3ArrowOption2 = {
       answer:
         "No, there are no limits to the number of digital vCards you can create. You can generate multiple vCards for different purposes, such as personal, professional, or specific events.",
     },
-    {
-      id: 6,
-      plus: <i className="bx bx-plus"></i>,
-      minus: <i className="bx bx-minus"></i>,
-      question: "6. How do I share my digital vCard with others?",
-      answer: `You can share your digital vCard in multiple ways:
-      •Via NFC: Simply tap your device against another NFC-enabled device to transfer your vCard.
-      •QR Code: Display a QR code containing your vCard information for others to scan.
-      •Email: Send your digital vCard as an email attachment.
-      •Messaging Apps: Share your vCard through messaging apps like WhatsApp or Telegram.`,
-    },
-    {
-      id: 7,
-      plus: <i className="bx bx-plus"></i>,
-      minus: <i className="bx bx-minus"></i>,
-      question: "7. Can I update my digital vCard after creation?",
-      answer:
-        "Yes, you can update your digital vCard at any time. Changes you make to your contact information or design preferences will be reflected in the shared vCards.",
-    },
-    {
-      id: 8,
-      plus: <i className="bx bx-plus"></i>,
-      minus: <i className="bx bx-minus"></i>,
-      question:
-        "8. Is there a fee for using the NFC-enabled digital vCard service?",
-      answer:
-        "Our basic NFC-enabled digital vCard service is free to use. However, we may offer premium features or advanced customization options that come with a subscription fee.",
-    },
-    {
-      id: 9,
-      plus: <i className="bx bx-plus"></i>,
-      minus: <i className="bx bx-minus"></i>,
-      question: "9. Is the NFC transfer secure?",
-      answer:
-        "Yes, the NFC transfer of digital vCards is secure and encrypted, ensuring that your contact information remains protected during the sharing process.",
-    },
+    // {
+    //   id: 6,
+    //   plus: <i className="bx bx-plus"></i>,
+    //   minus: <i className="bx bx-minus"></i>,
+    //   question: "6. How do I share my digital vCard with others?",
+    //   answer: `You can share your digital vCard in multiple ways:
+    //   •Via NFC: Simply tap your device against another NFC-enabled device to transfer your vCard.
+    //   •QR Code: Display a QR code containing your vCard information for others to scan.
+    //   •Email: Send your digital vCard as an email attachment.
+    //   •Messaging Apps: Share your vCard through messaging apps like WhatsApp or Telegram.`,
+    // },
+    // {
+    //   id: 7,
+    //   plus: <i className="bx bx-plus"></i>,
+    //   minus: <i className="bx bx-minus"></i>,
+    //   question: "7. Can I update my digital vCard after creation?",
+    //   answer:
+    //     "Yes, you can update your digital vCard at any time. Changes you make to your contact information or design preferences will be reflected in the shared vCards.",
+    // },
+    // {
+    //   id: 8,
+    //   plus: <i className="bx bx-plus"></i>,
+    //   minus: <i className="bx bx-minus"></i>,
+    //   question:
+    //     "8. Is there a fee for using the NFC-enabled digital vCard service?",
+    //   answer:
+    //     "Our basic NFC-enabled digital vCard service is free to use. However, we may offer premium features or advanced customization options that come with a subscription fee.",
+    // },
+    // {
+    //   id: 9,
+    //   plus: <i className="bx bx-plus"></i>,
+    //   minus: <i className="bx bx-minus"></i>,
+    //   question: "9. Is the NFC transfer secure?",
+    //   answer:
+    //     "Yes, the NFC transfer of digital vCards is secure and encrypted, ensuring that your contact information remains protected during the sharing process.",
+    // },
     // {
     //   id: 10,
     //   plus: <i className="bx bx-plus"></i>,

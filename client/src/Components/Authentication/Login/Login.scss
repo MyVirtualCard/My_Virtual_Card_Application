@@ -34,6 +34,10 @@
     scale: 1.8;
     width: 100%;
     height: 100%;
+
+    @media screen and (max-width:776px){
+      display: none;
+    }
   }
   .brand_logo{
     display: flex;
@@ -44,15 +48,18 @@
     img{
       width: auto;
       height: 70px;
+      object-fit: cover;
+      object-position: top;
       // background-color: #ffffff;
       // padding: 10px;
 
     }
     @media screen and (max-width:767px){
       display: block;
-      position: absolute;
+      position: relative;
       top: 2%;
       left: 50%;
+      transform: translate(-50%,-2%);
       z-index: 10;
     }
   }
@@ -382,9 +389,9 @@ gap: 10px;
         transition: all 0.3s ease;
       }
 
-      @media screen and (max-width: 800px) {
+      @media screen and (max-width: 776) {
         padding: 0.8rem 2rem;
-        width: 100%;
+        width: 90%;
         background-image: linear-gradient(#fff, #fff),
         linear-gradient(to right, #a85dff, #396eff);
       }
@@ -552,13 +559,22 @@ gap: 10px;
       font-weight: 550;
       justify-content:flex-start;
   
-
+      @media screen and (max-width:776px){
+      font-size: 0.9rem;
+      }
   
     }
     span{
       color: royalblue;
       cursor: pointer;
       font-weight: 600;
+    }
+
+    @media screen and (max-width:776px){
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 1rem;
     }
   }
   .signup_link {
@@ -581,6 +597,9 @@ gap: 10px;
         color: royalblue;
         font-weight: bold;
       }
+      @media screen and (max-width:776px){
+        font-size: 0.9rem;
+        }
     }
   }
   @media screen and (max-width:600px){
@@ -601,14 +620,15 @@ gap: 10px;
       &::-webkit-scrollbar {
         display: none !important;
       }
-      @media screen and (max-width: 800px) {
+      @media screen and (max-width: 776px) {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content:center;
         height: auto;
         box-shadow: none;
+border-radius: none;
 
         background: linear-gradient(180deg , #ffffff 50% ,#ffffff 50);
       }
@@ -620,7 +640,7 @@ gap: 10px;
       width: 4px;
       height: 4px;
       background-color: #ffffff00;
-      border-radius: 4px;
+    
 
     }
     &::-webkit-scrollbar-thumb{
@@ -643,11 +663,11 @@ gap: 10px;
 
 #login_back{
   // background: linear-gradient(120deg, #0A757A 55%, #001844 45%);
-  background: linear-gradient(140deg, #EFF0F5, #EFF0F5);
+  background: linear-gradient(140deg, #ffffff, #ffffff);
   transition: all 0.5s linear;
 }
 #register_back{
-  background: linear-gradient(140deg, #EFF0F5, #EFF0F5);
+  background: linear-gradient(140deg, #ffffff, #ffffff);
   // background: linear-gradient(120deg, #ffffff 55%, #ffffff 45%);
   transition: all 0.5s linear;
 }

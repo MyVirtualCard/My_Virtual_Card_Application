@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.scss";
 import Lottie from "react-lottie";
-import logo from "../../../assets/Brand_Logo/brand_logo.png";
+import logo from "../../../assets/Brand_Logo/BrandLogo2.png";
 import SocialIconBack from "../../../assets/Lotte_Animation/Logo_Back.json";
 import footerBack from "../../../assets/Lotte_Animation/Gradient_Back3.json";
 const Footer = () => {
@@ -30,7 +30,7 @@ const Footer = () => {
           <div className="row_1">
             <div className="company">
               <img src={logo} alt="logo" />
-              <h3>MyVirtualCard.In</h3>
+              {/* <h3>MyVirtualCard.In</h3> */}
             </div>
             <div className="details">
               <div className="list">

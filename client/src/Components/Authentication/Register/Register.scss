@@ -46,6 +46,8 @@
     img{
       width: auto;
       height: 70px;
+      object-fit: cover;
+      object-position: top;
       // background-color: #ffffff;
       // padding: 10px;
 
@@ -390,8 +392,10 @@ z-index: 50;
   position: relative;
 
   img{
-    width: 70px;
+    width: auto;
     height: 70px;
+    object-fit: cover;
+    object-position: top;
   }
   @media screen and (max-width:767px){
     display: block;
@@ -1059,7 +1063,7 @@ gap: 10px;
         box-shadow: none;
         background-image: none;
       }
-      @media screen and (max-width: 500px) {
+      @media screen and (max-width: 776px) {
         width: 100%;
         height: 100vh;
         box-shadow: none;
@@ -1067,7 +1071,7 @@ gap: 10px;
         border-radius: 0rem;
         background-image: none;
         // background-color: #fff;\
-        background: linear-gradient(180deg , #ffffff 50% ,#ffffff 50%);
+        background: linear-gradient(180deg , #ffffff 20% ,#ffffff 50%);
       }
     }
   

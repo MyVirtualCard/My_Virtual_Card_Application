@@ -160,6 +160,7 @@ const Login = () => {
         id={AuthToggle ? "login_back" : "register_back"}
       >
         <div className="auth_back">
+          
           <img src={backImage} alt="" />
         </div>
         {/* Home page button */}
@@ -170,7 +171,10 @@ const Login = () => {
           </Link>
         </div>
         <div className="brand_logo">
+          <Link to={'/'}>
           <img src={brand_logo} alt="brand_logo" />
+          </Link>
+        
         </div>
         <div className="verify_box_container">
           <div className="left_side">
