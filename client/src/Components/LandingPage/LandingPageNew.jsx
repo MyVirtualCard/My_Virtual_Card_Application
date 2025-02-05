@@ -1881,24 +1881,12 @@ const LandingPage = () => {
             <div className="left">
               <div className="plan_heading">
                 <h1>
-                  <div className="icon">
-                    <Lottie
-                      options={Session3PriceOption}
-                      height={window.innerWidth < 700 ? "30px" : "50px"}
-                      width={window.innerWidth < 700 ? "30px" : "50px"}
-                      className="lottie"
-                    />
-                  </div>
+                
                   MyVirtualCard Pricing
                 </h1>
                 <h2>
                   Select the <span>Perfect Plan</span> for You
-                  <Lottie
-                    options={Session3ArrowOption}
-                    height={window.innerWidth < 700 ? "30px" : "60px"}
-                    width={window.innerWidth < 700 ? "30px" : "60px"}
-                    className="lottie"
-                  />
+                  <i className='bx bxs-chevrons-down' ></i>
                 </h2>
                 {/* <p>
                 <strong>Your Plan, Your Way:</strong> Choose What Works Best
@@ -2486,12 +2474,7 @@ const LandingPage = () => {
           <div className="slide7_title">
             <h2>
               <div className="icon">
-                <Lottie
-                  options={Session5Icon}
-                  height={window.innerWidth < 700 ? "70px" : "80px"}
-                  width={window.innerWidth < 700 ? "70px" : "80px"}
-                  className="lottie"
-                />
+              <i className='bx bx-cog'></i>
               </div>
               Our Services
             </h2>

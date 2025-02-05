@@ -17,12 +17,13 @@ const LazyLoading = () => {
       <div className="lazy_loading_container">
         <div className="back_image"></div>
         <p>Loading...</p>
-        <Lottie
+        {/* <Lottie
           options={options}
           height={window.innerWidth < 900 ? "150px" : "180px"}
           width={window.innerWidth < 900 ? "150px" : "180px"}
           className="lottie"
-        />
+        /> */}
+        <span className="lazyloader"></span>
       </div>
     </>
   );
