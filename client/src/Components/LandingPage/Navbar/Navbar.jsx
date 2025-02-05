@@ -103,7 +103,7 @@ const Navbar = ({
               </Link>
             </li>
         
-            <li>
+            {/* <li>
               <Link
                 onClick={() => {
                   scrollToElement(DynamicVcardRef),
@@ -114,7 +114,7 @@ const Navbar = ({
               >
                 <p>Dynamic-VCard's</p>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 onClick={() => {
@@ -152,7 +152,7 @@ const Navbar = ({
                 <p>FAQS</p>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={() => {
                   scrollToElement(ServiceRef),
@@ -163,7 +163,7 @@ const Navbar = ({
               >
                 <p>Services</p>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="column_3">
