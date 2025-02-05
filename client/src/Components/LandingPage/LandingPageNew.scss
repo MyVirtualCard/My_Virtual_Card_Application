@@ -1861,7 +1861,7 @@
             flex: 0.6;
             color: #fff;
             padding: 2rem;
-
+z-index: 2;
             h1 {
               font-size: 2.7rem;
               color: #fff;
@@ -2711,7 +2711,7 @@
       scale: 1;
       width: 100%;
       height: 100%;
-      opacity: 0.1;
+      opacity: 0.3;
 
       // transform: rotate(180deg);
       @media screen and (max-width: 700px) {
@@ -5678,7 +5678,8 @@
     }
   }
   @media screen and (max-width: 776px) {
-    scroll-snap-type: none;
+  
+    scroll-snap-type: y mandatory;
   }
   &::-webkit-scrollbar {
     display: none;

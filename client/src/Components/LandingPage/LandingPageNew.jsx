@@ -592,7 +592,7 @@ const LandingPage = () => {
   const handleScroll = debounce(() => {
     console.log("Scrolling...");
   }, 100);
-  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -2118,13 +2118,17 @@ const LandingPage = () => {
         </section>
         {/* Static Template */}
         <section className="Session_2" ref={StaticVcardRef}>
-          <div className="session2_back_banner_image">
-            <Lottie
-              options={Session2BackOptions}
-              height={"100%"}
-              width={"100%"}
-            />
-          </div>
+          {width > 776 ? (
+            <div className="session2_back_banner_image">
+              <Lottie
+                options={Session2BackOptions}
+                height={"100%"}
+                width={"100%"}
+              />
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="right_side">
             <div className="slide2_title">
