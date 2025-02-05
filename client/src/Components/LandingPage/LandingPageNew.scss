@@ -5764,7 +5764,7 @@ z-index: 2;
   }
   @media screen and (max-width: 776px) {
   
-    scroll-snap-type:y proximity;
+    scroll-snap-type:none;
     scroll-behavior: smooth;
   }
   &::-webkit-scrollbar {
