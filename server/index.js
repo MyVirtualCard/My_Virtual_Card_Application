@@ -4,6 +4,12 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import Razorpay from "razorpay";
+import path from 'path';
+import { fileURLToPath } from "url";
+
+// Define __dirname manually
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config();
 import { ConnectDB } from "./config/mongodb.js";
 
@@ -17,19 +23,27 @@ app.use(express.json({ limit: "60mb" }));
 app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(cookieParser());
+// Serve static files from React frontend
+app.use(express.static(path.join(__dirname, "client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+});
+
 app.use("/uploads", express.static("uploads"));
-app.use(cors({
-  origin: 'https://myvirtualcard.in',
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-  credentials:true
-}));
+// app.use(cors({
+//   origin: 'https://myvirtualcard.in',
+//   methods: 'GET,POST,PUT,DELETE',
+//   allowedHeaders: 'Content-Type,Authorization',
+//   credentials:true
+// }));
 // app.use(cors({
 //   origin: 'http://localhost:5173',
 //   methods: 'GET,POST,PUT,DELETE',
 //   allowedHeaders: 'Content-Type,Authorization',
 //   credentials:true
 // }));
+app.use(cors('*'));
 
 //Razorpay Instantiate:
 export const instance = new Razorpay({
