@@ -6,7 +6,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import axios from "axios";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 
 import { useParams } from "react-router-dom";
 import { BasicDetailValidateShema } from "../../../Helper/BasicDetailValiate";

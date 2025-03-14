@@ -5,7 +5,7 @@ import "primereact/resources/themes/saga-blue/theme.css"; // Theme
 import "primereact/resources/primereact.min.css"; // Core CSS
 import "primeicons/primeicons.css"; // Icons
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AboutDetailValidateShema } from "../../../Helper/About.validate";

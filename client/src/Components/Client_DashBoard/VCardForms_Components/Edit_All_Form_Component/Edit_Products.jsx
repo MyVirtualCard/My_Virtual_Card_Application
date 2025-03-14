@@ -8,7 +8,7 @@ import "primeicons/primeicons.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { ProductValidateShema } from "../../../Helper/ProductValidate";
 import { AppContext } from "../../../Context/AppContext";
