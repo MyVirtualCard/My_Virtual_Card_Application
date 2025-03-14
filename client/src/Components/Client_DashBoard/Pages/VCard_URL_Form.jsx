@@ -6,7 +6,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/saga-blue/theme.css"; // theme
 import "primereact/resources/primereact.min.css"; // core css
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import {
   convertToBase64Banner,
