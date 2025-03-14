@@ -26,9 +26,14 @@ app.use(cookieParser());
 // Serve static files from React frontend
 app.use(express.static(path.join(__dirname, "client/dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist/index.html'));
 });
+console.log(path.join(__dirname, 'client/dist/index.html'));
+
 
 app.use("/uploads", express.static("uploads"));
 app.use(cors({
