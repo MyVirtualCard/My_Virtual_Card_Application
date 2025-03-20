@@ -36,6 +36,7 @@ import LandingPage from "./Components/LandingPage/LandingPageNew";
 const LazyComponent = () => import("./LazyLoading/LazyLoading");
 import Register from "./Components/Authentication/Register/Register";
 import Login from "./Components/Authentication/Login/Login";
+import Teacher_Preview from "./Components/Client_DashBoard/All_VCards/Static_VCards/Teacher_VCards/Teacher_Preview";
 const App = () => {
   let navigate = useNavigate();
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -216,6 +217,7 @@ const App = () => {
           />
         </Route>
         {/* //New Designs */}
+        <Route path="/Teacher_Preview" element={<Teacher_Preview/>} />
         <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
         <Route
           path="/Taxi_Service_Preview"
@@ -238,7 +240,6 @@ const App = () => {
         <Route path="/Advocate_Preview" element={<ADVOCATE_PREVIEW />} />
         <Route path="/Education_Preview" element={<EDUCATION_PREVIEW />} />
         <Route path="/Cab_Drivers_Preview" element={<CAB_DRIVERS_PREVIEW />} />
-
         {/* Live Static Vcard */}
         {URL_Alies == URL_Alies && currentTemplate === 5 ? (
           <Route path={`/:URL_Alies`} element={<Corporate_Company />} />

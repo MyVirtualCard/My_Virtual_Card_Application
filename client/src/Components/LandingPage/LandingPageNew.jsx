@@ -12,13 +12,6 @@ import Slider from "react-slick";
 import { VscOpenPreview } from "react-icons/vsc";
 import { Session1MouseScroll } from "./constants";
 import SocialIconBack from "../../assets/Lotte_Animation/Logo_Back.json";
-import RoboAnime from "../../assets/Lotte_Animation/Robot-1.json";
-import RoboAnime1 from "../../assets/Lotte_Animation/Robot-5.json";
-import RoboAnime2 from "../../assets/Lotte_Animation/Robot-6.json";
-import RoboAnime3 from "../../assets/Lotte_Animation/Robot-4.json";
-import RoboAnime4 from "../../assets/Lotte_Animation/Robot-7.json";
-import RoboAnime5 from "../../assets/Lotte_Animation/Robot-8.json";
-import RoboAnime6 from "../../assets/Lotte_Animation/Robot-9.json";
 import ArrowAnime from "../../assets/Lotte_Animation/Arrow2.json";
 import ArrowAnime1 from "../../assets/Lotte_Animation/Arrow.json";
 import BackgroundAnime from "../../assets/Lotte_Animation/Gradient_Back.json";
@@ -608,9 +601,6 @@ const LandingPage = () => {
   //HandleLeftMove
 
   let [LeftMove, setLeftMove] = useState(false);
-  function handleLeftMove() {
-    setLeftMove(true);
-  }
   const handleScroll = debounce(() => {
     console.log("Scrolling...");
   }, 100);
