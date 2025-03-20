@@ -24,6 +24,12 @@ app.use(bodyParser.json({ limit: "60mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "60mb", extended: true }));
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
+const parentDir = path.join(__dirname, '..');
+app.use(express.static(path.join(parentDir, 'client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(parentDir, 'client', 'dist', 'index.html'));
+});
+
 app.use(cors({
   origin: 'https://myvirtualcard.in',
   methods: 'GET,POST,PUT,DELETE',
