@@ -217,7 +217,7 @@ const App = () => {
           />
         </Route>
         {/* //New Designs */}
-        <Route path="/Teacher_Preview" element={<Teacher_Preview/>} />
+        <Route path="/mnithyalakshmi" element={<Teacher_Preview/>} />
         <Route path="/Gym_Trainer_Preview" element={<GYM_TRAINER_DEMO />} />
         <Route
           path="/Taxi_Service_Preview"
