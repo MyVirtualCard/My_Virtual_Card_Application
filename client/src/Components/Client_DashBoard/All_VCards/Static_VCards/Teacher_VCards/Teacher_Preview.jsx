@@ -261,7 +261,7 @@ const Teacher_Preview = () => {
           </div> */}
               <div className="user_logo">
                 <img
-                  src="https://img.freepik.com/premium-photo/portrait-young-female-with-curly-hair-dressed-violet-sweater-looking-camera_79762-2422.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid"
+                  src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=tnYiyxMAAAAJ&citpid=1"
                   alt="user_logo"
                 />
                 {/* <div className="svg_image">
@@ -496,7 +496,7 @@ const Teacher_Preview = () => {
             </div>
             <div className="right">
               <img
-                src="https://img.freepik.com/premium-photo/portrait-young-female-with-curly-hair-dressed-violet-sweater-looking-camera_79762-2422.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid"
+                src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=tnYiyxMAAAAJ&citpid=1"
                 alt="profile"
               />
             </div>
@@ -505,7 +505,7 @@ const Teacher_Preview = () => {
           <div className="author_details">
             <div className="profile">
               <img
-                src="https://img.freepik.com/premium-photo/portrait-young-female-with-curly-hair-dressed-violet-sweater-looking-camera_79762-2422.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid"
+              src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=tnYiyxMAAAAJ&citpid=1"
                 alt="profile"
               />
             </div>
