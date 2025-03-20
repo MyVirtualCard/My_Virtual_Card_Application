@@ -13,7 +13,7 @@ import { RiCloseLargeLine } from "react-icons/ri";
 import "react-slideshow-image/dist/styles.css";
 //Testimonial
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import BackAnime from "../../../../../assets/Lotte_Animation/Back_Anime4.json";
+import BackAnime from "../../../../../assets/Lotte_Animation/Back_Anime3.json";
 import { useState } from "react";
 const Teacher_Preview = () => {
   const BackImageOptions = {
@@ -68,58 +68,58 @@ const Teacher_Preview = () => {
     },
   ];
 
-  // const Gallery = [
-  //   {
-  //     id: 1,
-  //     Title: "Image 1",
-  //     Image:
-  //       "https://img.freepik.com/free-photo/copywriter-writing-ideas_1098-17580.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid",
-  //   },
-  //   {
-  //     id: 2,
-  //     Title: "Image 2",
-  //     Image:
-  //       "https://img.freepik.com/free-photo/medium-shot-woman-enjoying-blue-matcha_23-2150649614.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid",
-  //   },
-  //   {
-  //     id: 3,
-  //     Title: "Image 3",
-  //     Image:
-  //       "https://img.freepik.com/free-photo/front-view-businesswoman-working-with-laptop-notebook_23-2148788877.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid",
-  //   },
-  // ];
-  const Certificates = [
+  const Gallery = [
     {
       id: 1,
-      Title: "Doc 1",
-      Image: "../../../../../../public/PDF/Arthi R E.jpg",
+      Title: "Image 1",
+      Image:
+        "https://img.freepik.com/free-photo/copywriter-writing-ideas_1098-17580.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid",
     },
     {
       id: 2,
-      Title: "Doc 2",
-      Image: "../../../../../../public/PDF/Dr.K. J. Vinodini.jpg",
+      Title: "Image 2",
+      Image:
+        "https://img.freepik.com/free-photo/medium-shot-woman-enjoying-blue-matcha_23-2150649614.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid",
     },
     {
       id: 3,
-      Title: "Doc 3",
-      Image: "../../../../../../public/PDF/Dr.S.Constance Angela.jpg",
-    },
-    {
-      id: 4,
-      Title: "Doc 4",
-      Image: "../../../../../../public/PDF/Dr.S.Maragathasundari.jpg",
-    },
-    {
-      id: 5,
-      Title: "Doc 5",
-      Image: "../../../../../../public/PDF/Dr.S.Maragathasundari.jpg",
-    },
-    {
-      id: 6,
-      Title: "Doc 6",
-      Image: "../../../../../../public/PDF/Nivedha M.jpg",
+      Title: "Image 3",
+      Image:
+        "https://img.freepik.com/free-photo/front-view-businesswoman-working-with-laptop-notebook_23-2148788877.jpg?uid=R79330344&ga=GA1.1.1189974794.1739838046&semt=ais_hybrid",
     },
   ];
+  // const Certificates = [
+  //   {
+  //     id: 1,
+  //     Title: "Doc 1",
+  //     Image: "../../../../../../public/PDF/Arthi R E.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     Title: "Doc 2",
+  //     Image: "../../../../../../public/PDF/Dr.K. J. Vinodini.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     Title: "Doc 3",
+  //     Image: "../../../../../../public/PDF/Dr.S.Constance Angela.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     Title: "Doc 4",
+  //     Image: "../../../../../../public/PDF/Dr.S.Maragathasundari.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     Title: "Doc 5",
+  //     Image: "../../../../../../public/PDF/Dr.S.Maragathasundari.jpg",
+  //   },
+  //   {
+  //     id: 6,
+  //     Title: "Doc 6",
+  //     Image: "../../../../../../public/PDF/Nivedha M.jpg",
+  //   },
+  // ];
   //Gallery Functionality
   const handleShare = async (url) => {
     if (navigator.share) {
@@ -425,7 +425,7 @@ const Teacher_Preview = () => {
                   </div>
 
                   <div className="gallery_box">
-                    {Certificates.map((data, index) => {
+                    {Gallery.map((data, index) => {
                       return (
                         <>
                           <div className="gallery_item" key={index}>
