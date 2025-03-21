@@ -3,7 +3,7 @@ import Lottie from "react-lottie";
 //service Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { Helmet } from 'react-helmet';
 import { FaShareFromSquare } from "react-icons/fa6";
 import { IoMdDownload } from "react-icons/io";
 import { FaRegEye } from "react-icons/fa";
@@ -227,7 +227,13 @@ const Teacher_Preview = () => {
     fullImageBox.style.display = "none";
   }
   return (
-    <div className="doctor_demo_container">
+    <>
+    <Helmet>
+                <title>Nithyalakshmi M</title>
+                <meta name="description" content="Briefly describe your approach to teaching and learning, emphasizing your commitment to student success and creating a positive learning environment" />
+                <link rel="icon" href="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=tnYiyxMAAAAJ&citpid=1" />
+            </Helmet>
+            <div className="doctor_demo_container">
          {/* Gallery Full IMAGE */}
             <div
               className="full_image"
@@ -559,6 +565,8 @@ const Teacher_Preview = () => {
         </div>
       )}
     </div>
+    </>
+
   );
 };
 
